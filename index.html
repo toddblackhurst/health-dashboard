@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Todd · BioMetrics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2230;
+  --surface3: #21262d;
+  --border: #30363d;
+  --accent: #58a6ff;
+  --accent-bg: rgba(88,166,255,0.12);
+  --green: #3fb950;
+  --green-bg: rgba(63,185,80,0.1);
+  --yellow: #d29922;
+  --yellow-bg: rgba(210,153,34,0.12);
+  --red: #f85149;
+  --red-bg: rgba(248,81,73,0.1);
+  --purple: #a371f7;
+  --purple-bg: rgba(163,113,247,0.1);
+  --teal: #39d353;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --text3: #6e7681;
+  --chart-hrv: #58a6ff;
+  --chart-recovery: #d29922;
+  --chart-weight: #3fb950;
+  --chart-bf: #f85149;
+  --chart-sleep: #a371f7;
+  --chart-volume: #39d353;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 14px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: env(safe-area-inset-bottom, 80px);
+  padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 64px));
+}
+
+/* ── Topbar ────────────────────────────────────────── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(13,17,23,0.97);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+.topbar-name { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.topbar-date { font-size: 11px; color: var(--text3); margin-top: 1px; text-transform: uppercase; letter-spacing: 0.08em; }
+.live-pill {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--green-bg);
+  border: 1px solid rgba(63,185,80,0.25);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 11px; font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.live-dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+/* ── Tabs ──────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 57px;
+  z-index: 99;
+}
+.tab-btn {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Tab panels ────────────────────────────────────── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Shared components ─────────────────────────────── */
+.section {
+  padding: 14px 14px 0;
+}
+.section-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.card:last-child { margin-bottom: 0; }
+
+/* Status badges */
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.badge-green  { background: var(--green-bg);  color: var(--green);  }
+.badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+.badge-red    { background: var(--red-bg);    color: var(--red);    }
+.badge-blue   { background: var(--accent-bg); color: var(--accent); }
+.badge-purple { background: var(--purple-bg); color: var(--purple); }
+.badge-dim    { background: var(--surface3);  color: var(--text3);  }
+
+/* Data rows with bar */
+.data-row {
+  display: flex; align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+.data-row:last-child { border-bottom: none; padding-bottom: 0; }
+.dr-key   { width: 100px; flex-shrink: 0; font-size: 12px; color: var(--text2); }
+.dr-bar   { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.dr-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+.dr-val   { min-width: 55px; text-align: right; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.dr-badge { min-width: 60px; text-align: right; flex-shrink: 0; }
+
+/* ── Status grid ───────────────────────────────────── */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 4px;
+}
+.status-item { text-align: center; padding: 0 4px; }
+.status-item + .status-item { border-left: 1px solid var(--border); }
+.si-val { font-size: 22px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+.si-label { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+.si-badge { margin-top: 3px; }
+
+/* ── Coach note ────────────────────────────────────── */
+.coach-note {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.coach-note strong { color: var(--text); }
+
+/* ── Sparkline chart ───────────────────────────────── */
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.chart-card:last-child { margin-bottom: 0; }
+.chart-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 10px;
+}
+.chart-title { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
+.chart-sub   { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.chart-val   { font-size: 20px; font-weight: 700; line-height: 1; text-align: right; }
+.chart-change{ font-size: 11px; margin-top: 2px; text-align: right; }
+.chart-area  { width: 100%; }
+.chart-x-labels {
+  display: flex; justify-content: space-between;
+  margin-top: 4px;
+  font-size: 9px; color: var(--text3);
+  overflow: hidden;
+}
+.chart-x-labels span { flex: 1; text-align: center; overflow: hidden; white-space: nowrap; }
+.chart-x-labels span:first-child { text-align: left; }
+.chart-x-labels span:last-child { text-align: right; }
+
+/* ── Glucose zone ──────────────────────────────────── */
+.glucose-zone-bar {
+  height: 8px; border-radius: 4px;
+  background: linear-gradient(90deg, var(--green) 0%, var(--green) 64%, var(--yellow) 64%, var(--yellow) 82%, var(--red) 82%);
+  position: relative;
+  margin: 8px 0 4px;
+}
+.glucose-marker {
+  position: absolute;
+  top: -4px;
+  width: 4px; height: 16px;
+  background: var(--text);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 6px rgba(230,237,243,0.5);
+}
+.zone-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text3); }
+
+/* ── Progress bar ──────────────────────────────────── */
+.progress-wrap { margin: 8px 0; }
+.progress-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+.progress-key { color: var(--text2); }
+.progress-vals { font-weight: 700; }
+.progress-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill  { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+
+/* ── Goal ring area ────────────────────────────────── */
+.goal-card-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px;
+}
+.goal-big { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+.goal-big-unit { font-size: 16px; font-weight: 400; color: var(--text2); }
+.goal-right { text-align: right; }
+.goal-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
+.goal-target { font-size: 16px; font-weight: 700; color: var(--green); }
+.goal-remaining { font-size: 11px; color: var(--teal); margin-top: 2px; }
+
+/* ── Segmental grid ────────────────────────────────── */
+.seg-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.seg-card { background: var(--surface3); border: 1px solid var(--border); border-radius: 6px; padding: 10px; }
+.seg-card.full-width { grid-column: 1/-1; }
+.seg-title { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.seg-row-item {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+}
+.seg-row-item:last-child { border-bottom: none; padding-bottom: 0; }
+.seg-row-key { color: var(--text2); }
+.seg-row-right { display: flex; align-items: center; gap: 6px; }
+
+/* ── Session history list ──────────────────────────── */
+.session-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.session-item:last-child { border-bottom: none; padding-bottom: 0; }
+.session-date {
+  font-size: 10px; color: var(--text3); text-transform: uppercase;
+  letter-spacing: 0.06em; min-width: 44px;
+}
+.session-info { flex: 1; min-width: 0; }
+.session-name { font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.session-meta { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.session-vol { font-size: 12px; font-weight: 700; color: var(--teal); text-align: right; min-width: 52px; }
+
+/* ── Stat row grid ─────────────────────────────────── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 10px 0;
+}
+.stat-cell {
+  background: var(--surface3);
+  border-radius: 6px;
+  padding: 10px 8px;
+  text-align: center;
+}
+.stat-cell-val { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+.stat-cell-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+/* ── Trends full chart ─────────────────────────────── */
+.trend-chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.trend-chart-card:last-child { margin-bottom: 0; }
+.trend-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 12px;
+}
+.trend-title-block .t-title { font-size: 13px; font-weight: 700; }
+.trend-title-block .t-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.trend-stat-block { text-align: right; }
+.trend-stat-block .t-cur { font-size: 22px; font-weight: 700; line-height: 1; }
+.trend-stat-block .t-change { font-size: 11px; margin-top: 2px; }
+
+/* ── Loading ───────────────────────────────────────── */
+.loading {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 200px; gap: 12px;
+  color: var(--text3);
+  font-size: 13px;
+}
+.spinner {
+  width: 28px; height: 28px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Error ─────────────────────────────────────────── */
+.error-block {
+  margin: 20px 16px;
+  background: var(--red-bg);
+  border: 1px solid rgba(248,81,73,0.3);
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 13px;
+  color: var(--red);
+  line-height: 1.5;
+}
+.error-block code { font-family: monospace; font-size: 11px; }
+
+/* ── Bottom nav ────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: rgba(13,17,23,0.97);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  backdrop-filter: blur(12px);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.bn-item {
+  padding: 10px 0 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  cursor: pointer;
+  user-select: none;
+}
+.bn-icon { font-size: 18px; }
+.bn-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); font-weight: 700; }
+.bn-item.active .bn-label { color: var(--accent); }
+
+.spacer { height: 14px; }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div>
+    <div class="topbar-name">Todd Blackhurst</div>
+    <div class="topbar-date" id="topbar-date">Loading…</div>
+  </div>
+  <div class="live-pill">
+    <div class="live-dot"></div>
+    Live
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab-btn active" data-tab="today">Today</div>
+  <div class="tab-btn" data-tab="body">Body</div>
+  <div class="tab-btn" data-tab="training">Training</div>
+  <div class="tab-btn" data-tab="trends">Trends</div>
+</div>
+
+<!-- Tab panels -->
+<div id="tab-today"    class="tab-panel active"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+<div id="tab-body"     class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+<div id="tab-training" class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+<div id="tab-trends"   class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+
+<!-- Bottom nav (mirrors tabs) -->
+<div class="bottom-nav" id="bottom-nav">
+  <div class="bn-item active" data-tab="today"><div class="bn-icon">📡</div><div class="bn-label">Today</div></div>
+  <div class="bn-item" data-tab="body"><div class="bn-icon">🫀</div><div class="bn-label">Body</div></div>
+  <div class="bn-item" data-tab="training"><div class="bn-icon">💪</div><div class="bn-label">Train</div></div>
+  <div class="bn-item" data-tab="trends"><div class="bn-icon">📈</div><div class="bn-label">Trends</div></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   UTILITIES
+══════════════════════════════════════════════════════ */
+
+const DB_URL = './HEALTH_DATABASE.json';
+let DB = null;
+const rendered = {};
+
+function fmt(val, dec = 1) {
+  if (val === null || val === undefined) return '—';
+  return typeof val === 'number' ? val.toFixed(dec) : val;
+}
+function fmtDate(d) {
+  if (!d) return '';
+  const parts = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(parts[1])-1]} ${parseInt(parts[2])}`;
+}
+function fmtDateShort(d) {
+  if (!d) return '';
+  const parts = d.split('-');
+  return `${parts[1]}/${parts[2]}`;
+}
+function latest(arr) {
+  return arr.slice().sort((a,b) => a.date > b.date ? -1 : 1)[0] || {};
+}
+function sortAsc(arr) {
+  return arr.slice().sort((a,b) => a.date < b.date ? -1 : 1);
+}
+function badge(text, color) {
+  return `<span class="badge badge-${color}">${text}</span>`;
+}
+function recoveryBadge(score) {
+  if (score === null || score === undefined) return badge('—', 'dim');
+  if (score >= 70) return badge('Optimal', 'green');
+  if (score >= 40) return badge('Normal', 'yellow');
+  return badge('Low', 'red');
+}
+function hrvBadge(hrv, baseline) {
+  if (!hrv) return badge('—', 'dim');
+  const diff = hrv - baseline;
+  if (diff > 3)  return badge(`+${diff.toFixed(1)} above base`, 'green');
+  if (diff < -3) return badge(`${diff.toFixed(1)} below base`, 'red');
+  return badge('At baseline', 'blue');
+}
+function sleepBadge(score) {
+  if (!score) return badge('—', 'dim');
+  if (score >= 80) return badge('Great', 'green');
+  if (score >= 60) return badge('Fair', 'yellow');
+  return badge('Poor', 'red');
+}
+function weightChange(current, prev) {
+  if (!current || !prev) return '';
+  const diff = current - prev;
+  if (Math.abs(diff) < 0.1) return badge('Stable', 'blue');
+  return diff < 0 ? badge(`−${Math.abs(diff).toFixed(1)} lbs`, 'green') : badge(`+${diff.toFixed(1)} lbs`, 'red');
+}
+
+/* ══════════════════════════════════════════════════════
+   SVG LINE CHART
+   data: [{date, value}, …]  (nulls skipped)
+══════════════════════════════════════════════════════ */
+function buildLineChart(data, opts = {}) {
+  const {
+    color = '#58a6ff',
+    height = 56,
+    baseline = null,
+    baselineLabel = null,
+  } = opts;
+
+  const valid = data.filter(d => d.value !== null && d.value !== undefined);
+  if (valid.length < 2) return { svg: '<div style="color:var(--text3);font-size:11px;padding:8px 0">Not enough data yet</div>', labels: [] };
+
+  const W = 300, H = height, px = 4, py = 6;
+  const ys = valid.map(d => d.value);
+  const allYs = baseline !== null ? [...ys, baseline] : ys;
+  const yMin = Math.min(...allYs) - (Math.max(...allYs) - Math.min(...allYs)) * 0.15;
+  const yMax = Math.max(...allYs) + (Math.max(...allYs) - Math.min(...allYs)) * 0.15;
+  const yRange = yMax - yMin || 1;
+
+  const toX = i => px + (i / (valid.length - 1)) * (W - 2 * px);
+  const toY = v => H - py - ((v - yMin) / yRange) * (H - 2 * py);
+
+  const pts = valid.map((d, i) => ({ x: toX(i), y: toY(d.value), d }));
+  const id = 'g' + Math.random().toString(36).slice(2, 7);
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${H}px;display:block;overflow:visible">
+  <defs>
+    <linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+    </linearGradient>
+  </defs>`;
+
+  // Baseline line
+  if (baseline !== null) {
+    const by = toY(baseline);
+    s += `<line x1="${px}" y1="${by.toFixed(1)}" x2="${W-px}" y2="${by.toFixed(1)}" stroke="rgba(110,118,129,0.5)" stroke-width="1" stroke-dasharray="5 3"/>`;
+    if (baselineLabel) {
+      s += `<text x="${W-px}" y="${(by - 3).toFixed(1)}" fill="rgba(110,118,129,0.7)" font-size="8" text-anchor="end" font-family="-apple-system,sans-serif">${baselineLabel}</text>`;
+    }
+  }
+
+  // Area fill
+  const linePts = pts.map((p,i) => `${i===0?'M':'L'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+  const areaPts = linePts + ` L${pts[pts.length-1].x.toFixed(1)} ${H} L${pts[0].x.toFixed(1)} ${H} Z`;
+  s += `<path d="${areaPts}" fill="url(#${id})" stroke="none"/>`;
+
+  // Line
+  s += `<path d="${linePts}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+  // Last dot only
+  const last = pts[pts.length - 1];
+  s += `<circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="3.5" fill="${color}" stroke="#0d1117" stroke-width="1.5"/>`;
+
+  s += '</svg>';
+
+  // X labels (first, middle, last)
+  const labelIdxs = valid.length <= 4
+    ? valid.map((_, i) => i)
+    : [0, Math.floor(valid.length / 2), valid.length - 1];
+  const labels = [...new Set(labelIdxs)].map(i => fmtDate(valid[i].date));
+
+  return { svg: s, labels };
+}
+
+/* Bar chart for volume */
+function buildBarChart(data, opts = {}) {
+  const { color = '#39d353', height = 60 } = opts;
+  const valid = data.filter(d => d.value !== null && d.value !== undefined);
+  if (valid.length < 1) return '<div style="color:var(--text3);font-size:11px;padding:8px 0">No data</div>';
+
+  const W = 300, H = height;
+  const max = Math.max(...valid.map(d => d.value));
+  const barW = (W / valid.length) * 0.65;
+  const gap   = (W / valid.length) * 0.35;
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${H}px;display:block">`;
+  valid.forEach((d, i) => {
+    const x = i * (barW + gap) + gap / 2;
+    const barH = (d.value / max) * (H - 8);
+    const y = H - barH;
+    const isLast = i === valid.length - 1;
+    s += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}"
+           rx="2" fill="${isLast ? color : 'rgba(57,211,83,0.4)'}"/>`;
+  });
+  s += '</svg>';
+  return s;
+}
+
+/* ══════════════════════════════════════════════════════
+   COACHING INSIGHT GENERATOR
+══════════════════════════════════════════════════════ */
+function coachingNote(db) {
+  const sleep = latest(db.recovery_sleep);
+  const profile = db.profile;
+  const baseline = profile.oura_biology_baselines || {};
+  const hrvBase = baseline.hrv_baseline_ms || 32.5;
+  const notes = [];
+
+  if (sleep.hrv_ms) {
+    const diff = (sleep.hrv_ms - hrvBase).toFixed(1);
+    if (diff > 3) notes.push(`HRV ${sleep.hrv_ms} ms — <strong>${diff} ms above your ${hrvBase} baseline.</strong> Nervous system is recovered.`);
+    else if (diff < -3) notes.push(`HRV ${sleep.hrv_ms} ms — <strong>${Math.abs(diff)} ms below baseline.</strong> Reduce intensity; keep HR well under 122 bpm.`);
+    else notes.push(`HRV ${sleep.hrv_ms} ms — sitting near baseline (${hrvBase} ms). Train normally with HR management.`);
+  }
+  if (sleep.sleep_bank_min !== null && sleep.sleep_bank_min !== undefined && sleep.sleep_bank_min < -60) {
+    const h = Math.abs(Math.floor(sleep.sleep_bank_min / 60));
+    const m = Math.abs(sleep.sleep_bank_min % 60);
+    notes.push(`Sleep debt: <strong>−${h}h ${m}m.</strong> Prioritize an early bedtime tonight (target ~9:30 PM).`);
+  }
+  if (sleep.recovery_score_pct >= 70) notes.push('High readiness — push day if planned.');
+  else if (sleep.recovery_score_pct < 40) notes.push('Low readiness — active recovery or full deload recommended.');
+  else notes.push('Moderate readiness. HR cap 122 bpm applies to all strength work today.');
+
+  return notes.slice(0, 3).join('<br>');
+}
+
+/* ══════════════════════════════════════════════════════
+   TODAY TAB
+══════════════════════════════════════════════════════ */
+function renderToday(db) {
+  const sleep   = latest(db.recovery_sleep);
+  const glucose = latest(db.glucose);
+  const body    = latest(db.body_composition);
+  const profile = db.profile;
+  const baseline = profile.oura_biology_baselines || {};
+
+  // Status grid
+  const recovery  = sleep.recovery_score_pct;
+  const hrv       = sleep.hrv_ms;
+  const rhr       = sleep.resting_hr_bpm;
+  const glu       = glucose.current_reading_mgdl;
+
+  function recColor(r) {
+    if (!r) return 'var(--text)';
+    if (r >= 70) return 'var(--green)';
+    if (r >= 40) return 'var(--yellow)';
+    return 'var(--red)';
+  }
+  function hrvColor(h) {
+    if (!h) return 'var(--text)';
+    const d = h - (baseline.hrv_baseline_ms || 32.5);
+    if (d > 3) return 'var(--green)';
+    if (d < -3) return 'var(--red)';
+    return 'var(--accent)';
+  }
+
+  // HRV sparkline data
+  const hrvData = sortAsc(db.recovery_sleep)
+    .filter(r => r.hrv_ms)
+    .map(r => ({ date: r.date, value: r.hrv_ms }));
+
+  const recData = sortAsc(db.recovery_sleep)
+    .filter(r => r.recovery_score_pct)
+    .map(r => ({ date: r.date, value: r.recovery_score_pct }));
+
+  const hrvChart = buildLineChart(hrvData, { color: 'var(--chart-hrv)', baseline: baseline.hrv_baseline_ms || 32.5, baselineLabel: `Baseline ${baseline.hrv_baseline_ms || 32.5}` });
+  const recChart = buildLineChart(recData, { color: 'var(--chart-recovery)', height: 50 });
+
+  // Glucose zone marker (70-180 range, in-range = 70-140)
+  const gluPct = glu ? Math.min(100, Math.max(0, ((glu - 70) / 110) * 100)) : 28;
+
+  // Sleep data
+  const totalMin = sleep.total_sleep_min || sleep.autosleep_total_sleep_min;
+  const totalH   = totalMin ? Math.floor(totalMin / 60) : '—';
+  const totalM   = totalMin ? totalMin % 60 : '';
+  const totalStr = totalMin ? `${totalH}h ${totalM}m` : '—';
+  const deepMin  = sleep.deep_sleep_min || sleep.autosleep_deep_min;
+  const remMin   = sleep.rem_sleep_min  || sleep.autosleep_rem_min;
+  const deepStr  = deepMin ? `${deepMin}m` : '—';
+  const remStr   = remMin  ? (remMin >= 60 ? `${Math.floor(remMin/60)}h ${remMin%60}m` : `${remMin}m`) : '—';
+  const debtMin  = sleep.sleep_bank_min || sleep.autosleep_sleep_bank_min;
+  const debtStr  = debtMin ? `−${Math.abs(Math.floor(debtMin/60))}h ${Math.abs(debtMin%60)}m` : '—';
+
+  // Sleep bar pct helpers
+  const sleepPct  = totalMin ? Math.min(100, (totalMin / 480) * 100) : 0;   // vs 8h
+  const deepPct   = deepMin  ? Math.min(100, (deepMin / 90) * 100)   : 0;   // vs 90m ideal
+  const remPct    = remMin   ? Math.min(100, (remMin / 120) * 100)   : 0;   // vs 120m ideal
+  const effPct    = sleep.sleep_efficiency_pct || 0;
+
+  const weightLbs = body.weight_lbs || (body.weight_kg ? body.weight_kg * 2.2046 : null);
+  const goalLbs   = profile.nutrition_targets ? profile.nutrition_targets.goal_weight_lbs : 165;
+  const startLbs  = 172.7; // from first body comp entry
+  const progressPct = weightLbs ? Math.min(100, ((startLbs - weightLbs) / (startLbs - goalLbs)) * 100) : 0;
+
+  return `
+  <!-- Status grid -->
+  <div class="status-grid">
+    <div class="status-item">
+      <div class="si-val" style="color:${recColor(recovery)}">${recovery || '—'}</div>
+      <div class="si-label">Readiness</div>
+      <div class="si-badge">${recoveryBadge(recovery)}</div>
+    </div>
+    <div class="status-item">
+      <div class="si-val" style="color:${hrvColor(hrv)}">${fmt(hrv, 1)}</div>
+      <div class="si-label">HRV ms</div>
+      <div class="si-badge">${hrv ? (hrv > (baseline.hrv_baseline_ms||32.5) ? badge('+above','green') : badge('below','red')) : badge('—','dim')}</div>
+    </div>
+    <div class="status-item">
+      <div class="si-val">${fmt(rhr, 1)}</div>
+      <div class="si-label">RHR bpm</div>
+      <div class="si-badge">${rhr ? (rhr < 65 ? badge('Normal','green') : badge('Elevated','yellow')) : badge('—','dim')}</div>
+    </div>
+    <div class="status-item">
+      <div class="si-val" style="color:${glu && glu < 140 ? 'var(--green)' : 'var(--yellow)'}">${glu || '—'}</div>
+      <div class="si-label">Glucose</div>
+      <div class="si-badge">${glu ? (glu < 140 ? badge('In range','green') : badge('Above','yellow')) : badge('—','dim')}</div>
+    </div>
+  </div>
+
+  <!-- Coach note -->
+  <div class="section">
+    <div class="section-title">Coach Note</div>
+    <div class="coach-note">${coachingNote(db)}</div>
+  </div>
+
+  <!-- HRV chart -->
+  <div class="section">
+    <div class="section-title">HRV Trend</div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Heart Rate Variability</div>
+          <div class="chart-sub">Baseline: ${baseline.hrv_baseline_ms || 32.5} ms · Source: Oura</div>
+        </div>
+        <div>
+          <div class="chart-val" style="color:var(--chart-hrv)">${fmt(hrv, 1)} ms</div>
+          <div class="chart-change" style="color:${hrv > (baseline.hrv_baseline_ms||32.5) ? 'var(--green)' : 'var(--red)'}">
+            ${hrv ? ((hrv - (baseline.hrv_baseline_ms||32.5)) > 0 ? '↑' : '↓') + ' ' + Math.abs(hrv - (baseline.hrv_baseline_ms||32.5)).toFixed(1) + ' vs base' : ''}
+          </div>
+        </div>
+      </div>
+      <div class="chart-area">${hrvChart.svg}</div>
+      <div class="chart-x-labels">${hrvChart.labels.map(l => `<span>${l}</span>`).join('')}</div>
+    </div>
+
+    <!-- Recovery chart -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Recovery Score</div>
+          <div class="chart-sub">Oura · 7-day history</div>
+        </div>
+        <div>
+          <div class="chart-val" style="color:var(--chart-recovery)">${recovery || '—'}%</div>
+          <div class="chart-change" style="color:var(--text3)">${recoveryBadge(recovery)}</div>
+        </div>
+      </div>
+      <div class="chart-area">${recChart.svg}</div>
+      <div class="chart-x-labels">${recChart.labels.map(l => `<span>${l}</span>`).join('')}</div>
+    </div>
+  </div>
+
+  <!-- Sleep breakdown -->
+  <div class="section">
+    <div class="section-title">Sleep · ${fmtDate(sleep.date)}</div>
+    <div class="card">
+      <div class="data-row">
+        <div class="dr-key">Total Sleep</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:${sleepPct}%;background:var(--accent)"></div></div>
+        <div class="dr-val">${totalStr}</div>
+        <div class="dr-badge">${sleepBadge(sleep.sleep_score_pct)}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Deep Sleep</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:${deepPct}%;background:var(--purple)"></div></div>
+        <div class="dr-val">${deepStr}</div>
+        <div class="dr-badge">${deepMin ? (deepMin >= 60 ? badge('Good','green') : badge('Low','yellow')) : badge('—','dim')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">REM</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:${remPct}%;background:var(--purple)"></div></div>
+        <div class="dr-val">${remStr}</div>
+        <div class="dr-badge">${remMin ? (remMin >= 90 ? badge('Good','green') : badge('Fair','yellow')) : badge('—','dim')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Efficiency</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:${effPct}%;background:var(--green)"></div></div>
+        <div class="dr-val">${effPct ? effPct + '%' : '—'}</div>
+        <div class="dr-badge">${sleep.sleep_efficiency_pct ? (sleep.sleep_efficiency_pct >= 85 ? badge('Good','green') : badge('Fair','yellow')) : badge('—','dim')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Sleep Debt</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:${debtMin ? Math.min(100, (Math.abs(debtMin)/300)*100) : 0}%;background:var(--yellow)"></div></div>
+        <div class="dr-val">${debtStr}</div>
+        <div class="dr-badge">${debtMin ? (Math.abs(debtMin) < 60 ? badge('Low','green') : Math.abs(debtMin) < 180 ? badge('Moderate','yellow') : badge('High','red')) : badge('—','dim')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">HR Dip</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:${sleep.hr_dip_pct ? sleep.hr_dip_pct * 4 : 0}%;background:var(--teal)"></div></div>
+        <div class="dr-val">${sleep.hr_dip_pct ? sleep.hr_dip_pct + '%' : '—'}</div>
+        <div class="dr-badge">${sleep.hr_dip_pct ? (sleep.hr_dip_pct >= 8 ? badge('Normal','green') : badge('Low','yellow')) : badge('—','dim')}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glucose -->
+  <div class="section">
+    <div class="section-title">Glucose · ${fmtDate(glucose.date)}</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+        <div>
+          <div style="font-size:32px;font-weight:800;letter-spacing:-0.02em;color:${glu && glu < 140 ? 'var(--green)' : 'var(--yellow)'}">
+            ${glu || '—'}<span style="font-size:14px;font-weight:400;color:var(--text2)"> mg/dL</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3)">Trend: ${glucose.trend || '—'} · Stelo CGM via Oura</div>
+        </div>
+        <div style="text-align:right">
+          ${glu ? badge('In range','green') : badge('—','dim')}
+          <div style="font-size:11px;color:var(--text3);margin-top:6px">Target: 70–140</div>
+        </div>
+      </div>
+      <div class="glucose-zone-bar">
+        <div class="glucose-marker" style="left:${gluPct}%"></div>
+      </div>
+      <div class="zone-labels">
+        <span>70</span>
+        <span style="color:var(--green)">In range</span>
+        <span>180+</span>
+      </div>
+      ${glucose.time_in_range_yesterday_pct ? `<div style="margin-top:8px;font-size:12px;color:var(--text2)">
+        Time in range yesterday: <strong style="color:var(--green)">${glucose.time_in_range_yesterday_pct}%</strong>
+        ${glucose.glucose_variability_pct !== undefined && glucose.glucose_variability_pct !== null ? ` · Variability: <strong>${glucose.glucose_variability_pct}%</strong> ${badge(glucose.glucose_variability_status||'','green')}` : ''}
+      </div>` : ''}
+    </div>
+  </div>
+
+  <!-- Weight snapshot -->
+  <div class="section">
+    <div class="section-title">Weight · ${fmtDate(body.date)}</div>
+    <div class="card">
+      <div class="goal-card-header">
+        <div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:2px">Current</div>
+          <div class="goal-big">${weightLbs ? weightLbs.toFixed(1) : '—'}<span class="goal-big-unit"> lbs</span></div>
+        </div>
+        <div class="goal-right">
+          <div class="goal-lbl">Goal</div>
+          <div class="goal-target">${goalLbs} lbs</div>
+          <div class="goal-remaining">${weightLbs ? Math.abs(weightLbs - goalLbs).toFixed(1) + ' lbs to go' : ''}</div>
+        </div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${Math.max(0, progressPct).toFixed(1)}%;background:linear-gradient(90deg,var(--yellow),var(--green))"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px">
+          <span>Start ${startLbs}</span>
+          <span style="color:var(--green)">${progressPct.toFixed(0)}% complete</span>
+          <span>Goal ${goalLbs}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>`;
+}
+
+/* ══════════════════════════════════════════════════════
+   BODY TAB
+══════════════════════════════════════════════════════ */
+function renderBody(db) {
+  const entries = sortAsc(db.body_composition);
+  const cur     = latest(db.body_composition);
+  const prev    = entries.length >= 2 ? entries[entries.length - 2] : null;
+  const profile = db.profile;
+  const goalLbs = profile.nutrition_targets ? profile.nutrition_targets.goal_weight_lbs : 165;
+
+  const weightLbs = cur.weight_lbs || (cur.weight_kg ? +(cur.weight_kg * 2.2046).toFixed(1) : null);
+  const prevW     = prev ? (prev.weight_lbs || (prev.weight_kg ? +(prev.weight_kg * 2.2046).toFixed(1) : null)) : null;
+
+  // Weight trend chart
+  const wtData = entries.filter(e => e.weight_lbs || e.weight_kg).map(e => ({
+    date: e.date, value: e.weight_lbs || +(e.weight_kg * 2.2046).toFixed(1)
+  }));
+  const bfData = entries.filter(e => e.body_fat_pct).map(e => ({ date: e.date, value: e.body_fat_pct }));
+
+  const wtChart = buildLineChart(wtData, { color: 'var(--chart-weight)', height: 60 });
+  const bfChart = buildLineChart(bfData, { color: 'var(--chart-bf)',     height: 50 });
+
+  // Segmental (from Hume entry)
+  const humeEntry = db.body_composition.find(e => e.source === 'Hume Body Pod') || {};
+  const seg = humeEntry.segmental_muscle_lbs || {};
+  const segFat = humeEntry.segmental_fat_pct || {};
+
+  const segHtml = (seg.trunk) ? `
+  <div class="section-title" style="margin-top:12px">Segmental Analysis — Hume Body Pod <small style="color:var(--text3);font-size:9px">${fmtDate(humeEntry.date)}</small></div>
+  <div class="seg-grid">
+    <div class="seg-card full-width">
+      <div class="seg-title">Trunk</div>
+      <div class="seg-row-item">
+        <span class="seg-row-key">Muscle</span>
+        <div class="seg-row-right">${seg.trunk.value_lbs} lbs ${badge(seg.trunk.rating,'yellow')}</div>
+      </div>
+      <div class="seg-row-item">
+        <span class="seg-row-key">Fat %</span>
+        <div class="seg-row-right">${segFat.trunk ? segFat.trunk.fat_pct + '%' : '—'} ${segFat.trunk ? badge(segFat.trunk.rating,'blue') : ''}</div>
+      </div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-title">Right Arm</div>
+      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.right_arm.value_lbs} lbs</span></div>
+      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.right_arm ? badge(segFat.right_arm.fat_pct + '%','red') : '—'}</span></div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-title">Left Arm</div>
+      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.left_arm.value_lbs} lbs</span></div>
+      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.left_arm ? badge(segFat.left_arm.fat_pct + '%','red') : '—'}</span></div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-title">Right Leg</div>
+      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.right_leg.value_lbs} lbs</span></div>
+      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.right_leg ? badge(segFat.right_leg.fat_pct + '%','blue') : '—'}</span></div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-title">Left Leg</div>
+      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.left_leg.value_lbs} lbs</span></div>
+      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.left_leg ? badge(segFat.left_leg.fat_pct + '%','blue') : '—'}</span></div>
+    </div>
+  </div>` : '';
+
+  // Measurement history table
+  const histHtml = entries.map(e => {
+    const w = e.weight_lbs || (e.weight_kg ? +(e.weight_kg * 2.2046).toFixed(1) : '—');
+    return `<div class="data-row">
+      <div class="dr-key">${fmtDate(e.date)}</div>
+      <div style="flex:1;font-size:11px;color:var(--text3)">${e.source}</div>
+      <div class="dr-val">${w} lbs</div>
+      <div class="dr-badge">${e.body_fat_pct ? badge(e.body_fat_pct + '%','blue') : ''}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <!-- Goal progress -->
+  <div class="section">
+    <div class="section-title">Body Composition · ${fmtDate(cur.date)}</div>
+    <div class="card">
+      <div class="goal-card-header">
+        <div>
+          <div style="font-size:11px;color:var(--text3)">Weight · ${cur.source}</div>
+          <div class="goal-big">${weightLbs ? weightLbs.toFixed(1) : '—'}<span class="goal-big-unit"> lbs</span></div>
+          <div style="margin-top:4px">${weightChange(weightLbs, prevW)}</div>
+        </div>
+        <div class="goal-right">
+          <div class="goal-lbl">Goal</div>
+          <div class="goal-target">${goalLbs} lbs</div>
+          <div class="goal-remaining">${weightLbs ? Math.abs(weightLbs - goalLbs).toFixed(1) + ' lbs to go' : ''}</div>
+          <div style="margin-top:6px">${cur.bmi ? badge('BMI ' + cur.bmi, 'blue') : ''}</div>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${Math.max(0,((172.7 - (weightLbs||172.7))/(172.7 - goalLbs))*100).toFixed(1)}%;background:linear-gradient(90deg,var(--yellow),var(--teal))"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px">
+          <span>172.7</span><span>Progress to goal</span><span>${goalLbs}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key stats -->
+    <div class="stat-row">
+      <div class="stat-cell">
+        <div class="stat-cell-val">${fmt(cur.body_fat_pct, 1)}<span style="font-size:11px;color:var(--text2)">%</span></div>
+        <div class="stat-cell-lbl">Body Fat</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val">${cur.lean_mass_lbs ? cur.lean_mass_lbs.toFixed(1) : '—'}</div>
+        <div class="stat-cell-lbl">Lean (lbs)</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val">${cur.visceral_fat_level ? 'Lv ' + cur.visceral_fat_level : '—'}</div>
+        <div class="stat-cell-lbl">Visc. Fat</div>
+      </div>
+    </div>
+    <div class="stat-row" style="margin-top:0">
+      <div class="stat-cell">
+        <div class="stat-cell-val">${cur.muscle_pct ? cur.muscle_pct + '%' : '—'}</div>
+        <div class="stat-cell-lbl">Muscle %</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val">${cur.body_water_pct ? cur.body_water_pct + '%' : '—'}</div>
+        <div class="stat-cell-lbl">Body Water</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val">${cur.bmr_kcal || '—'}</div>
+        <div class="stat-cell-lbl">BMR kcal</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weight chart -->
+  <div class="section">
+    <div class="section-title">Weight Trend</div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Weight (lbs)</div>
+          <div class="chart-sub">All measurements · ${entries.length} scans</div>
+        </div>
+        <div>
+          <div class="chart-val" style="color:var(--chart-weight)">${weightLbs ? weightLbs.toFixed(1) : '—'}</div>
+          <div class="chart-change" style="color:var(--green)">Goal: ${goalLbs} lbs</div>
+        </div>
+      </div>
+      <div class="chart-area">${wtChart.svg}</div>
+      <div class="chart-x-labels">${wtChart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
+    </div>
+
+    <!-- BF% chart -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Body Fat %</div>
+          <div class="chart-sub">Lower is better · Target: ~15%</div>
+        </div>
+        <div>
+          <div class="chart-val" style="color:var(--chart-bf)">${fmt(cur.body_fat_pct, 1)}%</div>
+        </div>
+      </div>
+      <div class="chart-area">${bfChart.svg}</div>
+      <div class="chart-x-labels">${bfChart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
+    </div>
+  </div>
+
+  <!-- Segmental -->
+  <div class="section">
+    ${segHtml}
+  </div>
+
+  <!-- Measurement history -->
+  <div class="section">
+    <div class="section-title">Measurement History</div>
+    <div class="card">${histHtml}</div>
+  </div>
+
+  <!-- Nutrition targets reminder -->
+  <div class="section">
+    <div class="section-title">Nutrition Targets</div>
+    <div class="card">
+      <div class="data-row">
+        <div class="dr-key">Calories</div>
+        <div style="flex:1"></div>
+        <div class="dr-val">2000 kcal</div>
+        <div class="dr-badge">${badge('Target','blue')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Protein</div>
+        <div style="flex:1"></div>
+        <div class="dr-val">150 g</div>
+        <div class="dr-badge">${badge('Target','blue')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Carbs</div>
+        <div style="flex:1"></div>
+        <div class="dr-val">190 g</div>
+        <div class="dr-badge">${badge('Target','blue')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Fat</div>
+        <div style="flex:1"></div>
+        <div class="dr-val">70 g</div>
+        <div class="dr-badge">${badge('Target','blue')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Deficit</div>
+        <div style="flex:1"></div>
+        <div class="dr-val">~380 kcal</div>
+        <div class="dr-badge">${badge('vs TDEE','dim')}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>`;
+}
+
+/* ══════════════════════════════════════════════════════
+   TRAINING TAB
+══════════════════════════════════════════════════════ */
+function renderTraining(db) {
+  const strengthLogs = sortAsc(db.strength_logs);
+  const activities   = sortAsc(db.activity_sessions);
+
+  // All sessions combined + sorted
+  const allSessions = [
+    ...strengthLogs.map(s => ({...s, _type: 'strength'})),
+    ...activities.filter(a => a.session_type !== 'Daily Activity Snapshot').map(a => ({...s, ...a, _type: 'activity'}))
+  ].sort((a,b) => a.date < b.date ? 1 : -1);
+
+  const latest_s = strengthLogs[strengthLogs.length - 1] || {};
+
+  // Volume chart (last 12 strength sessions)
+  const recent12 = strengthLogs.slice(-12);
+  const volData = recent12.map(s => ({ date: s.date, value: s.volume_kg ? Math.round(s.volume_kg * 2.2046) : null }));
+  const volChart = buildLineChart(volData, { color: 'var(--chart-volume)', height: 60 });
+
+  // Session history list
+  const sessionListHtml = strengthLogs.slice().reverse().slice(0, 15).map(s => {
+    const volLbs = s.volume_kg ? Math.round(s.volume_kg * 2.2046).toLocaleString() : '—';
+    return `<div class="session-item">
+      <div class="session-date">${fmtDateShort(s.date)}</div>
+      <div class="session-info">
+        <div class="session-name">${s.session_focus || 'Strength'}</div>
+        <div class="session-meta">${s.duration_min}min · ${s.exercise_count} exercises · ${s.location || 'WorldGym'}</div>
+      </div>
+      <div class="session-vol">${volLbs}<div style="font-size:9px;color:var(--text3)">lbs vol</div></div>
+    </div>`;
+  }).join('');
+
+  // Latest session exercises
+  const exHtml = (latest_s.exercises || []).slice(0, 8).map(ex => {
+    const workSets = (ex.sets || []).filter(s => !s.warmup);
+    const setsHtml = workSets.slice(0, 6).map(s =>
+      `<div class="ex-set">
+        <div class="set-n">Set ${s.n}</div>
+        <div class="set-data">${s.reps}×${s.weight_kg > 0 ? s.weight_kg + 'kg' : Math.abs(s.weight_kg)+'kg assist'}</div>
+      </div>`
+    ).join('');
+    return `<div class="ex-card">
+      <div class="ex-header">
+        <div class="ex-name">${ex.name}</div>
+        <div>${badge(workSets.length + ' sets','dim')}</div>
+      </div>
+      <div class="ex-sets-grid">${setsHtml}</div>
+    </div>`;
+  }).join('');
+
+  const latestVolLbs = latest_s.volume_kg ? Math.round(latest_s.volume_kg * 2.2046).toLocaleString() : '—';
+
+  return `
+  <!-- Latest session -->
+  <div class="section">
+    <div class="section-title">Latest Session · ${fmtDate(latest_s.date)}</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <div style="font-size:14px;font-weight:700">${latest_s.session_focus || 'Strength'}</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">${latest_s.location || 'WorldGym'} · ${latest_s.start_time || ''}</div>
+        </div>
+        ${badge('Complete','green')}
+      </div>
+      <div class="stat-row" style="margin:0 0 8px">
+        <div class="stat-cell">
+          <div class="stat-cell-val" style="font-size:16px;color:var(--teal)">${latestVolLbs}</div>
+          <div class="stat-cell-lbl">lbs Volume</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-cell-val" style="font-size:16px">${latest_s.duration_min}m</div>
+          <div class="stat-cell-lbl">Duration</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-cell-val" style="font-size:16px">${latest_s.exercise_count}</div>
+          <div class="stat-cell-lbl">Exercises</div>
+        </div>
+      </div>
+      ${latest_s.calories_kcal ? `<div style="font-size:12px;color:var(--text2)">${latest_s.calories_kcal} kcal · ${badge('HR ok','green')}</div>` : ''}
+    </div>
+  </div>
+
+  <!-- Volume trend -->
+  <div class="section">
+    <div class="section-title">Volume Trend (lbs)</div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Total Load per Session</div>
+          <div class="chart-sub">Last ${recent12.length} strength sessions</div>
+        </div>
+        <div>
+          <div class="chart-val" style="color:var(--chart-volume)">${latestVolLbs}</div>
+          <div class="chart-change" style="color:var(--text3)">lbs latest</div>
+        </div>
+      </div>
+      <div class="chart-area">${volChart.svg}</div>
+      <div class="chart-x-labels">${volChart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
+    </div>
+  </div>
+
+  <!-- Latest session exercise breakdown -->
+  ${latest_s.exercises && latest_s.exercises.length > 0 ? `
+  <div class="section">
+    <div class="section-title">Exercise Breakdown · ${fmtDate(latest_s.date)}</div>
+    ${exHtml}
+  </div>` : ''}
+
+  <!-- Session history -->
+  <div class="section">
+    <div class="section-title">Session History</div>
+    <div class="card">${sessionListHtml}</div>
+  </div>
+
+  <div class="spacer"></div>`;
+}
+
+/* ══════════════════════════════════════════════════════
+   TRENDS TAB
+══════════════════════════════════════════════════════ */
+function renderTrends(db) {
+  const baseline = db.profile.oura_biology_baselines || {};
+
+  const hrvData  = sortAsc(db.recovery_sleep).filter(r=>r.hrv_ms).map(r=>({date:r.date,value:r.hrv_ms}));
+  const recData  = sortAsc(db.recovery_sleep).filter(r=>r.recovery_score_pct).map(r=>({date:r.date,value:r.recovery_score_pct}));
+  const sleepData= sortAsc(db.recovery_sleep).filter(r=>r.sleep_score_pct).map(r=>({date:r.date,value:r.sleep_score_pct}));
+  const wtData   = sortAsc(db.body_composition).filter(e=>e.weight_lbs||e.weight_kg).map(e=>({date:e.date,value:e.weight_lbs||(e.weight_kg*2.2046)}));
+  const bfData   = sortAsc(db.body_composition).filter(e=>e.body_fat_pct).map(e=>({date:e.date,value:e.body_fat_pct}));
+  const volData  = sortAsc(db.strength_logs).filter(s=>s.volume_kg).map(s=>({date:s.date,value:Math.round(s.volume_kg*2.2046)}));
+
+  const hrv  = buildLineChart(hrvData,  { color:'var(--chart-hrv)',      height:70, baseline:baseline.hrv_baseline_ms||32.5, baselineLabel:`Baseline ${baseline.hrv_baseline_ms||32.5}` });
+  const rec  = buildLineChart(recData,  { color:'var(--chart-recovery)', height:60 });
+  const slp  = buildLineChart(sleepData,{ color:'var(--chart-sleep)',    height:60 });
+  const wt   = buildLineChart(wtData,   { color:'var(--chart-weight)',   height:60, baseline:165, baselineLabel:'Goal 165' });
+  const bf   = buildLineChart(bfData,   { color:'var(--chart-bf)',       height:55 });
+  const vol  = buildLineChart(volData,  { color:'var(--chart-volume)',   height:60 });
+
+  const latestHrv = hrvData.length  ? hrvData[hrvData.length-1].value   : null;
+  const latestRec = recData.length  ? recData[recData.length-1].value   : null;
+  const latestSlp = sleepData.length? sleepData[sleepData.length-1].value:null;
+  const latestWt  = wtData.length   ? wtData[wtData.length-1].value     : null;
+  const latestBf  = bfData.length   ? bfData[bfData.length-1].value     : null;
+
+  // Changes
+  const change = (arr) => arr.length >= 2 ? (arr[arr.length-1].value - arr[0].value) : null;
+  const hrvChg = change(hrvData);
+  const wtChg  = change(wtData);
+  const bfChg  = change(bfData);
+
+  function trendCard(title, sub, val, unit, changeVal, chart, labels, opts = {}) {
+    const { changeGoodDir = 1, decimals = 1 } = opts; // 1 = up is good, -1 = down is good
+    const chgColor = changeVal === null ? 'var(--text3)'
+      : (changeVal * changeGoodDir > 0 ? 'var(--green)' : 'var(--red)');
+    const chgStr = changeVal !== null
+      ? (changeVal > 0 ? '↑' : '↓') + ' ' + Math.abs(changeVal).toFixed(decimals) + unit + ' since first'
+      : '';
+    return `
+    <div class="trend-chart-card">
+      <div class="trend-header">
+        <div class="trend-title-block">
+          <div class="t-title">${title}</div>
+          <div class="t-sub">${sub}</div>
+        </div>
+        <div class="trend-stat-block">
+          <div class="t-cur">${val !== null ? (+val).toFixed(decimals) + unit : '—'}</div>
+          <div class="t-change" style="color:${chgColor}">${chgStr}</div>
+        </div>
+      </div>
+      <div class="chart-area">${chart.svg}</div>
+      <div class="chart-x-labels">${chart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  return `
+  <div class="section">
+    <div class="section-title">Recovery Signals</div>
+    ${trendCard('HRV', `Oura · Baseline ${baseline.hrv_baseline_ms||32.5} ms`, latestHrv, ' ms', hrvChg, hrv, hrv.labels, {changeGoodDir:1})}
+    ${trendCard('Recovery Score', 'Oura readiness · 0–100', latestRec, '%', null, rec, rec.labels)}
+    ${trendCard('Sleep Score', 'Oura · 0–100', latestSlp, '%', null, slp, slp.labels)}
+  </div>
+
+  <div class="section">
+    <div class="section-title">Body Composition</div>
+    ${trendCard('Weight', 'Goal: 165 lbs', latestWt, ' lbs', wtChg, wt, wt.labels, {changeGoodDir:-1, decimals:1})}
+    ${trendCard('Body Fat %', 'Lower is better · Target ~15%', latestBf, '%', bfChg, bf, bf.labels, {changeGoodDir:-1, decimals:1})}
+  </div>
+
+  <div class="section">
+    <div class="section-title">Training Load</div>
+    ${trendCard('Session Volume', `${volData.length} strength sessions`, volData.length ? volData[volData.length-1].value : null, ' lbs', null, vol, vol.labels, {decimals:0})}
+  </div>
+
+  <!-- Oura baselines summary -->
+  <div class="section">
+    <div class="section-title">Biology Baselines · Oura</div>
+    <div class="card">
+      <div class="data-row">
+        <div class="dr-key">VO₂ Max</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:40%;background:var(--yellow)"></div></div>
+        <div class="dr-val">${baseline.vo2_max||'—'}</div>
+        <div class="dr-badge">${badge(baseline.vo2_max_status||'—','yellow')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">HRV Baseline</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:60%;background:var(--accent)"></div></div>
+        <div class="dr-val">${baseline.hrv_baseline_ms||'—'} ms</div>
+        <div class="dr-badge">${badge('Personal','blue')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">RHR Baseline</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:55%;background:var(--green)"></div></div>
+        <div class="dr-val">${baseline.rhr_baseline_bpm||'—'} bpm</div>
+        <div class="dr-badge">${badge('Normal','green')}</div>
+      </div>
+      <div class="data-row">
+        <div class="dr-key">Avg Sleep</div>
+        <div class="dr-bar"><div class="dr-bar-fill" style="width:58%;background:var(--purple)"></div></div>
+        <div class="dr-val">${baseline.avg_sleep_per_night_min ? Math.floor(baseline.avg_sleep_per_night_min/60) + 'h ' + (baseline.avg_sleep_per_night_min%60) + 'm' : '—'}</div>
+        <div class="dr-badge">${badge('Chronic debt','yellow')}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>`;
+}
+
+/* ══════════════════════════════════════════════════════
+   TAB SWITCHING
+══════════════════════════════════════════════════════ */
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+
+  if (!rendered[name] && DB) {
+    renderTab(name, DB);
+  }
+}
+
+function renderTab(name, db) {
+  const panel = document.getElementById('tab-' + name);
+  try {
+    switch(name) {
+      case 'today':    panel.innerHTML = renderToday(db);    break;
+      case 'body':     panel.innerHTML = renderBody(db);     break;
+      case 'training': panel.innerHTML = renderTraining(db); break;
+      case 'trends':   panel.innerHTML = renderTrends(db);   break;
+    }
+    rendered[name] = true;
+  } catch(e) {
+    panel.innerHTML = `<div class="error-block">
+      <strong>Render error in ${name} tab</strong><br>
+      <code>${e.message}</code>
+    </div>`;
+    console.error(e);
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+async function init() {
+  // Topbar date
+  const now = new Date();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('topbar-date').textContent =
+    `${days[now.getDay()]} · ${months[now.getMonth()]} ${now.getDate()} · ${now.getFullYear()}`;
+
+  // Tab click
+  document.querySelectorAll('.tab-btn, .bn-item').forEach(el => {
+    el.addEventListener('click', () => switchTab(el.dataset.tab));
+  });
+
+  // Load data
+  try {
+    const res = await fetch(DB_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status} — could not load ${DB_URL}`);
+    DB = await res.json();
+    renderTab('today', DB);
+  } catch(e) {
+    ['today','body','training','trends'].forEach(name => {
+      document.getElementById('tab-' + name).innerHTML = `
+        <div class="error-block">
+          <strong>Could not load HEALTH_DATABASE.json</strong><br>
+          ${e.message}<br><br>
+          Make sure <code>HEALTH_DATABASE.json</code> is in the same folder as <code>index.html</code> in your GitHub repo.
+        </div>`;
+    });
+  }
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,5766 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "created": "2026-04-11",
+    "last_updated": "2026-04-11",
+    "description": "Personal health and training database \u2014 Todd Blackhurst AI coaching system",
+    "data_sources": [
+      "Oura",
+      "Bevel",
+      "Stelo",
+      "Apple Fitness",
+      "Motra",
+      "Hume Body Pod",
+      "Manual Entry"
+    ],
+    "unit_conventions": {
+      "weight": "kg (convert lbs \u00f7 2.2046)",
+      "volume": "kg total lifted",
+      "distance": "km",
+      "duration": "minutes",
+      "temperature": "celsius"
+    }
+  },
+  "profile": {
+    "name": "Todd Blackhurst",
+    "sex": "male",
+    "age": 57,
+    "height_cm": 185.4,
+    "height_imperial": "6'1\"",
+    "gym": "WorldGym Taichung",
+    "conditions": [
+      "mild hip osteoarthritis"
+    ],
+    "tracking_apps": [
+      "Oura",
+      "Bevel",
+      "Stelo",
+      "Apple Fitness",
+      "Motra",
+      "Hume Body Pod",
+      "Ocare3"
+    ],
+    "training_frequency": "strength 3x/week, cardio on off-days",
+    "goals": [
+      "reduce VAT",
+      "preserve muscle",
+      "improve sleep",
+      "correct structural imbalances",
+      "V-taper development"
+    ],
+    "oura_biology_baselines": {
+      "as_of": "2026-04",
+      "vo2_max": 38.9,
+      "vo2_max_status": "Below Average",
+      "hrv_baseline_ms": 32.5,
+      "rhr_baseline_bpm": 62.6,
+      "body_fat_baseline_pct": 16.3,
+      "avg_bedtime": "21:23",
+      "avg_wake_time": "05:44",
+      "avg_sleep_per_night_min": 385,
+      "notes": "Oura Biology personal baselines. VO2 Max 38.9 (Below Average \u2014 cardio fitness improvement goal). HRV baseline 32.5 ms (any reading below this signals recovery deficit). Avg sleep 6h 25m/night \u2014 chronic mild sleep debt."
+    },
+    "nutrition_targets": {
+      "as_of": "2026-04-11",
+      "calories_kcal": 2000,
+      "protein_g": 150,
+      "carbs_g": 190,
+      "fat_g": 70,
+      "deficit_kcal": 380,
+      "tdee_estimate_kcal": 2380,
+      "bmr_kcal": 1666,
+      "protein_per_kg_lean_mass": 2.6,
+      "lean_mass_kg_basis": 57.1,
+      "goal_weight_lbs": 165,
+      "current_weight_lbs": 173.4,
+      "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes \u00b13 kg or training frequency shifts."
+    }
+  },
+  "body_composition": [
+    {
+      "date": "2025-11-05",
+      "source": "Bevel (Progress Report)",
+      "weight_kg": 78.3,
+      "weight_lbs": 172.7,
+      "body_fat_pct": 22.0,
+      "fat_mass_kg": 17.2,
+      "fat_mass_lbs": 37.9,
+      "lean_mass_kg": 56.8,
+      "lean_mass_lbs": 125.2,
+      "subcutaneous_fat_kg": 15.0,
+      "subcutaneous_fat_lbs": 33.0,
+      "visceral_fat_g": null,
+      "visceral_fat_level": null,
+      "bmi": null,
+      "body_water_pct": null,
+      "bone_mass_kg": null,
+      "segmental": null,
+      "notes": "Baseline from Bevel 30-day Progress Report (Nov 5 \u2013 Nov 24)"
+    },
+    {
+      "date": "2025-11-24",
+      "source": "Bevel (Progress Report)",
+      "weight_kg": 78.0,
+      "weight_lbs": 172.0,
+      "body_fat_pct": 17.5,
+      "fat_mass_kg": 13.6,
+      "fat_mass_lbs": 30.0,
+      "lean_mass_kg": 60.2,
+      "lean_mass_lbs": 132.7,
+      "subcutaneous_fat_kg": 11.8,
+      "subcutaneous_fat_lbs": 26.1,
+      "visceral_fat_g": null,
+      "visceral_fat_level": null,
+      "bmi": null,
+      "body_water_pct": null,
+      "bone_mass_kg": null,
+      "segmental": null,
+      "notes": "End-point from Bevel 30-day Progress Report \u2014 marked as Low on fat distribution"
+    },
+    {
+      "date": "2026-04-06",
+      "source": "Bevel",
+      "weight_kg": 75.9,
+      "weight_lbs": 167.3,
+      "body_fat_pct": 16.2,
+      "fat_mass_kg": null,
+      "fat_mass_lbs": null,
+      "lean_mass_kg": null,
+      "lean_mass_lbs": null,
+      "subcutaneous_fat_kg": null,
+      "subcutaneous_fat_lbs": null,
+      "visceral_fat_g": null,
+      "visceral_fat_level": 2.0,
+      "bmi": null,
+      "body_water_pct": null,
+      "bone_mass_kg": null,
+      "segmental": null,
+      "notes": "Bevel weekly scan (week of Apr 6). Visceral Fat Level 2.0. BF% 16.2%, weight 75.9 kg / 167.3 lbs. Primary VAT reduction target ongoing."
+    },
+    {
+      "date": "2026-04-10",
+      "source": "Hume Body Pod",
+      "weight_kg": 78.7,
+      "weight_lbs": 173.4,
+      "body_fat_pct": 22.0,
+      "fat_mass_kg": 17.3,
+      "fat_mass_lbs": 38.1,
+      "lean_mass_kg": 57.1,
+      "lean_mass_lbs": 125.8,
+      "subcutaneous_fat_kg": 15.1,
+      "subcutaneous_fat_lbs": 33.2,
+      "subcutaneous_fat_pct": 19.1,
+      "visceral_fat_g": null,
+      "visceral_fat_level": null,
+      "bmi": 22.9,
+      "body_water_pct": 57.4,
+      "bone_mass_kg": null,
+      "goal_weight_lbs": 165.0,
+      "segmental_muscle_lbs": {
+        "right_arm": {
+          "value_lbs": 7.1,
+          "rating": "Standard"
+        },
+        "left_arm": {
+          "value_lbs": 6.9,
+          "rating": "Standard"
+        },
+        "trunk": {
+          "value_lbs": 59.6,
+          "rating": "Low"
+        },
+        "right_leg": {
+          "value_lbs": 22.6,
+          "rating": "Standard"
+        },
+        "left_leg": {
+          "value_lbs": 20.6,
+          "rating": "Standard"
+        }
+      },
+      "segmental_fat_pct": {
+        "right_arm": {
+          "fat_pct": 22.2,
+          "rating": "High"
+        },
+        "left_arm": {
+          "fat_pct": 22.2,
+          "rating": "High"
+        },
+        "trunk": {
+          "fat_pct": 21.3,
+          "rating": "Low"
+        },
+        "right_leg": {
+          "fat_pct": 16.5,
+          "rating": "Standard"
+        },
+        "left_leg": {
+          "fat_pct": 17.2,
+          "rating": "Standard"
+        }
+      },
+      "notes": "Hume Body Pod full scan, updated Apr 10. Air-displacement plethysmography (higher BF% than BIA/Bevel). Trunk muscle Low \u2014 core/anti-rotation priority confirmed. Bilateral arm fat High. Goal weight 165 lbs."
+    },
+    {
+      "date": "2026-04-11",
+      "time": "04:29",
+      "source": "Bevel",
+      "weight_lbs": 166.0,
+      "weight_kg": 75.3,
+      "bmi": 22.0,
+      "body_fat_pct": 17.4,
+      "fat_mass_lbs": 28.9,
+      "fat_mass_kg": 13.1,
+      "lean_mass_lbs": 137.1,
+      "lean_mass_kg": 62.2,
+      "visceral_fat_level": 3.0,
+      "bmr_kcal": 1779,
+      "body_water_pct": 56.6,
+      "bone_mass_lbs": 7.7,
+      "bone_mass_kg": 3.5,
+      "muscle_pct": 78.1,
+      "notes": "Bevel morning scan Apr 11, 4:29 AM. Weight stable at 166.0 lbs. Body fat 17.4% \u2014 excellent control. Lean mass 137.1 lbs (78.1% muscle) \u2014 preserved well. Visceral fat Lv 3.0 indicates modest VAT. BMR 1779 kcal baseline for deficit calculations."
+    }
+  ],
+  "recovery_sleep": [
+    {
+      "date": "2026-01-29",
+      "source": "Oura",
+      "recovery_score_pct": 52,
+      "sleep_score_pct": 76,
+      "hrv_ms": 55,
+      "resting_hr_bpm": null,
+      "respiratory_rate_rpm": null,
+      "spo2_pct": null,
+      "wrist_temp_c": null,
+      "strain_score": 0,
+      "total_sleep_min": null,
+      "time_in_bed_min": null,
+      "sleep_efficiency_pct": null,
+      "deep_sleep_min": null,
+      "rem_sleep_min": null,
+      "sleep_latency_min": null,
+      "hr_dip_pct": null,
+      "sleep_bank_min": null,
+      "cardio_load": null,
+      "notes": "Low strain day \u2014 Oura. Productive Sleep Debt Recovery noted. Outdoor cycling session same morning."
+    },
+    {
+      "date": "2026-03-22",
+      "source": "Oura",
+      "recovery_score_pct": null,
+      "sleep_score_pct": 55,
+      "hrv_ms": null,
+      "resting_hr_bpm": null,
+      "respiratory_rate_rpm": null,
+      "spo2_pct": null,
+      "wrist_temp_c": null,
+      "strain_score": null,
+      "total_sleep_min": 437,
+      "time_in_bed_min": 463,
+      "sleep_efficiency_pct": null,
+      "deep_sleep_min": null,
+      "rem_sleep_min": null,
+      "sleep_latency_min": null,
+      "hr_dip_pct": null,
+      "sleep_bank_min": null,
+      "cardio_load": null,
+      "notes": "Sleep Quality 55%, below average. Time in Bed 7h 43m, Asleep 7h 17m. Wind-down 9:20 PM, target bedtime 9:50 PM."
+    },
+    {
+      "date": "2026-03-31",
+      "source": "Oura",
+      "recovery_score_pct": 58,
+      "sleep_score_pct": 73,
+      "hrv_ms": 38.9,
+      "resting_hr_bpm": 62.4,
+      "respiratory_rate_rpm": 14.6,
+      "spo2_pct": 95.0,
+      "wrist_temp_c": 36.1,
+      "strain_score": null,
+      "total_sleep_min": 393,
+      "time_in_bed_min": 428,
+      "sleep_efficiency_pct": 84,
+      "deep_sleep_min": 59,
+      "rem_sleep_min": 92,
+      "sleep_latency_min": null,
+      "hr_dip_pct": 14,
+      "sleep_bank_min": -109,
+      "cardio_load": 29,
+      "notes": "Recovery 58% Normal. Sleep 73% Above normal. Deep Sleep 59m (notable). HR Dip 14%. Sleep Bank -1h 49m. Cardio Load 29 Detraining. Sleep HRV avg 31ms / max 126ms. Lowest HR 56 bpm.",
+      "lowest_hr_bpm": 56,
+      "hrv_max_ms": 126,
+      "avg_hr_sleep_bpm": 63,
+      "hrv_avg_sleep_ms": 31,
+      "wrist_temp_f": 97.0
+    },
+    {
+      "date": "2026-04-04",
+      "source": "Oura",
+      "recovery_score_pct": 26,
+      "sleep_score_pct": null,
+      "hrv_ms": 19.3,
+      "resting_hr_bpm": 64.5,
+      "respiratory_rate_rpm": 14.6,
+      "spo2_pct": 95.3,
+      "wrist_temp_f": 97.1,
+      "wrist_temp_c": 36.2,
+      "strain_score": null,
+      "total_sleep_min": null,
+      "time_in_bed_min": null,
+      "sleep_efficiency_pct": null,
+      "deep_sleep_min": null,
+      "rem_sleep_min": null,
+      "sleep_latency_min": null,
+      "hr_dip_pct": null,
+      "sleep_bank_min": null,
+      "cardio_load": null,
+      "notes": "Significant HRV Drop \u2014 Recovery crashed to 26% (HRV 19.3 ms, ~20ms below baseline). Despite 1h 6min deep sleep. Sleep started Apr 3 at 10:19 PM. Reduction in training intensity indicated."
+    },
+    {
+      "date": "2026-04-05",
+      "source": "Oura",
+      "recovery_score_pct": 81,
+      "sleep_score_pct": 69,
+      "hrv_ms": 51.4,
+      "resting_hr_bpm": 61.0,
+      "respiratory_rate_rpm": 14.9,
+      "spo2_pct": 95.3,
+      "wrist_temp_c": 36.3,
+      "strain_score": null,
+      "total_sleep_min": 350,
+      "time_in_bed_min": 418,
+      "sleep_efficiency_pct": 84,
+      "deep_sleep_min": 38,
+      "rem_sleep_min": 65,
+      "sleep_latency_min": 26,
+      "hr_dip_pct": null,
+      "sleep_bank_min": null,
+      "cardio_load": null,
+      "notes": "Recovery Breakthrough \u2014 HRV surged to 51.4 ms (+52% rebound from Apr 4's 26%). Nervous system adapting well to training. Sleep 5h 50m (started Apr 4 at 10:56 PM). Sleep Score 69 FAIR.",
+      "wrist_temp_f": 97.3,
+      "lowest_hr_bpm": 57,
+      "avg_hr_sleep_bpm": 62
+    },
+    {
+      "date": "2026-04-09",
+      "source": "Oura",
+      "recovery_score_pct": 41,
+      "sleep_score_pct": 69,
+      "hrv_ms": 36.2,
+      "resting_hr_bpm": 64.9,
+      "respiratory_rate_rpm": 14.4,
+      "spo2_pct": 96.3,
+      "wrist_temp_c": null,
+      "strain_score": null,
+      "total_sleep_min": 328,
+      "time_in_bed_min": 424,
+      "sleep_efficiency_pct": 77,
+      "deep_sleep_min": 38,
+      "rem_sleep_min": 65,
+      "sleep_latency_min": 26,
+      "hr_dip_pct": 15,
+      "sleep_bank_min": -133,
+      "cardio_load": null,
+      "notes": "Recovery Slide 41% \u2014 HRV 36.2 ms (Recovery metric), 25 ms avg overnight. HRV/HR spike after Apr 8 high-strain session. Sleep Score 69 FAIR. 5h 28m asleep / 7h 4m in bed (9:21 PM \u2013 4:25 AM). Efficiency 77%. Deep 38m, REM 65m. HR Dip 15%. Debt -2h 13m.",
+      "lowest_hr_bpm": 60,
+      "avg_hr_sleep_bpm": 68,
+      "hrv_avg_sleep_ms": 25,
+      "hrv_max_ms": 96
+    },
+    {
+      "date": "2026-04-11",
+      "source": "Oura + Rise + AutoSleep",
+      "recovery_score_pct": 57,
+      "sleep_score_pct": 61,
+      "hrv_ms": 38.8,
+      "resting_hr_bpm": 62.8,
+      "respiratory_rate_rpm": 14.4,
+      "spo2_pct": 95.2,
+      "wrist_temp_c": 36.4,
+      "wrist_temp_f": 97.6,
+      "strain_score": 6,
+      "total_sleep_min": 408,
+      "time_in_bed_min": 493,
+      "sleep_efficiency_pct": 83,
+      "deep_sleep_min": 43,
+      "rem_sleep_min": 78,
+      "sleep_latency_min": 22,
+      "hr_dip_pct": 14,
+      "sleep_bank_min": -150,
+      "sleep_restfulness": "Good",
+      "sleep_timing": "Optimal",
+      "cardio_load": null,
+      "lowest_hr_bpm": 58,
+      "avg_hr_sleep_bpm": 64,
+      "hrv_avg_sleep_ms": 26,
+      "hrv_max_ms": 151,
+      "autosleep_total_sleep_min": 434,
+      "autosleep_rem_min": 126,
+      "autosleep_deep_min": 30,
+      "autosleep_sleep_bank_min": -128,
+      "autosleep_sleep_time": "21:38",
+      "notes": "Resilience Signal \u2014 steady 57% recovery despite Apr 10 high-strain session. HR dropped 3.1 bpm. Rise: 6h 48m sleep / 8h 13m in bed (9:18 PM \u2013 5:31 AM), Efficiency 83%, Deep 43m, REM 1h 18m, Latency 22m, Restfulness Good, Timing Optimal, Debt -2h 30m Moderate. AutoSleep: 7h 14m total, REM 2h 6m, Deep 30m, Debt -2h 8m, Sleep Time 9:38 PM. HR Dip 14%. Lowest HR 58. HRV avg 26ms / max 151ms. Avg HR 64. SpO2 95.2%."
+    }
+  ],
+  "nutrition": [
+    {
+      "date": "2025-10-11",
+      "source": "Cronometer",
+      "targets": {
+        "calories_kcal": 1800,
+        "protein_g": 135,
+        "carbs_g": 180,
+        "fat_g": 60,
+        "_note": "Legacy targets \u2014 superseded 2026-04-11. Current targets: 2000 kcal / 150g P / 190g C / 70g F."
+      },
+      "meals": [],
+      "daily_totals": {
+        "calories_kcal": 653,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null
+      },
+      "vs_targets": {
+        "calories_delta": -1147,
+        "protein_delta": null,
+        "carbs_delta": null,
+        "fat_delta": null
+      },
+      "nutrition_score": null,
+      "notes": "Goal set at maintenance (TDEE 1800 kcal). Significant undereating that day \u2014 below target by 1147 kcal. Meal-level breakdown not available (legacy entry)."
+    },
+    {
+      "date": "2026-04-01",
+      "source": "Oura + Manual Estimate",
+      "targets": {
+        "calories_kcal": 1800,
+        "protein_g": 135,
+        "carbs_g": 180,
+        "fat_g": 60,
+        "_note": "Legacy targets \u2014 superseded 2026-04-11. Current targets: 2000 kcal / 150g P / 190g C / 70g F."
+      },
+      "meals": [
+        {
+          "meal": "supplement",
+          "time": "07:00\u201310:00",
+          "items": [
+            {
+              "food": "Gold Standard Whey Protein (Vanilla)",
+              "amount": "1 scoop (30g)",
+              "calories_kcal": 120,
+              "protein_g": 24,
+              "carbs_g": 3,
+              "fat_g": 1.5,
+              "estimated": false,
+              "source": "Label"
+            },
+            {
+              "food": "100% Vegan Protein Milk",
+              "amount": "~240ml",
+              "calories_kcal": 130,
+              "protein_g": 20,
+              "carbs_g": 8,
+              "fat_g": 3,
+              "estimated": true,
+              "source": "Estimate"
+            },
+            {
+              "food": "Pre-Workout Supplement",
+              "amount": "1 serving",
+              "calories_kcal": 20,
+              "protein_g": 0,
+              "carbs_g": 5,
+              "fat_g": 0,
+              "estimated": true,
+              "source": "Estimate"
+            },
+            {
+              "food": "Custom Shake",
+              "amount": "~300ml",
+              "calories_kcal": 180,
+              "protein_g": 15,
+              "carbs_g": 22,
+              "fat_g": 4,
+              "estimated": true,
+              "source": "Estimate"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 450,
+            "protein_g": 59,
+            "carbs_g": 38,
+            "fat_g": 8.5
+          }
+        }
+      ],
+      "daily_totals": {
+        "calories_kcal": 450,
+        "protein_g": 59,
+        "carbs_g": 38,
+        "fat_g": 8.5,
+        "note": "Partial data only \u2014 Oura shows net deficit of -2136 kcal suggesting full day intake was not logged"
+      },
+      "vs_targets": {
+        "calories_delta": -1350,
+        "protein_delta": -76,
+        "carbs_delta": -142,
+        "fat_delta": -51.5
+      },
+      "nutrition_score": 50,
+      "notes": "Oura nutrition screen Apr 1. Nutrition Score 50 (Normal). Net Energy deficit -2,136 kcal per Oura. Only supplement/shake data captured \u2014 remainder of day's food not logged. Likely significant undereating or incomplete logging."
+    }
+  ],
+  "activity_sessions": [
+    {
+      "date": "2026-01-29",
+      "source": "Oura",
+      "session_type": "Outdoor Cycle",
+      "start_time": "07:36",
+      "strain_score": null,
+      "duration_min": 38.5,
+      "active_duration_min": 30.2,
+      "avg_hr_bpm": 124,
+      "peak_hr_bpm": null,
+      "calories_kcal": 219,
+      "distance_km": 9.04,
+      "distance_mi": 5.62,
+      "avg_speed_mph": 11.2,
+      "elevation_ft": 103,
+      "total_volume_kg": null,
+      "total_reps": null,
+      "hr_zones": {
+        "z1_pct": 0,
+        "z2_pct": 14,
+        "z3_pct": 48,
+        "z4_pct": 37,
+        "z5_pct": 0,
+        "z1_min": 0,
+        "z2_min": 4.2,
+        "z3_min": 14.7,
+        "z4_min": 10.9,
+        "z5_min": 0
+      },
+      "tracked_with": "Apple Watch",
+      "location": "Beitun District, Taichung City",
+      "notes": "Zone 3 dominant ride. HR well controlled for outdoor cycling."
+    },
+    {
+      "date": "2026-04-01",
+      "source": "Oura",
+      "session_type": "Strength Training",
+      "start_time": "07:51",
+      "strain_score": 78,
+      "duration_min": 94.8,
+      "active_duration_min": 29.5,
+      "avg_hr_bpm": 118,
+      "peak_hr_bpm": null,
+      "calories_kcal": 765,
+      "distance_km": null,
+      "distance_mi": null,
+      "avg_speed_mph": null,
+      "elevation_ft": null,
+      "total_volume_kg": 9234,
+      "total_volume_lbs": 20360,
+      "total_reps": 433,
+      "hr_zones": {
+        "z1_pct": 99,
+        "z2_pct": 1,
+        "z3_pct": 0,
+        "z4_pct": 0,
+        "z5_pct": 0
+      },
+      "tracked_with": "Bevel",
+      "cardio_load_change": 15,
+      "cardio_load_status": "Detraining",
+      "notes": "High strain score (78%) despite moderate activity \u2014 short active window. Cardio load detraining zone."
+    },
+    {
+      "date": "2026-04-08",
+      "source": "Oura",
+      "session_type": "Strength Training",
+      "start_time": "07:58",
+      "strain_score": 77,
+      "duration_min": 118.4,
+      "active_duration_min": 45.1,
+      "avg_hr_bpm": 109,
+      "peak_hr_bpm": null,
+      "calories_kcal": 786,
+      "distance_km": null,
+      "distance_mi": null,
+      "avg_speed_mph": null,
+      "elevation_ft": null,
+      "total_volume_kg": 8256,
+      "total_volume_lbs": 18200,
+      "total_reps": 475,
+      "hr_zones": null,
+      "tracked_with": "Motra",
+      "cardio_load_change": null,
+      "cardio_load_status": null,
+      "notes": "Volume Spike flagged by Oura \u2014 nearly doubled 14-day avg for a single session. High chest and hinge day. HR stayed mostly in lower aerobic zones."
+    },
+    {
+      "date": "2026-04-08",
+      "source": "Oura",
+      "session_type": "Warm-Up / Corrective + Strength",
+      "start_time": "07:58",
+      "strain_score": 77,
+      "duration_min": 118.4,
+      "active_duration_min": 45.1,
+      "avg_hr_bpm": 109,
+      "peak_hr_bpm": null,
+      "calories_kcal": 786,
+      "distance_km": null,
+      "distance_mi": null,
+      "avg_speed_mph": null,
+      "elevation_ft": null,
+      "total_volume_kg": 8256,
+      "total_volume_lbs": 18200,
+      "total_reps": 475,
+      "hr_zones": {
+        "z0_pct": 18,
+        "z0_min": 21.6,
+        "z1_pct": 54,
+        "z1_min": 63.9,
+        "z2_pct": 26,
+        "z2_min": 30.8,
+        "z3_pct": 2,
+        "z3_min": 2.2,
+        "z4_pct": 0,
+        "z5_pct": 0
+      },
+      "muscle_split_pct": {
+        "muscular": 67,
+        "cardio": 33
+      },
+      "muscle_strain": {
+        "chest": 15,
+        "glutes": 15,
+        "shoulder": 10,
+        "upper_back": 8,
+        "lats": 7,
+        "traps": 6,
+        "abs": 6,
+        "hamstrings": 5,
+        "core": 5,
+        "lower_back": 3,
+        "triceps": 3,
+        "hip_flexors": 3,
+        "obliques": 2,
+        "adductors": 2,
+        "hip": 1,
+        "rotator_cuff": 1
+      },
+      "tracked_with": "Oura + Motra",
+      "cardio_load_change": null,
+      "cardio_load_status": null,
+      "notes": "Volume Spike \u2014 nearly doubled 14-day average for single session. Warmup block included Cervical CARS, Thoracic Open Book, Glute Bridge, Band Pull Apart, Ext Shoulder Rotation, Kettlebell Swings. HR stayed mostly Z1-Z2. High chest and hinge focus."
+    },
+    {
+      "date": "2026-04-10",
+      "source": "Oura",
+      "session_type": "Strength Training",
+      "start_time": "07:57",
+      "strain_score": 70,
+      "duration_min": 76.6,
+      "active_duration_min": 76.6,
+      "avg_hr_bpm": 119,
+      "peak_hr_bpm": null,
+      "calories_kcal": 602,
+      "distance_km": null,
+      "distance_mi": null,
+      "avg_speed_mph": null,
+      "elevation_ft": null,
+      "total_volume_kg": 7754,
+      "total_volume_lbs": 17074,
+      "total_reps": 346,
+      "hr_zones": null,
+      "tracked_with": "Motra",
+      "cardio_load_change": 13,
+      "cardio_load_status": "Productive",
+      "notes": "Productive Shape Session \u2014 7,764 kg volume. Cardio stayed within HRV limits. Added 13 pts to Cardio Load. Well-executed session."
+    },
+    {
+      "date": "2026-04-11",
+      "source": "Oura Ring",
+      "session_type": "Daily Activity Snapshot",
+      "status": "Active as of 11:00 AM",
+      "as_of_time": "11:00",
+      "strain_score": 6,
+      "recovery_score": 57,
+      "sleep_score": 61,
+      "stress_level_label": "Med",
+      "stress_highest": 75,
+      "stress_lowest": 4,
+      "stress_average": 28,
+      "energy_bank_pct": 71,
+      "metabolic_opportunity": "At 11 AM \u2014 good window to transition into planned session. Energy Bank at 71% despite 67% daily stress.",
+      "sleep_metrics": {
+        "time_in_bed_min": 469,
+        "time_asleep_min": 434,
+        "sleep_quality_pct": 61,
+        "wind_down_time": "21:59",
+        "target_bedtime": "22:29"
+      },
+      "health_monitor_snapshot": {
+        "resting_heart_rate_bpm": 62.8,
+        "heart_rate_variability_ms": 38.8,
+        "resting_respiratory_rate_rpm": 14.4,
+        "oxygen_saturation_pct": 95.2,
+        "body_temperature_f": 97.6,
+        "blood_glucose_mgdl": 101
+      },
+      "notes": "Oura snapshot at 11:00 AM. Recovery at 57% \u2014 moderate state. Low strain (6%) allows for structured session. Sleep quality 61% reflects solid rest. All vitals normal. Blood glucose 101 mg/dL stable via Stelo integration."
+    }
+  ],
+  "strength_logs": [
+    {
+      "date": "2026-02-02",
+      "source": "Motra",
+      "session_name": "20260202",
+      "location": "WorldGym Taichung",
+      "start_time": "09:07",
+      "duration_min": 44,
+      "volume_kg": 8800,
+      "calories_kcal": 305,
+      "exercise_count": 9,
+      "session_focus": "Pull / Back / Glutes / Core",
+      "motra_url": "https://motra.com/share/workout/37cde9bedc",
+      "exercises": [
+        {
+          "name": "Machine Assisted Pull-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": -80
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": -80
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_kg": -80
+            },
+            {
+              "n": 4,
+              "reps": 8,
+              "weight_kg": -90
+            }
+          ]
+        },
+        {
+          "name": "Cable Lat Pull Down Wide-Grip",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 100
+            },
+            {
+              "n": 2,
+              "reps": 7,
+              "weight_kg": 112.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 87.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Seated Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 70
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 80
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 80
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Shrug",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Bicep Curl",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 12.5
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 10
+            }
+          ]
+        },
+        {
+          "name": "Machine Fly (Pec Dec)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 10
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Dead Hang",
+          "is_timed": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 80,
+              "weight_kg": 0
+            },
+            {
+              "n": 2,
+              "duration_s": 20,
+              "weight_kg": 0
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 0
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 0
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-04",
+      "source": "Motra",
+      "session_name": "20260203 Wednesday",
+      "location": "WorldGym Taichung",
+      "start_time": "05:44",
+      "duration_min": 41,
+      "volume_kg": 5100,
+      "calories_kcal": 272,
+      "exercise_count": 6,
+      "session_focus": "Push / Shoulders / Triceps",
+      "motra_url": "https://motra.com/share/workout/603b274b6a",
+      "exercises": [
+        {
+          "name": "Dumbbell Shoulder Press",
+          "sets": [
+            {
+              "n": "WU1",
+              "reps": 10,
+              "weight_kg": 3.4,
+              "warmup": true
+            },
+            {
+              "n": "WU2",
+              "reps": 10,
+              "weight_kg": 3.4,
+              "warmup": true
+            },
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 11.3
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 11.3
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 11.3
+            },
+            {
+              "n": 4,
+              "reps": 10,
+              "weight_kg": 11.3
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Incline Bench Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 13.6
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 13.6
+            },
+            {
+              "n": 3,
+              "reps": 11,
+              "weight_kg": 15.8
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 4.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 4.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 3.4
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 3.4
+            }
+          ]
+        },
+        {
+          "name": "Single Dumbbell Overhead Tricep Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 6.8
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 9
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 13.6
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Tricep Pushdown / Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 31.7
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 31.7
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 31.7
+            }
+          ]
+        },
+        {
+          "name": "Cable Fly Mid",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 13.6
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 13.6
+            },
+            {
+              "n": 3,
+              "reps": 13,
+              "weight_kg": 13.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-06",
+      "source": "Motra",
+      "session_name": "20260206 Friday",
+      "location": "WorldGym Taichung",
+      "start_time": "07:06",
+      "duration_min": 51,
+      "volume_kg": 7200,
+      "calories_kcal": 369,
+      "exercise_count": 9,
+      "session_focus": "Lower / Glutes / Pull",
+      "motra_url": "https://motra.com/share/workout/e4815015b0",
+      "weight_unit_original": "lbs",
+      "exercises": [
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 30
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_lbs": 30
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_lbs": 40
+            },
+            {
+              "n": 4,
+              "reps": 10,
+              "weight_lbs": 40
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Romanian Deadlift",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 40
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 45
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 50
+            }
+          ]
+        },
+        {
+          "name": "Machine Leg Press (Moving Chair)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 100
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 160
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 180
+            }
+          ]
+        },
+        {
+          "name": "Cable Pull Through",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 11,
+              "weight_lbs": 20
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 30
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 30
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Step-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_lbs": 0,
+              "is_bodyweight": true
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_lbs": 20
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 60
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 60
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 70
+            }
+          ]
+        },
+        {
+          "name": "Machine Leg / Hamstring Curl Prone",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 80
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 80
+            }
+          ]
+        },
+        {
+          "name": "Machine Assisted Pull-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_lbs": -120
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_lbs": -120
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_lbs": -120
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-10",
+      "source": "Motra",
+      "session_name": "20260210 Tuesday Gaylord",
+      "location": "Gaylord Hotel (travel)",
+      "start_time": "14:02",
+      "duration_min": 47,
+      "volume_kg": 7000,
+      "calories_kcal": 359,
+      "exercise_count": 10,
+      "session_focus": "Pull / Shoulders / Glutes",
+      "motra_url": "https://motra.com/share/workout/f087b9cec9",
+      "weight_unit_original": "lbs",
+      "exercises": [
+        {
+          "name": "Machine Assisted Pull-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 3,
+              "weight_lbs": -100
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_lbs": -85
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_lbs": -70
+            }
+          ]
+        },
+        {
+          "name": "Cable Lat Pull Down Wide-Grip",
+          "sets": [
+            {
+              "n": "WU",
+              "reps": 10,
+              "weight_lbs": 70,
+              "warmup": true
+            },
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_lbs": 130
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_lbs": 100
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_lbs": 85
+            }
+          ]
+        },
+        {
+          "name": "Machine Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 40
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 70
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 70
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Single-Arm Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 25
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 25
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 25
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 37.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 37.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 37.5
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Shrug",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_lbs": 45
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_lbs": 50
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Bicep Curl",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 20
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 15
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_lbs": 45
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 55
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_lbs": 55
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "name": "Barbell Overhead Press / Military Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_lbs": 30
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_lbs": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "source": "Motra",
+      "session_name": "20260212 Thursday Home",
+      "location": "WorldGym Taichung",
+      "start_time": "09:14",
+      "duration_min": 46,
+      "volume_kg": 5700,
+      "calories_kcal": 340,
+      "exercise_count": 10,
+      "session_focus": "Push / Shoulders / Triceps / Glutes",
+      "motra_url": "https://motra.com/share/workout/0c875fc932",
+      "exercises": [
+        {
+          "name": "Machine Assisted Pull-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": -90
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": -80
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_kg": -90
+            }
+          ]
+        },
+        {
+          "name": "Barbell Overhead Press / Military Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 11,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Incline Bench Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 6
+            },
+            {
+              "n": 2,
+              "reps": 11,
+              "weight_kg": 4
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 4
+            }
+          ]
+        },
+        {
+          "name": "Cable Fly High",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Tricep Pushdown / Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 30
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 35
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Overhead Triceps Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 2,
+              "reps": 11,
+              "weight_kg": 8
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Cable Crunch",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 35
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-14",
+      "source": "Motra",
+      "session_name": "20260214 Saturday",
+      "location": "WorldGym Taichung",
+      "start_time": "09:21",
+      "duration_min": 44,
+      "volume_kg": 10400,
+      "calories_kcal": 354,
+      "exercise_count": 7,
+      "session_focus": "Lower / Glutes / Hinge",
+      "motra_url": "https://motra.com/share/workout/85a3e1ed04",
+      "exercises": [
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 30
+            },
+            {
+              "n": 4,
+              "reps": 15,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Romanian Deadlift",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 17.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Cable Pull Through",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Machine Leg Press (Moving Chair)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 70
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 70
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 80
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Step-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 5,
+              "weight_kg": 15
+            },
+            {
+              "n": 3,
+              "reps": 6,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 60
+            },
+            {
+              "n": 2,
+              "reps": 13,
+              "weight_kg": 80
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 80
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-21",
+      "source": "Motra",
+      "session_name": "20260221 Saturday",
+      "location": "WorldGym Taichung",
+      "start_time": "13:39",
+      "duration_min": 76,
+      "volume_kg": 11400,
+      "calories_kcal": 591,
+      "exercise_count": 17,
+      "session_focus": "Full Body \u2014 Pull / Glutes / Correctives",
+      "motra_url": "https://motra.com/share/workout/5c74b0660a",
+      "exercises": [
+        {
+          "name": "Hip Circles",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Resistance Band Pull Apart",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15
+            },
+            {
+              "n": 2,
+              "reps": 15
+            }
+          ]
+        },
+        {
+          "name": "Cat-Cow Pose",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Bodyweight Glute Bridge",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15
+            },
+            {
+              "n": 2,
+              "reps": 15
+            }
+          ]
+        },
+        {
+          "name": "Arm Circles",
+          "is_warmup": true,
+          "is_timed": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 63
+            }
+          ]
+        },
+        {
+          "name": "Machine Assisted Pull-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 4,
+              "weight_kg": 0,
+              "is_bodyweight": true
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": -70
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_kg": -80
+            }
+          ]
+        },
+        {
+          "name": "Cable Lat Pull Down Wide-Grip",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 87.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 87.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 87.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Straight Arm Pull Down",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 16,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Machine Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 10
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Single-Arm Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 10
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 10
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 10
+            },
+            {
+              "n": 4,
+              "reps": 10,
+              "weight_kg": 10
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Bicep Curl",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 6
+            }
+          ]
+        },
+        {
+          "name": "Cable Rope Bicep Curl",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Shrug",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 13,
+              "weight_kg": 30
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 30
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Cable Pull Through",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 30
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-24",
+      "source": "Motra",
+      "session_name": "20260224 Tuesday Legs",
+      "location": "WorldGym Taichung",
+      "start_time": "10:28",
+      "duration_min": 70,
+      "volume_kg": 18100,
+      "calories_kcal": 481,
+      "exercise_count": 11,
+      "session_focus": "Lower / Glutes / Legs",
+      "motra_url": "https://motra.com/share/workout/4ba6da5c9f",
+      "exercises": [
+        {
+          "name": "Half Kneeling Hip Flexor Stretch",
+          "is_warmup": true,
+          "is_timed": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 60
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 0,
+              "is_bodyweight": true
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 0,
+              "is_bodyweight": true
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 35
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 35
+            },
+            {
+              "n": 5,
+              "reps": 12,
+              "weight_kg": 35
+            },
+            {
+              "n": 6,
+              "reps": 15,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Romanian Deadlift",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 27.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Pull Through",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Machine Leg Press (Moving Chair)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 80
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 80
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 90
+            },
+            {
+              "n": 4,
+              "reps": 10,
+              "weight_kg": 90
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Step-Up",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 5,
+              "weight_kg": 12
+            },
+            {
+              "n": 2,
+              "reps": 5,
+              "weight_kg": 12
+            },
+            {
+              "n": 3,
+              "reps": 5,
+              "weight_kg": 12
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 80
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 80
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 80
+            }
+          ]
+        },
+        {
+          "name": "Machine Leg Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 80
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 80
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 80
+            }
+          ]
+        },
+        {
+          "name": "Machine Leg / Hamstring Curl Prone",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 80
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 75
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 70
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Cable Pallof Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 4,
+              "weight_kg": 10
+            },
+            {
+              "n": 2,
+              "reps": 4,
+              "weight_kg": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-02-26",
+      "source": "Motra",
+      "session_name": "20260226 Thursday Morning",
+      "location": "WorldGym Taichung",
+      "start_time": "08:43",
+      "duration_min": 48,
+      "volume_kg": 9300,
+      "calories_kcal": 332,
+      "exercise_count": 10,
+      "session_focus": "Full Body \u2014 Push / Pull / Glutes",
+      "motra_url": "https://motra.com/share/workout/1622596ca6",
+      "exercises": [
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 14
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 14
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 14
+            },
+            {
+              "n": 4,
+              "reps": 18,
+              "weight_kg": 14
+            }
+          ]
+        },
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 4
+            },
+            {
+              "n": 2,
+              "reps": 2
+            },
+            {
+              "n": 3,
+              "reps": 2
+            }
+          ]
+        },
+        {
+          "name": "Machine Seated Chest Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 35
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Machine Low Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 40
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 40
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 40
+            }
+          ]
+        },
+        {
+          "name": "Machine Shoulder Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 30
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 7,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 6
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 4
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 4
+            }
+          ]
+        },
+        {
+          "name": "Machine Alternate Arm Curl",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Machine Seated Back Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 50
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 50
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 50
+            }
+          ]
+        },
+        {
+          "name": "Decline Sit-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-02",
+      "source": "Motra",
+      "session_name": "20260301 Monday",
+      "location": "WorldGym Taichung",
+      "start_time": "07:49",
+      "duration_min": 62,
+      "volume_kg": 7900,
+      "calories_kcal": 464,
+      "exercise_count": 10,
+      "session_focus": "Full Body \u2014 Pull / Push / Lower",
+      "motra_url": "https://motra.com/share/workout/9f424d4915",
+      "exercises": [
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 3
+            },
+            {
+              "n": 2,
+              "reps": 3
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 30
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 11,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Machine Seated Chest Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Seated Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 45
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 45
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Cable Crunch",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 16,
+              "weight_kg": 18
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 27
+            }
+          ]
+        },
+        {
+          "name": "Machine Rear Delt (Reverse) Fly",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 22.5
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 22.5
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 22.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Tricep Pushdown / Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 32
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 32
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 32
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 4
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 6
+            }
+          ]
+        },
+        {
+          "name": "Machine Leg Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 50
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 50
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 50
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-04",
+      "source": "Motra",
+      "session_name": "20260304 Wednesday",
+      "location": "WorldGym Taichung",
+      "start_time": "07:41",
+      "duration_min": 65,
+      "volume_kg": 7500,
+      "calories_kcal": 635,
+      "exercise_count": 11,
+      "session_focus": "Pull / Lower / Shoulders",
+      "motra_url": "https://motra.com/share/workout/3667c36f7f",
+      "exercises": [
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 3
+            },
+            {
+              "n": 2,
+              "reps": 3
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Machine Lat Pull Down Wide-Grip",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 6,
+              "weight_kg": 50
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 50
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 45
+            },
+            {
+              "n": 4,
+              "reps": 10,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Barbell Romanian Deadlift",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 24
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": 35
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 11,
+              "weight_kg": 10
+            }
+          ]
+        },
+        {
+          "name": "Machine Low Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 15
+            },
+            {
+              "n": 3,
+              "reps": 13,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Machine Single-Leg Leg Extension",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Machine Assisted Dip",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": -20
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": -20
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 17
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 17
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 17
+            }
+          ]
+        },
+        {
+          "name": "Barbell Overhead Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 4
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 6
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 6
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-06",
+      "source": "Motra",
+      "session_name": "20260306",
+      "location": "WorldGym Taichung",
+      "start_time": "07:08",
+      "duration_min": 72,
+      "volume_kg": 8200,
+      "calories_kcal": 606,
+      "exercise_count": 10,
+      "session_focus": "Push / Pull / Core / Correctives",
+      "motra_url": "https://motra.com/share/workout/dc40a38e16",
+      "exercises": [
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 4
+            },
+            {
+              "n": 2,
+              "reps": 3
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Incline Bench Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 18
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 18
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 18
+            }
+          ]
+        },
+        {
+          "name": "Machine Fly (Pec Dec)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 31.5
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 22.5
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 22.5
+            },
+            {
+              "n": 4,
+              "reps": 15,
+              "weight_kg": 22.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Lat Pull Down Wide-Grip",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 45
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 45
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 6
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 19.3
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 19.3
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 19.3
+            }
+          ]
+        },
+        {
+          "name": "Cable Crunch",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 30
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Cable Pallof Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 10
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 7.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-09",
+      "source": "Motra",
+      "session_name": "20260309",
+      "location": "WorldGym Taichung",
+      "start_time": "07:53",
+      "duration_min": 76,
+      "volume_kg": 9700,
+      "calories_kcal": 553,
+      "exercise_count": 11,
+      "session_focus": "Pull / Glutes / Functional / Landmine",
+      "motra_url": "https://motra.com/share/workout/634ea7beb5",
+      "exercises": [
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 4
+            },
+            {
+              "n": 2,
+              "reps": 3
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 44.7
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 44.7
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 44.7
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 44.7
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO Wide Pull Down",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 40
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 40
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 35
+            },
+            {
+              "n": 4,
+              "reps": 10,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO DY Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Barbell Double-Arm Landmine Press",
+          "weight_unit_original": "lbs",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_lbs": 45
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_lbs": 45
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 36
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 36
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 5
+            },
+            {
+              "n": 2,
+              "reps": 11,
+              "weight_kg": 5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 5
+            }
+          ]
+        },
+        {
+          "name": "Machine Rear Delt (Reverse) Fly",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 22.5
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 27.5
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            },
+            {
+              "n": 3,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "name": "Kneeling Modified Cable Rotation",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 5.2
+            },
+            {
+              "n": 2,
+              "reps": 16,
+              "weight_kg": 7.9
+            }
+          ]
+        },
+        {
+          "name": "Dead Hang",
+          "is_timed": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 56
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-11",
+      "source": "Motra",
+      "session_name": "20260311 Chiang Mai",
+      "location": "Chiang Mai (travel)",
+      "start_time": "07:07",
+      "duration_min": 56,
+      "volume_kg": 7700,
+      "calories_kcal": 337,
+      "exercise_count": 9,
+      "session_focus": "Full Body \u2014 Pull / Glutes / Shoulders",
+      "motra_url": "https://motra.com/share/workout/3d54f60f8e",
+      "exercises": [
+        {
+          "name": "Dumbbell Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 25
+            },
+            {
+              "n": 4,
+              "reps": 15,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 4
+            },
+            {
+              "n": 2,
+              "reps": 3
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Cable Lat Pull Down Wide-Grip",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 45
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 50
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 50
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Romanian Deadlift",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Shoulder Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 12.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 12.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 12.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Pull Through",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 15
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Seated Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 45
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 41
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 41
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 19.3
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 19.3
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-13",
+      "source": "Motra",
+      "session_name": "20260313 Chiang Mai",
+      "location": "Chiang Mai (travel)",
+      "start_time": "07:00",
+      "duration_min": 60,
+      "volume_kg": 12000,
+      "calories_kcal": 468,
+      "exercise_count": 9,
+      "session_focus": "Push / Pull / Glutes",
+      "motra_url": "https://motra.com/share/workout/6b6bda69dd",
+      "exercises": [
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 5
+            },
+            {
+              "n": 2,
+              "reps": 4
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Machine Seated Chest Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 41
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 41
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 41
+            }
+          ]
+        },
+        {
+          "name": "Machine Incline Bench Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 36
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 32
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 27
+            }
+          ]
+        },
+        {
+          "name": "Cable Lat Pull Down Wide-Grip",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 36
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 45
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Smith Machine Hip Thrust",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 40
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 40
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 40
+            },
+            {
+              "n": 4,
+              "reps": 15,
+              "weight_kg": 40
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 41
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 41
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 41
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 20.1
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 22
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 22
+            }
+          ]
+        },
+        {
+          "name": "Cable V-Handle Seated Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 41
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 36
+            }
+          ]
+        },
+        {
+          "name": "Machine Ab Crunch",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 20,
+              "weight_kg": 29
+            },
+            {
+              "n": 2,
+              "reps": 20,
+              "weight_kg": 36
+            },
+            {
+              "n": 3,
+              "reps": 20,
+              "weight_kg": 36
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-16",
+      "source": "Motra",
+      "session_name": "20260316",
+      "location": "WorldGym Taichung",
+      "start_time": "07:20",
+      "duration_min": 105,
+      "volume_kg": 13200,
+      "calories_kcal": 907,
+      "exercise_count": 16,
+      "session_focus": "Full Body \u2014 Functional / Correctives / Pull / Glutes",
+      "motra_url": "https://motra.com/share/workout/5c5317ac89",
+      "notes": "Long session \u2014 includes extensive functional fitness block, medicine ball slams, rotational work, and Pallof press. High calorie output.",
+      "exercises": [
+        {
+          "name": "Standing Hip Flexor Stretch",
+          "is_warmup": true,
+          "is_timed": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 21
+            },
+            {
+              "n": 2,
+              "duration_s": 18
+            },
+            {
+              "n": 3,
+              "duration_s": 1
+            }
+          ]
+        },
+        {
+          "name": "Side-Lying Thoracic Rotation Stretch",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Resistance Band Lateral Walk",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "name": "Medicine Ball Slams",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 2
+            },
+            {
+              "n": 2,
+              "reps": 14,
+              "weight_kg": 6
+            },
+            {
+              "n": 3,
+              "reps": 14,
+              "weight_kg": 6
+            },
+            {
+              "n": 4,
+              "reps": 14,
+              "weight_kg": 6
+            }
+          ]
+        },
+        {
+          "name": "Cable Rotational Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 5.7
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 7.9
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 7.9
+            }
+          ]
+        },
+        {
+          "name": "Cable Chop (High to Low)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": 10.2
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_kg": 12.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Pallof Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": 7.9
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": 7.9
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 52.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 52.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 52.5
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 52.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Pull Through",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 17
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 19.3
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 19.3
+            }
+          ]
+        },
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 6
+            },
+            {
+              "n": 2,
+              "reps": 5
+            },
+            {
+              "n": 3,
+              "reps": 4
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO Wide Pull Down",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 35
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 35
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 35
+            },
+            {
+              "n": 4,
+              "reps": 10,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Barbell Double-Arm Landmine Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 30
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 40
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 40
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO DY Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "is_superset": true,
+          "superset_group": "A",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 45
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 45
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO Lateral Raise",
+          "is_superset": true,
+          "superset_group": "A",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 5
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            },
+            {
+              "n": 3,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "source": "Motra",
+      "session_name": "20260318",
+      "location": "WorldGym Taichung",
+      "start_time": "07:39",
+      "duration_min": 89,
+      "volume_kg": 11200,
+      "calories_kcal": 585,
+      "exercise_count": 14,
+      "session_focus": "Push / Pull / Glutes / Functional \u2014 KB emphasis",
+      "motra_url": "https://motra.com/share/workout/29e06dbb91",
+      "exercises": [
+        {
+          "name": "Spinning / Stationary Biking",
+          "is_warmup": true,
+          "is_timed": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 181
+            }
+          ]
+        },
+        {
+          "name": "Bodyweight Glute Bridge",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15
+            },
+            {
+              "n": 2,
+              "reps": 15
+            }
+          ]
+        },
+        {
+          "name": "Cable External Shoulder Rotation",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 5.7
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 3.4
+            }
+          ]
+        },
+        {
+          "name": "Hip Circles",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Machine Shoulder Press",
+          "sets": [
+            {
+              "n": "WU1",
+              "reps": 15,
+              "weight_kg": 18.5,
+              "warmup": true
+            },
+            {
+              "n": "WU2",
+              "reps": 12,
+              "weight_kg": 18.5,
+              "warmup": true
+            },
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 22.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 27.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 31.5
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 31.5
+            }
+          ]
+        },
+        {
+          "name": "Machine Seated Chest Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 31.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 27.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 27.5
+            }
+          ]
+        },
+        {
+          "name": "Machine Fly (Pec Dec)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 31.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 27.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 27.5
+            }
+          ]
+        },
+        {
+          "name": "Barbell Romanian Deadlift",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 40
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 40
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 40
+            }
+          ]
+        },
+        {
+          "name": "Cable V-Handle Seated Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 41
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 41
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 41
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 40
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 40
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 40
+            }
+          ]
+        },
+        {
+          "name": "Cable Crunch",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 20,
+              "weight_kg": 19.3
+            },
+            {
+              "n": 2,
+              "reps": 20,
+              "weight_kg": 28.4
+            },
+            {
+              "n": 3,
+              "reps": 20,
+              "weight_kg": 28.4
+            }
+          ]
+        },
+        {
+          "name": "Kettlebell Swing",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 10
+            },
+            {
+              "n": 2,
+              "reps": 20,
+              "weight_kg": 12
+            },
+            {
+              "n": 3,
+              "reps": 20,
+              "weight_kg": 12
+            }
+          ]
+        },
+        {
+          "name": "Kettlebell Halo",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 16,
+              "weight_kg": 8
+            },
+            {
+              "n": 2,
+              "reps": 16,
+              "weight_kg": 8
+            },
+            {
+              "n": 3,
+              "reps": 16,
+              "weight_kg": 8
+            }
+          ]
+        },
+        {
+          "name": "Prone Y Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            },
+            {
+              "n": 3,
+              "reps": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "source": "Motra",
+      "session_name": "20260320 1C FF",
+      "location": "WorldGym Taichung",
+      "start_time": "08:45",
+      "duration_min": 23,
+      "volume_kg": 3600,
+      "calories_kcal": 171,
+      "exercise_count": 6,
+      "session_focus": "Functional Fitness \u2014 Landmine Supersets",
+      "motra_url": "https://motra.com/share/workout/228b8de18a",
+      "exercises": [
+        {
+          "name": "Barbell Single-Arm Landmine Row",
+          "is_superset": true,
+          "superset_group": "A",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 6,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 6,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 6,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Barbell Single-Arm Landmine Press",
+          "is_superset": true,
+          "superset_group": "A",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 6,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 6,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 6,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Barbell Landmine Rotational Press",
+          "is_superset": true,
+          "superset_group": "A",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 9,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 7,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Landmine Romanian Deadlift",
+          "is_superset": true,
+          "superset_group": "A",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": 25
+            },
+            {
+              "n": 3,
+              "reps": 8,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Cable Chop (Low to High)",
+          "is_superset": true,
+          "superset_group": "B",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8,
+              "weight_kg": 14.7
+            },
+            {
+              "n": 2,
+              "reps": 8,
+              "weight_kg": 12.5
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "is_superset": true,
+          "superset_group": "B",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 14.7
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 12.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "source": "Motra",
+      "session_name": "20260323 FF Warm Up",
+      "location": "WorldGym Taichung",
+      "start_time": "07:48",
+      "duration_min": 41,
+      "volume_kg": 1900,
+      "calories_kcal": 301,
+      "exercise_count": 11,
+      "session_focus": "Functional Fitness / Activation Block",
+      "motra_url": "https://motra.com/share/workout/cb951312a8",
+      "notes": "FF warm-up session done before main 1A strength block same day.",
+      "exercises": [
+        {
+          "name": "Spinning / Stationary Biking",
+          "is_warmup": true,
+          "is_timed": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 185
+            }
+          ]
+        },
+        {
+          "name": "Bodyweight Glute Bridge",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15
+            },
+            {
+              "n": 2,
+              "reps": 15
+            }
+          ]
+        },
+        {
+          "name": "Resistance Band Lateral Walk",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "name": "Resistance Band Pull Apart",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15
+            },
+            {
+              "n": 2,
+              "reps": 15
+            }
+          ]
+        },
+        {
+          "name": "Cable External Shoulder Rotation",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 3.4
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 3.4
+            }
+          ]
+        },
+        {
+          "name": "Hip Circles",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Medicine Ball Slams",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 10
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 10
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 6
+            }
+          ]
+        },
+        {
+          "name": "Cable Rotational Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 5.7
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 5.7
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 5.7
+            }
+          ]
+        },
+        {
+          "name": "Cable Chop (High to Low)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 10.2
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 10.2
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 10.2
+            }
+          ]
+        },
+        {
+          "name": "Cable Pallof Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 6,
+              "weight_kg": 7.9
+            },
+            {
+              "n": 2,
+              "reps": 6,
+              "weight_kg": 7.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "source": "Motra",
+      "session_name": "20260323 1A Strength",
+      "location": "WorldGym Taichung",
+      "start_time": "08:32",
+      "duration_min": 46,
+      "volume_kg": 8500,
+      "calories_kcal": 388,
+      "exercise_count": 7,
+      "session_focus": "Pull / Glutes / Shoulders / Core \u2014 Anchor Session",
+      "motra_url": "https://motra.com/share/workout/4fc9942a67",
+      "exercises": [
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 5
+            },
+            {
+              "n": 2,
+              "reps": 4
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 52
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 52
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 52
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO Wide Pull Down",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 35
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 35
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 50
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 45
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 5
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 14.7
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 14.2
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 14.2
+            }
+          ]
+        },
+        {
+          "name": "Cable Crunch",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 20,
+              "weight_kg": 21.6
+            },
+            {
+              "n": 2,
+              "reps": 20,
+              "weight_kg": 21.6
+            },
+            {
+              "n": 3,
+              "reps": 20,
+              "weight_kg": 21.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "source": "Motra",
+      "session_name": "20260325 Warm Up & FF",
+      "location": "WorldGym Taichung",
+      "start_time": "07:48",
+      "duration_min": 36,
+      "volume_kg": 1200,
+      "calories_kcal": 192,
+      "exercise_count": 11,
+      "session_focus": "Functional Fitness / Activation / KB",
+      "motra_url": "https://motra.com/share/workout/7adc942373",
+      "exercises": [
+        {
+          "name": "Spinning / Stationary Biking",
+          "is_warmup": true,
+          "is_timed": true,
+          "sets": [
+            {
+              "n": 1,
+              "duration_s": 186
+            }
+          ]
+        },
+        {
+          "name": "Bodyweight Glute Bridge",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15
+            },
+            {
+              "n": 2,
+              "reps": 15
+            }
+          ]
+        },
+        {
+          "name": "Resistance Band Lateral Walk",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "name": "Resistance Band Pull Apart",
+          "is_warmup": true,
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "name": "Cable External Shoulder Rotation",
+          "is_warmup": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 3.4
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 3.4
+            }
+          ]
+        },
+        {
+          "name": "TRX YTW",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8
+            },
+            {
+              "n": 2,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Wall Slide",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Kettlebell Swing",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 12
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 12
+            },
+            {
+              "n": 3,
+              "reps": 16,
+              "weight_kg": 12
+            }
+          ]
+        },
+        {
+          "name": "Kettlebell Halo",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 16,
+              "weight_kg": 8
+            },
+            {
+              "n": 2,
+              "reps": 16,
+              "weight_kg": 12
+            },
+            {
+              "n": 3,
+              "reps": 16,
+              "weight_kg": 8
+            }
+          ]
+        },
+        {
+          "name": "Suspension Trainer YTW",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Suspension Trainer Standing Fallout",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10
+            },
+            {
+              "n": 2,
+              "reps": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "source": "Motra",
+      "session_name": "20260325 Strength Training",
+      "location": "WorldGym Taichung",
+      "start_time": "08:28",
+      "duration_min": 56,
+      "volume_kg": 7800,
+      "calories_kcal": 358,
+      "exercise_count": 9,
+      "session_focus": "Push / Pull / Glutes / Correctives",
+      "motra_url": "https://motra.com/share/workout/8072e76aa5",
+      "exercises": [
+        {
+          "name": "Smith Machine Incline Bench Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 15
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 15
+            }
+          ]
+        },
+        {
+          "name": "Machine Seated Chest Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 22.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 31.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 31.5
+            }
+          ]
+        },
+        {
+          "name": "Machine Fly (Pec Dec)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 31.5
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 27.5
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 27.5
+            }
+          ]
+        },
+        {
+          "name": "Barbell Romanian Deadlift",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 40
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 40
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 40
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 42.7
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 42.7
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 42.7
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Seated Row",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 39
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 39
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 12.5
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 17
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 17
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12
+            },
+            {
+              "n": 2,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "name": "Cable External Shoulder Rotation",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 3.4
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 1.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "source": "Motra",
+      "session_name": "20260330 Weights",
+      "location": "WorldGym Taichung",
+      "start_time": "08:08",
+      "duration_min": 62,
+      "volume_kg": 9800,
+      "calories_kcal": 484,
+      "exercise_count": 7,
+      "session_focus": "Pull / Glutes / Shoulders / Core",
+      "motra_url": "https://motra.com/share/workout/abfdeede19",
+      "exercises": [
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 5
+            },
+            {
+              "n": 2,
+              "reps": 4
+            },
+            {
+              "n": 3,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 13,
+              "weight_kg": 48
+            },
+            {
+              "n": 2,
+              "reps": 13,
+              "weight_kg": 48
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 48
+            },
+            {
+              "n": 4,
+              "reps": 13,
+              "weight_kg": 48
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO Wide Pull Down",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 35
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 35
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 35
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Abduction",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 45
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 45
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 45
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 6
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 6
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 6
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 23.8
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 23.8
+            },
+            {
+              "n": 3,
+              "reps": 15,
+              "weight_kg": 23.8
+            }
+          ]
+        },
+        {
+          "name": "Cable Crunch",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 15,
+              "weight_kg": 30.6
+            },
+            {
+              "n": 2,
+              "reps": 15,
+              "weight_kg": 26.1
+            },
+            {
+              "n": 3,
+              "reps": 16,
+              "weight_kg": 26.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "source": "Motra",
+      "session_name": "20260410 Friday",
+      "location": "WorldGym Taichung",
+      "start_time": "07:57",
+      "duration_min": 76,
+      "volume_kg": 6800,
+      "calories_kcal": 484,
+      "exercise_count": 11,
+      "session_focus": "Push / Landmine / Functional / Pull / Glutes",
+      "motra_url": "https://motra.com/share/workout/7513a5d273",
+      "notes": "File mislabeled as 20260430 \u2014 confirmed date Apr 10, 2026 from Motra timestamp.",
+      "exercises": [
+        {
+          "name": "Barbell Landmine Rotational Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 16,
+              "weight_kg": 25
+            },
+            {
+              "n": 2,
+              "reps": 16,
+              "weight_kg": 30
+            },
+            {
+              "n": 3,
+              "reps": 16,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Medicine Ball Slams",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 5,
+              "weight_kg": 8
+            },
+            {
+              "n": 2,
+              "reps": 5,
+              "weight_kg": 8
+            },
+            {
+              "n": 3,
+              "reps": 5,
+              "weight_kg": 8
+            }
+          ]
+        },
+        {
+          "name": "Kettlebell Swing",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Dumbbell Incline Guillotine Bench Press",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 12
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 12
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 14
+            }
+          ]
+        },
+        {
+          "name": "Cable Fly Mid",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 13,
+              "weight_kg": 5.7
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 5.7
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 5.7
+            },
+            {
+              "n": 4,
+              "reps": 12,
+              "weight_kg": 5.7
+            }
+          ]
+        },
+        {
+          "name": "Pull-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 5
+            },
+            {
+              "n": 2,
+              "reps": 5
+            },
+            {
+              "n": 3,
+              "reps": 4
+            }
+          ]
+        },
+        {
+          "name": "Cable Bar Straight Arm Pull Down",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 19.3
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 17
+            },
+            {
+              "n": 3,
+              "reps": 9,
+              "weight_kg": 14.7
+            }
+          ]
+        },
+        {
+          "name": "Machine Hip Thrust (Glute Bridge)",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 47.7
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 47.7
+            },
+            {
+              "n": 3,
+              "reps": 13,
+              "weight_kg": 47.7
+            }
+          ]
+        },
+        {
+          "name": "Hammer ISO Lateral Raise",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 10,
+              "weight_kg": 5
+            },
+            {
+              "n": 2,
+              "reps": 10,
+              "weight_kg": 5
+            },
+            {
+              "n": 3,
+              "reps": 10,
+              "weight_kg": 5
+            }
+          ]
+        },
+        {
+          "name": "Step-Up",
+          "is_bodyweight": true,
+          "sets": [
+            {
+              "n": 1,
+              "reps": 8
+            },
+            {
+              "n": 2,
+              "reps": 8
+            },
+            {
+              "n": 3,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "name": "Cable Face Pull",
+          "sets": [
+            {
+              "n": 1,
+              "reps": 12,
+              "weight_kg": 21.6
+            },
+            {
+              "n": 2,
+              "reps": 12,
+              "weight_kg": 21.6
+            },
+            {
+              "n": 3,
+              "reps": 12,
+              "weight_kg": 21.6
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "glucose": [
+    {
+      "date": "2026-04-07",
+      "source": "Stelo (via Oura)",
+      "current_reading_mgdl": 99,
+      "trend": "Steady",
+      "time_in_range_yesterday_pct": 91,
+      "time_above_range_min": null,
+      "glucose_variability_pct": null,
+      "waking_glucose_mgdl": null,
+      "average_glucose_mgdl": null,
+      "overnight_peak_mgdl": null,
+      "overnight_peak_time": null,
+      "notes": "Stelo CGM Apr 7. Reading 99 mg/dL Steady. 91% Time in Range recorded for previous day (Apr 6)."
+    },
+    {
+      "date": "2026-04-08",
+      "source": "Stelo (via Oura)",
+      "current_reading_mgdl": 124,
+      "current_reading_time": "09:57",
+      "trend": "Steady",
+      "time_in_range_yesterday_pct": 91,
+      "time_above_range_min": 12,
+      "time_above_range_status": "Optimal",
+      "glucose_variability_pct": 11,
+      "glucose_variability_status": "Good / Optimal",
+      "waking_glucose_mgdl": 96,
+      "average_glucose_mgdl": 109,
+      "overnight_peak_mgdl": 132,
+      "overnight_peak_time": "03:12",
+      "overnight_reading_mgdl": 110,
+      "overnight_reading_time": "01:42",
+      "sleep_window": "22:15\u201305:13",
+      "notes": "Stelo CGM Apr 8. Current 124 mg/dL at 9:57 AM. Overnight peak 132 mg/dL at 3:12 AM. Variability 11% Good. Avg 109 mg/dL. TAR 12m Optimal. Yesterday (Apr 7) TAR was 3h 26m Elevated \u2014 likely dinner-related."
+    },
+    {
+      "date": "2026-04-09",
+      "source": "Stelo (via Oura)",
+      "current_reading_mgdl": 99,
+      "trend": "Steady",
+      "time_in_range_yesterday_pct": null,
+      "time_above_range_min": 0,
+      "time_above_range_status": "Optimal",
+      "glucose_variability_pct": 3,
+      "glucose_variability_status": "Optimal",
+      "waking_glucose_mgdl": null,
+      "average_glucose_mgdl": 94,
+      "overnight_peak_mgdl": null,
+      "overnight_peak_time": null,
+      "overnight_reading_mgdl": 83,
+      "overnight_reading_time": "00:52",
+      "sleep_window": "21:21\u201304:25",
+      "notes": "Stelo CGM Apr 9. Current 99 mg/dL Steady. Overnight glucose 83 mg/dL (12:52 AM). Variability 3% Optimal \u2014 best reading to date. TAR 0 Optimal. Avg 94 mg/dL for the day."
+    },
+    {
+      "date": "2026-04-11",
+      "source": "Oura (Stelo integrated)",
+      "current_reading_mgdl": 101,
+      "trend": null,
+      "time_in_range_yesterday_pct": null,
+      "time_above_range_min": null,
+      "glucose_variability_pct": null,
+      "waking_glucose_mgdl": null,
+      "average_glucose_mgdl": null,
+      "overnight_peak_mgdl": null,
+      "overnight_peak_time": null,
+      "notes": "Oura Health Monitor Apr 11, 11 AM. Blood Glucose 101 mg/dL from Stelo integration."
+    }
+  ],
+  "posture_assessment": [
+    {
+      "date": "2026-04",
+      "date_note": "Approximate \u2014 from screenshots batch Apr 11, 2026",
+      "source": "Crosspoint / WorldGym Taiwan AI Assessment",
+      "assessment_url": "i.worldgymtaiwan.com",
+      "overall": {
+        "dynamic_score": 77,
+        "hip_offset_cm": -4.3,
+        "head_deviation_cm": 3.6,
+        "spine_deviation_cm": 11.4
+      },
+      "segment_scores": {
+        "right_arm": 45,
+        "left_arm": 58,
+        "left_knee": 74
+      },
+      "flagged_muscles": [
+        "sternocleidomastoid",
+        "trapezius",
+        "infraspinatus",
+        "external oblique",
+        "serratus anterior",
+        "latissimus dorsi",
+        "erector spinae",
+        "deltoid",
+        "biceps"
+      ],
+      "coaching_relevance": {
+        "hip_offset": "Right-side dominance confirmed \u2014 unilateral work and hip alignment cues critical",
+        "head_deviation": "Forward head posture / cervical alignment deficit \u2014 cervical CARS and wall slides priority",
+        "spine_deviation": "Significant lateral spine deviation (11.4 cm) \u2014 anti-rotation and quadratus lumborum work",
+        "right_arm_low_score": "Right shoulder asymmetry \u2014 matches structural correction system priorities",
+        "flagged_muscles_summary": "Posterior chain (traps, infraspinatus, lats, erectors) and anterior chain (serratus, oblique) imbalances both present"
+      },
+      "notes": "WorldGym Taiwan AI posture scan (Crosspoint system). Dynamic score 77/100. Hip offset -4.3 cm (right dominant). Spine deviation 11.4 cm is significant. Right arm 45 vs left arm 58 confirms shoulder asymmetry. Directly validates structural correction priorities in 20_STRUCTURAL_CORRECTION_PRIORITY_USER.md."
+    }
+  ],
+  "last_updated": "2026-04-11"
+}
