@@ -583,8 +583,8 @@ function coachingNote(db) {
     else notes.push(`HRV ${sleep.hrv_ms} ms — sitting near baseline (${hrvBase} ms). Train normally with HR management.`);
   }
   if (sleep.sleep_bank_min !== null && sleep.sleep_bank_min !== undefined && sleep.sleep_bank_min < -60) {
-    const h = Math.abs(Math.floor(sleep.sleep_bank_min / 60));
-    const m = Math.abs(sleep.sleep_bank_min % 60);
+    const h = Math.floor(Math.abs(sleep.sleep_bank_min) / 60);
+    const m = Math.abs(sleep.sleep_bank_min) % 60;
     notes.push(`Sleep debt: <strong>−${h}h ${m}m.</strong> Prioritize an early bedtime tonight (target ~9:30 PM).`);
   }
   if (sleep.recovery_score_pct >= 70) notes.push('High readiness — push day if planned.');
@@ -649,7 +649,7 @@ function renderToday(db) {
   const deepStr  = deepMin ? `${deepMin}m` : '—';
   const remStr   = remMin  ? (remMin >= 60 ? `${Math.floor(remMin/60)}h ${remMin%60}m` : `${remMin}m`) : '—';
   const debtMin  = sleep.sleep_bank_min || sleep.autosleep_sleep_bank_min;
-  const debtStr  = debtMin ? `−${Math.abs(Math.floor(debtMin/60))}h ${Math.abs(debtMin%60)}m` : '—';
+  const debtStr  = debtMin ? `−${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m` : '—';
 
   // Sleep bar pct helpers
   const sleepPct  = totalMin ? Math.min(100, (totalMin / 480) * 100) : 0;   // vs 8h
@@ -1064,7 +1064,7 @@ function renderTraining(db) {
   // All sessions combined + sorted
   const allSessions = [
     ...strengthLogs.map(s => ({...s, _type: 'strength'})),
-    ...activities.filter(a => a.session_type !== 'Daily Activity Snapshot').map(a => ({...s, ...a, _type: 'activity'}))
+    ...activities.filter(a => a.session_type !== 'Daily Activity Snapshot').map(a => ({...a, _type: 'activity'}))
   ].sort((a,b) => a.date < b.date ? 1 : -1);
 
   const latest_s = strengthLogs[strengthLogs.length - 1] || {};
