@@ -179,13 +179,61 @@ body {
   background: var(--surface2);
   border-left: 3px solid var(--accent);
   border-radius: 0 6px 6px 0;
-  padding: 10px 12px;
-  font-size: 12px;
+  padding: 14px 14px;
+  font-size: 13px;
   color: var(--text2);
-  line-height: 1.55;
+  line-height: 1.65;
   margin-bottom: 8px;
 }
 .coach-note strong { color: var(--text); }
+.coach-note p { margin-bottom: 10px; }
+.coach-note p:last-child { margin-bottom: 0; }
+.coach-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--accent); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.coach-label::before { content: '◆'; font-size: 7px; }
+
+/* ── Macro progress bars ───────────────────────────── */
+.macro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 2px;
+}
+.macro-cell {
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+}
+.macro-cell.full { grid-column: 1 / -1; }
+.macro-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.macro-nums { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+.macro-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.macro-target { font-size: 11px; color: var(--text3); }
+.macro-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.macro-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+.macro-delta { font-size: 10px; margin-top: 4px; }
+
+/* ── Weekly summary ────────────────────────────────── */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 6px;
+}
+.week-cell {
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 8px;
+  text-align: center;
+}
+.week-val { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.week-lbl { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
+.week-sub { font-size: 10px; color: var(--text2); margin-top: 2px; }
 
 /* ── Sparkline chart ───────────────────────────────── */
 .chart-card {
@@ -570,28 +618,74 @@ function buildBarChart(data, opts = {}) {
    COACHING INSIGHT GENERATOR
 ══════════════════════════════════════════════════════ */
 function coachingNote(db) {
-  const sleep = latest(db.recovery_sleep);
+  const sleep   = latest(db.recovery_sleep);
   const profile = db.profile;
   const baseline = profile.oura_biology_baselines || {};
-  const hrvBase = baseline.hrv_baseline_ms || 32.5;
-  const notes = [];
+  const hrvBase  = baseline.hrv_baseline_ms || 32.5;
+  const body     = latest(db.body_composition);
+  const nutrition = db.nutrition || [];
+  const todayNut  = nutrition.length ? latest(nutrition) : null;
 
-  if (sleep.hrv_ms) {
-    const diff = (sleep.hrv_ms - hrvBase).toFixed(1);
-    if (diff > 3) notes.push(`HRV ${sleep.hrv_ms} ms — <strong>${diff} ms above your ${hrvBase} baseline.</strong> Nervous system is recovered.`);
-    else if (diff < -3) notes.push(`HRV ${sleep.hrv_ms} ms — <strong>${Math.abs(diff)} ms below baseline.</strong> Reduce intensity; keep HR well under 122 bpm.`);
-    else notes.push(`HRV ${sleep.hrv_ms} ms — sitting near baseline (${hrvBase} ms). Train normally with HR management.`);
-  }
-  if (sleep.sleep_bank_min !== null && sleep.sleep_bank_min !== undefined && sleep.sleep_bank_min < -60) {
-    const h = Math.floor(Math.abs(sleep.sleep_bank_min) / 60);
-    const m = Math.abs(sleep.sleep_bank_min) % 60;
-    notes.push(`Sleep debt: <strong>−${h}h ${m}m.</strong> Prioritize an early bedtime tonight (target ~9:30 PM).`);
-  }
-  if (sleep.recovery_score_pct >= 70) notes.push('High readiness — push day if planned.');
-  else if (sleep.recovery_score_pct < 40) notes.push('Low readiness — active recovery or full deload recommended.');
-  else notes.push('Moderate readiness. HR cap 122 bpm applies to all strength work today.');
+  const hrv       = sleep.hrv_ms;
+  const recovery  = sleep.recovery_score_pct;
+  const debtMin   = sleep.sleep_bank_min || sleep.autosleep_sleep_bank_min;
+  const diff      = hrv ? +(hrv - hrvBase).toFixed(1) : null;
+  const weightLbs = body.weight_lbs || (body.weight_kg ? +(body.weight_kg * 2.2046).toFixed(1) : null);
+  const goalLbs   = (profile.nutrition_targets && profile.nutrition_targets.goal_weight_lbs) || 165;
 
-  return notes.slice(0, 3).join('<br>');
+  // ── Paragraph 1: Recovery & Readiness ──
+  let para1 = '';
+  if (hrv && diff !== null) {
+    if (diff > 3) {
+      para1 = `Todd, your HRV is at <strong>${hrv} ms</strong> — that's ${diff} ms above your baseline of ${hrvBase} ms. Your nervous system is recovered and ready to work. If you've got a strength session planned today, push it. This is exactly the signal you want to see.${recovery >= 70 ? " Readiness is high across the board — don't leave that on the table." : ""}`;
+    } else if (diff < -3) {
+      para1 = `Todd, your HRV is down to <strong>${hrv} ms</strong> — ${Math.abs(diff)} ms below your ${hrvBase} ms baseline. I'm not going to sugarcoat it: your body is telling you it's under-recovered. You can still train, but this isn't the day to chase PRs. Keep everything under 122 bpm, cut volume if needed, and protect the sleep tonight.${debtMin && debtMin < -90 ? ` You're carrying a sleep debt of ${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m — that's compounding the problem. Lights out by 9:30 tonight is non-negotiable.` : ''}`;
+    } else {
+      para1 = `Todd, HRV is at <strong>${hrv} ms</strong> — right at your ${hrvBase} ms baseline. Solid, normal day. ${recovery >= 70 ? "Readiness is green, which means you've got the capacity to push if the session calls for it." : recovery < 40 ? "Readiness is on the low side though, so take the intensity cues seriously today." : "Train with intent, keep your HR managed, and focus on quality movement over maximum load."}${debtMin && debtMin < -60 ? ` That sleep debt is still there — ${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m in the hole. Address it before it starts dragging your performance.` : ''}`;
+    }
+  } else {
+    para1 = `Todd, get your Oura data synced — I need your HRV to give you an accurate training decision today. Until then, default to a controlled session: HR under 122 bpm, focus on structural work and quality movement.`;
+  }
+
+  // ── Paragraph 2: Nutrition ──
+  let para2 = '';
+  if (todayNut && todayNut.daily_totals && todayNut.daily_totals.calories_kcal) {
+    const cals = todayNut.daily_totals.calories_kcal;
+    const prot = todayNut.daily_totals.protein_g;
+    const targetCals = 2000;
+    const targetProt = 150;
+    const calPct = Math.round((cals / targetCals) * 100);
+    if (cals < targetCals * 0.5) {
+      para2 = `The nutrition data has you at <strong>${cals} kcal</strong> — that's under 50% of your 2,000 kcal target. I need you to be real with yourself here: that level of undereating either means the logging is incomplete, or you're genuinely not fueling the training you're doing. At 57, anabolic resistance is real — chronically undereating while training accelerates muscle loss. Hit your <strong>150g protein</strong> first, every single day, no exceptions.`;
+    } else if (cals >= targetCals * 0.9 && prot && prot >= targetProt * 0.9) {
+      para2 = `Nutrition is looking good — <strong>${cals} kcal</strong> logged with ${prot}g protein. That's exactly what the plan calls for. A calculated deficit with high protein is the only sustainable way to cut fat without burning through the muscle you're building in the gym. Keep it up.`;
+    } else if (prot && prot < targetProt * 0.7) {
+      para2 = `Calories are logged at <strong>${cals} kcal</strong>, but protein is showing ${prot}g — well short of your 150g target. This matters more than the calorie number. Protein is what keeps you from cannibalizing muscle while in a deficit. Prioritize it at every meal, not as an afterthought.`;
+    } else {
+      para2 = `Nutrition logged at <strong>${cals} kcal</strong> — ${calPct < 80 ? "you're a bit short of target" : "on track"}. Stay dialed in on protein. Your 2,000 kcal / 150g protein target exists for a specific reason at your age and training intensity. The deficit is already built in — don't accidentally make it bigger by skipping meals.`;
+    }
+  } else {
+    para2 = `Get today's nutrition logged. I know tracking feels like admin work, but the data is what lets me give you real coaching. Your target is <strong>2,000 kcal and 150g protein</strong> — a ~380 kcal deficit from your TDEE with protein elevated to protect your muscle mass. That's the plan. Execute it.`;
+  }
+
+  // ── Paragraph 3: Progress & Accountability ──
+  let para3 = '';
+  if (weightLbs) {
+    const remaining = +(weightLbs - goalLbs).toFixed(1);
+    if (remaining > 7) {
+      para3 = `You're at <strong>${weightLbs.toFixed(1)} lbs</strong> with ${remaining} lbs to your goal of ${goalLbs} lbs. You're moving in the right direction — keep stacking consistent days. The mission is clear: reduce visceral fat, preserve muscle, improve sleep, and correct the structural imbalances we've identified. Every session and every meal is a vote for or against that goal. Make most of them count.`;
+    } else if (remaining > 2) {
+      para3 = `You're <strong>${remaining} lbs from your goal</strong> of ${goalLbs} lbs — you're in the final push. This is where most people ease off because the end feels close. Don't. The structural work matters just as much now as when you started — your right-side dominance and shoulder imbalance don't fix themselves with weight loss. Keep the corrective work in every session.`;
+    } else if (remaining > 0) {
+      para3 = `You're <strong>nearly at goal weight</strong> — ${remaining} lbs to ${goalLbs} lbs. Finish the job. Don't drift into maintenance mode just because the scale is cooperating. The structural correction and performance work are the long game here.`;
+    } else {
+      para3 = `Weight goal hit. Now the work shifts — maintain lean mass, keep reducing visceral fat, and address the structural imbalances that affect how your body actually moves and ages. The scale isn't the whole picture anymore.`;
+    }
+  } else {
+    para3 = `Keep stacking good days. Sleep → nutrition → training — in that order of priority. The right-side dominance and shoulder asymmetry are long-game problems that require consistent, patient work. Don't skip the corrective elements. They're not optional.`;
+  }
+
+  return `<div class="coach-label">Coach · Daily Brief</div><p>${para1}</p><p>${para2}</p><p>${para3}</p>`;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -662,6 +756,34 @@ function renderToday(db) {
   const startLbs  = 172.7; // from first body comp entry
   const progressPct = weightLbs ? Math.min(100, ((startLbs - weightLbs) / (startLbs - goalLbs)) * 100) : 0;
 
+  // ── Nutrition today ──
+  const nutEntries = db.nutrition || [];
+  const todayNut   = nutEntries.length ? latest(nutEntries) : null;
+  const nutTotals  = todayNut ? (todayNut.daily_totals || {}) : {};
+  const nutTargets = { cal: 2000, prot: 150, carbs: 190, fat: 70 };
+  const logged_cal   = nutTotals.calories_kcal || 0;
+  const logged_prot  = nutTotals.protein_g     || 0;
+  const logged_carbs = nutTotals.carbs_g        || 0;
+  const logged_fat   = nutTotals.fat_g          || 0;
+  const calPct   = Math.min(100, Math.round((logged_cal   / nutTargets.cal)   * 100));
+  const protPct  = Math.min(100, Math.round((logged_prot  / nutTargets.prot)  * 100));
+  const carbsPct = Math.min(100, Math.round((logged_carbs / nutTargets.carbs) * 100));
+  const fatPct   = Math.min(100, Math.round((logged_fat   / nutTargets.fat)   * 100));
+  function macroColor(pct) {
+    if (pct >= 90) return 'var(--green)';
+    if (pct >= 60) return 'var(--yellow)';
+    return 'var(--red)';
+  }
+  function deltaBadge(logged, target, unit) {
+    if (!logged) return `<span style="color:var(--text3);font-size:10px">No data logged</span>`;
+    const d = logged - target;
+    const abs = Math.abs(d).toFixed(d < 10 && d > -10 ? 1 : 0);
+    if (Math.abs(d) < target * 0.05) return badge('On target','green');
+    return d < 0
+      ? `<span style="font-size:10px;color:var(--yellow)">−${abs}${unit} to go</span>`
+      : `<span style="font-size:10px;color:var(--green)">+${abs}${unit} over</span>`;
+  }
+
   return `
   <!-- Status grid -->
   <div class="status-grid">
@@ -684,6 +806,53 @@ function renderToday(db) {
       <div class="si-val" style="color:${glu && glu < 140 ? 'var(--green)' : 'var(--yellow)'}">${glu || '—'}</div>
       <div class="si-label">Glucose</div>
       <div class="si-badge">${glu ? (glu < 140 ? badge('In range','green') : badge('Above','yellow')) : badge('—','dim')}</div>
+    </div>
+  </div>
+
+  <!-- Nutrition Today -->
+  <div class="section">
+    <div class="section-title">Nutrition · ${todayNut ? fmtDate(todayNut.date) : 'Today'}</div>
+    <!-- Calorie bar full width -->
+    <div class="macro-grid">
+      <div class="macro-cell full">
+        <div class="macro-label">Calories</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${macroColor(calPct)}">${logged_cal || '—'}<span style="font-size:12px;font-weight:400;color:var(--text3)"> kcal</span></div>
+          <div class="macro-target">Target: ${nutTargets.cal} kcal</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${calPct}%;background:${macroColor(calPct)}"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_cal, nutTargets.cal, ' kcal')}</div>
+      </div>
+      <!-- Protein -->
+      <div class="macro-cell">
+        <div class="macro-label">Protein</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${macroColor(protPct)}">${logged_prot || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
+          <div class="macro-target">${nutTargets.prot}g</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${protPct}%;background:${macroColor(protPct)}"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_prot, nutTargets.prot, 'g')}</div>
+      </div>
+      <!-- Carbs -->
+      <div class="macro-cell">
+        <div class="macro-label">Carbs</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${macroColor(carbsPct)}">${logged_carbs || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
+          <div class="macro-target">${nutTargets.carbs}g</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${carbsPct}%;background:var(--accent)"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_carbs, nutTargets.carbs, 'g')}</div>
+      </div>
+      <!-- Fat -->
+      <div class="macro-cell">
+        <div class="macro-label">Fat</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${macroColor(fatPct)}">${logged_fat || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
+          <div class="macro-target">${nutTargets.fat}g</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${fatPct}%;background:var(--purple)"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_fat, nutTargets.fat, 'g')}</div>
+      </div>
     </div>
   </div>
 
@@ -1228,6 +1397,101 @@ function renderTrends(db) {
     </div>`;
   }
 
+  // ── Weekly nutrition summary ──
+  const nutEntries = sortAsc(db.nutrition || []);
+  // Last 7 days window
+  const now7 = new Date();
+  const cutoff = new Date(now7); cutoff.setDate(cutoff.getDate() - 7);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+  const weekNut = nutEntries.filter(n => n.date >= cutoffStr);
+  const allNut  = nutEntries; // for all-time averages
+
+  function nutAvg(arr, key) {
+    const vals = arr.map(n => n.daily_totals ? n.daily_totals[key] : null).filter(v => v !== null && v !== undefined);
+    return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0) / vals.length) : null;
+  }
+  function nutSum(arr, key) {
+    const vals = arr.map(n => n.daily_totals ? n.daily_totals[key] : null).filter(v => v !== null && v !== undefined);
+    return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)) : null;
+  }
+
+  const wkAvgCal  = nutAvg(weekNut, 'calories_kcal');
+  const wkAvgProt = nutAvg(weekNut, 'protein_g');
+  const wkAvgCarb = nutAvg(weekNut, 'carbs_g');
+  const wkAvgFat  = nutAvg(weekNut, 'fat_g');
+  const wkDaysLogged = weekNut.filter(n => n.daily_totals && n.daily_totals.calories_kcal).length;
+
+  const allAvgCal  = nutAvg(allNut, 'calories_kcal');
+  const allAvgProt = nutAvg(allNut, 'protein_g');
+
+  function nutColor(val, target) {
+    if (!val) return 'var(--text3)';
+    const pct = val / target;
+    if (pct >= 0.9) return 'var(--green)';
+    if (pct >= 0.65) return 'var(--yellow)';
+    return 'var(--red)';
+  }
+
+  const weekNutHtml = `
+  <div class="section">
+    <div class="section-title">Weekly Nutrition · Last 7 Days</div>
+    <div class="card" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-size:12px;color:var(--text2)">${wkDaysLogged} of 7 days logged</div>
+        ${wkDaysLogged < 4 ? badge('Log more days','yellow') : wkDaysLogged >= 6 ? badge('Great consistency','green') : badge('Getting there','blue')}
+      </div>
+      <div class="week-grid">
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgCal, 2000)}">${wkAvgCal || '—'}</div>
+          <div class="week-lbl">Avg kcal/day</div>
+          <div class="week-sub">Target: 2,000</div>
+        </div>
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgProt, 150)}">${wkAvgProt || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">Avg Protein</div>
+          <div class="week-sub">Target: 150g</div>
+        </div>
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgCarb, 190)}">${wkAvgCarb || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">Avg Carbs</div>
+          <div class="week-sub">Target: 190g</div>
+        </div>
+      </div>
+      <div class="week-grid" style="margin-top:6px">
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgFat, 70)}">${wkAvgFat || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">Avg Fat</div>
+          <div class="week-sub">Target: 70g</div>
+        </div>
+        <div class="week-cell">
+          <div class="week-val" style="color:var(--text2)">${allAvgCal || '—'}</div>
+          <div class="week-lbl">All-time avg kcal</div>
+          <div class="week-sub">${allNut.length} days logged</div>
+        </div>
+        <div class="week-cell">
+          <div class="week-val" style="color:var(--text2)">${allAvgProt || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">All-time protein</div>
+          <div class="week-sub">avg per day</div>
+        </div>
+      </div>
+      ${weekNut.length > 0 ? `
+      <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
+        <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Day-by-Day</div>
+        ${weekNut.slice().reverse().map(n => {
+          const c = n.daily_totals ? n.daily_totals.calories_kcal : null;
+          const p = n.daily_totals ? n.daily_totals.protein_g : null;
+          const pct = c ? Math.min(100, Math.round((c/2000)*100)) : 0;
+          return `<div class="data-row" style="padding:6px 0">
+            <div class="dr-key" style="font-size:11px">${fmtDate(n.date)}</div>
+            <div class="dr-bar"><div class="dr-bar-fill" style="width:${pct}%;background:${nutColor(c,2000)}"></div></div>
+            <div class="dr-val" style="font-size:11px">${c ? c+' kcal' : '—'}</div>
+            <div class="dr-badge">${p ? badge(p+'g P', p >= 135 ? 'green' : 'yellow') : badge('—','dim')}</div>
+          </div>`;
+        }).join('')}
+      </div>` : ''}
+    </div>
+  </div>`;
+
   return `
   <div class="section">
     <div class="section-title">Recovery Signals</div>
@@ -1246,6 +1510,8 @@ function renderTrends(db) {
     <div class="section-title">Training Load</div>
     ${trendCard('Session Volume', `${volData.length} strength sessions`, volData.length ? volData[volData.length-1].value : null, ' lbs', null, vol, vol.labels, {decimals:0})}
   </div>
+
+  ${weekNutHtml}
 
   <!-- Oura baselines summary -->
   <div class="section">
