@@ -773,22 +773,78 @@
             "carbs_g": 5,
             "fat_g": 5
           }
+        },
+        {
+          "meal": "snack_2",
+          "time": "16:15",
+          "items": [
+            {
+              "food": "Peanut M&M's",
+              "amount": "28g (1 oz / 12 pieces)",
+              "calories_kcal": 140,
+              "protein_g": 3,
+              "carbs_g": 17,
+              "fat_g": 8,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 140,
+            "protein_g": 3,
+            "carbs_g": 17,
+            "fat_g": 8
+          },
+          "notes": "Sugar gap. The peanut M&M's are the signature sweets pattern — 17g carbs, 8g fat, 3g protein. Swap: 1 oz beef jerky next time — same pocket snack, 10g protein, 0g fat, 0g carbs."
+        },
+        {
+          "meal": "dinner",
+          "time": "18:50",
+          "items": [
+            {
+              "food": "Salmon Sushi Roll",
+              "amount": "1 serving (6 pieces)",
+              "calories_kcal": 288,
+              "protein_g": 11,
+              "carbs_g": 54,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Salmon Sashimi with Shiso Leaf and Daikon Radish",
+              "amount": "1 serving (6 slices)",
+              "calories_kcal": 137,
+              "protein_g": 20,
+              "carbs_g": 0,
+              "fat_g": 6,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 425,
+            "protein_g": 31,
+            "carbs_g": 54,
+            "fat_g": 8
+          },
+          "notes": "Best macro decision of the day — lean protein + rice carbs, minimal fat. Sashimi (6 slices) did most of the protein work at 20g. Roll added the carbs efficiently. Good instinct given the fat overrun earlier."
         }
       ],
       "daily_totals": {
-        "calories_kcal": 1389,
-        "protein_g": 82,
-        "carbs_g": 59,
-        "fat_g": 97,
-        "note": "Breakfast + Lunch + Afternoon Snack logged. Evening meal pending. Fat 27g over target — dinner must be zero fat."
+        "calories_kcal": 1954,
+        "protein_g": 116,
+        "carbs_g": 130,
+        "fat_g": 113,
+        "note": "Day near-complete (5 entries). Fat 43g over target — damage done at breakfast (walnuts 26g fat) and lunch (ranch dressing 39g fat). Dinner was excellent execution. 46 kcal / 34g protein / 60g carbs still available if a late shake is possible."
       },
       "vs_targets": {
-        "calories_delta": -611,
-        "protein_delta": -68,
-        "carbs_delta": -131,
-        "fat_delta": 27
+        "calories_delta": -46,
+        "protein_delta": -34,
+        "carbs_delta": -60,
+        "fat_delta": 43
       },
-      "notes": "3 meals logged via Cal AI. Fat target blown: 97g vs 70g target (+27g over) driven by ranch dressing at lunch (39g fat) on top of fat-heavy breakfast (53g fat). Protein improving: 82g with afternoon whey shake helping. Dinner prescription: 60-70g lean protein (chicken/tuna/egg whites) + rice/oats, zero fat. Morning walk: 2.22 mi, 198 active cal, avg HR 101 bpm."
+      "notes": "5 entries logged via Cal AI. Fat target significantly blown (113g vs 70g target, +43g) — damage concentrated at breakfast (walnuts +26g) and lunch (ranch +39g). Dinner (sushi + sashimi) was a strong recovery choice: 31g protein, 54g carbs, only 8g fat. M&M snack at 4:15 PM was the sweets pattern showing up — 8g fat, 17g sugar. Day calories nearly on target at 1954/2000. Protein 34g short — one more whey shake would close it. Morning walk: 2.22 mi, 198 active cal, avg HR 101 bpm."
     }
   ],
   "activity_sessions": [
@@ -6414,42 +6470,41 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-12T18:09:41+08:00",
+    "generated_at": "2026-04-12T19:08:26+08:00",
     "generated_by": "hourly-coaching-brief",
-    "note": "Auto-generated. No new uploads in Today/ folder this run — all files already in processed_20260412/.",
+    "note": "Auto-generated. 3 new food photos processed: Peanut M&M's (snack), Salmon Sushi Roll + Sashimi (dinner). Nutrition log updated to near-complete.",
     "sections": {
       "recovery": [
-        "🟡 AMBER-GREEN — Recovery trending strongly upward. Oura/Rise HRV at 41.7 ms, well above your 32.5 ms baseline (+9.2 ms). Recovery score hit 68% — classified as a Recovery Breakthrough, up +12% from yesterday's 56%.",
-        "HRV baseline: 41.7 ms vs 32.5 ms baseline → +9.2 ms above. Meaningful — not just noise. Short-term trend: +1.6 ms over 7 days. 90-day trend: +7.1 ms. Trajectory is healthy.",
-        "Sleep: 6h 15m–6h 54m across sources. Moderate debt (~2–3 hrs). REM was above normal at 2h 28m — that's the main driver of the recovery breakthrough. Latency was long at 37 min (elevated) and restfulness flagged — means the night was fragmented even if REM was solid.",
-        "Mild flag: Respiratory rate 14.1 rpm (below normal). SpO2 96.1% (fine). Nothing alarming — monitor if it persists 2+ days in a row.",
-        "Non-obvious pattern: Your REM-driven recovery spikes tend to follow walks + lighter calorie days. Last night's early bed (8:55 PM) + morning walk combo is the recovery formula — this is worth protecting as a Sunday ritual."
+        "🟡 AMBER-GREEN — Recovery breakthrough. Oura HRV 41.7 ms vs 32.5 ms baseline (+9.2 ms). Recovery score 68% — Above Normal, +12% from yesterday. Trajectory is healthy: +7.1 ms over 90 days.",
+        "Sleep: 6h 54m (Oura) / 6h 15m (Rise). Moderate debt ~2h 12m. REM above normal at 2h 28m — that drove the breakthrough. Latency long at 37 min and restfulness flagged — fragmented night, but REM was solid.",
+        "Mild flag: Respiratory rate 14.1 rpm (below normal). SpO2 96.1% normal. Not alarming — monitor if it persists a second day.",
+        "Non-obvious pattern: REM-driven recovery spikes follow early bedtime + morning walk combos. Tonight's early bed (target ~9:30 PM) + tomorrow's walk would extend this streak — it's replicable."
       ],
       "training_direction": [
-        "TRAIN TODAY — Full session. Amber-Green status supports it. Last strength session was April 6 (posterior chain / pull — KB swings, hip thrust, pull-ups, lat pulldown). Six days of recovery means push-dominant upper is overdue.",
-        "Pattern today: Push-dominant Upper + Structural Correction. Horizontal push (DB bench) + vertical press (half-kneeling cable press) + shoulder correctives + unilateral lower anchored at left leg.",
-        "Floor plan: Floor 3 → Floor 2. Activation on 3 (foam roller, band work, thoracic). Primary and accessory on 2. No Floor 1 today.",
-        "65-minute hard cap — session ends at 65 min regardless. Cut Block C if needed, never Block A. Your last confirmed session (Apr 6) ran 96 minutes. Timer goes on before your first prep exercise.",
-        "HR rule: Under 122 bpm throughout. On push days your HR tends to spike on incline press if you rush transitions — rest 90 sec minimum between compound sets."
+        "TRAIN NOW if going tonight — WorldGym open until 10 PM, 7:08 PM currently. Push-dominant upper is the call. Window still exists.",
+        "Pattern: Push-Dominant Upper + Structural Correction. DB flat bench → single-arm row (left leads) → half-kneeling cable press (left leads) → face pull → low step-up (left leads) → Pallof + suitcase carry.",
+        "Floor 3 → Floor 2. Activation on 3, all compounds on 2. No Floor 1.",
+        "65-minute hard cap. 3 of your last 3 strength sessions exceeded it: Apr 6 (96 min), Apr 8 (118 min), Apr 10 (77 min). That's not a coincidence — it's a pattern. Set the timer before your first prep movement.",
+        "HR rule: Under 122 bpm. Sushi dinner 30+ min ago — metabolism slightly elevated. Warm up a bit longer than usual, first 10 min especially."
       ],
       "nutrition": [
-        "⚠️ FAT is the binding constraint. Already 97g against a 70g target — 27g OVER with dinner still pending. Calories and protein have room (611 kcal and 68g protein still needed). Carbs are wide open (131g remaining).",
-        "Current totals: 1389 kcal / 2000 | P: 82g / 150g | C: 59g / 190g | F: 97g / 70g. Three meals logged (breakfast, lunch, afternoon snack). Evening meal pending.",
-        "Dinner prescription — zero fat, zero tolerance: 150–200g chicken breast (dry grilled or boiled) + 200–250g white rice or oats. This gets you ~55–65g protein and 120–130g carbs at under 5g fat. That's the only path to staying inside today's totals.",
-        "The fat damage happened at two points: ⅓ cup walnuts at breakfast (+26g fat) and ranch dressing at lunch (+~24g fat). These two choices alone put you 50g over fat budget before dinner. Swap nuts for protein powder or cottage cheese at breakfast — same satiety, zero fat blowout.",
-        "No zero-logging days flagged this week. April 12 is tracking well structurally — the issue is fat composition, not total absence of logging. That's a better problem to have."
+        "⚠️ FAT is the blown constraint — 113g vs 70g target (+43g over). Day is essentially done at 1954 kcal. One whey shake (25g protein, 5g fat) would close protein gap to -9g with only 46 kcal overhead.",
+        "Full day totals: 1954 kcal / 116g P / 130g C / 113g F. 5 entries logged. Calories nearly on target. Protein 34g short — one late shake handles it.",
+        "M&M's at 4:15 PM — acknowledged, moving on: that's 8g fat / 17g sugar / 3g protein in a single snack. Next time: 1 oz beef jerky — same pocket snack, 10g protein, 0g fat. Swap is simple.",
+        "Dinner was the best call you made today: salmon sashimi + sushi roll = 31g protein, 54g carbs, 8g fat. Lean execution when the day needed it. That was a recovery decision, not a convenience one.",
+        "The fat damage (walnuts at breakfast + ranch at lunch) happened before noon. That's the fixable structural issue: breakfast fat sources. Swap walnuts for half a cup of cottage cheese — same satiety, 14g protein, 2g fat."
       ],
       "progress": [
-        "✅ Weight: 165.8 lbs (Bevel) — only 0.8 lbs from the 165 lb goal. Down from 167.3 on April 6 — that's 1.5 lbs in 6 days. You're at the door.",
-        "Body fat: 16.3% (Bevel, stable). Lean mass: 138.8 lbs — preserved. Visceral Fat Level dropped from 3.0 (Apr 11) to 2.0 today — meaningful single-day drop. Morning walk protocol is working.",
-        "VO2 Max: 39.6 ml/kg/min (Motra) — highest reading yet. +4.9 over 90 days. At 57, that's a serious fitness trajectory. Fasted morning walks are the engine — keep them.",
-        "Key win this week: Walk on a Sunday at 5:55 AM, HR well below cap, fat oxidation zone, and a Recovery Breakthrough. That's not an accident — it's the protocol working.",
-        "Key risk: Fat intake pattern. Walnuts + dressings at breakfast/lunch is blowing the macro split before afternoon. The calories can be hit — but if fat is chronically over, the deficit erodes. Fix the breakfast fat sources first."
+        "✅ 165.8 lbs — 0.8 lbs from the 165 lb goal. Down 1.5 lbs since April 6. You're essentially there — next Bevel scan could show it.",
+        "Body fat 16.3% (Bevel), lean mass 138.8 lbs — preserved. Visceral Fat Level dropped from 3.0 (Apr 11) to 2.0 today — meaningful signal, not noise.",
+        "VO2 Max: 39.6 ml/kg/min (Motra) — highest reading yet, +4.9 over 90 days. The fasted morning walks are the engine — they're working.",
+        "Key win today: Morning walk at 5:55 AM, HR 101 bpm (well below cap), Recovery Breakthrough logged, dinner was a smart lean choice. Full system functioning.",
+        "Key risk: Breakfast fat pattern — walnuts + any fatty protein at breakfast blows the fat budget before lunch. Fix breakfast, the rest of the day self-corrects."
       ],
       "watch_for": [
-        "1. If HR exceeds 118 bpm during your first compound set (DB bench) → rest 2 full minutes before your next set, drop weight 10%, and skip the second exercise in any planned superset. Don't chase volume on a compressed recovery day.",
-        "2. If dinner feels difficult to eat after a late gym session (>8 PM) → prioritize the protein shake (whey in almond milk = 25g protein / 5g fat) as your 'meal' and skip rice. Preserves protein without adding fat. Missing the carbs tonight is less harmful than adding more fat.",
-        "3. If session runs past 60 minutes → stop, skip Block C entirely, go straight to cooldown. Your April 6 session hit 96 minutes. Set a phone timer for 60 minutes at the start of prep and treat it as a hard stop, not a soft guideline."
+        "1. If training tonight: set timer before first prep movement — not after. 65 min from first foam roller roll. Your Apr 6/8/10 pattern shows the overrun happens in the middle, not the end.",
+        "2. If skipping the gym tonight: take a whey shake before 9 PM — 25g protein, 5g fat, 4g carbs. Closes the protein gap without adding more fat. Day ends at 141g protein, 117g fat — close enough.",
+        "3. Tomorrow morning: log breakfast before leaving the house. Two consecutive zero-log mornings (Apr 11) weakened the data stream. The streak of good logging today is worth protecting."
       ]
     },
     "session_plan": {
@@ -6659,7 +6714,7 @@
       ]
     }
   },
-  "last_updated": "2026-04-12T18:09:41+08:00",
+  "last_updated": "2026-04-12T19:08:26+08:00",
   "coaching_brief_session_plan_note": "session_plan lives inside coaching_brief starting next hourly run. Sample below is for today's Sunday active recovery context.",
   "_session_plan_sample": {
     "session_type": "Pull-dominant Upper / Structural Correction",
