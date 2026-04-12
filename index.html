@@ -410,7 +410,7 @@ body {
   background: rgba(13,17,23,0.97);
   border-top: 1px solid var(--border);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   backdrop-filter: blur(12px);
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
@@ -445,8 +445,9 @@ body {
 <div class="tabs">
   <div class="tab-btn active" data-tab="today">Today</div>
   <div class="tab-btn" data-tab="body">Body</div>
-  <div class="tab-btn" data-tab="training">Training</div>
+  <div class="tab-btn" data-tab="training">Train</div>
   <div class="tab-btn" data-tab="trends">Trends</div>
+  <div class="tab-btn" data-tab="coach">Coach</div>
 </div>
 
 <!-- Tab panels -->
@@ -454,6 +455,7 @@ body {
 <div id="tab-body"     class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 <div id="tab-training" class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 <div id="tab-trends"   class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+<div id="tab-coach"    class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 
 <!-- Bottom nav (mirrors tabs) -->
 <div class="bottom-nav" id="bottom-nav">
@@ -461,6 +463,7 @@ body {
   <div class="bn-item" data-tab="body"><div class="bn-icon">🫀</div><div class="bn-label">Body</div></div>
   <div class="bn-item" data-tab="training"><div class="bn-icon">💪</div><div class="bn-label">Train</div></div>
   <div class="bn-item" data-tab="trends"><div class="bn-icon">📈</div><div class="bn-label">Trends</div></div>
+  <div class="bn-item" data-tab="coach"><div class="bn-icon">🎯</div><div class="bn-label">Coach</div></div>
 </div>
 
 <script>
@@ -856,10 +859,15 @@ function renderToday(db) {
     </div>
   </div>
 
-  <!-- Coach note -->
+  <!-- Coach teaser -->
   <div class="section">
-    <div class="section-title">Coach Note</div>
-    <div class="coach-note">${coachingNote(db)}</div>
+    <div class="section-title">Coach Brief</div>
+    <div class="coach-note" id="coach-teaser" style="cursor:pointer" onclick="switchTab('coach')">
+      ${coachingTeaser(db)}
+      <div style="margin-top:10px;font-size:11px;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:4px">
+        Full coaching brief → <span style="font-size:13px">🎯</span>
+      </div>
+    </div>
   </div>
 
   <!-- HRV chart -->
@@ -1342,6 +1350,199 @@ function renderTraining(db) {
 }
 
 /* ══════════════════════════════════════════════════════
+   COACHING TEASER (Today tab — 1 paragraph only)
+══════════════════════════════════════════════════════ */
+function coachingTeaser(db) {
+  const cb = db.coaching_brief;
+  // If we have a stored brief from the scheduled task, show the recovery paragraph
+  if (cb && cb.sections && cb.sections.recovery) {
+    const updatedAt = cb.generated_at ? new Date(cb.generated_at) : null;
+    const timeStr = updatedAt ? updatedAt.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true}) : '';
+    return `<div class="coach-label" style="margin-bottom:6px">Coach · ${timeStr ? 'Updated ' + timeStr : 'Daily Brief'}</div><p>${cb.sections.recovery}</p>`;
+  }
+  // Fallback: generate the readiness paragraph
+  const sleep    = latest(db.recovery_sleep);
+  const baseline = db.profile.oura_biology_baselines || {};
+  const hrv      = sleep.hrv_ms;
+  const recovery = sleep.recovery_score_pct;
+  const hrvBase  = baseline.hrv_baseline_ms || 32.5;
+  const diff     = hrv ? +(hrv - hrvBase).toFixed(1) : null;
+
+  let para = '';
+  if (hrv && diff !== null) {
+    if (diff > 3) {
+      para = `HRV at <strong>${hrv} ms</strong> — ${diff} ms above your ${hrvBase} ms baseline. Nervous system is recovered and ready. If you've got a strength session planned, push it.`;
+    } else if (diff < -3) {
+      para = `HRV down to <strong>${hrv} ms</strong> — ${Math.abs(diff)} ms below your ${hrvBase} ms baseline. Under-recovered today. Keep effort controlled, HR under 122 bpm. Don't chase PRs.`;
+    } else {
+      para = `HRV at <strong>${hrv} ms</strong> — right at baseline. Solid training day. ${recovery >= 70 ? 'Readiness is green — you have capacity to push.' : recovery < 40 ? 'Readiness is low, keep intensity managed.' : 'Train with intent, prioritize quality movement.'}`;
+    }
+  } else {
+    para = `Sync your Oura data for a readiness decision. Until then, default to a controlled session: HR under 122 bpm, structural work and quality movement.`;
+  }
+  return `<div class="coach-label">Coach · Daily Brief</div><p>${para}</p>`;
+}
+
+/* ══════════════════════════════════════════════════════
+   COACH TAB — FULL RENDERING
+══════════════════════════════════════════════════════ */
+function renderCoach(db) {
+  const cb       = db.coaching_brief;
+  const sleep    = latest(db.recovery_sleep);
+  const body     = latest(db.body_composition);
+  const baseline = db.profile.oura_biology_baselines || {};
+  const hrv      = sleep.hrv_ms;
+  const recovery = sleep.recovery_score_pct;
+  const hrvBase  = baseline.hrv_baseline_ms || 32.5;
+  const diff     = hrv ? +(hrv - hrvBase).toFixed(1) : null;
+  const weightLbs = body.weight_lbs || (body.weight_kg ? +(body.weight_kg * 2.2046).toFixed(1) : null);
+  const goalLbs   = (db.profile.nutrition_targets && db.profile.nutrition_targets.goal_weight_lbs) || 165;
+  const nutrition = db.nutrition || [];
+  const todayNut  = nutrition.length ? latest(nutrition) : null;
+
+  // Section renderer helper
+  function coachSection(title, colorVar, text) {
+    return `
+    <div style="margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${colorVar};margin-bottom:8px;display:flex;align-items:center;gap:5px">
+        <span style="font-size:7px">◆</span> ${title}
+      </div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7;background:var(--surface);border:1px solid var(--border);border-left:3px solid ${colorVar};border-radius:0 6px 6px 0;padding:12px 14px">${text}</div>
+    </div>`;
+  }
+
+  let sections = '';
+
+  if (cb && cb.sections) {
+    // ── Render stored brief from scheduled task ──
+    const updatedAt = cb.generated_at ? new Date(cb.generated_at) : null;
+    const timeStr   = updatedAt ? updatedAt.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true}) : '';
+    const dateStr   = updatedAt ? updatedAt.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'}) : '';
+
+    const sectionDefs = [
+      { key: 'recovery',          title: 'Recovery & Readiness',     color: 'var(--accent)'  },
+      { key: 'training_direction',title: 'Training Direction',       color: 'var(--green)'   },
+      { key: 'workout_prep',      title: 'Workout Preparation',      color: 'var(--teal)'    },
+      { key: 'nutrition',         title: 'Nutrition',                color: 'var(--yellow)'  },
+      { key: 'progress',          title: 'Progress & Accountability',color: 'var(--purple)'  },
+      { key: 'watch_for',         title: 'What to Watch',            color: 'var(--text2)'   },
+    ];
+
+    sectionDefs.filter(s => cb.sections[s.key]).forEach(s => {
+      sections += coachSection(s.title, s.color, cb.sections[s.key]);
+    });
+
+    return `
+    <div style="padding:14px 14px 0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Daily Coaching Brief</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px">AI Coach · Updates hourly 6am–9pm</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          ${updatedAt ? `<div style="font-size:11px;color:var(--text3)">${dateStr}</div><div style="font-size:13px;font-weight:700;color:var(--accent)">${timeStr}</div>` : '<span class="badge badge-yellow">No brief yet</span>'}
+        </div>
+      </div>
+      ${sections}
+    </div>
+    <div class="spacer"></div>`;
+
+  } else {
+    // ── Fallback: generate client-side coaching ──
+
+    // Section 1: Recovery
+    let recText = '';
+    if (hrv && diff !== null) {
+      const debtMin = sleep.sleep_bank_min || sleep.autosleep_sleep_bank_min;
+      if (diff > 3) {
+        recText = `Your HRV is at <strong>${hrv} ms</strong> — ${diff} ms above your ${hrvBase} ms baseline. Your nervous system is recovered and ready to work. If you have a strength session planned, push it. This is exactly the signal you want to see.${recovery >= 70 ? " Readiness is high across the board — don't leave that on the table." : ""}`;
+      } else if (diff < -3) {
+        recText = `HRV is down to <strong>${hrv} ms</strong> — ${Math.abs(diff)} ms below your ${hrvBase} ms baseline. Your body is telling you it's under-recovered. You can still train, but today is not the day to chase PRs. Keep everything under 122 bpm, cut volume if needed, and protect the sleep tonight.${debtMin && debtMin < -90 ? ` You're carrying a sleep debt of ${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m — that's compounding the problem.` : ''}`;
+      } else {
+        recText = `HRV is at <strong>${hrv} ms</strong> — right at your ${hrvBase} ms baseline. Solid, normal day. ${recovery >= 70 ? "Readiness is green, which means you have the capacity to push if the session calls for it." : recovery < 40 ? "Readiness is on the low side though — take the intensity cues seriously today." : "Train with intent, keep your HR managed, and focus on quality movement over maximum load."}`;
+      }
+    } else {
+      recText = `Sync your Oura data to get an accurate training decision. Until then, default to a controlled session: HR under 122 bpm, focus on structural work and quality movement.`;
+    }
+    sections += coachSection('Recovery & Readiness', 'var(--accent)', recText);
+
+    // Section 2: Training direction
+    let trainText = '';
+    if (hrv) {
+      if (diff > 3) {
+        trainText = `Today is a green-light day — nervous system is fully loaded. This is the session to push your primary lift, take sets close to failure on the main movements, and actually chase a PR if the opportunity is there. Don't waste a high-HRV day on a recovery session.`;
+      } else if (diff < -3) {
+        trainText = `With HRV suppressed, today's training priority shifts to quality over quantity. Do your corrective work properly. Reduce main lift volume by 20–30%, avoid grinding through failed reps, and keep rest periods generous. A controlled session that doesn't create excess fatigue is a win today.`;
+      } else {
+        trainText = `Normal training day. Execute the planned session at full intent — just don't go hunting for max effort. Your primary movements should feel challenging but not desperate. Quality reps, proper rest, and consistent structural correction work.`;
+      }
+    } else {
+      trainText = `Without readiness data, train at 75% of planned intensity and see how the session feels at the warm-up. Your body will tell you more in the first 15 minutes than any number on a screen.`;
+    }
+    sections += coachSection('Training Direction', 'var(--green)', trainText);
+
+    // Section 3: Workout prep
+    sections += coachSection('Workout Preparation', 'var(--teal)',
+      `Before every session: spend 8–10 minutes on Floor 3 for prep and activation. <strong>Hip 90/90 mobility</strong> (avoid deep flexion — mild OA), <strong>banded hip abduction</strong> to wake up the left glute, and <strong>thoracic rotation</strong> to offset the stiffness. Your right-side dominance means you need to consciously prime the left side before loading. Don't skip the activation work — it directly affects how well your corrective movements function in the main session.`
+    );
+
+    // Section 4: Nutrition
+    let nutText = '';
+    if (todayNut && todayNut.daily_totals && todayNut.daily_totals.calories_kcal) {
+      const cals = todayNut.daily_totals.calories_kcal;
+      const prot = todayNut.daily_totals.protein_g || 0;
+      const calPct = Math.round((cals / 2000) * 100);
+      if (prot < 105) {
+        nutText = `Calories are logged at <strong>${cals} kcal</strong> (${calPct}% of target), but protein is at ${prot}g — well short of your 150g target. This matters more than the calorie number. Protein is what keeps you from losing muscle in a deficit. At 57, anabolic resistance is real — you need more protein than a younger athlete to get the same muscle-preserving effect. Prioritize a protein source at every meal and hit 150g before worrying about anything else.`;
+      } else if (cals < 1400) {
+        nutText = `Your logged intake is <strong>${cals} kcal</strong> — that's significantly under your 2,000 kcal target. Either the log is incomplete, or you're genuinely undereating. A 380 kcal deficit is already built into your plan — going lower accelerates muscle loss and increases cortisol, both of which undermine your goals. Log everything and hit the target.`;
+      } else {
+        nutText = `Nutrition is on track — <strong>${cals} kcal</strong> with ${prot}g protein logged. That's the plan: a deliberate ~380 kcal deficit with elevated protein to preserve muscle during the cut. Keep this consistency going. The compounding effect of hitting targets daily is what drives the body composition change you're after.`;
+      }
+    } else {
+      nutText = `No nutrition data logged yet today. Your targets are <strong>2,000 kcal / 150g protein / 190g carbs / 70g fat</strong>. That's a ~380 kcal deficit from your TDEE with protein elevated specifically to counteract anabolic resistance at your age. Log every meal — the data is what makes the coaching accurate.`;
+    }
+    sections += coachSection('Nutrition', 'var(--yellow)', nutText);
+
+    // Section 5: Progress
+    let progText = '';
+    if (weightLbs) {
+      const remaining = +(weightLbs - goalLbs).toFixed(1);
+      if (remaining > 5) {
+        progText = `At <strong>${weightLbs.toFixed(1)} lbs</strong>, you're ${remaining} lbs from your goal of ${goalLbs} lbs. The mission hasn't changed: reduce visceral fat, preserve muscle, improve sleep, and correct the structural imbalances we've identified. Every session and every meal is a data point. Most of them need to be in the right direction.`;
+      } else if (remaining > 0) {
+        progText = `You're <strong>${remaining} lbs from your goal</strong> of ${goalLbs} lbs — you're in the final push. This is where most people ease off because the end feels close. Don't. The structural work matters just as much now as when you started. Right-side dominance, shoulder asymmetry, and thoracic stiffness don't fix themselves with weight loss alone.`;
+      } else {
+        progText = `Weight goal hit at ${weightLbs.toFixed(1)} lbs. The mission now shifts: maintain lean mass, keep reducing visceral fat, and address the structural imbalances that affect how your body moves and ages. The scale is no longer the primary metric.`;
+      }
+    } else {
+      progText = `Keep stacking good days. Sleep → nutrition → training — in that priority order. The right-side dominance and shoulder asymmetry are long-game problems that require consistent, patient work. They will improve with deliberate effort over months, not weeks.`;
+    }
+    sections += coachSection('Progress & Accountability', 'var(--purple)', progText);
+
+    // Section 6: Watch for
+    sections += coachSection('What to Watch', 'var(--text2)',
+      `Three things to stay aware of this week: <strong>(1) HR creep</strong> — if you're hitting 125+ bpm during compound lifts, you're working harder than your aerobic system is ready for. Pull back. <strong>(2) Right-side compensation</strong> — in every pulling movement, notice if the right shoulder is doing more work. If it is, reduce load and reinforce the left. <strong>(3) Sleep quality signals</strong> — HRV trending down over 3+ days means your recovery is degrading. The fix is almost always sleep hygiene, not training modification.`
+    );
+
+    return `
+    <div style="padding:14px 14px 0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Daily Coaching Brief</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px">AI Coach · Updates hourly 6am–9pm</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <span class="badge badge-yellow">Using snapshot data</span>
+        </div>
+      </div>
+      ${sections}
+    </div>
+    <div class="spacer"></div>`;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
    TRENDS TAB
 ══════════════════════════════════════════════════════ */
 function renderTrends(db) {
@@ -1568,6 +1769,7 @@ function renderTab(name, db) {
       case 'body':     panel.innerHTML = renderBody(db);     break;
       case 'training': panel.innerHTML = renderTraining(db); break;
       case 'trends':   panel.innerHTML = renderTrends(db);   break;
+      case 'coach':    panel.innerHTML = renderCoach(db);    break;
     }
     rendered[name] = true;
   } catch(e) {
