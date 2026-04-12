@@ -6414,22 +6414,50 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-12T17:08:21+08:00",
-    "generated_by": "Scheduled AI Coach task",
-    "note": "Populated hourly 6am–9pm by the scheduled coaching task. See sections below.",
+    "generated_at": "2026-04-12T18:09:41+08:00",
+    "generated_by": "hourly-coaching-brief",
+    "note": "Auto-generated. No new uploads in Today/ folder this run — all files already in processed_20260412/.",
     "sections": {
-      "recovery": "🟢 Green — Recovery Breakthrough\n• HRV 41.7 ms — 9.2 ms above your 32.5 ms personal baseline. Oura 68% (Above Normal), +12% from yesterday's 57%. This is a genuine recovery window, not a noise blip.\n• Sleep 6h 15m–6h 54m. REM above normal at 2h 28m (Oura). Latency 37m — attributed to post-workout metabolism. Moderate sleep debt (~2h 12m) but restfulness flagged; deep sleep was only 30m.\n• Respiratory rate 14.1 rpm (slightly below normal) and SpO2 96.1% (normal). RR is a watch item — not actionable today unless tomorrow it drops further alongside HRV.\n• Non-obvious: HRV above baseline for 3 consecutive days (Apr 9: 36.2 → Apr 11: 38.8 → Apr 12: 41.7 ms). That streak rarely survives a session over 70 minutes. Green light is real — protect it.",
-      "training_direction": "Train — Pull-dominant Upper / Structural Correction\n• Pattern due: pull. Apr 10 = upper strength (post Apr 8 chest/hinge spike at 118 min). Apr 12 AM = easy walk. Pull + structural correction is the correct pattern today.\n• Floor 3 → Floor 2. Activation on 3, primary work on 2. No floor changes mid-session. Left side leads all unilateral work — every set.\n• 65-minute hard cap. Set the timer NOW, before your first Floor 3 movement. Cut Block C if needed — never cut the compound rows. The cap is 65 min, not 70, not 'around 65.'\n• HR rule: <122 bpm all session. At 5 PM in Taichung, afternoon heat and post-lunch digestion will push baseline HR up 3–5 bpm above morning. Warm-up 10 min before first working set. If HR doesn't drop below 95 after warm-up, rest another 5 min.\n• Accountability: Apr 1 = 95 min, Apr 6 = 96 min, Apr 8 = 118 min, Apr 10 = 77 min. That's 4 of your last 4 strength sessions over the cap. Set. The. Timer.",
-      "nutrition": "Fat blown — dinner is the only remaining variable\n• Logged: 1,389 kcal / 82g P / 59g C / 97g F. Fat is 27g over the 70g target. Budget is closed for fat at dinner.\n• Dinner must deliver: ~600 kcal / 68g protein / 130g carbs / 0g fat. Chicken breast (200g) + 1 cup white rice + steamed broccoli = exact fit.\n• If you train at 5–6 PM, eat by 7:30 PM at the latest. Late dinner raises overnight glucose and degrades recovery score — which would end your current 3-day HRV streak.\n• Apr 11 had no nutrition logged. Not tracking a day doesn't mean you hit targets — it means the deficit is unverifiable. Log dinner tonight.\n• Protein discipline is working: 82g logged by mid-afternoon. Get the remaining 68g at dinner and you'll close the week above target.",
-      "progress": "0.8 lbs from goal weight — VO2 Max at personal best\n• Weight: 165.8 lbs (Bevel, Apr 12 6:47 AM). Down 0.2 lbs from Apr 11. Goal weight 165.0 lbs — you're 0.8 lbs out. This week is likely.\n• Visceral Fat Level: 3.0 → 2.0 from Apr 11 to Apr 12. Primary VAT reduction mission is advancing. Lean mass 138.8 lbs at 79.1% muscle — being preserved despite the deficit. Exactly the goal at 57.\n• VO2 Max 39.6 ml/kg/min (Motra) — up +4.9 over 90 days from 34.7 to 39.6. Morning Zone 1 walks are driving this. Don't drop them.\n• Win: Consecutive morning walks + consistent logging this week have produced the cleanest recovery data in months.\n• Watch: Motra 30-day weight trend projects 169.3 lbs if the current +0.8 lbs/wk trend continues. This is almost certainly a hydration + training load artifact, but verify it by logging every meal this week.",
-      "watch_for": "1. If HR at the start of your first working set is above 105 bpm — stop, rest 10 min, and re-check. 5 PM session after afternoon snack in Taichung heat means baseline HR will be elevated. Don't start loaded pulling with HR above 105.\n2. If you add fat to dinner (oil, cheese, dressing, nuts) — you'll end the day 35g+ over target. The fix: chicken or tuna only, rice or oats, no oil, no sauce. Fat budget is mathematically closed.\n3. If tomorrow's Oura respiratory rate is below 14.0 rpm AND HRV drops below 35 ms — shift Monday's session to active recovery (walk only). One RR flag today is a watch; two in a row paired with HRV drop is a deload signal."
+      "recovery": [
+        "🟡 AMBER-GREEN — Recovery trending strongly upward. Oura/Rise HRV at 41.7 ms, well above your 32.5 ms baseline (+9.2 ms). Recovery score hit 68% — classified as a Recovery Breakthrough, up +12% from yesterday's 56%.",
+        "HRV baseline: 41.7 ms vs 32.5 ms baseline → +9.2 ms above. Meaningful — not just noise. Short-term trend: +1.6 ms over 7 days. 90-day trend: +7.1 ms. Trajectory is healthy.",
+        "Sleep: 6h 15m–6h 54m across sources. Moderate debt (~2–3 hrs). REM was above normal at 2h 28m — that's the main driver of the recovery breakthrough. Latency was long at 37 min (elevated) and restfulness flagged — means the night was fragmented even if REM was solid.",
+        "Mild flag: Respiratory rate 14.1 rpm (below normal). SpO2 96.1% (fine). Nothing alarming — monitor if it persists 2+ days in a row.",
+        "Non-obvious pattern: Your REM-driven recovery spikes tend to follow walks + lighter calorie days. Last night's early bed (8:55 PM) + morning walk combo is the recovery formula — this is worth protecting as a Sunday ritual."
+      ],
+      "training_direction": [
+        "TRAIN TODAY — Full session. Amber-Green status supports it. Last strength session was April 6 (posterior chain / pull — KB swings, hip thrust, pull-ups, lat pulldown). Six days of recovery means push-dominant upper is overdue.",
+        "Pattern today: Push-dominant Upper + Structural Correction. Horizontal push (DB bench) + vertical press (half-kneeling cable press) + shoulder correctives + unilateral lower anchored at left leg.",
+        "Floor plan: Floor 3 → Floor 2. Activation on 3 (foam roller, band work, thoracic). Primary and accessory on 2. No Floor 1 today.",
+        "65-minute hard cap — session ends at 65 min regardless. Cut Block C if needed, never Block A. Your last confirmed session (Apr 6) ran 96 minutes. Timer goes on before your first prep exercise.",
+        "HR rule: Under 122 bpm throughout. On push days your HR tends to spike on incline press if you rush transitions — rest 90 sec minimum between compound sets."
+      ],
+      "nutrition": [
+        "⚠️ FAT is the binding constraint. Already 97g against a 70g target — 27g OVER with dinner still pending. Calories and protein have room (611 kcal and 68g protein still needed). Carbs are wide open (131g remaining).",
+        "Current totals: 1389 kcal / 2000 | P: 82g / 150g | C: 59g / 190g | F: 97g / 70g. Three meals logged (breakfast, lunch, afternoon snack). Evening meal pending.",
+        "Dinner prescription — zero fat, zero tolerance: 150–200g chicken breast (dry grilled or boiled) + 200–250g white rice or oats. This gets you ~55–65g protein and 120–130g carbs at under 5g fat. That's the only path to staying inside today's totals.",
+        "The fat damage happened at two points: ⅓ cup walnuts at breakfast (+26g fat) and ranch dressing at lunch (+~24g fat). These two choices alone put you 50g over fat budget before dinner. Swap nuts for protein powder or cottage cheese at breakfast — same satiety, zero fat blowout.",
+        "No zero-logging days flagged this week. April 12 is tracking well structurally — the issue is fat composition, not total absence of logging. That's a better problem to have."
+      ],
+      "progress": [
+        "✅ Weight: 165.8 lbs (Bevel) — only 0.8 lbs from the 165 lb goal. Down from 167.3 on April 6 — that's 1.5 lbs in 6 days. You're at the door.",
+        "Body fat: 16.3% (Bevel, stable). Lean mass: 138.8 lbs — preserved. Visceral Fat Level dropped from 3.0 (Apr 11) to 2.0 today — meaningful single-day drop. Morning walk protocol is working.",
+        "VO2 Max: 39.6 ml/kg/min (Motra) — highest reading yet. +4.9 over 90 days. At 57, that's a serious fitness trajectory. Fasted morning walks are the engine — keep them.",
+        "Key win this week: Walk on a Sunday at 5:55 AM, HR well below cap, fat oxidation zone, and a Recovery Breakthrough. That's not an accident — it's the protocol working.",
+        "Key risk: Fat intake pattern. Walnuts + dressings at breakfast/lunch is blowing the macro split before afternoon. The calories can be hit — but if fat is chronically over, the deficit erodes. Fix the breakfast fat sources first."
+      ],
+      "watch_for": [
+        "1. If HR exceeds 118 bpm during your first compound set (DB bench) → rest 2 full minutes before your next set, drop weight 10%, and skip the second exercise in any planned superset. Don't chase volume on a compressed recovery day.",
+        "2. If dinner feels difficult to eat after a late gym session (>8 PM) → prioritize the protein shake (whey in almond milk = 25g protein / 5g fat) as your 'meal' and skip rice. Preserves protein without adding fat. Missing the carbs tonight is less harmful than adding more fat.",
+        "3. If session runs past 60 minutes → stop, skip Block C entirely, go straight to cooldown. Your April 6 session hit 96 minutes. Set a phone timer for 60 minutes at the start of prep and treat it as a hard stop, not a soft guideline."
+      ]
     },
     "session_plan": {
-      "session_type": "Pull-dominant Upper / Structural Correction",
-      "session_goal": "Build left-side pulling strength and volume, counter right-shoulder dominance, thoracic decompression. Complete within 65 minutes.",
+      "session_type": "Push-Dominant Upper / Structural Correction",
+      "session_goal": "Restore push balance after 6 days off from strength, integrate scapular correction and left-side unilateral control.",
       "floor_plan": "Floor 3 → Floor 2",
       "time_cap_min": 65,
-      "readiness_call": "Green",
+      "readiness_call": "Amber-Green",
       "blocks": [
         {
           "id": "PREP",
@@ -6440,179 +6468,190 @@
               "id": "prep_1",
               "name": "Foam Roller Thoracic Extension",
               "sets": "1",
-              "reps": "10",
+              "reps": "8–10 extensions",
               "rest_sec": 0,
-              "note": "2–3s pause per rep on the roller. T-spine stiffness is the upstream driver of your shoulder asymmetry. Don't rush this.",
+              "note": "Thoracic stiffness is your #3 structural issue. 3 segments — mid-back, upper-mid, upper thoracic. Hold 2 sec at each segment. Don't rush this — it sets the scapular baseline for the whole push session.",
               "alternatives": [
-                "Seated T-Spine Rotation with Dowel",
-                "Cat-Cow with Lateral Reach",
-                "Quadruped Thread-the-Needle"
+                "Thoracic extension over bench edge",
+                "Cat-cow with thoracic pause",
+                "Seated thoracic rotation with dowel"
               ]
             },
             {
               "id": "prep_2",
               "name": "Quadruped Thoracic Rotation",
-              "sets": "2",
-              "reps": "8 per side",
+              "sets": "1",
+              "reps": "10 each side",
               "rest_sec": 0,
-              "note": "Right side rotates naturally further than left — force equal range both sides. Slow, deliberate, exhale into rotation.",
+              "note": "Start LEFT side first. Right-side dominance means your left thoracic rotation is restricted — prioritize it. Place hand behind head, rotate elbow toward ceiling. Control the descent.",
               "alternatives": [
-                "Side-Lying Open Book",
-                "Half-Kneeling T-Spine Rotation",
-                "Foam Roller Side Bend"
+                "Open book stretch (side-lying)",
+                "Seated rotation with band anchor",
+                "Half-kneeling thoracic rotation"
               ]
             },
             {
               "id": "prep_3",
               "name": "Banded Hip Abduction",
-              "sets": "2",
-              "reps": "15",
+              "sets": "1",
+              "reps": "15 each side (left first)",
               "rest_sec": 0,
-              "note": "LEFT side first. Your right glute fires automatically — left needs intentional priming before any unilateral lower work.",
+              "note": "Left side leads. Activates glute medius — left hip is the structural weak side per scan data. Standing or side-lying, your choice. Keep pelvis level — don't let the hip hike.",
               "alternatives": [
-                "Side-Lying Hip Abduction",
-                "Clamshell with Band",
-                "Standing Cable Hip Abduction"
+                "Clamshell with band",
+                "Side-lying hip abduction (no band)",
+                "Cable hip abduction standing"
               ]
             },
             {
               "id": "prep_4",
-              "name": "Band Pull-Apart",
+              "name": "Band Pull-Aparts",
               "sets": "2",
               "reps": "15",
-              "rest_sec": 0,
-              "note": "Slow 2–3s eccentric. Left scapular retraction cue. Primes infraspinatus and rear delt before rowing.",
+              "rest_sec": 15,
+              "note": "Scapular control primer before any pressing. Retract hard at end range — hold 1 second. Reduces upper trap compensation on the bench. Use a light-to-medium band.",
               "alternatives": [
-                "Face Pull (light cable)",
-                "Prone Y-T-W (bodyweight)",
-                "TRX Y-Fly"
+                "Face pull (cable or band)",
+                "TRX Y-raise (if available Floor 3)",
+                "Prone Y-T-W bodyweight"
               ]
             },
             {
               "id": "prep_5",
-              "name": "Side-Lying External Shoulder Rotation",
+              "name": "Wall Slides",
               "sets": "1",
-              "reps": "12 per side",
+              "reps": "10",
               "rest_sec": 0,
-              "note": "LEFT arm first. Light DB only — this is activation, not loading. Corrects the right-shoulder rotator cuff asymmetry from the AI scan.",
+              "note": "Arms against wall, slide up overhead keeping contact. Targets shoulder mobility asymmetry — your #3 structural issue. Move at a pace where you can feel the resistance, not through it.",
               "alternatives": [
-                "90/90 Band External Rotation",
-                "Cable External Rotation at Side",
-                "Prone Y-T-W"
+                "Dowel shoulder CARs",
+                "Band overhead reach",
+                "Cable face pull with external rotation"
               ]
             }
           ]
         },
         {
-          "id": "A",
-          "label": "Block A — Primary Pull Superset (~18 min)",
-          "pairing": "superset",
-          "estimated_min": 18,
+          "id": "BLOCK_A",
+          "label": "Floor 2 — Primary Push (~15 min)",
+          "estimated_min": 15,
           "exercises": [
             {
-              "id": "A1",
-              "name": "Single-Arm Cable Row",
+              "id": "a1",
+              "name": "DB Flat Bench Press",
               "sets": "3",
               "reps": "10–12",
               "rest_sec": 90,
-              "note": "LEFT arm leads every set. Full scapular retraction pause at end range. No torso rotation — this is your right-side dominance correction anchor for the session.",
+              "note": "Straight sets — no superset on push day given HR cap. Moderate weight where form stays clean through rep 10. Control the descent (2 sec down). Left arm may fatigue slightly earlier — let it lead the descent cue.",
               "alternatives": [
-                "Half-Kneeling Single-Arm Lat Pulldown",
-                "Single-Arm Landmine Row",
-                "Chest-Supported DB Row (left leads)"
+                "Incline DB Press (15–30°)",
+                "Cable Chest Press (single or dual)",
+                "Machine Chest Press"
               ]
             },
             {
-              "id": "A2",
-              "name": "Lat Pulldown (wide grip)",
+              "id": "a2",
+              "name": "Single-Arm DB Row (left side first)",
               "sets": "3",
-              "reps": "10–12",
+              "reps": "10 each side",
               "rest_sec": 60,
-              "note": "Pair with A1 during rest period. Full lat stretch at the top — don't cut range. Initiate with lat depression, not bicep curl.",
+              "note": "Left arm leads — always. This is your right-side dominance corrective. Use a weight where your left side completes all reps without compensation, not the weight your right side can handle. Anti-rotation is the point, not load.",
               "alternatives": [
-                "Assisted Pull-Up",
-                "Cable Straight-Arm Pulldown",
-                "Neutral-Grip Pulldown"
+                "One-arm cable row (Floor 2 cable station)",
+                "Single-arm seated cable row",
+                "TRX row (single arm, Floor 3)"
               ]
             }
           ]
         },
         {
-          "id": "B",
-          "label": "Block B — Shoulder Corrective + Hinge Superset (~16 min)",
-          "pairing": "superset",
-          "estimated_min": 16,
+          "id": "BLOCK_B",
+          "label": "Floor 2 — Secondary + Corrective (~15 min)",
+          "estimated_min": 15,
           "exercises": [
             {
-              "id": "B1",
-              "name": "Cable Face Pull (rope)",
+              "id": "b1",
+              "name": "Half-Kneeling Cable Press (left arm first)",
+              "sets": "3",
+              "reps": "10 each side",
+              "rest_sec": 60,
+              "note": "Left arm leads. Half-kneeling position forces anti-rotation — core engages to stabilize. Right knee down, press with left arm (right-side dominance correction). Keep glute of rear leg active throughout.",
+              "alternatives": [
+                "Single-arm overhead DB press (seated)",
+                "Landmine press (left arm first)",
+                "Single-arm cable overhead press"
+              ]
+            },
+            {
+              "id": "b2",
+              "name": "Face Pull",
               "sets": "3",
               "reps": "15",
-              "rest_sec": 75,
-              "note": "External rotation at end range — pull elbows back and high, hands to temples. Light weight, strict form. This is corrective volume, not a strength exercise.",
+              "rest_sec": 45,
+              "note": "Rear delt and mid-trap activation — directly addresses shoulder imbalance. Pull to forehead height, elbows flared high, squeeze at end range. This is a corrective, not a weight exercise. Load should allow perfect form every rep.",
               "alternatives": [
-                "Band Face Pull",
-                "Rear Delt Cable Fly",
-                "TRX Row with External Rotation"
+                "TRX Y-raise",
+                "Cable Y-raise",
+                "Band face pull (light, seated)"
               ]
             },
             {
-              "id": "B2",
-              "name": "Romanian Deadlift (DB)",
+              "id": "b3",
+              "name": "Low Step-Up (left leg first)",
               "sets": "3",
-              "reps": "8–10",
-              "rest_sec": 75,
-              "note": "Hips back, neutral spine, soft knee bend. Stop hip flexion at approximately 90° to protect hip OA. Control the eccentric 2–3s.",
+              "reps": "10 each side",
+              "rest_sec": 45,
+              "note": "Left leg leads every set. Hip-OA safe — no deep hip flexion. Use a 6–8 inch step maximum. Drive through the heel, full hip extension at top. No push-off from the trailing foot. Slow the descent.",
               "alternatives": [
-                "Single-Leg RDL (supported, DB)",
-                "Cable Pull-Through",
-                "Kettlebell Swing (moderate weight)"
+                "Supported split squat (rear foot low, left leg forward)",
+                "Lateral step-up (low box)",
+                "Glute bridge single-leg (left first, floor)"
               ]
             }
           ]
         },
         {
-          "id": "C",
-          "label": "Block C — Trunk + Engagement (~14 min)",
-          "estimated_min": 14,
+          "id": "BLOCK_C",
+          "label": "Floor 2 — Trunk / Engagement (~12 min)",
+          "estimated_min": 12,
           "exercises": [
             {
-              "id": "C1",
-              "name": "Pallof Press (cable)",
+              "id": "c1",
+              "name": "Pallof Press",
               "sets": "3",
-              "reps": "10 per side",
-              "rest_sec": 60,
-              "note": "LEFT side first. Anti-rotation is the entire point — if your torso rotates, the weight is too heavy. Core and lateral spine correction in one movement.",
+              "reps": "8 each side",
+              "rest_sec": 45,
+              "note": "Anti-rotation. Core priority per scan — trunk muscle mass rated Low on both ADP and BIA scans. Press straight out, hold 2 sec, return controlled. Do NOT rotate — the goal is to resist rotation, not perform it.",
               "alternatives": [
-                "Half-Kneeling Pallof Press",
-                "Band Pallof Press",
-                "Dead Bug (floor)"
+                "Half-kneeling Pallof press",
+                "Cable anti-rotation hold",
+                "Band Pallof press (anchored to rack)"
               ]
             },
             {
-              "id": "C2",
-              "name": "Suitcase Carry",
+              "id": "c2",
+              "name": "Suitcase Carry (left hand)",
               "sets": "3",
-              "reps": "30m per side",
-              "rest_sec": 60,
-              "note": "LEFT hand leads and heavier if possible. Upright posture — zero lateral lean. Trains glute med, oblique, and quadratus lumborum simultaneously.",
+              "reps": "20–25m",
+              "rest_sec": 45,
+              "note": "Left hand only. Directly challenges right-side dominance — your primary structural correction. KB or DB. Keep shoulder packed down, no lateral lean. Walk slow enough to feel the anti-lateral-flexion demand.",
               "alternatives": [
-                "Farmer Carry (bilateral)",
-                "Single-Arm DB March",
-                "Offset KB Carry"
+                "Single-arm farmer carry (left)",
+                "Overhead carry (left arm, if shoulder stable)",
+                "Waiter carry (left arm extended)"
               ]
             },
             {
-              "id": "C3",
-              "name": "Med Ball Floor Slam",
+              "id": "c3",
+              "name": "Medicine Ball Slam",
               "sets": "3",
-              "reps": "8",
+              "reps": "5",
               "rest_sec": 60,
-              "note": "Full triple extension up, aggressive hip hinge on the way down. If HR is above 112 bpm coming into this block, extend rest to 90s before starting.",
+              "note": "Floor slams — not wall. 8 kg ball. Full overhead reach, hard slam, athletic reset. This is your engagement element — it should feel explosive and satisfying. 5 reps only, quality not volume. Check HR before each set.",
               "alternatives": [
-                "KB Swing (power focus)",
-                "Landmine Hip Hinge",
-                "Explosive Push Press (light KB)"
+                "KB deadlift (ballistic, 5 reps)",
+                "Box jump (low, 5 reps — hip OA caution)",
+                "Battle ropes (10 sec burst)"
               ]
             }
           ]
@@ -6620,7 +6659,7 @@
       ]
     }
   },
-  "last_updated": "2026-04-12T17:08:21+08:00",
+  "last_updated": "2026-04-12T18:09:41+08:00",
   "coaching_brief_session_plan_note": "session_plan lives inside coaching_brief starting next hourly run. Sample below is for today's Sunday active recovery context.",
   "_session_plan_sample": {
     "session_type": "Pull-dominant Upper / Structural Correction",
