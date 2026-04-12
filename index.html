@@ -60,6 +60,7 @@ body {
 }
 .topbar-name { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
 .topbar-date { font-size: 11px; color: var(--text3); margin-top: 1px; text-transform: uppercase; letter-spacing: 0.08em; }
+.topbar-updated { font-size: 10px; color: var(--accent); margin-top: 2px; letter-spacing: 0.04em; opacity: 0.8; }
 .live-pill {
   display: flex; align-items: center; gap: 5px;
   background: var(--green-bg);
@@ -434,6 +435,7 @@ body {
   <div>
     <div class="topbar-name">Todd Blackhurst</div>
     <div class="topbar-date" id="topbar-date">Loading…</div>
+    <div class="topbar-updated" id="topbar-updated"></div>
   </div>
   <div class="live-pill">
     <div class="live-dot"></div>
@@ -445,7 +447,7 @@ body {
 <div class="tabs">
   <div class="tab-btn active" data-tab="today">Today</div>
   <div class="tab-btn" data-tab="body">Body</div>
-  <div class="tab-btn" data-tab="training">Train</div>
+  <div class="tab-btn" data-tab="nutrition">Nutrition</div>
   <div class="tab-btn" data-tab="trends">Trends</div>
   <div class="tab-btn" data-tab="coach">Coach</div>
 </div>
@@ -453,7 +455,7 @@ body {
 <!-- Tab panels -->
 <div id="tab-today"    class="tab-panel active"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 <div id="tab-body"     class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-<div id="tab-training" class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+<div id="tab-nutrition" class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 <div id="tab-trends"   class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 <div id="tab-coach"    class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
 
@@ -461,7 +463,7 @@ body {
 <div class="bottom-nav" id="bottom-nav">
   <div class="bn-item active" data-tab="today"><div class="bn-icon">📡</div><div class="bn-label">Today</div></div>
   <div class="bn-item" data-tab="body"><div class="bn-icon">🫀</div><div class="bn-label">Body</div></div>
-  <div class="bn-item" data-tab="training"><div class="bn-icon">💪</div><div class="bn-label">Train</div></div>
+  <div class="bn-item" data-tab="nutrition"><div class="bn-icon">🥗</div><div class="bn-label">Nutrition</div></div>
   <div class="bn-item" data-tab="trends"><div class="bn-icon">📈</div><div class="bn-label">Trends</div></div>
   <div class="bn-item" data-tab="coach"><div class="bn-icon">🎯</div><div class="bn-label">Coach</div></div>
 </div>
@@ -1232,118 +1234,257 @@ function renderBody(db) {
 }
 
 /* ══════════════════════════════════════════════════════
-   TRAINING TAB
+   NUTRITION TAB
 ══════════════════════════════════════════════════════ */
-function renderTraining(db) {
-  const strengthLogs = sortAsc(db.strength_logs);
-  const activities   = sortAsc(db.activity_sessions);
+function renderNutrition(db) {
+  const nutEntries  = db.nutrition || [];
+  const todayNut    = nutEntries.length ? latest(nutEntries) : null;
+  const nutTotals   = todayNut ? (todayNut.daily_totals || {}) : {};
+  const meals       = todayNut ? (todayNut.meals || []) : [];
+  const nutTargets  = { cal: 2000, prot: 150, carbs: 190, fat: 70 };
 
-  // All sessions combined + sorted
-  const allSessions = [
-    ...strengthLogs.map(s => ({...s, _type: 'strength'})),
-    ...activities.filter(a => a.session_type !== 'Daily Activity Snapshot').map(a => ({...a, _type: 'activity'}))
-  ].sort((a,b) => a.date < b.date ? 1 : -1);
+  const logged_cal   = nutTotals.calories_kcal || 0;
+  const logged_prot  = nutTotals.protein_g     || 0;
+  const logged_carbs = nutTotals.carbs_g        || 0;
+  const logged_fat   = nutTotals.fat_g          || 0;
+  const calPct   = Math.min(100, Math.round((logged_cal   / nutTargets.cal)   * 100));
+  const protPct  = Math.min(100, Math.round((logged_prot  / nutTargets.prot)  * 100));
+  const carbsPct = Math.min(100, Math.round((logged_carbs / nutTargets.carbs) * 100));
+  const fatPct   = Math.min(100, Math.round((logged_fat   / nutTargets.fat)   * 100));
 
-  const latest_s = strengthLogs[strengthLogs.length - 1] || {};
+  function macroColor(pct) {
+    if (pct >= 90) return 'var(--green)';
+    if (pct >= 50) return 'var(--yellow)';
+    return 'var(--red)';
+  }
+  function fatColor(pct) {
+    if (pct >= 100) return 'var(--red)';
+    if (pct >= 80) return 'var(--yellow)';
+    return 'var(--green)';
+  }
+  function deltaBadge(logged, target, unit) {
+    if (!logged) return `<span style="color:var(--text3);font-size:10px">Not logged yet</span>`;
+    const d = logged - target;
+    const abs = Math.abs(d).toFixed(Math.abs(d) < 10 ? 1 : 0);
+    if (Math.abs(d) < target * 0.05) return badge('On target', 'green');
+    return d < 0
+      ? `<span style="font-size:10px;color:var(--yellow)">−${abs}${unit} remaining</span>`
+      : `<span style="font-size:10px;color:var(--red)">+${abs}${unit} over</span>`;
+  }
 
-  // Volume chart (last 12 strength sessions)
-  const recent12 = strengthLogs.slice(-12);
-  const volData = recent12.map(s => ({ date: s.date, value: s.volume_kg ? Math.round(s.volume_kg * 2.2046) : null }));
-  const volChart = buildLineChart(volData, { color: 'var(--chart-volume)', height: 60 });
+  // ── Nutrition coaching note ──
+  let coachText = '';
+  const rem_cal  = nutTargets.cal  - logged_cal;
+  const rem_prot = nutTargets.prot - logged_prot;
+  const rem_fat  = nutTargets.fat  - logged_fat;
 
-  // Session history list
-  const sessionListHtml = strengthLogs.slice().reverse().slice(0, 15).map(s => {
-    const volLbs = s.volume_kg ? Math.round(s.volume_kg * 2.2046).toLocaleString() : '—';
-    return `<div class="session-item">
-      <div class="session-date">${fmtDateShort(s.date)}</div>
-      <div class="session-info">
-        <div class="session-name">${s.session_focus || 'Strength'}</div>
-        <div class="session-meta">${s.duration_min}min · ${s.exercise_count} exercises · ${s.location || 'WorldGym'}</div>
+  if (!logged_cal) {
+    coachText = `<strong>Nothing logged yet today.</strong> Your targets are 2,000 kcal / 150g protein / 190g carbs / 70g fat — a deliberate ~380 kcal deficit built for fat loss without muscle sacrifice. Log your meals as you go so I can coach you in real time. Start with breakfast.`;
+  } else {
+    let flags = [];
+    if (rem_prot > 80) flags.push(`<strong>Protein gap: ${rem_prot}g still needed</strong> — this is your top priority. Hit 150g or muscle preservation is compromised.`);
+    else if (rem_prot > 30) flags.push(`<strong>${rem_prot}g protein remaining</strong> — close, keep pushing. Prioritize protein at your next meal.`);
+    else if (rem_prot <= 0) flags.push(`<strong>Protein target hit ✓</strong> — excellent execution on the most important number.`);
+
+    if (rem_fat < 15 && logged_fat > 0) flags.push(`<strong>⚠️ Fat nearly maxed:</strong> Only ${rem_fat}g fat remaining. Keep remaining meals very lean — prioritize protein and carbs only.`);
+    if (rem_fat < 0) flags.push(`<strong>⚠️ Fat target exceeded</strong> by ${Math.abs(rem_fat)}g. Focus all remaining calories on protein.`);
+
+    if (logged_cal < nutTargets.cal * 0.35 && rem_cal > 1200) {
+      coachText = `${flags.join(' ')} You still have <strong>${rem_cal} kcal</strong> in your budget — plenty of room to hit protein across two more meals. Don't skip meals; the deficit is already built in.`;
+    } else if (logged_cal > nutTargets.cal * 0.85) {
+      coachText = `${flags.join(' ')} You're at <strong>${logged_cal} kcal</strong> — ${rem_cal > 0 ? rem_cal + ' kcal remaining' : 'at or over target'}. ${rem_prot > 20 ? 'Use what\'s left to close the protein gap with lean sources only.' : 'Nutrition is largely on track today.'}`;
+    } else {
+      coachText = `${flags.length ? flags.join(' ') + ' ' : ''}<strong>${logged_cal} kcal</strong> logged so far. ${rem_cal} kcal remaining in today's budget.`;
+    }
+  }
+
+  // ── Meal log HTML ──
+  const mealColors = {
+    breakfast: 'var(--yellow)',
+    lunch: 'var(--green)',
+    dinner: 'var(--accent)',
+    snack: 'var(--purple)',
+    supplement: 'var(--teal)',
+    default: 'var(--text2)'
+  };
+
+  const mealsHtml = meals.length > 0 ? meals.map(m => {
+    const mcolor = mealColors[m.meal] || mealColors.default;
+    const mLabel = m.meal ? m.meal.charAt(0).toUpperCase() + m.meal.slice(1) : 'Meal';
+    const sub = m.subtotals || {};
+    const itemsHtml = (m.items || []).map(item => `
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid rgba(48,54,61,0.5);">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.food}</div>
+          <div style="font-size:10px;color:var(--text3)">${item.amount}${item.estimated ? ' · est.' : ''}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;margin-left:10px">
+          <div style="font-size:12px;font-weight:700;color:var(--text)">${item.calories_kcal || '—'}<span style="font-size:9px;color:var(--text3)"> kcal</span></div>
+          <div style="font-size:10px;color:var(--text3)">${item.protein_g || 0}P · ${item.carbs_g || 0}C · ${item.fat_g || 0}F</div>
+        </div>
+      </div>`).join('');
+
+    return `
+    <div class="card" style="border-left:3px solid ${mcolor};margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div>
+          <span style="font-size:13px;font-weight:700;color:${mcolor}">${mLabel}</span>
+          ${m.time ? `<span style="font-size:10px;color:var(--text3);margin-left:8px">${m.time}</span>` : ''}
+        </div>
+        <div style="text-align:right;font-size:11px;color:var(--text2)">
+          ${sub.calories_kcal ? `<strong>${sub.calories_kcal}</strong> kcal` : ''}
+          ${sub.protein_g ? ` · <strong>${sub.protein_g}g</strong> P` : ''}
+        </div>
       </div>
-      <div class="session-vol">${volLbs}<div style="font-size:9px;color:var(--text3)">lbs vol</div></div>
+      ${itemsHtml}
     </div>`;
-  }).join('');
+  }).join('') : `<div class="card" style="text-align:center;padding:20px;color:var(--text3);font-size:12px">No meals logged yet today.<br><span style="font-size:11px">Tell me what you ate and I'll log it.</span></div>`;
 
-  // Latest session exercises
-  const exHtml = (latest_s.exercises || []).slice(0, 8).map(ex => {
-    const workSets = (ex.sets || []).filter(s => !s.warmup);
-    const setsHtml = workSets.slice(0, 6).map(s =>
-      `<div class="ex-set">
-        <div class="set-n">Set ${s.n}</div>
-        <div class="set-data">${s.reps}×${s.weight_kg > 0 ? s.weight_kg + 'kg' : Math.abs(s.weight_kg)+'kg assist'}</div>
-      </div>`
-    ).join('');
-    return `<div class="ex-card">
-      <div class="ex-header">
-        <div class="ex-name">${ex.name}</div>
-        <div>${badge(workSets.length + ' sets','dim')}</div>
-      </div>
-      <div class="ex-sets-grid">${setsHtml}</div>
-    </div>`;
-  }).join('');
+  // ── Weekly nutrition summary ──
+  const nutEntriesSorted = sortAsc(db.nutrition || []);
+  const now7 = new Date();
+  const cutoff = new Date(now7); cutoff.setDate(cutoff.getDate() - 7);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+  const weekNut = nutEntriesSorted.filter(n => n.date >= cutoffStr);
 
-  const latestVolLbs = latest_s.volume_kg ? Math.round(latest_s.volume_kg * 2.2046).toLocaleString() : '—';
+  function nutAvg(arr, key) {
+    const vals = arr.map(n => n.daily_totals ? n.daily_totals[key] : null).filter(v => v !== null && v !== undefined);
+    return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0) / vals.length) : null;
+  }
+  function nutColor(val, target) {
+    if (!val) return 'var(--text3)';
+    const pct = val / target;
+    if (pct >= 0.9) return 'var(--green)';
+    if (pct >= 0.65) return 'var(--yellow)';
+    return 'var(--red)';
+  }
+
+  const wkAvgCal  = nutAvg(weekNut, 'calories_kcal');
+  const wkAvgProt = nutAvg(weekNut, 'protein_g');
+  const wkAvgCarb = nutAvg(weekNut, 'carbs_g');
+  const wkAvgFat  = nutAvg(weekNut, 'fat_g');
+  const wkDaysLogged = weekNut.filter(n => n.daily_totals && n.daily_totals.calories_kcal).length;
+  const allNut = nutEntriesSorted;
+  const allAvgCal  = nutAvg(allNut, 'calories_kcal');
+  const allAvgProt = nutAvg(allNut, 'protein_g');
 
   return `
-  <!-- Latest session -->
+  <!-- Nutrition coaching note -->
+  <div class="section" style="padding-top:14px">
+    <div class="section-title">Nutrition Coach</div>
+    <div class="coach-note">
+      <div class="coach-label">Nutrition · ${todayNut ? fmtDate(todayNut.date) : 'Today'}</div>
+      <p>${coachText}</p>
+    </div>
+  </div>
+
+  <!-- Today macros -->
   <div class="section">
-    <div class="section-title">Latest Session · ${fmtDate(latest_s.date)}</div>
+    <div class="section-title">Today's Macros</div>
+    <div class="macro-grid">
+      <div class="macro-cell full">
+        <div class="macro-label">Calories</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${macroColor(calPct)}">${logged_cal || '—'}<span style="font-size:12px;font-weight:400;color:var(--text3)"> kcal</span></div>
+          <div class="macro-target">Target: ${nutTargets.cal} kcal · ${rem_cal > 0 ? rem_cal + ' remaining' : 'At target'}</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${calPct}%;background:${macroColor(calPct)}"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_cal, nutTargets.cal, ' kcal')}</div>
+      </div>
+      <div class="macro-cell">
+        <div class="macro-label">Protein</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${macroColor(protPct)}">${logged_prot || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
+          <div class="macro-target">${nutTargets.prot}g</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${protPct}%;background:${macroColor(protPct)}"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_prot, nutTargets.prot, 'g')}</div>
+      </div>
+      <div class="macro-cell">
+        <div class="macro-label">Carbs</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${macroColor(carbsPct)}">${logged_carbs || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
+          <div class="macro-target">${nutTargets.carbs}g</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${carbsPct}%;background:var(--accent)"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_carbs, nutTargets.carbs, 'g')}</div>
+      </div>
+      <div class="macro-cell">
+        <div class="macro-label">Fat</div>
+        <div class="macro-nums">
+          <div class="macro-val" style="color:${fatColor(fatPct)}">${logged_fat || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
+          <div class="macro-target">${nutTargets.fat}g</div>
+        </div>
+        <div class="macro-track"><div class="macro-fill" style="width:${fatPct}%;background:${fatColor(fatPct)}"></div></div>
+        <div class="macro-delta">${deltaBadge(logged_fat, nutTargets.fat, 'g')}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Today's meal log -->
+  <div class="section">
+    <div class="section-title">Today's Food Log · ${todayNut ? fmtDate(todayNut.date) : 'Today'}</div>
+    ${mealsHtml}
+  </div>
+
+  <!-- Weekly summary -->
+  <div class="section">
+    <div class="section-title">Weekly Nutrition · Last 7 Days</div>
     <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-        <div>
-          <div style="font-size:14px;font-weight:700">${latest_s.session_focus || 'Strength'}</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:2px">${latest_s.location || 'WorldGym'} · ${latest_s.start_time || ''}</div>
-        </div>
-        ${badge('Complete','green')}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-size:12px;color:var(--text2)">${wkDaysLogged} of 7 days logged</div>
+        ${wkDaysLogged < 4 ? badge('Log more days','yellow') : wkDaysLogged >= 6 ? badge('Great consistency','green') : badge('Getting there','blue')}
       </div>
-      <div class="stat-row" style="margin:0 0 8px">
-        <div class="stat-cell">
-          <div class="stat-cell-val" style="font-size:16px;color:var(--teal)">${latestVolLbs}</div>
-          <div class="stat-cell-lbl">lbs Volume</div>
+      <div class="week-grid">
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgCal, 2000)}">${wkAvgCal || '—'}</div>
+          <div class="week-lbl">Avg kcal/day</div>
+          <div class="week-sub">Target: 2,000</div>
         </div>
-        <div class="stat-cell">
-          <div class="stat-cell-val" style="font-size:16px">${latest_s.duration_min}m</div>
-          <div class="stat-cell-lbl">Duration</div>
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgProt, 150)}">${wkAvgProt || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">Avg Protein</div>
+          <div class="week-sub">Target: 150g</div>
         </div>
-        <div class="stat-cell">
-          <div class="stat-cell-val" style="font-size:16px">${latest_s.exercise_count}</div>
-          <div class="stat-cell-lbl">Exercises</div>
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgCarb, 190)}">${wkAvgCarb || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">Avg Carbs</div>
+          <div class="week-sub">Target: 190g</div>
         </div>
       </div>
-      ${latest_s.calories_kcal ? `<div style="font-size:12px;color:var(--text2)">${latest_s.calories_kcal} kcal · ${badge('HR ok','green')}</div>` : ''}
+      <div class="week-grid" style="margin-top:6px">
+        <div class="week-cell">
+          <div class="week-val" style="color:${nutColor(wkAvgFat, 70)}">${wkAvgFat || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">Avg Fat</div>
+          <div class="week-sub">Target: 70g</div>
+        </div>
+        <div class="week-cell">
+          <div class="week-val" style="color:var(--text2)">${allAvgCal || '—'}</div>
+          <div class="week-lbl">All-time avg kcal</div>
+          <div class="week-sub">${allNut.length} days logged</div>
+        </div>
+        <div class="week-cell">
+          <div class="week-val" style="color:var(--text2)">${allAvgProt || '—'}<span style="font-size:11px">g</span></div>
+          <div class="week-lbl">All-time protein</div>
+          <div class="week-sub">avg per day</div>
+        </div>
+      </div>
+      ${weekNut.length > 0 ? `
+      <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
+        <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Day-by-Day</div>
+        ${weekNut.slice().reverse().map(n => {
+          const c = n.daily_totals ? n.daily_totals.calories_kcal : null;
+          const p = n.daily_totals ? n.daily_totals.protein_g : null;
+          const pct = c ? Math.min(100, Math.round((c/2000)*100)) : 0;
+          return `<div class="data-row" style="padding:6px 0">
+            <div class="dr-key" style="font-size:11px">${fmtDate(n.date)}</div>
+            <div class="dr-bar"><div class="dr-bar-fill" style="width:${pct}%;background:${nutColor(c,2000)}"></div></div>
+            <div class="dr-val" style="font-size:11px">${c ? c+' kcal' : '—'}</div>
+            <div class="dr-badge">${p ? badge(p+'g P', p >= 135 ? 'green' : 'yellow') : badge('—','dim')}</div>
+          </div>`;
+        }).join('')}
+      </div>` : ''}
     </div>
-  </div>
-
-  <!-- Volume trend -->
-  <div class="section">
-    <div class="section-title">Volume Trend (lbs)</div>
-    <div class="chart-card">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Total Load per Session</div>
-          <div class="chart-sub">Last ${recent12.length} strength sessions</div>
-        </div>
-        <div>
-          <div class="chart-val" style="color:var(--chart-volume)">${latestVolLbs}</div>
-          <div class="chart-change" style="color:var(--text3)">lbs latest</div>
-        </div>
-      </div>
-      <div class="chart-area">${volChart.svg}</div>
-      <div class="chart-x-labels">${volChart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
-    </div>
-  </div>
-
-  <!-- Latest session exercise breakdown -->
-  ${latest_s.exercises && latest_s.exercises.length > 0 ? `
-  <div class="section">
-    <div class="section-title">Exercise Breakdown · ${fmtDate(latest_s.date)}</div>
-    ${exHtml}
-  </div>` : ''}
-
-  <!-- Session history -->
-  <div class="section">
-    <div class="section-title">Session History</div>
-    <div class="card">${sessionListHtml}</div>
   </div>
 
   <div class="spacer"></div>`;
@@ -1411,6 +1552,62 @@ function renderCoach(db) {
     </div>`;
   }
 
+  // ── Training schedule ──
+  function buildTrainingSchedule() {
+    const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const todayDow = new Date().getDay(); // 0=Sun, 1=Mon, ... 6=Sat
+
+    const schedule = {
+      0: { label: 'Rest Day', icon: '🛌', color: 'var(--text3)', desc: 'Full rest today. No fasted walk, no training. Let your body absorb the week\'s work. Prioritize sleep, nutrition, and recovery habits. A real rest day is not laziness — it\'s part of the plan.' },
+      1: { label: 'Strength Training', icon: '💪', color: 'var(--green)', desc: 'Fasted walk first thing, then breakfast before training. Monday is a primary strength day. Lead with your pull or upper-body corrective work. Focus on left-scapular engagement, right-side balance, and quality over load. HR cap 122 bpm. Target 55–65 minutes total at WorldGym.' },
+      2: { label: 'Zone 2 Cycling', icon: '🚴', color: 'var(--accent)', desc: 'Fasted walk first, then breakfast before cycling. 30–45 minutes of Zone 2 on the bike — that means conversational pace, staying around 105–118 bpm. Zone 2 builds aerobic base and enhances fat oxidation without eating into recovery. Keep it disciplined: if your HR drifts above 122, ease off.' },
+      3: { label: 'Strength Training', icon: '💪', color: 'var(--green)', desc: 'Fasted walk first thing, then breakfast before training. Wednesday is a primary strength day. Rotate the pattern from Monday — if Monday was pull-dominant, go push or hinge today. Always include structural correction work: thoracic mobility, anti-rotation core, and hip activation on Floor 3 before loading.' },
+      4: { label: 'Zone 2 Cycling', icon: '🚴', color: 'var(--accent)', desc: 'Fasted walk first, then breakfast before cycling. 30–45 minutes of Zone 2. Keep the effort honest — Zone 2 is not a warmup and not a workout. It\'s a specific aerobic stimulus. If you feel great, resist the urge to push harder. The adaptation happens at steady, sustainable effort.' },
+      5: { label: 'Strength Training', icon: '💪', color: 'var(--green)', desc: 'Fasted walk first thing, then breakfast before training. Friday closes the strength week. Pick up what Monday and Wednesday left behind — accessory focus, any lagging corrective work, and finish with a trunk/engagement block. Don\'t add volume just because it\'s the last session. Finish clean.' },
+      6: { label: 'Rest Day', icon: '🛌', color: 'var(--text3)', desc: 'Full rest — no fasted walk on Saturdays. Sleep in if you can. This is intentional: two rest days back-to-back (Sat/Sun) allow full systemic recovery before the new training week. Use the day for mobility work if you feel like moving, but nothing structured.' },
+    };
+
+    const today = schedule[todayDow];
+    const hasFastedWalk = todayDow !== 0 && todayDow !== 6;
+
+    const scheduleRows = Object.entries(schedule).map(([dow, s]) => {
+      const isToday = parseInt(dow) === todayDow;
+      return `<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);${isToday ? 'background:rgba(88,166,255,0.05);border-radius:4px;padding:6px 8px;margin:0 -8px' : ''}">
+        <div style="width:28px;text-align:center;font-size:15px">${s.icon}</div>
+        <div style="flex:1">
+          <div style="font-size:11px;font-weight:${isToday ? '700' : '500'};color:${isToday ? s.color : 'var(--text2)'}">${dayNames[parseInt(dow)]}</div>
+          <div style="font-size:10px;color:var(--text3)">${s.label}${hasFastedWalk && parseInt(dow) !== 0 && parseInt(dow) !== 6 ? ' · Walk first' : ''}</div>
+        </div>
+        ${isToday ? `<span class="badge badge-blue">Today</span>` : ''}
+      </div>`;
+    }).join('');
+
+    return `
+    <div style="margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+        <span style="font-size:7px">◆</span> Today's Training · ${dayNames[todayDow]}
+      </div>
+      <!-- Today card -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid ${today.color};border-radius:0 6px 6px 0;padding:12px 14px;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span style="font-size:22px">${today.icon}</span>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:${today.color}">${today.label}</div>
+            ${hasFastedWalk ? '<div style="font-size:11px;color:var(--text3)">Fasted walk → Breakfast → Training</div>' : '<div style="font-size:11px;color:var(--text3)">Full rest today</div>'}
+          </div>
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.65">${today.desc}</div>
+      </div>
+      <!-- Weekly schedule -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 8px">
+        <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Weekly Schedule</div>
+        ${scheduleRows}
+      </div>
+    </div>`;
+  }
+
+  const trainingScheduleHtml = buildTrainingSchedule();
+
   let sections = '';
 
   if (cb && cb.sections) {
@@ -1444,6 +1641,7 @@ function renderCoach(db) {
         </div>
       </div>
       ${sections}
+      <div style="padding-top:0">${trainingScheduleHtml}</div>
     </div>
     <div class="spacer"></div>`;
 
@@ -1537,6 +1735,7 @@ function renderCoach(db) {
         </div>
       </div>
       ${sections}
+      <div style="padding-top:0">${trainingScheduleHtml}</div>
     </div>
     <div class="spacer"></div>`;
   }
@@ -1767,7 +1966,7 @@ function renderTab(name, db) {
     switch(name) {
       case 'today':    panel.innerHTML = renderToday(db);    break;
       case 'body':     panel.innerHTML = renderBody(db);     break;
-      case 'training': panel.innerHTML = renderTraining(db); break;
+      case 'nutrition': panel.innerHTML = renderNutrition(db); break;
       case 'trends':   panel.innerHTML = renderTrends(db);   break;
       case 'coach':    panel.innerHTML = renderCoach(db);    break;
     }
@@ -1803,8 +2002,21 @@ async function init() {
     if (!res.ok) throw new Error(`HTTP ${res.status} — could not load ${DB_URL}`);
     DB = await res.json();
     renderTab('today', DB);
+    // Show last updated time
+    const updEl = document.getElementById('topbar-updated');
+    if (updEl) {
+      const cb = DB.coaching_brief;
+      let updTime = '';
+      if (cb && cb.generated_at) {
+        const d = new Date(cb.generated_at);
+        updTime = 'Updated ' + d.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
+      } else {
+        updTime = 'Loaded ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
+      }
+      updEl.textContent = updTime;
+    }
   } catch(e) {
-    ['today','body','training','trends'].forEach(name => {
+    ['today','body','nutrition','trends'].forEach(name => {
       document.getElementById('tab-' + name).innerHTML = `
         <div class="error-block">
           <strong>Could not load HEALTH_DATABASE.json</strong><br>
