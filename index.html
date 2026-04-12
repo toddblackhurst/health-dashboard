@@ -1632,7 +1632,8 @@ function renderCoach(db) {
         <span style="font-size:7px">◆</span> Today's Session
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:0 6px 6px 0;overflow:hidden">
-        <div style="padding:10px 14px;background:var(--surface3);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div style="padding:10px 14px;background:var(--surface3)">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
           <div>
             <div style="font-size:13px;font-weight:700">${sp.session_type || 'Training Session'}</div>
             <div style="font-size:11px;color:var(--text3);margin-top:2px">${sp.session_goal || ''}</div>
@@ -1642,6 +1643,8 @@ function renderCoach(db) {
             <span style="font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:3px 8px">⏱ ${sp.time_cap_min || 65} min cap</span>
             <span style="font-size:11px;background:var(--surface);border:1px solid ${tcColor};border-radius:4px;padding:3px 8px;color:${tcColor};font-weight:700">${sp.readiness_call || '—'}</span>
           </div>
+        </div>
+          ${sp.why_different ? `<div style="font-size:11px;color:var(--text3);padding:8px 14px;border-top:1px solid var(--border);background:var(--surface3);font-style:italic">💡 ${sp.why_different}</div>` : ''}
         </div>`;
 
     sp.blocks.forEach(block => {
@@ -1665,6 +1668,8 @@ function renderCoach(db) {
           <div class="sp-ex-body">
             <div class="sp-ex-name" id="${exKey}_name">${ex.name}</div>
             ${prescription ? `<div class="sp-ex-prescription">${prescription}</div>` : ''}
+            ${ex.equipment ? `<div style="font-size:10px;color:var(--accent);margin-top:3px;line-height:1.4">📍 ${ex.equipment}</div>` : ''}
+            ${ex.motra ? `<div style="font-size:10px;color:var(--purple);margin-top:3px;line-height:1.4">📱 Motra: ${ex.motra}</div>` : ''}
             ${ex.note ? `<div class="sp-ex-note">${ex.note}</div>` : ''}
             ${ex.alternatives && ex.alternatives.length ? `
             <div class="sp-alts" id="${exKey}_alts">
@@ -1684,6 +1689,39 @@ function renderCoach(db) {
 
     html += `<div style="height:10px"></div></div></div>`;
     return html;
+  }
+
+  // ── Week Overview renderer ──
+  function renderWeekOverview(wsp) {
+    if (!wsp) return '';
+    const dayMap = { '1': 'Monday', '3': 'Wednesday', '5': 'Friday' };
+    const todayDow = String(new Date().getDay());
+    const strengthDays = ['1','3','5'].filter(d => wsp[d]);
+    if (!strengthDays.length) return '';
+
+    let rows = strengthDays.map(dow => {
+      const sp = wsp[dow];
+      const isToday = dow === todayDow;
+      return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);${isToday ? 'background:rgba(63,185,80,0.06);border-radius:4px;padding:7px 8px;margin:0 -8px' : ''}">
+        <div style="font-size:10px;font-weight:700;color:${isToday ? 'var(--green)' : 'var(--text3)'};width:34px;text-align:center;text-transform:uppercase;letter-spacing:0.05em">${dayMap[dow].slice(0,3)}</div>
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:${isToday ? '700' : '600'};color:${isToday ? 'var(--text)' : 'var(--text2)'}">${sp.session_type}</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:1px">${(sp.blocks||[]).filter(b=>b.id!=='PREP').map(b=>b.exercises||[]).flat().slice(0,3).map(e=>e.name.split('(')[0].trim()).join(' · ')}</div>
+        </div>
+        ${isToday ? `<span style="font-size:9px;font-weight:700;color:var(--green);background:var(--green-bg);border:1px solid rgba(63,185,80,0.3);border-radius:3px;padding:2px 6px;text-transform:uppercase">Today</span>` : ''}
+      </div>`;
+    }).join('');
+
+    return `
+    <div style="margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+        <span style="font-size:7px">◆</span> This Week's Strength Sessions
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;padding:8px 14px">
+        ${rows}
+        <div style="height:6px"></div>
+      </div>
+    </div>`;
   }
 
   // Session plan button handlers (keep/change/select)
@@ -1800,8 +1838,12 @@ function renderCoach(db) {
     sectionDefs.filter(s => cb.sections[s.key]).forEach(s => {
       sections += coachSection(s.title, s.color, cb.sections[s.key]);
       // After workout_prep (or training_direction if no workout_prep), inject session plan
-      if ((s.key === 'workout_prep' || (s.key === 'training_direction' && !cb.sections['workout_prep'])) && cb.session_plan) {
-        sections += renderSessionPlan(cb.session_plan);
+      // Pick day-specific plan first, fall back to generic session_plan
+      const _dowStr = String(new Date().getDay());
+      const _activePlan = (cb.weekly_session_plans && cb.weekly_session_plans[_dowStr]) || cb.session_plan;
+      if ((s.key === 'workout_prep' || (s.key === 'training_direction' && !cb.sections['workout_prep'])) && _activePlan) {
+        sections += renderSessionPlan(_activePlan);
+        sections += renderWeekOverview(cb.weekly_session_plans);
       }
     });
 
@@ -1859,6 +1901,14 @@ function renderCoach(db) {
     sections += coachSection('Workout Preparation', 'var(--teal)',
       `Before every session: spend 8–10 minutes on Floor 3 for prep and activation. <strong>Hip 90/90 mobility</strong> (avoid deep flexion — mild OA), <strong>banded hip abduction</strong> to wake up the left glute, and <strong>thoracic rotation</strong> to offset the stiffness. Your right-side dominance means you need to consciously prime the left side before loading. Don't skip the activation work — it directly affects how well your corrective movements function in the main session.`
     );
+
+    // Inject session plan in fallback mode too
+    const _fbDowStr = String(new Date().getDay());
+    const _fbPlan = (cb && cb.weekly_session_plans && cb.weekly_session_plans[_fbDowStr]) || (cb && cb.session_plan);
+    if (_fbPlan) {
+      sections += renderSessionPlan(_fbPlan);
+      sections += renderWeekOverview(cb && cb.weekly_session_plans);
+    }
 
     // Section 4: Nutrition
     let nutText = '';
