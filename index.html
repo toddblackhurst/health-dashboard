@@ -336,6 +336,73 @@ body {
 .session-meta { font-size: 11px; color: var(--text3); margin-top: 1px; }
 .session-vol { font-size: 12px; font-weight: 700; color: var(--teal); text-align: right; min-width: 52px; }
 
+/* ── Session plan (keep/change) ───────────────────── */
+.sp-block {
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.sp-block-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 12px;
+  background: var(--surface3);
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.sp-block-time { font-size: 10px; color: var(--text3); font-weight: 400; }
+.sp-exercise {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  transition: background 0.15s;
+}
+.sp-exercise.sp-kept { background: color-mix(in srgb, var(--green) 8%, var(--surface)); }
+.sp-exercise.sp-changed { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.sp-ex-id {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  min-width: 26px; padding-top: 1px; letter-spacing: 0.04em;
+}
+.sp-ex-body { flex: 1; min-width: 0; }
+.sp-ex-name { font-size: 13px; font-weight: 700; line-height: 1.3; }
+.sp-ex-name.sp-original { text-decoration: line-through; color: var(--text3); font-size: 11px; }
+.sp-ex-replacement { font-size: 13px; font-weight: 700; color: var(--accent); }
+.sp-ex-prescription { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.sp-ex-note { font-size: 11px; color: var(--text2); margin-top: 4px; font-style: italic; line-height: 1.4; }
+.sp-alts {
+  margin-top: 8px; padding: 8px 10px;
+  background: var(--surface3); border-radius: 6px;
+  display: none;
+}
+.sp-alts.open { display: block; }
+.sp-alts-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.sp-alt-btn {
+  display: block; width: 100%; text-align: left;
+  padding: 6px 8px; margin-bottom: 4px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 5px; font-size: 12px; color: var(--text1);
+  cursor: pointer; transition: background 0.12s, border-color 0.12s;
+}
+.sp-alt-btn:last-child { margin-bottom: 0; }
+.sp-alt-btn:hover { background: var(--surface3); border-color: var(--accent); color: var(--accent); }
+.sp-ex-actions { display: flex; gap: 6px; flex-shrink: 0; padding-top: 1px; }
+.sp-btn {
+  padding: 4px 9px; border-radius: 5px; font-size: 11px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border); transition: all 0.12s;
+  line-height: 1;
+}
+.sp-btn-keep { background: var(--surface3); color: var(--text2); }
+.sp-btn-keep:hover, .sp-btn-keep.active { background: var(--green); color: #fff; border-color: var(--green); }
+.sp-btn-change { background: var(--surface3); color: var(--text2); }
+.sp-btn-change:hover, .sp-btn-change.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.sp-meta-bar {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  padding: 8px 12px; border-top: 1px solid var(--border);
+  background: var(--surface3); font-size: 11px; color: var(--text3);
+}
+.sp-meta-item { display: flex; align-items: center; gap: 4px; }
+.sp-meta-item strong { color: var(--text1); }
+
 /* ── Stat row grid ─────────────────────────────────── */
 .stat-row {
   display: grid;
@@ -1552,6 +1619,111 @@ function renderCoach(db) {
     </div>`;
   }
 
+  // ── Session Plan renderer (keep/change buttons) ──
+  function renderSessionPlan(sp) {
+    if (!sp || !sp.blocks || !sp.blocks.length) return '';
+
+    const trafficColor = { 'Green':'var(--green)', 'Amber-Green':'#d4a017', 'Amber':'var(--yellow)', 'Red':'var(--red)' };
+    const tcColor = trafficColor[sp.readiness_call] || 'var(--text3)';
+
+    let html = `
+    <div style="margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+        <span style="font-size:7px">◆</span> Today's Session
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:0 6px 6px 0;overflow:hidden">
+        <div style="padding:10px 14px;background:var(--surface3);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div>
+            <div style="font-size:13px;font-weight:700">${sp.session_type || 'Training Session'}</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">${sp.session_goal || ''}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <span style="font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:3px 8px">🏢 ${sp.floor_plan || 'Floor 3 → 2'}</span>
+            <span style="font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:3px 8px">⏱ ${sp.time_cap_min || 65} min cap</span>
+            <span style="font-size:11px;background:var(--surface);border:1px solid ${tcColor};border-radius:4px;padding:3px 8px;color:${tcColor};font-weight:700">${sp.readiness_call || '—'}</span>
+          </div>
+        </div>`;
+
+    sp.blocks.forEach(block => {
+      const blockColor = block.id === 'PREP' ? 'var(--text3)' : block.id === 'A' ? 'var(--green)' : block.id === 'B' ? 'var(--teal)' : block.id === 'C' ? 'var(--purple)' : 'var(--accent)';
+      html += `<div class="sp-block" style="margin:10px;margin-bottom:0;border-color:var(--border)">
+        <div class="sp-block-header" style="color:${blockColor}">
+          <span>${block.label || block.id}</span>
+          ${block.estimated_min ? `<span class="sp-block-time">~${block.estimated_min} min</span>` : ''}
+          ${block.pairing === 'superset' ? `<span style="font-size:9px;background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1px 5px;color:var(--text3);text-transform:lowercase;font-weight:400;letter-spacing:0">superset</span>` : ''}
+        </div>`;
+
+      (block.exercises || []).forEach(ex => {
+        const exKey = `sp_${ex.id}`;
+        const prescription = [
+          ex.sets && ex.reps ? `${ex.sets}×${ex.reps}` : '',
+          ex.rest_sec > 0 ? `${ex.rest_sec}s rest` : ''
+        ].filter(Boolean).join(' · ');
+
+        html += `<div class="sp-exercise" id="${exKey}">
+          <div class="sp-ex-id">${ex.id.toUpperCase()}</div>
+          <div class="sp-ex-body">
+            <div class="sp-ex-name" id="${exKey}_name">${ex.name}</div>
+            ${prescription ? `<div class="sp-ex-prescription">${prescription}</div>` : ''}
+            ${ex.note ? `<div class="sp-ex-note">${ex.note}</div>` : ''}
+            ${ex.alternatives && ex.alternatives.length ? `
+            <div class="sp-alts" id="${exKey}_alts">
+              <div class="sp-alts-label">Swap with:</div>
+              ${ex.alternatives.map((alt, i) => `<button class="sp-alt-btn" onclick="spSelectAlt('${exKey}', '${alt.replace(/'/g,"\\'")}', '${(ex.name||'').replace(/'/g,"\\'")}')">↳ ${alt}</button>`).join('')}
+            </div>` : ''}
+          </div>
+          <div class="sp-ex-actions">
+            <button class="sp-btn sp-btn-keep" id="${exKey}_keep" onclick="spKeep('${exKey}')" title="Keep this exercise">✓</button>
+            ${ex.alternatives && ex.alternatives.length ? `<button class="sp-btn sp-btn-change" id="${exKey}_change" onclick="spChange('${exKey}')" title="See alternatives">↻</button>` : ''}
+          </div>
+        </div>`;
+      });
+
+      html += `</div>`;
+    });
+
+    html += `<div style="height:10px"></div></div></div>`;
+    return html;
+  }
+
+  // Session plan button handlers (keep/change/select)
+  function spKeep(key) {
+    const el = document.getElementById(key);
+    const keepBtn = document.getElementById(key+'_keep');
+    const changeBtn = document.getElementById(key+'_change');
+    const alts = document.getElementById(key+'_alts');
+    if (!el) return;
+    el.classList.remove('sp-changed');
+    el.classList.toggle('sp-kept');
+    keepBtn && keepBtn.classList.toggle('active');
+    if (alts) alts.classList.remove('open');
+    if (changeBtn) changeBtn.classList.remove('active');
+  }
+  function spChange(key) {
+    const alts = document.getElementById(key+'_alts');
+    const changeBtn = document.getElementById(key+'_change');
+    const el = document.getElementById(key);
+    if (!alts) return;
+    const isOpen = alts.classList.contains('open');
+    alts.classList.toggle('open');
+    changeBtn && changeBtn.classList.toggle('active', !isOpen);
+  }
+  function spSelectAlt(key, altName, originalName) {
+    const nameEl = document.getElementById(key+'_name');
+    const alts = document.getElementById(key+'_alts');
+    const changeBtn = document.getElementById(key+'_change');
+    const keepBtn = document.getElementById(key+'_keep');
+    const el = document.getElementById(key);
+    if (!nameEl) return;
+    // Show strikethrough original + new name
+    nameEl.innerHTML = `<span class="sp-original">${originalName}</span> <span class="sp-replacement">${altName}</span>`;
+    nameEl.classList.remove('sp-ex-name');
+    if (alts) alts.classList.remove('open');
+    if (changeBtn) changeBtn.classList.remove('active');
+    if (el) { el.classList.add('sp-changed'); el.classList.remove('sp-kept'); }
+    if (keepBtn) keepBtn.classList.remove('active');
+  }
+
   // ── Training schedule ──
   function buildTrainingSchedule() {
     const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -1627,6 +1799,10 @@ function renderCoach(db) {
 
     sectionDefs.filter(s => cb.sections[s.key]).forEach(s => {
       sections += coachSection(s.title, s.color, cb.sections[s.key]);
+      // After workout_prep (or training_direction if no workout_prep), inject session plan
+      if ((s.key === 'workout_prep' || (s.key === 'training_direction' && !cb.sections['workout_prep'])) && cb.session_plan) {
+        sections += renderSessionPlan(cb.session_plan);
+      }
     });
 
     return `
