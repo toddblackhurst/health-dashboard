@@ -282,6 +282,32 @@
         }
       },
       "notes": "Hume Pod BIA daily scale Apr 12, 6:51 AM. Weight 166.8 lbs. Metabolic Age 42 yrs (Excellent). Health Score 673. Trunk muscle Low (consistent with ADP scan Apr 10). BF 10.2% is a BIA artifact — ADP scan (Apr 10) measured 22.0%. Segmental swings vs Apr 10 are hydration-driven, not real muscle change. Trunk Low rating structurally persistent."
+    },
+    {
+      "date": "2026-04-13",
+      "time": "06:11",
+      "source": "Ocare3 (BIA scale)",
+      "weight_lbs": 165.6,
+      "weight_kg": 75.1,
+      "bmi": 21.9,
+      "body_fat_pct": 15.7,
+      "visceral_fat_level": 2.0,
+      "bmr_kcal": 1778,
+      "body_water_pct": 58.6,
+      "bone_mass_lbs": 7.7,
+      "muscle_pct": 79.6,
+      "notes": "Ocare3 BIA scan Apr 13, 06:11 AM. Weight 165.6 lbs — essentially AT goal weight (165 lbs). BF 15.7% (BIA — use Bevel/Hume ADP as primary reference). Muscle 79.6%, Visceral Fat Lv 2.0 stable. BMR 1778 kcal consistent. Last week avg 165.6, max 166.0, min 164.9 — trend holding at goal range."
+    },
+    {
+      "date": "2026-04-13",
+      "time": "06:43",
+      "source": "Hume Pod (BIA daily scale)",
+      "weight_lbs": 166.8,
+      "weight_kg": 75.7,
+      "weekly_avg_lbs": 165.6,
+      "weekly_max_lbs": 166.0,
+      "weekly_min_lbs": 164.9,
+      "notes": "Hume Pod daily Apr 13, 6:43 AM. Weight 166.8 lbs. Weekly avg 165.6 lbs — within 1 lb of 165 lb goal. Health Score 673 High, Biological Age 30 yrs (vs chronological 57). Steps 5,230 by 6:43 AM, Active Cal 261 (day ongoing). BF% from BIA not reliable — use ADP scan Apr 10 (22.0%) as reference."
     }
   ],
   "recovery_sleep": [
@@ -861,24 +887,143 @@
             "fat_g": 8
           },
           "notes": "Best macro decision of the day — lean protein + rice carbs, minimal fat. Sashimi (6 slices) did most of the protein work at 20g. Roll added the carbs efficiently. Good instinct given the fat overrun earlier."
+        },
+        {
+          "meal": "late_snack",
+          "time": "20:45",
+          "items": [
+            {
+              "food": "Gold Standard 100% Whey - Vanilla Ice Cream (Optimum Nutrition)",
+              "amount": "1 scoop",
+              "calories_kcal": 120,
+              "protein_g": 24,
+              "carbs_g": 4,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Kirkland Unsweetened Almond Milk",
+              "amount": "1 serving",
+              "calories_kcal": 30,
+              "protein_g": 1,
+              "carbs_g": 1,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 150,
+            "protein_g": 25,
+            "carbs_g": 5,
+            "fat_g": 4
+          },
+          "notes": "Retroactive addition — Cal AI screenshots uploaded Apr 13 morning. Late-night whey + almond milk at 8:45 PM. Closes the protein gap: updated Apr 12 protein = 141g (was 116g)."
         }
       ],
       "daily_totals": {
-        "calories_kcal": 1954,
-        "protein_g": 116,
-        "carbs_g": 130,
-        "fat_g": 113,
-        "note": "DAY CLOSED. Final: 1954 kcal / 116g P / 130g C / 113g F. Deficit -46 kcal. Protein short -34g. Fat over +43g — walnuts breakfast + ranch lunch. Dinner sushi/sashimi was strong recovery."
+        "calories_kcal": 2104,
+        "protein_g": 141,
+        "carbs_g": 135,
+        "fat_g": 117,
+        "note": "RETROACTIVELY UPDATED Apr 13 — late-night whey shake added. Final: 2104 kcal / 141g P / 135g C / 117g F. Protein gap closed to -9g (excellent). Calories 104 over target. Fat still over (+47g) due to breakfast walnuts + lunch ranch."
       },
       "vs_targets": {
-        "calories_delta": -46,
-        "protein_delta": -34,
-        "carbs_delta": -60,
-        "fat_delta": 43
+        "calories_delta": 104,
+        "protein_delta": -9,
+        "carbs_delta": -55,
+        "fat_delta": 47
       },
       "notes": "5 entries logged via Cal AI. Fat target significantly blown (113g vs 70g target, +43g) — damage concentrated at breakfast (walnuts +26g) and lunch (ranch +39g). Dinner (sushi + sashimi) was a strong recovery choice: 31g protein, 54g carbs, only 8g fat. M&M snack at 4:15 PM was the sweets pattern showing up — 8g fat, 17g sugar. Day calories nearly on target at 1954/2000. Protein 34g short — one more whey shake would close it. Morning walk: 2.22 mi, 198 active cal, avg HR 101 bpm.",
       "day_closed": true,
       "day_closed_time": "2026-04-12 evening"
+    },
+    {
+      "date": "2026-04-13",
+      "source": "Cal AI",
+      "targets": {
+        "calories_kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
+      },
+      "meals": [
+        {
+          "meal": "pre_workout_shake",
+          "time": "06:25",
+          "items": [
+            {
+              "food": "Gold Standard 100% Whey - Vanilla Ice Cream (×2 scoops)",
+              "calories_kcal": 252,
+              "protein_g": 48,
+              "carbs_g": 8,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Red Tractor Omega 3 Instant Oats",
+              "calories_kcal": 39,
+              "protein_g": 2,
+              "carbs_g": 7,
+              "fat_g": 1,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Kirkland Unsweetened Almond Milk",
+              "calories_kcal": 45,
+              "protein_g": 1,
+              "carbs_g": 2,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Plain Yogurt",
+              "amount": "120g",
+              "calories_kcal": 75,
+              "protein_g": 4,
+              "carbs_g": 9,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Frozen Blueberries",
+              "amount": "half cup",
+              "calories_kcal": 39,
+              "protein_g": 0,
+              "carbs_g": 10,
+              "fat_g": 0,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 490,
+            "protein_g": 55,
+            "carbs_g": 41,
+            "fat_g": 13
+          },
+          "notes": "Pre-strength-session shake. Strong protein start (55g). 41g carbs for fuel. Fat only 13g — excellent for a day with yesterday's 117g fat overrun. Two scoops whey is the right call on a training day."
+        }
+      ],
+      "daily_totals": {
+        "calories_kcal": 490,
+        "protein_g": 55,
+        "carbs_g": 41,
+        "fat_g": 13,
+        "note": "Partial — pre-workout shake only as of 7 AM. Day ongoing. Remaining: ~1510 kcal / 95g P / 149g C / 57g F needed."
+      },
+      "vs_targets": {
+        "calories_delta": -1510,
+        "protein_delta": -95,
+        "carbs_delta": -149,
+        "fat_delta": -57
+      },
+      "day_closed": false
     }
   ],
   "activity_sessions": [
@@ -1177,6 +1322,48 @@
       "total_steps": 10292,
       "distance_mi": 4.81,
       "notes": "Apple Fitness daily step summary as of 8:15 PM. 10,292 steps / 4.81 miles. Morning walk (2.22 mi) + general daily movement (2.59 mi). High NEAT day — well above average. Supports VAT reduction goal. No additional training load added."
+    },
+    {
+      "date": "2026-04-13",
+      "source": "Motra + Apple Fitness",
+      "session_type": "Cardio — Low Aerobic",
+      "session_name": "Outdoor Walk",
+      "location": "Beitun District, Taichung City",
+      "start_time": "05:16",
+      "total_duration_min": 40.9,
+      "active_duration_min": 39.1,
+      "distance_mi": 2.43,
+      "avg_pace_min_per_mi": "16:04",
+      "total_calories_kcal": 253,
+      "elevation_gain_ft": 30,
+      "avg_hr_bpm": 96,
+      "activity_strain_pct": 16,
+      "hr_zones": {
+        "z0_pct": 66,
+        "z0_min": 25.75,
+        "z1_pct": 34,
+        "z1_min": 13.2
+      },
+      "splits": [
+        {
+          "split": 1,
+          "pace": "16:04/mi",
+          "avg_hr_bpm": 93
+        },
+        {
+          "split": 2,
+          "pace": "15:57/mi",
+          "avg_hr_bpm": 98
+        },
+        {
+          "split": 3,
+          "pace": "16:22/mi",
+          "avg_hr_bpm": 97
+        }
+      ],
+      "tracked_with": "Apple Watch Ultra 3 (via Motra)",
+      "hr_constraint_met": true,
+      "notes": "Fasted morning walk, Beitun District. 71°F/86% humidity. Avg HR 96 bpm, Zone 0-1, 16% Activity Strain only. HR well within <122 bpm constraint. Low-intensity aerobic work — fasted state VAT reduction protocol. Pre-strength session burn."
     }
   ],
   "strength_logs": [
@@ -6513,54 +6700,54 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-13T07:03:20+08:00",
+    "generated_at": "2026-04-13T07:30:00+08:00",
     "generated_by": "scheduled-task-hourly",
-    "note": "Auto-generated April 13, 2026 morning brief",
+    "note": "Auto-generated Apr 13 morning brief — 10 new uploads processed (body comp, walk, nutrition)",
     "sections": {
       "recovery": {
         "status": "🟠 Amber",
         "bullets": [
-          "HRV 20ms — 12.5ms below your 32.5ms personal baseline. Yesterday's Recovery Breakthrough (41.7ms) was the spike; today is regression to mean. Your nervous system is rebalancing after a high-stimulus day, not collapsing.",
-          "Sleep short: 5h19m (Oura) / 5h34m (Rise). Sleep score 51. Debt sitting at -4h10m — this is your 3rd consecutive sub-7h night. Quantity is the gap; quality isn't — deep sleep 59 min (18%), restfulness Optimal, HR dip 15% all intact.",
-          "Pattern alert: HRV spike on Apr 5 (51.4ms) → drop Apr 9 (36.2ms). Spike Apr 12 (41.7ms) → drop today (20ms). This is consistent. Don't train for the spike day — train for the day after it.",
-          "Fasted morning walk already complete: 5:16 AM, 2.43 mi, Zone 0-1. That's 16% activity strain already on the board. Total training load today must respect this."
+          "HRV 20ms — 12.5ms below your 32.5ms personal baseline. This is the bounce-back from yesterday's Recovery Breakthrough (41.7ms). You spiked on Apr 12, regressed today. Same pattern as Apr 5 (51.4ms spike) → Apr 9 (36.2ms drop). It's consistent, not alarming — but it counts today.",
+          "Sleep short at 5h 19m (Oura) / 5h 34m (Rise), debt now at -4h 10m. Third consecutive night under 6h. Quality held — deep sleep 59 min (18%), restfulness Optimal, HR dip 15%. The problem is quantity.",
+          "Fasted morning walk already logged: 5:16 AM, 2.43 mi, 96 bpm avg, Zone 0-1, 16% Activity Strain. Today's total training load budget must account for this.",
+          "Non-obvious pattern: Your three post-high-HRV drops (Apr 4→5, Apr 9→10, Apr 12→13) all show the same HRV crash depth. The nervous system is cycling — not degrading. But it means you train for the Amber day, not the Green one that came before it."
         ]
       },
       "training_direction": {
-        "call": "Train — Amber session. Pull-dominant upper + structural correction. 65-min hard cap.",
+        "call": "Train — Pull + Glute Hinge per locked weekly plan. Amber-day execution rules apply.",
         "bullets": [
-          "Pull-dominant upper body: horizontal pull anchor (cable row) + vertical pull (lat pulldown or assisted pull-up) — direct rotation away from Apr 8/10 push-dominant sessions. Posterior chain ready after 5 days.",
-          "Floor 3 → Floor 2. 10-min prep on Floor 3, all main blocks on Floor 2. Zero floor changes mid-session.",
-          "65-minute hard cap — set the timer before your first prep movement. If Block A is still running at 50 min, move to Pallof press only for Block C and end on time. Cut accessories, not compounds.",
-          "HR under 122 bpm — with HRV at 20ms, your cardiac cost per rep is higher than usual. Check after every compound set. If you hit 115+ between Block A sets, extend rest to 90 sec.",
-          "Accountability: Apr 6 ran 95.7 min, Apr 8 ran 118.4 min, Apr 10 ran 76.6 min — all 3 of your last 3 strength sessions exceeded 65 min. Today the timer starts before your shoes go on."
+          "Monday = Pull + Glute Hinge (programmed in weekly_session_plans[1]). Hammer Strength Wide Lat Pulldown → Single-Arm DB Row → Machine Hip Thrust → Low Step-Up → Face Pull → Pallof Press → Suitcase Carry. Do not deviate.",
+          "Floor 3 (PREP, ~10 min) → Floor 2 (all main blocks). No floor changes once main work starts.",
+          "65-minute hard cap — set a timer before your first prep movement. If Block C starts after min 52, cut to Pallof Press only + Suitcase Carry and exit. Apr 6 ran 96 min, Apr 8 ran 118 min, Apr 10 ran 77 min — 0 of your last 3 strength sessions hit the 65-min cap. Today it ends on time.",
+          "HR cap 122 bpm — with 20ms HRV, your cardiac cost per rep is elevated. Check HR after every compound set. If you hit 115+ in a rest period, take 90 sec before the next set, not 60.",
+          "Amber-day rule: first set of every block is a warm-in. Use 80% of normal load for set 1. If it feels easy, go normal for sets 2-4. If it feels heavy, stay conservative — do not chase yesterday's numbers on today's recovery."
         ]
       },
       "nutrition": {
-        "binding_constraint": "Protein — today's target 150g. Fat cap 70g. Nothing logged yet for Apr 13.",
+        "binding_constraint": "Protein — 55g logged vs 150g target. 95g needed across the rest of today.",
         "bullets": [
-          "Apr 13 starts at zero — no meals logged yet.",
-          "Yesterday's pattern to correct: protein short -34g (116g/150g), fat blown +43g (113g/70g). Both driven by breakfast (walnuts +26g fat) and lunch (ranch +39g fat).",
-          "Fat fix today: swap walnuts for blueberries or banana at breakfast. Ask for dressing on the side at lunch — that alone saves 30-40g fat.",
-          "Pre-training fuel (if training before noon): 1 scoop whey + ⅓ cup oats 60-90 min before. Low HRV + empty tank = higher HR response and worse output.",
-          "Protein formula that closes the day: morning whey shake (24g) + chicken or fish at lunch (30g) + evening protein meal or another shake (40g) = 150g target. Three anchor points, no obsessive tracking needed."
+          "490 kcal / 55g P logged (pre-workout shake, 6:25 AM). Fat 13g — excellent start after yesterday's 117g fat overrun. The double-whey shake + yogurt combo was the right call.",
+          "Protein fix: you need 95g more across lunch, afternoon snack, and dinner. Formula: chicken/fish at lunch (35-40g) + afternoon whey (24g) + protein dinner (30-35g). That closes it without obsessing.",
+          "Fat budget: 57g remaining for the day — do NOT repeat yesterday's walnuts + ranch pattern. One of those two meals blew the budget. Today: blueberries instead of walnuts, vinaigrette instead of ranch.",
+          "Retroactive update: the 8:45 PM whey shake logged from last night closes April 12's protein to 141g (was 116g) — gap was only 9g, not 34g. Protein discipline is better than it looked yesterday.",
+          "Apr 11 remains zero-logged. If meals were eaten, describe them this session for retroactive entry. If actual intake was very low, monitor energy today — low caloric days increase perceived exertion under load."
         ]
       },
       "progress": {
-        "lead_number": "165.8 lbs — 0.8 lbs from the 165 lb goal.",
+        "lead_number": "165.6 lbs (Ocare3, Apr 13) — you are AT goal weight.",
         "bullets": [
-          "Weight: 165.8 lbs (Bevel Apr 12 morning). Down 0.2 lbs from Apr 11. You are 0.8 lbs from your goal weight — this is not a projection, this is where you are.",
-          "Body comp (Bevel Apr 12): BF 16.3%, lean mass 138.8 lbs (79.1%). Lean mass up 1.7 lbs from Apr 11 (137.1 lbs) — directionally correct; muscle is being preserved under the deficit.",
-          "VO2 Max (Motra): 39.6 ml/kg/min, up 4.9 over 90 days. From Below Average to the edge of Average. The daily walks and structured cardio load are moving this number — it is not stagnating.",
-          "Key win: Visceral fat level dropped 3.0 → 2.0 (Bevel Apr 11→12). Primary mission target is moving. This is the number that matters most for longevity.",
-          "Key risk: Motra's 30-day weight trend shows +0.8 lbs/wk → 30-day projection 169.3 lbs. Bevel morning readings show 165.8 lbs — these diverge. Likely explained by measurement method and timing. Trust Bevel morning readings as primary; flag if both converge upward."
+          "Weight: 165.6 lbs by Ocare3 this morning (6:11 AM). Goal is 165 lbs. Weekly avg per Hume: 165.6 lbs (max 166.0, min 164.9). You've arrived at the weight. Now the question is body comp — holding lean mass while sustaining the deficit.",
+          "Body fat: 15.7% Ocare3 BIA today, 16.3% Bevel Apr 12 — consistent range. Visceral Fat Level 2.0, stable. The VAT reduction mission is progressing.",
+          "Lean mass preservation: Muscle 79.6% today (up from 79.1% yesterday, Bevel). Day-to-day BIA fluctuates, but trend is stable-to-improving. Key win: you've dropped 7.8 lbs since Nov 2025 while lean mass has been maintained.",
+          "VO2 Max: 39.6 ml/kg/min (Motra) — up 4.9 over 90 days. From Below Average to near-Average for your age group. The fasted walk protocol and Zone 2 cardio are measurably working.",
+          "Risk: Hume's 30-day weight trend projected 169.3 lbs at +0.8 lbs/wk. Ocare3/Bevel morning readings contradict this. Most likely hydration and measurement-time differences. Trust the daily Bevel morning reading as primary; the Hume projection is a caution flag, not a crisis."
         ]
       },
       "watch_for": {
         "items": [
-          "If HR exceeds 115 bpm before your first Block A working set, take an extra 90 seconds rest and recheck before loading. Today's 20ms HRV means your HR ceiling arrives faster than usual — don't start compounds above 100 bpm.",
-          "If the session clock hits 50 minutes and you haven't entered Block C, drop to Pallof press (left first, 3 sets) as your only Block C movement and end. One anti-rotation set beats zero every time.",
-          "If you feel protein hunger by 3pm with nothing logged past breakfast, default to: 1 scoop Gold Standard whey + unsweetened almond milk + 1 piece fruit. No decision needed — this is the preset."
+          "If HR exceeds 112 bpm during the rest period after Block A Set 1 (not the working set — the rest period), extend your rest to 90 sec and note it. Today's 20ms HRV means cardiac recovery is slower. Don't start Set 2 above 112 at rest.",
+          "If the session clock hits 52 minutes and you have not started Block C, execute ONLY Pallof Press (left first, 3×12/side) + Suitcase Carry (left, 3×20m) and end. One anti-rotation anchor beats a rushed Block C every time.",
+          "If protein feels hard to hit at dinner, default to the same double-whey shake from this morning (490 kcal / 55g P). One shake closes a 55g protein gap with 13g fat — exactly what you need on a day the fat budget is already tight."
         ]
       }
     },
@@ -6755,7 +6942,8 @@
             }
           ]
         }
-      ]
+      ],
+      "note": "Locked weekly plan for Monday Apr 13. Readiness adjusted to Amber per today's HRV (20ms). Session structure unchanged per immutability rule."
     },
     "weekly_session_plans": {
       "1": {
