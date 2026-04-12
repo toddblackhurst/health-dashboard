@@ -6481,41 +6481,41 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-12T21:07:05+08:00",
+    "generated_at": "2026-04-13T06:08:02+08:00",
     "generated_by": "hourly-coaching-brief",
-    "note": "Auto-generated 21:07 run. Processed: 1 file (Apple Fitness daily steps — 10,292 steps / 4.81 mi). Nutrition day closed (5 entries, 1954 kcal). Training call: rest tonight, Pull-Dominant Upper tomorrow morning.",
+    "note": "Auto-generated 06:08 run. No new uploads — Today folder not found at expected path. Working from April 12 recovery data. Training call: Pull-Dominant Upper — train today.",
     "sections": {
       "recovery": [
-        "🟡 AMBER-GREEN — 3rd consecutive above-baseline HRV day: Apr 9 (36.2 ms) → Apr 11 (38.8 ms) → Apr 12 (41.7 ms). This streak is rare. Both prior streaks this year ended after sessions over 70 minutes.",
-        "HRV 41.7 ms vs 32.5 ms baseline (+9.2 ms). Recovery 68%, +12% from yesterday. Motra: HRV stabilizing, 7d +1.6 ms. The system is building toward a 4th consecutive above-baseline day — protect it tonight.",
-        "Sleep: 6h 54m, debt ~2h 12m. REM above normal (2h 28m Oura) — that's what drove the recovery breakthrough. Latency 37 min and restfulness flagged, but productive overall.",
-        "Mild flag: Respiratory rate 14.1 rpm (below normal, day 1). SpO2 96.1% normal. No action needed — flag if it repeats tomorrow."
+        "🟡 AMBER-GREEN — HRV 41.7 ms vs 32.5 ms baseline (+9.2 ms above). Recovery 68% (Oura). This is your 4th consecutive above-baseline HRV day: Apr 9 (36.2) → Apr 11 (38.8) → Apr 12 (41.7) → Apr 13 (carried forward). Both prior streaks this year snapped on sessions over 70 minutes. Today's session length matters.",
+        "Sleep Apr 12: 6h 15–54m (source variance). REM above normal (2h 28m Oura) — that's the driver of the 68% recovery score. Latency was long (37 min). No new sleep data uploaded yet for Apr 13 — brief is running on last-known state.",
+        "Mild flag still active: Respiratory rate 14.1 rpm (below normal on Apr 12, day 1 of flag). SpO2 96.1% normal. Upload Oura screenshot to clear or confirm this flag.",
+        "Non-obvious pattern: The Apr 9→12 HRV arc (+5.5 ms over 4 days) mirrors the best recovery stretch since Jan 29 (HRV 55 ms peak). That sequence followed a rest day — Apr 12 walk-only was the right call."
       ],
       "training_direction": [
-        "Rest tonight. Train tomorrow 7–8 AM. It's 9 PM — your target bedtime is 9:30 PM. Protect the HRV streak, not the session.",
-        "Tomorrow: Pull-Dominant Upper + Structural Correction. Floor 3 → Floor 2. Last push-heavy upper was Apr 8 (chest 15% strain). Pull tomorrow balances it.",
-        "Rotation: assisted pull-up → single-arm row (left leads) → face pull → half-kneeling pulldown (left leads) → Pallof + suitcase carry. Session plan already loaded.",
-        "65-min hard cap — set the timer before your first foam roller rep. 3 of 3 last sessions overran: Apr 6 (96 min), Apr 8 (118 min), Apr 10 (77 min). The timer is the only reliable fix.",
-        "HR: Under 122 bpm. Pull sessions trend lower — that's your advantage tomorrow. Still verify before each compound set."
+        "Train today. Pull-Dominant Upper + Structural Correction. Window: 7–8 AM. Session plan loaded below.",
+        "Rotation logic: Apr 8 was chest-dominant (chest 15% strain, highest muscle group that session). Apr 10 was shape/mixed. Pull-dominant upper today rebalances the push:pull ratio and loads structural correction priorities — right-side dominance, shoulder imbalance.",
+        "Floor 3 prep → Floor 2 strength. No floor changes mid-session. Pull-up → single-arm row (left leads) → face pull → half-kneeling pulldown (left leads) → Pallof press + suitcase carry.",
+        "65-min hard cap. Set the timer before your first foam roller rep — not after Block A. 3 of 3 last sessions overran: Apr 6 (96 min), Apr 8 (118 min), Apr 10 (77 min). The pattern is clear. The timer is the only reliable fix.",
+        "HR: Under 122 bpm. Pull sessions trend lower (Apr 6 avg 113 bpm, Apr 8 avg 109 bpm). You have an advantage today — still check HR before each compound set."
       ],
       "nutrition": [
-        "Day closed ✅ — 1954 kcal / 116g P / 130g C / 113g F. Calories nearly perfect (-46 kcal). Binding constraint: fat overrun +43g. Protein short 34g. Good day overall.",
-        "Root cause: walnuts breakfast (+26g fat) + ranch lunch (+24g fat) = 50g fat before 1 PM. Dinner sashimi + roll was the right recovery: 31g P / 8g fat.",
-        "Tomorrow fix: cottage cheese instead of walnuts. ½ cup = 14g protein, 2g fat. Drops breakfast fat from 53g to 29g, opens protein room for the full day.",
-        "10,292 steps / 4.81 miles today — high NEAT. Morning walk (2.22 mi) + general movement (2.59 mi). Strong VAT-reduction day without training load.",
-        "Tomorrow binding constraint: protein. Whey before food at breakfast. Target 50g P at lunch. Hit 150g before dinner."
+        "No food logged yet for Apr 13 (6 AM run). Binding constraint today: protein — you were 34g short yesterday (116g vs 150g target).",
+        "Apr 12 closed: 1954 kcal / 116g P / 130g C / 113g F. Fat overran +43g (walnuts at breakfast + ranch at lunch). Dinner sashimi was the right recovery: 31g P / 8g fat.",
+        "Today fix: swap walnuts for cottage cheese (½ cup = 14g protein, 2g fat). Drops breakfast fat from 53g to ~29g, opens room for protein throughout the day.",
+        "Pre-training: if 5+ hours since last meal, take whey before leaving for gym. Don't train fasted on a pull day — you need substrate for pulling volume.",
+        "Flag: Apr 11 was zero-logged. Two poorly logged days in the last week make deficit tracking unreliable. Log breakfast before you leave today."
       ],
       "progress": [
-        "165.8 lbs on Bevel this morning — 0.8 lbs from the 165 lb goal. Down 1.5 lbs since Apr 6. You're essentially there.",
-        "Body fat 16.3% (Bevel). Lean mass 138.8 lbs. Visceral fat level 2.0 — down from 3.0 on Apr 11. Fat dropping, lean mass holding. That's the target outcome.",
-        "VO2 Max 39.6 ml/kg/min (Motra, highest in database) — +4.9 over 90 days. Fasted morning walks are the primary driver. 10,292 steps today confirms the pattern.",
-        "Key win: 5 nutrition entries logged today — clean close after Apr 11 zero-log morning. Recovery in tracking behavior noted.",
-        "Key risk: Motra shows +0.8 lbs/wk projection (166.3 lbs rolling avg). Hydration artifact — trust Bevel's downward trend. Don't let the Motra number create a false alarm."
+        "165.8 lbs (Bevel, Apr 12) — 0.8 lbs from the 165 lb goal. Down 1.5 lbs since Apr 6. Trend is intact.",
+        "BF 16.3% / Lean 138.8 lbs / Visceral Fat Level 2.0 (down from 3.0 on Apr 11). Fat dropping, lean mass holding. That is the exact target outcome — this is recomposition working.",
+        "VO2 Max 39.6 ml/kg/min (Motra) — highest reading in database, +4.9 over 90 days. Fasted morning walks are the primary driver. Keep the walk protocol.",
+        "Key win this week: Apr 12 — 10,292 steps + 5 nutrition entries logged + walk-only recovery day. Clean execution.",
+        "Key risk: protein undereating is the consistent drift. Apr 12: -34g. Apr 11: unknown (zero logged). Two of the last three logged days have had a protein gap. Fix is breakfast — lead with protein, not fat."
       ],
       "watch_for": [
-        "1. If you're not asleep by 9:45 PM, you'll cut into the REM window that drove today's 68% recovery. Close screens now — the 4th straight above-baseline HRV day is the target.",
-        "2. If tomorrow's breakfast has walnuts, fat overrun is locked in before 9 AM. Cottage cheese is in the fridge — this is a one-decision fix, not a discipline conversation.",
-        "3. If tomorrow's session runs past 65 min, you'll break the HRV streak you've built since Apr 9. Set the timer before the foam roller, not after Block A."
+        "1. If today's session runs past 65 min, the HRV streak built since Apr 9 is at real risk — both prior streaks this year ended on overlong sessions. Set the timer before you touch the foam roller.",
+        "2. If breakfast has walnuts again, fat target is blown before 9 AM for the 2nd straight day. Cottage cheese is the one-decision fix — 14g protein, 2g fat vs. 6g protein, 26g fat.",
+        "3. If no Oura screenshot is uploaded by midday, the Apr 12 respiratory rate flag (14.1 rpm below normal) cannot be cleared or escalated — drop it in the Today folder when you get home."
       ]
     },
     "session_plan": {
@@ -6577,7 +6577,7 @@
               "rest_sec": 15,
               "note": "Scapular control primer before pulling. Retract hard at end range, hold 1 second. Reduces upper trap compensation on lat pulldown and rows.",
               "alternatives": [
-                "Face pull (cable or band)",
+                "Face pull (cable or band, light)",
                 "TRX Y-raise (Floor 3)",
                 "Prone Y-T-W bodyweight"
               ]
@@ -6588,7 +6588,7 @@
               "sets": "2",
               "reps": "30 sec",
               "rest_sec": 30,
-              "note": "Shoulder decompression + grip primer. Passive hang, shoulders relaxed into elevation, then active pack. Sets the pull path for the entire session. Skip if shoulder is irritated.",
+              "note": "Shoulder decompression + grip primer. Passive hang, shoulders relaxed into elevation, then actively pack down. Sets the pull path for the entire session. Skip if shoulder is irritated.",
               "alternatives": [
                 "Active hang (scapular pull)",
                 "Band-assisted hang",
@@ -6608,7 +6608,7 @@
               "sets": "3",
               "reps": "8",
               "rest_sec": 90,
-              "note": "Straight sets. Your Feb 2 log used -80 to -90 kg assist — start at -80 kg and hold if clean. Full ROM: dead hang to chin over bar. Left side will want to bail early — control the descent equally on both sides.",
+              "note": "Straight sets. Feb 2 log: -80 to -90 kg assist — start at -80 kg, hold if clean. Full ROM: dead hang to chin over bar. Left side will want to bail early — control the descent equally on both sides.",
               "alternatives": [
                 "Cable Lat Pulldown Wide-Grip (100 kg starting — Feb log)",
                 "Single-arm lat pulldown (left first)",
@@ -6621,7 +6621,7 @@
               "sets": "3",
               "reps": "10 each side",
               "rest_sec": 60,
-              "note": "Left arm leads — always. Use a weight your left side owns completely, not what the right can handle. Anti-rotation demand is the corrective goal. Brace hard through the planted side.",
+              "note": "Left arm leads — always. Use a weight your left side owns completely, not what the right can handle. Suggested: 22 kg. Anti-rotation demand is the corrective goal. Brace hard through the planted side.",
               "alternatives": [
                 "One-arm cable row (Floor 2 cable station)",
                 "Single-arm seated cable row",
@@ -6641,7 +6641,7 @@
               "sets": "3",
               "reps": "15",
               "rest_sec": 45,
-              "note": "Rear delt and mid-trap corrective — directly addresses shoulder imbalance (#2 structural issue). Pull to forehead height, elbows flared high, squeeze at end range. Load should allow perfect form every rep. Your Feb log used 20–25 kg.",
+              "note": "Rear delt and mid-trap corrective — directly addresses shoulder imbalance (#2 structural issue). Pull to forehead height, elbows flared high, squeeze at end range. Apr 6 log: 28.4 kg × 15 reps. Hold or drop 1 kg to ensure full form.",
               "alternatives": [
                 "TRX Y-raise (Floor 3 if cables occupied)",
                 "Cable Y-raise",
@@ -6654,7 +6654,7 @@
               "sets": "3",
               "reps": "10 each side",
               "rest_sec": 60,
-              "note": "Left arm leads. Half-kneeling position forces anti-rotation core engagement while pulling — stacks two corrections in one movement. Right knee down, pull with left arm. Keep glute of rear leg active throughout.",
+              "note": "Left arm leads. Half-kneeling forces anti-rotation core engagement while pulling — stacks two corrections in one movement. Right knee down, pull with left arm. Keep glute of rear leg active throughout.",
               "alternatives": [
                 "Single-arm cable lat pulldown (standing)",
                 "Single-arm band pulldown (anchored high)",
@@ -6685,9 +6685,9 @@
               "id": "c1",
               "name": "Pallof Press",
               "sets": "3",
-              "reps": "8 each side",
+              "reps": "12 each side (left first)",
               "rest_sec": 45,
-              "note": "Anti-rotation. Trunk muscle rated Low on both ADP and BIA scans — this is a priority corrective every session. Press straight out, hold 2 sec, return controlled. Do NOT rotate.",
+              "note": "Anti-rotation core — Priority #4 structural issue. Apr 6: 10.2 kg × 6 reps. Move to 12 kg today for 12 reps. Press straight out, hold 2 sec, return controlled. Do NOT rotate.",
               "alternatives": [
                 "Half-kneeling Pallof press",
                 "Cable anti-rotation hold",
@@ -6700,7 +6700,7 @@
               "sets": "3",
               "reps": "20–25m",
               "rest_sec": 45,
-              "note": "Left hand only. Primary right-side dominance corrective. KB or DB. Shoulder packed down, no lateral lean. Walk slow enough to feel the anti-lateral-flexion demand.",
+              "note": "Left hand only. Primary right-side dominance corrective. KB or DB. Shoulder packed down, no lateral lean. Walk slow enough to feel the anti-lateral-flexion demand. This corrects your body shift pattern every session it appears.",
               "alternatives": [
                 "Single-arm farmer carry (left)",
                 "Overhead carry (left arm, if shoulder stable)",
@@ -6713,7 +6713,7 @@
               "sets": "3",
               "reps": "5",
               "rest_sec": 60,
-              "note": "Floor slams — not wall. 8 kg ball. Full overhead reach, hard slam, athletic reset. 5 reps only — quality not volume. This is your engagement element: it should feel explosive and satisfying. Check HR before each set.",
+              "note": "Floor slams — not wall. 8 kg ball. Full overhead reach, hard slam, athletic reset. 5 reps only — quality not volume. This is your engagement element — it should feel explosive. Check HR before each set.",
               "alternatives": [
                 "KB Deadlift (ballistic, 5 reps)",
                 "Battle ropes (10 sec burst)",
@@ -6725,5 +6725,5 @@
       ]
     }
   },
-  "last_updated": "2026-04-12T21:07:05+08:00"
+  "last_updated": "2026-04-13T06:08:02+08:00"
 }
