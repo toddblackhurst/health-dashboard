@@ -7134,52 +7134,52 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-13T15:08:00+08:00",
+    "generated_at": "2026-04-13T16:36:27+08:00",
     "readiness_call": "Amber",
     "sections": {
       "recovery": {
         "traffic_light": "🟠 Amber",
         "bullets": [
-          "HRV 20ms — 12.5ms below your 32.5ms baseline. Sharp drop from yesterday's 41.7ms breakthrough — classic regression to mean after a high-HRV day, compounded by 3 nights of stacking sleep debt.",
-          "Sleep 5h19m (Oura) / 5h34m (Rise). Rise score 51 — Poor. Debt now -4h10m (Oura) / -3h23m (Rise). That's the steepest single-night debt reading in tracked history. The debt is accelerating, not stabilizing.",
-          "Positives: Deep sleep 59 min (best in recent history), restfulness Optimal, HR dip 15%, lowest HR 56 bpm. Sleep architecture was solid — duration alone is the problem.",
-          "Non-obvious pattern: Sleep debt over 3 consecutive nights: -2h30m → -2h12m → -4h10m. It's worsening each night. Wednesday's HRV reading is already in jeopardy before Tuesday begins. Tonight's bedtime before 10:00 PM is the only variable you control."
+          "HRV 20ms — 12.5ms below your 32.5ms baseline. Sharp drop from yesterday's 41.7ms breakthrough — classic regression to mean, compounded by 3 consecutive nights of mounting sleep debt.",
+          "Sleep 5h19m (Oura) / 5h34m (Rise). Rise score 51 — Poor. Debt now -4h10m (Oura) / -3h23m (Rise). Steepest single-night debt in tracked history — and it's accelerating, not stabilizing.",
+          "Positives: Deep sleep 59 min (best in recent history), HR dip 15%, lowest HR 56 bpm, restfulness Optimal. Architecture solid — duration is the only problem.",
+          "Non-obvious pattern: Sleep debt worsening 3 nights in a row: -2h30m → -2h12m → -4h10m. Wednesday's HRV is already at risk. Bedtime before 9:45 PM tonight is the one lever you control."
         ]
       },
       "training_direction": {
-        "call": "SESSION COMPLETE ✅ — Pull + Glute Hinge done. Recovery mode for the rest of today.",
+        "call": "SESSION COMPLETE ✅ — Pull + Glute Hinge done. Recovery-only for the rest of today.",
         "bullets": [
-          "Monday session logged: 07:56 AM, 80 min, 6,300 kg / 13,889 lbs, 475 kcal, 15 exercises. Progression: Single-Arm Row 10kg → 12kg in sets 3–4 ✅. Pull-ups added unplanned — good instinct, not a problem.",
-          "5 of 5 recent sessions exceeded the 65-min cap. Apr 1 = 95 min, Apr 6 = 96 min, Apr 8 = 118 min, Apr 10 = 77 min, Apr 13 = 80 min. Average overrun: 28 minutes. Wednesday cap enforcement starts before the foam roller — set the timer first.",
-          "Fasted walk done (2.43 mi, Zone 0-1, avg HR 96 bpm). No training for the rest of today. Recovery, nutrition, and sleep are the only active inputs between now and Wednesday 7am.",
-          "Next session: Wednesday Apr 15 — Push + Quad / Anti-Rotation. Floor 3 → Floor 2. Half-Kneeling Landmine Press, Incline DB Press, V-Squat, Pallof Press. 65-min hard cap — no exceptions.",
-          "Wednesday readiness hinges on tonight's sleep. If HRV comes in below 25ms Wednesday morning, Block B drops to 2 sets per exercise and Block C cuts to Pallof Press + Suitcase Carry only."
+          "Monday session: 07:56 AM, 80 min, 6,300 kg / 13,889 lbs, 475 kcal, 15 exercises. Progression confirmed: Single-Arm Row 10kg → 12kg in sets 3–4. Pull-ups added — right instinct.",
+          "5 of 5 recent sessions exceeded the 65-min cap: Apr 1 = 95 min, Apr 6 = 96 min, Apr 8 = 118 min, Apr 10 = 77 min, Apr 13 = 80 min. Average overrun: 28 min. That extra 28 min is adding sleep-debt risk, not training benefit.",
+          "Fasted walk done (2.43 mi, Zone 0-1). No more training today — recovery, nutrition, and sleep are the only inputs between now and Wednesday 7 AM.",
+          "Next: Wednesday Apr 15 — Push + Quad / Anti-Rotation. Floor 3 → Floor 2. Landmine Press, Incline DB Press, V-Squat, Pallof Press. Timer starts BEFORE the foam roller.",
+          "Wednesday contingency: If HRV comes in below 25ms — Block B drops to 2 sets per exercise and Block C cuts to Pallof Press + Suitcase Carry only. No extra reps to compensate."
         ]
       },
       "nutrition": {
-        "binding_constraint": "CARBS — 97g still available. Protein is essentially done (138g / 150g). Fat budget is closed (74g / 70g — 4g over).",
+        "binding_constraint": "CARBS — 97g still available. Protein essentially done (138g/150g). Fat budget closed (74g/70g — 4g over).",
         "bullets": [
-          "Updated totals through 12:10 PM: 1,546 kcal / P: 138g / C: 93g / F: 74g. BBQ ribs (46g protein) at lunch flipped the protein picture — within 12g of daily target before 1 PM.",
-          "Fat is closed at 74g vs 70g target (4g over). No added fats at dinner tonight — lean protein only: fish, chicken breast, shrimp, egg whites, or low-fat cottage cheese.",
-          "Carbs: 97g remaining (190g target). Direct all of them to dinner — rice, sweet potato, or both. Carbs at dinner support glycogen and sleep-quality. Don't leave them on the table.",
-          "Remaining protein: 12g only. One serving of fish or chicken closes it. No extra shake needed unless dinner protein falls short.",
-          "Log dinner tonight — a photo is enough. Keep the 3-entry streak going."
+          "Current totals: 1,546 kcal / P: 138g / C: 93g / F: 74g. Protein gap is only 12g — one serving of fish or chicken closes it. Outstanding tracking day through lunch.",
+          "It's 4:35 PM — the exact window yesterday's M&M hit (4:15 PM, 140 kcal, 8g fat, 3g protein). If you feel a snack pull right now: 1 oz beef jerky or 1 scoop whey in water. Same pocket snack, +7g protein, zero fat budget damage.",
+          "Dinner window is 5–7 PM. Load all remaining carbs here — 97g = rice bowl + sweet potato. Lean protein only (fat budget closed): fish, chicken breast, shrimp, or egg whites.",
+          "Log dinner with a photo — 3-day logging streak is worth protecting.",
+          "Apr 11 was a zero-log day. You have logged every meal since. Don't break the streak tonight."
         ]
       },
       "progress": {
         "top_number": "165.6 lbs weekly avg — you are at goal weight. Phase shifts to body composition now.",
         "bullets": [
-          "Weight: Ocare3 this morning 165.6 lbs / Hume Pod 166.8 lbs (hydration variance). Weekly avg 165.6 lbs, weekly min 164.9 lbs. The 165 lb target is achieved — weight management phase begins.",
-          "Body comp (Bevel Apr 12): BF 16.3%, lean mass 138.8 lbs (79.1%), Visceral Fat Level 2.0 — down from 3.0 the day before. Lean mass is trending up while in caloric deficit at 57. That's the core result.",
-          "VO2 Max: 39.6 ml/kg/min (Motra Apr 12) — +4.9 over 90 days, now above Oura baseline of 38.9. First consistent upward trend in tracked history.",
-          "Key win this week: Today's pull session showed strength progression — Single-Arm Row from 10kg → 12kg while on an Amber readiness day. Muscle is being preserved under deficit.",
-          "Key risk: Motra 30-day weight trend projects 169.3 lbs by mid-May at +0.8 lbs/wk. That contradicts Bevel and Ocare3 data. If weekly avg climbs above 167 lbs by Apr 20, tighten deficit and re-evaluate targets."
+          "Weight: Ocare3 165.6 lbs + Hume Pod 166.8 lbs this morning (hydration variance). Weekly avg 165.6 lbs, min 164.9 lbs — 165 lb target is achieved. Maintenance/recomp phase begins.",
+          "Body comp (Bevel Apr 12): BF 16.3%, lean mass 138.8 lbs (79.1%), Visceral Fat Lv 2.0 — down from Lv 3.0 the day before. Lean mass trending up while in caloric deficit at 57. That's the headline.",
+          "VO2 Max: 39.6 ml/kg/min (Motra, Apr 12) — +4.9 over 90 days, now above Oura biology baseline of 38.9. First sustained upward trend in tracked history.",
+          "Key win this week: Strength progression on an Amber readiness day (Row +2kg). Muscle being preserved under deficit confirms the protein strategy is working.",
+          "Key risk: Motra 30-day weight trend still projects 169.3 lbs by mid-May at +0.8 lbs/wk. Conflicts with Bevel/Ocare3 data — watch weekly avg. If it climbs above 167 lbs by Apr 20, tighten deficit."
         ]
       },
       "watch_for": [
-        "If tonight's bedtime is after 10:00 PM or sleep is again under 6 hours — flag Wednesday's brief immediately at 6 AM and cap the session at 55 min with Block B reduced to 2 sets per exercise. Three consecutive debt nights make a third straight Amber session almost certain.",
-        "If afternoon snack today includes chocolate, M&M's, or sweets — swap now to 1 oz beef jerky or a whey shake. Yesterday at 4:15 PM the M&M pattern hit — 140 kcal, 17g sugar, 8g fat for 3g protein. The swap nets +7g protein and saves the fat budget.",
-        "If Wednesday morning HRV comes in below 25ms — reduce Block B to 2 sets per exercise and cut Block C to Pallof Press + Suitcase Carry only (no third element). Do not compensate with extra reps — that's exactly how Monday stretched to 80 minutes."
+        "⚠️ 4:35 PM snack window is active RIGHT NOW — yesterday M&Ms hit at 4:15 PM (140 kcal, 17g sugar, 8g fat for 3g protein). If hunger is there: 1 oz jerky or whey shake in water. Decision point is the next 30 minutes.",
+        "If tonight's bedtime is after 10:00 PM or total sleep is again under 6 hours — Wednesday's brief auto-flags at 6 AM and session caps at 55 min with Block B at 2 sets only. Three consecutive debt nights make a third straight Amber almost certain.",
+        "If Wednesday morning HRV comes in below 25ms — do not add sets or extend time to compensate. That's how Monday stretched to 80 min. Reduce Block B to 2 sets per exercise, cut Block C to Pallof Press + Suitcase Carry only, and finish in 55 min."
       ]
     },
     "session_plan": {
