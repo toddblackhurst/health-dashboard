@@ -586,6 +586,35 @@
       "sleep_timing_oura": "Good",
       "sleep_time": "21:48",
       "notes": "HRV 20ms — significant drop from 41.7ms yesterday, well below ~32.5ms baseline. Sleep short at 5h19m (Oura)/5h34m (Rise). Sleep debt accumulating: -4h10m (Oura) / -3h23m (Rise). Positives: deep sleep 59min/18% solid, restfulness Optimal, HR stable. Fasted morning walk already done (5:16 AM, 2.43mi, Zone 0-1, 16% Activity Strain). Training guidance: Amber — proceed with programmed strength session, HR cap 122 bpm, treat first sets as warm-in, reduce Block C if fatigue surfaces."
+    },
+    {
+      "date": "2026-04-14",
+      "source": "Bevel",
+      "recovery_score_pct": 44,
+      "recovery_trend": "HRV rebound after rest day — back above baseline following early 9:01 PM bedtime",
+      "hrv_ms": 35.4,
+      "resting_hr_bpm": 65.0,
+      "sleep_score_pct": 58,
+      "total_sleep_min": 403,
+      "time_in_bed_min": 419,
+      "sleep_efficiency_pct": 96,
+      "deep_sleep_min": 33,
+      "rem_sleep_min": 98,
+      "sleep_bank_min": -193,
+      "sleep_time": "21:01",
+      "respiratory_rate_rpm": 14.4,
+      "spo2_pct": 95.1,
+      "wrist_temp_f": 96.9,
+      "wrist_temp_note": "Below normal — mild flag; possible inflammation or dehydration",
+      "stress_avg": 30,
+      "stress_highest": 67,
+      "notes": "Bevel April 14 morning. HRV 35.4ms — rebound from 20ms yesterday, back above 32.5ms baseline. Green readiness tier. Recovery 44% reflects post-strength training adaptation. Sleep 6h43m asleep / 6h59m in bed, efficiency 96% (excellent). Sleep debt reduced from -4h10m to -3h13m — early bedtime (9:01 PM) made a measurable difference. Wrist temp 96.9°F below normal — monitor for dehydration or low-grade inflammation. Morning walk already completed: 5:53–6:26 AM, 2.11 mi, 33:28, avg HR 99 bpm.",
+      "hr_dip_pct": 11,
+      "strain_score": 0,
+      "bevel_energy_pct": 66,
+      "wake_time": "~04:00",
+      "readiness_tier": "Green",
+      "readiness_tier_basis": "HRV 35.4ms >= 30ms threshold; above personal baseline 32.5ms"
     }
   ],
   "nutrition": [
@@ -1156,6 +1185,95 @@
         "fat_delta": 35
       },
       "day_closed": true
+    },
+    {
+      "date": "2026-04-14",
+      "source": "Cal AI",
+      "targets": {
+        "calories_kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
+      },
+      "meals": [
+        {
+          "meal": "pre_workout_shake",
+          "time": "06:45",
+          "items": [
+            {
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
+              "amount": "2 scoops",
+              "calories_kcal": 252,
+              "protein_g": 48,
+              "carbs_g": 8,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Red Tractor Omega 3 Instant Oats",
+              "amount": "1 serving",
+              "calories_kcal": 39,
+              "protein_g": 2,
+              "carbs_g": 7,
+              "fat_g": 1,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Kirkland Unsweetened Almond Milk",
+              "amount": "1 serving",
+              "calories_kcal": 45,
+              "protein_g": 1,
+              "carbs_g": 2,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Plain Yogurt",
+              "amount": "120g",
+              "calories_kcal": 75,
+              "protein_g": 4,
+              "carbs_g": 9,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Frozen Blueberries",
+              "amount": "1/2 cup",
+              "calories_kcal": 39,
+              "protein_g": 0,
+              "carbs_g": 10,
+              "fat_g": 0,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 490,
+            "protein_g": 55,
+            "carbs_g": 41,
+            "fat_g": 13
+          },
+          "notes": "Pre-workout shake at 6:45 AM — same formula as Apr 13. 55g protein strong start. Fat 13g manageable. Solid pre-walk/pre-session fuel."
+        }
+      ],
+      "daily_totals": {
+        "calories_kcal": 490,
+        "protein_g": 55,
+        "carbs_g": 41,
+        "fat_g": 13,
+        "note": "Day in progress — 1 meal logged. Remaining targets: ~1510 kcal / 95g P / 149g C / 57g F."
+      },
+      "vs_targets": {
+        "calories_delta": -1510,
+        "protein_delta": -95,
+        "carbs_delta": -149,
+        "fat_delta": -57
+      },
+      "day_closed": false
     }
   ],
   "activity_sessions": [
@@ -1605,6 +1723,48 @@
       "tracked_with": "Motra",
       "motra_url": "https://motra.com/share/workout/5515084e71",
       "notes": "Week 1 Monday — Pull + Glute Hinge. Added Pull-Ups (unplanned) and Wall Slides to PREP. 80 min session — OVER 65 min cap. Volume 6.3K kg / 475 kcal. Progressed Single-Arm Row from 10kg to 12kg in sets 3-4. Suitcase Carry heavy set dropped from 16kg to 12kg (fatigue management). Good execution of corrective block. HR context: Amber day (HRV 20ms, below 32.5ms baseline)."
+    },
+    {
+      "date": "2026-04-13",
+      "source": "Apple Fitness",
+      "session_type": "Cardio — Low Aerobic",
+      "session_name": "Outdoor Walk — Evening",
+      "start_time": "18:17",
+      "end_time": "18:57",
+      "duration_min": 40.3,
+      "active_calories_kcal": 129,
+      "total_calories_kcal": 194,
+      "distance_mi": 1.86,
+      "avg_pace_min_mi": "21:37",
+      "avg_hr_bpm": 89,
+      "elevation_gain_ft": 46,
+      "effort": "Easy (2/5)",
+      "location": "West District",
+      "temperature_f": 79,
+      "humidity_pct": 67,
+      "hr_constraint_met": true,
+      "notes": "Evening walk Apr 13, West District. 1.86 mi, 40:19, avg HR 89 bpm — Easy effort. HR well within <122 bpm constraint. Zone 0-1 active recovery. Lower pace than morning walks (21:37/mi vs typical 15-16/mi)."
+    },
+    {
+      "date": "2026-04-14",
+      "source": "Apple Fitness",
+      "session_type": "Cardio — Low Aerobic",
+      "session_name": "Outdoor Walk — Morning (Fasted)",
+      "start_time": "05:53",
+      "end_time": "06:26",
+      "duration_min": 33.5,
+      "active_calories_kcal": 187,
+      "total_calories_kcal": 241,
+      "distance_mi": 2.11,
+      "avg_pace_min_mi": "15:50",
+      "avg_hr_bpm": 99,
+      "elevation_gain_ft": 33,
+      "effort": "Easy (3/5)",
+      "location": "Beitun District",
+      "temperature_f": 71,
+      "humidity_pct": 85,
+      "hr_constraint_met": true,
+      "notes": "Fasted morning walk Apr 14, Beitun District. 2.11 mi, 33:28, avg HR 99 bpm — Easy-Moderate effort. HR within <122 bpm constraint. Faster pace than yesterday's evening walk (15:50 vs 21:37/mi). Peak HR touched 104 bpm on split 3. Active recovery day — walk already complete."
     }
   ],
   "strength_logs": [
@@ -7167,52 +7327,49 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T08:00:00+0800",
-    "readiness_call": "Amber",
+    "generated_at": "2026-04-14T09:30:00+0800",
+    "readiness_call": "Green",
     "sections": {
       "recovery": {
-        "traffic_light": "🟠 Amber",
+        "traffic_light": "🟢 Green",
         "bullets": [
-          "HRV 20ms (Apr 13 data — no new Oura upload yet). Still 12.5ms below your 32.5ms baseline. Two consecutive below-baseline readings. Monday's 80-min session against an Amber readiness day has a cost — this is it.",
-          "Sleep short again: 5h19m (Oura) / 5h34m (Rise) for the Apr 12–13 night. Debt at -4h10m. Deep sleep was solid at 59min/18% — nervous system isn't collapsing, but volume is insufficient. Tonight's target: lights out by 9:30 PM.",
-          "All vitals otherwise clean: RHR 63 bpm, HR dip 15%, SpO2 normal, restfulness Optimal. Amber is sleep debt + HRV, not a physiology problem.",
-          "Non-obvious pattern: Your HRV has been below baseline every day following a strength session over 76 minutes (Apr 8→9: 36ms, Apr 10→13: 20ms). Monday ran 80 min. HRV won't recover on a rest day until the sleep debt clears. Tonight isn't optional — it's the actual training stimulus for Wednesday."
+          "HRV 35.4ms — rebounded from 20ms yesterday, back above 32.5ms baseline. Green. The early 9:01 PM bedtime produced a 15ms HRV jump overnight. You followed the coaching call, and the data shows it worked.",
+          "Sleep: 6h43m asleep, 58% quality, efficiency 96% (excellent). Sleep bank improved from -4h10m to -3h13m — 57 minutes of debt recovered in one night. REM 1h38m solid. Wrist temp 96.9°F flagged below normal — may indicate mild dehydration; drink water.",
+          "RHR 65.0 bpm (vs 63 bpm baseline — slightly elevated, normal post-strength day variation). SpO2 95.1% and respiratory rate 14.4 rpm both normal. Body is in recovery mode, not under stress.",
+          "Non-obvious: the HRV pattern now confirms early bedtime is your single most effective recovery intervention — more so than rest day activity level. Apr 11 (rest+early sleep) → 41.7ms. Apr 14 (rest+9:01 PM) → 35.4ms. Late nights suppress your HRV regardless of training load."
         ]
       },
       "training_direction": {
-        "call": "Active Recovery. Morning walk only. No gym.",
+        "call": "Rest day. Morning walk ✅ done. No additional load.",
         "bullets": [
-          "Tuesday is a full rest day. Fasted morning walk — Zone 0-1, 2–2.5 miles, avg HR under 100 bpm. Same protocol as Monday (avg HR 96, Zone 0-1 — that was perfect). No additional training load.",
-          "Wednesday Apr 15 is Push + Quad / Anti-Rotation. Floor 3 → Floor 2. Hard cap 65 min.",
-          "Set your gym timer before the first prep movement Wednesday — not before Block A. Every session this block has gone over cap: Apr 1 (94.8m), Apr 6 (95.7m), Apr 8 (118.4m), Apr 10 (76.6m), Apr 13 (80m). That's 5 straight. The timer is the intervention.",
-          "If Wednesday's Block C isn't started by the 55-min mark — skip it. Landmine Press and Split Squats are the session. Cable Lateral Raise and Pallof Press are the bonus.",
-          "Sleep tonight is the most important training tool you have right now. More valuable than another set of pull-ups."
+          "Morning walk complete: 2.11 mi, 33:28, avg HR 99 bpm — Easy (3). Walk was notably faster than yesterday evening (15:50/mi vs 21:37/mi). HR touched 104 bpm on final split. Not problematic, but keep Wednesday's pre-session effort in Zone 0-1.",
+          "Wednesday Apr 15 is Push + Quad / Anti-Rotation. Green readiness going in — this is the window to execute the session cleanly. Incline Press: if 16kg felt comfortable at the end of Monday's prep, open with 16kg and test 18kg on set 3.",
+          "Timer rule: unchanged. Set it before the first prep exercise. Not before Block A. Not when you walk in the door. You have gone over 65 min in every session this block — 5 for 5. The timer is not a suggestion.",
+          "If Block C isn't started by the 55-min mark — skip it. Landmine Press and V-Squat are the session. Lateral Raise and Pallof Press are the bonus."
         ]
       },
       "nutrition": {
-        "binding_constraint": "Fat — 2 consecutive days at 105g and 117g vs 70g target. Today is the reset.",
+        "binding_constraint": "Fat — 57g remaining after breakfast shake. Today is the reset day.",
         "bullets": [
-          "Yesterday CLOSED: 2,175 kcal / P:165g ✅ / C:153g / F:105g ⚠️. Protein was a genuine win — 15g over target, driven by the 2-scoop pre-workout + BBQ ribs combo. Fat was the problem, again.",
-          "Two-day fat pattern: Apr 12 = 117g (+47g over), Apr 13 = 105g (+35g over). Both days triggered by high-fat lunch protein (walnuts/ranch and BBQ ribs). The pattern is lunch, not dinner.",
-          "Today's fat fix is simple: lean protein at every meal. Grilled chicken breast or fish (30-40g protein, under 5g fat). Skip added oils, dressings, nuts. Carbs are free — 37g under target yesterday, room to eat rice or sweet potato without guilt.",
-          "Pre-Wednesday carb load: aim for 190g carbs today. Rice, sweet potato, oats, fruit. Carbs at dinner tonight (rice + lean protein) sets up Wednesday's session better than anything in the gym.",
-          "No Apr 14 food logged yet — upload your first meal or shake when you have it. Goal: hit protein by lunch (2-scoop shake + lean protein source = 100g+ by noon)."
+          "Pre-workout shake logged: 490 kcal / P:55g / C:41g / F:13g ✅. Strong start — same winning formula. 55g protein before 7 AM is excellent.",
+          "Remaining today: ~1510 kcal / 95g P / 149g C / 57g F across ~3 more meals. Fat is already 13g spent — only 57g left. Every meal needs to be lean: grilled protein + rice, no oils, no dressings, no nuts.",
+          "Today is the carb load day before Wednesday. You need 149g more carbs. Rice, sweet potato, oats, fruit — all free. Lunch: lean protein + rice bowl. Dinner: lean protein + sweet potato or rice. Carbs tonight set up tomorrow's session.",
+          "Yesterday closed at 2,175 kcal / P:165g ✅ / C:153g / F:105g ⚠️. Protein was a win. Fat was the problem — two days running. Today's single fix: nothing that adds fat without protein. Nuts, dressings, added oils are off the table today."
         ]
       },
       "progress": {
-        "lead_number": "165.6 lbs weekly average — goal weight achieved. Now recompose.",
+        "lead_number": "HRV rebound to 35.4ms — recovery system responding. Green going into Wednesday.",
         "bullets": [
-          "Weight: 165.6 lbs weekly average (max 166.0, min 164.9). Goal was 165 lbs. You're there. The mission shifts: hold 165, reduce fat %, build lean mass. Don't chase lower weight at the cost of muscle.",
-          "Body composition (Bevel Apr 12): BF 16.3%, lean mass 138.8 lbs (79.1%). Visceral Fat Level 2.0 — down from 3.0 on Apr 11. VAT is responding. Lean mass held well through a week of deficit training.",
-          "VO2 Max (Motra): 39.6 ml/kg/min, rated Good. +4.9 over 90 days — real cardiovascular improvement. The fasted morning walks are doing more work than they look like on a log entry.",
-          "Key win: Single-Arm Row progressed 10→12kg on an Amber readiness day (Apr 13). Strength is adapting even when recovery isn't perfect. That's what 1+ year of consistency earns.",
-          "Key risk: Fat overage two days in a row will compress this week's deficit from ~380 kcal/day to effectively zero or slightly positive. Not a crisis, but Tuesday needs to be clean to protect the weekly average."
+          "Weight holding at goal range. Weekly average ~165.6 lbs vs 165 lb goal. Mission is now recomposition — hold weight, reduce fat%, build lean mass. Don't chase lower weight.",
+          "Visceral Fat Level 2.0 (down from 3.0 on Apr 11). VAT is responding to the deficit + training combination. Fat-clean days like today compound this.",
+          "Monday's session delivered strength progression despite Amber readiness: Single-Arm Row advanced 10→12kg. That's two progressions in two sessions (Apr 10 → Apr 13). Consistency is earning compound interest.",
+          "Wednesday is the first Green-readiness strength session of the week. Treat it as the session to execute at full intensity — not to conserve energy. The Walk + Sleep combo this week is doing its job."
         ]
       },
       "watch_for": [
-        "If it's 10 PM tonight and you're not in bed — stop whatever you're doing. Sleep debt is at -4h10m. The pattern that crashed your HRV to 19.3ms on Apr 4 was three consecutive short nights. You've had two. Wednesday's readiness depends on what you do tonight.",
-        "If you haven't logged food by noon today — open Cal AI and scan your first meal. Two-day fat overage is easier to fix at breakfast than at dinner. Don't let today go untracked and unmanaged.",
-        "If Wednesday's session timer is not set before your first warm-up exercise — you will run over 65 minutes again. You've gone over cap in every session this block. The timer is not a reminder — it's a commitment device. Set it before the resistance band goes on your wrist."
+        "Wrist temp flagged below normal (96.9°F) — drink 500ml of water in the next hour. If you feel any unusual fatigue or stiffness this afternoon, it's a hydration signal, not a training signal. Don't add extra activity.",
+        "Carb load window is open today — use it. You have 149g of carbs left to hit target. Undereating carbs today leaves Wednesday's session running on empty. Rice at lunch and dinner is the call.",
+        "Wednesday timer: set it before the resistance band goes on your wrist. 5 sessions over 65 min in a row. This is the session where you prove it's a choice, not a habit."
       ]
     },
     "session_plan": {
@@ -7406,5 +7563,5 @@
       ]
     }
   },
-  "last_updated": "2026-04-13T19:30:00+08:00"
+  "last_updated": "2026-04-14T06:30:00+0800"
 }
