@@ -342,7 +342,11 @@
       "sleep_timing_oura": "Good",
       "sleep_time": "21:48",
       "notes": "HRV 20ms — significant drop from 41.7ms yesterday, well below ~32.5ms baseline. Sleep short at 5h19m (Oura)/5h34m (Rise). Sleep debt accumulating: -4h10m (Oura) / -3h23m (Rise). Positives: deep sleep 59min/18% solid, restfulness Optimal, HR stable. Fasted morning walk already done (5:16 AM, 2.43mi, Zone 0-1, 16% Activity Strain). Training guidance: Amber — proceed with programmed strength session, HR cap 122 bpm, treat first sets as warm-in, reduce Block C if fatigue surfaces.",
-      "synced_at": "2026-04-13T06:39:07.024882+00:00"
+      "synced_at": "2026-04-13T06:47:19.181976+00:00",
+      "sleep_duration_min": 320,
+      "rhr_bpm": 56,
+      "sleep_start": "2026-04-12T21:21",
+      "sleep_end": "2026-04-13T05:09"
     },
     {
       "date": "2026-04-12",
