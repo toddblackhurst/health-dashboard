@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-12",
+    "last_updated": "2026-04-13",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -6700,9 +6700,9 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-13T07:30:00+08:00",
+    "generated_at": "2026-04-13T08:07:55+08:00",
     "generated_by": "scheduled-task-hourly",
-    "note": "Auto-generated Apr 13 morning brief — 10 new uploads processed (body comp, walk, nutrition)",
+    "note": "Auto-generated Apr 13 hourly refresh (08:07 AM Taiwan) — no new uploads found. Brief unchanged from 7:30 AM run. Monday Pull + Glute Hinge session day. Amber readiness.",
     "sections": {
       "recovery": {
         "status": "🟠 Amber",
