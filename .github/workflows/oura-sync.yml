@@ -26,7 +26,7 @@ jobs:
         run: |
           python3 - <<'PYEOF'
           import json, os, subprocess, urllib.request, urllib.error
-          from datetime import date, datetime, timezone
+          from datetime import date, datetime, timezone, timedelta
 
           ACCESS_TOKEN  = os.environ["OURA_ACCESS_TOKEN"]
           REFRESH_TOKEN = os.environ["OURA_REFRESH_TOKEN"]
@@ -34,6 +34,7 @@ jobs:
           CLIENT_SECRET = os.environ["OURA_CLIENT_SECRET"]
           GH_REPO       = os.environ["GH_REPO"]
           TODAY         = date.today().isoformat()
+          YESTERDAY     = (date.today() - timedelta(days=1)).isoformat()
 
           # ── Token refresh (runs if access token is expired) ──────────────
           def do_refresh():
@@ -62,9 +63,11 @@ jobs:
               print("Tokens refreshed and stored.")
 
           # ── Oura API call with auto-retry on 401 ────────────────────────
-          def oura_get(path):
+          def oura_get(path, start=None, end=None):
+              s = start or TODAY
+              e = end   or TODAY
               url = (f"https://api.ouraring.com/v2/usercollection/{path}"
-                     f"?start_date={TODAY}&end_date={TODAY}")
+                     f"?start_date={s}&end_date={e}")
               for attempt in range(2):
                   req = urllib.request.Request(
                       url, headers={"Authorization": f"Bearer {ACCESS_TOKEN}"}
@@ -82,8 +85,7 @@ jobs:
           # ── Fetch today's data from Oura ─────────────────────────────────
           readiness = oura_get("daily_readiness")
           sleep_day = oura_get("daily_sleep")
-          hrv_day   = oura_get("daily_hrv")
-          sleep_raw = oura_get("sleep")
+          sleep_raw = oura_get("sleep", start=YESTERDAY)   # span yesterday→today to catch overnight sessions
 
           # ── Parse values ─────────────────────────────────────────────────
           r_data         = readiness["data"][0] if readiness.get("data") else {}
@@ -92,23 +94,27 @@ jobs:
           s_data      = sleep_day["data"][0] if sleep_day.get("data") else {}
           sleep_score = s_data.get("score")
 
-          h_data = hrv_day["data"][0] if hrv_day.get("data") else {}
-          hrv_ms = round(h_data["night_average"], 1) if h_data.get("night_average") else None
-
           sleep_duration_min = None
           rhr_bpm            = None
           sleep_start        = None
           sleep_end          = None
+          hrv_ms             = None
 
           if sleep_raw.get("data"):
+              # Pick the longest sleep session (filters out naps)
               main = max(sleep_raw["data"],
                          key=lambda s: s.get("total_sleep_duration", 0))
               raw_dur = main.get("total_sleep_duration")
               if raw_dur:
                   sleep_duration_min = round(raw_dur / 60)
-              rhr_bpm    = main.get("lowest_heart_rate")
+              rhr_bpm     = main.get("lowest_heart_rate")
               sleep_start = main.get("bedtime_start", "")[:16] or None
               sleep_end   = main.get("bedtime_end",   "")[:16] or None
+              # HRV lives inside the sleep session object
+              hrv_raw = main.get("hrv", {})
+              nightly = hrv_raw.get("average_nightly") if isinstance(hrv_raw, dict) else None
+              if nightly:
+                  hrv_ms = round(nightly, 1)
 
           print(f"Date:        {TODAY}")
           print(f"Recovery:    {recovery_score}")
