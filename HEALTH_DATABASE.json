@@ -6700,60 +6700,58 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-13T08:07:55+08:00",
-    "generated_by": "scheduled-task-hourly",
-    "note": "Auto-generated Apr 13 hourly refresh (08:07 AM Taiwan) — no new uploads found. Brief unchanged from 7:30 AM run. Monday Pull + Glute Hinge session day. Amber readiness.",
+    "generated_at": "2026-04-13T09:08:34+08:00",
+    "generated_by": "scheduled-task hourly-coaching-brief",
+    "note": "Hourly refresh — no new uploads. Nutrition: pre-workout shake only (490 kcal / 55g P as of 6:25 AM). Session not yet logged. All data current as of 8 AM scans.",
     "sections": {
       "recovery": {
-        "status": "🟠 Amber",
+        "traffic_light": "🟠 Amber",
         "bullets": [
-          "HRV 20ms — 12.5ms below your 32.5ms personal baseline. This is the bounce-back from yesterday's Recovery Breakthrough (41.7ms). You spiked on Apr 12, regressed today. Same pattern as Apr 5 (51.4ms spike) → Apr 9 (36.2ms drop). It's consistent, not alarming — but it counts today.",
-          "Sleep short at 5h 19m (Oura) / 5h 34m (Rise), debt now at -4h 10m. Third consecutive night under 6h. Quality held — deep sleep 59 min (18%), restfulness Optimal, HR dip 15%. The problem is quantity.",
-          "Fasted morning walk already logged: 5:16 AM, 2.43 mi, 96 bpm avg, Zone 0-1, 16% Activity Strain. Today's total training load budget must account for this.",
-          "Non-obvious pattern: Your three post-high-HRV drops (Apr 4→5, Apr 9→10, Apr 12→13) all show the same HRV crash depth. The nervous system is cycling — not degrading. But it means you train for the Amber day, not the Green one that came before it."
+          "HRV 20ms — 12.5ms below your 32.5ms baseline (-38%). Your cardiac autonomic system paid the bill today for yesterday's rebound day. Not a crisis, but the recovery budget is thin.",
+          "Sleep 5h19m–5h34m (Rise/Oura), debt -3h23m to -4h10m. Short night. Rise sleep score 51/100 — the number says it plainly.",
+          "Two positives holding this at Amber not Red: deep sleep was 59 min (solid, 18% of total) and restfulness was rated Optimal — the sleep you got was quality, just short.",
+          "Non-obvious pattern: the 41.7ms→20ms HRV drop is a classic regression-to-mean after a Recovery Breakthrough day. Your last three back-to-back HRV readings: 36.2ms (Apr 9) → 38.8ms (Apr 11) → 41.7ms (Apr 12) → 20ms (Apr 13). A 54% single-day drop like this always follows a big rebound day — the body borrows from tomorrow to deliver today's score. This was predictable and doesn't signal illness or overtraining."
         ]
       },
       "training_direction": {
-        "call": "Train — Pull + Glute Hinge per locked weekly plan. Amber-day execution rules apply.",
+        "call": "Train — Pull + Glute Hinge (Week 1 Monday, locked)",
         "bullets": [
-          "Monday = Pull + Glute Hinge (programmed in weekly_session_plans[1]). Hammer Strength Wide Lat Pulldown → Single-Arm DB Row → Machine Hip Thrust → Low Step-Up → Face Pull → Pallof Press → Suitcase Carry. Do not deviate.",
-          "Floor 3 (PREP, ~10 min) → Floor 2 (all main blocks). No floor changes once main work starts.",
-          "65-minute hard cap — set a timer before your first prep movement. If Block C starts after min 52, cut to Pallof Press only + Suitcase Carry and exit. Apr 6 ran 96 min, Apr 8 ran 118 min, Apr 10 ran 77 min — 0 of your last 3 strength sessions hit the 65-min cap. Today it ends on time.",
-          "HR cap 122 bpm — with 20ms HRV, your cardiac cost per rep is elevated. Check HR after every compound set. If you hit 115+ in a rest period, take 90 sec before the next set, not 60.",
-          "Amber-day rule: first set of every block is a warm-in. Use 80% of normal load for set 1. If it feels easy, go normal for sets 2-4. If it feels heavy, stay conservative — do not chase yesterday's numbers on today's recovery."
+          "Today's session is already planned and locked: Hammer Strength Wide Lat Pulldown 3×10 → Single-Arm DB Row 3×10 (left first) → Machine Hip Thrust 3×12 → Low Step-Up 3×10 (left first) → Face Pull 3×15 → Pallof Press 3×12 → Suitcase Carry 3×20–25m (left hand). Do not deviate.",
+          "Floor plan: Floor 3 → Floor 2 (PREP on 3, all main blocks on 2). No floor changes mid-session.",
+          "65-minute hard cap — set a timer before your first PREP movement. If Block C hasn't started by minute 52, cut to Pallof Press + Suitcase Carry only and exit. Apr 6 ran 96 min, Apr 8 ran 118 min, Apr 10 ran 77 min — 0 of your last 3 strength sessions finished within 65 min. Today the timer is non-negotiable.",
+          "HR cap 122 bpm. With HRV at 20ms your cardiac cost-per-rep is elevated — autonomic efficiency is down. Check HR after every compound set. If you hit 115+ bpm during a rest period, extend to 90 sec before next set, not 60.",
+          "Amber-day protocol: first set of every block is a warm-in — use 80% of normal load for set 1. If it feels easy, move to full load for sets 2–3. If it feels heavy, stay conservative and do not chase previous weights. Your fasted walk this morning (2.43mi, Zone 0-1, done at 5:16 AM) was a clean low-intensity primer — don't add to that by treating today as a test day."
         ]
       },
       "nutrition": {
         "binding_constraint": "Protein — 55g logged vs 150g target. 95g needed across the rest of today.",
         "bullets": [
-          "490 kcal / 55g P logged (pre-workout shake, 6:25 AM). Fat 13g — excellent start after yesterday's 117g fat overrun. The double-whey shake + yogurt combo was the right call.",
-          "Protein fix: you need 95g more across lunch, afternoon snack, and dinner. Formula: chicken/fish at lunch (35-40g) + afternoon whey (24g) + protein dinner (30-35g). That closes it without obsessing.",
-          "Fat budget: 57g remaining for the day — do NOT repeat yesterday's walnuts + ranch pattern. One of those two meals blew the budget. Today: blueberries instead of walnuts, vinaigrette instead of ranch.",
-          "Retroactive update: the 8:45 PM whey shake logged from last night closes April 12's protein to 141g (was 116g) — gap was only 9g, not 34g. Protein discipline is better than it looked yesterday.",
-          "Apr 11 remains zero-logged. If meals were eaten, describe them this session for retroactive entry. If actual intake was very low, monitor energy today — low caloric days increase perceived exertion under load."
+          "490 kcal / 55g P / 41g C / 13g F logged (pre-workout shake at 6:25 AM). Remaining targets: ~1,510 kcal / 95g P / 149g C / 57g F.",
+          "Fat is clean at 13g — excellent reset after yesterday's 117g fat overrun. Do NOT repeat the walnuts + ranch pattern. Today: if walnuts appear at breakfast, swap half for berries. If ranch appears at lunch, use vinaigrette or skip the dressing.",
+          "Protein formula to hit 150g: post-workout whey (24g) + chicken or fish at lunch (35–40g) + afternoon whey (24g) + protein dinner (30–35g). That's 113–123g added → total 168–178g. You'll hit target without obsessing.",
+          "Pre-training fuel check: it's been ~3 hours since the shake. You don't need another meal before training. The 55g protein + 41g carbs is adequate for a 65-min session. Do not eat a large meal right before — digestion mid-session elevates HR.",
+          "Apr 11 remains zero-logged. If you ate on Apr 11, describe the meals anytime this session for retroactive entry. If intake was genuinely very low that day, note it as a flag — two consecutive low-calorie days before a training day increases perceived exertion."
         ]
       },
       "progress": {
-        "lead_number": "165.6 lbs (Ocare3, Apr 13) — you are AT goal weight.",
+        "lead_number": "165.6 lbs weekly avg — you are at goal weight.",
         "bullets": [
-          "Weight: 165.6 lbs by Ocare3 this morning (6:11 AM). Goal is 165 lbs. Weekly avg per Hume: 165.6 lbs (max 166.0, min 164.9). You've arrived at the weight. Now the question is body comp — holding lean mass while sustaining the deficit.",
-          "Body fat: 15.7% Ocare3 BIA today, 16.3% Bevel Apr 12 — consistent range. Visceral Fat Level 2.0, stable. The VAT reduction mission is progressing.",
-          "Lean mass preservation: Muscle 79.6% today (up from 79.1% yesterday, Bevel). Day-to-day BIA fluctuates, but trend is stable-to-improving. Key win: you've dropped 7.8 lbs since Nov 2025 while lean mass has been maintained.",
-          "VO2 Max: 39.6 ml/kg/min (Motra) — up 4.9 over 90 days. From Below Average to near-Average for your age group. The fasted walk protocol and Zone 2 cardio are measurably working.",
-          "Risk: Hume's 30-day weight trend projected 169.3 lbs at +0.8 lbs/wk. Ocare3/Bevel morning readings contradict this. Most likely hydration and measurement-time differences. Trust the daily Bevel morning reading as primary; the Hume projection is a caution flag, not a crisis."
+          "Weight: 165.6 lbs (Ocare3 this morning, 6:11 AM). Weekly avg per Hume: 165.6 lbs (max 166.0, min 164.9). Goal is 165 lbs. You've arrived. The mission now shifts from weight loss to body comp — hold lean mass while sustaining the 380 kcal deficit.",
+          "Body fat: 15.7% today (Ocare3 BIA), 16.3% Bevel Apr 12. Visceral Fat Level 2.0, down from 3.0 on Apr 11 — meaningful one-week improvement on the VAT target.",
+          "Lean mass: 79.6% muscle (Ocare3 today) vs 79.1% yesterday (Bevel). BIA fluctuates but the trend is stable. The elevated protein target (150g/day) is doing its job at age 57.",
+          "VO2 Max: 39.6 ml/kg/min (Motra) — Good rating, +4.9 over 90 days. This is the fastest 90-day VO2 gain in your tracked history. Fasted walks + consistent training are compounding here.",
+          "Key risk: Motra weight trend shows +0.8 lbs/week over 30 days, projecting 169.3 lbs in 30 days. This conflicts with your current scale readings showing 165.6 lbs. Watch for whether the Motra projection corrects — if weight starts climbing above 167 lbs on consecutive morning reads, recalibrate the deficit."
         ]
       },
-      "watch_for": {
-        "items": [
-          "If HR exceeds 112 bpm during the rest period after Block A Set 1 (not the working set — the rest period), extend your rest to 90 sec and note it. Today's 20ms HRV means cardiac recovery is slower. Don't start Set 2 above 112 at rest.",
-          "If the session clock hits 52 minutes and you have not started Block C, execute ONLY Pallof Press (left first, 3×12/side) + Suitcase Carry (left, 3×20m) and end. One anti-rotation anchor beats a rushed Block C every time.",
-          "If protein feels hard to hit at dinner, default to the same double-whey shake from this morning (490 kcal / 55g P). One shake closes a 55g protein gap with 13g fat — exactly what you need on a day the fat budget is already tight."
-        ]
-      }
+      "watch_for": [
+        "If HR reaches 115+ bpm during any rest period today — extend rest to 90 sec minimum before next set. HRV 20ms means cardiovascular recovery between sets is slower than normal. Rushing rest at this readiness level pushes you into HR zones that compromise the session.",
+        "If Block C hasn't started by minute 52 of the session — immediately cut to Pallof Press (3×12 each side) + Suitcase Carry (3×25m left hand) and exit. This is the pre-committed rule. No negotiations mid-session. The 65-min cap is the only thing between you and a 4th straight overrun.",
+        "If fat at dinner is tracking toward another overrun (>30g in a single dinner item) — pivot to the sushi model from Apr 12: lean protein (sashimi, chicken) + rice carbs, no dressings or nut-based fats. Yesterday proved you can execute this instinctively when aware."
+      ]
     },
     "session_plan": {
-      "session_type": "Pull-Dominant Upper / Structural Correction",
-      "session_goal": "Rebuild horizontal and vertical pull capacity after 5 days of push-hinge dominance, while addressing shoulder imbalance, right-side dominance, and anti-rotation core weakness within a strict 65-min Amber-day cap.",
+      "session_type": "Pull + Glute Hinge",
+      "session_goal": "Primary: Develop lat/row pull strength and glute hinge capacity. Secondary: address right-side dominance (all unilateral work left-first), shoulder imbalance (face pull scapular cue), and anti-rotation core (Pallof + Suitcase Carry). Amber-day protocol: warm-in on every first set.",
       "floor_plan": "Floor 3 → Floor 2",
       "time_cap_min": 65,
       "readiness_call": "Amber",
@@ -6769,24 +6767,24 @@
               "sets": "1",
               "reps": "60 sec",
               "rest_sec": 0,
-              "note": "Roll T-spine from mid-back to shoulder blades — 10 passes. Pause on stiff spots. Opens thoracic for all pulling patterns today. Your #5 structural priority (thoracic stiffness) needs this unlocked before loading.",
+              "note": "Roll T-spine from mid-back to shoulder blades — 10 slow passes. Pause on stiff spots. Opens thoracic for all pulling patterns today. Your #5 structural priority. Do not skip on Amber days — it's the single highest-return warmup minute.",
               "alternatives": [
-                "Quadruped thoracic rotation (floor mat)",
-                "Lacrosse ball T-spine release",
-                "Seated rotation with dowel"
+                "Lacrosse ball T-spine release (same mat)",
+                "Quadruped thoracic rotation only (skip foam roller)",
+                "Seated rotation with dowel (seated on bench)"
               ]
             },
             {
               "id": "prep_2",
-              "name": "Quadruped Thoracic Rotation",
+              "name": "Quadruped Thoracic Rotation (left first)",
               "sets": "2",
-              "reps": "8 each side (left first)",
+              "reps": "8 each side",
               "rest_sec": 0,
-              "note": "On all fours, one hand behind head, rotate that elbow toward the ceiling. Left side first — this is your stiffer side. Don't rotate through the lumbar. Hold 1 sec at end range. Directly prepares the thoracic mobility needed for rowing.",
+              "note": "One hand behind head, rotate that elbow toward ceiling. Left side first — your stiffer side. Hold 1 sec at end range. Rotate through the thoracic, not the lumbar. Directly primes the shoulder mobility needed for the lat pulldown and row.",
               "alternatives": [
-                "Open Book stretch (side-lying)",
-                "Half-kneeling rotation",
-                "Seated rotation with band"
+                "Open Book stretch side-lying (left side first)",
+                "Half-kneeling rotation with arm reach",
+                "Seated rotation with band (seated on bench)"
               ]
             },
             {
@@ -6795,11 +6793,11 @@
               "sets": "1",
               "reps": "15 each side",
               "rest_sec": 0,
-              "note": "Left side starts. Pelvis stays level — no Trendelenburg hike. This activates glute medius before any standing or unilateral pull work today. Hip-OA safe — band only, no deep flexion.",
+              "note": "Left side starts. Pelvis stays level — no hip hike. Activates glute medius before Machine Hip Thrust in Block B. Hip-OA safe: band only, no deep flexion, no impact. This sets the left glute up to drive the thrust pattern.",
               "alternatives": [
-                "Clamshell with band",
-                "Side-lying hip abduction (bodyweight)",
-                "Cable hip abduction standing"
+                "Clamshell with band (side-lying, left first)",
+                "Side-lying hip abduction bodyweight",
+                "Standing cable hip abduction (light)"
               ]
             },
             {
@@ -6808,90 +6806,77 @@
               "sets": "2",
               "reps": "15",
               "rest_sec": 15,
-              "note": "Arms at shoulder height, pull band apart to T-position, 1-sec squeeze at end range. This is scapular activation before every pull session — mid-lower trap, not a workout. Light band. The squeeze matters more than the reps.",
+              "note": "Arms at shoulder height, pull to T-position, 1-sec squeeze at end range. Light band — this is activation, not a workout. Mid-lower trap and rear delt firing before the pull session. The squeeze at lockout matters more than the range.",
               "alternatives": [
-                "Cable face pull (ultra-light)",
-                "TRX Y-raise",
-                "Prone Y-T-W (bodyweight, floor mat)"
-              ]
-            },
-            {
-              "id": "prep_5",
-              "name": "Dead Bug",
-              "sets": "1",
-              "reps": "8 each side",
-              "rest_sec": 0,
-              "note": "Amber day warm-in — activate core before any loading. Lower back stays pressed to floor the entire set. If the back lifts, reduce range of motion. Opposite arm and leg extend slowly on the exhale. This is anti-extension before pulling.",
-              "alternatives": [
-                "Bear hold 30 sec",
-                "Bird dog (quadruped)",
-                "Hollow body hold 20 sec"
+                "Face pull ultra-light cable (Floor 2, skip if staying on Floor 3)",
+                "Prone Y-T-W bodyweight on floor mat",
+                "TRX Y-raise (if TRX available on Floor 3)"
               ]
             }
           ]
         },
         {
           "id": "A",
-          "label": "Floor 2 — Horizontal Pull Anchor (~18 min)",
+          "label": "Floor 2 — Vertical Pull Anchor (~18 min)",
           "estimated_min": 18,
           "exercises": [
             {
               "id": "a1",
-              "name": "Cable Seated Row (neutral grip)",
-              "sets": "4",
+              "name": "Hammer Strength Wide Lat Pulldown",
+              "sets": "3",
               "reps": "10",
-              "rest_sec": 75,
-              "note": "Primary pull anchor today. Neutral grip, pull elbows straight back, squeeze left scapula hard at end range. Right side tends to initiate — consciously start each rep with the left side. 3-sec eccentric. This is the horizontal pulling your recent push-heavy sessions have been missing.",
+              "rest_sec": 90,
+              "note": "Wide overhand grip. Pull elbows down and back — not flared out. Focus on initiating the pull from the LEFT lat, not the right arm. 3-sec eccentric every rep. Set 1 is the warm-in (80% load). Amber-day rule: if set 1 feels heavy, keep the weight there for sets 2–3. Do not chase prior week's numbers today.",
               "alternatives": [
-                "Chest-Supported DB Row (incline bench)",
-                "Hammer Strength D.Y. Row (chest-pad machine)",
-                "One-Arm Cable Row (left first)"
+                "Cable Wide-Grip Lat Pulldown (Floor 2 cable stack)",
+                "Neutral-Grip Machine Pulldown (same Hammer Strength station)",
+                "Assisted Pull-Up Machine (Floor 2)"
               ]
             },
             {
               "id": "a2",
-              "name": "Cable Face Pull",
-              "sets": "4",
-              "reps": "15",
+              "name": "Single-Arm DB Row (left first)",
+              "sets": "3",
+              "reps": "10 each side",
               "rest_sec": 60,
-              "note": "Rope attachment at face height. Elbows high, pull to forehead, external rotation at end range — 1-sec squeeze. This is shoulder imbalance corrective (#2 structural priority) paired with your primary pull. HR stays lower between cable rows, making this the ideal superset partner.",
+              "note": "Left arm starts every set — right-side dominance corrective (#1 structural priority). Brace on the bench, pull the DB straight up, drive the left elbow past the back pocket, hold 1 sec at top, lower 3 seconds. Do not rotate the torso. The right side does not get to compensate.",
               "alternatives": [
-                "TRX Y-Raise (Floor 3)",
-                "Band Face Pull (rack anchor)",
-                "Cable Y-Raise (low pulley, underhand)"
+                "One-Arm Cable Row (Floor 2, left first)",
+                "Chest-Supported DB Row (incline bench, both arms)",
+                "Hammer Strength D.Y. Row (machine, chest pad)"
               ]
             }
           ]
         },
         {
           "id": "B",
-          "label": "Floor 2 — Vertical Pull + Unilateral Upper (~15 min)",
+          "label": "Floor 2 — Glute Hinge + Unilateral Lower (~15 min)",
           "estimated_min": 15,
           "exercises": [
             {
               "id": "b1",
-              "name": "Machine Assisted Pull-Up",
+              "name": "Machine Hip Thrust",
               "sets": "3",
-              "reps": "8",
+              "reps": "12",
               "rest_sec": 90,
-              "note": "Vertical pull anchor. Hands shoulder-width, pull elbows down and back — not out. Focus on LEFT lat initiating the pull, not the right arm. Controlled at the top, 2-sec lowering. Use -80 kg assistance or your working weight from Feb 2 session (confirmed in logs).",
+              "note": "Hip OA protocol: controlled range, no forced end-range extension. Drive through both heels evenly, squeeze at the top — 1 sec hold. Left glute should feel equal to right. If the right hip dominates the lockout, reduce load and focus on bilateral squeeze quality. This is posterior chain reload after the lat-dominant Block A.",
               "alternatives": [
-                "Wide-Grip Lat Pulldown (cable, Floor 2)",
-                "Neutral-Grip Lat Pulldown (Hammer Strength)",
-                "Half-Kneeling Single-Arm Pulldown"
+                "Glute Bridge on floor (bodyweight or plate on hips)",
+                "Cable Pull-Through (Floor 2, rope attachment low pulley)",
+                "Single-Leg Glute Bridge on floor (left side first)"
               ]
             },
             {
               "id": "b2",
-              "name": "One-Arm Cable Row (left first)",
+              "name": "Low Step-Up (left first)",
               "sets": "3",
               "reps": "10 each side",
-              "rest_sec": 45,
-              "note": "Left arm starts every set. Right-side dominance corrective (#1 structural priority). Same cable stack as Block A — no equipment change needed. Drive the left elbow back, hold 1 sec at the top, lower 3 seconds. Don't let the right side pull harder.",
+              "rest_sec": 60,
+              "note": "Left foot leads every rep. Step height: 4–6 inches (low box or step) — hip OA constraint means no high-step. Drive through the left heel, don't push off the trailing foot. This is the unilateral lower corrective (#1 priority: right-side dominance). Control the descent — 2 sec down. Hold DBs if balance is solid.",
               "alternatives": [
-                "Single-Arm DB Row (left first)",
-                "Chest-Supported Single-Arm Row",
-                "Meadows Row (left first, landmine)"
+                "Lateral Step-Up to abduction (lower height)",
+                "Reverse Lunge to step (left forward, left foot steps back)",
+                "Assisted Single-Leg Press machine (partial ROM)"
               ]
             }
           ]
@@ -6903,47 +6888,47 @@
           "exercises": [
             {
               "id": "c1",
-              "name": "Pallof Press (left side first)",
+              "name": "Cable Face Pull",
               "sets": "3",
-              "reps": "12 each side",
+              "reps": "15",
               "rest_sec": 45,
-              "note": "Left side always starts. D-ring at sternum height, press straight out, 2-sec hold, zero rotation. If you feel yourself rotating, the weight is too heavy. Anti-rotation core is #4 structural priority. This is the KEEP movement on Amber days — drop c2 or c3 before dropping this.",
+              "note": "Rope attachment at face height. Elbows high, pull to forehead, external rotation at end range — 1-sec squeeze. Shoulder imbalance corrective (#2 structural priority). Light weight — this is quality reps not heavy load. This is the KEEP movement if time is short.",
               "alternatives": [
-                "Half-Kneeling Pallof Press",
-                "Band Pallof Press (rack anchor)",
-                "Tall-Kneeling Pallof Press"
+                "Band Face Pull (anchored to squat rack)",
+                "TRX Y-Raise (Floor 3 only — don't go back up for this)",
+                "Cable Y-Raise (low pulley, underhand grip)"
               ]
             },
             {
               "id": "c2",
-              "name": "Suitcase Carry (left hand only)",
+              "name": "Pallof Press (left side first)",
               "sets": "3",
-              "reps": "20–25 meters",
+              "reps": "12 each side",
               "rest_sec": 45,
-              "note": "Left hand ONLY. Right-side dominance corrective — this exercise repeats every session by design. Shoulder packed down, ribcage neutral, zero lateral lean toward the KB. Walk slow enough to feel the demand. 20–24 kg KB.",
+              "note": "Left side starts every set. D-ring at sternum height, press straight out, 2-sec hold, zero rotation. Anti-rotation core is #4 structural priority. If you feel yourself rotating, the weight is too heavy. Do not drop this on an Amber day — the anti-rotation work is what keeps the spine organized under load.",
               "alternatives": [
-                "Single-Arm Farmer Carry (left)",
-                "Overhead Carry left arm (if shoulder stable)",
-                "DB Waiter Carry (left arm extended)"
+                "Half-Kneeling Pallof Press (same cable)",
+                "Band Pallof Press (anchored to rack)",
+                "Tall-Kneeling Pallof Press"
               ]
             },
             {
               "id": "c3",
-              "name": "Med Ball Slam",
-              "sets": "2",
-              "reps": "8",
+              "name": "Suitcase Carry (left hand only)",
+              "sets": "3",
+              "reps": "20–25 meters",
               "rest_sec": 45,
-              "note": "Athletic engagement element — 8 kg ball, floor slams only (wall slams not practical). Power through the core on every slam. This is the session finisher that makes it feel athletic rather than clinical. Check HR — if over 118 bpm after set 1, rest 90 sec before set 2. DROP this if session is running long.",
+              "note": "Left hand ONLY. Right-side dominance corrective — this exercise appears every session by design. Shoulder packed down, ribcage neutral, zero lateral lean toward the KB. Walk slow enough to feel the lateral stability demand. 20–24 kg KB. If Block C started late (after min 52), run 2 sets not 3 and exit after.",
               "alternatives": [
-                "KB Swing (8 reps, hip power pattern)",
-                "Band pull-aparts (2x15, shoulder finish)",
-                "Dead Bug 1 set (keep it corrective)"
+                "Single-Arm Farmer Carry (left, same KB weight)",
+                "DB Waiter Carry left arm extended (lighter load)",
+                "Side-Plank hold 30 sec each side (no equipment needed)"
               ]
             }
           ]
         }
       ],
-      "note": "Locked weekly plan for Monday Apr 13. Readiness adjusted to Amber per today's HRV (20ms). Session structure unchanged per immutability rule."
+      "note": "Locked Week 1 Monday session — Pull + Glute Hinge. Readiness adjusted to Amber per HRV 20ms. Session structure unchanged per immutability rule. All blocks per 26_CURRENT_BLOCK.md."
     },
     "weekly_session_plans": {
       "1": {
@@ -7558,5 +7543,5 @@
       }
     }
   },
-  "last_updated": "2026-04-13"
+  "last_updated": "2026-04-13T09:08:34+08:00"
 }
