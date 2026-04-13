@@ -1041,20 +1041,43 @@
             "fat_g": 12
           },
           "notes": "Post-workout shake at 10:05 AM. Note: Cal AI shows 8g carbs + 12g fat \u2014 fat higher than typical due to 2 cups almond milk. Protein solid at 29g."
+        },
+        {
+          "meal": "lunch",
+          "time": "12:01",
+          "items": [
+            {
+              "food": "Creamy Potato Soup",
+              "amount": "1 serving",
+              "calories_kcal": 220,
+              "protein_g": 6,
+              "carbs_g": 24,
+              "fat_g": 11,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 220,
+            "protein_g": 6,
+            "carbs_g": 24,
+            "fat_g": 11
+          },
+          "notes": "Lunch at 12:01 PM. Light on protein (6g only). Creamy potato soup \u2014 calorie-moderate but low protein impact. Fat budget still fine."
         }
       ],
       "daily_totals": {
-        "calories_kcal": 730,
-        "protein_g": 84,
-        "carbs_g": 49,
-        "fat_g": 25,
-        "note": "Updated 10:09 \u2014 pre-workout + post-workout shake. Day ongoing. Remaining: ~1270 kcal / 66g P / 141g C / 45g F."
+        "calories_kcal": 950,
+        "protein_g": 90,
+        "carbs_g": 73,
+        "fat_g": 36,
+        "note": "Updated 12:01 \u2014 pre-workout + post-workout + lunch. Day ongoing. Remaining: ~1050 kcal / 60g P / 117g C / 34g F."
       },
       "vs_targets": {
-        "calories_delta": -1270,
-        "protein_delta": -66,
-        "carbs_delta": -141,
-        "fat_delta": -45
+        "calories_delta": -1050,
+        "protein_delta": -60,
+        "carbs_delta": -117,
+        "fat_delta": -34
       },
       "day_closed": false
     }
@@ -6842,52 +6865,52 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-13T11:09:00+08:00",
+    "generated_at": "2026-04-13T12:08:00+08:00",
     "readiness_call": "Amber",
     "sections": {
       "recovery": {
         "traffic_light": "\ud83d\udfe0 Amber",
         "bullets": [
-          "HRV 20ms \u2014 12.5ms below your 32.5ms baseline. Significant nervous system stress signal after yesterday's 41.7ms peak. Classic regression-to-mean after a breakthrough day, compounded by sleep debt accumulation.",
-          "Sleep 5h19m (Oura) / 5h34m (Rise). Rise score 51 \u2014 poor. Sleep debt now -4h10m (Oura) / -3h23m (Rise). Third consecutive night below target.",
-          "Bright spots: Deep sleep 59min (solid), restfulness Optimal, HR stable (lowest 56 bpm, dip 15%). The architecture was decent; the total duration was the problem.",
-          "Non-obvious pattern: Sleep debt has been accumulating across 3 nights \u2014 -2h30m, -2h12m, -4h10m. Not resolving between sessions. If tonight's sleep doesn't hit 7+ hours, Wednesday's HRV is going to reflect it \u2014 and that's the session to watch."
+          "HRV 20ms \u2014 12.5ms below your 32.5ms baseline. Sharp drop from 41.7ms yesterday \u2014 classic regression after a breakthrough day, compounded by 3 nights of accumulating debt.",
+          "Sleep 5h19m (Oura) / 5h34m (Rise), Rise score 51 (Poor). Debt now at -4h10m \u2014 that's the highest single-night reading in tracked history. The debt is building faster than it's resolving.",
+          "Positives: Deep sleep 59min (best in recent history), restfulness Optimal, HR dip 15%, lowest HR 56 bpm. Architecture was solid \u2014 duration alone is the problem.",
+          "Non-obvious: Sleep debt progression over 3 nights: -2h30m, -2h12m, -4h10m. It's accelerating, not stabilizing. Wednesday's HRV is already at risk before Tuesday even starts. Get to bed before 10pm tonight \u2014 this is the only lever that matters right now."
         ]
       },
       "training_direction": {
-        "call": "SESSION COMPLETE \u2705 \u2014 Pull + Glute Hinge done",
+        "call": "SESSION COMPLETE \u2705 \u2014 Monday done. Recovery mode the rest of today.",
         "bullets": [
-          "Monday Week 1 \u2014 Pull + Glute Hinge: DONE. 07:56 AM, 80 min, 6,300 kg, 475 kcal, 15 exercises. Progression noted: Single-Arm Row 10kg \u2192 12kg (sets 3-4 \u2705). Pull-ups added to prep \u2014 good call.",
-          "Session ran 80 min vs 65-min cap \u2014 15 min over on Amber readiness. The pattern is now documented: Apr 6 = 96 min, Apr 10 = 76 min, Apr 13 = 80 min. Three consecutive over-cap sessions. You're averaging 19% over cap. That's a system problem, not a one-off.",
-          "Rest of today: Recovery only. Fasted walk already done (2.43 mi, Zone 0-1 \u2014 right call on Amber). No additional training stimulus needed.",
-          "Next session: Wednesday Apr 15 \u2014 Push + Quad / Anti-Rotation. Floor 3 \u2192 Floor 2. 65-min hard cap.",
-          "Accountability: Start the timer before the first warmup rep on Wednesday. Three data points = a pattern. Timer before the foam roller \u2014 not after the landmine press feels good."
+          "Pull + Glute Hinge: DONE. 07:56 AM, 80 min, 6,300 kg / 13,889 lbs, 475 kcal, 15 exercises. Progression noted: Single-Arm Row 10kg \u2192 12kg (sets 3-4) \u2705. Pull-ups added unplanned \u2014 good athletic instinct.",
+          "80 min vs 65-min cap on Amber readiness \u2014 15 min over. Pattern now confirmed: Apr 6 = 96 min, Apr 10 = 76 min, Apr 13 = 80 min. Three consecutive over-cap sessions averaging 19% over the limit. This is the accountability call for Wednesday: timer starts before the foam roller.",
+          "Fasted morning walk already done (2.43 mi, Zone 0-1, avg HR 96 bpm). No more training today. Recovery, nutrition, and sleep are the only inputs that matter between now and Wednesday 7am.",
+          "Next session: Wednesday Apr 15 \u2014 Push + Quad / Anti-Rotation. Floor 3 \u2192 Floor 2. Half-Kneeling Landmine Press, Incline DB Press, V-Squat, Pallof Press. 65-min hard cap.",
+          "Wednesday readiness will depend almost entirely on tonight's sleep. You're averaging 80-min sessions on Amber days. On Green, Wednesday can be full. On Amber again \u2014 Block B drops to 2 sets and the timer enforced from set 1."
         ]
       },
       "nutrition": {
-        "binding_constraint": "FAT \u2014 25g used at 10am, 45g remaining. Yesterday ran +47g over.",
+        "binding_constraint": "PROTEIN \u2014 60g still needed. Fat budget 34g remaining \u2014 manageable.",
         "bullets": [
-          "Running total (post-workout, ~10am): 730 kcal / P: 84g / C: 49g / F: 25g. Day in progress \u2014 afternoon meals are the make-or-break window.",
-          "Protein roadmap to 150g: 66g remaining. Lunch 35-40g (chicken breast or fish, no nuts, no creamy dressing) + afternoon whey shake 24g + dinner 30-35g (salmon, eggs, or turkey). Exactly doable \u2014 don't skip the afternoon shake.",
-          "Fat budget watch: 45g remaining for the rest of the day. Lunch is the danger point. Oil+vinegar or soy sauce. Not ranch. Not guac + cheese. One lean choice at lunch keeps the whole day clean.",
-          "Flag \u2014 April 11 was a zero-log day. If meals are happening and not being logged, the deficit math is invisible. Log dinner tonight even if it's a quick description.",
-          "Non-obvious: Your last 3 fat overruns trace to two foods \u2014 walnuts at breakfast (26g fat, 1/3 cup) and creamy dressings at lunch. Neither is a willpower failure \u2014 they're just high-density and easy to underestimate. Berries instead of walnuts costs you 26g fat. That's the whole fix."
+          "Running total through lunch (12:01 PM): 950 kcal / P: 90g / C: 73g / F: 36g. Remaining to target: ~1050 kcal / 60g P / 117g C / 34g F.",
+          "Lunch was light on protein (only 6g from potato soup). Afternoon whey shake is non-negotiable: 1 scoop = 24g protein, brings you to 114g. Then dinner needs 36g \u2014 salmon (6 slices sashimi = 20g) + chicken or eggs closes it.",
+          "Fat budget is clean right now (36g used, 34g left). Don't blow it at dinner with oil-heavy cooking. Grilled, steamed, or baked. Soy sauce over cream sauces.",
+          "Carbs wide open (117g remaining, only 73g logged). Post-workout window already passed \u2014 save carbs for dinner (rice, sweet potato) and sleep-quality signaling.",
+          "Apr 11 was a zero-log day. If dinner doesn't get logged tonight, the 3-day nutrition pattern becomes invisible. Quick photo log counts \u2014 doesn't have to be detailed."
         ]
       },
       "progress": {
-        "top_number": "165.6 lbs weekly average \u2014 you are at your goal weight.",
+        "top_number": "165.6 lbs weekly average \u2014 you are at goal weight. Phase shifts to body composition.",
         "bullets": [
-          "Weight: Ocare3 this morning 165.6 lbs, Hume Pod 166.8 lbs (scale variance normal). Weekly avg 165.6 lbs, min 164.9 lbs. The 165 lb target has been hit. The next phase is about body composition, not scale weight.",
-          "Body composition (Bevel Apr 12): BF 16.3%, lean mass 138.8 lbs (79.1%), VF Level 2.0 \u2014 down from 3.0 on Apr 11. Lean mass is preserved or slightly increasing through a caloric deficit. That's the result that matters at 57.",
-          "VO2 Max: 39.6 ml/kg/min (Motra, Apr 12) \u2014 above your 38.9 Oura baseline. +4.9 over 90 days. Cardio fitness is trending right for the first time in tracked history.",
-          "Win this week: Lean mass at 138.8 lbs while averaging 165-166 lbs scale weight in a deficit. Muscle preservation confirmed.",
-          "Risk to watch: Motra's 30-day weight trend projects 169.3 lbs (+0.8 lbs/wk). That conflicts with Bevel/Ocare3 scale data. Could be BIA hydration variance \u2014 but worth watching. If scale average climbs above 167 lbs next week, re-evaluate caloric targets."
+          "Weight: Ocare3 this morning 165.6 lbs / Hume Pod 166.8 lbs (scale variance expected). Weekly avg 165.6 lbs, min 164.9 lbs. The 165 lb goal is achieved. Focus now shifts to BF% and lean mass, not scale weight.",
+          "Body composition (Bevel Apr 12): BF 16.3%, lean mass 138.8 lbs (79.1%), VF Level 2.0 \u2014 down from 3.0 on Apr 11 in a single day. Lean mass holding or increasing slightly while in caloric deficit at 57. That's the result.",
+          "VO2 Max: 39.6 ml/kg/min (Motra Apr 12) \u2014 +4.9 over 90 days, +0.7 above Oura baseline. First time VO2 has consistently trended upward in tracked history.",
+          "Win: Muscle preservation confirmed while cutting. Lean mass Apr 10 (Hume ADP) = 57.1 kg / Apr 12 (Bevel) = 63.0 kg. Direction is right across both devices even with BIA-to-ADP variance.",
+          "Risk: Motra 30-day weight projection = 169.3 lbs (+0.8 lbs/wk trend). Contradicts scale and Bevel data. Watch for trend divergence \u2014 if Ocare3 weekly avg climbs above 167 lbs by Apr 20, re-evaluate caloric targets."
         ]
       },
       "watch_for": [
-        "If Wednesday's HRV is below 25ms \u2014 reduce Block B to 2 sets, cut Block C to Pallof Press only. Three nights of accumulating sleep debt makes a second consecutive Amber session risky for recovery.",
-        "If lunch today includes creamy dressing or nuts \u2014 fat budget is blown for the day before dinner. Ask for dressing on the side (use 1 tsp) or switch to soy sauce / oil + vinegar. The +47g overrun from yesterday was entirely preventable.",
-        "If tonight's sleep is below 6 hours (bed after 11pm or wake before 5am) \u2014 flag this for Wednesday's brief and reduce session intensity even if HRV shows a rebound. HRV can give a false morning reading after short but high-quality sleep."
+        "If tomorrow's sleep (tonight) is below 6.5 hours or bed time is after 10:30 PM \u2014 flag Wednesday's brief immediately and cap the session at 55 min with reduced Block B (2 sets per exercise only). Three nights of accumulating debt makes a third consecutive Amber session a real risk.",
+        "If afternoon snack today includes chocolate, M&M's, or sweets \u2014 swap to 1 oz beef jerky or a whey shake instead. Yesterday's M&M's added 140 kcal / 17g sugar / 8g fat for 3g protein. The swap nets you +7g protein and saves the fat budget in one move.",
+        "If Wednesday morning HRV is below 25ms \u2014 reduce Block B to 2 sets per exercise and cut Block C to Pallof Press + Suitcase Carry only (no third movement). Do not add reps to compensate \u2014 that's how Monday became 80 minutes."
       ]
     },
     "session_plan": {
@@ -7094,5 +7117,5 @@
       }
     }
   },
-  "last_updated": "2026-04-13"
+  "last_updated": "2026-04-13T12:08:00+08:00"
 }
