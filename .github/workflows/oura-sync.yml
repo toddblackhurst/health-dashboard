@@ -1,0 +1,126 @@
+name: Oura Auto-Sync
+
+on:
+  repository_dispatch:
+    types: [oura-sync]
+  workflow_dispatch:   # lets you trigger manually from GitHub UI too
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Sync Oura → HEALTH_DATABASE.json
+        env:
+          OURA_PAT: ${{ secrets.OURA_PAT }}
+        run: |
+          python3 - <<'PYEOF'
+          import json, os, urllib.request, urllib.error
+          from datetime import date, datetime, timezone
+
+          TOKEN = os.environ["OURA_PAT"]
+          TODAY = date.today().isoformat()
+
+          def oura_get(path):
+              url = f"https://api.ouraring.com/v2/usercollection/{path}?start_date={TODAY}&end_date={TODAY}"
+              req = urllib.request.Request(url, headers={"Authorization": f"Bearer {TOKEN}"})
+              try:
+                  with urllib.request.urlopen(req) as r:
+                      return json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  print(f"Oura API error on {path}: {e.code}")
+                  return {"data": []}
+
+          # ── Fetch from Oura ──────────────────────────────────────────────
+          readiness = oura_get("daily_readiness")
+          sleep_day = oura_get("daily_sleep")
+          hrv_day   = oura_get("daily_hrv")
+          sleep_raw = oura_get("sleep")   # individual sleep periods for duration
+
+          # ── Parse readiness ──────────────────────────────────────────────
+          r_data    = readiness["data"][0] if readiness["data"] else {}
+          recovery_score = r_data.get("score")
+
+          # ── Parse sleep score ────────────────────────────────────────────
+          s_data    = sleep_day["data"][0] if sleep_day["data"] else {}
+          sleep_score = s_data.get("score")
+
+          # ── Parse HRV ────────────────────────────────────────────────────
+          h_data    = hrv_day["data"][0] if hrv_day["data"] else {}
+          hrv_ms    = h_data.get("night_average")
+          if hrv_ms:
+              hrv_ms = round(hrv_ms, 1)
+
+          # ── Parse sleep duration + RHR from raw sleep periods ────────────
+          sleep_duration_min = None
+          rhr_bpm = None
+          sleep_start = None
+          sleep_end   = None
+
+          if sleep_raw["data"]:
+              # Use the longest sleep period (main sleep, not naps)
+              main = max(sleep_raw["data"], key=lambda s: s.get("total_sleep_duration", 0))
+              raw_dur = main.get("total_sleep_duration")  # seconds
+              if raw_dur:
+                  sleep_duration_min = round(raw_dur / 60)
+              rhr_bpm     = main.get("lowest_heart_rate")
+              sleep_start = main.get("bedtime_start", "")[:16] if main.get("bedtime_start") else None
+              sleep_end   = main.get("bedtime_end",   "")[:16] if main.get("bedtime_end")   else None
+
+          print(f"Date:          {TODAY}")
+          print(f"Recovery:      {recovery_score}")
+          print(f"Sleep score:   {sleep_score}")
+          print(f"HRV:           {hrv_ms} ms")
+          print(f"Sleep:         {sleep_duration_min} min")
+          print(f"RHR:           {rhr_bpm} bpm")
+          print(f"Bedtime:       {sleep_start} → {sleep_end}")
+
+          # ── Load HEALTH_DATABASE.json ────────────────────────────────────
+          with open("HEALTH_DATABASE.json") as f:
+              db = json.load(f)
+
+          # ── Find or create today's recovery_sleep entry ──────────────────
+          if "recovery_sleep" not in db:
+              db["recovery_sleep"] = []
+
+          idx = next((i for i, e in enumerate(db["recovery_sleep"]) if e.get("date") == TODAY), None)
+          entry = db["recovery_sleep"][idx] if idx is not None else {"date": TODAY}
+
+          # Only overwrite if Oura returned a value (don't clobber with None)
+          if recovery_score is not None: entry["recovery_score_pct"]  = recovery_score
+          if sleep_score     is not None: entry["sleep_score_pct"]     = sleep_score
+          if hrv_ms          is not None: entry["hrv_ms"]              = hrv_ms
+          if sleep_duration_min is not None: entry["sleep_duration_min"] = sleep_duration_min
+          if rhr_bpm         is not None: entry["rhr_bpm"]             = rhr_bpm
+          if sleep_start:                 entry["sleep_start"]         = sleep_start
+          if sleep_end:                   entry["sleep_end"]           = sleep_end
+          entry["source"]      = "oura_auto_sync"
+          entry["synced_at"]   = datetime.now(timezone.utc).isoformat()
+
+          if idx is not None:
+              db["recovery_sleep"][idx] = entry
+          else:
+              db["recovery_sleep"].append(entry)
+
+          # Keep array sorted descending by date
+          db["recovery_sleep"].sort(key=lambda e: e.get("date",""), reverse=True)
+
+          # ── Write back ───────────────────────────────────────────────────
+          with open("HEALTH_DATABASE.json", "w") as f:
+              json.dump(db, f, indent=2, ensure_ascii=False)
+
+          print("HEALTH_DATABASE.json updated.")
+          PYEOF
+
+      - name: Commit updated database
+        run: |
+          git config user.name  "oura-sync[bot]"
+          git config user.email "oura-sync@users.noreply.github.com"
+          git add HEALTH_DATABASE.json
+          git diff --staged --quiet || git commit -m "Oura auto-sync · $(date -u +%Y-%m-%d\ %H:%M\ UTC)"
+          git push
