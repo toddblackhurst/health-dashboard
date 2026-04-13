@@ -493,6 +493,203 @@ body {
 .bn-item.active .bn-label { color: var(--accent); }
 
 .spacer { height: 14px; }
+
+/* ── Exercise feedback inline ───────────────────────── */
+.ex-feedback-area {
+  margin-top: 8px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+}
+.ex-feedback-area.open { display: flex; }
+.ex-feedback-textarea {
+  width: 100%;
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 12px;
+  padding: 8px 10px;
+  resize: none;
+  line-height: 1.5;
+  font-family: inherit;
+  min-height: 56px;
+}
+.ex-feedback-textarea:focus { outline: none; border-color: var(--accent); }
+.ex-feedback-textarea::placeholder { color: var(--text3); }
+.ex-feedback-saved {
+  font-size: 10px; color: var(--green); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  display: none;
+}
+.ex-feedback-saved.show { display: block; }
+.sp-btn-comment { background: var(--surface3); color: var(--text3); }
+.sp-btn-comment:hover, .sp-btn-comment.active { background: var(--purple); color: #fff; border-color: var(--purple); }
+.ex-feedback-display {
+  margin-top: 5px;
+  font-size: 11px; color: var(--purple);
+  font-style: italic; line-height: 1.4;
+  padding: 5px 8px;
+  background: var(--purple-bg);
+  border-radius: 4px;
+  border-left: 2px solid var(--purple);
+  display: none;
+}
+.ex-feedback-display.show { display: block; }
+
+/* ── Session feedback card ──────────────────────────── */
+.session-feedback-card {
+  margin: 0 0 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--purple);
+  border-radius: 0 6px 6px 0;
+  overflow: hidden;
+}
+.session-feedback-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px;
+  background: var(--surface3);
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--purple);
+  cursor: pointer;
+}
+.session-feedback-body { padding: 12px 14px; display: none; }
+.session-feedback-body.open { display: block; }
+.rating-row { display: flex; gap: 6px; margin-bottom: 12px; }
+.rating-btn {
+  flex: 1; padding: 8px 4px; text-align: center;
+  background: var(--surface3); border: 1px solid var(--border);
+  border-radius: 6px; font-size: 15px; cursor: pointer;
+  transition: all 0.12s;
+}
+.rating-btn.active { background: var(--purple-bg); border-color: var(--purple); }
+.feedback-textarea {
+  width: 100%; background: var(--surface3);
+  border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-size: 12px; padding: 10px 12px;
+  resize: none; line-height: 1.6; font-family: inherit;
+  min-height: 80px; margin-bottom: 10px;
+}
+.feedback-textarea:focus { outline: none; border-color: var(--purple); }
+.feedback-textarea::placeholder { color: var(--text3); }
+.feedback-export-box {
+  background: var(--surface3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 10px 12px;
+  font-size: 11px; color: var(--text2); line-height: 1.5;
+  white-space: pre-wrap; font-family: monospace;
+  display: none; margin-bottom: 10px; max-height: 200px; overflow-y: auto;
+}
+.feedback-export-box.show { display: block; }
+.feedback-btn {
+  padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 700;
+  cursor: pointer; border: 1px solid var(--border); transition: all 0.12s;
+  margin-right: 6px;
+}
+.feedback-btn-save { background: var(--purple); color: #fff; border-color: var(--purple); }
+.feedback-btn-export { background: var(--surface3); color: var(--accent); border-color: var(--accent); }
+.feedback-btn-copy { background: var(--surface3); color: var(--green); border-color: var(--green); }
+
+/* ── Structured brief bullets ───────────────────────── */
+.brief-bullet {
+  padding: 5px 0 5px 12px;
+  border-left: 2px solid var(--border);
+  margin-bottom: 6px;
+  line-height: 1.55;
+  font-size: 13px;
+}
+.brief-bullet:last-child { margin-bottom: 0; }
+.brief-header {
+  font-weight: 700; margin-bottom: 8px; font-size: 13px; color: var(--text);
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ── Weekly review ──────────────────────────────────── */
+.weekly-review-card {
+  margin-bottom: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  overflow: hidden;
+}
+.weekly-review-header {
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(163,113,247,0.08));
+  border-bottom: 1px solid var(--border);
+}
+.weekly-review-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; border-bottom: 1px solid var(--border);
+}
+.wr-stat {
+  padding: 12px 10px; text-align: center;
+}
+.wr-stat + .wr-stat { border-left: 1px solid var(--border); }
+.wr-stat-val { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.wr-stat-lbl { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
+.wr-section {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.wr-section:last-child { border-bottom: none; }
+.wr-section-title {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text3); margin-bottom: 6px;
+}
+.wr-section-content {
+  font-size: 12px; color: var(--text2); line-height: 1.6;
+}
+.wr-verdict {
+  padding: 12px 14px;
+  font-size: 13px; color: var(--text2); line-height: 1.65;
+  border-top: 1px solid var(--border);
+  background: var(--surface3);
+}
+
+/* ── Quick data log ──────────────────────────────────── */
+.quick-log-card {
+  margin-bottom: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--yellow);
+  border-radius: 0 6px 6px 0;
+  overflow: hidden;
+}
+.quick-log-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; background: var(--surface3);
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--yellow); cursor: pointer;
+}
+.quick-log-body { padding: 12px 14px; display: none; }
+.quick-log-body.open { display: block; }
+.quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.quick-chip {
+  padding: 5px 10px; background: var(--surface3);
+  border: 1px solid var(--border); border-radius: 20px;
+  font-size: 11px; color: var(--text2); cursor: pointer;
+  transition: all 0.12s; user-select: none;
+}
+.quick-chip:hover { border-color: var(--yellow); color: var(--yellow); }
+.quick-chip.selected { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); font-weight: 700; }
+.ql-textarea {
+  width: 100%; background: var(--surface3); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); font-size: 12px;
+  padding: 10px 12px; resize: none; line-height: 1.6;
+  font-family: inherit; min-height: 70px; margin-bottom: 10px;
+}
+.ql-textarea:focus { outline: none; border-color: var(--yellow); }
+.ql-textarea::placeholder { color: var(--text3); }
+.ql-source-row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.ql-source-btn {
+  padding: 6px 10px; background: var(--surface3);
+  border: 1px solid var(--border); border-radius: 6px;
+  font-size: 11px; color: var(--text2); cursor: pointer;
+  transition: all 0.12s; font-weight: 600;
+}
+.ql-source-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+.ql-source-btn.active { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); }
 </style>
 </head>
 <body>
@@ -1608,6 +1805,27 @@ function renderCoach(db) {
   const nutrition = db.nutrition || [];
   const todayNut  = nutrition.length ? latest(nutrition) : null;
 
+  // Converts structured section objects → safe HTML (fixes [object Object])
+  function formatSectionContent(key, val) {
+    if (!val) return '';
+    if (typeof val === 'string') return val;
+    if (Array.isArray(val)) {
+      // watch_for is an array of strings
+      return val.map(b => `<div class="brief-bullet">${b}</div>`).join('');
+    }
+    if (typeof val === 'object') {
+      let html = '';
+      // Pick the primary headline field for each section type
+      const header = val.traffic_light || val.call || val.binding_constraint || val.top_number || '';
+      if (header) html += `<div class="brief-header">${header}</div>`;
+      if (Array.isArray(val.bullets)) {
+        html += val.bullets.map(b => `<div class="brief-bullet">${b}</div>`).join('');
+      }
+      return html || String(val);
+    }
+    return String(val);
+  }
+
   // Section renderer helper
   function coachSection(title, colorVar, text) {
     return `
@@ -1663,6 +1881,9 @@ function renderCoach(db) {
           ex.rest_sec > 0 ? `${ex.rest_sec}s rest` : ''
         ].filter(Boolean).join(' · ');
 
+        // Load any saved feedback from localStorage
+        const _today = new Date().toISOString().slice(0,10);
+        const _savedFb = (() => { try { return localStorage.getItem('exFb_' + _today + '_' + exKey) || ''; } catch(e) { return ''; } })();
         html += `<div class="sp-exercise" id="${exKey}">
           <div class="sp-ex-id">${ex.id.toUpperCase()}</div>
           <div class="sp-ex-body">
@@ -1676,10 +1897,19 @@ function renderCoach(db) {
               <div class="sp-alts-label">Swap with:</div>
               ${ex.alternatives.map((alt, i) => `<button class="sp-alt-btn" onclick="spSelectAlt('${exKey}', '${alt.replace(/'/g,"\\'")}', '${(ex.name||'').replace(/'/g,"\\'")}')">↳ ${alt}</button>`).join('')}
             </div>` : ''}
+            <div class="ex-feedback-area" id="${exKey}_fb">
+              <textarea class="ex-feedback-textarea" id="${exKey}_fb_txt" placeholder="How'd this feel? Too heavy, too easy, pain, love it…" rows="2">${_savedFb}</textarea>
+              <div style="display:flex;align-items:center;gap:8px">
+                <button onclick="saveExFeedback('${exKey}','${(ex.name||'').replace(/'/g,"\\'")}');return false;" style="padding:4px 10px;background:var(--purple);color:#fff;border:none;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer">Save</button>
+                <span class="ex-feedback-saved" id="${exKey}_fb_ok">✓ Saved</span>
+              </div>
+            </div>
+            <div class="ex-feedback-display${_savedFb ? ' show' : ''}" id="${exKey}_fb_display">${_savedFb ? '💬 ' + _savedFb : ''}</div>
           </div>
           <div class="sp-ex-actions">
             <button class="sp-btn sp-btn-keep" id="${exKey}_keep" onclick="spKeep('${exKey}')" title="Keep this exercise">✓</button>
             ${ex.alternatives && ex.alternatives.length ? `<button class="sp-btn sp-btn-change" id="${exKey}_change" onclick="spChange('${exKey}')" title="See alternatives">↻</button>` : ''}
+            <button class="sp-btn sp-btn-comment" id="${exKey}_comment" onclick="spComment('${exKey}')" title="Add feedback">💬</button>
           </div>
         </div>`;
       });
@@ -1836,7 +2066,7 @@ function renderCoach(db) {
     ];
 
     sectionDefs.filter(s => cb.sections[s.key]).forEach(s => {
-      sections += coachSection(s.title, s.color, cb.sections[s.key]);
+      sections += coachSection(s.title, s.color, formatSectionContent(s.key, cb.sections[s.key]));
       // After workout_prep (or training_direction if no workout_prep), inject session plan
       // Pick day-specific plan first, fall back to generic session_plan
       const _dowStr = String(new Date().getDay());
@@ -1846,6 +2076,9 @@ function renderCoach(db) {
         sections += renderWeekOverview(cb.weekly_session_plans);
       }
     });
+
+    const weeklyReviewHtml = buildWeeklyReview(db);
+    const sessionFeedbackHtml = buildSessionFeedbackUI();
 
     return `
     <div style="padding:14px 14px 0">
@@ -1858,7 +2091,10 @@ function renderCoach(db) {
           ${updatedAt ? `<div style="font-size:11px;color:var(--text3)">${dateStr}</div><div style="font-size:13px;font-weight:700;color:var(--accent)">${timeStr}</div>` : '<span class="badge badge-yellow">No brief yet</span>'}
         </div>
       </div>
+      ${weeklyReviewHtml}
       ${sections}
+      ${sessionFeedbackHtml}
+      ${buildQuickLogUI()}
       <div style="padding-top:0">${trainingScheduleHtml}</div>
     </div>
     <div class="spacer"></div>`;
@@ -1949,6 +2185,9 @@ function renderCoach(db) {
       `Three things to stay aware of this week: <strong>(1) HR creep</strong> — if you're hitting 125+ bpm during compound lifts, you're working harder than your aerobic system is ready for. Pull back. <strong>(2) Right-side compensation</strong> — in every pulling movement, notice if the right shoulder is doing more work. If it is, reduce load and reinforce the left. <strong>(3) Sleep quality signals</strong> — HRV trending down over 3+ days means your recovery is degrading. The fix is almost always sleep hygiene, not training modification.`
     );
 
+    const weeklyReviewHtmlFb = buildWeeklyReview(db);
+    const sessionFeedbackHtmlFb = buildSessionFeedbackUI();
+
     return `
     <div style="padding:14px 14px 0">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
@@ -1960,11 +2199,412 @@ function renderCoach(db) {
           <span class="badge badge-yellow">Using snapshot data</span>
         </div>
       </div>
+      ${weeklyReviewHtmlFb}
       ${sections}
+      ${sessionFeedbackHtmlFb}
+      ${buildQuickLogUI()}
       <div style="padding-top:0">${trainingScheduleHtml}</div>
     </div>
     <div class="spacer"></div>`;
   }
+}
+
+/* ══════════════════════════════════════════════════════
+   EXERCISE FEEDBACK HELPERS
+══════════════════════════════════════════════════════ */
+function spComment(key) {
+  const area = document.getElementById(key + '_fb');
+  const btn  = document.getElementById(key + '_comment');
+  if (!area) return;
+  const isOpen = area.classList.contains('open');
+  area.classList.toggle('open', !isOpen);
+  btn && btn.classList.toggle('active', !isOpen);
+  if (!isOpen) {
+    const ta = document.getElementById(key + '_fb_txt');
+    if (ta) ta.focus();
+  }
+}
+
+function saveExFeedback(key, exName) {
+  const ta   = document.getElementById(key + '_fb_txt');
+  const okEl = document.getElementById(key + '_fb_ok');
+  const dispEl = document.getElementById(key + '_fb_display');
+  if (!ta) return;
+  const val = ta.value.trim();
+  const today = new Date().toISOString().slice(0, 10);
+  try {
+    if (val) {
+      localStorage.setItem('exFb_' + today + '_' + key, val);
+    } else {
+      localStorage.removeItem('exFb_' + today + '_' + key);
+    }
+  } catch(e) {}
+  // Visual confirm
+  if (okEl) { okEl.classList.add('show'); setTimeout(() => okEl.classList.remove('show'), 2000); }
+  // Update display
+  if (dispEl) {
+    if (val) { dispEl.textContent = '💬 ' + val; dispEl.classList.add('show'); }
+    else { dispEl.textContent = ''; dispEl.classList.remove('show'); }
+  }
+  // Close panel
+  const area = document.getElementById(key + '_fb');
+  const btn  = document.getElementById(key + '_comment');
+  if (area) area.classList.remove('open');
+  if (btn)  btn.classList.remove('active');
+}
+
+function buildSessionFeedbackUI() {
+  const today = new Date().toISOString().slice(0, 10);
+  let savedRating = 0, savedNotes = '';
+  try {
+    savedRating = parseInt(localStorage.getItem('sessFb_rating_' + today) || '0');
+    savedNotes  = localStorage.getItem('sessFb_notes_' + today) || '';
+  } catch(e) {}
+
+  const stars = ['😫','😕','😐','😊','🔥'];
+  const ratingBtns = stars.map((s, i) => {
+    const n = i + 1;
+    return `<button class="rating-btn${savedRating === n ? ' active' : ''}" id="sfRating${n}" onclick="sfSetRating(${n})" title="${n} star">${s}</button>`;
+  }).join('');
+
+  return `
+  <div style="margin-bottom:16px">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+      <span style="font-size:7px">◆</span> Session Feedback
+    </div>
+    <div class="session-feedback-card">
+      <div class="session-feedback-header" onclick="toggleEl('sessFbBody')">
+        <span>Rate & note today's session</span>
+        <span id="sfHeaderStatus" style="font-size:10px;color:var(--text3)">${savedRating ? stars[savedRating-1] + ' · tap to edit' : 'tap to open'} ▾</span>
+      </div>
+      <div class="session-feedback-body${savedRating || savedNotes ? ' open' : ''}" id="sessFbBody">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Session feel</div>
+        <div class="rating-row">${ratingBtns}</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Notes for coach</div>
+        <textarea class="feedback-textarea" id="sessFbNotes" placeholder="What worked, what felt off, energy level, joint issues, highlights, swaps you made…">${savedNotes}</textarea>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="feedback-btn feedback-btn-save" onclick="sfSave()">Save Feedback</button>
+          <button class="feedback-btn feedback-btn-export" onclick="sfExport()">📋 Copy for Coach</button>
+        </div>
+        <div class="feedback-export-box" id="sfExportBox"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleEl(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+function sfSetRating(n) {
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.getElementById('sfRating' + i);
+    if (btn) btn.classList.toggle('active', i === n);
+  }
+  try { localStorage.setItem('sessFb_rating_' + new Date().toISOString().slice(0,10), n); } catch(e) {}
+  const stat = document.getElementById('sfHeaderStatus');
+  const stars = ['😫','😕','😐','😊','🔥'];
+  if (stat) stat.textContent = stars[n-1] + ' · tap to edit ▾';
+}
+
+function sfSave() {
+  const today = new Date().toISOString().slice(0,10);
+  const notes = (document.getElementById('sessFbNotes') || {}).value || '';
+  let rating = 0;
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.getElementById('sfRating' + i);
+    if (btn && btn.classList.contains('active')) rating = i;
+  }
+  try {
+    localStorage.setItem('sessFb_notes_' + today, notes);
+    localStorage.setItem('sessFb_rating_' + today, rating);
+  } catch(e) {}
+  const stat = document.getElementById('sfHeaderStatus');
+  const stars = ['😫','😕','😐','😊','🔥'];
+  if (stat) stat.textContent = (rating ? stars[rating-1] : '✓') + ' · saved ▾';
+  const body = document.getElementById('sessFbBody');
+  if (body) body.classList.remove('open');
+}
+
+function sfExport() {
+  const today = new Date().toISOString().slice(0,10);
+  const notes = (document.getElementById('sessFbNotes') || {}).value || '';
+  let rating = 0;
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.getElementById('sfRating' + i);
+    if (btn && btn.classList.contains('active')) rating = i;
+  }
+  const stars = ['😫','😕','😐','😊','🔥'];
+
+  // Collect exercise feedback from localStorage
+  let exLines = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('exFb_' + today + '_sp_')) {
+        const exId = k.replace('exFb_' + today + '_sp_', '').replace(/_/g,' ').toUpperCase();
+        exLines.push('  • ' + exId + ': ' + localStorage.getItem(k));
+      }
+    }
+  } catch(e) {}
+
+  const exportText = [
+    '=== SESSION FEEDBACK · ' + today + ' ===',
+    rating ? 'Rating: ' + stars[rating-1] + ' (' + rating + '/5)' : '',
+    notes ? 'Notes: ' + notes : '',
+    exLines.length ? '\nExercise Notes:\n' + exLines.join('\n') : '',
+  ].filter(Boolean).join('\n');
+
+  const box = document.getElementById('sfExportBox');
+  if (box) { box.textContent = exportText; box.classList.add('show'); }
+
+  try {
+    navigator.clipboard.writeText(exportText).then(() => {
+      const btn = document.querySelector('.feedback-btn-export');
+      if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '📋 Copy for Coach', 2000); }
+    });
+  } catch(e) {}
+}
+
+/* ══════════════════════════════════════════════════════
+   WEEKLY REVIEW (Saturday focus)
+══════════════════════════════════════════════════════ */
+function buildWeeklyReview(db) {
+  const now = new Date();
+  const todayDow = now.getDay(); // 0=Sun, 6=Sat
+  const isSaturday = todayDow === 6;
+
+  // Get start of current Mon-Sun week
+  const daysSinceMonday = (todayDow + 6) % 7;
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - daysSinceMonday);
+  const weekStartStr = weekStart.toISOString().slice(0,10);
+  const weekEndStr   = now.toISOString().slice(0,10);
+
+  // Filter data to this week
+  const weekSleep = (db.recovery_sleep || []).filter(r => r.date >= weekStartStr && r.date <= weekEndStr);
+  const weekStrength = (db.strength_logs || []).filter(s => s.date >= weekStartStr && s.date <= weekEndStr);
+  const weekNut   = (db.nutrition || []).filter(n => n.date >= weekStartStr && n.date <= weekEndStr);
+  const weekBody  = (db.body_composition || []).filter(b => b.date >= weekStartStr && b.date <= weekEndStr);
+  const baseline  = (db.profile && db.profile.oura_biology_baselines) || {};
+
+  // Sessions
+  const sessionCount = weekStrength.length;
+  const totalVolLbs  = weekStrength.reduce((s, r) => s + (r.volume_kg ? r.volume_kg * 2.2046 : 0), 0);
+
+  // Sleep
+  const sleepArr = weekSleep.filter(r => r.sleep_duration_min || r.total_sleep_min);
+  const avgSleepMin = sleepArr.length
+    ? Math.round(sleepArr.reduce((s, r) => s + (r.sleep_duration_min || r.total_sleep_min || 0), 0) / sleepArr.length)
+    : null;
+  const avgHRV = weekSleep.filter(r => r.hrv_ms).length
+    ? +(weekSleep.filter(r => r.hrv_ms).reduce((s,r) => s + r.hrv_ms, 0) / weekSleep.filter(r => r.hrv_ms).length).toFixed(1)
+    : null;
+  const avgRecovery = weekSleep.filter(r => r.recovery_score_pct).length
+    ? Math.round(weekSleep.filter(r => r.recovery_score_pct).reduce((s,r) => s + r.recovery_score_pct, 0) / weekSleep.filter(r => r.recovery_score_pct).length)
+    : null;
+
+  // Nutrition compliance
+  const nutDays = weekNut.filter(n => n.daily_totals && n.daily_totals.calories_kcal);
+  const nutCompliance = nutDays.length > 0
+    ? Math.round(nutDays.reduce((s,n) => s + Math.min(100, Math.round((n.daily_totals.calories_kcal / 2000) * 100)), 0) / nutDays.length)
+    : null;
+  const avgProtein = nutDays.length > 0
+    ? Math.round(nutDays.reduce((s,n) => s + (n.daily_totals.protein_g || 0), 0) / nutDays.length)
+    : null;
+
+  // Weight change
+  const bodyThisWeek = weekBody.filter(b => b.weight_lbs || b.weight_kg).sort((a,b) => a.date > b.date ? 1 : -1);
+  const wtStart = bodyThisWeek.length ? (bodyThisWeek[0].weight_lbs || bodyThisWeek[0].weight_kg * 2.2046) : null;
+  const wtEnd   = bodyThisWeek.length ? (bodyThisWeek[bodyThisWeek.length-1].weight_lbs || bodyThisWeek[bodyThisWeek.length-1].weight_kg * 2.2046) : null;
+  const wtChange = (wtStart && wtEnd) ? +(wtEnd - wtStart).toFixed(1) : null;
+
+  // Only show on Saturdays (or always show as "week so far" if not Saturday)
+  if (!isSaturday && sessionCount === 0 && !avgSleepMin) return '';
+
+  const weekLabel  = isSaturday ? 'Weekly Coach Review' : 'Week So Far';
+  const weekDates  = `${weekStartStr.slice(5).replace('-','/')} – ${weekEndStr.slice(5).replace('-','/')}`;
+  const color      = isSaturday ? 'var(--accent)' : 'var(--text3)';
+  const hrv_baseline = baseline.hrv_baseline_ms || 32.5;
+
+  // Build coaching verdict
+  let verdict = '';
+  if (isSaturday) {
+    const strengths = [];
+    const concerns  = [];
+    const callouts  = [];
+
+    if (sessionCount >= 3) strengths.push(`<strong>${sessionCount} strength sessions</strong> — full week completed`);
+    else if (sessionCount === 2) concerns.push(`Only <strong>2 of 3 strength sessions</strong> completed`);
+    else if (sessionCount <= 1) concerns.push(`Only <strong>${sessionCount} strength session</strong> this week — training stimulus was insufficient`);
+
+    if (avgHRV && avgHRV >= hrv_baseline) strengths.push(`avg HRV <strong>${avgHRV} ms</strong> — at or above your ${hrv_baseline} ms baseline`);
+    else if (avgHRV) concerns.push(`avg HRV <strong>${avgHRV} ms</strong> — below your ${hrv_baseline} ms baseline; sleep debt is the likely driver`);
+
+    if (avgSleepMin && avgSleepMin >= 420) strengths.push(`avg sleep <strong>${Math.floor(avgSleepMin/60)}h ${avgSleepMin%60}m</strong> — solid rest week`);
+    else if (avgSleepMin) concerns.push(`avg sleep only <strong>${Math.floor(avgSleepMin/60)}h ${avgSleepMin%60}m</strong> — below the 7h floor your recovery needs`);
+
+    if (avgProtein && avgProtein >= 130) strengths.push(`avg protein <strong>${avgProtein}g</strong> — muscle preservation on track`);
+    else if (avgProtein) concerns.push(`avg protein <strong>${avgProtein}g</strong> — short of your 150g target; anabolic resistance at 57 means this gap costs more than it looks`);
+
+    if (wtChange !== null) {
+      if (wtChange <= -0.3 && wtChange >= -1.5) strengths.push(`weight moved <strong>${Math.abs(wtChange)} lbs down</strong> — deliberate deficit working`);
+      else if (wtChange > 0.5) callouts.push(`weight up <strong>${wtChange} lbs</strong> — check sodium, nutrition compliance, or sleep-driven cortisol`);
+    }
+
+    const nextWeekFocus = [];
+    if (sessionCount < 3) nextWeekFocus.push('Hit all 3 strength sessions — M/W/F. No session skipping.');
+    if (avgSleepMin && avgSleepMin < 420) nextWeekFocus.push('10 PM bedtime is not optional next week. Set it as a calendar block.');
+    if (avgProtein && avgProtein < 130) nextWeekFocus.push('Afternoon protein shake is non-negotiable — log it before 3 PM.');
+    if (!nextWeekFocus.length) nextWeekFocus.push('Maintain the standard. Progression on primary lifts and tighten corrective form.');
+
+    const strengthStr = strengths.length ? `<strong>✓ Wins:</strong> ${strengths.join(' · ')}.` : '';
+    const concernStr  = concerns.length  ? `<strong>⚠ Gaps:</strong> ${concerns.join(' · ')}.` : '';
+    const calloutStr  = callouts.length  ? `<strong>🔴 Flag:</strong> ${callouts.join(' · ')}.` : '';
+    const nextStr     = `<strong>Next week:</strong> ${nextWeekFocus.join(' ')}`;
+
+    verdict = [strengthStr, concernStr, calloutStr, nextStr].filter(Boolean).join('<br><br>');
+  }
+
+  return `
+  <div style="margin-bottom:16px">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${color};margin-bottom:8px;display:flex;align-items:center;gap:5px">
+      <span style="font-size:7px">◆</span> ${weekLabel}${isSaturday ? ' · ' + weekDates : ''}
+    </div>
+    <div class="weekly-review-card" style="border-left-color:${color}">
+      ${isSaturday ? `<div class="weekly-review-header">
+        <div style="font-size:14px;font-weight:700">📊 ${weekDates} — End of Week Review</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px">Full week analysis · training + sleep + nutrition + body</div>
+      </div>` : ''}
+      <div class="weekly-review-grid">
+        <div class="wr-stat">
+          <div class="wr-stat-val" style="color:var(--green)">${sessionCount}</div>
+          <div class="wr-stat-lbl">Sessions</div>
+        </div>
+        <div class="wr-stat">
+          <div class="wr-stat-val" style="color:var(--accent)">${avgHRV || '—'}</div>
+          <div class="wr-stat-lbl">Avg HRV ms</div>
+        </div>
+        <div class="wr-stat">
+          <div class="wr-stat-val" style="color:var(--purple)">${avgSleepMin ? Math.floor(avgSleepMin/60) + 'h' + (avgSleepMin%60 ? avgSleepMin%60 + 'm' : '') : '—'}</div>
+          <div class="wr-stat-lbl">Avg Sleep</div>
+        </div>
+      </div>
+      <div class="weekly-review-grid" style="border-bottom:1px solid var(--border)">
+        <div class="wr-stat">
+          <div class="wr-stat-val" style="color:var(--yellow)">${avgProtein ? avgProtein + 'g' : '—'}</div>
+          <div class="wr-stat-lbl">Avg Protein</div>
+        </div>
+        <div class="wr-stat">
+          <div class="wr-stat-val" style="color:${avgRecovery >= 70 ? 'var(--green)' : avgRecovery >= 40 ? 'var(--yellow)' : 'var(--red)'}">${avgRecovery || '—'}</div>
+          <div class="wr-stat-lbl">Avg Recovery</div>
+        </div>
+        <div class="wr-stat">
+          <div class="wr-stat-val" style="color:${wtChange < 0 ? 'var(--green)' : wtChange > 0.3 ? 'var(--yellow)' : 'var(--text2)'}">${wtChange !== null ? (wtChange > 0 ? '+' : '') + wtChange + ' lbs' : '—'}</div>
+          <div class="wr-stat-lbl">Wt Change</div>
+        </div>
+      </div>
+      ${weekStrength.length ? `<div class="wr-section">
+        <div class="wr-section-title">Sessions logged</div>
+        <div class="wr-section-content">${weekStrength.map(s => `<span style="margin-right:10px">${fmtDate(s.date)} · ${s.session_type || 'Strength'} · ${s.duration_min || '—'} min</span>`).join('')}</div>
+      </div>` : ''}
+      ${isSaturday && verdict ? `<div class="wr-verdict">${verdict}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════════════════════
+   QUICK DATA LOG UI
+══════════════════════════════════════════════════════ */
+function buildQuickLogUI() {
+  const today = new Date().toISOString().slice(0,10);
+  let savedSource = '';
+  try { savedSource = localStorage.getItem('ql_source_' + today) || ''; } catch(e) {}
+
+  const sources = ['Cal AI', 'Oura', 'Bevel', 'Stelo', 'Manual'];
+  const chips   = sources.map(s =>
+    `<button class="ql-source-btn${savedSource === s ? ' active' : ''}" onclick="qlSource('${s}',this)">${s}</button>`
+  ).join('');
+
+  const quickFoods = [
+    'Whey shake (24g P)', 'Beef jerky (1oz)', 'Eggs x2', 'Chicken breast',
+    'Salmon 150g', 'Greek yogurt', 'Rice 1 cup', 'Sweet potato', 'Salad',
+  ];
+  const foodChips = quickFoods.map(f =>
+    `<button class="quick-chip" onclick="qlAddFood('${f.replace(/'/g,"\\'")}',this)">${f}</button>`
+  ).join('');
+
+  return `
+  <div style="margin-bottom:16px">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+      <span style="font-size:7px">◆</span> Quick Data Log
+    </div>
+    <div class="quick-log-card">
+      <div class="quick-log-header" onclick="toggleEl('qlBody')">
+        <span>📝 Log food, notes &amp; data</span>
+        <span style="font-size:10px;color:var(--text3)">tap to open ▾</span>
+      </div>
+      <div class="quick-log-body" id="qlBody">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Data source</div>
+        <div class="ql-source-row">${chips}</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Quick-add food</div>
+        <div class="quick-chips" id="qlFoodChips">${foodChips}</div>
+        <textarea class="ql-textarea" id="qlText" placeholder="Paste Cal AI output, describe a meal, or add any data note for the coach…"></textarea>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <button class="feedback-btn feedback-btn-save" onclick="qlSave()">Save Note</button>
+          <button class="feedback-btn feedback-btn-export" onclick="qlCopy()">📋 Copy for Coach</button>
+        </div>
+        <div style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--text3);line-height:1.6">
+          <strong style="color:var(--text2)">💡 Fastest workflows</strong><br>
+          <strong>Cal AI →</strong> After logging a meal, tap Share → Copy text → paste here<br>
+          <strong>Oura →</strong> Screenshot your daily ring scores → send to coach as image<br>
+          <strong>Bevel →</strong> Screenshot body comp → send to coach as image<br>
+          <strong>Stelo CGM →</strong> Screenshot trend chart after meals<br>
+          <strong>Shortcut tip →</strong> Set an iOS Shortcut on your home screen: "Ask Siri to open Personal Coach" for one-tap access
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function qlSource(name, btn) {
+  document.querySelectorAll('.ql-source-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  try { localStorage.setItem('ql_source_' + new Date().toISOString().slice(0,10), name); } catch(e) {}
+}
+
+function qlAddFood(name, btn) {
+  btn.classList.toggle('selected');
+  const ta = document.getElementById('qlText');
+  if (!ta) return;
+  if (btn.classList.contains('selected')) {
+    ta.value = (ta.value ? ta.value + '\n' : '') + name;
+  } else {
+    ta.value = ta.value.replace('\n' + name, '').replace(name + '\n', '').replace(name, '').trim();
+  }
+}
+
+function qlSave() {
+  const today = new Date().toISOString().slice(0,10);
+  const txt = (document.getElementById('qlText') || {}).value || '';
+  try { localStorage.setItem('ql_note_' + today, txt); } catch(e) {}
+  const btn = document.querySelector('.feedback-btn-save');
+  if (btn) { btn.textContent = '✓ Saved'; setTimeout(() => btn.textContent = 'Save Note', 2000); }
+}
+
+function qlCopy() {
+  const today = new Date().toISOString().slice(0,10);
+  const txt = (document.getElementById('qlText') || {}).value || '';
+  let source = '';
+  try { source = localStorage.getItem('ql_source_' + today) || 'Manual'; } catch(e) {}
+  const out = `=== FOOD/DATA LOG · ${today} · Source: ${source} ===\n${txt}`;
+  try {
+    navigator.clipboard.writeText(out).then(() => {
+      const btn = document.querySelector('.feedback-btn-export');
+      if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '📋 Copy for Coach', 2000); }
+    });
+  } catch(e) {}
 }
 
 /* ══════════════════════════════════════════════════════
