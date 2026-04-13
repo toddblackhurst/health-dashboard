@@ -6842,223 +6842,197 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-13T10:30:00+08:00",
+    "generated_at": "2026-04-13T11:09:00+08:00",
     "readiness_call": "Amber",
     "sections": {
       "recovery": {
         "traffic_light": "\ud83d\udfe0 Amber",
         "bullets": [
-          "HRV 20ms \u2014 12.5ms below your 32.5ms baseline. That's a meaningful deficit. Nervous system hasn't cleared the cumulative load from last week.",
-          "Sleep 5h19m (Oura) / 5h34m (Rise) \u2014 short. Sleep debt now -4h10m (Oura). This is the 3rd night in a row under 6 hours. Debt is compounding, not resolving.",
-          "Positives: Deep sleep 59 min / 18% \u2014 structurally solid. Restfulness Optimal. HR dip 15% normal. SpO2 not flagged.",
-          "Pattern alert: Apr 9 HRV was 36ms after an over-time session (Apr 8: 118 min). Apr 13 HRV is 20ms \u2014 same pattern, shorter recovery window. Long sessions are costing you the next day's readiness."
+          "HRV 20ms \u2014 12.5ms below your 32.5ms baseline. Significant nervous system stress signal after yesterday's 41.7ms peak. Classic regression-to-mean after a breakthrough day, compounded by sleep debt accumulation.",
+          "Sleep 5h19m (Oura) / 5h34m (Rise). Rise score 51 \u2014 poor. Sleep debt now -4h10m (Oura) / -3h23m (Rise). Third consecutive night below target.",
+          "Bright spots: Deep sleep 59min (solid), restfulness Optimal, HR stable (lowest 56 bpm, dip 15%). The architecture was decent; the total duration was the problem.",
+          "Non-obvious pattern: Sleep debt has been accumulating across 3 nights \u2014 -2h30m, -2h12m, -4h10m. Not resolving between sessions. If tonight's sleep doesn't hit 7+ hours, Wednesday's HRV is going to reflect it \u2014 and that's the session to watch."
         ]
       },
       "training_direction": {
-        "call": "Session Complete \u2014 Post-Session Management",
+        "call": "SESSION COMPLETE \u2705 \u2014 Pull + Glute Hinge done",
         "bullets": [
-          "Monday pull session done: 80 min / 6.3K kg / 475 kcal. Week 1 Day 1 executed.",
-          "OVER the 65-minute cap by 15 minutes on an Amber readiness day. 4 of your last 4 sessions with logged duration (Apr 6: 96 min, Apr 8: 118 min, Apr 10: 77 min, Apr 13: 80 min) exceeded the cap. Zero sessions under 65 min. Set the timer before your first movement Wednesday.",
-          "Good progression signals: Single-Arm Row progressed from 10kg to 12kg in sets 3-4. Suitcase Carry appropriately dropped from 16kg to 12kg \u2014 smart fatigue management.",
-          "Floor plan executed correctly: Floor 3 prep \u2192 Floor 2 compounds. Pull-Ups added as bonus \u2014 structurally sound addition to this pattern.",
-          "For the rest of today: no additional training. The fasted walk (2.43 mi, Zone 0-1, done at 5:16 AM) + 80 min strength is your daily load. Walk it off, eat well, sleep early."
+          "Monday Week 1 \u2014 Pull + Glute Hinge: DONE. 07:56 AM, 80 min, 6,300 kg, 475 kcal, 15 exercises. Progression noted: Single-Arm Row 10kg \u2192 12kg (sets 3-4 \u2705). Pull-ups added to prep \u2014 good call.",
+          "Session ran 80 min vs 65-min cap \u2014 15 min over on Amber readiness. The pattern is now documented: Apr 6 = 96 min, Apr 10 = 76 min, Apr 13 = 80 min. Three consecutive over-cap sessions. You're averaging 19% over cap. That's a system problem, not a one-off.",
+          "Rest of today: Recovery only. Fasted walk already done (2.43 mi, Zone 0-1 \u2014 right call on Amber). No additional training stimulus needed.",
+          "Next session: Wednesday Apr 15 \u2014 Push + Quad / Anti-Rotation. Floor 3 \u2192 Floor 2. 65-min hard cap.",
+          "Accountability: Start the timer before the first warmup rep on Wednesday. Three data points = a pattern. Timer before the foam roller \u2014 not after the landmine press feels good."
         ]
       },
       "nutrition": {
-        "binding_constraint": "Protein \u2014 66g still needed in ~1270 remaining kcal",
+        "binding_constraint": "FAT \u2014 25g used at 10am, 45g remaining. Yesterday ran +47g over.",
         "bullets": [
-          "Logged so far: 730 kcal / 84g P / 49g C / 25g F. Day ongoing. Post-workout shake added 29g protein.",
-          "Protein roadmap to 150g: Lunch 35-40g (chicken breast or fish, light dressing) + afternoon whey 24g + dinner 30-35g = target hit.",
-          "Fat budget: 45g fat remaining in ~1270 kcal. Yesterday's 117g fat overrun was driven by walnuts + ranch. Keep lunch sauce on the side today.",
-          "Carb gap is large: 141g carbs still needed. Rice, oats, or a post-workout banana won't hurt \u2014 you've got room.",
-          "Apr 12 had 141g protein (strong close). Apr 11 pre-workout + today pre- and post-workout shake pattern is working \u2014 keep the structure."
+          "Running total (post-workout, ~10am): 730 kcal / P: 84g / C: 49g / F: 25g. Day in progress \u2014 afternoon meals are the make-or-break window.",
+          "Protein roadmap to 150g: 66g remaining. Lunch 35-40g (chicken breast or fish, no nuts, no creamy dressing) + afternoon whey shake 24g + dinner 30-35g (salmon, eggs, or turkey). Exactly doable \u2014 don't skip the afternoon shake.",
+          "Fat budget watch: 45g remaining for the rest of the day. Lunch is the danger point. Oil+vinegar or soy sauce. Not ranch. Not guac + cheese. One lean choice at lunch keeps the whole day clean.",
+          "Flag \u2014 April 11 was a zero-log day. If meals are happening and not being logged, the deficit math is invisible. Log dinner tonight even if it's a quick description.",
+          "Non-obvious: Your last 3 fat overruns trace to two foods \u2014 walnuts at breakfast (26g fat, 1/3 cup) and creamy dressings at lunch. Neither is a willpower failure \u2014 they're just high-density and easy to underestimate. Berries instead of walnuts costs you 26g fat. That's the whole fix."
         ]
       },
       "progress": {
-        "top_win": "Weight essentially AT goal \u2014 165.6 lbs (Ocare3 AM scan), goal 165 lbs",
+        "top_number": "165.6 lbs weekly average \u2014 you are at your goal weight.",
         "bullets": [
-          "Weight: 165.6 lbs today (Ocare3), 166.8 lbs (Hume BIA). Weekly avg 165.6 lbs \u2014 inside goal range. Down from 173.4 lbs (Hume ADP Apr 10 wet weight) \u2014 lean mass was 57.1 kg then, now trending higher per Bevel.",
-          "Body composition: Apr 12 Bevel scan \u2014 165.8 lbs, 16.3% BF, 138.8 lbs lean mass. Visceral Fat Lv 2.0 (down from 3.0 on Apr 11 \u2014 directionally correct). Lean mass stable.",
-          "VO2 Max: 39.6 ml/kg/min (Motra) \u2014 up 4.9 over 90 days. Heading toward 40+ for the first time.",
-          "Key win this week: Week 1 Day 1 executed on an Amber day. That's adherence.",
-          "Key risk: Session duration pattern \u2014 4-for-4 over the 65-min cap. HR averaged 109-119 bpm in these sessions (within range) but cumulative CNS load is showing in your HRV trend."
+          "Weight: Ocare3 this morning 165.6 lbs, Hume Pod 166.8 lbs (scale variance normal). Weekly avg 165.6 lbs, min 164.9 lbs. The 165 lb target has been hit. The next phase is about body composition, not scale weight.",
+          "Body composition (Bevel Apr 12): BF 16.3%, lean mass 138.8 lbs (79.1%), VF Level 2.0 \u2014 down from 3.0 on Apr 11. Lean mass is preserved or slightly increasing through a caloric deficit. That's the result that matters at 57.",
+          "VO2 Max: 39.6 ml/kg/min (Motra, Apr 12) \u2014 above your 38.9 Oura baseline. +4.9 over 90 days. Cardio fitness is trending right for the first time in tracked history.",
+          "Win this week: Lean mass at 138.8 lbs while averaging 165-166 lbs scale weight in a deficit. Muscle preservation confirmed.",
+          "Risk to watch: Motra's 30-day weight trend projects 169.3 lbs (+0.8 lbs/wk). That conflicts with Bevel/Ocare3 scale data. Could be BIA hydration variance \u2014 but worth watching. If scale average climbs above 167 lbs next week, re-evaluate caloric targets."
         ]
       },
-      "watch_for": {
-        "items": [
-          "If HRV on Wednesday morning is again below 25ms \u2014 drop Block C entirely, keep Block A and B straight sets only, hard stop at 55 min.",
-          "If protein total is under 100g by 3pm today \u2014 add a second afternoon whey shake (24g protein / 150 kcal) before dinner.",
-          "If sleep time tonight is after 10pm \u2014 tomorrow's recovery window closes further. Target bed by 9:30 PM tonight. Sleep debt is at -4h10m and Wednesday is a training day."
-        ]
-      }
+      "watch_for": [
+        "If Wednesday's HRV is below 25ms \u2014 reduce Block B to 2 sets, cut Block C to Pallof Press only. Three nights of accumulating sleep debt makes a second consecutive Amber session risky for recovery.",
+        "If lunch today includes creamy dressing or nuts \u2014 fat budget is blown for the day before dinner. Ask for dressing on the side (use 1 tsp) or switch to soy sauce / oil + vinegar. The +47g overrun from yesterday was entirely preventable.",
+        "If tonight's sleep is below 6 hours (bed after 11pm or wake before 5am) \u2014 flag this for Wednesday's brief and reduce session intensity even if HRV shows a rebound. HRV can give a false morning reading after short but high-quality sleep."
+      ]
     },
     "session_plan": {
-      "session_type": "Pull-dominant Upper / Glute Hinge + Corrective",
-      "session_goal": "Build lat width, posterior chain strength, and anti-rotation stability while embedding left-side corrective cues throughout.",
+      "session_type": "Pull-Dominant Upper + Glute Hinge \u2014 COMPLETED \u2705",
+      "session_goal": "Build lat width and horizontal pull strength while training glute-dominant hinge patterns and structural correction \u2014 all completed this morning.",
       "floor_plan": "Floor 3 \u2192 Floor 2",
       "time_cap_min": 65,
+      "actual_duration_min": 80,
+      "duration_status": "OVER CAP by 15 min",
       "readiness_call": "Amber",
-      "status": "COMPLETED \u2014 2026-04-13 07:56 AM, 80 min",
+      "status": "COMPLETED",
+      "completed_at": "2026-04-13T07:56:00+08:00",
       "blocks": [
         {
           "id": "PREP",
-          "label": "Floor 3 \u2014 Activation (~12 min)",
-          "estimated_min": 12,
+          "label": "Floor 3 \u2014 Activation (~10 min)",
+          "estimated_min": 10,
           "exercises": [
             {
               "id": "prep_1",
-              "name": "Foam Roller Thoracic Extension",
+              "name": "Foam Roller \u2014 Thoracic Extension",
               "sets": "1",
-              "reps": "8",
+              "reps": "8-10 extensions",
               "rest_sec": 0,
-              "note": "Open the thoracic spine before any pulling. Pause at each tight segment. Sets the baseline for everything that follows.",
+              "note": "Thoracic stiffness correction. Roller perpendicular to spine, roll T4\u2013T8 only. Don't extend into lumbar.",
               "alternatives": [
-                "Seated thoracic extension over chair back",
-                "Open-book stretch on floor",
-                "Cat-cow thoracic focus"
+                "Quadruped thoracic rotation",
+                "Cat-Cow",
+                "Open Book stretch on floor"
               ]
             },
             {
               "id": "prep_2",
-              "name": "Quadruped T-Spine Rotation",
-              "sets": "1",
-              "reps": "10 each side",
+              "name": "Quadruped Thoracic Rotation",
+              "sets": "2",
+              "reps": "8/side \u2014 LEFT first",
               "rest_sec": 0,
-              "note": "Left side first. Thoracic stiffness is a primary asymmetry driver. Rotate to end range and pause 2 seconds.",
+              "note": "Right-body shift correction. Left side first. Watch for asymmetry \u2014 if left opens less, add 2 reps left.",
               "alternatives": [
-                "Side-lying thoracic rotation stretch",
-                "Open-book rotation",
-                "Thread the needle"
+                "Open Book floor rotation",
+                "Seated thoracic rotation",
+                "Half-kneeling rotation"
               ]
             },
             {
               "id": "prep_3",
-              "name": "Resistance Band Standing Hip Abduction",
-              "sets": "1",
-              "reps": "15 each side (left first)",
+              "name": "Banded Hip Abduction",
+              "sets": "2",
+              "reps": "15/side \u2014 LEFT first",
               "rest_sec": 0,
-              "note": "Left side leads. Hip abduction weakness drives your right-side body shift. Squeeze at top, slow return.",
+              "note": "Glute med activation before hip hinge. Left side first. Light band \u2014 activation only, not fatigue.",
               "alternatives": [
-                "Clamshell with band",
-                "Side-lying hip abduction",
-                "Cable hip abduction standing"
+                "Side-lying clam shell",
+                "Standing band abduction",
+                "Monster walk with band"
               ]
             },
             {
               "id": "prep_4",
-              "name": "Resistance Band Pull Apart",
+              "name": "Band Pull-Apart",
               "sets": "2",
               "reps": "15",
-              "rest_sec": 30,
-              "note": "Scapular retraction primer. Sets up shoulder alignment before pulling work. Squeeze for 1 second at peak.",
+              "rest_sec": 0,
+              "note": "Scapular activation before pull work. Light band. 1-second squeeze at end range \u2014 this is the correction, not a warmup.",
               "alternatives": [
                 "Face pull with band",
                 "TRX Y-raise",
-                "Cable rear delt fly light"
-              ]
-            },
-            {
-              "id": "prep_5",
-              "name": "Wall Slide",
-              "sets": "1",
-              "reps": "10",
-              "rest_sec": 0,
-              "note": "Arms pressing into wall the whole time. Corrects shoulder elevation pattern before overhead and pulling movements.",
-              "alternatives": [
-                "TRX Y-raise",
-                "Floor angels",
-                "Prone Y raise light"
+                "Wall slide"
               ]
             }
           ]
         },
         {
           "id": "A",
-          "label": "Floor 2 \u2014 Primary Pull Pattern (~18 min)",
-          "estimated_min": 18,
+          "label": "Floor 2 \u2014 Block A: Vertical Pull + Horizontal Row (15\u201318 min)",
+          "estimated_min": 17,
           "exercises": [
             {
               "id": "a1",
-              "name": "Pull-Up",
+              "name": "Hammer Strength Wide Lat Pulldown",
               "sets": "3",
-              "reps": "6/5/4",
-              "load": "BW",
-              "rest_sec": 90,
-              "note": "Descend in 3 counts. Full hang to chin above bar. Track rep quality over rep count \u2014 stop before form breaks.",
+              "reps": "10",
+              "rest_sec": 60,
+              "note": "Lat width anchor. Lead with elbows down, not hands. Right shoulder tends to dominate \u2014 watch for left lag.",
+              "motra": "Machine Lat Pull Down Wide-Grip",
               "alternatives": [
-                "Hammer ISO Wide Lat Pulldown (primary fallback)",
-                "Cable pulldown narrow grip",
-                "Assisted pull-up machine"
+                "Neutral-Grip Lat Pulldown (same machine)",
+                "Cable Lat Pulldown with wide bar",
+                "Machine Front Pull Down"
               ]
             },
             {
               "id": "a2",
-              "name": "Hammer ISO Wide Pull Down",
-              "sets": "4",
-              "reps": "10",
-              "load_kg": 35,
-              "rest_sec": 75,
-              "note": "Keep chest tall, elbows drive down and in. No shoulder elevation. 35kg maintained across all 4 sets \u2014 hold here until all 4\u00d710 clean before adding weight.",
+              "name": "Single-Arm Dumbbell Row",
+              "sets": "3",
+              "reps": "10/side \u2014 LEFT FIRST every set",
+              "rest_sec": 60,
+              "note": "Right-side dominance correction. Left side first when you're fresh. Progress: 10kg \u2192 12kg in sets 3-4 was correct. Elbow to hip pocket, hold 1 sec at top.",
+              "motra": "Cable Single-Arm Row",
               "alternatives": [
-                "Cable lat pulldown wide grip",
-                "Resistance band pulldown",
-                "Machine front pull down"
+                "Cable one-arm row",
+                "Chest-supported DB row",
+                "Landmine row"
               ]
             }
           ]
         },
         {
           "id": "B",
-          "label": "Floor 2 \u2014 Secondary Pattern + Hip Hinge (~18 min)",
-          "estimated_min": 18,
+          "label": "Floor 2 \u2014 Block B: Glute Hinge + Unilateral Leg (15\u201318 min)",
+          "estimated_min": 16,
           "exercises": [
             {
               "id": "b1",
-              "name": "Dumbbell Single-Arm Row",
-              "sets": "4",
-              "reps": "10-12",
-              "load_kg": "10-12",
+              "name": "Machine Hip Thrust",
+              "sets": "3",
+              "reps": "12",
               "rest_sec": 60,
-              "note": "Left arm first every set. Sets 3-4 progressed to 12kg \u2014 strong signal. Keep elbow tracking back, not flaring. Hip rotates with the pull.",
+              "note": "Primary glute-hinge anchor. No deep hip flexion (hip OA). Full glute squeeze at top. Avoid loading the hip joint at the bottom \u2014 stop at neutral.",
+              "motra": "Machine Hip Thrust (Glute Bridge)",
               "alternatives": [
-                "Cable single-arm row",
-                "TRX row",
-                "Machine chest-supported row one-arm"
+                "Cable pull-through",
+                "KB Romanian deadlift (light)",
+                "Hip bridge on floor with band"
               ]
             },
             {
               "id": "b2",
-              "name": "Machine Hip Thrust (Glute Bridge)",
+              "name": "Low Step-Up",
               "sets": "3",
-              "reps": "12",
-              "load_kg": 42.7,
-              "rest_sec": 75,
-              "note": "Squeeze glutes at top for 2 counts. Left glute presses first \u2014 cue: imagine pushing left heel into floor. Hip OA: avoid end-range hyperextension.",
-              "alternatives": [
-                "Dumbbell hip thrust off bench",
-                "Glute bridge on floor with plate",
-                "Cable pull-through"
-              ]
-            },
-            {
-              "id": "b3",
-              "name": "Step-Up",
-              "sets": "3",
-              "reps": "10 each leg (left first)",
-              "load": "BW",
+              "reps": "10/side \u2014 LEFT FIRST every set",
               "rest_sec": 60,
-              "note": "Left leg leads every set. Low step \u2014 no deep hip flexion. Drive through heel, not toe. Single-leg loading corrects right-side dominance.",
+              "note": "Unilateral leg correction. Left side first. Low box only \u2014 no deep hip flexion. Drive through the heel of the working leg, not the trailing toe.",
+              "motra": "Create custom: 'Low Step-Up', Muscle Group = Legs, Equipment = Box/Step",
               "alternatives": [
-                "Split squat isometric hold",
-                "Reverse lunge slow tempo",
-                "Lateral step-up"
+                "Lateral step-up (lower height)",
+                "TRX-assisted split squat (bodyweight)",
+                "Glute bridge single-leg"
               ]
             }
           ]
         },
         {
           "id": "C",
-          "label": "Floor 2 \u2014 Trunk + Anti-Rotation (~12 min)",
+          "label": "Floor 2 \u2014 Block C: Trunk / Anti-Rotation + Engagement (12\u201315 min)",
           "estimated_min": 12,
           "exercises": [
             {
@@ -7066,61 +7040,59 @@
               "name": "Cable Face Pull",
               "sets": "3",
               "reps": "15",
-              "load_kg": 17,
               "rest_sec": 45,
-              "note": "External rotation at end range. Elbows high and wide. Shoulder imbalance correction \u2014 high rep / moderate load for tissue tolerance.",
+              "note": "Rear delt and scapular health. Shoulder imbalance correction. Pull to forehead, externally rotate at end range. Light load \u2014 perfect reps only.",
+              "motra": "Cable Face Pull",
               "alternatives": [
                 "Band face pull",
-                "TRX face pull",
-                "DB rear delt raise"
+                "TRX W-pull",
+                "DB rear delt fly (chest-supported)"
               ]
             },
             {
               "id": "c2",
-              "name": "Cable Pallof Press",
+              "name": "Pallof Press",
               "sets": "3",
-              "reps": "8 each side",
-              "load_kg": 5.7,
+              "reps": "12/side",
               "rest_sec": 45,
-              "note": "Trunk muscle rated Low (Hume scan Apr 10). This is the primary corrective. Press slow, resist rotation. Left side first.",
+              "note": "Core anti-rotation priority. Stand tall, no torso rotation during the press. Left side first. Don't let the cable pull your shoulders around.",
+              "motra": "Cable Pallof Hold",
               "alternatives": [
                 "Band Pallof press",
                 "Half-kneeling Pallof press",
-                "Dead bug"
+                "Dead bug (floor)"
               ]
             },
             {
               "id": "c3",
-              "name": "Dumbbell Suitcase Carry",
+              "name": "Suitcase Carry",
               "sets": "3",
-              "reps": "50 ft",
-              "load_kg": "12-16",
+              "reps": "20\u201325m \u2014 LEFT HAND every set",
               "rest_sec": 60,
-              "note": "Left hand carries heavy set. Smart drop from 16kg to 12kg for sets 2-3 \u2014 correct fatigue management. Stay tall, resist lateral lean.",
+              "note": "Left-side anti-lateral flexion. Suitcase carry targets the exact asymmetry in your scan. Left hand only \u2014 right side already dominant. Progression: 16kg \u2192 dropped to 12kg for sets 2-3 was smart fatigue management.",
+              "motra": "Kettlebell Suitcase Carry",
               "alternatives": [
-                "KB suitcase carry",
-                "Farmer's carry one-sided",
-                "Bottoms-up KB carry"
-              ]
-            },
-            {
-              "id": "c4",
-              "name": "Hanging Leg Raise",
-              "sets": "2",
-              "reps": "12",
-              "load": "BW",
-              "rest_sec": 45,
-              "note": "No hip flexor dominance \u2014 initiate from lower abs. Knees bent is fine. Avoid kipping.",
-              "alternatives": [
-                "Lying leg raise",
-                "TRX knee tuck",
-                "Dragon flag negative"
+                "Farmer carry (bilateral)",
+                "KB waiter carry (overhead, light)",
+                "Landmine anti-rotation hold"
               ]
             }
           ]
         }
-      ]
+      ],
+      "next_session_preview": {
+        "date": "2026-04-15",
+        "label": "Wednesday \u2014 Push + Quad / Anti-Rotation",
+        "floor_plan": "Floor 3 \u2192 Floor 2",
+        "time_cap_min": 65,
+        "key_anchors": [
+          "Half-Kneeling Landmine Press",
+          "Incline DB Press",
+          "Hammer Strength V-Squat",
+          "Pallof Press"
+        ]
+      }
     }
   },
-  "last_updated": "2026-04-13T09:08:34+08:00"
+  "last_updated": "2026-04-13"
 }
