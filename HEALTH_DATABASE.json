@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T09:07:04+0800",
+    "last_updated": "2026-04-14T12:08:10+0800",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -7376,20 +7376,20 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T11:08:39+0800",
+    "generated_at": "2026-04-14T12:08:10+0800",
     "readiness_call": "Green",
     "sections": {
       "recovery": {
         "traffic_light": "🟢 Green",
         "bullets": [
-          "HRV 35.4ms — back above 32.5ms baseline after yesterday's 20ms low. Green. Early 9:01 PM bedtime produced a 15ms HRV jump. Pattern is confirmed: early sleep is your single most effective recovery lever.",
+          "HRV 35.4ms — above 32.5ms baseline. Green. Early 9:01 PM bedtime produced the rebound from yesterday's 20ms Amber. Wrist temp 96.9°F still below normal — 12 PM hydration check: drink water now.",
           "Sleep: 6h43m asleep, 58% quality, efficiency 96% (excellent). Sleep bank at -3h13m — improved 57 min overnight. REM 1h38m solid. Wrist temp 96.9°F flagged below normal — dehydration or mild inflammation. Drink water.",
           "RHR 65.0 bpm (vs 62.6 bpm baseline — slightly elevated, normal 24h post-strength day). SpO2 95.1%, respiratory rate 14.4 rpm — both clean. Body in repair mode, not stress mode.",
           "Non-obvious: Your fat overruns are not a meal-structure problem — they're an add-on problem. Three days of logging show the meal scaffolding (protein + carb base) is correct. The leak is always condiments: walnuts at breakfast (+26g Apr 12), ranch at lunch (+39g Apr 12), bacon at dinner (+fat Apr 13). Fix the add-ons, not the meals."
         ]
       },
       "training_direction": {
-        "call": "Double cardio done ✅. Walk (5:53 AM, 2.11 mi, HR 99) + Indoor Cycle (7:57 AM, 31 min, HR 100). 371 active calories. No further load today.",
+        "call": "Double cardio done ✅ Walk (2.11 mi, HR 99) + Indoor Cycle (31 min, HR 100). 371 active calories. No further load today. Next session: Wednesday Push + Quad / Anti-Rotation.",
         "bullets": [
           "Morning walk ✅ 2.11 mi, 33:28, avg HR 99 bpm — Easy (3/5). Indoor Cycle ✅ 31:10, avg HR 100 bpm — Easy (2/5). Both sessions HR well within <122 bpm cap. Total active calories: 371. Active recovery target exceeded.",
           "Double cardio on a rest day is noteworthy — 63 min of Easy zone work total. This is appropriate given Green readiness and both sessions at Easy effort. Watch tomorrow's morning HRV: double cardio sometimes accelerates recovery (LISS effect) and sometimes creates unexpected accumulation.",
@@ -7398,9 +7398,9 @@
         ]
       },
       "nutrition": {
-        "binding_constraint": "Fat — 39g remaining for 3 meals. ~13g per meal max. Zero oils, zero dressings, zero add-ons.",
+        "binding_constraint": "Fat — 39g remaining for 3 meals (~13g/meal max). One condiment ends the day.",
         "bullets": [
-          "Post-workout shake logged 09:24: 422 kcal / P:40g / C:26g / F:18g (Cal AI). Running total: 912 kcal / 95g P / 67g C / 31g F. Two clean shakes in — 95g protein already banked before noon.",
+          "12 PM status: 912 kcal / 95g P / 67g C / 31g F logged (2 shakes). Remaining: ~1088 kcal / 55g P / 123g C / 39g F. Lunch window is open — lean protein + rice is the play.",
           "Remaining today: ~1088 kcal / 55g P / 123g C / 39g F across 3 meals. Fat binding constraint at 39g — ~13g per meal max. This is tighter than recent days. One condiment kills it.",
           "Non-obvious: Vegan protein milk is adding 16g fat vs Kirkland almond milk (4g fat). Swapping post-workout to almond milk would save 12g fat per day — that's nearly a full meal's fat budget reclaimed. Worth considering.",
           "Pre-Wednesday carb load: 123g carbs still needed. Rice at lunch (50g) + sweet potato at dinner (40g) + rice at dinner (40g) = 130g. Carb load window is fully open. Lean protein only — no sauces."
@@ -7610,7 +7610,15 @@
           ]
         }
       ]
-    }
+    },
+    "date": "2026-04-14",
+    "last_updated": "2026-04-14T12:08:10+0800",
+    "readiness_tier": "Green",
+    "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
+    "daily_insight": "Wrist temp 96.9°F (below normal) + 371 active calories from double cardio = dehydration is likely already underway at noon. Thirst is masking as hunger in the 12–3 PM window — this is the exact mechanism behind the afternoon sweets reach. Drink 500ml water before touching food.",
+    "training_call": "Rest day complete. Walk + Cycle done. No further training load. Hydrate, hit lean protein at lunch (fish/chicken + rice), protect fat budget. Wednesday is Green-readiness Push session — arrive fueled.",
+    "nutrition_binding_constraint": "Fat — 39g remaining / 3 meals. ~13g per meal max.",
+    "watch_for": "Dehydration-hunger confusion: 12–3 PM window is highest risk today. 371 active calories + below-normal wrist temp = real fluid deficit. Drink water first, wait 10 min before deciding you're hungry. If sweets craving surfaces, this is almost certainly the trigger — not actual hunger."
   },
   "last_updated": "2026-04-14T11:08:39+0800"
 }
