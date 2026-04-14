@@ -7444,11 +7444,11 @@
         ]
       },
       "nutrition": {
-        "binding_constraint": "Fat (9g) + Calories (285 kcal) — critically tight. It's 17:07 — dinner decision imminent.",
+        "binding_constraint": "Fat (9g) + Calories (285 kcal) — dinner is happening NOW at 18:07.",
         "bullets": [
-          "17:07 status: 1,715 kcal / 145g P / 150g C / 61g F logged (last entry ~13:00 — 4 hours gap, no new uploads). Remaining: 285 kcal / 5g P / 40g C / 9g F.",
+          "18:07 status: 1,715 kcal / 145g P / 150g C / 61g F logged (last entry 13:00 — 5+ hours gap). Remaining: 285 kcal / 5g P / 40g C / 9g F.",
           "Protein day won (145g / 150g). No need to chase protein at dinner. One lean protein at dinner is for insurance only.",
-          "⚡ DINNER DECISION WINDOW — it's 5 PM. Apr 13 fat blow happened at 6 PM dinner (eggs/bacon/hash browns = +31g fat). Same hour, same risk. One decision: steamed fish or poached chicken, plain rice, no sauce. That's it.",
+          "⚡ DINNER NOW — it's 6 PM. Apr 13 fat blow was 6 PM (eggs + bacon + hash browns = +31g fat). Apr 12 blow was walnuts + ranch. Both felt like 'reasonable' choices. Tonight: no choices — steamed fish or poached chicken, plain rice, nothing else.",
           "40g carbs still open — white rice (22g) + sweet potato (18g) = exact fit. This is Wednesday's fuel. Don't skip the carbs trying to cut more."
         ]
       },
@@ -7462,7 +7462,7 @@
         ]
       },
       "watch_for": [
-        "⚡ 5 PM DINNER DECISION — same hour as Apr 13's fat blow. Steamed fish / poached chicken / shrimp + plain rice. No sauce, no oil, no extras. One clean dinner closes a 3-day streak.",
+        "⚡ DINNER IS NOW — 6 PM, not upcoming. Same hour as Apr 13's fat blow. Steamed fish / poached chicken / shrimp + plain rice. No sauce, no oil, no extras. The 3-day streak ends tonight with one clean plate.",
         "9 PM BEDTIME — not a suggestion. Last night's 9 PM bedtime produced today's 35.4ms HRV. Repeat it and Wednesday goes Green. Miss it and you're gambling on Amber again.",
         "Carb window open (40g): rice + sweet potato — load them for Wednesday Push fuel. Don't skip carbs to cut calories, there's no deficit benefit if glycogen is empty going in."
       ]
@@ -7658,13 +7658,13 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T16:06:19+0800",
+    "last_updated": "2026-04-14T18:07:11+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "Three consecutive fat overruns (Apr 12 +47g, Apr 13 +35g, today 61/70g with dinner still ahead). The pattern is dinner — not the shakes, not lunch. Tonight is the third chance to hold the line. Protein is closed at 145/150g. Dinner only needs carbs (40g = one rice serving) and near-zero fat.",
-    "training_call": "Rest day complete — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Done for today. Wednesday Push session tomorrow: load remaining 40g carbs at dinner (rice + sweet potato) for pre-session glycogen top-up. No additional cardio tonight.",
-    "nutrition_binding_constraint": "Fat (9g left) AND Calories (285 kcal left). Dinner formula: steamed or grilled chicken breast or white fish + plain rice. Zero oil. Zero sauce. Zero condiments. Any deviation blows target for the third day running.",
-    "watch_for": "Dinner fat trap — third night in a row. Apr 12 was walnuts + ranch. Apr 13 was bacon + eggs. Both felt like reasonable choices in the moment. Tonight the brief is simple: plain protein, plain rice, nothing extra. The 9g fat limit has no room for judgment calls."
+    "daily_insight": "It is 6 PM — dinner is happening right now, not in an hour. Apr 13 fat blow was at 6 PM (bacon + eggs + hash browns). This is that exact window. 9g fat and 285 kcal remain. One clean plate closes a 3-day streak — plain protein, plain rice, no oil, no sauce, nothing extra.",
+    "training_call": "Rest day complete ✅ — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Nothing more tonight. Two jobs left: (1) eat dinner clean — 9g fat, plain rice + protein only; (2) lights out at 9 PM. That's it. Wednesday Push session starts at Green.",
+    "nutrition_binding_constraint": "Fat (9g) AND Calories (285 kcal) — dinner is happening now (18:07). Formula: steamed or grilled chicken breast / white fish + plain rice. Zero oil. Zero sauce. Zero condiments. Third fat overrun in a row is this one plate.",
+    "watch_for": "DINNER IS NOW — 6 PM, same hour as Apr 13's bacon + eggs + hash browns (+35g fat overage). 9g fat budget left. Plain protein, plain rice. The brief has flagged this for 2 hours. Don't think about it — just order / plate it right."
   },
   "last_updated": "2026-04-14T16:06:19+0800"
 }
