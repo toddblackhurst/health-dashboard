@@ -7327,49 +7327,49 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T09:07:04+0800",
+    "generated_at": "2026-04-14T10:06:51+0800",
     "readiness_call": "Green",
     "sections": {
       "recovery": {
         "traffic_light": "🟢 Green",
         "bullets": [
-          "HRV 35.4ms — back above 32.5ms baseline after yesterday's 20ms low. Green. Early 9:01 PM bedtime produced a 15ms HRV jump. You followed the call, the data responded.",
-          "Sleep: 6h43m asleep, 58% quality, efficiency 96% (excellent). Sleep bank improved from -4h10m to -3h13m — 57 minutes of debt recovered in one night. REM 1h38m solid. Wrist temp 96.9°F flagged below normal — may indicate mild dehydration; drink water.",
-          "RHR 65.0 bpm (vs 63 bpm baseline — slightly elevated, normal post-strength day variation). SpO2 95.1% and respiratory rate 14.4 rpm both normal. Body is in recovery mode, not under stress.",
-          "Non-obvious: the HRV pattern now confirms early bedtime is your single most effective recovery intervention — more so than rest day activity level. Apr 11 (rest+early sleep) → 41.7ms. Apr 14 (rest+9:01 PM) → 35.4ms. Late nights suppress your HRV regardless of training load."
+          "HRV 35.4ms — back above 32.5ms baseline after yesterday's 20ms low. Green. Early 9:01 PM bedtime produced a 15ms HRV jump. Pattern is confirmed: early sleep is your single most effective recovery lever.",
+          "Sleep: 6h43m asleep, 58% quality, efficiency 96% (excellent). Sleep bank at -3h13m — improved 57 min overnight. REM 1h38m solid. Wrist temp 96.9°F flagged below normal — dehydration or mild inflammation. Drink water.",
+          "RHR 65.0 bpm (vs 62.6 bpm baseline — slightly elevated, normal 24h post-strength day). SpO2 95.1%, respiratory rate 14.4 rpm — both clean. Body in repair mode, not stress mode.",
+          "Non-obvious: Your fat overruns are not a meal-structure problem — they're an add-on problem. Three days of logging show the meal scaffolding (protein + carb base) is correct. The leak is always condiments: walnuts at breakfast (+26g Apr 12), ranch at lunch (+39g Apr 12), bacon at dinner (+fat Apr 13). Fix the add-ons, not the meals."
         ]
       },
       "training_direction": {
-        "call": "Rest day. Morning walk ✅ done. No additional load.",
+        "call": "Rest day. Morning walk ✅ done (2.11 mi, 33:28, avg HR 99 bpm). No additional load today.",
         "bullets": [
-          "Morning walk complete: 2.11 mi, 33:28, avg HR 99 bpm — Easy (3). Walk was notably faster than yesterday evening (15:50/mi vs 21:37/mi). HR touched 104 bpm on final split. Not problematic, but keep Wednesday's pre-session effort in Zone 0-1.",
-          "Wednesday Apr 15 is Push + Quad / Anti-Rotation. Green readiness going in — this is the window to execute the session cleanly. Incline Press: if 16kg felt comfortable at the end of Monday's prep, open with 16kg and test 18kg on set 3.",
-          "Timer rule: unchanged. Set it before the first prep exercise. Not before Block A. Not when you walk in the door. You have gone over 65 min in every session this block — 5 for 5. The timer is not a suggestion.",
-          "If Block C isn't started by the 55-min mark — skip it. Landmine Press and V-Squat are the session. Lateral Raise and Pallof Press are the bonus."
+          "Morning walk complete: 2.11 mi, 33:28, avg HR 99 bpm — Easy (3). Walk was faster than yesterday evening (15:50/mi vs 21:37/mi). HR touched 104 bpm on final split — manageable. Keep tomorrow's pre-session effort in Zone 0-1.",
+          "Wednesday Apr 15 is Push + Quad / Anti-Rotation. Green readiness going in. This is the window to execute cleanly. Incline Press: open at 16kg/hand. If all 10 reps clean across 3 sets → test 18kg next session.",
+          "Timer rule is non-negotiable: set it BEFORE the first prep exercise. You've gone over 65 min in every session this block — 5 for 5. The over-runs compound fatigue and erode the deficit. Timer is the cap.",
+          "Block C (Lateral Raise + Pallof Press + Goblet Carry) is the bonus — only if Block B is done before the 55-min mark. Landmine Press and V-Squat are the session. Don't sacrifice the compounds for the accessories."
         ]
       },
       "nutrition": {
-        "binding_constraint": "Fat — 57g remaining after shake. Pre-Wednesday carb load window is open.",
+        "binding_constraint": "Fat — 57g remaining for 3+ meals. ~19g per meal max. No oils, no dressings.",
         "bullets": [
-          "Pre-workout shake logged 06:45: 490 kcal / P:55g / C:41g / F:13g ✅. 55g protein before the walk — strong anchor.",
-          "Remaining today: ~1510 kcal / 95g P / 149g C / 57g F across 3 meals. Fat is the constraint: 57g left, ~19g per meal. Every meal must be lean — grilled protein, rice, no oils or dressings.",
-          "It's 9 AM — the morning snack window is now open. No new food logged since the shake at 06:45. If you eat before 10 AM keep it high-protein, low-fat: egg whites, Greek yogurt, or lean protein bowl only. Save carbs for lunch and dinner.",
-          "Yesterday closed F:105g (⚠️+35g over). Two consecutive fat days. Today is the reset. One slip at lunch = the third day. Don't let breakfast become the leak."
+          "Pre-workout shake logged 06:45: 490 kcal / P:55g / C:41g / F:13g ✅. 55g protein before the walk — identical to Apr 13 anchor. Strong start.",
+          "Remaining today: ~1510 kcal / 95g P / 149g C / 57g F across 3 meals. Fat is the constraint: 57g left, ~19g per meal. Grilled protein, rice, steamed vegetables — no sauces, no oils, no butter coffee.",
+          "Morning snack window (9–10 AM) has closed. Nothing logged since 06:45 — good. Lunch is the next decision point. Two consecutive fat-blow days came from lunch condiments (ranch, oils). Today: lean protein + rice + steamed veg, dry or lemon only.",
+          "Pre-Wednesday carb load window is open: need 149g more carbs. Rice + sweet potato at lunch and dinner fills this cleanly. Carb load ≠ permission slip for fat — these are separate macros."
         ]
       },
       "progress": {
-        "lead_number": "HRV rebound to 35.4ms — recovery system responding. Green going into Wednesday.",
+        "lead_number": "HRV 35.4ms — recovery system responding. Green baseline going into Wednesday.",
         "bullets": [
-          "Weight holding at goal range. Weekly average ~165.6 lbs vs 165 lb goal. Mission is now recomposition — hold weight, reduce fat%, build lean mass. Don't chase lower weight.",
-          "Visceral Fat Level 2.0 (down from 3.0 on Apr 11). VAT is responding to the deficit + training combination. Fat-clean days like today compound this.",
-          "Monday's session delivered strength progression despite Amber readiness: Single-Arm Row advanced 10→12kg. That's two progressions in two sessions (Apr 10 → Apr 13). Consistency is earning compound interest.",
-          "Wednesday is the first Green-readiness strength session of the week. Treat it as the session to execute at full intensity — not to conserve energy. The Walk + Sleep combo this week is doing its job."
+          "Weight holding at goal range. Weekly average ~165.6 lbs vs 165 lb goal. Mission is recomposition — hold weight, reduce fat%, build lean mass. Don't chase lower weight.",
+          "Visceral Fat Level 2.0 (down from 3.0 on Apr 11). VAT is responding to the deficit + training combination. Fat-clean days compound this. Today is the reset day that makes the trend stick.",
+          "Monday's session delivered strength progression despite Amber readiness: Single-Arm Row advanced 10→12kg. Two progressions in two sessions (Apr 10 → Apr 13). Consistency is earning compound interest.",
+          "Wednesday is the first Green-readiness strength session of the week. This is the window to press the standard — not to conserve. The Walk + Sleep combination this week is doing exactly what it's supposed to do."
         ]
       },
       "watch_for": [
-        "Wrist temp flagged below normal (96.9°F) — drink 500ml water NOW if not already done. Dehydration compounds afternoon fatigue and snack cravings.",
-        "Morning snack window (9–10 AM) is ACTIVE — this is the highest-risk hour. Nuts, cheese, butter coffee all show up in fat macros before lunch. Keep any food to egg whites or yogurt only.",
-        "Sweets risk is elevated on rest days — no training dopamine, energy sitting at 66%, and a carb-load permission slip creates a psychological opening. The carb load target is rice and sweet potato, not chocolate."
+        "Lunch is the highest-risk meal today (10 AM–1 PM window). The fat over-runs on Apr 12 and Apr 13 both had lunch as the source: ranch dressing (+39g), ribs (+fat). Today's lunch decision is the fat reset inflection point. Lean protein + rice + steamed veg. No dressings.",
+        "Wrist temp flagged below normal (96.9°F) — if you haven't had 500ml water since the morning walk, drink now. Dehydration compounds afternoon snack cravings and makes hunger feel more urgent than it is.",
+        "Rest day dopamine dip: no training stimulus today means lower natural dopamine in the afternoon (2–4 PM). This is the sweets window on rest days. The carb load target is rice and sweet potato at meals — not a snack between meals."
       ]
     },
     "session_plan": {
@@ -7563,5 +7563,5 @@
       ]
     }
   },
-  "last_updated": "2026-04-14T08:08:09+0800"
+  "last_updated": "2026-04-14T10:06:51+0800"
 }
