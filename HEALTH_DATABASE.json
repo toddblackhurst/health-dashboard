@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T14:07:10+0800",
+    "last_updated": "2026-04-14T15:09:10+0800",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -1314,20 +1314,43 @@
             "fat_g": 2
           },
           "notes": "Lunch starter at 12:20 — Cal AI logged. Tomato vegetable soup: clean carb hit (18g), minimal fat (2g). Protein contribution small (3g). Good fat-sparing lunch choice. Running totals now: 1,002 kcal / 98g P / 85g C / 33g F."
+        },
+        {
+          "meal": "lunch_main",
+          "time": "13:00",
+          "items": [
+            {
+              "food": "Spaghetti with Meatballs and Tomato Sauce",
+              "amount": "1 serving",
+              "calories_kcal": 713,
+              "protein_g": 47,
+              "carbs_g": 65,
+              "fat_g": 28,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 713,
+            "protein_g": 47,
+            "carbs_g": 65,
+            "fat_g": 28
+          },
+          "notes": "Lunch main at ~13:00 — Cal AI screenshot. Spaghetti with meatballs and tomato sauce. Strong protein hit (47g) closes the protein day (145g/150g total — essentially done). Fat now 61g/70g, only 9g remaining. Calories at 1,715/2,000 — 285 kcal left for dinner only."
         }
       ],
       "daily_totals": {
-        "calories_kcal": 1002,
-        "protein_g": 98,
-        "carbs_g": 85,
-        "fat_g": 33,
-        "note": "Day in progress — 3 meals logged. Remaining targets: ~998 kcal / 52g P / 105g C / 37g F."
+        "calories_kcal": 1715,
+        "protein_g": 145,
+        "carbs_g": 150,
+        "fat_g": 61,
+        "note": "Day in progress — 4 meals logged. Remaining: 285 kcal / 5g P / 40g C / 9g F."
       },
       "vs_targets": {
-        "calories_delta": -998,
-        "protein_delta": -52,
-        "carbs_delta": -105,
-        "fat_delta": -37
+        "calories_delta": -285,
+        "protein_delta": -5,
+        "carbs_delta": -40,
+        "fat_delta": -9
       },
       "day_closed": false
     }
@@ -7421,12 +7444,12 @@
         ]
       },
       "nutrition": {
-        "binding_constraint": "Protein — 52g remaining across ~2 meals (afternoon snack + dinner). Protein has been used fastest today (65.3% of target with only 3 meals logged). Last entry at 12:20 PM was soup (3g protein only). Next protein hit is overdue.",
+        "binding_constraint": "Fat (9g) + Calories (285 kcal) — both critically tight. Protein done at 145/150g.",
         "bullets": [
-          "14:07 status: 1,002 kcal / 98g P / 85g C / 33g F logged (2 shakes + lunch soup). No new food entries since 12:20 PM. Remaining: ~998 kcal / 52g P / 105g C / 37g F across 2 meals.",
-          "Protein is the binding constraint: 52g needed in 2 meals = 26g minimum per meal. A lean protein main course at the next meal is non-negotiable. Chicken breast (30g), tuna (30g), egg whites (26g), fish (25–35g) all work.",
-          "Non-obvious: Vegan protein milk is adding 16g fat vs Kirkland almond milk (4g fat). Swapping post-workout to almond milk would save 12g fat per day — that's nearly a full meal's fat budget reclaimed. Worth considering.",
-          "Pre-Wednesday carb load still open: 105g carbs remaining. Rice at dinner (50g) + sweet potato (40g) = 90g. Lean protein + rice/potato = the dinner formula. Carb window is wide open. Fat window is tight at 37g."
+          "~13:00 update: 1,715 kcal / 145g P / 150g C / 61g F logged (4 entries — 2 shakes + soup + spaghetti). Remaining: 285 kcal / 5g P / 40g C / 9g F.",
+          "Protein essentially done (145g / 150g). Spaghetti with meatballs delivered 47g — the protein day is won.",
+          "Fat wall: 61g / 70g used. 9g remaining. One tablespoon olive oil = 14g fat — over budget immediately. Dinner must be zero-added-fat: steamed fish, poached chicken, shrimp. No sauce.",
+          "40g carbs still available — load white rice (22g) + sweet potato (18g) at dinner. Pre-session glycogen for Wednesday Push. This is the only flexible macro tonight."
         ]
       },
       "progress": {
@@ -7439,9 +7462,9 @@
         ]
       },
       "watch_for": [
-        "⚡ 2 PM LIVE — Sweets danger window is active right now. 371 active calories from double cardio created a real hunger gap. This is the exact pattern from Apr 12 (Peanut M&Ms at 4:15 PM). Bridge it with the protein meal that closes lunch — chicken, fish, eggs. Not sugar.",
-        "Fat is tighter than it looks: 37g remaining across 2 remaining meals = ~18g/meal max. One condiment kills it. Same pattern Apr 12 (ranch +39g) and Apr 13 (ribs +38g). Lean protein + rice + steamed veg at both remaining meals. No sauces.",
-        "Vegan protein milk fat flag: 16g fat per serving vs 4g for almond milk. If fat budget keeps running tight, this is the single highest-leverage swap available. Mention to coach next session if you want to adjust the formula."
+        "⚡ FAT WALL — 9g fat remaining. Any sauce, dressing, oil, or fatty protein blows it. Steam or grill dry tonight.",
+        "285 kcal budget left: one lean dinner only. No dessert, no evening snack unless it's dry whey in water.",
+        "Carb window open (40g): rice + sweet potato at dinner. Load them — Wednesday Push session fuel."
       ]
     },
     "session_plan": {
@@ -7635,13 +7658,13 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T14:07:10+0800",
+    "last_updated": "2026-04-14T15:09:10+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "Tomato vegetable soup was a fat-sparing call (only 2g fat) but does not move the protein needle meaningfully (3g). 52g protein still needed from 2 meals — that's 26g per meal. A lean protein main at lunch (grilled chicken, fish, shrimp) is now non-negotiable. Carbs remain wide open (105g remaining).",
-    "training_call": "Rest day. Walk done. No further training load. Wednesday is Push session — load carbs at lunch today (123g C still available; rice + sweet potato are free). Lean protein only at lunch and dinner (fish, chicken, egg whites). No added oils or dressings.",
-    "nutrition_binding_constraint": "protein",
-    "watch_for": "2–4 PM sweets window — same trigger as Apr 12 (M&Ms at 4:15 PM after high-protein lunch). Lunch is late today (~1 PM), which pushes the appetite rebound to 3–4 PM. Hit 35g+ protein at lunch to suppress it. If the craving surfaces anyway: it's the pattern, not hunger."
+    "daily_insight": "Spaghetti with meatballs (47g protein) closed the protein day at 145/150g — you're essentially done on protein. But fat is now the wall: 61/70g used with dinner still ahead. 9g fat left means dinner must be dry-cooked lean protein + plain carbs. No sauce. No oil.",
+    "training_call": "Rest day complete — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Done for today. Wednesday Push session tomorrow: load remaining 40g carbs at dinner (rice + sweet potato) for pre-session glycogen top-up.",
+    "nutrition_binding_constraint": "Fat (9g left) AND Calories (285 kcal left). Dinner must be: steamed/grilled chicken breast or white fish + plain rice. Zero oil. Zero sauce. Zero condiments.",
+    "watch_for": "Fat finish trap — 9g fat left, dinner ahead. This is exactly where Apr 12 and 13 blew up. Any sauce, dressing, or fatty protein (ribs, salmon, eggs with yolk) will push fat over target again. Tonight: steam, grill dry, or boil. Plain is the win."
   },
-  "last_updated": "2026-04-14T12:30:00+0800"
+  "last_updated": "2026-04-14T15:09:10+0800"
 }
