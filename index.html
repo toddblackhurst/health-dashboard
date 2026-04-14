@@ -1950,9 +1950,18 @@ function coachingTeaser(db) {
   const cb = db.coaching_brief;
   // If we have a stored brief from the scheduled task, show the recovery paragraph
   if (cb && cb.sections && cb.sections.recovery) {
-    const updatedAt = cb.generated_at ? new Date(cb.generated_at) : null;
+    const updatedAt = cb.last_updated ? new Date(cb.last_updated) : cb.generated_at ? new Date(cb.generated_at) : null;
     const timeStr = updatedAt ? updatedAt.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true}) : '';
-    return `<div class="coach-label" style="margin-bottom:6px">Coach · ${timeStr ? 'Updated ' + timeStr : 'Daily Brief'}</div><p>${cb.sections.recovery}</p>`;
+    const rec = cb.sections.recovery;
+    let teaserHtml = '';
+    if (typeof rec === 'string') {
+      teaserHtml = rec;
+    } else if (typeof rec === 'object' && rec !== null) {
+      const header = rec.traffic_light || rec.call || '';
+      const firstBullet = Array.isArray(rec.bullets) && rec.bullets.length ? rec.bullets[0] : '';
+      teaserHtml = (header ? `<strong>${header}</strong><br>` : '') + firstBullet;
+    }
+    return `<div class="coach-label" style="margin-bottom:6px">Coach · ${timeStr ? 'Updated ' + timeStr : 'Daily Brief'}</div><p>${teaserHtml}</p>`;
   }
   // Fallback: generate the readiness paragraph
   const sleep    = latest(db.recovery_sleep);
