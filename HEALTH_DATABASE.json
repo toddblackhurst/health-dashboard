@@ -7612,13 +7612,13 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T12:08:10+0800",
+    "last_updated": "2026-04-14T13:07:12+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "Wrist temp 96.9°F (below normal) + 371 active calories from double cardio = dehydration is likely already underway at noon. Thirst is masking as hunger in the 12–3 PM window — this is the exact mechanism behind the afternoon sweets reach. Drink 500ml water before touching food.",
-    "training_call": "Rest day complete. Walk + Cycle done. No further training load. Hydrate, hit lean protein at lunch (fish/chicken + rice), protect fat budget. Wednesday is Green-readiness Push session — arrive fueled.",
-    "nutrition_binding_constraint": "Fat — 39g remaining / 3 meals. ~13g per meal max.",
-    "watch_for": "Dehydration-hunger confusion: 12–3 PM window is highest risk today. 371 active calories + below-normal wrist temp = real fluid deficit. Drink water first, wait 10 min before deciding you're hungry. If sweets craving surfaces, this is almost certainly the trigger — not actual hunger."
+    "daily_insight": "Fat is on pace for a clean day — 31g used, 39g remaining at 1 PM, after back-to-back overruns (+47g Apr 12, +35g Apr 13). But no food has been logged in 3.5 hours. Unlogged snacking is the exact mechanism that erased prior fat-clean days. Log lunch now — this is the key action window.",
+    "training_call": "Rest day. Walk done. No further training load. Wednesday is Push session — load carbs at lunch today (123g C still available; rice + sweet potato are free). Lean protein only at lunch and dinner (fish, chicken, egg whites). No added oils or dressings.",
+    "nutrition_binding_constraint": "Fat — 39g remaining across ~3 meals. ~13g per meal ceiling. Carbs are not the constraint today (123g available — use them at lunch).",
+    "watch_for": "2–4 PM sweets window — same trigger as Apr 12 (M&Ms at 4:15 PM after high-protein lunch). Lunch is late today (~1 PM), which pushes the appetite rebound to 3–4 PM. Hit 35g+ protein at lunch to suppress it. If the craving surfaces anyway: it's the pattern, not hunger."
   },
-  "last_updated": "2026-04-14T11:08:39+0800"
+  "last_updated": "2026-04-14T13:07:12+0800"
 }
