@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T08:00:00+0800",
+    "last_updated": "2026-04-14T09:07:04+0800",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -7327,7 +7327,7 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T08:08:09+0800",
+    "generated_at": "2026-04-14T09:07:04+0800",
     "readiness_call": "Green",
     "sections": {
       "recovery": {
@@ -7353,7 +7353,7 @@
         "bullets": [
           "Pre-workout shake logged 06:45: 490 kcal / P:55g / C:41g / F:13g ✅. 55g protein before the walk — strong anchor.",
           "Remaining today: ~1510 kcal / 95g P / 149g C / 57g F across 3 meals. Fat is the constraint: 57g left, ~19g per meal. Every meal must be lean — grilled protein, rice, no oils or dressings.",
-          "It's 8 AM — breakfast or mid-morning meal window coming up. If you eat again before 10 AM, keep it high-protein, low-fat: egg whites, Greek yogurt, or a lean protein bowl. Save carbs for lunch and dinner.",
+          "It's 9 AM — the morning snack window is now open. No new food logged since the shake at 06:45. If you eat before 10 AM keep it high-protein, low-fat: egg whites, Greek yogurt, or lean protein bowl only. Save carbs for lunch and dinner.",
           "Yesterday closed F:105g (⚠️+35g over). Two consecutive fat days. Today is the reset. One slip at lunch = the third day. Don't let breakfast become the leak."
         ]
       },
@@ -7367,8 +7367,8 @@
         ]
       },
       "watch_for": [
-        "Wrist temp flagged below normal (96.9°F) — drink 500ml water before 9 AM. Dehydration compounds afternoon fatigue and snack cravings.",
-        "Morning snack window (8–10 AM) is the hidden fat leak: nuts, cheese, butter coffee — all show up in fat macros before lunch. If you eat again before 10 AM, keep it to egg whites or yogurt.",
+        "Wrist temp flagged below normal (96.9°F) — drink 500ml water NOW if not already done. Dehydration compounds afternoon fatigue and snack cravings.",
+        "Morning snack window (9–10 AM) is ACTIVE — this is the highest-risk hour. Nuts, cheese, butter coffee all show up in fat macros before lunch. Keep any food to egg whites or yogurt only.",
         "Sweets risk is elevated on rest days — no training dopamine, energy sitting at 66%, and a carb-load permission slip creates a psychological opening. The carb load target is rice and sweet potato, not chocolate."
       ]
     },
