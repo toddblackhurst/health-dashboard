@@ -615,6 +615,45 @@
       "wake_time": "~04:00",
       "readiness_tier": "Green",
       "readiness_tier_basis": "HRV 35.4ms >= 30ms threshold; above personal baseline 32.5ms"
+    },
+    {
+      "date": "2026-04-15",
+      "source": "Bevel + Oura",
+      "recovery_score_pct": 75,
+      "recovery_trend": "Significant Recovery Bounce — HRV surged from 35.4ms to 51.3ms (+45%), well above 32.5ms baseline. 9:36 PM bedtime drove the gain.",
+      "hrv_ms": 51.3,
+      "resting_hr_bpm": 61.9,
+      "resting_hr_bpm_oura": 59,
+      "sleep_score_pct": 66,
+      "oura_sleep_score": 79,
+      "total_sleep_min": 411,
+      "total_sleep_min_oura": 373,
+      "time_in_bed_min": 424,
+      "time_in_bed_min_oura": 438,
+      "sleep_efficiency_pct": 97,
+      "sleep_efficiency_pct_oura": 85,
+      "deep_sleep_min": 37,
+      "deep_sleep_min_oura": 54,
+      "rem_sleep_min": 110,
+      "rem_sleep_min_oura": 66,
+      "sleep_bank_min": -172,
+      "sleep_time": "21:36",
+      "sleep_latency_min": 20,
+      "respiratory_rate_rpm": 14.5,
+      "spo2_pct": 96.5,
+      "wrist_temp_f": 97.5,
+      "wrist_temp_note": "Normal — cleared from yesterday's 96.9°F flag. Pre-bed hydration call worked.",
+      "hr_dip_pct": 15,
+      "stress_highest": 46,
+      "stress_lowest": 3,
+      "stress_avg": 17,
+      "energy_pct": 86,
+      "cardio_load": 26,
+      "cardio_load_status": "Maintaining",
+      "strain_score": 0,
+      "readiness_tier": "Green",
+      "readiness_tier_basis": "HRV 51.3ms >> 32.5ms baseline (57% above). Best reading in recent block. Sleep bank -2h52m — improving from -3h13m.",
+      "notes": "Bevel + Oura April 15 morning scan. HRV 51.3ms — strongest reading this block. 31% increase from yesterday (35.4ms). Bevel flagged 'Significant Recovery Bounce' and 'Efficiency Breakthrough' (97% sleep efficiency). SpO2 cleared to 96.5% Normal (from 95.1% Apr 14). Wrist temp 97.5°F normalized. Sleep bank -2h52m (improving from -3h13m). Oura sleep score 79 Good with optimal sleep timing. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms — dose-response confirmed across 3 nights."
     }
   ],
   "nutrition": [
@@ -7680,14 +7719,14 @@
         }
       ]
     },
-    "date": "2026-04-14",
-    "last_updated": "2026-04-14T21:07:20+0800",
+    "date": "2026-04-15",
+    "last_updated": "2026-04-15T06:09:16+0800",
     "readiness_tier": "Green",
-    "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "It's 9:07 PM — you should be horizontal right now, not reading this. Last night's 9:01 PM bedtime moved your HRV from 20ms to 35.4ms in a single night. That is the most powerful performance intervention available to you tonight, and the window is closing. The brief is done. The nutrition is done. The training call is set. There is nothing left to optimize except sleep onset.",
-    "training_call": "Rest day complete ✅ — walk (2.11 mi, 99 avg HR) + indoor cycle (31 min, 100 avg HR) = 371 active cal. Tomorrow: Push + Quad / Anti-Rotation (Wed Apr 15). Incline Press opens at 16kg/hand. Timer starts BEFORE first prep exercise. 65-min hard cap. Check HRV first thing Wednesday — Green (≥30ms): execute as planned. Amber (20–29ms): reduce Block C. Red (<20ms): walk only.",
-    "nutrition_binding_constraint": "DAY CLOSED ✅ — 2,003 kcal / 156g P / 204g C / 63g F. All targets met. Fat streak broken. Zero further eating. Hydrate — 1 glass of water before sleep (wrist temp 96.9°F flag still active).",
-    "watch_for": "9:07 PM — you are 7 minutes past lights-out. If the sweets urge hits in the next 30 min, it's the post-dinner danger window — not hunger. Water, not food. Phone down now. The Wednesday session quality is being determined by what you do in the next 10 minutes."
+    "readiness_tier_basis": "HRV 51.3ms — 57% above 32.5ms baseline. Best reading this block.",
+    "daily_insight": "Three-night HRV sequence locked in: 20ms (Apr 13) → 35.4ms (Apr 14) → 51.3ms (Apr 15). Each early bedtime — 9:01 PM then 9:36 PM — produced a measurable HRV step-up even while sleep debt sits at -2h 52m. The nervous system is adapting to timing consistency before debt is cleared. SpO2 also normalized to 96.5% (from 95.1% flagged yesterday) — the pre-bed hydration call worked. This is the cleanest recovery window of the current block.",
+    "training_call": "Push session GO — execute at full capacity. HRV 51.3ms is exceptional. Session: Vertical Pull + Lower/Glute Emphasis + Structural Correction (DAILY_LOG.md). Pull-Up anchor 4×6–8 BW with 3-sec lower, LEFT elbow initiates. Hip Thrust 47kg × 4×10–12, LEFT glute squeeze at top. Timer starts BEFORE first prep exercise. 65-min hard cap. Block C only if Block B closes before 55-min mark.",
+    "nutrition_binding_constraint": "No food logged yet for today (Apr 15). Starting position: fat budget 70g. Watch: if using vegan protein milk in pre-workout shake, fat starts 16g immediately. Swap to almond milk saves 12g at meal 1. Yesterday closed clean: 63g fat / 70g target ✅ — fat streak is broken, protect it.",
+    "watch_for": "4–5 PM snacking window is the active risk. Post-strength appetite peaks here — Apr 12 saw M&Ms at 4:15 PM. Have a planned lean snack (jerky or whey) staged before the session ends. Don't let training hunger become unplanned calorie intake."
   },
-  "last_updated": "2026-04-14T16:06:19+0800"
+  "last_updated": "2026-04-15T06:09:16+0800"
 }
