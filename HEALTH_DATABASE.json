@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T19:07:32+0800",
+    "last_updated": "2026-04-14T21:07:20+0800",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -7681,13 +7681,13 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T20:07:32+0800",
+    "last_updated": "2026-04-14T21:07:20+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "Day closed clean: 2,003 kcal / 156g P / 204g C / 63g F — all four macro targets met. The 3-day fat overrun streak (Apr 12 +47g, Apr 13 +35g) ended tonight with a 2g fat dinner. Non-obvious: The salmon sushi roll wasn't a 'good choice' in isolation — it was a specific formula correction driven by the previous two days' data. That's the system working.",
-    "training_call": "Rest day complete ✅ — walk (2.11 mi, 99 avg HR) + indoor cycle (31 min, 100 avg HR) = 371 active cal. No additional load. It is 8:07 PM — wind-down window is NOW. Wednesday Push (Apr 15): Incline Press opens at 16kg/hand. Timer starts BEFORE first prep exercise. 65-min hard cap.",
-    "nutrition_binding_constraint": "DAY CLOSED ✅ — 2,003 kcal / 156g P / 204g C / 63g F. All targets met. Fat streak broken. No further eating needed. Hydrate before sleep — wrist temp 96.9°F flagged below normal (dehydration risk).",
-    "watch_for": "8:07 PM — WIND DOWN NOW. Last night's 9:01 PM bedtime drove HRV from 20ms → 35.4ms. Tonight's repeat is the only prep that matters for Wednesday. Phone down 8:45. Lights out 9:00. Hydrate first — 1 glass of water before lying down (wrist temp flag)."
+    "daily_insight": "It's 9:07 PM — you should be horizontal right now, not reading this. Last night's 9:01 PM bedtime moved your HRV from 20ms to 35.4ms in a single night. That is the most powerful performance intervention available to you tonight, and the window is closing. The brief is done. The nutrition is done. The training call is set. There is nothing left to optimize except sleep onset.",
+    "training_call": "Rest day complete ✅ — walk (2.11 mi, 99 avg HR) + indoor cycle (31 min, 100 avg HR) = 371 active cal. Tomorrow: Push + Quad / Anti-Rotation (Wed Apr 15). Incline Press opens at 16kg/hand. Timer starts BEFORE first prep exercise. 65-min hard cap. Check HRV first thing Wednesday — Green (≥30ms): execute as planned. Amber (20–29ms): reduce Block C. Red (<20ms): walk only.",
+    "nutrition_binding_constraint": "DAY CLOSED ✅ — 2,003 kcal / 156g P / 204g C / 63g F. All targets met. Fat streak broken. Zero further eating. Hydrate — 1 glass of water before sleep (wrist temp 96.9°F flag still active).",
+    "watch_for": "9:07 PM — you are 7 minutes past lights-out. If the sweets urge hits in the next 30 min, it's the post-dinner danger window — not hunger. Water, not food. Phone down now. The Wednesday session quality is being determined by what you do in the next 10 minutes."
   },
   "last_updated": "2026-04-14T16:06:19+0800"
 }
