@@ -7720,13 +7720,13 @@
       ]
     },
     "date": "2026-04-15",
-    "last_updated": "2026-04-15T06:09:16+0800",
+    "last_updated": "2026-04-15T06:43:09+0800",
     "readiness_tier": "Green",
-    "readiness_tier_basis": "HRV 51.3ms — 57% above 32.5ms baseline. Best reading this block.",
-    "daily_insight": "Three-night HRV sequence locked in: 20ms (Apr 13) → 35.4ms (Apr 14) → 51.3ms (Apr 15). Each early bedtime — 9:01 PM then 9:36 PM — produced a measurable HRV step-up even while sleep debt sits at -2h 52m. The nervous system is adapting to timing consistency before debt is cleared. SpO2 also normalized to 96.5% (from 95.1% flagged yesterday) — the pre-bed hydration call worked. This is the cleanest recovery window of the current block.",
-    "training_call": "Push session GO — execute at full capacity. HRV 51.3ms is exceptional. Session: Vertical Pull + Lower/Glute Emphasis + Structural Correction (DAILY_LOG.md). Pull-Up anchor 4×6–8 BW with 3-sec lower, LEFT elbow initiates. Hip Thrust 47kg × 4×10–12, LEFT glute squeeze at top. Timer starts BEFORE first prep exercise. 65-min hard cap. Block C only if Block B closes before 55-min mark.",
-    "nutrition_binding_constraint": "No food logged yet for today (Apr 15). Starting position: fat budget 70g. Watch: if using vegan protein milk in pre-workout shake, fat starts 16g immediately. Swap to almond milk saves 12g at meal 1. Yesterday closed clean: 63g fat / 70g target ✅ — fat streak is broken, protect it.",
-    "watch_for": "4–5 PM snacking window is the active risk. Post-strength appetite peaks here — Apr 12 saw M&Ms at 4:15 PM. Have a planned lean snack (jerky or whey) staged before the session ends. Don't let training hunger become unplanned calorie intake."
+    "readiness_tier_basis": "HRV 51.3ms — 57% above 32.5ms baseline. Best reading this block. Morning walk done ✅.",
+    "daily_insight": "HRV 51.3ms with sleep bank still at -2h52m reveals something the data rarely shows: timing discipline is producing recovery surplus faster than debt clearance. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms — each night outpacing the debt. This is supercompensation territory heading into a strength session, not just a green light — genuine adaptation window.",
+    "training_call": "Strength session GO — morning walk (2.19 mi, 100 BPM, 36 min) ✅ complete. Cardiovascular system pre-activated. Floor 3 warm-up will ramp faster. Session: Vertical Pull + Lower/Glute + Structural Correction (see DAILY_LOG.md). Pull-Up anchor 4×6–8 BW, 3-sec lower, LEFT elbow initiates. Hip Thrust 47kg × 4×10–12, LEFT glute squeeze at top. Timer starts BEFORE first prep exercise. 65-min hard cap. Block C only if Block B closes before 55-min mark.",
+    "nutrition_binding_constraint": "Pre-workout shake + drink queued (not yet logged): ~446 kcal / 56g P / 46g C / 7g F. Once logged: 1,554 kcal / 94g P / 144g C / 63g F remaining for the day. Fat is the binding constraint at 63g remaining — that is the entire budget minus shake. Zero oil at lunch and dinner. Post-session shake adds ~40g P / ~7g F — that takes fat to 14g with ~56g remaining for two meals. Manageable but tight.",
+    "watch_for": "4–5 PM snacking window is the active risk (Apr 12 — M&Ms at 4:15 PM post-session). Post-strength appetite peaks 3–4 hours after session. Stage a lean snack (jerky or whey) before leaving the gym. Fat budget is tight today — any unplanned snack with fat will close the budget before dinner."
   },
   "last_updated": "2026-04-15T06:09:16+0800"
 }
