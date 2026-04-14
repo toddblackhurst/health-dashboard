@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T15:09:10+0800",
+    "last_updated": "2026-04-14T17:07:54+0800",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -7422,49 +7422,49 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T14:07:10+0800",
+    "generated_at": "2026-04-14T17:07:54+0800",
     "readiness_call": "Green",
     "sections": {
       "recovery": {
         "traffic_light": "🟢 Green",
         "bullets": [
-          "HRV 35.4ms — above 32.5ms baseline. Green. Early 9:01 PM bedtime produced the rebound from yesterday's 20ms Amber. Wrist temp 96.9°F still below normal — 12 PM hydration check: drink water now.",
-          "Sleep: 6h43m asleep, 58% quality, efficiency 96% (excellent). Sleep bank at -3h13m — improved 57 min overnight. REM 1h38m solid. Wrist temp 96.9°F flagged below normal — dehydration or mild inflammation. Drink water.",
-          "RHR 65.0 bpm (vs 62.6 bpm baseline — slightly elevated, normal 24h post-strength day). SpO2 95.1%, respiratory rate 14.4 rpm — both clean. Body in repair mode, not stress mode.",
-          "Non-obvious: Your fat overruns are not a meal-structure problem — they're an add-on problem. Three days of logging show the meal scaffolding (protein + carb base) is correct. The leak is always condiments: walnuts at breakfast (+26g Apr 12), ranch at lunch (+39g Apr 12), bacon at dinner (+fat Apr 13). Fix the add-ons, not the meals."
+          "HRV 35.4ms — above 32.5ms baseline. Green. The 9:01 PM bedtime on Apr 13 is what drove HRV from 20ms → 35.4ms in 24 hours. Replicate tonight: 9 PM target. This is the highest-ROI action of the next 4 hours.",
+          "Sleep: 6h43m asleep, 58% quality, efficiency 96% (excellent). Sleep bank at -3h13m — improving trend. REM 1h38m solid. RHR 65.0 bpm (vs 62.6 baseline — slightly elevated, normal 24h post-strength day).",
+          "Body in repair mode, not stress mode. SpO2 95.1%, respiratory rate 14.4 rpm — both clean. Double cardio completed (63 min total LISS). Rest of today is full recovery.",
+          "Non-obvious: The 9 PM → 35.4ms HRV rebound is not a coincidence — it's a direct dose-response. Two consecutive 9 PM bedtimes going into Wednesday's Push session = the most powerful pre-session prep available. More impact than any warm-up protocol."
         ]
       },
       "training_direction": {
-        "call": "Double cardio done ✅ Walk (2.11 mi, HR 99) + Indoor Cycle (31 min, HR 100). 371 active calories. No further load today. Next session: Wednesday Push + Quad / Anti-Rotation.",
+        "call": "Training day complete ✅ Walk (2.11 mi, HR 99) + Indoor Cycle (31 min, HR 100). 371 active cal. Zero additional load. Focus: dinner execution + 9 PM bedtime for Wednesday Green.",
         "bullets": [
           "Morning walk ✅ 2.11 mi, 33:28, avg HR 99 bpm — Easy (3/5). Indoor Cycle ✅ 31:10, avg HR 100 bpm — Easy (2/5). Both sessions HR well within <122 bpm cap. Total active calories: 371. Active recovery target exceeded.",
-          "Double cardio on a rest day is noteworthy — 63 min of Easy zone work total. This is appropriate given Green readiness and both sessions at Easy effort. Watch tomorrow's morning HRV: double cardio sometimes accelerates recovery (LISS effect) and sometimes creates unexpected accumulation.",
-          "Wednesday Apr 15 is Push + Quad / Anti-Rotation. Green readiness going in. Incline Press: open at 16kg/hand. If all 10 reps clean across 3 sets → test 18kg next session.",
-          "Timer rule is non-negotiable: set it BEFORE the first prep exercise. You've gone over 65 min in every session this block — 5 for 5. Timer is the cap. Block C only if Block B is done before the 55-min mark."
+          "63 min of LISS on a rest day is the right call at Green readiness. LISS at this intensity accelerates glycogen replenishment — Wednesday's Push session arrives fueled if dinner loads carbs as planned.",
+          "Wednesday Apr 15: Push + Quad / Anti-Rotation. Incline Press opens at 16kg/hand. If all 10 reps clean across 3 sets → flag for 18kg test. Timer on before first prep exercise — no exceptions.",
+          "Timer rule: you've exceeded 65 min in every session this block (5 for 5). Set timer BEFORE warm-up. Block C only if Block B closes before 55-min mark."
         ]
       },
       "nutrition": {
-        "binding_constraint": "Fat (9g) + Calories (285 kcal) — both critically tight. Protein done at 145/150g.",
+        "binding_constraint": "Fat (9g) + Calories (285 kcal) — critically tight. It's 17:07 — dinner decision imminent.",
         "bullets": [
-          "~13:00 update: 1,715 kcal / 145g P / 150g C / 61g F logged (4 entries — 2 shakes + soup + spaghetti). Remaining: 285 kcal / 5g P / 40g C / 9g F.",
-          "Protein essentially done (145g / 150g). Spaghetti with meatballs delivered 47g — the protein day is won.",
-          "Fat wall: 61g / 70g used. 9g remaining. One tablespoon olive oil = 14g fat — over budget immediately. Dinner must be zero-added-fat: steamed fish, poached chicken, shrimp. No sauce.",
-          "40g carbs still available — load white rice (22g) + sweet potato (18g) at dinner. Pre-session glycogen for Wednesday Push. This is the only flexible macro tonight."
+          "17:07 status: 1,715 kcal / 145g P / 150g C / 61g F logged (last entry ~13:00 — 4 hours gap, no new uploads). Remaining: 285 kcal / 5g P / 40g C / 9g F.",
+          "Protein day won (145g / 150g). No need to chase protein at dinner. One lean protein at dinner is for insurance only.",
+          "⚡ DINNER DECISION WINDOW — it's 5 PM. Apr 13 fat blow happened at 6 PM dinner (eggs/bacon/hash browns = +31g fat). Same hour, same risk. One decision: steamed fish or poached chicken, plain rice, no sauce. That's it.",
+          "40g carbs still open — white rice (22g) + sweet potato (18g) = exact fit. This is Wednesday's fuel. Don't skip the carbs trying to cut more."
         ]
       },
       "progress": {
-        "lead_number": "HRV 35.4ms Green + 371 active calories — best active recovery day of the block.",
+        "lead_number": "HRV 35.4ms Green + 371 active calories + fat reset day in progress.",
         "bullets": [
-          "Weight holding at goal range. Weekly average ~165.6 lbs vs 165 lb goal. Mission is recomposition — hold weight, reduce fat%, build lean mass. Don't chase lower weight.",
-          "Visceral Fat Level 2.0 (down from 3.0 on Apr 11). VAT is responding to the deficit + training combination. Fat-clean days compound this. Today is the reset day that makes the trend stick.",
-          "Monday's session delivered strength progression despite Amber readiness: Single-Arm Row advanced 10→12kg. Two progressions in two sessions (Apr 10 → Apr 13). Consistency is earning compound interest.",
-          "Wednesday is the first Green-readiness strength session of the week. Double cardio today means glycogen stores are partially depleted — lean into the pre-session carb load at lunch and dinner to arrive fueled."
+          "Weight holding at goal range. Weekly average ~165.6 lbs vs 165 lb goal. Mission is recomposition — hold weight, reduce fat%, build lean mass. Don't chase lower.",
+          "Visceral Fat Level 2.0 (down from 3.0 on Apr 11). VAT responding to deficit + training. Fat-clean days compound this — today is the pivot after two consecutive overruns.",
+          "Monday's session delivered strength progression despite Amber readiness: Single-Arm Row advanced 10→12kg. Consecutive progressions (Apr 10 → Apr 13). Consistency earning compound interest.",
+          "Three-day fat overrun streak: Apr 12 +47g, Apr 13 +35g. Today can close clean at +0g — that shifts the weekly average and protects the VAT trend. This dinner is the decision."
         ]
       },
       "watch_for": [
-        "⚡ FAT WALL — 9g fat remaining. Any sauce, dressing, oil, or fatty protein blows it. Steam or grill dry tonight.",
-        "285 kcal budget left: one lean dinner only. No dessert, no evening snack unless it's dry whey in water.",
-        "Carb window open (40g): rice + sweet potato at dinner. Load them — Wednesday Push session fuel."
+        "⚡ 5 PM DINNER DECISION — same hour as Apr 13's fat blow. Steamed fish / poached chicken / shrimp + plain rice. No sauce, no oil, no extras. One clean dinner closes a 3-day streak.",
+        "9 PM BEDTIME — not a suggestion. Last night's 9 PM bedtime produced today's 35.4ms HRV. Repeat it and Wednesday goes Green. Miss it and you're gambling on Amber again.",
+        "Carb window open (40g): rice + sweet potato — load them for Wednesday Push fuel. Don't skip carbs to cut calories, there's no deficit benefit if glycogen is empty going in."
       ]
     },
     "session_plan": {
