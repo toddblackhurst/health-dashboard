@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T21:07:20+0800",
+    "last_updated": "2026-04-15T07:10:47.091435+08:00",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -7488,21 +7488,21 @@
     "readiness_call": "Green",
     "sections": {
       "recovery": {
-        "traffic_light": "🟢 Green",
+        "traffic_light": "🟢 Green — Best Reading This Block",
         "bullets": [
-          "HRV 35.4ms — above 32.5ms baseline. Green. Yesterday's 9:01 PM bedtime drove HRV from 20ms → 35.4ms in one night. Direct dose-response confirmed. Tonight's 9 PM is not optional.",
-          "Sleep: 6h43m asleep, efficiency 96% (excellent). Sleep debt -3h13m — improving. REM 1h38m solid. RHR 65.0 bpm (slightly above 62.6 baseline — expected 24h post-strength day).",
-          "Wrist temp 96.9°F flagged below normal — possible dehydration from 63 min of LISS (walk + indoor cycle). Drink 1 glass before sleep. This is the one flag in an otherwise clean readiness picture.",
-          "SpO2 95.1%, respiratory rate 14.4 rpm — both normal. Recovery score 44% (Bevel) reflects post-strength adaptation, not systemic stress. HRV is the signal that matters."
+          "HRV 51.3ms — strongest reading of the entire block. +45% from yesterday's 35.4ms, 57% above 32.5ms baseline. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms across 3 nights. Dose-response confirmed.",
+          "Sleep: 6h51m asleep, efficiency 97% (Bevel Efficiency Breakthrough flag). Oura sleep score 79 Good — optimal timing. Sleep bank -2h52m, improving from -3h13m. Deep sleep 37–54m, REM 1h6m–1h50m.",
+          "SpO2 cleared to 96.5% Normal (from 95.1% yesterday). Wrist temp 97.5°F normalized (from 96.9°F flag). RHR 61.9 bpm (Bevel) / 59 bpm (Oura) — excellent. Cardio load 26 Maintaining.",
+          "Readiness verdict: Green. Push your strength session. This is the HRV signal you've been building toward all week."
         ]
       },
       "training_direction": {
-        "call": "Day complete ✅ — walk (2.11 mi, HR 99) + indoor cycle (31 min, HR 100). 371 active cal. Zero additional load tonight.",
+        "call": "Wednesday Push + Quad / Anti-Rotation — HRV 51.3ms Green. Push it.",
         "bullets": [
-          "Morning walk ✅ 2.11 mi, 33:28, avg HR 99 bpm — Easy (3/5). Indoor Cycle ✅ 31:10, avg HR 100 bpm — Easy (2/5). Both sessions HR well within <122 bpm cap.",
-          "63 min of LISS on a rest day is exactly right. Glycogen primed for Wednesday. Combined with a clean carb dinner (204g C — 14g over target, mostly sushi rice), Wednesday Push session arrives fueled.",
-          "Wednesday Apr 15: Push + Quad / Anti-Rotation. Incline Press opens at 16kg/hand — if all 10 reps clean across 3 sets → flag for 18kg next session. Half-Kneeling Landmine Press: left side leads every set.",
-          "Timer starts BEFORE first prep exercise. You've run over 65 min in every session this block (5 for 5). Block C only if Block B closes before 55-min mark. Non-negotiable."
+          "Incline Press opens at 16kg/hand. All 10 reps clean across 3 sets → flag for 18kg next session. Half-Kneeling Landmine Press: left side leads every set, right-side dominance will show up.",
+          "Block A (Floor 2): Incline DB Press + Half-Kneeling Landmine Press superset. Block B: Split Squat + Cable Lateral Raise. Block C: Pallof Press + Serratus Punches + Copenhagen Hip Adduction.",
+          "Timer starts BEFORE first prep exercise. Block C only if Block B closes before 55-min mark. Five sessions in a row you've run over 65 min. That ends today.",
+          "HR cap: 122 bpm throughout. Rest 60–75 sec between sets. This is strength work, not conditioning. Protect the recovery you built this week."
         ]
       },
       "nutrition": {
@@ -7720,11 +7720,11 @@
       ]
     },
     "date": "2026-04-15",
-    "last_updated": "2026-04-15T06:43:09+0800",
+    "last_updated": "2026-04-15T07:10:47.091435+08:00",
     "readiness_tier": "Green",
-    "readiness_tier_basis": "HRV 51.3ms — 57% above 32.5ms baseline. Best reading this block. Morning walk done ✅.",
-    "daily_insight": "HRV 51.3ms with sleep bank still at -2h52m reveals something the data rarely shows: timing discipline is producing recovery surplus faster than debt clearance. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms — each night outpacing the debt. This is supercompensation territory heading into a strength session, not just a green light — genuine adaptation window.",
-    "training_call": "Strength session GO — morning walk (2.19 mi, 100 BPM, 36 min) ✅ complete. Cardiovascular system pre-activated. Floor 3 warm-up will ramp faster. Session: Vertical Pull + Lower/Glute + Structural Correction (see DAILY_LOG.md). Pull-Up anchor 4×6–8 BW, 3-sec lower, LEFT elbow initiates. Hip Thrust 47kg × 4×10–12, LEFT glute squeeze at top. Timer starts BEFORE first prep exercise. 65-min hard cap. Block C only if Block B closes before 55-min mark.",
+    "readiness_tier_basis": "HRV 51.3ms — best reading this block, 57% above 32.5ms baseline. Sleep efficiency 97%. SpO2 and wrist temp both cleared.",
+    "daily_insight": "Three consecutive early bedtimes produced a measurable HRV staircase: 20ms → 35.4ms → 51.3ms. This is your clearest data on sleep timing yet. Keep the 9:30 PM bedtime tonight to consolidate.",
+    "training_call": "Green — Push your strength session. Best HRV of the block.",
     "nutrition_binding_constraint": "Pre-workout shake + drink queued (not yet logged): ~446 kcal / 56g P / 46g C / 7g F. Once logged: 1,554 kcal / 94g P / 144g C / 63g F remaining for the day. Fat is the binding constraint at 63g remaining — that is the entire budget minus shake. Zero oil at lunch and dinner. Post-session shake adds ~40g P / ~7g F — that takes fat to 14g with ~56g remaining for two meals. Manageable but tight.",
     "watch_for": "4–5 PM snacking window is the active risk (Apr 12 — M&Ms at 4:15 PM post-session). Post-strength appetite peaks 3–4 hours after session. Stage a lean snack (jerky or whey) before leaving the gym. Fat budget is tight today — any unplanned snack with fat will close the budget before dinner."
   },
