@@ -2250,7 +2250,7 @@ function renderCoach(db) {
 
   if (cb && cb.sections) {
     // ── Render stored brief from scheduled task ──
-    const updatedAt = cb.generated_at ? new Date(cb.generated_at) : null;
+    const updatedAt = cb.last_updated ? new Date(cb.last_updated) : cb.generated_at ? new Date(cb.generated_at) : null;
     const timeStr   = updatedAt ? updatedAt.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true}) : '';
     const dateStr   = updatedAt ? updatedAt.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'}) : '';
 
@@ -3107,8 +3107,8 @@ async function init() {
     if (updEl) {
       const cb = DB.coaching_brief;
       let updTime = '';
-      if (cb && cb.generated_at) {
-        const d = new Date(cb.generated_at);
+      if (cb && (cb.last_updated || cb.generated_at)) {
+        const d = new Date(cb.last_updated || cb.generated_at);
         updTime = 'Updated ' + d.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
       } else {
         updTime = 'Loaded ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
