@@ -7658,13 +7658,13 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T15:09:10+0800",
+    "last_updated": "2026-04-14T16:06:19+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "Spaghetti with meatballs (47g protein) closed the protein day at 145/150g — you're essentially done on protein. But fat is now the wall: 61/70g used with dinner still ahead. 9g fat left means dinner must be dry-cooked lean protein + plain carbs. No sauce. No oil.",
-    "training_call": "Rest day complete — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Done for today. Wednesday Push session tomorrow: load remaining 40g carbs at dinner (rice + sweet potato) for pre-session glycogen top-up.",
-    "nutrition_binding_constraint": "Fat (9g left) AND Calories (285 kcal left). Dinner must be: steamed/grilled chicken breast or white fish + plain rice. Zero oil. Zero sauce. Zero condiments.",
-    "watch_for": "Fat finish trap — 9g fat left, dinner ahead. This is exactly where Apr 12 and 13 blew up. Any sauce, dressing, or fatty protein (ribs, salmon, eggs with yolk) will push fat over target again. Tonight: steam, grill dry, or boil. Plain is the win."
+    "daily_insight": "Three consecutive fat overruns (Apr 12 +47g, Apr 13 +35g, today 61/70g with dinner still ahead). The pattern is dinner — not the shakes, not lunch. Tonight is the third chance to hold the line. Protein is closed at 145/150g. Dinner only needs carbs (40g = one rice serving) and near-zero fat.",
+    "training_call": "Rest day complete — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Done for today. Wednesday Push session tomorrow: load remaining 40g carbs at dinner (rice + sweet potato) for pre-session glycogen top-up. No additional cardio tonight.",
+    "nutrition_binding_constraint": "Fat (9g left) AND Calories (285 kcal left). Dinner formula: steamed or grilled chicken breast or white fish + plain rice. Zero oil. Zero sauce. Zero condiments. Any deviation blows target for the third day running.",
+    "watch_for": "Dinner fat trap — third night in a row. Apr 12 was walnuts + ranch. Apr 13 was bacon + eggs. Both felt like reasonable choices in the moment. Tonight the brief is simple: plain protein, plain rice, nothing extra. The 9g fat limit has no room for judgment calls."
   },
-  "last_updated": "2026-04-14T15:09:10+0800"
+  "last_updated": "2026-04-14T16:06:19+0800"
 }
