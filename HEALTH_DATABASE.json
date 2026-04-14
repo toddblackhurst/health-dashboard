@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-15T07:10:47.091435+08:00",
+    "last_updated": "2026-04-15T07:28:34.959060+08:00",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -1415,6 +1415,63 @@
         "fat_delta": -7
       },
       "day_closed": true
+    },
+    {
+      "date": "2026-04-15",
+      "source": "Cal AI",
+      "targets": {
+        "calories_kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
+      },
+      "meals": [
+        {
+          "meal": "pre_workout_shake",
+          "time": "06:27",
+          "items": [
+            {
+              "food": "Cycling Day Protein Shake",
+              "calories_kcal": 436,
+              "protein_g": 56,
+              "carbs_g": 43,
+              "fat_g": 7,
+              "estimated": false,
+              "source": "Cal AI upload 06:27"
+            },
+            {
+              "food": "Pre-Workout Drink",
+              "calories_kcal": 10,
+              "protein_g": 0,
+              "carbs_g": 3,
+              "fat_g": 0,
+              "estimated": false,
+              "source": "Cal AI upload 06:27"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 446,
+            "protein_g": 56,
+            "carbs_g": 46,
+            "fat_g": 7
+          },
+          "notes": "Pre-workout shake + drink logged via Cal AI upload 06:27 AM. Queued from DAILY_LOG. Strong protein start (56g). Fat only 7g — excellent. Pre-workout drink 10 kcal (3g carbs, trace). Session fueled."
+        }
+      ],
+      "daily_totals": {
+        "calories_kcal": 446,
+        "protein_g": 56,
+        "carbs_g": 46,
+        "fat_g": 7,
+        "note": "Day in progress — pre-workout logged. 1,554 kcal remaining. 94g P / 144g C / 63g F remaining."
+      },
+      "vs_targets": {
+        "calories_delta": -1554,
+        "protein_delta": -94,
+        "carbs_delta": -144,
+        "fat_delta": -63
+      },
+      "day_closed": false
     }
   ],
   "activity_sessions": [
@@ -7506,27 +7563,27 @@
         ]
       },
       "nutrition": {
-        "binding_constraint": "DAY CLOSED ✅ — all targets met",
+        "binding_constraint": "Day in progress — 446 kcal / 56g P logged ✅",
         "bullets": [
-          "FINAL: 2,003 kcal / 156g P / 204g C / 63g F — calories +3 ✅ / protein +6 ✅ / carbs +14 (within tolerance) / fat −7 ✅.",
-          "The 3-day fat overrun streak ends tonight: Apr 12 +47g, Apr 13 +35g, Apr 14 −7g under. The fix was exactly what was called — lean protein + rice carbs, zero oil, zero sauce.",
-          "Pre-workout shake anchor confirmed for Wednesday (same formula as today's 490 kcal / 55g P starter). No deviation. Carb room from tonight's slight over (+14g) gives Wednesday's lunch a touch of flexibility.",
-          "Tomorrow (Wednesday): fat budget is 70g. After the vegan protein milk sub note — almond milk at 4g fat vs vegan milk at 16g saves 12g at breakfast alone. Run the swap if available."
+          "Pre-workout shake in: 436 kcal / 56g P / 43g C / 7g F ✅ Protein front-load working. 94g P remaining across the day.",
+          "Fat budget wide open — only 7g used vs 70g target. 63g remaining. Fat streak is NOT repeating today — clean opening.",
+          "Remaining targets: 1,554 kcal / 94g P / 144g C / 63g F. Post-workout shake (29g P) clears by 10 AM — 65g P left for lunch + dinner.",
+          "Today is strength day. Protein anchor is already working. Don't skip the post-session shake — it closes half your remaining protein gap in one shot."
         ]
       },
       "progress": {
-        "lead_number": "Day closed clean ✅ — 2,003 kcal / all targets hit / fat streak broken / HRV 35.4ms Green.",
+        "lead_number": "Green → strength session today. Best HRV of the block (51.3ms).",
         "bullets": [
-          "Nutrition streak: first fully on-target day after 3 consecutive fat overruns. VAT reduction requires days like today to compound. One clean day shifts the weekly average.",
-          "Weight holding at 165–166 lbs range vs 165 lb goal. Visceral Fat Level 2.0 (down from 3.0 on Apr 11). Weekly deficit on track if Wednesday and Thursday hold.",
-          "Monday's strength session delivered despite Amber readiness: Single-Arm Row progressed 10→12kg. Apr 6 → Apr 13 consecutive strength gains. Block 1 Week 1 trend: positive.",
-          "Wednesday is the pivot day. Push session at Green readiness + clean fuel = the compound return on this week's discipline. Show up and execute."
+          "3-night sleep staircase complete: 20ms → 35.4ms → 51.3ms. This is the direct result of 9 PM bedtimes. The experiment is proven — now lock the habit.",
+          "Apr 14 nutrition closed clean: 2,003 kcal / 156g P / 204g C / 63g F ✅ Fat streak broken (3rd consecutive day over target → 1st clean day). Momentum is positive.",
+          "Strength block Week 1: Apr 13 Pull + Glute Hinge ✅ | Today: Push + Quad / Anti-Rotation. Two complete sessions this week. Volume accumulating correctly.",
+          "Weight 166.8 lbs (Apr 13) — 30-day high per Motra, but HRV and recovery trending strongly upward. Don't chase weight loss by cutting calories. The deficit is built in."
         ]
       },
       "watch_for": [
-        "8:07 PM — WIND DOWN NOW. You have 53 minutes to lights-out. Dinner is done. No more food. Phone down at 8:45. The 9 PM → 35.4ms HRV result is only repeatable if you repeat the input.",
-        "HYDRATE BEFORE BED — wrist temp 96.9°F is the one flag today. 63 min of LISS + normal daily activity. 1 full glass of water before lying down. Not optional with a wrist temp flag.",
-        "Wednesday morning: check HRV first. If Green (≥30ms) — execute Push session as planned, Incline opens at 16kg/hand. If Amber (20-29ms) — reduce Block C. If Red (<20ms) — walk only."
+        "STRENGTH SESSION TODAY — timer starts before first warm-up exercise. Block C only if Block B closes before 55-min mark. You've run over 65 min in every session this block. Today that ends.",
+        "Nutrition: post-workout shake is mandatory post-session. 29g P closes the morning gap. Don't skip it because you're busy getting to work.",
+        "Bedtime tonight: 9:30 PM hard stop. Three consecutive early nights built this HRV reading. Breaking the streak tonight would undo the compound effect you've earned."
       ]
     },
     "session_plan": {
@@ -7720,7 +7777,7 @@
       ]
     },
     "date": "2026-04-15",
-    "last_updated": "2026-04-15T07:10:47.091435+08:00",
+    "last_updated": "2026-04-15T07:28:34.959060+08:00",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 51.3ms — best reading this block, 57% above 32.5ms baseline. Sleep efficiency 97%. SpO2 and wrist temp both cleared.",
     "daily_insight": "Three consecutive early bedtimes produced a measurable HRV staircase: 20ms → 35.4ms → 51.3ms. This is your clearest data on sleep timing yet. Keep the 9:30 PM bedtime tonight to consolidate.",
