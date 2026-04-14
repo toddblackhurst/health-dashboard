@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T12:30:00+0800",
+    "last_updated": "2026-04-14T14:07:10+0800",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -7399,7 +7399,7 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T12:30:00+0800",
+    "generated_at": "2026-04-14T14:07:10+0800",
     "readiness_call": "Green",
     "sections": {
       "recovery": {
@@ -7421,12 +7421,12 @@
         ]
       },
       "nutrition": {
-        "binding_constraint": "Protein — 52g remaining across ~2 meals. Protein has been used fastest today (65.3% of target). Lunch soup added only 3g. Afternoon snack + dinner must deliver 52g.",
+        "binding_constraint": "Protein — 52g remaining across ~2 meals (afternoon snack + dinner). Protein has been used fastest today (65.3% of target with only 3 meals logged). Last entry at 12:20 PM was soup (3g protein only). Next protein hit is overdue.",
         "bullets": [
-          "12:20 status: 1,002 kcal / 98g P / 85g C / 33g F logged (2 shakes + lunch soup). Remaining: ~998 kcal / 52g P / 105g C / 37g F. Lunch is open — need a solid protein source at this meal.",
-          "Remaining today: ~1088 kcal / 55g P / 123g C / 39g F across 3 meals. Fat binding constraint at 39g — ~13g per meal max. This is tighter than recent days. One condiment kills it.",
+          "14:07 status: 1,002 kcal / 98g P / 85g C / 33g F logged (2 shakes + lunch soup). No new food entries since 12:20 PM. Remaining: ~998 kcal / 52g P / 105g C / 37g F across 2 meals.",
+          "Protein is the binding constraint: 52g needed in 2 meals = 26g minimum per meal. A lean protein main course at the next meal is non-negotiable. Chicken breast (30g), tuna (30g), egg whites (26g), fish (25–35g) all work.",
           "Non-obvious: Vegan protein milk is adding 16g fat vs Kirkland almond milk (4g fat). Swapping post-workout to almond milk would save 12g fat per day — that's nearly a full meal's fat budget reclaimed. Worth considering.",
-          "Pre-Wednesday carb load: 123g carbs still needed. Rice at lunch (50g) + sweet potato at dinner (40g) + rice at dinner (40g) = 130g. Carb load window is fully open. Lean protein only — no sauces."
+          "Pre-Wednesday carb load still open: 105g carbs remaining. Rice at dinner (50g) + sweet potato (40g) = 90g. Lean protein + rice/potato = the dinner formula. Carb window is wide open. Fat window is tight at 37g."
         ]
       },
       "progress": {
@@ -7439,8 +7439,8 @@
         ]
       },
       "watch_for": [
-        "Fat is tighter than it looks: 39g remaining across 3 meals = ~13g/meal. The vegan protein milk already used 16g at breakfast alone. Lunch is the highest-risk window — same pattern as Apr 12 (ranch +39g) and Apr 13 (ribs +38g). Lean protein + rice + steamed veg. Lemon only.",
-        "Double cardio means elevated hunger this afternoon (~1–3 PM window). 371 active calories created a real energy gap. This is not a license to snack — this is exactly when the sweets craving peaks. Bridge with a lean protein meal at lunch.",
+        "⚡ 2 PM LIVE — Sweets danger window is active right now. 371 active calories from double cardio created a real hunger gap. This is the exact pattern from Apr 12 (Peanut M&Ms at 4:15 PM). Bridge it with the protein meal that closes lunch — chicken, fish, eggs. Not sugar.",
+        "Fat is tighter than it looks: 37g remaining across 2 remaining meals = ~18g/meal max. One condiment kills it. Same pattern Apr 12 (ranch +39g) and Apr 13 (ribs +38g). Lean protein + rice + steamed veg at both remaining meals. No sauces.",
         "Vegan protein milk fat flag: 16g fat per serving vs 4g for almond milk. If fat budget keeps running tight, this is the single highest-leverage swap available. Mention to coach next session if you want to adjust the formula."
       ]
     },
@@ -7635,7 +7635,7 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T12:30:00+0800",
+    "last_updated": "2026-04-14T14:07:10+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
     "daily_insight": "Tomato vegetable soup was a fat-sparing call (only 2g fat) but does not move the protein needle meaningfully (3g). 52g protein still needed from 2 meals — that's 26g per meal. A lean protein main at lunch (grilled chicken, fish, shrimp) is now non-negotiable. Carbs remain wide open (105g remaining).",
