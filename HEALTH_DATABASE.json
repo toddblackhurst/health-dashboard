@@ -7327,13 +7327,13 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T09:30:00+0800",
+    "generated_at": "2026-04-14T08:08:09+0800",
     "readiness_call": "Green",
     "sections": {
       "recovery": {
         "traffic_light": "🟢 Green",
         "bullets": [
-          "HRV 35.4ms — rebounded from 20ms yesterday, back above 32.5ms baseline. Green. The early 9:01 PM bedtime produced a 15ms HRV jump overnight. You followed the coaching call, and the data shows it worked.",
+          "HRV 35.4ms — back above 32.5ms baseline after yesterday's 20ms low. Green. Early 9:01 PM bedtime produced a 15ms HRV jump. You followed the call, the data responded.",
           "Sleep: 6h43m asleep, 58% quality, efficiency 96% (excellent). Sleep bank improved from -4h10m to -3h13m — 57 minutes of debt recovered in one night. REM 1h38m solid. Wrist temp 96.9°F flagged below normal — may indicate mild dehydration; drink water.",
           "RHR 65.0 bpm (vs 63 bpm baseline — slightly elevated, normal post-strength day variation). SpO2 95.1% and respiratory rate 14.4 rpm both normal. Body is in recovery mode, not under stress.",
           "Non-obvious: the HRV pattern now confirms early bedtime is your single most effective recovery intervention — more so than rest day activity level. Apr 11 (rest+early sleep) → 41.7ms. Apr 14 (rest+9:01 PM) → 35.4ms. Late nights suppress your HRV regardless of training load."
@@ -7349,12 +7349,12 @@
         ]
       },
       "nutrition": {
-        "binding_constraint": "Fat — 57g remaining after breakfast shake. Today is the reset day.",
+        "binding_constraint": "Fat — 57g remaining after shake. Pre-Wednesday carb load window is open.",
         "bullets": [
-          "Pre-workout shake logged: 490 kcal / P:55g / C:41g / F:13g ✅. Strong start — same winning formula. 55g protein before 7 AM is excellent.",
-          "Remaining today: ~1510 kcal / 95g P / 149g C / 57g F across ~3 more meals. Fat is already 13g spent — only 57g left. Every meal needs to be lean: grilled protein + rice, no oils, no dressings, no nuts.",
-          "Today is the carb load day before Wednesday. You need 149g more carbs. Rice, sweet potato, oats, fruit — all free. Lunch: lean protein + rice bowl. Dinner: lean protein + sweet potato or rice. Carbs tonight set up tomorrow's session.",
-          "Yesterday closed at 2,175 kcal / P:165g ✅ / C:153g / F:105g ⚠️. Protein was a win. Fat was the problem — two days running. Today's single fix: nothing that adds fat without protein. Nuts, dressings, added oils are off the table today."
+          "Pre-workout shake logged 06:45: 490 kcal / P:55g / C:41g / F:13g ✅. 55g protein before the walk — strong anchor.",
+          "Remaining today: ~1510 kcal / 95g P / 149g C / 57g F across 3 meals. Fat is the constraint: 57g left, ~19g per meal. Every meal must be lean — grilled protein, rice, no oils or dressings.",
+          "It's 8 AM — breakfast or mid-morning meal window coming up. If you eat again before 10 AM, keep it high-protein, low-fat: egg whites, Greek yogurt, or a lean protein bowl. Save carbs for lunch and dinner.",
+          "Yesterday closed F:105g (⚠️+35g over). Two consecutive fat days. Today is the reset. One slip at lunch = the third day. Don't let breakfast become the leak."
         ]
       },
       "progress": {
@@ -7367,9 +7367,9 @@
         ]
       },
       "watch_for": [
-        "Wrist temp flagged below normal (96.9°F) — drink 500ml of water in the next hour. If you feel any unusual fatigue or stiffness this afternoon, it's a hydration signal, not a training signal. Don't add extra activity.",
-        "Carb load window is open today — use it. You have 149g of carbs left to hit target. Undereating carbs today leaves Wednesday's session running on empty. Rice at lunch and dinner is the call.",
-        "Wednesday timer: set it before the resistance band goes on your wrist. 5 sessions over 65 min in a row. This is the session where you prove it's a choice, not a habit."
+        "Wrist temp flagged below normal (96.9°F) — drink 500ml water before 9 AM. Dehydration compounds afternoon fatigue and snack cravings.",
+        "Morning snack window (8–10 AM) is the hidden fat leak: nuts, cheese, butter coffee — all show up in fat macros before lunch. If you eat again before 10 AM, keep it to egg whites or yogurt.",
+        "Sweets risk is elevated on rest days — no training dopamine, energy sitting at 66%, and a carb-load permission slip creates a psychological opening. The carb load target is rice and sweet potato, not chocolate."
       ]
     },
     "session_plan": {
@@ -7377,7 +7377,7 @@
       "session_goal": "Develop horizontal and vertical push strength; reinforce quad-dominant unilateral pattern with hip-OA-safe depth; anti-rotation and shoulder correction to close.",
       "floor_plan": "Floor 3 → Floor 2",
       "time_cap_min": 65,
-      "readiness_call": "TBD — check Wednesday morning HRV",
+      "readiness_call": "TBD — check Wednesday morning HRV. Today at 35.4ms (Green) — strong baseline going in if sleep holds.",
       "status": "upcoming",
       "notes": "Timer starts BEFORE first prep exercise. If Block C not started by 55-min mark — skip it. Compounds first, accessories last.",
       "blocks": [
@@ -7563,5 +7563,5 @@
       ]
     }
   },
-  "last_updated": "2026-04-14T06:30:00+0800"
+  "last_updated": "2026-04-14T08:08:09+0800"
 }
