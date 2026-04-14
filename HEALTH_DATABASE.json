@@ -1337,22 +1337,45 @@
             "fat_g": 28
           },
           "notes": "Lunch main at ~13:00 — Cal AI screenshot. Spaghetti with meatballs and tomato sauce. Strong protein hit (47g) closes the protein day (145g/150g total — essentially done). Fat now 61g/70g, only 9g remaining. Calories at 1,715/2,000 — 285 kcal left for dinner only."
+        },
+        {
+          "meal": "dinner",
+          "time": "19:00",
+          "items": [
+            {
+              "food": "Salmon Sushi Roll",
+              "amount": "1 serving",
+              "calories_kcal": 288,
+              "protein_g": 11,
+              "carbs_g": 54,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 288,
+            "protein_g": 11,
+            "carbs_g": 54,
+            "fat_g": 2
+          },
+          "notes": "Dinner at ~19:00 — Cal AI screenshot. Salmon sushi roll. Clean lean protein + rice carbs, minimal fat (2g). Fat streak broken: Apr 12 +47g, Apr 13 +35g, Apr 14 -7g under target. Day closes at 2,003 kcal / 156g P / 204g C / 63g F — essentially all targets met."
         }
       ],
       "daily_totals": {
-        "calories_kcal": 1715,
-        "protein_g": 145,
-        "carbs_g": 150,
-        "fat_g": 61,
-        "note": "Day in progress — 4 meals logged. Remaining: 285 kcal / 5g P / 40g C / 9g F."
+        "calories_kcal": 2003,
+        "protein_g": 156,
+        "carbs_g": 204,
+        "fat_g": 63,
+        "note": "Day closed — 5 meals logged. All targets met. Fat streak broken after 2 consecutive over-target days."
       },
       "vs_targets": {
-        "calories_delta": -285,
-        "protein_delta": -5,
-        "carbs_delta": -40,
-        "fat_delta": -9
+        "calories_delta": 3,
+        "protein_delta": 6,
+        "carbs_delta": 14,
+        "fat_delta": -7
       },
-      "day_closed": false
+      "day_closed": true
     }
   ],
   "activity_sessions": [
@@ -7658,11 +7681,11 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T19:07:32+0800",
+    "last_updated": "2026-04-14T20:00:00+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "Dinner not logged since 1 PM (6 hours gap) — it is now 7 PM. The 285 kcal / 9g fat remaining is a single clean plate: steamed fish or chicken breast + plain rice. 9 PM bedtime is 2 hours away — that is the only decision left tonight that changes Wednesday.",
-    "training_call": "Rest day complete ✅ — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Two jobs left: (1) dinner right now — 9g fat, plain protein + plain rice only; (2) 9 PM bedtime — 2 hours from now. Both protect Wednesday Push at Green.",
+    "daily_insight": "Day closed. Salmon sushi roll at dinner executed the plan: 2g fat, clean carbs, broke the 3-day fat overrun streak. Final: 2,003 kcal / 156g P / 204g C / 63g F — all targets met. Wednesday Push session protected.",
+    "training_call": "Rest day complete ✅ — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Nutrition day closed clean. Wednesday Push at Green — execute the standard pre-workout shake and follow the same dinner discipline tomorrow.",
     "nutrition_binding_constraint": "Fat (9g) AND Calories (285 kcal) — 7 PM, dinner not yet logged. Formula: steamed or grilled chicken/fish + plain rice. Zero oil, zero sauce, zero extras. Three fat overruns in a row if this plate is wrong.",
     "watch_for": "9 PM BEDTIME — 2 hours away. Last night's 9:01 PM bedtime produced 35.4ms HRV. Tonight is the repeat. Dinner first (plain protein + plain rice), then wind down by 8:30 PM. Phone down at 8:45. Lights out at 9:00. Wednesday goes Green if this holds."
   },
