@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-14T17:07:54+0800",
+    "last_updated": "2026-04-14T19:07:32+0800",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -7658,13 +7658,13 @@
       ]
     },
     "date": "2026-04-14",
-    "last_updated": "2026-04-14T18:07:11+0800",
+    "last_updated": "2026-04-14T19:07:32+0800",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 35.4ms above 32.5ms baseline",
-    "daily_insight": "It is 6 PM — dinner is happening right now, not in an hour. Apr 13 fat blow was at 6 PM (bacon + eggs + hash browns). This is that exact window. 9g fat and 285 kcal remain. One clean plate closes a 3-day streak — plain protein, plain rice, no oil, no sauce, nothing extra.",
-    "training_call": "Rest day complete ✅ — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Nothing more tonight. Two jobs left: (1) eat dinner clean — 9g fat, plain rice + protein only; (2) lights out at 9 PM. That's it. Wednesday Push session starts at Green.",
-    "nutrition_binding_constraint": "Fat (9g) AND Calories (285 kcal) — dinner is happening now (18:07). Formula: steamed or grilled chicken breast / white fish + plain rice. Zero oil. Zero sauce. Zero condiments. Third fat overrun in a row is this one plate.",
-    "watch_for": "DINNER IS NOW — 6 PM, same hour as Apr 13's bacon + eggs + hash browns (+35g fat overage). 9g fat budget left. Plain protein, plain rice. The brief has flagged this for 2 hours. Don't think about it — just order / plate it right."
+    "daily_insight": "Dinner not logged since 1 PM (6 hours gap) — it is now 7 PM. The 285 kcal / 9g fat remaining is a single clean plate: steamed fish or chicken breast + plain rice. 9 PM bedtime is 2 hours away — that is the only decision left tonight that changes Wednesday.",
+    "training_call": "Rest day complete ✅ — walk (2.11 mi) + indoor cycle (31 min) = 371 active cal. Two jobs left: (1) dinner right now — 9g fat, plain protein + plain rice only; (2) 9 PM bedtime — 2 hours from now. Both protect Wednesday Push at Green.",
+    "nutrition_binding_constraint": "Fat (9g) AND Calories (285 kcal) — 7 PM, dinner not yet logged. Formula: steamed or grilled chicken/fish + plain rice. Zero oil, zero sauce, zero extras. Three fat overruns in a row if this plate is wrong.",
+    "watch_for": "9 PM BEDTIME — 2 hours away. Last night's 9:01 PM bedtime produced 35.4ms HRV. Tonight is the repeat. Dinner first (plain protein + plain rice), then wind down by 8:30 PM. Phone down at 8:45. Lights out at 9:00. Wednesday goes Green if this holds."
   },
   "last_updated": "2026-04-14T16:06:19+0800"
 }
