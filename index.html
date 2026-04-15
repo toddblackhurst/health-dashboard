@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Todd · BioMetrics</title>
+<title>Todd · Coach</title>
 <style>
 :root {
   --bg: #0d1117;
@@ -12,16 +12,16 @@
   --surface3: #21262d;
   --border: #30363d;
   --accent: #58a6ff;
-  --accent-bg: rgba(88,166,255,0.12);
+  --accent-bg: rgba(88,166,255,0.10);
   --green: #3fb950;
-  --green-bg: rgba(63,185,80,0.1);
+  --green-bg: rgba(63,185,80,0.10);
   --yellow: #d29922;
-  --yellow-bg: rgba(210,153,34,0.12);
+  --yellow-bg: rgba(210,153,34,0.10);
   --red: #f85149;
-  --red-bg: rgba(248,81,73,0.1);
+  --red-bg: rgba(248,81,73,0.10);
   --purple: #a371f7;
-  --purple-bg: rgba(163,113,247,0.1);
-  --teal: #39d353;
+  --purple-bg: rgba(163,113,247,0.10);
+  --orange: #f0883e;
   --text: #e6edf3;
   --text2: #8b949e;
   --text3: #6e7681;
@@ -35,8 +35,10 @@ body {
   min-height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 64px));
+  padding-bottom: max(88px, calc(env(safe-area-inset-bottom) + 72px));
 }
+
+/* ── Topbar ── */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 16px 12px;
@@ -55,87 +57,260 @@ body {
   font-size: 11px; font-weight: 700; color: var(--green);
   text-transform: uppercase; letter-spacing: 0.08em;
 }
-.live-dot {
-  width: 6px; height: 6px; background: var(--green);
-  border-radius: 50%; animation: blink 2s ease-in-out infinite;
-}
+.live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+/* ── Tabs ── */
 .tabs {
   display: flex; background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: sticky; top: 57px; z-index: 99;
+  overflow-x: auto; scrollbar-width: none;
 }
+.tabs::-webkit-scrollbar { display: none; }
 .tab-btn {
-  flex: 1; padding: 10px 0; text-align: center;
+  flex: 1; min-width: 64px; padding: 10px 0; text-align: center;
   font-size: 11px; font-weight: 700; color: var(--text3);
   cursor: pointer; border-bottom: 2px solid transparent;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  transition: color 0.2s, border-color 0.2s; user-select: none;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  transition: color 0.2s, border-color 0.2s; user-select: none; white-space: nowrap;
 }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-content { display: none; padding: 12px 12px 0; }
 .tab-content.active { display: block; }
+
+/* ── Cards ── */
 .card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 14px; margin-bottom: 10px;
 }
-.card-title {
-  font-size: 10px; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;
-}
+.card-title { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
 .card-value { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
 .card-sub { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+/* ── Hero card ── */
 .hero-card {
-  background: rgba(210,153,34,0.12); border: 1px solid #d2992240;
+  background: rgba(210,153,34,0.10); border: 1px solid #d2992230;
   border-radius: 14px; padding: 16px; margin-bottom: 10px;
 }
 .hero-tier { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #d29922; margin-bottom: 6px; }
-.hero-call { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 6px; }
-.hero-basis { font-size: 11px; color: var(--text2); line-height: 1.5; }
-.hero-insight {
-  margin-top: 10px; font-size: 11.5px; color: var(--text); line-height: 1.6;
-  padding-top: 10px; border-top: 1px solid #d2992230;
-}
+.hero-call { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 8px; }
+.hero-basis { font-size: 11.5px; color: var(--text2); line-height: 1.6; }
+.hero-insight { margin-top: 12px; font-size: 12px; color: var(--text); line-height: 1.7; padding-top: 12px; border-top: 1px solid #d2992225; }
+
+/* ── Stats ── */
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
 .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
 .stat-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
 .stat-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
 .stat-unit { font-size: 11px; color: var(--text2); font-weight: 400; }
 .stat-note { font-size: 10px; color: var(--text3); margin-top: 3px; }
-.section-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin: 14px 0 6px; }
-.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-.bullet-list li { font-size: 12px; color: var(--text2); line-height: 1.55; padding-left: 14px; position: relative; }
+
+/* ── Section label ── */
+.section-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin: 14px 0 8px; }
+
+/* ── Bullets ── */
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.bullet-list li { font-size: 12px; color: var(--text2); line-height: 1.6; padding-left: 14px; position: relative; }
 .bullet-list li::before { content: "·"; position: absolute; left: 4px; color: var(--accent); font-size: 14px; line-height: 1.3; }
+
+/* ── Watch items ── */
 .watch-list { display: flex; flex-direction: column; gap: 7px; }
 .watch-item {
-  display: flex; gap: 8px; font-size: 11.5px; color: var(--text2); line-height: 1.55;
+  display: flex; gap: 8px; font-size: 11.5px; color: var(--text2); line-height: 1.6;
   background: var(--yellow-bg); border: 1px solid rgba(210,153,34,0.2);
   border-radius: 8px; padding: 9px 10px;
 }
-.watch-icon { color: var(--yellow); font-size: 13px; flex-shrink: 0; }
+.watch-icon { color: var(--yellow); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── Lock badge ── */
+.lock-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 9px; font-weight: 700; color: var(--text3);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 2px 7px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+/* ── Coach paragraph ── */
+.coach-para {
+  font-size: 13px; color: var(--text); line-height: 1.75;
+  padding: 14px 0 2px;
+}
+.coach-para-header {
+  font-size: 10px; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+}
+.coach-divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+/* ── Sleep stages ── */
+.sleep-stage-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.stage-label { font-size: 10px; color: var(--text3); width: 42px; }
+.stage-bar-wrap { flex: 1; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.stage-bar { height: 100%; border-radius: 3px; }
+.stage-val { font-size: 10px; color: var(--text2); width: 80px; text-align: right; white-space: nowrap; }
+
+/* ── Macro / nutrition ── */
+.macro-sticky {
+  background: rgba(13,17,23,0.97);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px 8px;
+  position: sticky; top: 99px; z-index: 50;
+  backdrop-filter: blur(12px);
+  margin: -12px -12px 10px;
+}
+.macro-date-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.macro-date-label { font-size: 11px; font-weight: 700; color: var(--text); }
+.macro-kcal-live { font-size: 20px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+.macro-kcal-target { font-size: 11px; color: var(--text3); }
+.macro-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.macro-label { font-size: 10px; font-weight: 700; color: var(--text3); width: 28px; text-transform: uppercase; }
+.macro-bar-wrap { flex: 1; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.macro-bar { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
+.macro-val { font-size: 11px; font-weight: 600; color: var(--text2); width: 88px; text-align: right; white-space: nowrap; }
+
+/* ── Meal cards ── */
+.meal-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 11px 12px; margin-bottom: 8px;
+}
+.meal-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+.meal-name { font-size: 12px; font-weight: 700; color: var(--text); }
+.meal-time { font-size: 10px; color: var(--text3); }
+.meal-macros { font-size: 11px; color: var(--text2); margin-bottom: 7px; }
+.meal-coach-callout {
+  background: var(--accent-bg); border: 1px solid rgba(88,166,255,0.2);
+  border-radius: 7px; padding: 7px 9px;
+  font-size: 11px; color: var(--accent); line-height: 1.5;
+}
+.meal-empty {
+  text-align: center; padding: 24px 0; color: var(--text3);
+  font-size: 12px; line-height: 1.6;
+}
+
+/* ── Training cards ── */
+.upcoming-card {
+  background: var(--accent-bg); border: 1px solid rgba(88,166,255,0.25);
+  border-radius: 14px; padding: 16px; margin-bottom: 10px;
+}
+.upcoming-label { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
+.upcoming-title { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 4px; }
+.upcoming-sub { font-size: 11px; color: var(--text2); margin-bottom: 12px; }
+.why-para { font-size: 12px; color: var(--text); line-height: 1.7; margin-bottom: 10px; }
+
+.block-section { margin-bottom: 14px; }
+.block-header {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 10px; font-weight: 800; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.block-floor { font-size: 9px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
+.block-time { font-size: 9px; color: var(--text3); margin-left: auto; }
+
+.exercise-row {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px; margin-bottom: 6px;
+}
+.ex-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.ex-prescription { font-size: 11px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.ex-note { font-size: 11px; color: var(--text2); line-height: 1.5; margin-bottom: 6px; }
+.ex-footer { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.ex-alt-label { font-size: 10px; color: var(--text3); }
+.ex-alts { font-size: 10px; color: var(--text2); }
+.ex-change-btn {
+  margin-left: auto; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 3px 9px; font-size: 10px; font-weight: 700;
+  color: var(--text3); cursor: pointer; white-space: nowrap;
+}
+.ex-change-btn:active { background: var(--surface3); }
+
+.session-review-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px; margin-bottom: 10px;
+}
+.review-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;
+}
+.review-session-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.review-stats { display: flex; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.review-stat { font-size: 11px; color: var(--text2); }
+.review-stat strong { color: var(--text); }
+
+.week-strip { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 2px; }
+.week-strip::-webkit-scrollbar { display: none; }
+.week-day {
+  flex: 1; min-width: 64px; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 6px; text-align: center;
+}
+.week-day.today { border-color: var(--accent); background: var(--accent-bg); }
+.week-day.done { border-color: rgba(63,185,80,0.3); background: var(--green-bg); }
+.week-day.sprint { border-color: rgba(240,136,62,0.3); background: rgba(240,136,62,0.08); }
+.week-day-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 3px; }
+.week-day-icon { font-size: 16px; line-height: 1; margin-bottom: 3px; }
+.week-day-type { font-size: 9px; color: var(--text2); line-height: 1.3; }
+
+/* ── Status pill ── */
+.status-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+  border-radius: 20px; padding: 2px 8px; margin-bottom: 8px;
+}
+.pill-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.25); }
+.pill-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(210,153,34,0.25); }
+.pill-blue { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(88,166,255,0.25); }
+.pill-orange { background: rgba(240,136,62,0.1); color: var(--orange); border: 1px solid rgba(240,136,62,0.25); }
+
+/* ── Weight card ── */
+.weight-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.weight-box { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; }
+.weight-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.weight-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+
+/* ── Ask Coach ── */
+.coach-q-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin-bottom: 10px;
+}
+.coach-q-header {
+  background: rgba(163,113,247,0.1); border-bottom: 1px solid rgba(163,113,247,0.2);
+  padding: 11px 14px; display: flex; gap: 8px; align-items: flex-start;
+}
+.coach-q-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.coach-q-text { font-size: 13px; color: var(--text); line-height: 1.6; font-weight: 600; }
+.coach-q-context { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.5; font-weight: 400; }
+.coach-q-body { padding: 12px 14px; }
+.coach-q-answered { font-size: 12px; color: var(--text2); background: var(--surface2); border-radius: 7px; padding: 8px 10px; margin-bottom: 8px; }
+.coach-q-answered-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.coach-q-input {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px; color: var(--text);
+  font-size: 12px; font-family: inherit; resize: none; line-height: 1.5;
+  margin-bottom: 8px;
+}
+.coach-q-input:focus { outline: none; border-color: var(--accent); }
+.coach-q-submit {
+  width: 100%; background: var(--accent); border: none; border-radius: 8px;
+  padding: 10px; font-size: 12px; font-weight: 700; color: #0d1117;
+  cursor: pointer; letter-spacing: 0.02em;
+}
+.coach-q-submit:active { opacity: 0.85; }
+
+.coach-q-intro {
+  font-size: 12px; color: var(--text2); line-height: 1.6;
+  margin-bottom: 12px; padding: 12px; background: var(--surface2); border-radius: 10px;
+}
+
+/* ── Charts ── */
 .chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
 .chart-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
 .chart-title { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
 .chart-latest { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
 svg.sparkline { width: 100%; height: 90px; overflow: visible; }
-.eval-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
-.eval-header { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
-.status-pill {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-  background: var(--green-bg); color: var(--green);
-  border: 1px solid rgba(63,185,80,0.25); border-radius: 20px; padding: 2px 8px; margin-bottom: 8px;
-}
-.macro-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
-.macro-label { font-size: 10px; font-weight: 700; color: var(--text3); width: 22px; text-transform: uppercase; }
-.macro-bar-wrap { flex: 1; height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
-.macro-bar { height: 100%; border-radius: 3px; }
-.macro-val { font-size: 11px; font-weight: 600; color: var(--text2); width: 90px; text-align: right; white-space: nowrap; }
-.sleep-stage-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.stage-label { font-size: 10px; color: var(--text3); width: 42px; }
-.stage-bar-wrap { flex: 1; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
-.stage-bar { height: 100%; border-radius: 3px; }
-.stage-val { font-size: 10px; color: var(--text2); width: 72px; text-align: right; white-space: nowrap; }
+
+/* ── Bottom nav ── */
 .bottom-nav {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
   width: 100%; max-width: 480px;
@@ -147,41 +322,69 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 .nav-icon { font-size: 20px; line-height: 1; }
 .nav-label { font-size: 9px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
 .nav-btn.active .nav-label { color: var(--accent); }
+.nav-btn.active .nav-icon { filter: none; }
+
+/* ── Progress bar ── */
+.progress-section { margin-top: 8px; }
+.progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.progress-label { font-size: 11px; color: var(--text2); flex: 1; }
+.progress-val { font-size: 11px; font-weight: 700; color: var(--text); width: 48px; text-align: right; }
+.progress-bar-wrap { width: 80px; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.progress-bar { height: 100%; border-radius: 3px; }
+
+/* ── Inline note ── */
+.inline-note { font-size: 11px; color: var(--text3); line-height: 1.55; margin-top: 6px; }
+.tag { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; border-radius: 4px; padding: 1px 6px; }
+.tag-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.2); }
+.tag-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(210,153,34,0.2); }
+.tag-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,0.2); }
+.tag-blue { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(88,166,255,0.2); }
 </style>
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════ TOPBAR -->
 <div class="topbar">
   <div>
-    <div class="topbar-name">Todd · BioMetrics</div>
+    <div class="topbar-name">Todd · Coach</div>
     <div class="topbar-date">Thursday, April 16, 2026</div>
     <div class="topbar-updated">Updated 4:48 AM · Apr 16</div>
   </div>
   <div class="live-pill"><span class="live-dot"></span>Live</div>
 </div>
 
+<!-- ═══════════════════════════════════════════ TABS -->
 <div class="tabs">
   <div class="tab-btn active" onclick="switchTab('brief')">Brief</div>
-  <div class="tab-btn" onclick="switchTab('recovery')">Recovery</div>
+  <div class="tab-btn" onclick="switchTab('sleep')">Sleep</div>
   <div class="tab-btn" onclick="switchTab('training')">Training</div>
   <div class="tab-btn" onclick="switchTab('nutrition')">Nutrition</div>
-  <div class="tab-btn" onclick="switchTab('trends')">Trends</div>
+  <div class="tab-btn" onclick="switchTab('ask')">Ask Coach</div>
 </div>
 
-<!-- BRIEF -->
+
+<!-- ══════════════════════════════════════════════════════
+     BRIEF TAB
+══════════════════════════════════════════════════════ -->
 <div id="tab-brief" class="tab-content active">
+
+  <!-- Hero readiness call -->
   <div class="hero-card">
-    <div class="hero-tier">🟡 Yellow-Green · Apr 16</div>
-    <div class="hero-call">Cardio Day — Z1/Z2 only. Walk or easy bike 45–55 min. HR cap 122 bpm — no exceptions today.</div>
-    <div class="hero-basis">HRV 38.9ms (Hume) / 44ms avg (Oura) — above 35ms threshold. Oura 75 readiness, 58% Hume recovery. Pace yourself.</div>
-    <div class="hero-insight">Your body absorbed 66% strain from yesterday's 88-min session cleanly — HRV is still above the 35ms threshold, which means the system isn't overwhelmed. But you're not at yesterday's 51.3ms either. Today is a recovery-through-movement day: steady aerobic work, nothing that spikes HR above 122.</div>
+    <div class="hero-tier" style="display:flex;justify-content:space-between;align-items:center">
+      <span>🟡 Yellow-Green · Apr 16</span>
+      <span class="lock-badge">🔒 Locked · 5:22 AM</span>
+    </div>
+    <div class="hero-call" style="margin-top:8px">Cardio Day. Z1/Z2 only — walk or easy bike, 45–55 min, HR cap 122 bpm. No exceptions.</div>
+    <div class="hero-basis">HRV 38.9ms (Hume) / 44ms avg (Oura). Readiness 75. Recovery 58% — Hume green threshold. Post-session drop after Wednesday's 88-min effort. Expected, not concerning.</div>
+    <div class="hero-insight">Your HRV this week ran 20 → 35 → 51 → 39ms — that's exactly the arc a loaded training week should produce. You built, peaked, and came down appropriately. At 38.9ms you're still 6ms above your 32.5ms baseline, which means you're not in a hole — you're in the natural recovery valley. Wednesday was too long (88 min, 154 bpm peak), but your body absorbed 66% of that strain and came back green. Today's job is simple: blood flow, parasympathetic activation, protein. Tomorrow depends on what you do today.</div>
   </div>
 
+  <!-- Quick stats -->
   <div class="stat-grid">
     <div class="stat-box">
       <div class="stat-label">HRV</div>
       <div class="stat-val" style="color:var(--accent)">38.9<span class="stat-unit"> ms</span></div>
-      <div class="stat-note">Hume · ↓ from 51.3ms</div>
+      <div class="stat-note">↓ from 51.3ms</div>
     </div>
     <div class="stat-box">
       <div class="stat-label">Sleep</div>
@@ -196,98 +399,94 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     <div class="stat-box">
       <div class="stat-label">Recovery</div>
       <div class="stat-val" style="color:var(--yellow)">58<span class="stat-unit">%</span></div>
-      <div class="stat-note">Hume · Green zone</div>
+      <div class="stat-note">Hume green zone</div>
     </div>
   </div>
 
+  <!-- Watch for today -->
   <div class="card">
-    <div class="section-label">⚠ Watch For Today</div>
-    <div class="watch-list"><div class="watch-item"><span class="watch-icon">⚠</span><span>Nutrition reset — yesterday ended +340 kcal, +21g fat over. Today: 1,600–1,800 kcal target. Anchor protein (150g) but cut fat at breakfast and lunch. Lean protein + carbs.</span></div>
-<div class="watch-item"><span class="watch-icon">⚠</span><span>Bedtime critical — three consecutive early nights built last week's HRV gains. Don't break the streak. Target 9:00–9:30 PM bed tonight. Friday readiness depends on it.</span></div>
-<div class="watch-item"><span class="watch-icon">⚠</span><span>Sleep debt at 3h50m moderate — trending up slightly from 2h52m (yesterday's training load added to debt). Tonight's sleep quality matters more than duration: prioritize cool room, no screens 30 min before bed.</span></div>
-<div class="watch-item"><span class="watch-icon">⚠</span><span>HR cap during cardio — today is Z1/Z2 (Zone 1–2 only). Avg HR should stay 95–115 bpm for the entire session. If it climbs above 122, slow to a walk. Today is about blood flow and parasympathetic activation, not conditioning.</span></div></div>
+    <div class="card-title">⚠ Watch For Today <span class="lock-badge" style="float:right">🔒 Locked</span></div>
+    <div class="watch-list">
+      <div class="watch-item"><span class="watch-icon">⚠</span><span><strong>Nutrition reset day.</strong> Yesterday closed +340 kcal over with 91g fat (brunch plate did it again). Target today: 1,600–1,800 kcal. Anchor protein at 150g, hold fat ≤60g to correct the gap.</span></div>
+      <div class="watch-item"><span class="watch-icon">⚠</span><span><strong>Bedtime is critical.</strong> Three consecutive early nights built last week's HRV arc. Don't break the pattern — target 9:00–9:30 PM bed tonight. Friday readiness is built or destroyed tonight.</span></div>
+      <div class="watch-item"><span class="watch-icon">⚠</span><span><strong>HR cap during cardio.</strong> Z1/Z2 only. Target avg HR 95–115 bpm. If it climbs above 122, slow to a walk. Today is parasympathetic recovery, not conditioning.</span></div>
+    </div>
   </div>
 
+  <!-- Progress snapshot -->
   <div class="card">
-    <div class="section-label">📊 Nutrition Target</div>
-    <div style="font-size:12px;color:var(--text2);margin-bottom:10px">Target 1,600–1,800 kcal today — offset yesterday's +340 surplus. Protein 150g anchor. No brunch plate.</div>
-    <ul class="bullet-list"><li>Yesterday closed: 2,340 kcal / +340 over | P: 159g ✅ | C: 238g ⚠️ | F: 91g ⚠️ +21g over. Protein win, fat loss from brunch plate.</li>
-<li>Today's target: 1,600–1,800 kcal to rebalance the week's deficit. Protein 150g non-negotiable. Fat ≤60g (lower than normal to correct yesterday's +21g overage).</li>
-<li>Brunch plan: eggs only (no French toast, no hash browns, no fried components). Or lean protein bowl. The brunch plate pattern is the sole recurring macro leak this week.</li>
-<li>No food logged yet — morning is clean. Pre-cardio: light protein source. Post-cardio: protein shake. Anchor dinner with lean protein + complex carbs (poke bowl format worked perfectly last night).</li></ul>
+    <div class="card-title">Block 1 · Week 1 — Progress</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px">2/3 sessions complete · On schedule ✅</div>
+    <ul class="bullet-list">
+      <li>Mon ✅ Pull + Glute Hinge · Wed ✅ Push + Quad · Thu = cardio · <strong>Fri = Pull-dominant</strong></li>
+      <li>Volume baseline locked at 6,300 kg (both sessions). Consistent anchor — good sign for Week 2 comparison.</li>
+      <li>HRV trend confirms the block is loading correctly. If Friday morning reads ≥42ms, it's a go for full effort.</li>
+    </ul>
   </div>
 
-  <div class="card">
-    <div class="section-label">📈 Progress</div>
-    <div style="font-size:13px;font-weight:700;margin-bottom:8px">2/3 sessions complete — Block 1 Week 1 on track</div>
-    <ul class="bullet-list"><li>Training: Mon ✅ Tue (cardio) ✅ Wed ✅ strength | Thursday = today's cardio | Fri = pull-dominant strength. On schedule.</li>
-<li>Volume baseline locked: Apr 13 + Apr 15 both at 6,300 kg. Consistent first-week anchor. Friday test: Landmine Press 32.5 kg top set.</li>
-<li>Recovery trend: HRV sequence this week — 20ms → 35.4ms → 51.3ms → 38.9ms. Classic training load arc: build → peak → planned drop. If Friday morning reads 42ms+, green day.</li>
-<li>Sleep debt managed but climbing (2h52m → 3h50m). Three consecutive early bedtimes built last week's HRV gains. Tonight's bed target 9–9:30 PM keeps Friday HRV competitive.</li></ul>
-  </div>
 </div>
 
-<!-- RECOVERY -->
-<div id="tab-recovery" class="tab-content">
+
+<!-- ══════════════════════════════════════════════════════
+     SLEEP TAB
+══════════════════════════════════════════════════════ -->
+<div id="tab-sleep" class="tab-content">
+
+  <!-- Coach interpretation — LOCKED at morning data arrival -->
   <div class="card">
-    <div class="card-title">Recovery Summary · Apr 16</div>
-    <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#d29922">🟡 Yellow-Green — Post-Session Drop, Still Absorbing</div>
-    <ul class="bullet-list"><li>HRV: 38.9ms (Hume) / 44ms avg (Oura), max 129ms during sleep. Down from 51.3ms (Apr 15) — expected response to 88-min session + 154 bpm peak. Still above 35ms watch threshold. Not suppressed; adapting.</li>
-<li>Sleep: 6h21m, efficiency 84%, deep sleep 1h12m (19% — excellent), REM 1h4m (17%). Sleep started 9:02 PM, woke 4:38 AM. Oura score 81 GOOD — 'Sleep trending above average.' Timing Optimal.</li>
-<li>RHR 57 bpm (lowest) / 63 bpm avg — strong cardiac efficiency signal. SpO2 96%. Breathing regularity Good. Hume recovery 58% — 'Within Green Threshold, body absorbing yesterday\'s 66% strain.'</li>
-<li>Sleep debt 3h50m moderate — up from 2h52m (training load adds to accumulated debt). Oura: 'Pace yourself — resting heart rate lowered late last night.' Energy 77%, strain 0%.</li></ul>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="card-title" style="margin-bottom:0">Sleep · Apr 16</div>
+      <span class="lock-badge">🔒 Locked · 5:22 AM</span>
+    </div>
+    <div class="coach-para-header">Coach's Read</div>
+    <div class="coach-para">
+      Last night was a solid response to Wednesday's load. You slept 6h21m with 1h12m of deep sleep — that's 19% deep, above your typical range, which tells me your body prioritized structural recovery exactly when it needed to. The HRV story this week tells the real picture: 20 → 35 → 51 → 39ms. That's not a problem — that's a classic loaded-week arc. You built training stress, peaked on Wednesday morning, then came back down after the session. The 38.9ms you're sitting at right now is 6ms above your 32.5ms baseline, meaning you're not running a deficit — you're in the natural recovery valley between sessions.
+    </div>
+    <div class="coach-para" style="padding-top:0">
+      What this means for today: your body wants blood flow, not intensity. The cardio window is genuine. RHR of 57 bpm is the lowest you've logged — that's a strong cardiac efficiency signal, and it lines up with the improved sleep timing you've been hitting this week. Tonight's sleep is where you either build or burn Friday's readiness. Target bed by 9:00–9:30 PM. The three consecutive early nights last week built that 51ms peak. Repeat the pattern.
+    </div>
+    <hr class="coach-divider">
+    <div class="coach-para-header">7-Day Trend</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 10</div><div style="font-size:13px;font-weight:700;color:var(--text2)">—</div></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 11</div><div style="font-size:13px;font-weight:700;color:var(--red)">20ms</div></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 12</div><div style="font-size:13px;font-weight:700;color:var(--text2)">—</div></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 13</div><div style="font-size:13px;font-weight:700;color:var(--yellow)">35ms</div></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 14</div><div style="font-size:13px;font-weight:700;color:var(--text2)">—</div></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 15</div><div style="font-size:13px;font-weight:700;color:var(--green)">51ms</div></div>
+      <div style="background:rgba(88,166,255,0.12);border:1px solid rgba(88,166,255,0.3);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--accent)">Today</div><div style="font-size:13px;font-weight:700;color:var(--accent)">39ms</div></div>
+    </div>
+    <div class="inline-note">Baseline: 32.5ms. Green window: ≥42ms. Today sits 6ms above baseline — normal recovery drop, not a red flag.</div>
   </div>
 
-  <div class="stat-grid">
-    <div class="stat-box">
-      <div class="stat-label">HRV Hume</div>
-      <div class="stat-val" style="color:var(--accent)">38.9<span class="stat-unit"> ms</span></div>
-      <div class="stat-note">Max 129ms in sleep</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">HRV Oura avg</div>
-      <div class="stat-val" style="color:var(--accent)">44<span class="stat-unit"> ms</span></div>
-      <div class="stat-note">Baseline 32.5ms</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Oura Ready</div>
-      <div class="stat-val" style="color:var(--yellow)">75</div>
-      <div class="stat-note">Pace yourself</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Energy</div>
-      <div class="stat-val" style="color:var(--green)">77<span class="stat-unit">%</span></div>
-      <div class="stat-note">Strain: 0%</div>
-    </div>
-  </div>
-
+  <!-- Raw numbers — reference only -->
   <div class="card">
-    <div class="card-title">Sleep · Apr 16</div>
+    <div class="card-title">Raw Data · Apr 16 <span style="color:var(--text3);font-size:9px;font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px">(reference)</span></div>
     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
       <div>
         <div class="card-value" style="color:var(--purple)">6h21m</div>
         <div class="card-sub">Oura 81 GOOD · Eff 84%</div>
       </div>
       <div style="text-align:right">
-        <div style="font-size:12px;color:var(--text2)">Debt: -3h50m</div>
-        <div style="font-size:10px;color:var(--text3)">3h50m Moderate</div>
+        <div style="font-size:12px;color:var(--text2)">Debt: −3h50m</div>
+        <div style="font-size:10px;color:var(--text3)">Moderate</div>
       </div>
     </div>
     <div class="section-label" style="margin-top:0">Sleep Stages</div>
     <div class="sleep-stage-row">
       <div class="stage-label">Deep</div>
       <div class="stage-bar-wrap"><div class="stage-bar" style="width:19%;background:#58a6ff"></div></div>
-      <div class="stage-val">1h12m (19%)</div>
+      <div class="stage-val">1h12m · 19% <span class="tag tag-green">↑ Above avg</span></div>
     </div>
     <div class="sleep-stage-row">
       <div class="stage-label">REM</div>
       <div class="stage-bar-wrap"><div class="stage-bar" style="width:17%;background:#a371f7"></div></div>
-      <div class="stage-val">1h04m (17%)</div>
+      <div class="stage-val">1h04m · 17%</div>
     </div>
     <div class="sleep-stage-row">
       <div class="stage-label">Light</div>
-      <div class="stage-bar-wrap"><div class="stage-bar" style="width:48%;background:#3fb950"></div></div>
-      <div class="stage-val">4h05m (64%)</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:64%;background:#3fb950"></div></div>
+      <div class="stage-val">4h05m · 64%</div>
     </div>
     <div class="sleep-stage-row">
       <div class="stage-label">Awake</div>
@@ -295,7 +494,7 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
       <div class="stage-val">1h15m</div>
     </div>
     <div style="margin-top:10px;font-size:11px;color:var(--text2)">
-      SpO&#8322; 96% · Breathing: Good · Latency 14m · Optimal timing
+      SpO₂ 96% · Breathing: Good · Latency 14m · Bedtime Optimal (9:02 PM)
     </div>
   </div>
 
@@ -303,56 +502,286 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     <div class="stat-box">
       <div class="stat-label">RHR Lowest</div>
       <div class="stat-val" style="color:var(--green)">57<span class="stat-unit"> bpm</span></div>
-      <div class="stat-note">avg 63 bpm</div>
+      <div class="stat-note">avg 63 bpm · Baseline 62.6</div>
     </div>
     <div class="stat-box">
       <div class="stat-label">Stress Avg</div>
       <div class="stat-val" style="color:var(--yellow)">26</div>
       <div class="stat-note">High 53 · Low 2</div>
     </div>
-  </div>
-</div>
-
-<!-- TRAINING -->
-<div id="tab-training" class="tab-content">
-  <div class="eval-card">
-    <div class="status-pill">✓ Completed · Apr 15</div>
-    <div class="eval-header">Session Complete — Apr 15 · 6,300 kg · 88 min · Avg HR 118 bpm</div>
-    <ul class="bullet-list"><li>Volume: 6,300 kg — consistent with Apr 13 baseline. Session ran 23 min over target (88 min vs 65 min cap). Duration, not volume, drove the HR overrun.</li>
-<li>HR compliance: Avg 118 bpm ✅ within cap. Peak 154 bpm ⚠️ exceeded 122 cap. 40% Z3 + 11% Z4 = significant aerobic tax layered on strength work. Next session: 75 min hard cap, trim accessory block if needed.</li>
-<li>Highlights: Machine V Squat 40→50 kg (13 reps final set) progressive. Pallof Press 5.7 kg × 3 sets — anti-rotation anchor consistent. Landmine Press 30 kg top set held.</li>
-<li>Correctives completed: Hip Flexor Stretch, Wall Slide, TRX Y-Raise, Dead Bug × 3, Pallof Press × 3. Full compliance.</li>
-<li>Next session (Friday): Pull-dominant. Plan: Neutral Lat Pulldown → Single-Arm Row → Hip Thrust. Test Landmine Press 32.5 kg if readiness is green. Hard 65 min cap — no exceptions.</li></ul>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Today&#39;s Plan · Thu Apr 16</div>
-    <div style="background:var(--yellow-bg);border:1px solid rgba(210,153,34,0.25);border-radius:8px;padding:10px;margin-bottom:10px">
-      <div style="font-size:12px;font-weight:700;color:var(--yellow);margin-bottom:4px">🟡 Cardio — Z1/Z2 Recovery</div>
-      <div style="font-size:11.5px;color:var(--text2);line-height:1.55">Walk or easy bike · 45–55 min · HR cap 122 bpm. HRV 38.9ms — cleared for cardio. No strength. Blood flow and parasympathetic recovery after yesterday&#39;s 88-min session + 154 bpm peak.</div>
+    <div class="stat-box">
+      <div class="stat-label">Hume Recovery</div>
+      <div class="stat-val" style="color:var(--yellow)">58<span class="stat-unit">%</span></div>
+      <div class="stat-note">Green threshold</div>
     </div>
-    <div class="section-label">Session Format</div>
-    <ul class="bullet-list">
-      <li>5–10 min easy walk warm-up (HR ≤100 bpm)</li>
-      <li>30–40 min steady Z1/Z2 — treadmill walk incline 3–5% or outdoor. Target avg HR 100–115 bpm</li>
-      <li>Cool-down 5 min easy. No intervals, no circuits.</li>
-      <li>Post-cardio: protein shake immediately. Target 28–30g protein.</li>
-    </ul>
-    <div style="margin-top:10px;font-size:11px;color:var(--text3)">Friday: Pull-dominant strength · Lat Pulldown → Single-Arm Row → Hip Thrust · Test Landmine 32.5 kg if HRV ≥42ms</div>
+    <div class="stat-box">
+      <div class="stat-label">HRV Oura avg</div>
+      <div class="stat-val" style="color:var(--accent)">44<span class="stat-unit"> ms</span></div>
+      <div class="stat-note">Max 129ms in sleep</div>
+    </div>
   </div>
+
 </div>
 
-<!-- NUTRITION -->
-<div id="tab-nutrition" class="tab-content">
+
+<!-- ══════════════════════════════════════════════════════
+     TRAINING TAB
+══════════════════════════════════════════════════════ -->
+<div id="tab-training" class="tab-content">
+
+  <!-- Week strip -->
+  <div class="card" style="padding:12px">
+    <div class="card-title" style="margin-bottom:8px">Block 1 · Week of Apr 13</div>
+    <div class="week-strip">
+      <div class="week-day done">
+        <div class="week-day-label">Mon</div>
+        <div class="week-day-icon">✅</div>
+        <div class="week-day-type" style="color:var(--green)">Pull · Hinge</div>
+      </div>
+      <div class="week-day done">
+        <div class="week-day-label">Tue</div>
+        <div class="week-day-icon">✅</div>
+        <div class="week-day-type" style="color:var(--green)">Z1/Z2</div>
+      </div>
+      <div class="week-day done">
+        <div class="week-day-label">Wed</div>
+        <div class="week-day-icon">✅</div>
+        <div class="week-day-type" style="color:var(--green)">Push · Quad</div>
+      </div>
+      <div class="week-day today">
+        <div class="week-day-label" style="color:var(--accent)">Thu</div>
+        <div class="week-day-icon">🚶</div>
+        <div class="week-day-type" style="color:var(--accent)">Cardio</div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-label">Fri</div>
+        <div class="week-day-icon">💪</div>
+        <div class="week-day-type">Athletic</div>
+      </div>
+      <div class="week-day sprint">
+        <div class="week-day-label" style="color:var(--orange)">Sat</div>
+        <div class="week-day-icon">⚡</div>
+        <div class="week-day-type" style="color:var(--orange)">Sprints</div>
+      </div>
+      <div class="week-day">
+        <div class="week-day-label">Sun</div>
+        <div class="week-day-icon">📋</div>
+        <div class="week-day-type">Plan Wk2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── UPCOMING SESSION ─── -->
+  <div class="upcoming-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div class="upcoming-label">⬆ Up Next · Friday Apr 17</div>
+      <span class="lock-badge">🔒 Plan Locked<br><span style="font-size:8px;color:var(--text3);font-weight:400">Change exercises below</span></span>
+    </div>
+    <div class="upcoming-title">Athletic Mixed / Corrective Close</div>
+    <div class="upcoming-sub">Floor 3 → Floor 2 → Floor 3 · Time cap: <strong style="color:var(--red)">60 min hard</strong> · Readiness gate: ≥42ms HRV</div>
+
+    <div class="why-para">
+      Friday closes Week 1 with the pattern that matters most for your structural priorities: horizontal pulling. Meadows Row and Chest-Supported Row are directly targeting your right-side dominance and shoulder imbalance — the two issues most flagged in your AI assessment. Left side leads on everything unilateral. The Cable Pull-Through gives you hip hinge mechanics without loading the OA joint — posterior chain work, no joint stress. The finish block isn't conditioning accessory work — KB Swing and Suitcase Carry address the anti-rotation weakness and asymmetrical carry strength your Hume trunk "Low" rating is telling us to fix.
+    </div>
+    <div class="why-para" style="margin-bottom:0">
+      This session has the shortest time cap of the week — 60 minutes — and that's intentional. Three strength days in one week at 57 already asks a lot. Wednesday ran 88 minutes, and your body paid for it. Friday gets 60 and no more. You'll show up for Saturday's sprint block fresh, or you won't show up at all. Hit your blocks, watch the clock, leave on time.
+    </div>
+
+    <hr class="coach-divider" style="margin:14px 0">
+
+    <!-- PREP BLOCK -->
+    <div class="block-section">
+      <div class="block-header">
+        <span>PREP</span>
+        <span class="block-floor">Floor 3</span>
+        <span class="block-time">10 min</span>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">Open Book Stretch</div>
+        <div class="ex-prescription">1 × 8 each side · slow</div>
+        <div class="ex-note">Start left. Thoracic rotation — sets range of motion for every row that follows.</div>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">Banded Hip Abduction</div>
+        <div class="ex-prescription">2 × 15 each side</div>
+        <div class="ex-note">Standing or side-lying. Glute activation before hinge work — non-negotiable with mild OA.</div>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">Hanging Scapular Pull</div>
+        <div class="ex-prescription">2 × 8 · controlled</div>
+        <div class="ex-note">Dead hang, depress and retract scapulae only. No elbow bend. Primes pull pattern and shoulder stability.</div>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">Band Pull-Aparts</div>
+        <div class="ex-prescription">2 × 15 · elbows soft</div>
+        <div class="ex-note">Rear delt and external rotation primer. Shoulder imbalance correction starts here.</div>
+      </div>
+    </div>
+
+    <!-- BLOCK A -->
+    <div class="block-section">
+      <div class="block-header">
+        <span>BLOCK A</span>
+        <span class="block-floor">Floor 2</span>
+        <span class="block-time">18 min</span>
+      </div>
+      <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Superset A1 + A2 · Rest 90 sec after each pair</div>
+      <div class="exercise-row">
+        <div class="ex-name">A1 · Meadows Row</div>
+        <div class="ex-prescription">3 × 10 each side · Left first</div>
+        <div class="ex-note">Single-arm landmine row. Heavy horizontal pull — drives left-side activation and right-dominance correction. Full retraction at top, control the descent.</div>
+        <div class="ex-footer">
+          <span class="ex-alt-label">Swap:</span>
+          <span class="ex-alts">Cable Single-Arm Row · DB Chest-Supported Row · TRX Row</span>
+          <button class="ex-change-btn" onclick="toggleChange('a1')">Change</button>
+        </div>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">A2 · Cable Pull-Through</div>
+        <div class="ex-prescription">3 × 15 · hip hinge pattern</div>
+        <div class="ex-note">Hip hinge with posterior chain drive — no deep hip flexion, no joint loading. Glute-led extension. This is the safe hinge for your OA.</div>
+        <div class="ex-footer">
+          <span class="ex-alt-label">Swap:</span>
+          <span class="ex-alts">KB Deadlift · RDL light · Good Morning</span>
+          <button class="ex-change-btn" onclick="toggleChange('a2')">Change</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK B -->
+    <div class="block-section">
+      <div class="block-header">
+        <span>BLOCK B</span>
+        <span class="block-floor">Floor 2</span>
+        <span class="block-time">18 min</span>
+      </div>
+      <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Superset B1 + B2 · Rest 90 sec after each pair</div>
+      <div class="exercise-row">
+        <div class="ex-name">B1 · DB Chest-Supported Row</div>
+        <div class="ex-prescription">3 × 12 · neutral grip</div>
+        <div class="ex-note">Incline bench, arms hanging neutral. Eliminates lower back compensation — pure mid-back and rhomboids. Target: full retract, 1-sec hold at top.</div>
+        <div class="ex-footer">
+          <span class="ex-alt-label">Swap:</span>
+          <span class="ex-alts">Machine Row · Cable Row seated · Hammer Row</span>
+          <button class="ex-change-btn" onclick="toggleChange('b1')">Change</button>
+        </div>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">B2 · TRX Y-Raise</div>
+        <div class="ex-prescription">3 × 12 · slow tempo</div>
+        <div class="ex-note">Scapular stability and lower trap activation. This is the structural correction work — not optional. 3 seconds up, control down. Both arms must feel symmetrical.</div>
+        <div class="ex-footer">
+          <span class="ex-alt-label">Swap:</span>
+          <span class="ex-alts">Cable Face Pull · DB Rear Delt Raise · Band Pull-Apart</span>
+          <button class="ex-change-btn" onclick="toggleChange('b2')">Change</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK C -->
+    <div class="block-section">
+      <div class="block-header">
+        <span>BLOCK C — Finish</span>
+        <span class="block-floor">Floor 3</span>
+        <span class="block-time">12 min</span>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">KB Swing</div>
+        <div class="ex-prescription">3 × 10 · explosive</div>
+        <div class="ex-note">True hip hinge power — not a squat. Hip drive to horizontal, glutes contract at the top. This is the athletic piece of the session. Fun factor.</div>
+        <div class="ex-footer">
+          <span class="ex-alt-label">Swap:</span>
+          <span class="ex-alts">Cable Pull-Through × 12 · Box Hip Hinge · Med Ball Hip Pop</span>
+          <button class="ex-change-btn" onclick="toggleChange('c1')">Change</button>
+        </div>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">Suitcase Carry</div>
+        <div class="ex-prescription">3 × 25m · Left hand only</div>
+        <div class="ex-note">Anti-lateral flexion — left hand loads the weaker side of the asymmetry. Walk tall, no lean. This is core work, not cardio. Breathing steady throughout.</div>
+        <div class="ex-footer">
+          <span class="ex-alt-label">Swap:</span>
+          <span class="ex-alts">Farmer Carry both · Offset KB Carry · Pallof Press × 12</span>
+          <button class="ex-change-btn" onclick="toggleChange('c2')">Change</button>
+        </div>
+      </div>
+      <div class="exercise-row">
+        <div class="ex-name">Dead Bug</div>
+        <div class="ex-prescription">2 × 8 each side · slow</div>
+        <div class="ex-note">Low back flat to the floor throughout. Opposite arm-leg extension, breathe out on extension. Anti-extension core — closes the trunk weakness pattern every session.</div>
+        <div class="ex-footer">
+          <span class="ex-alt-label">Swap:</span>
+          <span class="ex-alts">Plank 30 sec · Bird Dog × 8 · Hollow Hold</span>
+          <button class="ex-change-btn" onclick="toggleChange('c3')">Change</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end upcoming-card -->
+
+  <!-- Notes to Coach input -->
   <div class="card">
-    <div class="card-title">April 16 — Reset Day</div>
-    <div style="font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:6px">Target: 1,600–1,800 kcal</div>
-    <div style="font-size:11.5px;color:var(--text2);margin-bottom:12px">Offsetting yesterday&#39;s +340 kcal surplus. No food logged yet (4:48 AM).</div>
-    <div class="section-label">Today&#39;s Targets</div>
-    <div class="macro-row">
-      <div class="macro-label">KCAL</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:0%;background:var(--accent)"></div></div>
-      <div class="macro-val">0 / 1,700</div>
+    <div class="card-title">Notes to Coach</div>
+    <textarea class="coach-q-input" rows="3" placeholder="Anything you want Coach to know before Friday's session... fatigue, joint issues, time pressure, etc."></textarea>
+    <button class="coach-q-submit" style="background:var(--surface2);color:var(--text2);border:1px solid var(--border);">Send to Coach</button>
+  </div>
+
+  <!-- ─── LAST SESSION REVIEW ─── -->
+  <div class="session-review-card">
+    <div class="review-label">
+      <span class="status-pill pill-green">✓ Completed</span>
+    </div>
+    <div class="review-session-title">Wednesday Apr 15 — Push + Quad / Anti-Rotation</div>
+    <div class="review-stats">
+      <div class="review-stat"><strong>6,300 kg</strong> volume</div>
+      <div class="review-stat"><strong>88 min</strong> <span class="tag tag-red">23 over</span></div>
+      <div class="review-stat"><strong>118 bpm</strong> avg HR ✅</div>
+      <div class="review-stat"><strong>154 bpm</strong> peak <span class="tag tag-red">⚠</span></div>
+    </div>
+    <div class="coach-para-header">Coach's Review</div>
+    <div class="coach-para" style="padding-top:0">
+      You matched Monday's 6,300 kg exactly — that's a meaningful consistency signal in Week 1. The strength work was solid: V-Squat jumped 40→50 kg with 13 reps on the final set, which is real progressive load, not just going through the motions. Pallof Press held at 5.7 kg across all 3 sets — the anti-rotation anchor is sticking. Corrective work was complete. All of that is a win.
+    </div>
+    <div class="coach-para" style="padding-top:0">
+      Here's what you fix on Friday: the session ran 88 minutes, and the peak HR hit 154 bpm. That's the same drift that's happened in 3 of your last 5 sessions — you feel good, the work is going well, and you keep going. The cost is a heavier recovery tax and a higher HR peak than a 65-minute cap would have produced. The 154 bpm peak is what put your HRV at 39ms instead of 45ms this morning. Friday's cap is 60 minutes. Not a suggestion. If the accessory block needs to be trimmed, trim it — the structural anchors come first.
+    </div>
+    <div class="lock-badge" style="margin-top:6px">🔒 Locked · Written Apr 15 post-session</div>
+  </div>
+
+  <!-- Saturday sprint block -->
+  <div class="card" style="border-color:rgba(240,136,62,0.3);background:rgba(240,136,62,0.05)">
+    <div class="card-title" style="color:var(--orange)">⚡ Saturday Apr 19 — Sprint Block (HGH Protocol)</div>
+    <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">Matrix Upright Bike · Floor 1 · 25–30 min standalone</div>
+    <ul class="bullet-list">
+      <li><strong>Gate condition:</strong> Saturday morning HRV ≥35ms AND sleep debt &lt;5h AND Friday session felt normal. Skip or reduce to 3×20 sec if any gate fails.</li>
+      <li><strong>Warm-up:</strong> 5 min easy pedaling. HR 85–100 bpm going in.</li>
+      <li><strong>Work:</strong> 4 × 20 sec ALL OUT. Resistance 8–10 dial. True maximal output. You will exceed 122 bpm — this is the point.</li>
+      <li><strong>Recovery:</strong> 3 min easy pedaling between efforts. Do not stop — keep legs moving.</li>
+      <li><strong>Cool-down:</strong> 5–8 min easy. HR below 110 bpm before leaving.</li>
+    </ul>
+    <div style="margin-top:10px;font-size:11px;color:var(--orange)">Week 1–2: 4×20 sec / 3 min rest · Progression to 5×20 sec starts Week 3 only if HRV trend supports it</div>
+    <div class="lock-badge" style="margin-top:8px">🔒 Locked · Block 1 Sprint Protocol</div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     NUTRITION TAB
+══════════════════════════════════════════════════════ -->
+<div id="tab-nutrition" class="tab-content">
+
+  <!-- STICKY MACRO HEADER — always visible -->
+  <div class="macro-sticky">
+    <div class="macro-date-row">
+      <div>
+        <div class="macro-date-label">Thu Apr 16 · Reset Day</div>
+        <div style="font-size:10px;color:var(--text3)">Target: 1,600–1,800 kcal</div>
+      </div>
+      <div style="text-align:right">
+        <div class="macro-kcal-live">0 <span class="macro-kcal-target">/ 1,700</span></div>
+        <div style="font-size:10px;color:var(--text3)">0 logged</div>
+      </div>
     </div>
     <div class="macro-row">
       <div class="macro-label">PROT</div>
@@ -371,106 +800,176 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     </div>
   </div>
 
+  <!-- Weight & body comp -->
   <div class="card">
-    <div class="card-title">Yesterday Closed · Apr 15</div>
+    <div class="card-title">Weight & Body Comp</div>
+    <div class="weight-row">
+      <div class="weight-box">
+        <div class="weight-label">Weight (today)</div>
+        <div class="weight-val" style="color:var(--green)">165.6 <span style="font-size:12px;color:var(--text2)">lbs</span></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">Ocare3 · Apr 13</div>
+      </div>
+      <div class="weight-box">
+        <div class="weight-label">Goal</div>
+        <div class="weight-val" style="color:var(--accent)">165 <span style="font-size:12px;color:var(--text2)">lbs</span></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">0.6 lbs away ✅</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
+        <div class="weight-label">BF%</div>
+        <div style="font-size:16px;font-weight:700;color:var(--text)">16.3%</div>
+        <div style="font-size:9px;color:var(--text3)">Bevel · Apr 12</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
+        <div class="weight-label">Visceral</div>
+        <div style="font-size:16px;font-weight:700;color:var(--yellow)">Lv 2</div>
+        <div style="font-size:9px;color:var(--text3)">Bevel · Apr 12</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
+        <div class="weight-label">Lean Mass</div>
+        <div style="font-size:16px;font-weight:700;color:var(--green)">138.8 lb</div>
+        <div style="font-size:9px;color:var(--text3)">Bevel · Apr 12</div>
+      </div>
+    </div>
+    <div class="inline-note" style="margin-top:10px">Weekly avg 165.6 lbs — within 1 lb of goal. Lean mass holding steady. VAT direction: down (Lv 3 → Lv 2 in 24 hours, Apr 11–12). Progress is real.</div>
+  </div>
+
+  <!-- Coach's nutrition callout -->
+  <div class="card">
+    <div class="card-title">Coach's Nutrition Call · Apr 16 <span class="lock-badge" style="float:right">🔒 Morning</span></div>
+    <div class="coach-para" style="padding-top:0;font-size:12px">
+      Yesterday closed +340 kcal over with 91g fat — the brunch plate (French toast + eggs) was the entire problem. Protein hit 159g, which is actually a win. Today's job is simple: restore the deficit, hold protein, keep fat tight. Target 1,600–1,800 kcal, not a hard crash. The reason you're running a 300–400 kcal daily deficit is to preserve lean mass while reducing VAT — destroying intake today doesn't accelerate that, it just increases muscle breakdown risk. Eat to your target, not below it.
+    </div>
+    <div class="coach-para" style="padding-top:0;font-size:12px">
+      Plan: pre-cardio light protein (eggs, Greek yogurt), post-cardio protein shake (28–30g), lean lunch (poke bowl worked perfectly last night), and a protein-anchored dinner. No brunch plate format today — eggs only if you're having breakfast out.
+    </div>
+  </div>
+
+  <!-- Today's meals section label -->
+  <div class="section-label" style="margin-top:4px">Today's Meals</div>
+
+  <!-- Empty state — no meals logged yet -->
+  <div class="meal-empty">
+    <div style="font-size:24px;margin-bottom:8px">🍽</div>
+    <div>No meals logged yet today.</div>
+    <div style="margin-top:4px;font-size:11px">Log food via photo, screenshot, or description.<br>Coach will interpret each entry as it arrives.</div>
+  </div>
+
+  <!-- ─── EXAMPLE of what a logged meal looks like (hidden by default, shown for demo) ─── -->
+  <!--
+  <div class="meal-card">
+    <div class="meal-header">
+      <div class="meal-name">Greek Yogurt + Protein Shake</div>
+      <div class="meal-time">6:15 AM</div>
+    </div>
+    <div class="meal-macros">320 kcal · P 48g · C 22g · F 5g</div>
+    <div class="meal-coach-callout">
+      Strong start — 48g protein in one shot. Gets you to 32% of daily target before 7am. Fat at 5g is minimal, which is exactly what today needs. Keep the rest of the day's fat under 55g and you're clean.
+    </div>
+  </div>
+  -->
+
+  <!-- Yesterday closed -->
+  <div class="card" style="margin-top:12px">
+    <div class="card-title">Yesterday Closed · Apr 15 <span class="lock-badge" style="float:right">🔒 Final</span></div>
     <div class="macro-row">
       <div class="macro-label">KCAL</div>
       <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--yellow)"></div></div>
-      <div class="macro-val">2,340 / 2,000 ⚠</div>
+      <div class="macro-val" style="color:var(--yellow)">2,340 / 2,000 ⚠</div>
     </div>
     <div class="macro-row">
       <div class="macro-label">PROT</div>
       <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--green)"></div></div>
-      <div class="macro-val">159g / 150g ✓</div>
+      <div class="macro-val" style="color:var(--green)">159g / 150g ✓</div>
     </div>
     <div class="macro-row">
       <div class="macro-label">CARB</div>
       <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--yellow)"></div></div>
-      <div class="macro-val">238g / 190g ⚠</div>
+      <div class="macro-val" style="color:var(--yellow)">238g / 190g ⚠</div>
     </div>
     <div class="macro-row">
       <div class="macro-label">FAT</div>
       <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--red)"></div></div>
-      <div class="macro-val">91g / 70g ⚠</div>
+      <div class="macro-val" style="color:var(--red)">91g / 70g ⚠</div>
     </div>
-    <div style="font-size:10.5px;color:var(--text3);margin-top:8px">Brunch plate (French toast + eggs) = 53g fat in 1 meal. That&#39;s the recurring leak.</div>
+    <div class="inline-note" style="margin-top:8px">Brunch plate (French toast + eggs) = 53g fat in one meal. That's the recurring leak — same pattern 3× this week. The fix is specific: eggs only at brunch, no fried components.</div>
   </div>
 
-  <div class="card">
-    <div class="section-label">Coaching Note</div>
-    <ul class="bullet-list"><li>Yesterday closed: 2,340 kcal / +340 over | P: 159g ✅ | C: 238g ⚠️ | F: 91g ⚠️ +21g over. Protein win, fat loss from brunch plate.</li>
-<li>Today's target: 1,600–1,800 kcal to rebalance the week's deficit. Protein 150g non-negotiable. Fat ≤60g (lower than normal to correct yesterday's +21g overage).</li>
-<li>Brunch plan: eggs only (no French toast, no hash browns, no fried components). Or lean protein bowl. The brunch plate pattern is the sole recurring macro leak this week.</li>
-<li>No food logged yet — morning is clean. Pre-cardio: light protein source. Post-cardio: protein shake. Anchor dinner with lean protein + complex carbs (poke bowl format worked perfectly last night).</li></ul>
-  </div>
 </div>
 
-<!-- TRENDS -->
-<div id="tab-trends" class="tab-content">
-  <div class="chart-wrap">
-    <div class="chart-header">
-      <div class="chart-title">HRV (ms) · 14-day</div>
-      <div class="chart-latest" style="color:#58a6ff">38.9 ms</div>
-    </div>
-    <svg class="sparkline" viewBox="0 0 340 90">
-      <line x1="8" y1="50" x2="332" y2="50" stroke="#30363d" stroke-width="0.5" stroke-dasharray="3,3"/>
-      <text x="330" y="48" text-anchor="end" font-size="9" fill="#6e7681">32.5ms</text>
-      <polyline points="8.0,11.7 66.9,33.2 96.4,59.4 125.8,16.5 155.3,36.8 184.7,33.3 214.2,29.5 243.6,58.5 273.1,37.9 302.5,16.6 332.0,33.2" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round"/>
-      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
-    </svg>
+
+<!-- ══════════════════════════════════════════════════════
+     ASK COACH TAB
+══════════════════════════════════════════════════════ -->
+<div id="tab-ask" class="tab-content">
+
+  <div class="coach-q-intro">
+    These questions help Coach know you more precisely — not generic answers, but the specific things that sharpen your program. Answer when you have a minute. There's no pressure and no wrong answers.
   </div>
 
-  <div class="chart-wrap">
-    <div class="chart-header">
-      <div class="chart-title">Sleep (hours) · 14-day</div>
-      <div class="chart-latest" style="color:#a371f7">6.3h</div>
+  <!-- Question 1 -->
+  <div class="coach-q-card">
+    <div class="coach-q-header">
+      <div class="coach-q-icon">🧠</div>
+      <div>
+        <div class="coach-q-text">When you walk into the gym, what's the clearest signal — physically or mentally — that it's going to be a good session?</div>
+        <div class="coach-q-context">Not the data. What do YOU feel? Your subjective read before you start is something no app captures, and it matters for how Coach calibrates your warm-up and opening loads.</div>
+      </div>
     </div>
-    <svg class="sparkline" viewBox="0 0 340 90">
-      <polyline points="37.5,14.8 66.9,29.7 125.8,42.8 155.3,48.4 184.7,24.1 214.2,22.3 243.6,52.1 273.1,26.0 302.5,24.1 332.0,33.5" fill="none" stroke="#a371f7" stroke-width="2" stroke-linejoin="round"/>
-      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
-    </svg>
-  </div>
-
-  <div class="chart-wrap">
-    <div class="chart-header">
-      <div class="chart-title">Recovery % · 14-day</div>
-      <div class="chart-latest" style="color:#d29922">58%</div>
-    </div>
-    <svg class="sparkline" viewBox="0 0 340 90">
-      <polyline points="8.0,36.9 66.9,31.7 96.4,59.7 125.8,11.5 155.3,46.6 184.7,32.6 214.2,22.9 273.1,44.0 302.5,16.8 332.0,31.7" fill="none" stroke="#d29922" stroke-width="2" stroke-linejoin="round"/>
-      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
-    </svg>
-  </div>
-
-  <div class="chart-wrap">
-    <div class="chart-header">
-      <div class="chart-title">Resting HR (bpm) · 14-day</div>
-      <div class="chart-latest" style="color:#3fb950">57 bpm</div>
-    </div>
-    <svg class="sparkline" viewBox="0 0 340 90">
-      <polyline points="66.9,26.6 96.4,19.9 125.8,31.1 155.3,18.7 184.7,25.4 214.2,27.0 243.6,24.7 273.1,18.4 302.5,28.2 332.0,43.8" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round"/>
-      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
-    </svg>
-  </div>
-
-  <div class="card">
-    <div class="card-title">HRV This Week (Hume)</div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 13</div><div style="font-size:14px;font-weight:700;color:#f85149">20ms</div></div>
-<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 14</div><div style="font-size:14px;font-weight:700;color:#d29922">35.4ms</div></div>
-<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 15</div><div style="font-size:14px;font-weight:700;color:#3fb950">51.3ms</div></div>
-<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 16</div><div style="font-size:14px;font-weight:700;color:#d29922">38.9ms</div></div>
-
+    <div class="coach-q-body">
+      <textarea class="coach-q-input" rows="3" placeholder="Your answer here..."></textarea>
+      <button class="coach-q-submit">Send Answer to Coach</button>
     </div>
   </div>
+
+  <!-- Question 2 -->
+  <div class="coach-q-card">
+    <div class="coach-q-header">
+      <div class="coach-q-icon">🍫</div>
+      <div>
+        <div class="coach-q-text">On the chocolate and sweets — is there a specific trigger, or does it feel more random?</div>
+        <div class="coach-q-context">Boredom, post-dinner habit, social context, stress? One sentence is enough. Knowing the pattern helps Coach build a specific response rather than a generic note.</div>
+      </div>
+    </div>
+    <div class="coach-q-body">
+      <textarea class="coach-q-input" rows="3" placeholder="Your answer here..."></textarea>
+      <button class="coach-q-submit">Send Answer to Coach</button>
+    </div>
+  </div>
+
+  <!-- Question 3 -->
+  <div class="coach-q-card">
+    <div class="coach-q-header">
+      <div class="coach-q-icon">⏰</div>
+      <div>
+        <div class="coach-q-text">What time of day do you typically train, and is that fixed or variable depending on the week?</div>
+        <div class="coach-q-context">This shapes when Coach should front-load your nutrition, when to expect meal logs, and how to read HRV in context of training timing.</div>
+      </div>
+    </div>
+    <div class="coach-q-body">
+      <textarea class="coach-q-input" rows="2" placeholder="e.g. 6am most days, sometimes afternoon on Fridays..."></textarea>
+      <button class="coach-q-submit">Send Answer to Coach</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:4px">
+    <div class="card-title">Drop Anything for Coach</div>
+    <div style="font-size:11.5px;color:var(--text2);margin-bottom:10px;line-height:1.6">Feedback on a session, something that felt off, a pattern you've noticed, a question about the plan — put it here and Coach will process it at the next update.</div>
+    <textarea class="coach-q-input" rows="4" placeholder="Anything Coach should know..."></textarea>
+    <button class="coach-q-submit">Send to Coach</button>
+  </div>
+
 </div>
 
+
+<!-- ═══════════════════════════════════════════ BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="nav-btn active" onclick="switchTab('brief')" id="nav-brief">
     <div class="nav-icon">📋</div><div class="nav-label">Brief</div>
   </div>
-  <div class="nav-btn" onclick="switchTab('recovery')" id="nav-recovery">
-    <div class="nav-icon">💤</div><div class="nav-label">Recovery</div>
+  <div class="nav-btn" onclick="switchTab('sleep')" id="nav-sleep">
+    <div class="nav-icon">💤</div><div class="nav-label">Sleep</div>
   </div>
   <div class="nav-btn" onclick="switchTab('training')" id="nav-training">
     <div class="nav-icon">💪</div><div class="nav-label">Training</div>
@@ -478,22 +977,54 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
   <div class="nav-btn" onclick="switchTab('nutrition')" id="nav-nutrition">
     <div class="nav-icon">🥗</div><div class="nav-label">Nutrition</div>
   </div>
-  <div class="nav-btn" onclick="switchTab('trends')" id="nav-trends">
-    <div class="nav-icon">📈</div><div class="nav-label">Trends</div>
+  <div class="nav-btn" onclick="switchTab('ask')" id="nav-ask">
+    <div class="nav-icon">🤔</div><div class="nav-label">Ask Coach</div>
   </div>
 </div>
 
 <script>
+const TAB_IDS = ['brief','sleep','training','nutrition','ask'];
+
 function switchTab(id) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
-  const tabs = ['brief','recovery','training','nutrition','trends'];
-  document.querySelectorAll('.tab-btn')[tabs.indexOf(id)].classList.add('active');
+  document.querySelectorAll('.tab-btn')[TAB_IDS.indexOf(id)].classList.add('active');
   document.getElementById('nav-' + id).classList.add('active');
   window.scrollTo(0, 0);
 }
+
+function toggleChange(id) {
+  // In the future this would open a modal with alternatives and feed back to Coach
+  const btn = event.target;
+  btn.textContent = 'Noted ✓';
+  btn.style.color = 'var(--green)';
+  btn.style.borderColor = 'rgba(63,185,80,0.3)';
+  setTimeout(() => {
+    btn.textContent = 'Change';
+    btn.style.color = '';
+    btn.style.borderColor = '';
+  }, 2000);
+  // Future: POST to Coach pipeline with exercise id + "change requested"
+}
+
+// Submit handlers — stub for now, will wire to Coach pipeline
+document.querySelectorAll('.coach-q-submit').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const textarea = this.previousElementSibling;
+    if (textarea && textarea.value.trim()) {
+      const original = this.textContent;
+      this.textContent = '✓ Sent to Coach';
+      this.style.background = 'var(--green)';
+      setTimeout(() => {
+        this.textContent = original;
+        this.style.background = '';
+      }, 2500);
+      // Future: serialize and route to SESSION_MEMORY.md / coaching pipeline
+    }
+  });
+});
 </script>
 </body>
 </html>
