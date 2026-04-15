@@ -1879,8 +1879,48 @@ function renderNutrition(db) {
   const allAvgProt = nutAvg(allNut, 'protein_g');
 
   return `
-  <!-- Nutrition coaching note -->
+  <!-- Quick-Add Food Database -->
   <div class="section" style="padding-top:14px">
+    <div class="section-title">Quick Add</div>
+    <div class="card" style="padding:10px">
+      <div id="ql-pending-banner" style="display:none;margin-bottom:10px;padding:8px 10px;background:rgba(88,166,255,0.08);border:1px solid var(--accent);border-radius:6px;font-size:12px;color:var(--text)">
+        <span id="ql-pending-summary"></span>
+        <button onclick="qlConfirmQuickAdd()" style="float:right;background:var(--accent);color:#fff;border:none;border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer">Log it</button>
+        <button onclick="qlClearPending()" style="float:right;margin-right:6px;background:var(--surface3);color:var(--text2);border:none;border-radius:4px;padding:3px 8px;font-size:11px;cursor:pointer">Clear</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
+        ${[
+          { name:'Whey Shake',        emoji:'🥛', sub:'2 scoop + almond milk',     cal:220, p:48, c:6,  f:7,  meal:'post_workout'   },
+          { name:'Pocari Sweat',       emoji:'🏃', sub:'500ml bottle',              cal:223, p:0,  c:56, f:0,  meal:'intra_workout'  },
+          { name:'Eggs × 2',           emoji:'🍳', sub:'scrambled or hard boiled',  cal:140, p:12, c:2,  f:10, meal:'breakfast'      },
+          { name:'Chicken Breast',     emoji:'🍗', sub:'150g grilled, no sauce',    cal:248, p:46, c:0,  f:5,  meal:'lunch'          },
+          { name:'Greek Yogurt',       emoji:'🥣', sub:'150g plain 0% fat',         cal:90,  p:15, c:7,  f:0,  meal:'snack'          },
+          { name:'Rice 1 cup',         emoji:'🍚', sub:'cooked white rice',         cal:200, p:4,  c:45, f:0,  meal:'lunch'          },
+          { name:'Sweet Potato',       emoji:'🍠', sub:'medium, baked',             cal:130, p:2,  c:31, f:0,  meal:'dinner'         },
+          { name:'Oats 50g',           emoji:'🌾', sub:'dry, with almond milk',     cal:190, p:7,  c:34, f:3,  meal:'breakfast'      },
+          { name:'Salmon 150g',        emoji:'🐟', sub:'grilled, no oil',           cal:280, p:39, c:0,  f:13, meal:'dinner'         },
+          { name:'Tuna 85g',           emoji:'🐟', sub:'canned in water, drained',  cal:100, p:22, c:0,  f:1,  meal:'lunch'          },
+          { name:'Banana',             emoji:'🍌', sub:'medium',                    cal:105, p:1,  c:27, f:0,  meal:'snack'          },
+          { name:'Beef Jerky 1oz',     emoji:'🥩', sub:'standard jerky',            cal:116, p:9,  c:3,  f:7,  meal:'snack'          },
+          { name:'Pre-Workout',        emoji:'⚡', sub:'drink mix, 1 serving',      cal:10,  p:0,  c:3,  f:0,  meal:'pre_workout'    },
+          { name:'Coffee (black)',     emoji:'☕', sub:'no sugar, no cream',        cal:5,   p:0,  c:1,  f:0,  meal:'snack'          },
+          { name:'Whey 1 scoop',       emoji:'💊', sub:'Gold Standard, water',      cal:120, p:24, c:3,  f:2,  meal:'snack'          },
+          { name:'Almond Milk 250ml',  emoji:'🥛', sub:'unsweetened Kirkland',      cal:35,  p:1,  c:2,  f:3,  meal:'snack'          },
+        ].map(f => `
+        <button onclick="qlQuickAdd(${JSON.stringify(f).replace(/'/g,"\\'")})" style="text-align:left;background:var(--surface3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;cursor:pointer;transition:border-color 0.15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div style="font-size:15px">${f.emoji}</div>
+            <div style="font-size:10px;font-weight:700;color:var(--accent)">${f.cal} kcal</div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--text);margin-top:3px;line-height:1.3">${f.name}</div>
+          <div style="font-size:10px;color:var(--text3)">${f.p}P · ${f.c}C · ${f.f}F</div>
+        </button>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- Nutrition coaching note -->
+  <div class="section">
     <div class="section-title">Nutrition Coach</div>
     <div class="coach-note">
       <div class="coach-label">Nutrition · ${todayNut ? fmtDate(todayNut.date) : 'Today'}</div>
@@ -2249,56 +2289,63 @@ function renderCoach(db) {
 
   // ── Training schedule ──
   function buildTrainingSchedule() {
+    // ── Option A: Remove entirely (uncomment return '' below, comment out rest) ──
+    // return '';
+
+    // ── Option C: Context-aware today card (uncomment block at bottom) ──
+
+    // ── Option B (current): Weekly grid only — no generic "Today" description card ──
+    // The session plan / training evaluation already covers today's training specifically.
+    // The weekly grid stays as a useful "week at a glance" reference.
+
     const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const todayDow = new Date().getDay(); // 0=Sun, 1=Mon, ... 6=Sat
+    const todayDow = new Date().getDay();
 
     const schedule = {
-      0: { label: 'Rest Day', icon: '🛌', color: 'var(--text3)', desc: 'Full rest today. No fasted walk, no training. Let your body absorb the week\'s work. Prioritize sleep, nutrition, and recovery habits. A real rest day is not laziness — it\'s part of the plan.' },
-      1: { label: 'Strength Training', icon: '💪', color: 'var(--green)', desc: 'Fasted walk first thing, then breakfast before training. Monday is a primary strength day. Lead with your pull or upper-body corrective work. Focus on left-scapular engagement, right-side balance, and quality over load. HR cap 122 bpm. Target 55–65 minutes total at WorldGym.' },
-      2: { label: 'Zone 2 Cycling', icon: '🚴', color: 'var(--accent)', desc: 'Fasted walk first, then breakfast before cycling. 30–45 minutes of Zone 2 on the bike — that means conversational pace, staying around 105–118 bpm. Zone 2 builds aerobic base and enhances fat oxidation without eating into recovery. Keep it disciplined: if your HR drifts above 122, ease off.' },
-      3: { label: 'Strength Training', icon: '💪', color: 'var(--green)', desc: 'Fasted walk first thing, then breakfast before training. Wednesday is a primary strength day. Rotate the pattern from Monday — if Monday was pull-dominant, go push or hinge today. Always include structural correction work: thoracic mobility, anti-rotation core, and hip activation on Floor 3 before loading.' },
-      4: { label: 'Zone 2 Cycling', icon: '🚴', color: 'var(--accent)', desc: 'Fasted walk first, then breakfast before cycling. 30–45 minutes of Zone 2. Keep the effort honest — Zone 2 is not a warmup and not a workout. It\'s a specific aerobic stimulus. If you feel great, resist the urge to push harder. The adaptation happens at steady, sustainable effort.' },
-      5: { label: 'Strength Training', icon: '💪', color: 'var(--green)', desc: 'Fasted walk first thing, then breakfast before training. Friday closes the strength week. Pick up what Monday and Wednesday left behind — accessory focus, any lagging corrective work, and finish with a trunk/engagement block. Don\'t add volume just because it\'s the last session. Finish clean.' },
-      6: { label: 'Rest Day', icon: '🛌', color: 'var(--text3)', desc: 'Full rest — no fasted walk on Saturdays. Sleep in if you can. This is intentional: two rest days back-to-back (Sat/Sun) allow full systemic recovery before the new training week. Use the day for mobility work if you feel like moving, but nothing structured.' },
+      0: { label: 'Rest',              icon: '🛌', color: 'var(--text3)'   },
+      1: { label: 'Strength',          icon: '💪', color: 'var(--green)'   },
+      2: { label: 'Zone 2',            icon: '🚴', color: 'var(--accent)'  },
+      3: { label: 'Strength',          icon: '💪', color: 'var(--green)'   },
+      4: { label: 'Zone 2',            icon: '🚴', color: 'var(--accent)'  },
+      5: { label: 'Strength',          icon: '💪', color: 'var(--green)'   },
+      6: { label: 'Rest',              icon: '🛌', color: 'var(--text3)'   },
     };
 
-    const today = schedule[todayDow];
-    const hasFastedWalk = todayDow !== 0 && todayDow !== 6;
+    // Check if today's workout is already logged
+    const _todayStr = new Date().toISOString().slice(0,10);
+    const _todayDone = (db.strength_logs || []).some(s => s.date === _todayStr)
+      || (db.activity_sessions || []).some(a => a.date === _todayStr && (a.type === 'Strength Training' || a.source === 'Motra'));
 
     const scheduleRows = Object.entries(schedule).map(([dow, s]) => {
       const isToday = parseInt(dow) === todayDow;
-      return `<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);${isToday ? 'background:rgba(88,166,255,0.05);border-radius:4px;padding:6px 8px;margin:0 -8px' : ''}">
-        <div style="width:28px;text-align:center;font-size:15px">${s.icon}</div>
+      const isMissed = parseInt(dow) < todayDow && (s.label === 'Strength' || s.label === 'Zone 2');
+      const isDone = isToday && _todayDone && (s.label === 'Strength' || s.label === 'Zone 2');
+      return `<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);${isToday ? 'background:rgba(88,166,255,0.04);border-radius:4px;padding:5px 8px;margin:0 -8px' : ''}">
+        <div style="width:24px;text-align:center;font-size:14px">${isDone ? '✅' : s.icon}</div>
         <div style="flex:1">
           <div style="font-size:11px;font-weight:${isToday ? '700' : '500'};color:${isToday ? s.color : 'var(--text2)'}">${dayNames[parseInt(dow)]}</div>
-          <div style="font-size:10px;color:var(--text3)">${s.label}${hasFastedWalk && parseInt(dow) !== 0 && parseInt(dow) !== 6 ? ' · Walk first' : ''}</div>
+          <div style="font-size:10px;color:var(--text3)">${s.label}${(s.label === 'Strength' || s.label === 'Zone 2') && parseInt(dow) !== 0 && parseInt(dow) !== 6 ? ' · Walk first' : ''}</div>
         </div>
-        ${isToday ? `<span class="badge badge-blue">Today</span>` : ''}
+        ${isDone ? `<span class="badge badge-green">Done ✓</span>` : isToday ? `<span class="badge badge-blue">Today</span>` : ''}
       </div>`;
     }).join('');
 
     return `
     <div style="margin-bottom:16px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:5px">
-        <span style="font-size:7px">◆</span> Today's Training · ${dayNames[todayDow]}
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+        <span style="font-size:7px">◆</span> Week Schedule
       </div>
-      <!-- Today card -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid ${today.color};border-radius:0 6px 6px 0;padding:12px 14px;margin-bottom:10px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-          <span style="font-size:22px">${today.icon}</span>
-          <div>
-            <div style="font-size:14px;font-weight:700;color:${today.color}">${today.label}</div>
-            ${hasFastedWalk ? '<div style="font-size:11px;color:var(--text3)">Fasted walk → Breakfast → Training</div>' : '<div style="font-size:11px;color:var(--text3)">Full rest today</div>'}
-          </div>
-        </div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.65">${today.desc}</div>
-      </div>
-      <!-- Weekly schedule -->
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 8px">
-        <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Weekly Schedule</div>
         ${scheduleRows}
       </div>
     </div>`;
+
+    // ── Option C: Context-aware today card (paste here to enable) ──
+    // const today = schedule[todayDow];
+    // const statusLine = _todayDone
+    //   ? `<div style="font-size:11px;color:var(--teal)">✅ Session complete — see Training Evaluation above</div>`
+    //   : `<div style="font-size:11px;color:var(--text3)">${todayDow !== 0 && todayDow !== 6 ? 'Fasted walk → Breakfast → Training' : 'Full rest today'}</div>`;
+    // return `<div ...>${today.icon} ${today.label} ${statusLine} + grid</div>`;
   }
 
   const trainingScheduleHtml = buildTrainingSchedule();
@@ -2312,28 +2359,33 @@ function renderCoach(db) {
     const dateStr   = updatedAt ? updatedAt.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'}) : '';
 
     const sectionDefs = [
-      { key: 'recovery',          title: 'Recovery & Readiness',     color: 'var(--accent)'  },
-      { key: 'training_direction',title: 'Training Direction',       color: 'var(--green)'   },
-      { key: 'workout_prep',      title: 'Workout Preparation',      color: 'var(--teal)'    },
-      { key: 'nutrition',         title: 'Nutrition',                color: 'var(--yellow)'  },
-      { key: 'progress',          title: 'Progress & Accountability',color: 'var(--purple)'  },
-      { key: 'watch_for',         title: 'What to Watch',            color: 'var(--text2)'   },
+      { key: 'recovery',            title: 'Recovery & Readiness',      color: 'var(--accent)'  },
+      { key: 'training_direction',  title: 'Training Direction',         color: 'var(--green)'   },
+      { key: 'training_evaluation', title: 'Training Evaluation',        color: 'var(--teal)'    },
+      { key: 'workout_prep',        title: 'Workout Preparation',        color: 'var(--green)'   },
+      { key: 'nutrition',           title: 'Nutrition',                  color: 'var(--yellow)'  },
+      { key: 'progress',            title: 'Progress & Accountability',  color: 'var(--purple)'  },
+      { key: 'watch_for',           title: 'What to Watch',              color: 'var(--text2)'   },
     ];
+
+    const _dowStr = String(new Date().getDay());
+    const _activePlan = (cb.weekly_session_plans && cb.weekly_session_plans[_dowStr]) || cb.session_plan;
 
     sectionDefs.filter(s => cb.sections[s.key]).forEach(s => {
       sections += coachSection(s.title, s.color, formatSectionContent(s.key, cb.sections[s.key]));
-      // After workout_prep (or training_direction if no workout_prep), inject session plan
-      // Pick day-specific plan first, fall back to generic session_plan
-      const _dowStr = String(new Date().getDay());
-      const _activePlan = (cb.weekly_session_plans && cb.weekly_session_plans[_dowStr]) || cb.session_plan;
-      if ((s.key === 'workout_prep' || (s.key === 'training_direction' && !cb.sections['workout_prep'])) && _activePlan) {
+      // Inject session plan + feedback after any training section.
+      // training_evaluation takes precedence; training_direction only fires if neither eval nor workout_prep exists.
+      const _isTrainingSection = s.key === 'workout_prep'
+        || s.key === 'training_evaluation'
+        || (s.key === 'training_direction' && !cb.sections['workout_prep'] && !cb.sections['training_evaluation']);
+      if (_isTrainingSection && _activePlan) {
         sections += renderSessionPlan(_activePlan);
         sections += renderWeekOverview(cb.weekly_session_plans);
+        sections += buildSessionFeedbackUI(); // ← Session feedback lives here, right under Today's Session
       }
     });
 
     const weeklyReviewHtml = buildWeeklyReview(db);
-    const sessionFeedbackHtml = buildSessionFeedbackUI();
 
     return `
     <div style="padding:14px 14px 0">
@@ -2348,7 +2400,6 @@ function renderCoach(db) {
       </div>
       ${weeklyReviewHtml}
       ${sections}
-      ${sessionFeedbackHtml}
       ${buildQuickLogUI()}
       <div style="padding-top:0">${trainingScheduleHtml}</div>
     </div>
@@ -2393,12 +2444,13 @@ function renderCoach(db) {
       `Before every session: spend 8–10 minutes on Floor 3 for prep and activation. <strong>Hip 90/90 mobility</strong> (avoid deep flexion — mild OA), <strong>banded hip abduction</strong> to wake up the left glute, and <strong>thoracic rotation</strong> to offset the stiffness. Your right-side dominance means you need to consciously prime the left side before loading. Don't skip the activation work — it directly affects how well your corrective movements function in the main session.`
     );
 
-    // Inject session plan in fallback mode too
+    // Inject session plan + feedback in fallback mode too
     const _fbDowStr = String(new Date().getDay());
     const _fbPlan = (cb && cb.weekly_session_plans && cb.weekly_session_plans[_fbDowStr]) || (cb && cb.session_plan);
     if (_fbPlan) {
       sections += renderSessionPlan(_fbPlan);
       sections += renderWeekOverview(cb && cb.weekly_session_plans);
+      sections += buildSessionFeedbackUI();
     }
 
     // Section 4: Nutrition
@@ -2441,7 +2493,6 @@ function renderCoach(db) {
     );
 
     const weeklyReviewHtmlFb = buildWeeklyReview(db);
-    const sessionFeedbackHtmlFb = buildSessionFeedbackUI();
 
     return `
     <div style="padding:14px 14px 0">
@@ -2456,7 +2507,6 @@ function renderCoach(db) {
       </div>
       ${weeklyReviewHtmlFb}
       ${sections}
-      ${sessionFeedbackHtmlFb}
       ${buildQuickLogUI()}
       <div style="padding-top:0">${trainingScheduleHtml}</div>
     </div>
@@ -2857,6 +2907,117 @@ function buildQuickLogUI() {
       </div>
     </div>
   </div>`;
+}
+
+/* ── Quick-Add Food Database ── */
+let _qlPending = []; // pending items not yet written to DB
+
+function qlQuickAdd(food) {
+  _qlPending.push(food);
+  _qlUpdatePendingBanner();
+}
+
+function _qlUpdatePendingBanner() {
+  const banner = document.getElementById('ql-pending-banner');
+  const summary = document.getElementById('ql-pending-summary');
+  if (!banner || !summary) return;
+  if (_qlPending.length === 0) { banner.style.display = 'none'; return; }
+  const totals = _qlPending.reduce((acc, f) => ({
+    cal: acc.cal + f.cal, p: acc.p + f.p, c: acc.c + f.c, f: acc.f + f.f
+  }), {cal:0, p:0, c:0, f:0});
+  const names = _qlPending.map(f => f.name).join(', ');
+  summary.innerHTML = `<strong>${_qlPending.length} item${_qlPending.length>1?'s':''}</strong>: ${names} &nbsp;·&nbsp; <strong>${totals.cal} kcal</strong> | ${totals.p}P · ${totals.c}C · ${totals.f}F`;
+  banner.style.display = 'block';
+}
+
+function qlClearPending() {
+  _qlPending = [];
+  _qlUpdatePendingBanner();
+}
+
+async function qlConfirmQuickAdd() {
+  if (!_qlPending.length) return;
+  const btn = document.querySelector('#ql-pending-banner button');
+  if (btn) { btn.textContent = 'Logging…'; btn.disabled = true; }
+
+  // Build meal entry for today
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
+  const totals = _qlPending.reduce((acc, f) => ({
+    cal: acc.cal + f.cal, p: acc.p + f.p, c: acc.c + f.c, f: acc.f + f.f
+  }), {cal:0, p:0, c:0, f:0});
+  const meal = {
+    meal: 'snack',
+    time: timeStr,
+    source: 'Quick Add',
+    subtotals: { calories_kcal: totals.cal, protein_g: totals.p, carbs_g: totals.c, fat_g: totals.f },
+    items: _qlPending.map(f => ({
+      food: f.name,
+      amount: f.sub || '1 serving',
+      calories_kcal: f.cal,
+      protein_g: f.p,
+      carbs_g: f.c,
+      fat_g: f.f,
+      estimated: false
+    }))
+  };
+
+  try {
+    await ghWriteNutrition(meal);
+    _qlPending = [];
+    _qlUpdatePendingBanner();
+    // Reload data
+    const res = await fetch('./HEALTH_DATABASE.json?t=' + Date.now());
+    DB = await res.json();
+    renderTab('nutrition', DB);
+  } catch(e) {
+    if (btn) { btn.textContent = 'Log it'; btn.disabled = false; }
+    alert('Could not write to database: ' + e.message + '\n\nMake sure your GitHub token is set in Settings.');
+  }
+}
+
+async function ghWriteNutrition(newMeal) {
+  const token = (() => { try { return localStorage.getItem('gh_token') || ''; } catch(e) { return ''; } })();
+  if (!token) throw new Error('No GitHub token set. Go to Settings → GitHub Token.');
+  const GH_API = `https://api.github.com/repos/toddblackhurst/health-dashboard/contents/HEALTH_DATABASE.json`;
+  const todayStr = new Date().toISOString().slice(0,10);
+
+  // Fetch current file
+  const getRes = await fetch(GH_API, { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }});
+  if (!getRes.ok) throw new Error(`GitHub fetch failed: ${getRes.status}`);
+  const fileData = await getRes.json();
+  const db = JSON.parse(atob(fileData.content.replace(/\n/g,'')));
+
+  // Find or create today's nutrition entry
+  const nutIdx = (db.nutrition || []).findIndex(n => n.date === todayStr);
+  if (nutIdx >= 0) {
+    const entry = db.nutrition[nutIdx];
+    if (!entry.meals) entry.meals = [];
+    entry.meals.push(newMeal);
+    // Recalculate daily totals
+    const all = entry.meals;
+    entry.daily_totals = {
+      calories_kcal: all.reduce((s,m) => s + (m.subtotals?.calories_kcal||0), 0),
+      protein_g:     all.reduce((s,m) => s + (m.subtotals?.protein_g||0), 0),
+      carbs_g:       all.reduce((s,m) => s + (m.subtotals?.carbs_g||0), 0),
+      fat_g:         all.reduce((s,m) => s + (m.subtotals?.fat_g||0), 0),
+    };
+  } else {
+    if (!db.nutrition) db.nutrition = [];
+    db.nutrition.push({
+      date: todayStr,
+      meals: [newMeal],
+      daily_totals: { calories_kcal: newMeal.subtotals.calories_kcal, protein_g: newMeal.subtotals.protein_g, carbs_g: newMeal.subtotals.carbs_g, fat_g: newMeal.subtotals.fat_g }
+    });
+  }
+
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(db, null, 2))));
+  const putRes = await fetch(GH_API, {
+    method: 'PUT',
+    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: `Quick-add nutrition ${todayStr}`, content, sha: fileData.sha, branch: 'main' })
+  });
+  if (!putRes.ok) throw new Error(`GitHub write failed: ${putRes.status}`);
 }
 
 function qlSource(name, btn) {
