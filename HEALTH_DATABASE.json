@@ -1511,22 +1511,90 @@
             "fat_g": 9
           },
           "notes": "Post-workout shake. Gold Standard Whey + almond milk. 28g protein within recovery window (~80 min post session)."
+        },
+        {
+          "meal": "brunch_smoothie",
+          "time": "11:52",
+          "items": [
+            {
+              "food": "Mango and Orange Smoothie (No Added Sugar)",
+              "calories_kcal": 180,
+              "protein_g": 3,
+              "carbs_g": 42,
+              "fat_g": 1,
+              "estimated": false,
+              "source": "Cal AI IMG_0100 / PocariSweat_lunch_1327.png"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 180,
+            "protein_g": 3,
+            "carbs_g": 42,
+            "fat_g": 1
+          },
+          "notes": "Brunch smoothie — mango and orange, no added sugar. 42g carbs, only 3g protein. Logged evening pass."
+        },
+        {
+          "meal": "brunch_plate",
+          "time": "11:55",
+          "items": [
+            {
+              "food": "Breakfast Plate with Scrambled Eggs, Fried Egg, Plain French Toast",
+              "calories_kcal": 767,
+              "protein_g": 35,
+              "carbs_g": 42,
+              "fat_g": 53,
+              "estimated": false,
+              "source": "Cal AI IMG_0099 — Plain French Toast 3 pcs 229 kcal + Scrambled Egg 1 srv 199 kcal + other items"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 767,
+            "protein_g": 35,
+            "carbs_g": 42,
+            "fat_g": 53
+          },
+          "notes": "Brunch plate — scrambled eggs, fried egg, plain French toast (3 pieces). Primary fat spike of the day: 53g fat in one meal against a 70g daily target. Pattern repeat from Apr 12/13 fat overruns. Fix: no fried bread or hash browns at brunch."
+        },
+        {
+          "meal": "dinner",
+          "time": "17:27",
+          "items": [
+            {
+              "food": "Salmon and Crab Poke Bowl with Pumpkin Seeds and Brown Rice",
+              "calories_kcal": 504,
+              "protein_g": 37,
+              "carbs_g": 45,
+              "fat_g": 21,
+              "estimated": false,
+              "source": "Cal AI IMG_0101 — Salmon + Brown Rice as primary components"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 504,
+            "protein_g": 37,
+            "carbs_g": 45,
+            "fat_g": 21
+          },
+          "notes": "Dinner — salmon and crab poke bowl, pumpkin seeds, brown rice. Clean protein + complex carbs. Excellent dinner choice despite brunch fat overrun. Template dinner format."
         }
       ],
       "daily_totals": {
-        "calories_kcal": 889,
-        "protein_g": 84,
-        "carbs_g": 109,
-        "fat_g": 16,
-        "note": "Day in progress — 4 meals logged. 1,111 kcal remaining. 66g P / 81g C / 54g F remaining."
+        "calories_kcal": 2340,
+        "protein_g": 159,
+        "carbs_g": 238,
+        "fat_g": 91,
+        "note": "Day closed — 7 meals logged. Fat spike from brunch plate (53g). Protein target exceeded ✅. Calories 340 over."
       },
       "vs_targets": {
-        "calories_delta": -1111,
-        "protein_delta": -66,
-        "carbs_delta": -81,
-        "fat_delta": -54
+        "calories_delta": 340,
+        "protein_delta": 9,
+        "carbs_delta": 48,
+        "fat_delta": 21
       },
-      "day_closed": false
+      "nutrition_score": 5,
+      "nutrition_score_notes": "Protein hit ✅ (+9g). Calories +340 over (17%), Fat +21g over (30%), Carbs +48g over (25%). Primary driver: brunch plate 53g fat. Poke bowl dinner was clean. Score 5/10.",
+      "day_closed": true
     }
   ],
   "activity_sessions": [
