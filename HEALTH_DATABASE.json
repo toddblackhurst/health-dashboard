@@ -7840,13 +7840,15 @@
           "Readiness verdict: Green. Push your strength session. This is the HRV signal you've been building toward all week."
         ]
       },
-      "training_direction": {
-        "call": "Wednesday Push + Quad / Anti-Rotation \u2014 HRV 51.3ms Green. Push it.",
+      "training_evaluation": {
+        "call": "Session Complete \u2014 13,891 lbs / 6,300 kg \u00b7 88 min \u00b7 Avg HR 118 bpm",
+        "status": "completed",
         "bullets": [
-          "Incline Press opens at 16kg/hand. All 10 reps clean across 3 sets \u2192 flag for 18kg next session. Half-Kneeling Landmine Press: left side leads every set, right-side dominance will show up.",
-          "Block A (Floor 2): Incline DB Press + Half-Kneeling Landmine Press superset. Block B: Split Squat + Cable Lateral Raise. Block C: Pallof Press + Serratus Punches + Copenhagen Hip Adduction.",
-          "Timer starts BEFORE first prep exercise. Block C only if Block B closes before 55-min mark. Five sessions in a row you've run over 65 min. That ends today.",
-          "HR cap: 122 bpm throughout. Rest 60\u201375 sec between sets. This is strength work, not conditioning. Protect the recovery you built this week."
+          "Volume: 13,891 lbs (6,300 kg) \u2014 matches Apr 13 session exactly (6,300 kg). Consistent baseline week 1.",
+          "HR: avg 118 bpm | peak 154 bpm \u26a0\ufe0f \u2014 cap is 122 bpm. Peak occurred during hinge/squat block (Machine V Squat or Split Squat). Next session: 60-sec full rest between lower body sets.",
+          "Highlights: Landmine Press top set 30 kg (10 reps) \u2705 \u2014 held at 27.5/25 kg after, good fatigue management. V Squat 13 reps @ 50 kg on final set \u2014 progressive. Incline Press held 16 kg \u00d7 4 sets, 10 reps clean.",
+          "Correctives completed: Hip Flexor Stretch, Wall Slide, TRX Y Raise, Dead Bug (3 sets), Pallof Press (anti-rotation anchor, 3 sets). Solid corrective compliance.",
+          "Next session (Friday): Pull-dominant. Plan: Neutral Lat Pulldown \u2192 Single-Arm Row \u2192 Hip Thrust. Landmine Press flagged at 30 kg \u2014 try 32.5 kg top set if readiness is green. Keep session under 65 min."
         ]
       },
       "nutrition": {
@@ -7879,7 +7881,7 @@
       "floor_plan": "Floor 3 \u2192 Floor 2",
       "time_cap_min": 65,
       "readiness_call": "TBD \u2014 check Wednesday morning HRV. Today at 35.4ms (Green) \u2014 strong baseline going in if sleep holds.",
-      "status": "upcoming",
+      "status": "completed",
       "notes": "Timer starts BEFORE first prep exercise. If Block C not started by 55-min mark \u2014 skip it. Compounds first, accessories last.",
       "blocks": [
         {
@@ -8061,10 +8063,18 @@
             }
           ]
         }
-      ]
+      ],
+      "actual_summary": {
+        "exercises_completed": 12,
+        "volume_kg": 6300,
+        "duration_min": 88,
+        "peak_hr_bpm": 154,
+        "avg_hr_bpm": 118,
+        "hr_cap_exceeded": true
+      }
     },
     "date": "2026-04-15",
-    "last_updated": "2026-04-15T07:28:34.959060+08:00",
+    "last_updated": "2026-04-15T14:08:20.318232+08:00",
     "readiness_tier": "Green",
     "readiness_tier_basis": "HRV 51.3ms \u2014 best reading this block, 57% above 32.5ms baseline. Sleep efficiency 97%. SpO2 and wrist temp both cleared.",
     "daily_insight": "Three consecutive early bedtimes produced a measurable HRV staircase: 20ms \u2192 35.4ms \u2192 51.3ms. This is your clearest data on sleep timing yet. Keep the 9:30 PM bedtime tonight to consolidate.",
