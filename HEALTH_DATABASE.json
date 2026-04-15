@@ -656,6 +656,47 @@
       "notes": "Bevel + Oura April 15 morning scan. HRV 51.3ms — strongest reading this block. 31% increase from yesterday (35.4ms). Bevel flagged 'Significant Recovery Bounce' and 'Efficiency Breakthrough' (97% sleep efficiency). SpO2 cleared to 96.5% Normal (from 95.1% Apr 14). Wrist temp 97.5°F normalized. Sleep bank -2h52m (improving from -3h13m). Oura sleep score 79 Good with optimal sleep timing. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms — dose-response confirmed across 3 nights. | Oura Readiness confirmed 76 Good from screenshot (Apr 15 08:51). RHR 59 bpm. HRV balance Fair. Body temp Optimal. Sleep/Sleep balance Good.",
       "oura_readiness_score": 76,
       "oura_readiness_status": "Good — On schedule"
+    },
+    {
+      "date": "2026-04-16",
+      "source": "Oura (primary) + Hume",
+      "recovery_score_pct": 58,
+      "recovery_trend": "Post-Heavy-Session Drop — HRV fell from 51.3ms (Apr 15) to 38.9ms (Hume) / 44ms avg (Oura) after 88-min session + 154 bpm peak. Still above 35ms watch threshold. Recovery absorbing yesterday's 66% strain load.",
+      "hrv_ms": 44,
+      "hrv_ms_hume": 38.9,
+      "hrv_ms_oura_max": 129,
+      "resting_hr_bpm": 57,
+      "resting_hr_bpm_avg": 63,
+      "sleep_score_pct": 81,
+      "oura_sleep_score": 81,
+      "total_sleep_min": 381,
+      "time_in_bed_min": 456,
+      "sleep_efficiency_pct": 84,
+      "deep_sleep_min": 72,
+      "deep_sleep_pct": 19,
+      "rem_sleep_min": 64,
+      "rem_sleep_pct": 17,
+      "light_sleep_min": 245,
+      "light_sleep_pct": 64,
+      "awake_min": 75,
+      "sleep_bank_min": -230,
+      "sleep_debt_status": "Moderate — 3h 50m",
+      "sleep_time": "21:02",
+      "wake_time": "04:38",
+      "sleep_latency_min": 14,
+      "spo2_pct": 96,
+      "breathing_regularity": "Good",
+      "body_clock_note": "Midpoint 46 min ahead of chronotype — Optimal timing",
+      "stress_highest": 53,
+      "stress_lowest": 2,
+      "stress_avg": 26,
+      "energy_pct": 77,
+      "strain_score": 0,
+      "readiness_tier": "Yellow-Green",
+      "readiness_tier_basis": "HRV 38.9ms (Hume) / 44ms avg (Oura) — above 35ms watch threshold but down from 51.3ms. Oura 75 readiness 'Pace yourself'. Recovery 58% green. Sleep debt 3h50m moderate.",
+      "oura_readiness_score": 75,
+      "oura_readiness_status": "Good — Pace yourself",
+      "notes": "Oura + Hume April 16 morning scan (4:46 AM). HRV dropped from 51.3ms → 38.9ms (Hume) / 44ms avg (Oura) — expected post-session response from 88-min strength session + 154 bpm peak. Sleep 6h21m, efficiency 84%, deep sleep 19% (1h12m — excellent), REM 17% (1h4m). Sleep started ~9:02 PM, ended 4:38 AM. Oura 'Sleep trending — above average, keep it up.' Sleep debt at 3h50m moderate (up from 2h52m — training debt adding to sleep debt). Energy 77%, strain 0% (new day). Hume: 'Recovery Within Green Threshold — body absorbing yesterday\\'s 66% strain.' Oura: 'Resting heart rate lowered late last night — pace yourself.' RHR 57 bpm (lowest), 63 bpm avg. SpO2 96% stable. Breathing regularity Good. HRV max 129ms during sleep."
     }
   ],
   "nutrition": [
@@ -7896,260 +7937,61 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-14T17:07:54+0800",
-    "readiness_call": "Green",
+    "generated_at": "2026-04-16T04:48:00+0800",
+    "date": "2026-04-16",
+    "last_updated": "2026-04-16T04:48:00+0800",
+    "readiness_tier": "Yellow-Green",
+    "readiness_tier_basis": "HRV 38.9ms (Hume) / 44ms avg (Oura) — above 35ms threshold. Oura 75 readiness, 58% Hume recovery. Pace yourself.",
+    "readiness_call": "Yellow-Green",
+    "training_call": "Cardio Day — Z1/Z2 only. Walk or easy bike 45–55 min. HR cap 122 bpm — no exceptions today.",
+    "daily_insight": "Your body absorbed 66% strain from yesterday's 88-min session cleanly — HRV is still above the 35ms threshold, which means the system isn't overwhelmed. But you're not at yesterday's 51.3ms either. Today is a recovery-through-movement day: steady aerobic work, nothing that spikes HR above 122.",
+    "nutrition_binding_constraint": "Target 1,600–1,800 kcal today — offset yesterday's +340 surplus. Protein 150g anchor. No brunch plate.",
+    "watch_for": [
+      "Nutrition reset — yesterday ended +340 kcal, +21g fat over. Today: 1,600–1,800 kcal target. Anchor protein (150g) but cut fat at breakfast and lunch. Lean protein + carbs.",
+      "Bedtime critical — three consecutive early nights built last week's HRV gains. Don't break the streak. Target 9:00–9:30 PM bed tonight. Friday readiness depends on it.",
+      "Sleep debt at 3h50m moderate — trending up slightly from 2h52m (yesterday's training load added to debt). Tonight's sleep quality matters more than duration: prioritize cool room, no screens 30 min before bed.",
+      "HR cap during cardio — today is Z1/Z2 (Zone 1–2 only). Avg HR should stay 95–115 bpm for the entire session. If it climbs above 122, slow to a walk. Today is about blood flow and parasympathetic activation, not conditioning."
+    ],
     "sections": {
       "recovery": {
-        "traffic_light": "🟢 Green — Best Reading This Block",
+        "traffic_light": "🟡 Yellow-Green — Post-Session Drop, Still Absorbing",
         "bullets": [
-          "HRV 51.3ms — strongest reading of the entire block. +45% from yesterday's 35.4ms, 57% above 32.5ms baseline. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms across 3 nights. Dose-response confirmed.",
-          "Sleep: 6h51m asleep, efficiency 97% (Bevel Efficiency Breakthrough flag). Oura sleep score 79 Good — optimal timing. Sleep bank -2h52m, improving from -3h13m. Deep sleep 37–54m, REM 1h6m–1h50m.",
-          "SpO2 cleared to 96.5% Normal (from 95.1% yesterday). Wrist temp 97.5°F normalized (from 96.9°F flag). RHR 61.9 bpm (Bevel) / 59 bpm (Oura) — excellent. Cardio load 26 Maintaining.",
-          "Readiness verdict: Green. Push your strength session. This is the HRV signal you've been building toward all week."
+          "HRV: 38.9ms (Hume) / 44ms avg (Oura), max 129ms during sleep. Down from 51.3ms (Apr 15) — expected response to 88-min session + 154 bpm peak. Still above 35ms watch threshold. Not suppressed; adapting.",
+          "Sleep: 6h21m, efficiency 84%, deep sleep 1h12m (19% — excellent), REM 1h4m (17%). Sleep started 9:02 PM, woke 4:38 AM. Oura score 81 GOOD — 'Sleep trending above average.' Timing Optimal.",
+          "RHR 57 bpm (lowest) / 63 bpm avg — strong cardiac efficiency signal. SpO2 96%. Breathing regularity Good. Hume recovery 58% — 'Within Green Threshold, body absorbing yesterday\\'s 66% strain.'",
+          "Sleep debt 3h50m moderate — up from 2h52m (training load adds to accumulated debt). Oura: 'Pace yourself — resting heart rate lowered late last night.' Energy 77%, strain 0%."
         ]
       },
       "training_evaluation": {
-        "call": "Session Complete — 13,891 lbs / 6,300 kg · 88 min · Avg HR 118 bpm",
+        "call": "Session Complete — Apr 15 · 6,300 kg · 88 min · Avg HR 118 bpm",
         "status": "completed",
         "bullets": [
-          "Volume: 13,891 lbs (6,300 kg) — matches Apr 13 session exactly (6,300 kg). Consistent baseline week 1.",
-          "HR: avg 118 bpm | peak 154 bpm ⚠️ — cap is 122 bpm. Peak occurred during hinge/squat block (Machine V Squat or Split Squat). Next session: 60-sec full rest between lower body sets.",
-          "Highlights: Landmine Press top set 30 kg (10 reps) ✅ — held at 27.5/25 kg after, good fatigue management. V Squat 13 reps @ 50 kg on final set — progressive. Incline Press held 16 kg × 4 sets, 10 reps clean.",
-          "Correctives completed: Hip Flexor Stretch, Wall Slide, TRX Y Raise, Dead Bug (3 sets), Pallof Press (anti-rotation anchor, 3 sets). Solid corrective compliance.",
-          "Next session (Friday): Pull-dominant. Plan: Neutral Lat Pulldown → Single-Arm Row → Hip Thrust. Landmine Press flagged at 30 kg — try 32.5 kg top set if readiness is green. Keep session under 65 min."
+          "Volume: 6,300 kg — consistent with Apr 13 baseline. Session ran 23 min over target (88 min vs 65 min cap). Duration, not volume, drove the HR overrun.",
+          "HR compliance: Avg 118 bpm ✅ within cap. Peak 154 bpm ⚠️ exceeded 122 cap. 40% Z3 + 11% Z4 = significant aerobic tax layered on strength work. Next session: 75 min hard cap, trim accessory block if needed.",
+          "Highlights: Machine V Squat 40→50 kg (13 reps final set) progressive. Pallof Press 5.7 kg × 3 sets — anti-rotation anchor consistent. Landmine Press 30 kg top set held.",
+          "Correctives completed: Hip Flexor Stretch, Wall Slide, TRX Y-Raise, Dead Bug × 3, Pallof Press × 3. Full compliance.",
+          "Next session (Friday): Pull-dominant. Plan: Neutral Lat Pulldown → Single-Arm Row → Hip Thrust. Test Landmine Press 32.5 kg if readiness is green. Hard 65 min cap — no exceptions."
         ]
       },
       "nutrition": {
-        "binding_constraint": "889 kcal / 84g P logged — 2 meals remaining 🕑",
+        "binding_constraint": "Reset day — target 1,600–1,800 kcal | No food logged yet (4:48 AM)",
         "bullets": [
-          "Running: 889 kcal | P:84g/150g | C:109g/190g | F:16g/70g",
-          "Protein gap: 66g remaining across 2 meals — ~33g per meal closes it. Chicken, fish, or lean protein at both lunch and dinner.",
-          "Fat budget wide open: 16g used vs 70g target (54g remaining). Don't avoid fat at dinner — healthy fats (olive oil, nuts, avocado) will help absorption and satiety.",
-          "Carbs: 81g remaining and manageable. Rice, sweet potato, or bread fine with dinner — no need to load more starch deliberately."
+          "Yesterday closed: 2,340 kcal / +340 over | P: 159g ✅ | C: 238g ⚠️ | F: 91g ⚠️ +21g over. Protein win, fat loss from brunch plate.",
+          "Today's target: 1,600–1,800 kcal to rebalance the week's deficit. Protein 150g non-negotiable. Fat ≤60g (lower than normal to correct yesterday's +21g overage).",
+          "Brunch plan: eggs only (no French toast, no hash browns, no fried components). Or lean protein bowl. The brunch plate pattern is the sole recurring macro leak this week.",
+          "No food logged yet — morning is clean. Pre-cardio: light protein source. Post-cardio: protein shake. Anchor dinner with lean protein + complex carbs (poke bowl format worked perfectly last night)."
         ]
       },
       "progress": {
-        "lead_number": "2/3 sessions this week — 6,300 kg today. Block 1 baseline locked.",
+        "lead_number": "2/3 sessions complete — Block 1 Week 1 on track",
         "bullets": [
-          "Week training: Monday ✅ Pull + Glute Hinge (6,300 kg) + Wednesday ✅ Push + Quad (6,300 kg). Friday pull-dominant is next — 3-session week on track.",
-          "Nutrition trend: Apr 13 = over (+175 kcal, fat heavy) | Apr 14 ✅ clean (2,003/2000) | Apr 15 = in progress, 889 kcal. 2 back-to-back solid days building momentum.",
-          "Recovery: HRV bounced to 51.3ms today (best this block). Weight 165–166 lbs — AT goal range. Body comp holding while training load builds.",
-          "Friday carry-forward: Landmine Press ready to test 32.5 kg top set if readiness green. Session must close under 65 min — today's 88-min overrun won't repeat."
+          "Training: Mon ✅ Tue (cardio) ✅ Wed ✅ strength | Thursday = today's cardio | Fri = pull-dominant strength. On schedule.",
+          "Volume baseline locked: Apr 13 + Apr 15 both at 6,300 kg. Consistent first-week anchor. Friday test: Landmine Press 32.5 kg top set.",
+          "Recovery trend: HRV sequence this week — 20ms → 35.4ms → 51.3ms → 38.9ms. Classic training load arc: build → peak → planned drop. If Friday morning reads 42ms+, green day.",
+          "Sleep debt managed but climbing (2h52m → 3h50m). Three consecutive early bedtimes built last week's HRV gains. Tonight's bed target 9–9:30 PM keeps Friday HRV competitive."
         ]
-      },
-      "watch_for": [
-        "Lunch protein — need 33g minimum. 2 meals left, 66g protein gap. Don't let the afternoon coast on the post-workout shake alone.",
-        "Thursday readiness will likely dip — 88 min + 154 bpm peak = elevated recovery debt. If HRV < 35ms tomorrow morning, treat Thursday as Z1/Z2 cardio only, no strength.",
-        "Bedtime tonight: target 9:30 PM. Three consecutive early nights built today's 51.3ms HRV. Breaking the streak now costs you Friday readiness and would undercut the entire week.",
-        "Fat budget: 54g remaining — wide open, but 2 of 3 recent days were fat-heavy. Keep dinner fat moderate (lean protein + carb base, not fried/heavy cream)."
-      ]
-    },
-    "session_plan": {
-      "session_type": "NEXT: Push + Quad / Anti-Rotation — Wednesday Apr 15",
-      "session_goal": "Develop horizontal and vertical push strength; reinforce quad-dominant unilateral pattern with hip-OA-safe depth; anti-rotation and shoulder correction to close.",
-      "floor_plan": "Floor 3 → Floor 2",
-      "time_cap_min": 65,
-      "readiness_call": "TBD — check Wednesday morning HRV. Today at 35.4ms (Green) — strong baseline going in if sleep holds.",
-      "status": "completed",
-      "notes": "Timer starts BEFORE first prep exercise. If Block C not started by 55-min mark — skip it. Compounds first, accessories last.",
-      "blocks": [
-        {
-          "id": "PREP",
-          "label": "Floor 3 — Activation (~10 min)",
-          "estimated_min": 10,
-          "exercises": [
-            {
-              "id": "wed_prep_1",
-              "name": "Wall Slide",
-              "sets": "2",
-              "reps": "10",
-              "rest_sec": 0,
-              "note": "Back, head, and BOTH elbows flat against wall throughout. Anterior chain tightness correction before any pressing. Slow down when contact breaks — don't power through the restriction.",
-              "alternatives": [
-                "Doorway Chest Stretch × 30s each side",
-                "Band No-Money × 12",
-                "Prone T-Raise × 10"
-              ]
-            },
-            {
-              "id": "wed_prep_2",
-              "name": "Hip Flexor Stretch (Kneeling)",
-              "sets": "2",
-              "reps": "30s each side (left first)",
-              "rest_sec": 0,
-              "note": "Left hip flexor is typically tighter — add 10s on the left. Half-kneeling. Anterior chain release before split squat work. Hip OA: no forced ROM.",
-              "alternatives": [
-                "Couch Stretch × 30s each",
-                "Dynamic Lunge Stretch × 8",
-                "Standing Hip Flexor × 30s each"
-              ]
-            },
-            {
-              "id": "wed_prep_3",
-              "name": "TRX Y-Raise",
-              "sets": "2",
-              "reps": "12",
-              "rest_sec": 0,
-              "note": "Lower-trap activation before pressing. Lean back ~45°, arms form Y overhead. 3-sec controlled lowering. Corrects shoulder elevation pattern that appears under pressing load.",
-              "alternatives": [
-                "Prone Y-Raise × 10",
-                "Band Y-Raise × 12",
-                "Cable Y-Raise × 10"
-              ]
-            },
-            {
-              "id": "wed_prep_4",
-              "name": "Dead Bug",
-              "sets": "2",
-              "reps": "8 each side",
-              "rest_sec": 0,
-              "note": "Lower back pinned to floor — non-negotiable. Alternating arm + opposite leg extension. Anti-rotation primer before landmine press. Reduce ROM before breaking back contact.",
-              "alternatives": [
-                "Bird Dog × 8 each",
-                "Plank × 20s",
-                "Hollow Body Hold × 20s"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "A",
-          "label": "Floor 2 — Block A: Vertical + Horizontal Push (~18 min)",
-          "estimated_min": 18,
-          "exercises": [
-            {
-              "id": "wed_a1",
-              "name": "Half-Kneeling Landmine Press",
-              "sets": "3",
-              "reps": "10 each side (left first)",
-              "load": "~15–20 kg total (bar + plate) — build across sets",
-              "rest_sec": 60,
-              "note": "Left knee down, right foot forward. Diagonal pressing pattern — shoulder-friendly, unilateral correction built in. Left side sets the standard. Right-side dominance will show up — let left lead.",
-              "alternatives": [
-                "Single-Arm DB Shoulder Press × 10 each",
-                "Arnold Press × 10",
-                "Cable Shoulder Press × 10 each"
-              ]
-            },
-            {
-              "id": "wed_a2",
-              "name": "Incline Dumbbell Press",
-              "sets": "3",
-              "reps": "10",
-              "load": "16 kg/hand — if all 10 reps clean → 18 kg next session",
-              "rest_sec": 60,
-              "note": "30–45° incline. LEFT side initiates — right-side dominance shows up in pressing. 3-sec lowering tempo. If rep 9–10 starts to grind, stop at 8.",
-              "alternatives": [
-                "Flat DB Press × 10",
-                "Cable Chest Press × 10",
-                "Chest-Supported Machine Press × 10"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "B",
-          "label": "Floor 2 — Block B: Quad Dominant + Unilateral (~16 min)",
-          "estimated_min": 16,
-          "exercises": [
-            {
-              "id": "wed_b1",
-              "name": "Hammer Strength V-Squat (Limited Depth)",
-              "sets": "3",
-              "reps": "12",
-              "load": "BW or light plate — add load only if depth stays hip-OA-safe",
-              "rest_sec": 60,
-              "note": "Stop before hip crease reaches knee — hip OA protocol. Equal drive through both feet. Do not chase depth. Feet hip-width, slight toe-out.",
-              "alternatives": [
-                "Leg Press (partial ROM) × 12",
-                "Goblet Squat (limited depth) × 10",
-                "Box Squat (above parallel) × 10"
-              ]
-            },
-            {
-              "id": "wed_b2",
-              "name": "Dumbbell Split Squat",
-              "sets": "3",
-              "reps": "10 each (left leg forward)",
-              "load": "12 kg/hand — adjust for hip tolerance",
-              "rest_sec": 60,
-              "note": "Left leg forward, right leg back — left leads every set. Hip OA: control descent, no forced depth. Left side is typically weaker — let it set pace.",
-              "alternatives": [
-                "Reverse Lunge × 10 each",
-                "Step-Up × 10 each",
-                "TRX Lunge × 10 each"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "C",
-          "label": "Floor 2 — Block C: Anti-Rotation / Shoulder Close (~14 min)",
-          "estimated_min": 14,
-          "notes": "SKIP if over 55-min mark when you arrive here. Compounds > accessories always.",
-          "exercises": [
-            {
-              "id": "wed_c1",
-              "name": "Cable Lateral Raise",
-              "sets": "3",
-              "reps": "12 each side",
-              "load": "~5 kg — light, strict form",
-              "rest_sec": 45,
-              "note": "Shoulder imbalance correction. LEFT side first every set. Strict control — no momentum. Elbow slightly bent throughout. Rear delt and mid-delt emphasis.",
-              "alternatives": [
-                "DB Lateral Raise × 12",
-                "Cable Front Raise × 12",
-                "Face Pull × 15"
-              ]
-            },
-            {
-              "id": "wed_c2",
-              "name": "Pallof Press (Unilateral / Anti-Rotation)",
-              "sets": "3",
-              "reps": "12 each side",
-              "load": "~5–7 kg",
-              "rest_sec": 45,
-              "note": "You called this 'fun' and sweated hard doing it — that's the right intensity. Anti-rotation is the core's actual job. Press out, hold 2 seconds, return. Do not rotate — that's the whole point.",
-              "alternatives": [
-                "Band Pallof Press × 12",
-                "Cable Woodchop × 10",
-                "Side Plank × 20s"
-              ]
-            },
-            {
-              "id": "wed_c3",
-              "name": "KB Goblet Carry Walk + Squat",
-              "sets": "3",
-              "reps": "15m walk + 5 squats",
-              "load": "~16–20 kg KB",
-              "rest_sec": 60,
-              "note": "Goblet position — KB held at chest. Walk 15m, then 5 goblet squats (hip-OA-safe depth). Core braced throughout. Fun, athletic finish to the session.",
-              "alternatives": [
-                "Suitcase Carry × 25m (left hand)",
-                "Goblet Squat hold × 30s",
-                "Farmer Carry × 25m"
-              ]
-            }
-          ]
-        }
-      ],
-      "actual_summary": {
-        "exercises_completed": 12,
-        "volume_kg": 6300,
-        "duration_min": 88,
-        "peak_hr_bpm": 154,
-        "avg_hr_bpm": 118,
-        "hr_cap_exceeded": true
       }
-    },
-    "date": "2026-04-15",
-    "last_updated": "2026-04-15T14:11:14+0800",
-    "readiness_tier": "Green",
-    "readiness_tier_basis": "HRV 51.3ms — best reading this block, 57% above 32.5ms baseline. Sleep efficiency 97%. SpO2 and wrist temp both cleared.",
-    "daily_insight": "Three consecutive early bedtimes produced a measurable HRV staircase: 20ms → 35.4ms → 51.3ms. This is your clearest data on sleep timing yet. Keep the 9:30 PM bedtime tonight to consolidate.",
-    "training_call": "Green — Push your strength session. Best HRV of the block.",
-    "nutrition_binding_constraint": "Pre-workout shake + drink queued (not yet logged): ~446 kcal / 56g P / 46g C / 7g F. Once logged: 1,554 kcal / 94g P / 144g C / 63g F remaining for the day. Fat is the binding constraint at 63g remaining — that is the entire budget minus shake. Zero oil at lunch and dinner. Post-session shake adds ~40g P / ~7g F — that takes fat to 14g with ~56g remaining for two meals. Manageable but tight.",
-    "watch_for": "4–5 PM snacking window is the active risk (Apr 12 — M&Ms at 4:15 PM post-session). Post-strength appetite peaks 3–4 hours after session. Stage a lean snack (jerky or whey) before leaving the gym. Fat budget is tight today — any unplanned snack with fat will close the budget before dinner."
+    }
   },
-  "last_updated": "2026-04-15T10:06:00"
+  "last_updated": "2026-04-16T04:48:00"
 }
