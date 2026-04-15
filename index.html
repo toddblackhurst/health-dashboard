@@ -25,12 +25,6 @@
   --text: #e6edf3;
   --text2: #8b949e;
   --text3: #6e7681;
-  --chart-hrv: #58a6ff;
-  --chart-recovery: #d29922;
-  --chart-weight: #3fb950;
-  --chart-bf: #f85149;
-  --chart-sleep: #a371f7;
-  --chart-volume: #39d353;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html { font-size: 14px; }
@@ -41,21 +35,14 @@ body {
   min-height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  padding-bottom: env(safe-area-inset-bottom, 80px);
   padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 64px));
 }
-
-/* ── Topbar ────────────────────────────────────────── */
 .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   padding: 14px 16px 12px;
   border-bottom: 1px solid var(--border);
   background: rgba(13,17,23,0.97);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: sticky; top: 0; z-index: 100;
   backdrop-filter: blur(12px);
 }
 .topbar-name { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
@@ -63,3306 +50,450 @@ body {
 .topbar-updated { font-size: 10px; color: var(--accent); margin-top: 2px; letter-spacing: 0.04em; opacity: 0.8; }
 .live-pill {
   display: flex; align-items: center; gap: 5px;
-  background: var(--green-bg);
-  border: 1px solid rgba(63,185,80,0.25);
-  border-radius: 20px;
-  padding: 4px 10px;
-  font-size: 11px; font-weight: 700;
-  color: var(--green);
+  background: var(--green-bg); border: 1px solid rgba(63,185,80,0.25);
+  border-radius: 20px; padding: 4px 10px;
+  font-size: 11px; font-weight: 700; color: var(--green);
   text-transform: uppercase; letter-spacing: 0.08em;
 }
 .live-dot {
-  width: 6px; height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-  animation: blink 2s ease-in-out infinite;
+  width: 6px; height: 6px; background: var(--green);
+  border-radius: 50%; animation: blink 2s ease-in-out infinite;
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
-
-/* ── Tabs ──────────────────────────────────────────── */
 .tabs {
-  display: flex;
-  background: var(--surface);
+  display: flex; background: var(--surface);
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 57px;
-  z-index: 99;
+  position: sticky; top: 57px; z-index: 99;
 }
 .tab-btn {
-  flex: 1;
-  padding: 10px 0;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text3);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  transition: color 0.15s;
-  user-select: none;
-  -webkit-user-select: none;
+  flex: 1; padding: 10px 0; text-align: center;
+  font-size: 11px; font-weight: 700; color: var(--text3);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  transition: color 0.2s, border-color 0.2s; user-select: none;
 }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-/* ── Tab panels ────────────────────────────────────── */
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-
-/* ── Shared components ─────────────────────────────── */
-.section {
-  padding: 14px 14px 0;
-}
-.section-title {
-  font-size: 11px; font-weight: 700;
-  color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.1em;
-  margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
-}
-.section-title::after {
-  content: ''; flex: 1; height: 1px; background: var(--border);
-}
+.tab-content { display: none; padding: 12px 12px 0; }
+.tab-content.active { display: block; }
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 8px;
-}
-.card:last-child { margin-bottom: 0; }
-
-/* Status badges */
-.badge {
-  display: inline-block;
-  padding: 2px 7px;
-  border-radius: 5px;
-  font-size: 10px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.05em;
-}
-.badge-green  { background: var(--green-bg);  color: var(--green);  }
-.badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
-.badge-red    { background: var(--red-bg);    color: var(--red);    }
-.badge-blue   { background: var(--accent-bg); color: var(--accent); }
-.badge-purple { background: var(--purple-bg); color: var(--purple); }
-.badge-dim    { background: var(--surface3);  color: var(--text3);  }
-
-/* Data rows with bar */
-.data-row {
-  display: flex; align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  gap: 8px;
-}
-.data-row:last-child { border-bottom: none; padding-bottom: 0; }
-.dr-key   { width: 100px; flex-shrink: 0; font-size: 12px; color: var(--text2); }
-.dr-bar   { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-.dr-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
-.dr-val   { min-width: 55px; text-align: right; font-size: 12px; font-weight: 700; flex-shrink: 0; }
-.dr-badge { min-width: 60px; text-align: right; flex-shrink: 0; }
-
-/* ── Status grid ───────────────────────────────────── */
-.status-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 4px;
-}
-.status-item { text-align: center; padding: 0 4px; }
-.status-item + .status-item { border-left: 1px solid var(--border); }
-.si-val { font-size: 22px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-.si-label { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
-.si-badge { margin-top: 3px; }
-
-/* ── Coach note ────────────────────────────────────── */
-.coach-note {
-  background: var(--surface2);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 6px 6px 0;
-  padding: 14px 14px;
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.65;
-  margin-bottom: 8px;
-}
-.coach-note strong { color: var(--text); }
-.coach-note p { margin-bottom: 10px; }
-.coach-note p:last-child { margin-bottom: 0; }
-.coach-label {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--accent); margin-bottom: 8px;
-  display: flex; align-items: center; gap: 6px;
-}
-.coach-label::before { content: '◆'; font-size: 7px; }
-
-/* ── Macro progress bars ───────────────────────────── */
-.macro-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 2px;
-}
-.macro-cell {
-  background: var(--surface3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px;
-}
-.macro-cell.full { grid-column: 1 / -1; }
-.macro-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
-.macro-nums { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
-.macro-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
-.macro-target { font-size: 11px; color: var(--text3); }
-.macro-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.macro-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
-.macro-delta { font-size: 10px; margin-top: 4px; }
-
-/* ── Weekly summary ────────────────────────────────── */
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-top: 6px;
-}
-.week-cell {
-  background: var(--surface3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px 8px;
-  text-align: center;
-}
-.week-val { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
-.week-lbl { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
-.week-sub { font-size: 10px; color: var(--text2); margin-top: 2px; }
-
-/* ── Sparkline chart ───────────────────────────────── */
-.chart-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 8px;
-}
-.chart-card:last-child { margin-bottom: 0; }
-.chart-header {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 10px;
-}
-.chart-title { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
-.chart-sub   { font-size: 10px; color: var(--text3); margin-top: 2px; }
-.chart-val   { font-size: 20px; font-weight: 700; line-height: 1; text-align: right; }
-.chart-change{ font-size: 11px; margin-top: 2px; text-align: right; }
-.chart-area  { width: 100%; }
-.chart-x-labels {
-  display: flex; justify-content: space-between;
-  margin-top: 4px;
-  font-size: 9px; color: var(--text3);
-  overflow: hidden;
-}
-.chart-x-labels span { flex: 1; text-align: center; overflow: hidden; white-space: nowrap; }
-.chart-x-labels span:first-child { text-align: left; }
-.chart-x-labels span:last-child { text-align: right; }
-
-/* ── Glucose zone ──────────────────────────────────── */
-.glucose-zone-bar {
-  height: 8px; border-radius: 4px;
-  background: linear-gradient(90deg, var(--green) 0%, var(--green) 64%, var(--yellow) 64%, var(--yellow) 82%, var(--red) 82%);
-  position: relative;
-  margin: 8px 0 4px;
-}
-.glucose-marker {
-  position: absolute;
-  top: -4px;
-  width: 4px; height: 16px;
-  background: var(--text);
-  border-radius: 2px;
-  transform: translateX(-50%);
-  box-shadow: 0 0 6px rgba(230,237,243,0.5);
-}
-.zone-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text3); }
-
-/* ── Progress bar ──────────────────────────────────── */
-.progress-wrap { margin: 8px 0; }
-.progress-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
-.progress-key { color: var(--text2); }
-.progress-vals { font-weight: 700; }
-.progress-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.progress-fill  { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
-
-/* ── Goal ring area ────────────────────────────────── */
-.goal-card-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 14px;
-}
-.goal-big { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
-.goal-big-unit { font-size: 16px; font-weight: 400; color: var(--text2); }
-.goal-right { text-align: right; }
-.goal-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
-.goal-target { font-size: 16px; font-weight: 700; color: var(--green); }
-.goal-remaining { font-size: 11px; color: var(--teal); margin-top: 2px; }
-
-/* ── Segmental grid ────────────────────────────────── */
-.seg-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.seg-card { background: var(--surface3); border: 1px solid var(--border); border-radius: 6px; padding: 10px; }
-.seg-card.full-width { grid-column: 1/-1; }
-.seg-title { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-.seg-row-item {
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 11px; padding: 3px 0;
-  border-bottom: 1px solid var(--border);
-}
-.seg-row-item:last-child { border-bottom: none; padding-bottom: 0; }
-.seg-row-key { color: var(--text2); }
-.seg-row-right { display: flex; align-items: center; gap: 6px; }
-
-/* ── Session history list ──────────────────────────── */
-.session-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-.session-item:last-child { border-bottom: none; padding-bottom: 0; }
-.session-date {
-  font-size: 10px; color: var(--text3); text-transform: uppercase;
-  letter-spacing: 0.06em; min-width: 44px;
-}
-.session-info { flex: 1; min-width: 0; }
-.session-name { font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.session-meta { font-size: 11px; color: var(--text3); margin-top: 1px; }
-.session-vol { font-size: 12px; font-weight: 700; color: var(--teal); text-align: right; min-width: 52px; }
-
-/* ── Session plan (keep/change) ───────────────────── */
-.sp-block {
-  margin-bottom: 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.sp-block-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 8px 12px;
-  background: var(--surface3);
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-}
-.sp-block-time { font-size: 10px; color: var(--text3); font-weight: 400; }
-.sp-exercise {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 10px 12px;
-  border-top: 1px solid var(--border);
-  background: var(--surface);
-  transition: background 0.15s;
-}
-.sp-exercise.sp-kept { background: color-mix(in srgb, var(--green) 8%, var(--surface)); }
-.sp-exercise.sp-changed { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
-.sp-ex-id {
-  font-size: 10px; font-weight: 700; color: var(--text3);
-  min-width: 26px; padding-top: 1px; letter-spacing: 0.04em;
-}
-.sp-ex-body { flex: 1; min-width: 0; }
-.sp-ex-name { font-size: 13px; font-weight: 700; line-height: 1.3; }
-.sp-ex-name.sp-original { text-decoration: line-through; color: var(--text3); font-size: 11px; }
-.sp-ex-replacement { font-size: 13px; font-weight: 700; color: var(--accent); }
-.sp-ex-prescription { font-size: 11px; color: var(--text3); margin-top: 2px; }
-.sp-ex-note { font-size: 11px; color: var(--text2); margin-top: 4px; font-style: italic; line-height: 1.4; }
-.sp-alts {
-  margin-top: 8px; padding: 8px 10px;
-  background: var(--surface3); border-radius: 6px;
-  display: none;
-}
-.sp-alts.open { display: block; }
-.sp-alts-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-.sp-alt-btn {
-  display: block; width: 100%; text-align: left;
-  padding: 6px 8px; margin-bottom: 4px;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 5px; font-size: 12px; color: var(--text1);
-  cursor: pointer; transition: background 0.12s, border-color 0.12s;
+  border-radius: 12px; padding: 14px; margin-bottom: 10px;
 }
-.sp-alt-btn:last-child { margin-bottom: 0; }
-.sp-alt-btn:hover { background: var(--surface3); border-color: var(--accent); color: var(--accent); }
-.sp-ex-actions { display: flex; gap: 6px; flex-shrink: 0; padding-top: 1px; }
-.sp-btn {
-  padding: 4px 9px; border-radius: 5px; font-size: 11px; font-weight: 600;
-  cursor: pointer; border: 1px solid var(--border); transition: all 0.12s;
-  line-height: 1;
+.card-title {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;
 }
-.sp-btn-keep { background: var(--surface3); color: var(--text2); }
-.sp-btn-keep:hover, .sp-btn-keep.active { background: var(--green); color: #fff; border-color: var(--green); }
-.sp-btn-change { background: var(--surface3); color: var(--text2); }
-.sp-btn-change:hover, .sp-btn-change.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.sp-meta-bar {
-  display: flex; gap: 10px; flex-wrap: wrap;
-  padding: 8px 12px; border-top: 1px solid var(--border);
-  background: var(--surface3); font-size: 11px; color: var(--text3);
+.card-value { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.card-sub { font-size: 11px; color: var(--text2); margin-top: 4px; }
+.hero-card {
+  background: rgba(210,153,34,0.12); border: 1px solid #d2992240;
+  border-radius: 14px; padding: 16px; margin-bottom: 10px;
 }
-.sp-meta-item { display: flex; align-items: center; gap: 4px; }
-.sp-meta-item strong { color: var(--text1); }
-
-/* ── Stat row grid ─────────────────────────────────── */
-.stat-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin: 10px 0;
+.hero-tier { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #d29922; margin-bottom: 6px; }
+.hero-call { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 6px; }
+.hero-basis { font-size: 11px; color: var(--text2); line-height: 1.5; }
+.hero-insight {
+  margin-top: 10px; font-size: 11.5px; color: var(--text); line-height: 1.6;
+  padding-top: 10px; border-top: 1px solid #d2992230;
 }
-.stat-cell {
-  background: var(--surface3);
-  border-radius: 6px;
-  padding: 10px 8px;
-  text-align: center;
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+.stat-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.stat-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.stat-unit { font-size: 11px; color: var(--text2); font-weight: 400; }
+.stat-note { font-size: 10px; color: var(--text3); margin-top: 3px; }
+.section-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin: 14px 0 6px; }
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.bullet-list li { font-size: 12px; color: var(--text2); line-height: 1.55; padding-left: 14px; position: relative; }
+.bullet-list li::before { content: "·"; position: absolute; left: 4px; color: var(--accent); font-size: 14px; line-height: 1.3; }
+.watch-list { display: flex; flex-direction: column; gap: 7px; }
+.watch-item {
+  display: flex; gap: 8px; font-size: 11.5px; color: var(--text2); line-height: 1.55;
+  background: var(--yellow-bg); border: 1px solid rgba(210,153,34,0.2);
+  border-radius: 8px; padding: 9px 10px;
 }
-.stat-cell-val { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
-.stat-cell-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
-
-/* ── Trends full chart ─────────────────────────────── */
-.trend-chart-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px;
-  margin-bottom: 10px;
+.watch-icon { color: var(--yellow); font-size: 13px; flex-shrink: 0; }
+.chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.chart-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.chart-title { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
+.chart-latest { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+svg.sparkline { width: 100%; height: 90px; overflow: visible; }
+.eval-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+.eval-header { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+.status-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  background: var(--green-bg); color: var(--green);
+  border: 1px solid rgba(63,185,80,0.25); border-radius: 20px; padding: 2px 8px; margin-bottom: 8px;
 }
-.trend-chart-card:last-child { margin-bottom: 0; }
-.trend-header {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 12px;
-}
-.trend-title-block .t-title { font-size: 13px; font-weight: 700; }
-.trend-title-block .t-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
-.trend-stat-block { text-align: right; }
-.trend-stat-block .t-cur { font-size: 22px; font-weight: 700; line-height: 1; }
-.trend-stat-block .t-change { font-size: 11px; margin-top: 2px; }
-
-/* ── Loading ───────────────────────────────────────── */
-.loading {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 200px; gap: 12px;
-  color: var(--text3);
-  font-size: 13px;
-}
-.spinner {
-  width: 28px; height: 28px;
-  border: 2px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ── Error ─────────────────────────────────────────── */
-.error-block {
-  margin: 20px 16px;
-  background: var(--red-bg);
-  border: 1px solid rgba(248,81,73,0.3);
-  border-radius: 8px;
-  padding: 16px;
-  font-size: 13px;
-  color: var(--red);
-  line-height: 1.5;
-}
-.error-block code { font-family: monospace; font-size: 11px; }
-
-/* ── Bottom nav ────────────────────────────────────── */
+.macro-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.macro-label { font-size: 10px; font-weight: 700; color: var(--text3); width: 22px; text-transform: uppercase; }
+.macro-bar-wrap { flex: 1; height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.macro-bar { height: 100%; border-radius: 3px; }
+.macro-val { font-size: 11px; font-weight: 600; color: var(--text2); width: 90px; text-align: right; white-space: nowrap; }
+.sleep-stage-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.stage-label { font-size: 10px; color: var(--text3); width: 42px; }
+.stage-bar-wrap { flex: 1; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.stage-bar { height: 100%; border-radius: 3px; }
+.stage-val { font-size: 10px; color: var(--text2); width: 72px; text-align: right; white-space: nowrap; }
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
-  background: rgba(13,17,23,0.97);
-  border-top: 1px solid var(--border);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  backdrop-filter: blur(12px);
-  padding-bottom: env(safe-area-inset-bottom, 0);
-}
-.bn-item {
-  padding: 10px 0 12px;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  cursor: pointer;
-  user-select: none;
-}
-.bn-icon { font-size: 18px; }
-.bn-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); font-weight: 700; }
-.bn-item.active .bn-label { color: var(--accent); }
-
-.spacer { height: 14px; }
-
-/* ── Exercise feedback inline ───────────────────────── */
-.ex-feedback-area {
-  margin-top: 8px;
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-}
-.ex-feedback-area.open { display: flex; }
-.ex-feedback-textarea {
-  width: 100%;
-  background: var(--surface3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text);
-  font-size: 12px;
-  padding: 8px 10px;
-  resize: none;
-  line-height: 1.5;
-  font-family: inherit;
-  min-height: 56px;
-}
-.ex-feedback-textarea:focus { outline: none; border-color: var(--accent); }
-.ex-feedback-textarea::placeholder { color: var(--text3); }
-.ex-feedback-saved {
-  font-size: 10px; color: var(--green); font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  display: none;
-}
-.ex-feedback-saved.show { display: block; }
-.sp-btn-comment { background: var(--surface3); color: var(--text3); }
-.sp-btn-comment:hover, .sp-btn-comment.active { background: var(--purple); color: #fff; border-color: var(--purple); }
-.ex-feedback-display {
-  margin-top: 5px;
-  font-size: 11px; color: var(--purple);
-  font-style: italic; line-height: 1.4;
-  padding: 5px 8px;
-  background: var(--purple-bg);
-  border-radius: 4px;
-  border-left: 2px solid var(--purple);
-  display: none;
-}
-.ex-feedback-display.show { display: block; }
-
-/* ── Session feedback card ──────────────────────────── */
-.session-feedback-card {
-  margin: 0 0 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--purple);
-  border-radius: 0 6px 6px 0;
-  overflow: hidden;
-}
-.session-feedback-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px;
-  background: var(--surface3);
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--purple);
-  cursor: pointer;
-}
-.session-feedback-body { padding: 12px 14px; display: none; }
-.session-feedback-body.open { display: block; }
-.rating-row { display: flex; gap: 6px; margin-bottom: 12px; }
-.rating-btn {
-  flex: 1; padding: 8px 4px; text-align: center;
-  background: var(--surface3); border: 1px solid var(--border);
-  border-radius: 6px; font-size: 15px; cursor: pointer;
-  transition: all 0.12s;
-}
-.rating-btn.active { background: var(--purple-bg); border-color: var(--purple); }
-.feedback-textarea {
-  width: 100%; background: var(--surface3);
-  border: 1px solid var(--border); border-radius: 6px;
-  color: var(--text); font-size: 12px; padding: 10px 12px;
-  resize: none; line-height: 1.6; font-family: inherit;
-  min-height: 80px; margin-bottom: 10px;
-}
-.feedback-textarea:focus { outline: none; border-color: var(--purple); }
-.feedback-textarea::placeholder { color: var(--text3); }
-.feedback-export-box {
-  background: var(--surface3); border: 1px solid var(--border);
-  border-radius: 6px; padding: 10px 12px;
-  font-size: 11px; color: var(--text2); line-height: 1.5;
-  white-space: pre-wrap; font-family: monospace;
-  display: none; margin-bottom: 10px; max-height: 200px; overflow-y: auto;
-}
-.feedback-export-box.show { display: block; }
-.feedback-btn {
-  padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 700;
-  cursor: pointer; border: 1px solid var(--border); transition: all 0.12s;
-  margin-right: 6px;
-}
-.feedback-btn-save { background: var(--purple); color: #fff; border-color: var(--purple); }
-.feedback-btn-export { background: var(--surface3); color: var(--accent); border-color: var(--accent); }
-.feedback-btn-copy { background: var(--surface3); color: var(--green); border-color: var(--green); }
-
-/* ── Structured brief bullets ───────────────────────── */
-.brief-bullet {
-  padding: 5px 0 5px 12px;
-  border-left: 2px solid var(--border);
-  margin-bottom: 6px;
-  line-height: 1.55;
-  font-size: 13px;
-}
-.brief-bullet:last-child { margin-bottom: 0; }
-.brief-header {
-  font-weight: 700; margin-bottom: 8px; font-size: 13px; color: var(--text);
-  display: flex; align-items: center; gap: 6px;
-}
-
-/* ── Weekly review ──────────────────────────────────── */
-.weekly-review-card {
-  margin-bottom: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 6px 6px 0;
-  overflow: hidden;
-}
-.weekly-review-header {
-  padding: 12px 14px;
-  background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(163,113,247,0.08));
-  border-bottom: 1px solid var(--border);
-}
-.weekly-review-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0; border-bottom: 1px solid var(--border);
-}
-.wr-stat {
-  padding: 12px 10px; text-align: center;
-}
-.wr-stat + .wr-stat { border-left: 1px solid var(--border); }
-.wr-stat-val { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
-.wr-stat-lbl { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
-.wr-section {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-}
-.wr-section:last-child { border-bottom: none; }
-.wr-section-title {
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--text3); margin-bottom: 6px;
-}
-.wr-section-content {
-  font-size: 12px; color: var(--text2); line-height: 1.6;
-}
-.wr-verdict {
-  padding: 12px 14px;
-  font-size: 13px; color: var(--text2); line-height: 1.65;
-  border-top: 1px solid var(--border);
-  background: var(--surface3);
-}
-
-/* ── Quick data log ──────────────────────────────────── */
-.quick-log-card {
-  margin-bottom: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--yellow);
-  border-radius: 0 6px 6px 0;
-  overflow: hidden;
-}
-.quick-log-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px; background: var(--surface3);
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--yellow); cursor: pointer;
-}
-.quick-log-body { padding: 12px 14px; display: none; }
-.quick-log-body.open { display: block; }
-.quick-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-.quick-chip {
-  padding: 5px 10px; background: var(--surface3);
-  border: 1px solid var(--border); border-radius: 20px;
-  font-size: 11px; color: var(--text2); cursor: pointer;
-  transition: all 0.12s; user-select: none;
-}
-.quick-chip:hover { border-color: var(--yellow); color: var(--yellow); }
-.quick-chip.selected { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); font-weight: 700; }
-.ql-textarea {
-  width: 100%; background: var(--surface3); border: 1px solid var(--border);
-  border-radius: 6px; color: var(--text); font-size: 12px;
-  padding: 10px 12px; resize: none; line-height: 1.6;
-  font-family: inherit; min-height: 70px; margin-bottom: 10px;
-}
-.ql-textarea:focus { outline: none; border-color: var(--yellow); }
-.ql-textarea::placeholder { color: var(--text3); }
-.ql-source-row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
-.ql-source-btn {
-  padding: 6px 10px; background: var(--surface3);
-  border: 1px solid var(--border); border-radius: 6px;
-  font-size: 11px; color: var(--text2); cursor: pointer;
-  transition: all 0.12s; font-weight: 600;
-}
-.ql-source-btn:hover { border-color: var(--yellow); color: var(--yellow); }
-.ql-source-btn.active { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); }
-
-/* ── GitHub write-back status ────────────────────────── */
-.wb-status {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; padding: 3px 8px;
-  border-radius: 4px; transition: all 0.2s;
-}
-.wb-idle    { color: var(--text3); background: transparent; }
-.wb-saving  { color: var(--yellow); background: var(--yellow-bg); }
-.wb-ok      { color: var(--green);  background: var(--green-bg); }
-.wb-err     { color: var(--red);    background: var(--red-bg); }
-
-/* ── Token setup modal ───────────────────────────────── */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-  z-index: 1000; display: flex; align-items: flex-end;
-  justify-content: center; padding: 0;
-  opacity: 0; pointer-events: none; transition: opacity 0.2s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal-sheet {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
   width: 100%; max-width: 480px;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-radius: 16px 16px 0 0;
-  padding: 20px 20px max(20px, env(safe-area-inset-bottom));
-  transform: translateY(100%); transition: transform 0.25s ease;
+  background: rgba(22,27,34,0.97); border-top: 1px solid var(--border);
+  display: flex; padding-bottom: env(safe-area-inset-bottom, 0);
+  backdrop-filter: blur(16px); z-index: 200;
 }
-.modal-overlay.open .modal-sheet { transform: translateY(0); }
-.modal-title {
-  font-size: 15px; font-weight: 700; margin-bottom: 6px;
-}
-.modal-sub {
-  font-size: 12px; color: var(--text3); line-height: 1.6; margin-bottom: 14px;
-}
-.modal-input {
-  width: 100%; background: var(--surface3); border: 1px solid var(--border);
-  border-radius: 6px; color: var(--text); font-size: 12px;
-  padding: 10px 12px; font-family: monospace; margin-bottom: 10px;
-}
-.modal-input:focus { outline: none; border-color: var(--accent); }
-.modal-btns { display: flex; gap: 8px; }
-.modal-btn-primary {
-  flex: 1; padding: 11px; background: var(--accent); color: #fff;
-  border: none; border-radius: 8px; font-size: 13px; font-weight: 700;
-  cursor: pointer;
-}
-.modal-btn-secondary {
-  padding: 11px 16px; background: var(--surface3); color: var(--text2);
-  border: 1px solid var(--border); border-radius: 8px; font-size: 13px;
-  cursor: pointer;
-}
-.settings-gear {
-  padding: 4px 8px; background: transparent; border: 1px solid var(--border);
-  border-radius: 5px; font-size: 13px; cursor: pointer; color: var(--text3);
-  transition: all 0.12s;
-}
-.settings-gear:hover { border-color: var(--accent); color: var(--accent); }
+.nav-btn { flex: 1; padding: 10px 0 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; user-select: none; }
+.nav-icon { font-size: 20px; line-height: 1; }
+.nav-label { font-size: 9px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
+.nav-btn.active .nav-label { color: var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- Topbar -->
 <div class="topbar">
   <div>
-    <div class="topbar-name">Todd Blackhurst</div>
-    <div class="topbar-date" id="topbar-date">Loading…</div>
-    <div class="topbar-updated" id="topbar-updated"></div>
+    <div class="topbar-name">Todd · BioMetrics</div>
+    <div class="topbar-date">Thursday, April 16, 2026</div>
+    <div class="topbar-updated">Updated 4:48 AM · Apr 16</div>
   </div>
-  <div class="live-pill">
-    <div class="live-dot"></div>
-    Live
-  </div>
+  <div class="live-pill"><span class="live-dot"></span>Live</div>
 </div>
 
-<!-- Tabs -->
 <div class="tabs">
-  <div class="tab-btn active" data-tab="today">Today</div>
-  <div class="tab-btn" data-tab="body">Body</div>
-  <div class="tab-btn" data-tab="nutrition">Nutrition</div>
-  <div class="tab-btn" data-tab="trends">Trends</div>
-  <div class="tab-btn" data-tab="coach">Coach</div>
+  <div class="tab-btn active" onclick="switchTab('brief')">Brief</div>
+  <div class="tab-btn" onclick="switchTab('recovery')">Recovery</div>
+  <div class="tab-btn" onclick="switchTab('training')">Training</div>
+  <div class="tab-btn" onclick="switchTab('nutrition')">Nutrition</div>
+  <div class="tab-btn" onclick="switchTab('trends')">Trends</div>
 </div>
 
-<!-- Tab panels -->
-<div id="tab-today"    class="tab-panel active"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-<div id="tab-body"     class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-<div id="tab-nutrition" class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-<div id="tab-trends"   class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-<div id="tab-coach"    class="tab-panel"><div class="loading"><div class="spinner"></div>Loading…</div></div>
+<!-- BRIEF -->
+<div id="tab-brief" class="tab-content active">
+  <div class="hero-card">
+    <div class="hero-tier">🟡 Yellow-Green · Apr 16</div>
+    <div class="hero-call">Cardio Day — Z1/Z2 only. Walk or easy bike 45–55 min. HR cap 122 bpm — no exceptions today.</div>
+    <div class="hero-basis">HRV 38.9ms (Hume) / 44ms avg (Oura) — above 35ms threshold. Oura 75 readiness, 58% Hume recovery. Pace yourself.</div>
+    <div class="hero-insight">Your body absorbed 66% strain from yesterday's 88-min session cleanly — HRV is still above the 35ms threshold, which means the system isn't overwhelmed. But you're not at yesterday's 51.3ms either. Today is a recovery-through-movement day: steady aerobic work, nothing that spikes HR above 122.</div>
+  </div>
 
-<!-- Bottom nav (mirrors tabs) -->
-<div class="bottom-nav" id="bottom-nav">
-  <div class="bn-item active" data-tab="today"><div class="bn-icon">📡</div><div class="bn-label">Today</div></div>
-  <div class="bn-item" data-tab="body"><div class="bn-icon">🫀</div><div class="bn-label">Body</div></div>
-  <div class="bn-item" data-tab="nutrition"><div class="bn-icon">🥗</div><div class="bn-label">Nutrition</div></div>
-  <div class="bn-item" data-tab="trends"><div class="bn-icon">📈</div><div class="bn-label">Trends</div></div>
-  <div class="bn-item" data-tab="coach"><div class="bn-icon">🎯</div><div class="bn-label">Coach</div></div>
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-label">HRV</div>
+      <div class="stat-val" style="color:var(--accent)">38.9<span class="stat-unit"> ms</span></div>
+      <div class="stat-note">Hume · ↓ from 51.3ms</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Sleep</div>
+      <div class="stat-val" style="color:var(--purple)">6h21m</div>
+      <div class="stat-note">Oura 81 · Eff 84%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">RHR</div>
+      <div class="stat-val" style="color:var(--green)">57<span class="stat-unit"> bpm</span></div>
+      <div class="stat-note">Lowest · avg 63</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Recovery</div>
+      <div class="stat-val" style="color:var(--yellow)">58<span class="stat-unit">%</span></div>
+      <div class="stat-note">Hume · Green zone</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">⚠ Watch For Today</div>
+    <div class="watch-list"><div class="watch-item"><span class="watch-icon">⚠</span><span>Nutrition reset — yesterday ended +340 kcal, +21g fat over. Today: 1,600–1,800 kcal target. Anchor protein (150g) but cut fat at breakfast and lunch. Lean protein + carbs.</span></div>
+<div class="watch-item"><span class="watch-icon">⚠</span><span>Bedtime critical — three consecutive early nights built last week's HRV gains. Don't break the streak. Target 9:00–9:30 PM bed tonight. Friday readiness depends on it.</span></div>
+<div class="watch-item"><span class="watch-icon">⚠</span><span>Sleep debt at 3h50m moderate — trending up slightly from 2h52m (yesterday's training load added to debt). Tonight's sleep quality matters more than duration: prioritize cool room, no screens 30 min before bed.</span></div>
+<div class="watch-item"><span class="watch-icon">⚠</span><span>HR cap during cardio — today is Z1/Z2 (Zone 1–2 only). Avg HR should stay 95–115 bpm for the entire session. If it climbs above 122, slow to a walk. Today is about blood flow and parasympathetic activation, not conditioning.</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">📊 Nutrition Target</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px">Target 1,600–1,800 kcal today — offset yesterday's +340 surplus. Protein 150g anchor. No brunch plate.</div>
+    <ul class="bullet-list"><li>Yesterday closed: 2,340 kcal / +340 over | P: 159g ✅ | C: 238g ⚠️ | F: 91g ⚠️ +21g over. Protein win, fat loss from brunch plate.</li>
+<li>Today's target: 1,600–1,800 kcal to rebalance the week's deficit. Protein 150g non-negotiable. Fat ≤60g (lower than normal to correct yesterday's +21g overage).</li>
+<li>Brunch plan: eggs only (no French toast, no hash browns, no fried components). Or lean protein bowl. The brunch plate pattern is the sole recurring macro leak this week.</li>
+<li>No food logged yet — morning is clean. Pre-cardio: light protein source. Post-cardio: protein shake. Anchor dinner with lean protein + complex carbs (poke bowl format worked perfectly last night).</li></ul>
+  </div>
+
+  <div class="card">
+    <div class="section-label">📈 Progress</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px">2/3 sessions complete — Block 1 Week 1 on track</div>
+    <ul class="bullet-list"><li>Training: Mon ✅ Tue (cardio) ✅ Wed ✅ strength | Thursday = today's cardio | Fri = pull-dominant strength. On schedule.</li>
+<li>Volume baseline locked: Apr 13 + Apr 15 both at 6,300 kg. Consistent first-week anchor. Friday test: Landmine Press 32.5 kg top set.</li>
+<li>Recovery trend: HRV sequence this week — 20ms → 35.4ms → 51.3ms → 38.9ms. Classic training load arc: build → peak → planned drop. If Friday morning reads 42ms+, green day.</li>
+<li>Sleep debt managed but climbing (2h52m → 3h50m). Three consecutive early bedtimes built last week's HRV gains. Tonight's bed target 9–9:30 PM keeps Friday HRV competitive.</li></ul>
+  </div>
+</div>
+
+<!-- RECOVERY -->
+<div id="tab-recovery" class="tab-content">
+  <div class="card">
+    <div class="card-title">Recovery Summary · Apr 16</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#d29922">🟡 Yellow-Green — Post-Session Drop, Still Absorbing</div>
+    <ul class="bullet-list"><li>HRV: 38.9ms (Hume) / 44ms avg (Oura), max 129ms during sleep. Down from 51.3ms (Apr 15) — expected response to 88-min session + 154 bpm peak. Still above 35ms watch threshold. Not suppressed; adapting.</li>
+<li>Sleep: 6h21m, efficiency 84%, deep sleep 1h12m (19% — excellent), REM 1h4m (17%). Sleep started 9:02 PM, woke 4:38 AM. Oura score 81 GOOD — 'Sleep trending above average.' Timing Optimal.</li>
+<li>RHR 57 bpm (lowest) / 63 bpm avg — strong cardiac efficiency signal. SpO2 96%. Breathing regularity Good. Hume recovery 58% — 'Within Green Threshold, body absorbing yesterday\'s 66% strain.'</li>
+<li>Sleep debt 3h50m moderate — up from 2h52m (training load adds to accumulated debt). Oura: 'Pace yourself — resting heart rate lowered late last night.' Energy 77%, strain 0%.</li></ul>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-label">HRV Hume</div>
+      <div class="stat-val" style="color:var(--accent)">38.9<span class="stat-unit"> ms</span></div>
+      <div class="stat-note">Max 129ms in sleep</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">HRV Oura avg</div>
+      <div class="stat-val" style="color:var(--accent)">44<span class="stat-unit"> ms</span></div>
+      <div class="stat-note">Baseline 32.5ms</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Oura Ready</div>
+      <div class="stat-val" style="color:var(--yellow)">75</div>
+      <div class="stat-note">Pace yourself</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Energy</div>
+      <div class="stat-val" style="color:var(--green)">77<span class="stat-unit">%</span></div>
+      <div class="stat-note">Strain: 0%</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Sleep · Apr 16</div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+      <div>
+        <div class="card-value" style="color:var(--purple)">6h21m</div>
+        <div class="card-sub">Oura 81 GOOD · Eff 84%</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:12px;color:var(--text2)">Debt: -3h50m</div>
+        <div style="font-size:10px;color:var(--text3)">3h50m Moderate</div>
+      </div>
+    </div>
+    <div class="section-label" style="margin-top:0">Sleep Stages</div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">Deep</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:19%;background:#58a6ff"></div></div>
+      <div class="stage-val">1h12m (19%)</div>
+    </div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">REM</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:17%;background:#a371f7"></div></div>
+      <div class="stage-val">1h04m (17%)</div>
+    </div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">Light</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:48%;background:#3fb950"></div></div>
+      <div class="stage-val">4h05m (64%)</div>
+    </div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">Awake</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:20%;background:#f85149"></div></div>
+      <div class="stage-val">1h15m</div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text2)">
+      SpO&#8322; 96% · Breathing: Good · Latency 14m · Optimal timing
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-label">RHR Lowest</div>
+      <div class="stat-val" style="color:var(--green)">57<span class="stat-unit"> bpm</span></div>
+      <div class="stat-note">avg 63 bpm</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Stress Avg</div>
+      <div class="stat-val" style="color:var(--yellow)">26</div>
+      <div class="stat-note">High 53 · Low 2</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAINING -->
+<div id="tab-training" class="tab-content">
+  <div class="eval-card">
+    <div class="status-pill">✓ Completed · Apr 15</div>
+    <div class="eval-header">Session Complete — Apr 15 · 6,300 kg · 88 min · Avg HR 118 bpm</div>
+    <ul class="bullet-list"><li>Volume: 6,300 kg — consistent with Apr 13 baseline. Session ran 23 min over target (88 min vs 65 min cap). Duration, not volume, drove the HR overrun.</li>
+<li>HR compliance: Avg 118 bpm ✅ within cap. Peak 154 bpm ⚠️ exceeded 122 cap. 40% Z3 + 11% Z4 = significant aerobic tax layered on strength work. Next session: 75 min hard cap, trim accessory block if needed.</li>
+<li>Highlights: Machine V Squat 40→50 kg (13 reps final set) progressive. Pallof Press 5.7 kg × 3 sets — anti-rotation anchor consistent. Landmine Press 30 kg top set held.</li>
+<li>Correctives completed: Hip Flexor Stretch, Wall Slide, TRX Y-Raise, Dead Bug × 3, Pallof Press × 3. Full compliance.</li>
+<li>Next session (Friday): Pull-dominant. Plan: Neutral Lat Pulldown → Single-Arm Row → Hip Thrust. Test Landmine Press 32.5 kg if readiness is green. Hard 65 min cap — no exceptions.</li></ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Today&#39;s Plan · Thu Apr 16</div>
+    <div style="background:var(--yellow-bg);border:1px solid rgba(210,153,34,0.25);border-radius:8px;padding:10px;margin-bottom:10px">
+      <div style="font-size:12px;font-weight:700;color:var(--yellow);margin-bottom:4px">🟡 Cardio — Z1/Z2 Recovery</div>
+      <div style="font-size:11.5px;color:var(--text2);line-height:1.55">Walk or easy bike · 45–55 min · HR cap 122 bpm. HRV 38.9ms — cleared for cardio. No strength. Blood flow and parasympathetic recovery after yesterday&#39;s 88-min session + 154 bpm peak.</div>
+    </div>
+    <div class="section-label">Session Format</div>
+    <ul class="bullet-list">
+      <li>5–10 min easy walk warm-up (HR ≤100 bpm)</li>
+      <li>30–40 min steady Z1/Z2 — treadmill walk incline 3–5% or outdoor. Target avg HR 100–115 bpm</li>
+      <li>Cool-down 5 min easy. No intervals, no circuits.</li>
+      <li>Post-cardio: protein shake immediately. Target 28–30g protein.</li>
+    </ul>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3)">Friday: Pull-dominant strength · Lat Pulldown → Single-Arm Row → Hip Thrust · Test Landmine 32.5 kg if HRV ≥42ms</div>
+  </div>
+</div>
+
+<!-- NUTRITION -->
+<div id="tab-nutrition" class="tab-content">
+  <div class="card">
+    <div class="card-title">April 16 — Reset Day</div>
+    <div style="font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:6px">Target: 1,600–1,800 kcal</div>
+    <div style="font-size:11.5px;color:var(--text2);margin-bottom:12px">Offsetting yesterday&#39;s +340 kcal surplus. No food logged yet (4:48 AM).</div>
+    <div class="section-label">Today&#39;s Targets</div>
+    <div class="macro-row">
+      <div class="macro-label">KCAL</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:0%;background:var(--accent)"></div></div>
+      <div class="macro-val">0 / 1,700</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">PROT</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:0%;background:var(--green)"></div></div>
+      <div class="macro-val">0g / 150g</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">CARB</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:0%;background:var(--purple)"></div></div>
+      <div class="macro-val">0g / 160g</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">FAT</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:0%;background:var(--yellow)"></div></div>
+      <div class="macro-val">0g / 60g</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Yesterday Closed · Apr 15</div>
+    <div class="macro-row">
+      <div class="macro-label">KCAL</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--yellow)"></div></div>
+      <div class="macro-val">2,340 / 2,000 ⚠</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">PROT</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--green)"></div></div>
+      <div class="macro-val">159g / 150g ✓</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">CARB</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--yellow)"></div></div>
+      <div class="macro-val">238g / 190g ⚠</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">FAT</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--red)"></div></div>
+      <div class="macro-val">91g / 70g ⚠</div>
+    </div>
+    <div style="font-size:10.5px;color:var(--text3);margin-top:8px">Brunch plate (French toast + eggs) = 53g fat in 1 meal. That&#39;s the recurring leak.</div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Coaching Note</div>
+    <ul class="bullet-list"><li>Yesterday closed: 2,340 kcal / +340 over | P: 159g ✅ | C: 238g ⚠️ | F: 91g ⚠️ +21g over. Protein win, fat loss from brunch plate.</li>
+<li>Today's target: 1,600–1,800 kcal to rebalance the week's deficit. Protein 150g non-negotiable. Fat ≤60g (lower than normal to correct yesterday's +21g overage).</li>
+<li>Brunch plan: eggs only (no French toast, no hash browns, no fried components). Or lean protein bowl. The brunch plate pattern is the sole recurring macro leak this week.</li>
+<li>No food logged yet — morning is clean. Pre-cardio: light protein source. Post-cardio: protein shake. Anchor dinner with lean protein + complex carbs (poke bowl format worked perfectly last night).</li></ul>
+  </div>
+</div>
+
+<!-- TRENDS -->
+<div id="tab-trends" class="tab-content">
+  <div class="chart-wrap">
+    <div class="chart-header">
+      <div class="chart-title">HRV (ms) · 14-day</div>
+      <div class="chart-latest" style="color:#58a6ff">38.9 ms</div>
+    </div>
+    <svg class="sparkline" viewBox="0 0 340 90">
+      <line x1="8" y1="50" x2="332" y2="50" stroke="#30363d" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <text x="330" y="48" text-anchor="end" font-size="9" fill="#6e7681">32.5ms</text>
+      <polyline points="8.0,11.7 66.9,33.2 96.4,59.4 125.8,16.5 155.3,36.8 184.7,33.3 214.2,29.5 243.6,58.5 273.1,37.9 302.5,16.6 332.0,33.2" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round"/>
+      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
+    </svg>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-header">
+      <div class="chart-title">Sleep (hours) · 14-day</div>
+      <div class="chart-latest" style="color:#a371f7">6.3h</div>
+    </div>
+    <svg class="sparkline" viewBox="0 0 340 90">
+      <polyline points="37.5,14.8 66.9,29.7 125.8,42.8 155.3,48.4 184.7,24.1 214.2,22.3 243.6,52.1 273.1,26.0 302.5,24.1 332.0,33.5" fill="none" stroke="#a371f7" stroke-width="2" stroke-linejoin="round"/>
+      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
+    </svg>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-header">
+      <div class="chart-title">Recovery % · 14-day</div>
+      <div class="chart-latest" style="color:#d29922">58%</div>
+    </div>
+    <svg class="sparkline" viewBox="0 0 340 90">
+      <polyline points="8.0,36.9 66.9,31.7 96.4,59.7 125.8,11.5 155.3,46.6 184.7,32.6 214.2,22.9 273.1,44.0 302.5,16.8 332.0,31.7" fill="none" stroke="#d29922" stroke-width="2" stroke-linejoin="round"/>
+      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
+    </svg>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-header">
+      <div class="chart-title">Resting HR (bpm) · 14-day</div>
+      <div class="chart-latest" style="color:#3fb950">57 bpm</div>
+    </div>
+    <svg class="sparkline" viewBox="0 0 340 90">
+      <polyline points="66.9,26.6 96.4,19.9 125.8,31.1 155.3,18.7 184.7,25.4 214.2,27.0 243.6,24.7 273.1,18.4 302.5,28.2 332.0,43.8" fill="none" stroke="#3fb950" stroke-width="2" stroke-linejoin="round"/>
+      <text x="8.0" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Jan 29</text><text x="96.4" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 4</text><text x="184.7" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 11</text><text x="273.1" y="82" text-anchor="middle" font-size="9" fill="#6e7681">Apr 14</text>
+    </svg>
+  </div>
+
+  <div class="card">
+    <div class="card-title">HRV This Week (Hume)</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 13</div><div style="font-size:14px;font-weight:700;color:#f85149">20ms</div></div>
+<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 14</div><div style="font-size:14px;font-weight:700;color:#d29922">35.4ms</div></div>
+<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 15</div><div style="font-size:14px;font-weight:700;color:#3fb950">51.3ms</div></div>
+<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 16</div><div style="font-size:14px;font-weight:700;color:#d29922">38.9ms</div></div>
+
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-btn active" onclick="switchTab('brief')" id="nav-brief">
+    <div class="nav-icon">📋</div><div class="nav-label">Brief</div>
+  </div>
+  <div class="nav-btn" onclick="switchTab('recovery')" id="nav-recovery">
+    <div class="nav-icon">💤</div><div class="nav-label">Recovery</div>
+  </div>
+  <div class="nav-btn" onclick="switchTab('training')" id="nav-training">
+    <div class="nav-icon">💪</div><div class="nav-label">Training</div>
+  </div>
+  <div class="nav-btn" onclick="switchTab('nutrition')" id="nav-nutrition">
+    <div class="nav-icon">🥗</div><div class="nav-label">Nutrition</div>
+  </div>
+  <div class="nav-btn" onclick="switchTab('trends')" id="nav-trends">
+    <div class="nav-icon">📈</div><div class="nav-label">Trends</div>
+  </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════════════════
-   UTILITIES
-══════════════════════════════════════════════════════ */
-
-const DB_URL = './HEALTH_DATABASE.json';
-const GH_REPO  = 'toddblackhurst/health-dashboard';
-const GH_FILE  = 'HEALTH_DATABASE.json';
-const GH_API   = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
-let DB = null;
-const rendered = {};
-
-/* ══════════════════════════════════════════════════════
-   GITHUB WRITE-BACK ENGINE
-══════════════════════════════════════════════════════ */
-
-function getGHToken() {
-  try { return localStorage.getItem('gh_pat') || ''; } catch(e) { return ''; }
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  const tabs = ['brief','recovery','training','nutrition','trends'];
+  document.querySelectorAll('.tab-btn')[tabs.indexOf(id)].classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  window.scrollTo(0, 0);
 }
-
-function openTokenModal() {
-  const inp = document.getElementById('tokenInput');
-  if (inp) inp.value = getGHToken();
-  document.getElementById('tokenModal').classList.add('open');
-}
-function closeTokenModal() {
-  document.getElementById('tokenModal').classList.remove('open');
-}
-function saveToken() {
-  const val = (document.getElementById('tokenInput') || {}).value || '';
-  try { localStorage.setItem('gh_pat', val.trim()); } catch(e) {}
-  closeTokenModal();
-  // Update gear icon
-  updateTokenStatus();
-}
-function updateTokenStatus() {
-  const token = getGHToken();
-  const gears = document.querySelectorAll('.settings-gear');
-  gears.forEach(g => {
-    g.title = token ? 'GitHub write-back connected ✓ (tap to update token)' : 'Set up GitHub write-back';
-    g.textContent = token ? '🔗' : '⚙';
-  });
-}
-
-function setWbStatus(elId, state, msg) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  el.className = 'wb-status wb-' + state;
-  el.textContent = msg;
-}
-
-// Core write-back: merges feedback into HEALTH_DATABASE.json and pushes via GitHub API
-async function ghWriteFeedback(feedbackObj) {
-  const token = getGHToken();
-  if (!token) { openTokenModal(); return false; }
-
-  // Show saving indicator wherever present
-  document.querySelectorAll('.wb-status').forEach(el => {
-    el.className = 'wb-status wb-saving';
-    el.textContent = '↑ Saving…';
-  });
-
-  try {
-    // 1. Fetch current file (need SHA + content)
-    const getRes = await fetch(GH_API, {
-      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' }
-    });
-    if (!getRes.ok) throw new Error('GET failed: ' + getRes.status);
-    const fileData = await getRes.json();
-    const sha = fileData.sha;
-
-    // 2. Decode, parse, merge
-    const current = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
-
-    if (!Array.isArray(current.session_feedback)) current.session_feedback = [];
-    const today = new Date().toISOString().slice(0, 10);
-    const idx   = current.session_feedback.findIndex(f => f.date === today);
-    if (idx >= 0) {
-      // Merge into existing entry
-      current.session_feedback[idx] = Object.assign(current.session_feedback[idx], feedbackObj);
-    } else {
-      current.session_feedback.push(Object.assign({ date: today }, feedbackObj));
-    }
-    // Keep last 60 days
-    current.session_feedback = current.session_feedback
-      .sort((a,b) => a.date > b.date ? -1 : 1)
-      .slice(0, 60);
-
-    // 3. Encode + push
-    const newContent = btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2))));
-    const putRes = await fetch(GH_API, {
-      method: 'PUT',
-      headers: {
-        Authorization: 'token ' + token,
-        Accept: 'application/vnd.github+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: `Session feedback · ${today}`,
-        content: newContent,
-        sha: sha
-      })
-    });
-    if (!putRes.ok) throw new Error('PUT failed: ' + putRes.status);
-
-    document.querySelectorAll('.wb-status').forEach(el => {
-      el.className = 'wb-status wb-ok';
-      el.textContent = '✓ Saved to cloud';
-      setTimeout(() => { el.className = 'wb-status wb-idle'; el.textContent = ''; }, 3000);
-    });
-    return true;
-
-  } catch(err) {
-    console.error('GH write-back error:', err);
-    document.querySelectorAll('.wb-status').forEach(el => {
-      el.className = 'wb-status wb-err';
-      el.textContent = '✗ ' + (err.message.includes('401') ? 'Bad token' : err.message.includes('403') ? 'Token needs Contents:write permission' : 'Save failed');
-      setTimeout(() => { el.className = 'wb-status wb-idle'; el.textContent = ''; }, 5000);
-    });
-    return false;
-  }
-}
-
-// Collect all today's exercise feedback from localStorage
-function collectExerciseFeedback() {
-  const today = new Date().toISOString().slice(0, 10);
-  const notes = {};
-  try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith('exFb_' + today + '_sp_')) {
-        const exId = k.replace('exFb_' + today + '_sp_', '');
-        notes[exId] = localStorage.getItem(k);
-      }
-    }
-  } catch(e) {}
-  return notes;
-}
-
-function fmt(val, dec = 1) {
-  if (val === null || val === undefined) return '—';
-  return typeof val === 'number' ? val.toFixed(dec) : val;
-}
-function fmtDate(d) {
-  if (!d) return '';
-  const parts = d.split('-');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${months[parseInt(parts[1])-1]} ${parseInt(parts[2])}`;
-}
-function fmtDateShort(d) {
-  if (!d) return '';
-  const parts = d.split('-');
-  return `${parts[1]}/${parts[2]}`;
-}
-function latest(arr) {
-  return arr.slice().sort((a,b) => a.date > b.date ? -1 : 1)[0] || {};
-}
-function sortAsc(arr) {
-  return arr.slice().sort((a,b) => a.date < b.date ? -1 : 1);
-}
-function badge(text, color) {
-  return `<span class="badge badge-${color}">${text}</span>`;
-}
-function recoveryBadge(score) {
-  if (score === null || score === undefined) return badge('—', 'dim');
-  if (score >= 70) return badge('Optimal', 'green');
-  if (score >= 40) return badge('Normal', 'yellow');
-  return badge('Low', 'red');
-}
-function hrvBadge(hrv, baseline) {
-  if (!hrv) return badge('—', 'dim');
-  const diff = hrv - baseline;
-  if (diff > 3)  return badge(`+${diff.toFixed(1)} above base`, 'green');
-  if (diff < -3) return badge(`${diff.toFixed(1)} below base`, 'red');
-  return badge('At baseline', 'blue');
-}
-function sleepBadge(score) {
-  if (!score) return badge('—', 'dim');
-  if (score >= 80) return badge('Great', 'green');
-  if (score >= 60) return badge('Fair', 'yellow');
-  return badge('Poor', 'red');
-}
-function weightChange(current, prev) {
-  if (!current || !prev) return '';
-  const diff = current - prev;
-  if (Math.abs(diff) < 0.1) return badge('Stable', 'blue');
-  return diff < 0 ? badge(`−${Math.abs(diff).toFixed(1)} lbs`, 'green') : badge(`+${diff.toFixed(1)} lbs`, 'red');
-}
-
-/* ══════════════════════════════════════════════════════
-   SVG LINE CHART
-   data: [{date, value}, …]  (nulls skipped)
-══════════════════════════════════════════════════════ */
-function buildLineChart(data, opts = {}) {
-  const {
-    color = '#58a6ff',
-    height = 56,
-    baseline = null,
-    baselineLabel = null,
-  } = opts;
-
-  const valid = data.filter(d => d.value !== null && d.value !== undefined);
-  if (valid.length < 2) return { svg: '<div style="color:var(--text3);font-size:11px;padding:8px 0">Not enough data yet</div>', labels: [] };
-
-  const W = 300, H = height, px = 4, py = 6;
-  const ys = valid.map(d => d.value);
-  const allYs = baseline !== null ? [...ys, baseline] : ys;
-  const yMin = Math.min(...allYs) - (Math.max(...allYs) - Math.min(...allYs)) * 0.15;
-  const yMax = Math.max(...allYs) + (Math.max(...allYs) - Math.min(...allYs)) * 0.15;
-  const yRange = yMax - yMin || 1;
-
-  const toX = i => px + (i / (valid.length - 1)) * (W - 2 * px);
-  const toY = v => H - py - ((v - yMin) / yRange) * (H - 2 * py);
-
-  const pts = valid.map((d, i) => ({ x: toX(i), y: toY(d.value), d }));
-  const id = 'g' + Math.random().toString(36).slice(2, 7);
-
-  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${H}px;display:block;overflow:visible">
-  <defs>
-    <linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${color}" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
-    </linearGradient>
-  </defs>`;
-
-  // Baseline line
-  if (baseline !== null) {
-    const by = toY(baseline);
-    s += `<line x1="${px}" y1="${by.toFixed(1)}" x2="${W-px}" y2="${by.toFixed(1)}" stroke="rgba(110,118,129,0.5)" stroke-width="1" stroke-dasharray="5 3"/>`;
-    if (baselineLabel) {
-      s += `<text x="${W-px}" y="${(by - 3).toFixed(1)}" fill="rgba(110,118,129,0.7)" font-size="8" text-anchor="end" font-family="-apple-system,sans-serif">${baselineLabel}</text>`;
-    }
-  }
-
-  // Area fill
-  const linePts = pts.map((p,i) => `${i===0?'M':'L'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
-  const areaPts = linePts + ` L${pts[pts.length-1].x.toFixed(1)} ${H} L${pts[0].x.toFixed(1)} ${H} Z`;
-  s += `<path d="${areaPts}" fill="url(#${id})" stroke="none"/>`;
-
-  // Line
-  s += `<path d="${linePts}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
-
-  // Last dot only
-  const last = pts[pts.length - 1];
-  s += `<circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="3.5" fill="${color}" stroke="#0d1117" stroke-width="1.5"/>`;
-
-  s += '</svg>';
-
-  // X labels (first, middle, last)
-  const labelIdxs = valid.length <= 4
-    ? valid.map((_, i) => i)
-    : [0, Math.floor(valid.length / 2), valid.length - 1];
-  const labels = [...new Set(labelIdxs)].map(i => fmtDate(valid[i].date));
-
-  return { svg: s, labels };
-}
-
-/* Bar chart for volume */
-function buildBarChart(data, opts = {}) {
-  const { color = '#39d353', height = 60 } = opts;
-  const valid = data.filter(d => d.value !== null && d.value !== undefined);
-  if (valid.length < 1) return '<div style="color:var(--text3);font-size:11px;padding:8px 0">No data</div>';
-
-  const W = 300, H = height;
-  const max = Math.max(...valid.map(d => d.value));
-  const barW = (W / valid.length) * 0.65;
-  const gap   = (W / valid.length) * 0.35;
-
-  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${H}px;display:block">`;
-  valid.forEach((d, i) => {
-    const x = i * (barW + gap) + gap / 2;
-    const barH = (d.value / max) * (H - 8);
-    const y = H - barH;
-    const isLast = i === valid.length - 1;
-    s += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}"
-           rx="2" fill="${isLast ? color : 'rgba(57,211,83,0.4)'}"/>`;
-  });
-  s += '</svg>';
-  return s;
-}
-
-/* ══════════════════════════════════════════════════════
-   COACHING INSIGHT GENERATOR
-══════════════════════════════════════════════════════ */
-function coachingNote(db) {
-  const sleep   = latest(db.recovery_sleep);
-  const profile = db.profile;
-  const baseline = profile.oura_biology_baselines || {};
-  const hrvBase  = baseline.hrv_baseline_ms || 32.5;
-  const body     = latest(db.body_composition);
-  const nutrition = db.nutrition || [];
-  const todayNut  = nutrition.length ? latest(nutrition) : null;
-
-  const hrv       = sleep.hrv_ms;
-  const recovery  = sleep.recovery_score_pct;
-  const debtMin   = sleep.sleep_bank_min || sleep.autosleep_sleep_bank_min;
-  const diff      = hrv ? +(hrv - hrvBase).toFixed(1) : null;
-  const weightLbs = body.weight_lbs || (body.weight_kg ? +(body.weight_kg * 2.2046).toFixed(1) : null);
-  const goalLbs   = (profile.nutrition_targets && profile.nutrition_targets.goal_weight_lbs) || 165;
-
-  // ── Paragraph 1: Recovery & Readiness ──
-  let para1 = '';
-  if (hrv && diff !== null) {
-    if (diff > 3) {
-      para1 = `Todd, your HRV is at <strong>${hrv} ms</strong> — that's ${diff} ms above your baseline of ${hrvBase} ms. Your nervous system is recovered and ready to work. If you've got a strength session planned today, push it. This is exactly the signal you want to see.${recovery >= 70 ? " Readiness is high across the board — don't leave that on the table." : ""}`;
-    } else if (diff < -3) {
-      para1 = `Todd, your HRV is down to <strong>${hrv} ms</strong> — ${Math.abs(diff)} ms below your ${hrvBase} ms baseline. I'm not going to sugarcoat it: your body is telling you it's under-recovered. You can still train, but this isn't the day to chase PRs. Keep everything under 122 bpm, cut volume if needed, and protect the sleep tonight.${debtMin && debtMin < -90 ? ` You're carrying a sleep debt of ${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m — that's compounding the problem. Lights out by 9:30 tonight is non-negotiable.` : ''}`;
-    } else {
-      para1 = `Todd, HRV is at <strong>${hrv} ms</strong> — right at your ${hrvBase} ms baseline. Solid, normal day. ${recovery >= 70 ? "Readiness is green, which means you've got the capacity to push if the session calls for it." : recovery < 40 ? "Readiness is on the low side though, so take the intensity cues seriously today." : "Train with intent, keep your HR managed, and focus on quality movement over maximum load."}${debtMin && debtMin < -60 ? ` That sleep debt is still there — ${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m in the hole. Address it before it starts dragging your performance.` : ''}`;
-    }
-  } else {
-    para1 = `Todd, get your Oura data synced — I need your HRV to give you an accurate training decision today. Until then, default to a controlled session: HR under 122 bpm, focus on structural work and quality movement.`;
-  }
-
-  // ── Paragraph 2: Nutrition ──
-  let para2 = '';
-  if (todayNut && todayNut.daily_totals && todayNut.daily_totals.calories_kcal) {
-    const cals = todayNut.daily_totals.calories_kcal;
-    const prot = todayNut.daily_totals.protein_g;
-    const targetCals = 2000;
-    const targetProt = 150;
-    const calPct = Math.round((cals / targetCals) * 100);
-    if (cals < targetCals * 0.5) {
-      para2 = `The nutrition data has you at <strong>${cals} kcal</strong> — that's under 50% of your 2,000 kcal target. I need you to be real with yourself here: that level of undereating either means the logging is incomplete, or you're genuinely not fueling the training you're doing. At 57, anabolic resistance is real — chronically undereating while training accelerates muscle loss. Hit your <strong>150g protein</strong> first, every single day, no exceptions.`;
-    } else if (cals >= targetCals * 0.9 && prot && prot >= targetProt * 0.9) {
-      para2 = `Nutrition is looking good — <strong>${cals} kcal</strong> logged with ${prot}g protein. That's exactly what the plan calls for. A calculated deficit with high protein is the only sustainable way to cut fat without burning through the muscle you're building in the gym. Keep it up.`;
-    } else if (prot && prot < targetProt * 0.7) {
-      para2 = `Calories are logged at <strong>${cals} kcal</strong>, but protein is showing ${prot}g — well short of your 150g target. This matters more than the calorie number. Protein is what keeps you from cannibalizing muscle while in a deficit. Prioritize it at every meal, not as an afterthought.`;
-    } else {
-      para2 = `Nutrition logged at <strong>${cals} kcal</strong> — ${calPct < 80 ? "you're a bit short of target" : "on track"}. Stay dialed in on protein. Your 2,000 kcal / 150g protein target exists for a specific reason at your age and training intensity. The deficit is already built in — don't accidentally make it bigger by skipping meals.`;
-    }
-  } else {
-    para2 = `Get today's nutrition logged. I know tracking feels like admin work, but the data is what lets me give you real coaching. Your target is <strong>2,000 kcal and 150g protein</strong> — a ~380 kcal deficit from your TDEE with protein elevated to protect your muscle mass. That's the plan. Execute it.`;
-  }
-
-  // ── Paragraph 3: Progress & Accountability ──
-  let para3 = '';
-  if (weightLbs) {
-    const remaining = +(weightLbs - goalLbs).toFixed(1);
-    if (remaining > 7) {
-      para3 = `You're at <strong>${weightLbs.toFixed(1)} lbs</strong> with ${remaining} lbs to your goal of ${goalLbs} lbs. You're moving in the right direction — keep stacking consistent days. The mission is clear: reduce visceral fat, preserve muscle, improve sleep, and correct the structural imbalances we've identified. Every session and every meal is a vote for or against that goal. Make most of them count.`;
-    } else if (remaining > 2) {
-      para3 = `You're <strong>${remaining} lbs from your goal</strong> of ${goalLbs} lbs — you're in the final push. This is where most people ease off because the end feels close. Don't. The structural work matters just as much now as when you started — your right-side dominance and shoulder imbalance don't fix themselves with weight loss. Keep the corrective work in every session.`;
-    } else if (remaining > 0) {
-      para3 = `You're <strong>nearly at goal weight</strong> — ${remaining} lbs to ${goalLbs} lbs. Finish the job. Don't drift into maintenance mode just because the scale is cooperating. The structural correction and performance work are the long game here.`;
-    } else {
-      para3 = `Weight goal hit. Now the work shifts — maintain lean mass, keep reducing visceral fat, and address the structural imbalances that affect how your body actually moves and ages. The scale isn't the whole picture anymore.`;
-    }
-  } else {
-    para3 = `Keep stacking good days. Sleep → nutrition → training — in that order of priority. The right-side dominance and shoulder asymmetry are long-game problems that require consistent, patient work. Don't skip the corrective elements. They're not optional.`;
-  }
-
-  return `<div class="coach-label">Coach · Daily Brief</div><p>${para1}</p><p>${para2}</p><p>${para3}</p>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   TODAY TAB
-══════════════════════════════════════════════════════ */
-function renderToday(db) {
-  const sleep   = latest(db.recovery_sleep);
-  const glucose = latest(db.glucose);
-  const body    = latest(db.body_composition);
-  const profile = db.profile;
-  const baseline = profile.oura_biology_baselines || {};
-
-  // Status grid
-  const recovery  = sleep.recovery_score_pct;
-  const hrv       = sleep.hrv_ms;
-  const rhr       = sleep.resting_hr_bpm;
-  const glu       = glucose.current_reading_mgdl;
-
-  function recColor(r) {
-    if (!r) return 'var(--text)';
-    if (r >= 70) return 'var(--green)';
-    if (r >= 40) return 'var(--yellow)';
-    return 'var(--red)';
-  }
-  function hrvColor(h) {
-    if (!h) return 'var(--text)';
-    const d = h - (baseline.hrv_baseline_ms || 32.5);
-    if (d > 3) return 'var(--green)';
-    if (d < -3) return 'var(--red)';
-    return 'var(--accent)';
-  }
-
-  // HRV sparkline data
-  const hrvData = sortAsc(db.recovery_sleep)
-    .filter(r => r.hrv_ms)
-    .map(r => ({ date: r.date, value: r.hrv_ms }));
-
-  const recData = sortAsc(db.recovery_sleep)
-    .filter(r => r.recovery_score_pct)
-    .map(r => ({ date: r.date, value: r.recovery_score_pct }));
-
-  const hrvChart = buildLineChart(hrvData, { color: 'var(--chart-hrv)', baseline: baseline.hrv_baseline_ms || 32.5, baselineLabel: `Baseline ${baseline.hrv_baseline_ms || 32.5}` });
-  const recChart = buildLineChart(recData, { color: 'var(--chart-recovery)', height: 50 });
-
-  // Glucose zone marker (70-180 range, in-range = 70-140)
-  const gluPct = glu ? Math.min(100, Math.max(0, ((glu - 70) / 110) * 100)) : 28;
-
-  // Sleep data
-  const totalMin = sleep.total_sleep_min || sleep.autosleep_total_sleep_min;
-  const totalH   = totalMin ? Math.floor(totalMin / 60) : '—';
-  const totalM   = totalMin ? totalMin % 60 : '';
-  const totalStr = totalMin ? `${totalH}h ${totalM}m` : '—';
-  const deepMin  = sleep.deep_sleep_min || sleep.autosleep_deep_min;
-  const remMin   = sleep.rem_sleep_min  || sleep.autosleep_rem_min;
-  const deepStr  = deepMin ? `${deepMin}m` : '—';
-  const remStr   = remMin  ? (remMin >= 60 ? `${Math.floor(remMin/60)}h ${remMin%60}m` : `${remMin}m`) : '—';
-  const debtMin  = sleep.sleep_bank_min || sleep.autosleep_sleep_bank_min;
-  const debtStr  = debtMin ? `−${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m` : '—';
-
-  // Sleep bar pct helpers
-  const sleepPct  = totalMin ? Math.min(100, (totalMin / 480) * 100) : 0;   // vs 8h
-  const deepPct   = deepMin  ? Math.min(100, (deepMin / 90) * 100)   : 0;   // vs 90m ideal
-  const remPct    = remMin   ? Math.min(100, (remMin / 120) * 100)   : 0;   // vs 120m ideal
-  const effPct    = sleep.sleep_efficiency_pct || 0;
-
-  const weightLbs = body.weight_lbs || (body.weight_kg ? body.weight_kg * 2.2046 : null);
-  const goalLbs   = profile.nutrition_targets ? profile.nutrition_targets.goal_weight_lbs : 165;
-  const startLbs  = 172.7; // from first body comp entry
-  const progressPct = weightLbs ? Math.min(100, ((startLbs - weightLbs) / (startLbs - goalLbs)) * 100) : 0;
-
-  // ── Workout today ──
-  const todayStr = new Date().toISOString().slice(0,10);
-  const todayWorkout = (db.strength_logs || []).find(s => s.date === todayStr) || null;
-  const todayActivity = (db.activity_sessions || []).find(a => a.date === todayStr && (a.type === 'Strength Training' || a.source === 'Motra')) || null;
-  const wkt = todayWorkout || todayActivity;
-
-  // ── Nutrition today ──
-  const nutEntries = db.nutrition || [];
-  const todayNut   = nutEntries.length ? latest(nutEntries) : null;
-  const nutTotals  = todayNut ? (todayNut.daily_totals || {}) : {};
-  const nutTargets = { cal: 2000, prot: 150, carbs: 190, fat: 70 };
-  const logged_cal   = nutTotals.calories_kcal || 0;
-  const logged_prot  = nutTotals.protein_g     || 0;
-  const logged_carbs = nutTotals.carbs_g        || 0;
-  const logged_fat   = nutTotals.fat_g          || 0;
-  const calPct   = Math.min(100, Math.round((logged_cal   / nutTargets.cal)   * 100));
-  const protPct  = Math.min(100, Math.round((logged_prot  / nutTargets.prot)  * 100));
-  const carbsPct = Math.min(100, Math.round((logged_carbs / nutTargets.carbs) * 100));
-  const fatPct   = Math.min(100, Math.round((logged_fat   / nutTargets.fat)   * 100));
-  function macroColor(pct) {
-    if (pct >= 90) return 'var(--green)';
-    if (pct >= 60) return 'var(--yellow)';
-    return 'var(--red)';
-  }
-  function deltaBadge(logged, target, unit) {
-    if (!logged) return `<span style="color:var(--text3);font-size:10px">No data logged</span>`;
-    const d = logged - target;
-    const abs = Math.abs(d).toFixed(d < 10 && d > -10 ? 1 : 0);
-    if (Math.abs(d) < target * 0.05) return badge('On target','green');
-    return d < 0
-      ? `<span style="font-size:10px;color:var(--yellow)">−${abs}${unit} to go</span>`
-      : `<span style="font-size:10px;color:var(--green)">+${abs}${unit} over</span>`;
-  }
-
-  return `
-  <!-- Status grid -->
-  <div class="status-grid">
-    <div class="status-item">
-      <div class="si-val" style="color:${recColor(recovery)}">${recovery || '—'}</div>
-      <div class="si-label">Readiness</div>
-      <div class="si-badge">${recoveryBadge(recovery)}</div>
-    </div>
-    <div class="status-item">
-      <div class="si-val" style="color:${hrvColor(hrv)}">${fmt(hrv, 1)}</div>
-      <div class="si-label">HRV ms</div>
-      <div class="si-badge">${hrv ? (hrv > (baseline.hrv_baseline_ms||32.5) ? badge('+above','green') : badge('below','red')) : badge('—','dim')}</div>
-    </div>
-    <div class="status-item">
-      <div class="si-val">${fmt(rhr, 1)}</div>
-      <div class="si-label">RHR bpm</div>
-      <div class="si-badge">${rhr ? (rhr < 65 ? badge('Normal','green') : badge('Elevated','yellow')) : badge('—','dim')}</div>
-    </div>
-    <div class="status-item">
-      <div class="si-val" style="color:${glu && glu < 140 ? 'var(--green)' : 'var(--yellow)'}">${glu || '—'}</div>
-      <div class="si-label">Glucose</div>
-      <div class="si-badge">${glu ? (glu < 140 ? badge('In range','green') : badge('Above','yellow')) : badge('—','dim')}</div>
-    </div>
-  </div>
-
-  <!-- Nutrition Today -->
-  <div class="section">
-    <div class="section-title">Nutrition · ${todayNut ? fmtDate(todayNut.date) : 'Today'}</div>
-    <!-- Calorie bar full width -->
-    <div class="macro-grid">
-      <div class="macro-cell full">
-        <div class="macro-label">Calories</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${macroColor(calPct)}">${logged_cal || '—'}<span style="font-size:12px;font-weight:400;color:var(--text3)"> kcal</span></div>
-          <div class="macro-target">Target: ${nutTargets.cal} kcal</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${calPct}%;background:${macroColor(calPct)}"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_cal, nutTargets.cal, ' kcal')}</div>
-      </div>
-      <!-- Protein -->
-      <div class="macro-cell">
-        <div class="macro-label">Protein</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${macroColor(protPct)}">${logged_prot || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
-          <div class="macro-target">${nutTargets.prot}g</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${protPct}%;background:${macroColor(protPct)}"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_prot, nutTargets.prot, 'g')}</div>
-      </div>
-      <!-- Carbs -->
-      <div class="macro-cell">
-        <div class="macro-label">Carbs</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${macroColor(carbsPct)}">${logged_carbs || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
-          <div class="macro-target">${nutTargets.carbs}g</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${carbsPct}%;background:var(--accent)"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_carbs, nutTargets.carbs, 'g')}</div>
-      </div>
-      <!-- Fat -->
-      <div class="macro-cell">
-        <div class="macro-label">Fat</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${macroColor(fatPct)}">${logged_fat || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
-          <div class="macro-target">${nutTargets.fat}g</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${fatPct}%;background:var(--purple)"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_fat, nutTargets.fat, 'g')}</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Coach teaser -->
-  <div class="section">
-    <div class="section-title">Coach Brief</div>
-    <div class="coach-note" id="coach-teaser" style="cursor:pointer" onclick="switchTab('coach')">
-      ${coachingTeaser(db)}
-      <div style="margin-top:10px;font-size:11px;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:4px">
-        Full coaching brief → <span style="font-size:13px">🎯</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- HRV chart -->
-  <div class="section">
-    <div class="section-title">HRV Trend</div>
-    <div class="chart-card">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Heart Rate Variability</div>
-          <div class="chart-sub">Baseline: ${baseline.hrv_baseline_ms || 32.5} ms · Source: Oura</div>
-        </div>
-        <div>
-          <div class="chart-val" style="color:var(--chart-hrv)">${fmt(hrv, 1)} ms</div>
-          <div class="chart-change" style="color:${hrv > (baseline.hrv_baseline_ms||32.5) ? 'var(--green)' : 'var(--red)'}">
-            ${hrv ? ((hrv - (baseline.hrv_baseline_ms||32.5)) > 0 ? '↑' : '↓') + ' ' + Math.abs(hrv - (baseline.hrv_baseline_ms||32.5)).toFixed(1) + ' vs base' : ''}
-          </div>
-        </div>
-      </div>
-      <div class="chart-area">${hrvChart.svg}</div>
-      <div class="chart-x-labels">${hrvChart.labels.map(l => `<span>${l}</span>`).join('')}</div>
-    </div>
-
-    <!-- Recovery chart -->
-    <div class="chart-card">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Recovery Score</div>
-          <div class="chart-sub">Oura · 7-day history</div>
-        </div>
-        <div>
-          <div class="chart-val" style="color:var(--chart-recovery)">${recovery || '—'}%</div>
-          <div class="chart-change" style="color:var(--text3)">${recoveryBadge(recovery)}</div>
-        </div>
-      </div>
-      <div class="chart-area">${recChart.svg}</div>
-      <div class="chart-x-labels">${recChart.labels.map(l => `<span>${l}</span>`).join('')}</div>
-    </div>
-  </div>
-
-  <!-- Sleep breakdown -->
-  <div class="section">
-    <div class="section-title">Sleep · ${fmtDate(sleep.date)}</div>
-    <div class="card">
-      <div class="data-row">
-        <div class="dr-key">Total Sleep</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:${sleepPct}%;background:var(--accent)"></div></div>
-        <div class="dr-val">${totalStr}</div>
-        <div class="dr-badge">${sleepBadge(sleep.sleep_score_pct)}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Deep Sleep</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:${deepPct}%;background:var(--purple)"></div></div>
-        <div class="dr-val">${deepStr}</div>
-        <div class="dr-badge">${deepMin ? (deepMin >= 60 ? badge('Good','green') : badge('Low','yellow')) : badge('—','dim')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">REM</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:${remPct}%;background:var(--purple)"></div></div>
-        <div class="dr-val">${remStr}</div>
-        <div class="dr-badge">${remMin ? (remMin >= 90 ? badge('Good','green') : badge('Fair','yellow')) : badge('—','dim')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Efficiency</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:${effPct}%;background:var(--green)"></div></div>
-        <div class="dr-val">${effPct ? effPct + '%' : '—'}</div>
-        <div class="dr-badge">${sleep.sleep_efficiency_pct ? (sleep.sleep_efficiency_pct >= 85 ? badge('Good','green') : badge('Fair','yellow')) : badge('—','dim')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Sleep Debt</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:${debtMin ? Math.min(100, (Math.abs(debtMin)/300)*100) : 0}%;background:var(--yellow)"></div></div>
-        <div class="dr-val">${debtStr}</div>
-        <div class="dr-badge">${debtMin ? (Math.abs(debtMin) < 60 ? badge('Low','green') : Math.abs(debtMin) < 180 ? badge('Moderate','yellow') : badge('High','red')) : badge('—','dim')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">HR Dip</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:${sleep.hr_dip_pct ? sleep.hr_dip_pct * 4 : 0}%;background:var(--teal)"></div></div>
-        <div class="dr-val">${sleep.hr_dip_pct ? sleep.hr_dip_pct + '%' : '—'}</div>
-        <div class="dr-badge">${sleep.hr_dip_pct ? (sleep.hr_dip_pct >= 8 ? badge('Normal','green') : badge('Low','yellow')) : badge('—','dim')}</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Glucose -->
-  <div class="section">
-    <div class="section-title">Glucose · ${fmtDate(glucose.date)}</div>
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
-        <div>
-          <div style="font-size:32px;font-weight:800;letter-spacing:-0.02em;color:${glu && glu < 140 ? 'var(--green)' : 'var(--yellow)'}">
-            ${glu || '—'}<span style="font-size:14px;font-weight:400;color:var(--text2)"> mg/dL</span>
-          </div>
-          <div style="font-size:11px;color:var(--text3)">Trend: ${glucose.trend || '—'} · Stelo CGM via Oura</div>
-        </div>
-        <div style="text-align:right">
-          ${glu ? badge('In range','green') : badge('—','dim')}
-          <div style="font-size:11px;color:var(--text3);margin-top:6px">Target: 70–140</div>
-        </div>
-      </div>
-      <div class="glucose-zone-bar">
-        <div class="glucose-marker" style="left:${gluPct}%"></div>
-      </div>
-      <div class="zone-labels">
-        <span>70</span>
-        <span style="color:var(--green)">In range</span>
-        <span>180+</span>
-      </div>
-      ${glucose.time_in_range_yesterday_pct ? `<div style="margin-top:8px;font-size:12px;color:var(--text2)">
-        Time in range yesterday: <strong style="color:var(--green)">${glucose.time_in_range_yesterday_pct}%</strong>
-        ${glucose.glucose_variability_pct !== undefined && glucose.glucose_variability_pct !== null ? ` · Variability: <strong>${glucose.glucose_variability_pct}%</strong> ${badge(glucose.glucose_variability_status||'','green')}` : ''}
-      </div>` : ''}
-    </div>
-  </div>
-
-  <!-- Weight snapshot -->
-  <div class="section">
-    <div class="section-title">Weight · ${fmtDate(body.date)}</div>
-    <div class="card">
-      <div class="goal-card-header">
-        <div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:2px">Current</div>
-          <div class="goal-big">${weightLbs ? weightLbs.toFixed(1) : '—'}<span class="goal-big-unit"> lbs</span></div>
-        </div>
-        <div class="goal-right">
-          <div class="goal-lbl">Goal</div>
-          <div class="goal-target">${goalLbs} lbs</div>
-          <div class="goal-remaining">${weightLbs ? Math.abs(weightLbs - goalLbs).toFixed(1) + ' lbs to go' : ''}</div>
-        </div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-track">
-          <div class="progress-fill" style="width:${Math.max(0, progressPct).toFixed(1)}%;background:linear-gradient(90deg,var(--yellow),var(--green))"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px">
-          <span>Start ${startLbs}</span>
-          <span style="color:var(--green)">${progressPct.toFixed(0)}% complete</span>
-          <span>Goal ${goalLbs}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Today's Workout -->
-  ${wkt ? (() => {
-    const volLbs = wkt.volume_kg ? Math.round(wkt.volume_kg * 2.2046).toLocaleString() : (wkt.total_volume_kg ? Math.round(wkt.total_volume_kg * 2.2046).toLocaleString() : null);
-    const hrFlag = wkt.peak_hr_bpm && wkt.peak_hr_bpm > 122;
-    const mainExercises = (wkt.exercises || []).filter(e => e.category === 'main_strength' || e.category === 'accessory').slice(0, 5);
-    return `
-  <div class="section">
-    <div class="section-title">Today's Session · ${wkt.time || '—'}</div>
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-        <div>
-          <div style="font-size:15px;font-weight:700;letter-spacing:-0.01em">${wkt.session_type || wkt.type || 'Strength Training'}</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:2px">${wkt.source || 'Motra'} · ${wkt.duration_min || '—'} min · ${wkt.exercises ? wkt.exercises.length + ' exercises' : ''}</div>
-        </div>
-        <div style="text-align:right">
-          ${hrFlag ? badge('Peak HR ⚠️ ' + wkt.peak_hr_bpm + ' bpm','red') : badge('HR OK','green')}
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px">
-        <div style="text-align:center">
-          <div style="font-size:18px;font-weight:800;color:var(--accent)">${volLbs ? volLbs : '—'}</div>
-          <div style="font-size:10px;color:var(--text3)">lbs volume</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:18px;font-weight:800;color:var(--teal)">${wkt.calories_kcal || '—'}</div>
-          <div style="font-size:10px;color:var(--text3)">kcal</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:18px;font-weight:800;color:var(--chart-hrv)">${wkt.avg_hr_bpm || '—'}</div>
-          <div style="font-size:10px;color:var(--text3)">avg HR</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:18px;font-weight:800;color:var(--yellow)">${wkt.total_reps || wkt.reps || '—'}</div>
-          <div style="font-size:10px;color:var(--text3)">total reps</div>
-        </div>
-      </div>
-      ${mainExercises.length ? `<div style="border-top:1px solid var(--border);padding-top:8px;margin-top:2px">
-        ${mainExercises.map(ex => {
-          const wtStr = ex.weight === 'BW' ? 'BW' : (Array.isArray(ex.weight_kg) ? ex.weight_kg[0] + 'kg' : (ex.weight_kg ? ex.weight_kg + 'kg' : ''));
-          return `<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid var(--border);font-size:12px">
-            <span style="color:var(--text)">${ex.name}</span>
-            <span style="color:var(--text3)">${ex.sets}×${Array.isArray(ex.reps) ? ex.reps[0] : (ex.reps || '—')} ${wtStr}</span>
-          </div>`;
-        }).join('')}
-        ${(wkt.exercises || []).filter(e => e.category === 'main_strength' || e.category === 'accessory').length > 5 ? `<div style="font-size:11px;color:var(--text3);padding-top:5px">+${(wkt.exercises||[]).filter(e=>e.category==='main_strength'||e.category==='accessory').length - 5} more exercises</div>` : ''}
-      </div>` : ''}
-      ${wkt.motra_link ? `<div style="margin-top:8px"><a href="${wkt.motra_link}" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:none">📱 View full session on Motra →</a></div>` : ''}
-    </div>
-  </div>`;
-  })() : ''}
-
-  <div class="spacer"></div>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   BODY TAB
-══════════════════════════════════════════════════════ */
-function renderBody(db) {
-  const entries = sortAsc(db.body_composition);
-  const cur     = latest(db.body_composition);
-  const prev    = entries.length >= 2 ? entries[entries.length - 2] : null;
-  const profile = db.profile;
-  const goalLbs = profile.nutrition_targets ? profile.nutrition_targets.goal_weight_lbs : 165;
-
-  const weightLbs = cur.weight_lbs || (cur.weight_kg ? +(cur.weight_kg * 2.2046).toFixed(1) : null);
-  const prevW     = prev ? (prev.weight_lbs || (prev.weight_kg ? +(prev.weight_kg * 2.2046).toFixed(1) : null)) : null;
-
-  // Weight trend chart
-  const wtData = entries.filter(e => e.weight_lbs || e.weight_kg).map(e => ({
-    date: e.date, value: e.weight_lbs || +(e.weight_kg * 2.2046).toFixed(1)
-  }));
-  const bfData = entries.filter(e => e.body_fat_pct).map(e => ({ date: e.date, value: e.body_fat_pct }));
-
-  const wtChart = buildLineChart(wtData, { color: 'var(--chart-weight)', height: 60 });
-  const bfChart = buildLineChart(bfData, { color: 'var(--chart-bf)',     height: 50 });
-
-  // Segmental (from Hume entry)
-  const humeEntry = db.body_composition.find(e => e.source === 'Hume Body Pod') || {};
-  const seg = humeEntry.segmental_muscle_lbs || {};
-  const segFat = humeEntry.segmental_fat_pct || {};
-
-  const segHtml = (seg.trunk) ? `
-  <div class="section-title" style="margin-top:12px">Segmental Analysis — Hume Body Pod <small style="color:var(--text3);font-size:9px">${fmtDate(humeEntry.date)}</small></div>
-  <div class="seg-grid">
-    <div class="seg-card full-width">
-      <div class="seg-title">Trunk</div>
-      <div class="seg-row-item">
-        <span class="seg-row-key">Muscle</span>
-        <div class="seg-row-right">${seg.trunk.value_lbs} lbs ${badge(seg.trunk.rating,'yellow')}</div>
-      </div>
-      <div class="seg-row-item">
-        <span class="seg-row-key">Fat %</span>
-        <div class="seg-row-right">${segFat.trunk ? segFat.trunk.fat_pct + '%' : '—'} ${segFat.trunk ? badge(segFat.trunk.rating,'blue') : ''}</div>
-      </div>
-    </div>
-    <div class="seg-card">
-      <div class="seg-title">Right Arm</div>
-      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.right_arm.value_lbs} lbs</span></div>
-      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.right_arm ? badge(segFat.right_arm.fat_pct + '%','red') : '—'}</span></div>
-    </div>
-    <div class="seg-card">
-      <div class="seg-title">Left Arm</div>
-      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.left_arm.value_lbs} lbs</span></div>
-      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.left_arm ? badge(segFat.left_arm.fat_pct + '%','red') : '—'}</span></div>
-    </div>
-    <div class="seg-card">
-      <div class="seg-title">Right Leg</div>
-      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.right_leg.value_lbs} lbs</span></div>
-      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.right_leg ? badge(segFat.right_leg.fat_pct + '%','blue') : '—'}</span></div>
-    </div>
-    <div class="seg-card">
-      <div class="seg-title">Left Leg</div>
-      <div class="seg-row-item"><span class="seg-row-key">Muscle</span><span>${seg.left_leg.value_lbs} lbs</span></div>
-      <div class="seg-row-item"><span class="seg-row-key">Fat</span><span>${segFat.left_leg ? badge(segFat.left_leg.fat_pct + '%','blue') : '—'}</span></div>
-    </div>
-  </div>` : '';
-
-  // Measurement history table
-  const histHtml = entries.map(e => {
-    const w = e.weight_lbs || (e.weight_kg ? +(e.weight_kg * 2.2046).toFixed(1) : '—');
-    return `<div class="data-row">
-      <div class="dr-key">${fmtDate(e.date)}</div>
-      <div style="flex:1;font-size:11px;color:var(--text3)">${e.source}</div>
-      <div class="dr-val">${w} lbs</div>
-      <div class="dr-badge">${e.body_fat_pct ? badge(e.body_fat_pct + '%','blue') : ''}</div>
-    </div>`;
-  }).join('');
-
-  return `
-  <!-- Goal progress -->
-  <div class="section">
-    <div class="section-title">Body Composition · ${fmtDate(cur.date)}</div>
-    <div class="card">
-      <div class="goal-card-header">
-        <div>
-          <div style="font-size:11px;color:var(--text3)">Weight · ${cur.source}</div>
-          <div class="goal-big">${weightLbs ? weightLbs.toFixed(1) : '—'}<span class="goal-big-unit"> lbs</span></div>
-          <div style="margin-top:4px">${weightChange(weightLbs, prevW)}</div>
-        </div>
-        <div class="goal-right">
-          <div class="goal-lbl">Goal</div>
-          <div class="goal-target">${goalLbs} lbs</div>
-          <div class="goal-remaining">${weightLbs ? Math.abs(weightLbs - goalLbs).toFixed(1) + ' lbs to go' : ''}</div>
-          <div style="margin-top:6px">${cur.bmi ? badge('BMI ' + cur.bmi, 'blue') : ''}</div>
-        </div>
-      </div>
-
-      <div class="progress-wrap">
-        <div class="progress-track">
-          <div class="progress-fill" style="width:${Math.max(0,((172.7 - (weightLbs||172.7))/(172.7 - goalLbs))*100).toFixed(1)}%;background:linear-gradient(90deg,var(--yellow),var(--teal))"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px">
-          <span>172.7</span><span>Progress to goal</span><span>${goalLbs}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Key stats -->
-    <div class="stat-row">
-      <div class="stat-cell">
-        <div class="stat-cell-val">${fmt(cur.body_fat_pct, 1)}<span style="font-size:11px;color:var(--text2)">%</span></div>
-        <div class="stat-cell-lbl">Body Fat</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-cell-val">${cur.lean_mass_lbs ? cur.lean_mass_lbs.toFixed(1) : '—'}</div>
-        <div class="stat-cell-lbl">Lean (lbs)</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-cell-val">${cur.visceral_fat_level ? 'Lv ' + cur.visceral_fat_level : '—'}</div>
-        <div class="stat-cell-lbl">Visc. Fat</div>
-      </div>
-    </div>
-    <div class="stat-row" style="margin-top:0">
-      <div class="stat-cell">
-        <div class="stat-cell-val">${cur.muscle_pct ? cur.muscle_pct + '%' : '—'}</div>
-        <div class="stat-cell-lbl">Muscle %</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-cell-val">${cur.body_water_pct ? cur.body_water_pct + '%' : '—'}</div>
-        <div class="stat-cell-lbl">Body Water</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-cell-val">${cur.bmr_kcal || '—'}</div>
-        <div class="stat-cell-lbl">BMR kcal</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Weight chart -->
-  <div class="section">
-    <div class="section-title">Weight Trend</div>
-    <div class="chart-card">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Weight (lbs)</div>
-          <div class="chart-sub">All measurements · ${entries.length} scans</div>
-        </div>
-        <div>
-          <div class="chart-val" style="color:var(--chart-weight)">${weightLbs ? weightLbs.toFixed(1) : '—'}</div>
-          <div class="chart-change" style="color:var(--green)">Goal: ${goalLbs} lbs</div>
-        </div>
-      </div>
-      <div class="chart-area">${wtChart.svg}</div>
-      <div class="chart-x-labels">${wtChart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
-    </div>
-
-    <!-- BF% chart -->
-    <div class="chart-card">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Body Fat %</div>
-          <div class="chart-sub">Lower is better · Target: ~15%</div>
-        </div>
-        <div>
-          <div class="chart-val" style="color:var(--chart-bf)">${fmt(cur.body_fat_pct, 1)}%</div>
-        </div>
-      </div>
-      <div class="chart-area">${bfChart.svg}</div>
-      <div class="chart-x-labels">${bfChart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
-    </div>
-  </div>
-
-  <!-- Segmental -->
-  <div class="section">
-    ${segHtml}
-  </div>
-
-  <!-- Measurement history -->
-  <div class="section">
-    <div class="section-title">Measurement History</div>
-    <div class="card">${histHtml}</div>
-  </div>
-
-  <!-- Nutrition targets reminder -->
-  <div class="section">
-    <div class="section-title">Nutrition Targets</div>
-    <div class="card">
-      <div class="data-row">
-        <div class="dr-key">Calories</div>
-        <div style="flex:1"></div>
-        <div class="dr-val">2000 kcal</div>
-        <div class="dr-badge">${badge('Target','blue')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Protein</div>
-        <div style="flex:1"></div>
-        <div class="dr-val">150 g</div>
-        <div class="dr-badge">${badge('Target','blue')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Carbs</div>
-        <div style="flex:1"></div>
-        <div class="dr-val">190 g</div>
-        <div class="dr-badge">${badge('Target','blue')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Fat</div>
-        <div style="flex:1"></div>
-        <div class="dr-val">70 g</div>
-        <div class="dr-badge">${badge('Target','blue')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Deficit</div>
-        <div style="flex:1"></div>
-        <div class="dr-val">~380 kcal</div>
-        <div class="dr-badge">${badge('vs TDEE','dim')}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="spacer"></div>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   NUTRITION TAB
-══════════════════════════════════════════════════════ */
-function renderNutrition(db) {
-  const nutEntries  = db.nutrition || [];
-  const todayNut    = nutEntries.length ? latest(nutEntries) : null;
-  const nutTotals   = todayNut ? (todayNut.daily_totals || {}) : {};
-  const meals       = todayNut ? (todayNut.meals || []) : [];
-  const nutTargets  = { cal: 2000, prot: 150, carbs: 190, fat: 70 };
-
-  const logged_cal   = nutTotals.calories_kcal || 0;
-  const logged_prot  = nutTotals.protein_g     || 0;
-  const logged_carbs = nutTotals.carbs_g        || 0;
-  const logged_fat   = nutTotals.fat_g          || 0;
-  const calPct   = Math.min(100, Math.round((logged_cal   / nutTargets.cal)   * 100));
-  const protPct  = Math.min(100, Math.round((logged_prot  / nutTargets.prot)  * 100));
-  const carbsPct = Math.min(100, Math.round((logged_carbs / nutTargets.carbs) * 100));
-  const fatPct   = Math.min(100, Math.round((logged_fat   / nutTargets.fat)   * 100));
-
-  function macroColor(pct) {
-    if (pct >= 90) return 'var(--green)';
-    if (pct >= 50) return 'var(--yellow)';
-    return 'var(--red)';
-  }
-  function fatColor(pct) {
-    if (pct >= 100) return 'var(--red)';
-    if (pct >= 80) return 'var(--yellow)';
-    return 'var(--green)';
-  }
-  function deltaBadge(logged, target, unit) {
-    if (!logged) return `<span style="color:var(--text3);font-size:10px">Not logged yet</span>`;
-    const d = logged - target;
-    const abs = Math.abs(d).toFixed(Math.abs(d) < 10 ? 1 : 0);
-    if (Math.abs(d) < target * 0.05) return badge('On target', 'green');
-    return d < 0
-      ? `<span style="font-size:10px;color:var(--yellow)">−${abs}${unit} remaining</span>`
-      : `<span style="font-size:10px;color:var(--red)">+${abs}${unit} over</span>`;
-  }
-
-  // ── Nutrition coaching note ──
-  let coachText = '';
-  const rem_cal  = nutTargets.cal  - logged_cal;
-  const rem_prot = nutTargets.prot - logged_prot;
-  const rem_fat  = nutTargets.fat  - logged_fat;
-
-  if (!logged_cal) {
-    coachText = `<strong>Nothing logged yet today.</strong> Your targets are 2,000 kcal / 150g protein / 190g carbs / 70g fat — a deliberate ~380 kcal deficit built for fat loss without muscle sacrifice. Log your meals as you go so I can coach you in real time. Start with breakfast.`;
-  } else {
-    let flags = [];
-    if (rem_prot > 80) flags.push(`<strong>Protein gap: ${rem_prot}g still needed</strong> — this is your top priority. Hit 150g or muscle preservation is compromised.`);
-    else if (rem_prot > 30) flags.push(`<strong>${rem_prot}g protein remaining</strong> — close, keep pushing. Prioritize protein at your next meal.`);
-    else if (rem_prot <= 0) flags.push(`<strong>Protein target hit ✓</strong> — excellent execution on the most important number.`);
-
-    if (rem_fat < 15 && logged_fat > 0) flags.push(`<strong>⚠️ Fat nearly maxed:</strong> Only ${rem_fat}g fat remaining. Keep remaining meals very lean — prioritize protein and carbs only.`);
-    if (rem_fat < 0) flags.push(`<strong>⚠️ Fat target exceeded</strong> by ${Math.abs(rem_fat)}g. Focus all remaining calories on protein.`);
-
-    if (logged_cal < nutTargets.cal * 0.35 && rem_cal > 1200) {
-      coachText = `${flags.join(' ')} You still have <strong>${rem_cal} kcal</strong> in your budget — plenty of room to hit protein across two more meals. Don't skip meals; the deficit is already built in.`;
-    } else if (logged_cal > nutTargets.cal * 0.85) {
-      coachText = `${flags.join(' ')} You're at <strong>${logged_cal} kcal</strong> — ${rem_cal > 0 ? rem_cal + ' kcal remaining' : 'at or over target'}. ${rem_prot > 20 ? 'Use what\'s left to close the protein gap with lean sources only.' : 'Nutrition is largely on track today.'}`;
-    } else {
-      coachText = `${flags.length ? flags.join(' ') + ' ' : ''}<strong>${logged_cal} kcal</strong> logged so far. ${rem_cal} kcal remaining in today's budget.`;
-    }
-  }
-
-  // ── Meal log HTML ──
-  const mealColors = {
-    breakfast: 'var(--yellow)',
-    lunch: 'var(--green)',
-    dinner: 'var(--accent)',
-    snack: 'var(--purple)',
-    supplement: 'var(--teal)',
-    default: 'var(--text2)'
-  };
-
-  const mealsHtml = meals.length > 0 ? meals.map(m => {
-    const mcolor = mealColors[m.meal] || mealColors.default;
-    const mLabel = m.meal ? m.meal.charAt(0).toUpperCase() + m.meal.slice(1) : 'Meal';
-    const sub = m.subtotals || {};
-    const itemsHtml = (m.items || []).map(item => `
-      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid rgba(48,54,61,0.5);">
-        <div style="flex:1;min-width:0">
-          <div style="font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.food}</div>
-          <div style="font-size:10px;color:var(--text3)">${item.amount}${item.estimated ? ' · est.' : ''}</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0;margin-left:10px">
-          <div style="font-size:12px;font-weight:700;color:var(--text)">${item.calories_kcal || '—'}<span style="font-size:9px;color:var(--text3)"> kcal</span></div>
-          <div style="font-size:10px;color:var(--text3)">${item.protein_g || 0}P · ${item.carbs_g || 0}C · ${item.fat_g || 0}F</div>
-        </div>
-      </div>`).join('');
-
-    return `
-    <div class="card" style="border-left:3px solid ${mcolor};margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div>
-          <span style="font-size:13px;font-weight:700;color:${mcolor}">${mLabel}</span>
-          ${m.time ? `<span style="font-size:10px;color:var(--text3);margin-left:8px">${m.time}</span>` : ''}
-        </div>
-        <div style="text-align:right;font-size:11px;color:var(--text2)">
-          ${sub.calories_kcal ? `<strong>${sub.calories_kcal}</strong> kcal` : ''}
-          ${sub.protein_g ? ` · <strong>${sub.protein_g}g</strong> P` : ''}
-        </div>
-      </div>
-      ${itemsHtml}
-    </div>`;
-  }).join('') : `<div class="card" style="text-align:center;padding:20px;color:var(--text3);font-size:12px">No meals logged yet today.<br><span style="font-size:11px">Tell me what you ate and I'll log it.</span></div>`;
-
-  // ── Weekly nutrition summary ──
-  const nutEntriesSorted = sortAsc(db.nutrition || []);
-  const now7 = new Date();
-  const cutoff = new Date(now7); cutoff.setDate(cutoff.getDate() - 7);
-  const cutoffStr = cutoff.toISOString().slice(0, 10);
-  const weekNut = nutEntriesSorted.filter(n => n.date >= cutoffStr);
-
-  function nutAvg(arr, key) {
-    const vals = arr.map(n => n.daily_totals ? n.daily_totals[key] : null).filter(v => v !== null && v !== undefined);
-    return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0) / vals.length) : null;
-  }
-  function nutColor(val, target) {
-    if (!val) return 'var(--text3)';
-    const pct = val / target;
-    if (pct >= 0.9) return 'var(--green)';
-    if (pct >= 0.65) return 'var(--yellow)';
-    return 'var(--red)';
-  }
-
-  const wkAvgCal  = nutAvg(weekNut, 'calories_kcal');
-  const wkAvgProt = nutAvg(weekNut, 'protein_g');
-  const wkAvgCarb = nutAvg(weekNut, 'carbs_g');
-  const wkAvgFat  = nutAvg(weekNut, 'fat_g');
-  const wkDaysLogged = weekNut.filter(n => n.daily_totals && n.daily_totals.calories_kcal).length;
-  const allNut = nutEntriesSorted;
-  const allAvgCal  = nutAvg(allNut, 'calories_kcal');
-  const allAvgProt = nutAvg(allNut, 'protein_g');
-
-  return `
-  <!-- Quick-Add Food Database -->
-  <div class="section" style="padding-top:14px">
-    <div class="section-title">Quick Add</div>
-    <div class="card" style="padding:10px">
-      <div id="ql-pending-banner" style="display:none;margin-bottom:10px;padding:8px 10px;background:rgba(88,166,255,0.08);border:1px solid var(--accent);border-radius:6px;font-size:12px;color:var(--text)">
-        <span id="ql-pending-summary"></span>
-        <button onclick="qlConfirmQuickAdd()" style="float:right;background:var(--accent);color:#fff;border:none;border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer">Log it</button>
-        <button onclick="qlClearPending()" style="float:right;margin-right:6px;background:var(--surface3);color:var(--text2);border:none;border-radius:4px;padding:3px 8px;font-size:11px;cursor:pointer">Clear</button>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
-        ${[
-          { name:'Whey Shake',        emoji:'🥛', sub:'2 scoop + almond milk',     cal:220, p:48, c:6,  f:7,  meal:'post_workout'   },
-          { name:'Pocari Sweat',       emoji:'🏃', sub:'500ml bottle',              cal:223, p:0,  c:56, f:0,  meal:'intra_workout'  },
-          { name:'Eggs × 2',           emoji:'🍳', sub:'scrambled or hard boiled',  cal:140, p:12, c:2,  f:10, meal:'breakfast'      },
-          { name:'Chicken Breast',     emoji:'🍗', sub:'150g grilled, no sauce',    cal:248, p:46, c:0,  f:5,  meal:'lunch'          },
-          { name:'Greek Yogurt',       emoji:'🥣', sub:'150g plain 0% fat',         cal:90,  p:15, c:7,  f:0,  meal:'snack'          },
-          { name:'Rice 1 cup',         emoji:'🍚', sub:'cooked white rice',         cal:200, p:4,  c:45, f:0,  meal:'lunch'          },
-          { name:'Sweet Potato',       emoji:'🍠', sub:'medium, baked',             cal:130, p:2,  c:31, f:0,  meal:'dinner'         },
-          { name:'Oats 50g',           emoji:'🌾', sub:'dry, with almond milk',     cal:190, p:7,  c:34, f:3,  meal:'breakfast'      },
-          { name:'Salmon 150g',        emoji:'🐟', sub:'grilled, no oil',           cal:280, p:39, c:0,  f:13, meal:'dinner'         },
-          { name:'Tuna 85g',           emoji:'🐟', sub:'canned in water, drained',  cal:100, p:22, c:0,  f:1,  meal:'lunch'          },
-          { name:'Banana',             emoji:'🍌', sub:'medium',                    cal:105, p:1,  c:27, f:0,  meal:'snack'          },
-          { name:'Beef Jerky 1oz',     emoji:'🥩', sub:'standard jerky',            cal:116, p:9,  c:3,  f:7,  meal:'snack'          },
-          { name:'Pre-Workout',        emoji:'⚡', sub:'drink mix, 1 serving',      cal:10,  p:0,  c:3,  f:0,  meal:'pre_workout'    },
-          { name:'Coffee (black)',     emoji:'☕', sub:'no sugar, no cream',        cal:5,   p:0,  c:1,  f:0,  meal:'snack'          },
-          { name:'Whey 1 scoop',       emoji:'💊', sub:'Gold Standard, water',      cal:120, p:24, c:3,  f:2,  meal:'snack'          },
-          { name:'Almond Milk 250ml',  emoji:'🥛', sub:'unsweetened Kirkland',      cal:35,  p:1,  c:2,  f:3,  meal:'snack'          },
-        ].map(f => `
-        <button onclick="qlQuickAdd(${JSON.stringify(f).replace(/'/g,"\\'")})" style="text-align:left;background:var(--surface3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;cursor:pointer;transition:border-color 0.15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start">
-            <div style="font-size:15px">${f.emoji}</div>
-            <div style="font-size:10px;font-weight:700;color:var(--accent)">${f.cal} kcal</div>
-          </div>
-          <div style="font-size:11px;font-weight:700;color:var(--text);margin-top:3px;line-height:1.3">${f.name}</div>
-          <div style="font-size:10px;color:var(--text3)">${f.p}P · ${f.c}C · ${f.f}F</div>
-        </button>`).join('')}
-      </div>
-    </div>
-  </div>
-
-  <!-- Nutrition coaching note -->
-  <div class="section">
-    <div class="section-title">Nutrition Coach</div>
-    <div class="coach-note">
-      <div class="coach-label">Nutrition · ${todayNut ? fmtDate(todayNut.date) : 'Today'}</div>
-      <p>${coachText}</p>
-    </div>
-  </div>
-
-  <!-- Today macros -->
-  <div class="section">
-    <div class="section-title">Today's Macros</div>
-    <div class="macro-grid">
-      <div class="macro-cell full">
-        <div class="macro-label">Calories</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${macroColor(calPct)}">${logged_cal || '—'}<span style="font-size:12px;font-weight:400;color:var(--text3)"> kcal</span></div>
-          <div class="macro-target">Target: ${nutTargets.cal} kcal · ${rem_cal > 0 ? rem_cal + ' remaining' : 'At target'}</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${calPct}%;background:${macroColor(calPct)}"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_cal, nutTargets.cal, ' kcal')}</div>
-      </div>
-      <div class="macro-cell">
-        <div class="macro-label">Protein</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${macroColor(protPct)}">${logged_prot || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
-          <div class="macro-target">${nutTargets.prot}g</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${protPct}%;background:${macroColor(protPct)}"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_prot, nutTargets.prot, 'g')}</div>
-      </div>
-      <div class="macro-cell">
-        <div class="macro-label">Carbs</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${macroColor(carbsPct)}">${logged_carbs || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
-          <div class="macro-target">${nutTargets.carbs}g</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${carbsPct}%;background:var(--accent)"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_carbs, nutTargets.carbs, 'g')}</div>
-      </div>
-      <div class="macro-cell">
-        <div class="macro-label">Fat</div>
-        <div class="macro-nums">
-          <div class="macro-val" style="color:${fatColor(fatPct)}">${logged_fat || '—'}<span style="font-size:10px;font-weight:400;color:var(--text3)">g</span></div>
-          <div class="macro-target">${nutTargets.fat}g</div>
-        </div>
-        <div class="macro-track"><div class="macro-fill" style="width:${fatPct}%;background:${fatColor(fatPct)}"></div></div>
-        <div class="macro-delta">${deltaBadge(logged_fat, nutTargets.fat, 'g')}</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Today's meal log -->
-  <div class="section">
-    <div class="section-title">Today's Food Log · ${todayNut ? fmtDate(todayNut.date) : 'Today'}</div>
-    ${mealsHtml}
-  </div>
-
-  <!-- Weekly summary -->
-  <div class="section">
-    <div class="section-title">Weekly Nutrition · Last 7 Days</div>
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div style="font-size:12px;color:var(--text2)">${wkDaysLogged} of 7 days logged</div>
-        ${wkDaysLogged < 4 ? badge('Log more days','yellow') : wkDaysLogged >= 6 ? badge('Great consistency','green') : badge('Getting there','blue')}
-      </div>
-      <div class="week-grid">
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgCal, 2000)}">${wkAvgCal || '—'}</div>
-          <div class="week-lbl">Avg kcal/day</div>
-          <div class="week-sub">Target: 2,000</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgProt, 150)}">${wkAvgProt || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">Avg Protein</div>
-          <div class="week-sub">Target: 150g</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgCarb, 190)}">${wkAvgCarb || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">Avg Carbs</div>
-          <div class="week-sub">Target: 190g</div>
-        </div>
-      </div>
-      <div class="week-grid" style="margin-top:6px">
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgFat, 70)}">${wkAvgFat || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">Avg Fat</div>
-          <div class="week-sub">Target: 70g</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:var(--text2)">${allAvgCal || '—'}</div>
-          <div class="week-lbl">All-time avg kcal</div>
-          <div class="week-sub">${allNut.length} days logged</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:var(--text2)">${allAvgProt || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">All-time protein</div>
-          <div class="week-sub">avg per day</div>
-        </div>
-      </div>
-      ${weekNut.length > 0 ? `
-      <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
-        <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Day-by-Day</div>
-        ${weekNut.slice().reverse().map(n => {
-          const c = n.daily_totals ? n.daily_totals.calories_kcal : null;
-          const p = n.daily_totals ? n.daily_totals.protein_g : null;
-          const pct = c ? Math.min(100, Math.round((c/2000)*100)) : 0;
-          return `<div class="data-row" style="padding:6px 0">
-            <div class="dr-key" style="font-size:11px">${fmtDate(n.date)}</div>
-            <div class="dr-bar"><div class="dr-bar-fill" style="width:${pct}%;background:${nutColor(c,2000)}"></div></div>
-            <div class="dr-val" style="font-size:11px">${c ? c+' kcal' : '—'}</div>
-            <div class="dr-badge">${p ? badge(p+'g P', p >= 135 ? 'green' : 'yellow') : badge('—','dim')}</div>
-          </div>`;
-        }).join('')}
-      </div>` : ''}
-    </div>
-  </div>
-
-  <div class="spacer"></div>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   COACHING TEASER (Today tab — 1 paragraph only)
-══════════════════════════════════════════════════════ */
-function coachingTeaser(db) {
-  const cb = db.coaching_brief;
-  // If we have a stored brief from the scheduled task, show the recovery paragraph
-  if (cb && cb.sections && cb.sections.recovery) {
-    const updatedAt = cb.last_updated ? new Date(cb.last_updated) : cb.generated_at ? new Date(cb.generated_at) : null;
-    const timeStr = updatedAt ? updatedAt.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true}) : '';
-    const rec = cb.sections.recovery;
-    let teaserHtml = '';
-    if (typeof rec === 'string') {
-      teaserHtml = rec;
-    } else if (typeof rec === 'object' && rec !== null) {
-      const header = rec.traffic_light || rec.call || '';
-      const firstBullet = Array.isArray(rec.bullets) && rec.bullets.length ? rec.bullets[0] : '';
-      teaserHtml = (header ? `<strong>${header}</strong><br>` : '') + firstBullet;
-    }
-    return `<div class="coach-label" style="margin-bottom:6px">Coach · ${timeStr ? 'Updated ' + timeStr : 'Daily Brief'}</div><p>${teaserHtml}</p>`;
-  }
-  // Fallback: generate the readiness paragraph
-  const sleep    = latest(db.recovery_sleep);
-  const baseline = db.profile.oura_biology_baselines || {};
-  const hrv      = sleep.hrv_ms;
-  const recovery = sleep.recovery_score_pct;
-  const hrvBase  = baseline.hrv_baseline_ms || 32.5;
-  const diff     = hrv ? +(hrv - hrvBase).toFixed(1) : null;
-
-  let para = '';
-  if (hrv && diff !== null) {
-    if (diff > 3) {
-      para = `HRV at <strong>${hrv} ms</strong> — ${diff} ms above your ${hrvBase} ms baseline. Nervous system is recovered and ready. If you've got a strength session planned, push it.`;
-    } else if (diff < -3) {
-      para = `HRV down to <strong>${hrv} ms</strong> — ${Math.abs(diff)} ms below your ${hrvBase} ms baseline. Under-recovered today. Keep effort controlled, HR under 122 bpm. Don't chase PRs.`;
-    } else {
-      para = `HRV at <strong>${hrv} ms</strong> — right at baseline. Solid training day. ${recovery >= 70 ? 'Readiness is green — you have capacity to push.' : recovery < 40 ? 'Readiness is low, keep intensity managed.' : 'Train with intent, prioritize quality movement.'}`;
-    }
-  } else {
-    para = `Sync your Oura data for a readiness decision. Until then, default to a controlled session: HR under 122 bpm, structural work and quality movement.`;
-  }
-  return `<div class="coach-label">Coach · Daily Brief</div><p>${para}</p>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   COACH TAB — FULL RENDERING
-══════════════════════════════════════════════════════ */
-function renderCoach(db) {
-  const cb       = db.coaching_brief;
-  const sleep    = latest(db.recovery_sleep);
-  const body     = latest(db.body_composition);
-  const baseline = db.profile.oura_biology_baselines || {};
-  const hrv      = sleep.hrv_ms;
-  const recovery = sleep.recovery_score_pct;
-  const hrvBase  = baseline.hrv_baseline_ms || 32.5;
-  const diff     = hrv ? +(hrv - hrvBase).toFixed(1) : null;
-  const weightLbs = body.weight_lbs || (body.weight_kg ? +(body.weight_kg * 2.2046).toFixed(1) : null);
-  const goalLbs   = (db.profile.nutrition_targets && db.profile.nutrition_targets.goal_weight_lbs) || 165;
-  const nutrition = db.nutrition || [];
-  const todayNut  = nutrition.length ? latest(nutrition) : null;
-
-  // Converts structured section objects → safe HTML (fixes [object Object])
-  function formatSectionContent(key, val) {
-    if (!val) return '';
-    if (typeof val === 'string') return val;
-    if (Array.isArray(val)) {
-      // watch_for is an array of strings
-      return val.map(b => `<div class="brief-bullet">${b}</div>`).join('');
-    }
-    if (typeof val === 'object') {
-      let html = '';
-      // Pick the primary headline field for each section type
-      const header = val.traffic_light || val.call || val.binding_constraint || val.top_number || '';
-      if (header) html += `<div class="brief-header">${header}</div>`;
-      if (Array.isArray(val.bullets)) {
-        html += val.bullets.map(b => `<div class="brief-bullet">${b}</div>`).join('');
-      }
-      return html || String(val);
-    }
-    return String(val);
-  }
-
-  // Section renderer helper
-  function coachSection(title, colorVar, text) {
-    return `
-    <div style="margin-bottom:16px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${colorVar};margin-bottom:8px;display:flex;align-items:center;gap:5px">
-        <span style="font-size:7px">◆</span> ${title}
-      </div>
-      <div style="font-size:13px;color:var(--text2);line-height:1.7;background:var(--surface);border:1px solid var(--border);border-left:3px solid ${colorVar};border-radius:0 6px 6px 0;padding:12px 14px">${text}</div>
-    </div>`;
-  }
-
-  // ── Session Plan renderer (keep/change buttons) ──
-  function renderSessionPlan(sp) {
-    if (!sp || !sp.blocks || !sp.blocks.length) return '';
-
-    const trafficColor = { 'Green':'var(--green)', 'Amber-Green':'#d4a017', 'Amber':'var(--yellow)', 'Red':'var(--red)' };
-    const tcColor = trafficColor[sp.readiness_call] || 'var(--text3)';
-
-    let html = `
-    <div style="margin-bottom:16px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:5px">
-        <span style="font-size:7px">◆</span> Today's Session
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:0 6px 6px 0;overflow:hidden">
-        <div style="padding:10px 14px;background:var(--surface3)">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-          <div>
-            <div style="font-size:13px;font-weight:700">${sp.session_type || 'Training Session'}</div>
-            <div style="font-size:11px;color:var(--text3);margin-top:2px">${sp.session_goal || ''}</div>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <span style="font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:3px 8px">🏢 ${sp.floor_plan || 'Floor 3 → 2'}</span>
-            <span style="font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:3px 8px">⏱ ${sp.time_cap_min || 65} min cap</span>
-            <span style="font-size:11px;background:var(--surface);border:1px solid ${tcColor};border-radius:4px;padding:3px 8px;color:${tcColor};font-weight:700">${sp.readiness_call || '—'}</span>
-          </div>
-        </div>
-          ${sp.why_different ? `<div style="font-size:11px;color:var(--text3);padding:8px 14px;border-top:1px solid var(--border);background:var(--surface3);font-style:italic">💡 ${sp.why_different}</div>` : ''}
-        </div>`;
-
-    sp.blocks.forEach(block => {
-      const blockColor = block.id === 'PREP' ? 'var(--text3)' : block.id === 'A' ? 'var(--green)' : block.id === 'B' ? 'var(--teal)' : block.id === 'C' ? 'var(--purple)' : 'var(--accent)';
-      html += `<div class="sp-block" style="margin:10px;margin-bottom:0;border-color:var(--border)">
-        <div class="sp-block-header" style="color:${blockColor}">
-          <span>${block.label || block.id}</span>
-          ${block.estimated_min ? `<span class="sp-block-time">~${block.estimated_min} min</span>` : ''}
-          ${block.pairing === 'superset' ? `<span style="font-size:9px;background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1px 5px;color:var(--text3);text-transform:lowercase;font-weight:400;letter-spacing:0">superset</span>` : ''}
-        </div>`;
-
-      (block.exercises || []).forEach(ex => {
-        const exKey = `sp_${ex.id}`;
-        const prescription = [
-          ex.sets && ex.reps ? `${ex.sets}×${ex.reps}` : '',
-          ex.rest_sec > 0 ? `${ex.rest_sec}s rest` : ''
-        ].filter(Boolean).join(' · ');
-
-        // Load any saved feedback from localStorage
-        const _today = new Date().toISOString().slice(0,10);
-        const _savedFb = (() => { try { return localStorage.getItem('exFb_' + _today + '_' + exKey) || ''; } catch(e) { return ''; } })();
-        html += `<div class="sp-exercise" id="${exKey}">
-          <div class="sp-ex-id">${ex.id.toUpperCase()}</div>
-          <div class="sp-ex-body">
-            <div class="sp-ex-name" id="${exKey}_name">${ex.name}</div>
-            ${prescription ? `<div class="sp-ex-prescription">${prescription}</div>` : ''}
-            ${ex.equipment ? `<div style="font-size:10px;color:var(--accent);margin-top:3px;line-height:1.4">📍 ${ex.equipment}</div>` : ''}
-            ${ex.motra ? `<div style="font-size:10px;color:var(--purple);margin-top:3px;line-height:1.4">📱 Motra: ${ex.motra}</div>` : ''}
-            ${ex.note ? `<div class="sp-ex-note">${ex.note}</div>` : ''}
-            ${ex.alternatives && ex.alternatives.length ? `
-            <div class="sp-alts" id="${exKey}_alts">
-              <div class="sp-alts-label">Swap with:</div>
-              ${ex.alternatives.map((alt, i) => `<button class="sp-alt-btn" onclick="spSelectAlt('${exKey}', '${alt.replace(/'/g,"\\'")}', '${(ex.name||'').replace(/'/g,"\\'")}')">↳ ${alt}</button>`).join('')}
-            </div>` : ''}
-            <div class="ex-feedback-area" id="${exKey}_fb">
-              <textarea class="ex-feedback-textarea" id="${exKey}_fb_txt" placeholder="How'd this feel? Too heavy, too easy, pain, love it…" rows="2">${_savedFb}</textarea>
-              <div style="display:flex;align-items:center;gap:8px">
-                <button onclick="saveExFeedback('${exKey}','${(ex.name||'').replace(/'/g,"\\'")}');return false;" style="padding:4px 10px;background:var(--purple);color:#fff;border:none;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer">Save</button>
-                <span class="ex-feedback-saved" id="${exKey}_fb_ok">✓ Saved</span>
-              </div>
-            </div>
-            <div class="ex-feedback-display${_savedFb ? ' show' : ''}" id="${exKey}_fb_display">${_savedFb ? '💬 ' + _savedFb : ''}</div>
-          </div>
-          <div class="sp-ex-actions">
-            <button class="sp-btn sp-btn-keep" id="${exKey}_keep" onclick="spKeep('${exKey}')" title="Keep this exercise">✓</button>
-            ${ex.alternatives && ex.alternatives.length ? `<button class="sp-btn sp-btn-change" id="${exKey}_change" onclick="spChange('${exKey}')" title="See alternatives">↻</button>` : ''}
-            <button class="sp-btn sp-btn-comment" id="${exKey}_comment" onclick="spComment('${exKey}')" title="Add feedback">💬</button>
-          </div>
-        </div>`;
-      });
-
-      html += `</div>`;
-    });
-
-    html += `<div style="height:10px"></div></div></div>`;
-    return html;
-  }
-
-  // ── Week Overview renderer ──
-  function renderWeekOverview(wsp) {
-    if (!wsp) return '';
-    const dayMap = { '1': 'Monday', '3': 'Wednesday', '5': 'Friday' };
-    const todayDow = String(new Date().getDay());
-    const strengthDays = ['1','3','5'].filter(d => wsp[d]);
-    if (!strengthDays.length) return '';
-
-    let rows = strengthDays.map(dow => {
-      const sp = wsp[dow];
-      const isToday = dow === todayDow;
-      return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);${isToday ? 'background:rgba(63,185,80,0.06);border-radius:4px;padding:7px 8px;margin:0 -8px' : ''}">
-        <div style="font-size:10px;font-weight:700;color:${isToday ? 'var(--green)' : 'var(--text3)'};width:34px;text-align:center;text-transform:uppercase;letter-spacing:0.05em">${dayMap[dow].slice(0,3)}</div>
-        <div style="flex:1">
-          <div style="font-size:12px;font-weight:${isToday ? '700' : '600'};color:${isToday ? 'var(--text)' : 'var(--text2)'}">${sp.session_type}</div>
-          <div style="font-size:10px;color:var(--text3);margin-top:1px">${(sp.blocks||[]).filter(b=>b.id!=='PREP').map(b=>b.exercises||[]).flat().slice(0,3).map(e=>e.name.split('(')[0].trim()).join(' · ')}</div>
-        </div>
-        ${isToday ? `<span style="font-size:9px;font-weight:700;color:var(--green);background:var(--green-bg);border:1px solid rgba(63,185,80,0.3);border-radius:3px;padding:2px 6px;text-transform:uppercase">Today</span>` : ''}
-      </div>`;
-    }).join('');
-
-    return `
-    <div style="margin-bottom:16px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;gap:5px">
-        <span style="font-size:7px">◆</span> This Week's Strength Sessions
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:0 6px 6px 0;padding:8px 14px">
-        ${rows}
-        <div style="height:6px"></div>
-      </div>
-    </div>`;
-  }
-
-  // Session plan button handlers (keep/change/select)
-  function spKeep(key) {
-    const el = document.getElementById(key);
-    const keepBtn = document.getElementById(key+'_keep');
-    const changeBtn = document.getElementById(key+'_change');
-    const alts = document.getElementById(key+'_alts');
-    if (!el) return;
-    el.classList.remove('sp-changed');
-    el.classList.toggle('sp-kept');
-    keepBtn && keepBtn.classList.toggle('active');
-    if (alts) alts.classList.remove('open');
-    if (changeBtn) changeBtn.classList.remove('active');
-  }
-  function spChange(key) {
-    const alts = document.getElementById(key+'_alts');
-    const changeBtn = document.getElementById(key+'_change');
-    const el = document.getElementById(key);
-    if (!alts) return;
-    const isOpen = alts.classList.contains('open');
-    alts.classList.toggle('open');
-    changeBtn && changeBtn.classList.toggle('active', !isOpen);
-  }
-  function spSelectAlt(key, altName, originalName) {
-    const nameEl = document.getElementById(key+'_name');
-    const alts = document.getElementById(key+'_alts');
-    const changeBtn = document.getElementById(key+'_change');
-    const keepBtn = document.getElementById(key+'_keep');
-    const el = document.getElementById(key);
-    if (!nameEl) return;
-    // Show strikethrough original + new name
-    nameEl.innerHTML = `<span class="sp-original">${originalName}</span> <span class="sp-replacement">${altName}</span>`;
-    nameEl.classList.remove('sp-ex-name');
-    if (alts) alts.classList.remove('open');
-    if (changeBtn) changeBtn.classList.remove('active');
-    if (el) { el.classList.add('sp-changed'); el.classList.remove('sp-kept'); }
-    if (keepBtn) keepBtn.classList.remove('active');
-  }
-
-  // ── Training schedule ──
-  function buildTrainingSchedule() {
-    // ── Option A: Remove entirely (uncomment return '' below, comment out rest) ──
-    // return '';
-
-    // ── Option C: Context-aware today card (uncomment block at bottom) ──
-
-    // ── Option B (current): Weekly grid only — no generic "Today" description card ──
-    // The session plan / training evaluation already covers today's training specifically.
-    // The weekly grid stays as a useful "week at a glance" reference.
-
-    const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const todayDow = new Date().getDay();
-
-    const schedule = {
-      0: { label: 'Rest',              icon: '🛌', color: 'var(--text3)'   },
-      1: { label: 'Strength',          icon: '💪', color: 'var(--green)'   },
-      2: { label: 'Zone 2',            icon: '🚴', color: 'var(--accent)'  },
-      3: { label: 'Strength',          icon: '💪', color: 'var(--green)'   },
-      4: { label: 'Zone 2',            icon: '🚴', color: 'var(--accent)'  },
-      5: { label: 'Strength',          icon: '💪', color: 'var(--green)'   },
-      6: { label: 'Rest',              icon: '🛌', color: 'var(--text3)'   },
-    };
-
-    // Check if today's workout is already logged
-    const _todayStr = new Date().toISOString().slice(0,10);
-    const _todayDone = (db.strength_logs || []).some(s => s.date === _todayStr)
-      || (db.activity_sessions || []).some(a => a.date === _todayStr && (a.type === 'Strength Training' || a.source === 'Motra'));
-
-    const scheduleRows = Object.entries(schedule).map(([dow, s]) => {
-      const isToday = parseInt(dow) === todayDow;
-      const isMissed = parseInt(dow) < todayDow && (s.label === 'Strength' || s.label === 'Zone 2');
-      const isDone = isToday && _todayDone && (s.label === 'Strength' || s.label === 'Zone 2');
-      return `<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);${isToday ? 'background:rgba(88,166,255,0.04);border-radius:4px;padding:5px 8px;margin:0 -8px' : ''}">
-        <div style="width:24px;text-align:center;font-size:14px">${isDone ? '✅' : s.icon}</div>
-        <div style="flex:1">
-          <div style="font-size:11px;font-weight:${isToday ? '700' : '500'};color:${isToday ? s.color : 'var(--text2)'}">${dayNames[parseInt(dow)]}</div>
-          <div style="font-size:10px;color:var(--text3)">${s.label}${(s.label === 'Strength' || s.label === 'Zone 2') && parseInt(dow) !== 0 && parseInt(dow) !== 6 ? ' · Walk first' : ''}</div>
-        </div>
-        ${isDone ? `<span class="badge badge-green">Done ✓</span>` : isToday ? `<span class="badge badge-blue">Today</span>` : ''}
-      </div>`;
-    }).join('');
-
-    return `
-    <div style="margin-bottom:16px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:5px">
-        <span style="font-size:7px">◆</span> Week Schedule
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 8px">
-        ${scheduleRows}
-      </div>
-    </div>`;
-
-    // ── Option C: Context-aware today card (paste here to enable) ──
-    // const today = schedule[todayDow];
-    // const statusLine = _todayDone
-    //   ? `<div style="font-size:11px;color:var(--teal)">✅ Session complete — see Training Evaluation above</div>`
-    //   : `<div style="font-size:11px;color:var(--text3)">${todayDow !== 0 && todayDow !== 6 ? 'Fasted walk → Breakfast → Training' : 'Full rest today'}</div>`;
-    // return `<div ...>${today.icon} ${today.label} ${statusLine} + grid</div>`;
-  }
-
-  const trainingScheduleHtml = buildTrainingSchedule();
-
-  let sections = '';
-
-  if (cb && cb.sections) {
-    // ── Render stored brief from scheduled task ──
-    const updatedAt = cb.last_updated ? new Date(cb.last_updated) : cb.generated_at ? new Date(cb.generated_at) : null;
-    const timeStr   = updatedAt ? updatedAt.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true}) : '';
-    const dateStr   = updatedAt ? updatedAt.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'}) : '';
-
-    const sectionDefs = [
-      { key: 'recovery',            title: 'Recovery & Readiness',      color: 'var(--accent)'  },
-      { key: 'training_direction',  title: 'Training Direction',         color: 'var(--green)'   },
-      { key: 'training_evaluation', title: 'Training Evaluation',        color: 'var(--teal)'    },
-      { key: 'workout_prep',        title: 'Workout Preparation',        color: 'var(--green)'   },
-      { key: 'nutrition',           title: 'Nutrition',                  color: 'var(--yellow)'  },
-      { key: 'progress',            title: 'Progress & Accountability',  color: 'var(--purple)'  },
-      { key: 'watch_for',           title: 'What to Watch',              color: 'var(--text2)'   },
-    ];
-
-    const _dowStr = String(new Date().getDay());
-    const _activePlan = (cb.weekly_session_plans && cb.weekly_session_plans[_dowStr]) || cb.session_plan;
-
-    sectionDefs.filter(s => cb.sections[s.key]).forEach(s => {
-      sections += coachSection(s.title, s.color, formatSectionContent(s.key, cb.sections[s.key]));
-      // Inject session plan + feedback after any training section.
-      // training_evaluation takes precedence; training_direction only fires if neither eval nor workout_prep exists.
-      const _isTrainingSection = s.key === 'workout_prep'
-        || s.key === 'training_evaluation'
-        || (s.key === 'training_direction' && !cb.sections['workout_prep'] && !cb.sections['training_evaluation']);
-      if (_isTrainingSection && _activePlan) {
-        sections += renderSessionPlan(_activePlan);
-        sections += renderWeekOverview(cb.weekly_session_plans);
-        sections += buildSessionFeedbackUI(); // ← Session feedback lives here, right under Today's Session
-      }
-    });
-
-    const weeklyReviewHtml = buildWeeklyReview(db);
-
-    return `
-    <div style="padding:14px 14px 0">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-        <div>
-          <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Daily Coaching Brief</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:3px">AI Coach · Updates hourly 6am–9pm</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          ${updatedAt ? `<div style="font-size:11px;color:var(--text3)">${dateStr}</div><div style="font-size:13px;font-weight:700;color:var(--accent)">${timeStr}</div>` : '<span class="badge badge-yellow">No brief yet</span>'}
-        </div>
-      </div>
-      ${weeklyReviewHtml}
-      ${sections}
-      ${buildQuickLogUI()}
-      <div style="padding-top:0">${trainingScheduleHtml}</div>
-    </div>
-    <div class="spacer"></div>`;
-
-  } else {
-    // ── Fallback: generate client-side coaching ──
-
-    // Section 1: Recovery
-    let recText = '';
-    if (hrv && diff !== null) {
-      const debtMin = sleep.sleep_bank_min || sleep.autosleep_sleep_bank_min;
-      if (diff > 3) {
-        recText = `Your HRV is at <strong>${hrv} ms</strong> — ${diff} ms above your ${hrvBase} ms baseline. Your nervous system is recovered and ready to work. If you have a strength session planned, push it. This is exactly the signal you want to see.${recovery >= 70 ? " Readiness is high across the board — don't leave that on the table." : ""}`;
-      } else if (diff < -3) {
-        recText = `HRV is down to <strong>${hrv} ms</strong> — ${Math.abs(diff)} ms below your ${hrvBase} ms baseline. Your body is telling you it's under-recovered. You can still train, but today is not the day to chase PRs. Keep everything under 122 bpm, cut volume if needed, and protect the sleep tonight.${debtMin && debtMin < -90 ? ` You're carrying a sleep debt of ${Math.floor(Math.abs(debtMin)/60)}h ${Math.abs(debtMin)%60}m — that's compounding the problem.` : ''}`;
-      } else {
-        recText = `HRV is at <strong>${hrv} ms</strong> — right at your ${hrvBase} ms baseline. Solid, normal day. ${recovery >= 70 ? "Readiness is green, which means you have the capacity to push if the session calls for it." : recovery < 40 ? "Readiness is on the low side though — take the intensity cues seriously today." : "Train with intent, keep your HR managed, and focus on quality movement over maximum load."}`;
-      }
-    } else {
-      recText = `Sync your Oura data to get an accurate training decision. Until then, default to a controlled session: HR under 122 bpm, focus on structural work and quality movement.`;
-    }
-    sections += coachSection('Recovery & Readiness', 'var(--accent)', recText);
-
-    // Section 2: Training direction
-    let trainText = '';
-    if (hrv) {
-      if (diff > 3) {
-        trainText = `Today is a green-light day — nervous system is fully loaded. This is the session to push your primary lift, take sets close to failure on the main movements, and actually chase a PR if the opportunity is there. Don't waste a high-HRV day on a recovery session.`;
-      } else if (diff < -3) {
-        trainText = `With HRV suppressed, today's training priority shifts to quality over quantity. Do your corrective work properly. Reduce main lift volume by 20–30%, avoid grinding through failed reps, and keep rest periods generous. A controlled session that doesn't create excess fatigue is a win today.`;
-      } else {
-        trainText = `Normal training day. Execute the planned session at full intent — just don't go hunting for max effort. Your primary movements should feel challenging but not desperate. Quality reps, proper rest, and consistent structural correction work.`;
-      }
-    } else {
-      trainText = `Without readiness data, train at 75% of planned intensity and see how the session feels at the warm-up. Your body will tell you more in the first 15 minutes than any number on a screen.`;
-    }
-    sections += coachSection('Training Direction', 'var(--green)', trainText);
-
-    // Section 3: Workout prep
-    sections += coachSection('Workout Preparation', 'var(--teal)',
-      `Before every session: spend 8–10 minutes on Floor 3 for prep and activation. <strong>Hip 90/90 mobility</strong> (avoid deep flexion — mild OA), <strong>banded hip abduction</strong> to wake up the left glute, and <strong>thoracic rotation</strong> to offset the stiffness. Your right-side dominance means you need to consciously prime the left side before loading. Don't skip the activation work — it directly affects how well your corrective movements function in the main session.`
-    );
-
-    // Inject session plan + feedback in fallback mode too
-    const _fbDowStr = String(new Date().getDay());
-    const _fbPlan = (cb && cb.weekly_session_plans && cb.weekly_session_plans[_fbDowStr]) || (cb && cb.session_plan);
-    if (_fbPlan) {
-      sections += renderSessionPlan(_fbPlan);
-      sections += renderWeekOverview(cb && cb.weekly_session_plans);
-      sections += buildSessionFeedbackUI();
-    }
-
-    // Section 4: Nutrition
-    let nutText = '';
-    if (todayNut && todayNut.daily_totals && todayNut.daily_totals.calories_kcal) {
-      const cals = todayNut.daily_totals.calories_kcal;
-      const prot = todayNut.daily_totals.protein_g || 0;
-      const calPct = Math.round((cals / 2000) * 100);
-      if (prot < 105) {
-        nutText = `Calories are logged at <strong>${cals} kcal</strong> (${calPct}% of target), but protein is at ${prot}g — well short of your 150g target. This matters more than the calorie number. Protein is what keeps you from losing muscle in a deficit. At 57, anabolic resistance is real — you need more protein than a younger athlete to get the same muscle-preserving effect. Prioritize a protein source at every meal and hit 150g before worrying about anything else.`;
-      } else if (cals < 1400) {
-        nutText = `Your logged intake is <strong>${cals} kcal</strong> — that's significantly under your 2,000 kcal target. Either the log is incomplete, or you're genuinely undereating. A 380 kcal deficit is already built into your plan — going lower accelerates muscle loss and increases cortisol, both of which undermine your goals. Log everything and hit the target.`;
-      } else {
-        nutText = `Nutrition is on track — <strong>${cals} kcal</strong> with ${prot}g protein logged. That's the plan: a deliberate ~380 kcal deficit with elevated protein to preserve muscle during the cut. Keep this consistency going. The compounding effect of hitting targets daily is what drives the body composition change you're after.`;
-      }
-    } else {
-      nutText = `No nutrition data logged yet today. Your targets are <strong>2,000 kcal / 150g protein / 190g carbs / 70g fat</strong>. That's a ~380 kcal deficit from your TDEE with protein elevated specifically to counteract anabolic resistance at your age. Log every meal — the data is what makes the coaching accurate.`;
-    }
-    sections += coachSection('Nutrition', 'var(--yellow)', nutText);
-
-    // Section 5: Progress
-    let progText = '';
-    if (weightLbs) {
-      const remaining = +(weightLbs - goalLbs).toFixed(1);
-      if (remaining > 5) {
-        progText = `At <strong>${weightLbs.toFixed(1)} lbs</strong>, you're ${remaining} lbs from your goal of ${goalLbs} lbs. The mission hasn't changed: reduce visceral fat, preserve muscle, improve sleep, and correct the structural imbalances we've identified. Every session and every meal is a data point. Most of them need to be in the right direction.`;
-      } else if (remaining > 0) {
-        progText = `You're <strong>${remaining} lbs from your goal</strong> of ${goalLbs} lbs — you're in the final push. This is where most people ease off because the end feels close. Don't. The structural work matters just as much now as when you started. Right-side dominance, shoulder asymmetry, and thoracic stiffness don't fix themselves with weight loss alone.`;
-      } else {
-        progText = `Weight goal hit at ${weightLbs.toFixed(1)} lbs. The mission now shifts: maintain lean mass, keep reducing visceral fat, and address the structural imbalances that affect how your body moves and ages. The scale is no longer the primary metric.`;
-      }
-    } else {
-      progText = `Keep stacking good days. Sleep → nutrition → training — in that priority order. The right-side dominance and shoulder asymmetry are long-game problems that require consistent, patient work. They will improve with deliberate effort over months, not weeks.`;
-    }
-    sections += coachSection('Progress & Accountability', 'var(--purple)', progText);
-
-    // Section 6: Watch for
-    sections += coachSection('What to Watch', 'var(--text2)',
-      `Three things to stay aware of this week: <strong>(1) HR creep</strong> — if you're hitting 125+ bpm during compound lifts, you're working harder than your aerobic system is ready for. Pull back. <strong>(2) Right-side compensation</strong> — in every pulling movement, notice if the right shoulder is doing more work. If it is, reduce load and reinforce the left. <strong>(3) Sleep quality signals</strong> — HRV trending down over 3+ days means your recovery is degrading. The fix is almost always sleep hygiene, not training modification.`
-    );
-
-    const weeklyReviewHtmlFb = buildWeeklyReview(db);
-
-    return `
-    <div style="padding:14px 14px 0">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-        <div>
-          <div style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Daily Coaching Brief</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:3px">AI Coach · Updates hourly 6am–9pm</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <span class="badge badge-yellow">Using snapshot data</span>
-        </div>
-      </div>
-      ${weeklyReviewHtmlFb}
-      ${sections}
-      ${buildQuickLogUI()}
-      <div style="padding-top:0">${trainingScheduleHtml}</div>
-    </div>
-    <div class="spacer"></div>`;
-  }
-}
-
-/* ══════════════════════════════════════════════════════
-   EXERCISE FEEDBACK HELPERS
-══════════════════════════════════════════════════════ */
-function spComment(key) {
-  const area = document.getElementById(key + '_fb');
-  const btn  = document.getElementById(key + '_comment');
-  if (!area) return;
-  const isOpen = area.classList.contains('open');
-  area.classList.toggle('open', !isOpen);
-  btn && btn.classList.toggle('active', !isOpen);
-  if (!isOpen) {
-    const ta = document.getElementById(key + '_fb_txt');
-    if (ta) ta.focus();
-  }
-}
-
-function saveExFeedback(key, exName) {
-  const ta   = document.getElementById(key + '_fb_txt');
-  const okEl = document.getElementById(key + '_fb_ok');
-  const dispEl = document.getElementById(key + '_fb_display');
-  if (!ta) return;
-  const val = ta.value.trim();
-  const today = new Date().toISOString().slice(0, 10);
-  try {
-    if (val) { localStorage.setItem('exFb_' + today + '_' + key, val); }
-    else     { localStorage.removeItem('exFb_' + today + '_' + key); }
-  } catch(e) {}
-  // Visual confirm
-  if (okEl) { okEl.classList.add('show'); setTimeout(() => okEl.classList.remove('show'), 3000); }
-  // Update display
-  if (dispEl) {
-    if (val) { dispEl.textContent = '💬 ' + val; dispEl.classList.add('show'); }
-    else     { dispEl.textContent = ''; dispEl.classList.remove('show'); }
-  }
-  // Close panel
-  const area = document.getElementById(key + '_fb');
-  const btn  = document.getElementById(key + '_comment');
-  if (area) area.classList.remove('open');
-  if (btn)  btn.classList.remove('active');
-  // Write-back to GitHub (debounced — fires 800ms after last save)
-  clearTimeout(window._exFbTimer);
-  window._exFbTimer = setTimeout(() => {
-    const exNotes = collectExerciseFeedback();
-    // Get current session rating/notes from localStorage for bundled write
-    let rating = 0, sessionNotes = '';
-    try {
-      rating       = parseInt(localStorage.getItem('sessFb_rating_' + today) || '0');
-      sessionNotes = localStorage.getItem('sessFb_notes_' + today) || '';
-    } catch(e) {}
-    ghWriteFeedback({ exercise_notes: exNotes, session_rating: rating || undefined, session_notes: sessionNotes || undefined });
-  }, 800);
-}
-
-function buildSessionFeedbackUI() {
-  const today = new Date().toISOString().slice(0, 10);
-  let savedRating = 0, savedNotes = '';
-  try {
-    savedRating = parseInt(localStorage.getItem('sessFb_rating_' + today) || '0');
-    savedNotes  = localStorage.getItem('sessFb_notes_' + today) || '';
-  } catch(e) {}
-
-  const stars = ['😫','😕','😐','😊','🔥'];
-  const ratingBtns = stars.map((s, i) => {
-    const n = i + 1;
-    return `<button class="rating-btn${savedRating === n ? ' active' : ''}" id="sfRating${n}" onclick="sfSetRating(${n})" title="${n} star">${s}</button>`;
-  }).join('');
-
-  const hasToken = !!getGHToken();
-
-  return `
-  <div style="margin-bottom:16px">
-    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;gap:5px">
-      <span style="font-size:7px">◆</span> Session Feedback
-      <span class="wb-status wb-idle" id="sfWbStatus"></span>
-      <button class="settings-gear" onclick="openTokenModal()" title="${hasToken ? 'GitHub write-back connected ✓' : 'Set up GitHub write-back'}">${hasToken ? '🔗' : '⚙'}</button>
-    </div>
-    <div class="session-feedback-card">
-      <div class="session-feedback-header" onclick="toggleEl('sessFbBody')">
-        <span>Rate &amp; note today's session</span>
-        <span id="sfHeaderStatus" style="font-size:10px;color:var(--text3)">${savedRating ? stars[savedRating-1] + ' · tap to edit' : 'tap to open'} ▾</span>
-      </div>
-      <div class="session-feedback-body${savedRating || savedNotes ? ' open' : ''}" id="sessFbBody">
-        <div style="font-size:10px;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Session feel</div>
-        <div class="rating-row">${ratingBtns}</div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Notes for coach</div>
-        <textarea class="feedback-textarea" id="sessFbNotes" placeholder="What worked, what felt off, energy level, joint issues, highlights, swaps you made…">${savedNotes}</textarea>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <button class="feedback-btn feedback-btn-save" onclick="sfSave()">💾 Save &amp; Sync</button>
-          <button class="feedback-btn feedback-btn-export" onclick="sfExport()">📋 Copy text</button>
-        </div>
-        ${!hasToken ? `<div style="margin-top:10px;font-size:11px;color:var(--yellow);background:var(--yellow-bg);border-radius:5px;padding:8px 10px">⚙ Tap the <strong>⚙</strong> above to connect GitHub — saves feedback directly to your data file automatically.</div>` : ''}
-        <div class="feedback-export-box" id="sfExportBox"></div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function toggleEl(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle('open');
-}
-
-function sfSetRating(n) {
-  for (let i = 1; i <= 5; i++) {
-    const btn = document.getElementById('sfRating' + i);
-    if (btn) btn.classList.toggle('active', i === n);
-  }
-  const today = new Date().toISOString().slice(0,10);
-  try { localStorage.setItem('sessFb_rating_' + today, n); } catch(e) {}
-  const stat = document.getElementById('sfHeaderStatus');
-  const stars = ['😫','😕','😐','😊','🔥'];
-  if (stat) stat.textContent = stars[n-1] + ' · tap to edit ▾';
-  // Auto-sync rating immediately (debounced)
-  clearTimeout(window._ratingTimer);
-  window._ratingTimer = setTimeout(() => {
-    let sessionNotes = '';
-    try { sessionNotes = localStorage.getItem('sessFb_notes_' + today) || ''; } catch(e) {}
-    const exNotes = collectExerciseFeedback();
-    ghWriteFeedback({
-      session_rating: n,
-      session_notes:  sessionNotes || undefined,
-      exercise_notes: Object.keys(exNotes).length ? exNotes : undefined
-    });
-  }, 600);
-}
-
-function sfSave() {
-  const today = new Date().toISOString().slice(0,10);
-  const notes = (document.getElementById('sessFbNotes') || {}).value || '';
-  let rating = 0;
-  for (let i = 1; i <= 5; i++) {
-    const btn = document.getElementById('sfRating' + i);
-    if (btn && btn.classList.contains('active')) rating = i;
-  }
-  try {
-    localStorage.setItem('sessFb_notes_' + today, notes);
-    localStorage.setItem('sessFb_rating_' + today, rating);
-  } catch(e) {}
-  const stat = document.getElementById('sfHeaderStatus');
-  const stars = ['😫','😕','😐','😊','🔥'];
-  if (stat) stat.textContent = (rating ? stars[rating-1] : '✓') + ' · saving… ▾';
-  const body = document.getElementById('sessFbBody');
-  if (body) body.classList.remove('open');
-  // Bundle with any exercise notes and write to GitHub
-  const exNotes = collectExerciseFeedback();
-  ghWriteFeedback({
-    session_rating: rating || undefined,
-    session_notes:  notes  || undefined,
-    exercise_notes: Object.keys(exNotes).length ? exNotes : undefined
-  }).then(ok => {
-    if (stat) stat.textContent = (rating ? stars[rating-1] : '✓') + (ok ? ' · synced ✓ ▾' : ' · saved locally ▾');
-  });
-}
-
-function sfExport() {
-  const today = new Date().toISOString().slice(0,10);
-  const notes = (document.getElementById('sessFbNotes') || {}).value || '';
-  let rating = 0;
-  for (let i = 1; i <= 5; i++) {
-    const btn = document.getElementById('sfRating' + i);
-    if (btn && btn.classList.contains('active')) rating = i;
-  }
-  const stars = ['😫','😕','😐','😊','🔥'];
-
-  // Collect exercise feedback from localStorage
-  let exLines = [];
-  try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith('exFb_' + today + '_sp_')) {
-        const exId = k.replace('exFb_' + today + '_sp_', '').replace(/_/g,' ').toUpperCase();
-        exLines.push('  • ' + exId + ': ' + localStorage.getItem(k));
-      }
-    }
-  } catch(e) {}
-
-  const exportText = [
-    '=== SESSION FEEDBACK · ' + today + ' ===',
-    rating ? 'Rating: ' + stars[rating-1] + ' (' + rating + '/5)' : '',
-    notes ? 'Notes: ' + notes : '',
-    exLines.length ? '\nExercise Notes:\n' + exLines.join('\n') : '',
-  ].filter(Boolean).join('\n');
-
-  const box = document.getElementById('sfExportBox');
-  if (box) { box.textContent = exportText; box.classList.add('show'); }
-
-  try {
-    navigator.clipboard.writeText(exportText).then(() => {
-      const btn = document.querySelector('.feedback-btn-export');
-      if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '📋 Copy for Coach', 2000); }
-    });
-  } catch(e) {}
-}
-
-/* ══════════════════════════════════════════════════════
-   WEEKLY REVIEW (Saturday focus)
-══════════════════════════════════════════════════════ */
-function buildWeeklyReview(db) {
-  const now = new Date();
-  const todayDow = now.getDay(); // 0=Sun, 6=Sat
-  const isSaturday = todayDow === 6;
-
-  // Get start of current Mon-Sun week
-  const daysSinceMonday = (todayDow + 6) % 7;
-  const weekStart = new Date(now);
-  weekStart.setDate(now.getDate() - daysSinceMonday);
-  const weekStartStr = weekStart.toISOString().slice(0,10);
-  const weekEndStr   = now.toISOString().slice(0,10);
-
-  // Filter data to this week
-  const weekSleep = (db.recovery_sleep || []).filter(r => r.date >= weekStartStr && r.date <= weekEndStr);
-  const weekStrength = (db.strength_logs || []).filter(s => s.date >= weekStartStr && s.date <= weekEndStr);
-  const weekNut   = (db.nutrition || []).filter(n => n.date >= weekStartStr && n.date <= weekEndStr);
-  const weekBody  = (db.body_composition || []).filter(b => b.date >= weekStartStr && b.date <= weekEndStr);
-  const baseline  = (db.profile && db.profile.oura_biology_baselines) || {};
-
-  // Sessions
-  const sessionCount = weekStrength.length;
-  const totalVolLbs  = weekStrength.reduce((s, r) => s + (r.volume_kg ? r.volume_kg * 2.2046 : 0), 0);
-
-  // Sleep
-  const sleepArr = weekSleep.filter(r => r.sleep_duration_min || r.total_sleep_min);
-  const avgSleepMin = sleepArr.length
-    ? Math.round(sleepArr.reduce((s, r) => s + (r.sleep_duration_min || r.total_sleep_min || 0), 0) / sleepArr.length)
-    : null;
-  const avgHRV = weekSleep.filter(r => r.hrv_ms).length
-    ? +(weekSleep.filter(r => r.hrv_ms).reduce((s,r) => s + r.hrv_ms, 0) / weekSleep.filter(r => r.hrv_ms).length).toFixed(1)
-    : null;
-  const avgRecovery = weekSleep.filter(r => r.recovery_score_pct).length
-    ? Math.round(weekSleep.filter(r => r.recovery_score_pct).reduce((s,r) => s + r.recovery_score_pct, 0) / weekSleep.filter(r => r.recovery_score_pct).length)
-    : null;
-
-  // Nutrition compliance
-  const nutDays = weekNut.filter(n => n.daily_totals && n.daily_totals.calories_kcal);
-  const nutCompliance = nutDays.length > 0
-    ? Math.round(nutDays.reduce((s,n) => s + Math.min(100, Math.round((n.daily_totals.calories_kcal / 2000) * 100)), 0) / nutDays.length)
-    : null;
-  const avgProtein = nutDays.length > 0
-    ? Math.round(nutDays.reduce((s,n) => s + (n.daily_totals.protein_g || 0), 0) / nutDays.length)
-    : null;
-
-  // Weight change
-  const bodyThisWeek = weekBody.filter(b => b.weight_lbs || b.weight_kg).sort((a,b) => a.date > b.date ? 1 : -1);
-  const wtStart = bodyThisWeek.length ? (bodyThisWeek[0].weight_lbs || bodyThisWeek[0].weight_kg * 2.2046) : null;
-  const wtEnd   = bodyThisWeek.length ? (bodyThisWeek[bodyThisWeek.length-1].weight_lbs || bodyThisWeek[bodyThisWeek.length-1].weight_kg * 2.2046) : null;
-  const wtChange = (wtStart && wtEnd) ? +(wtEnd - wtStart).toFixed(1) : null;
-
-  // Only show on Saturdays (or always show as "week so far" if not Saturday)
-  if (!isSaturday && sessionCount === 0 && !avgSleepMin) return '';
-
-  const weekLabel  = isSaturday ? 'Weekly Coach Review' : 'Week So Far';
-  const weekDates  = `${weekStartStr.slice(5).replace('-','/')} – ${weekEndStr.slice(5).replace('-','/')}`;
-  const color      = isSaturday ? 'var(--accent)' : 'var(--text3)';
-  const hrv_baseline = baseline.hrv_baseline_ms || 32.5;
-
-  // Build coaching verdict
-  let verdict = '';
-  if (isSaturday) {
-    const strengths = [];
-    const concerns  = [];
-    const callouts  = [];
-
-    if (sessionCount >= 3) strengths.push(`<strong>${sessionCount} strength sessions</strong> — full week completed`);
-    else if (sessionCount === 2) concerns.push(`Only <strong>2 of 3 strength sessions</strong> completed`);
-    else if (sessionCount <= 1) concerns.push(`Only <strong>${sessionCount} strength session</strong> this week — training stimulus was insufficient`);
-
-    if (avgHRV && avgHRV >= hrv_baseline) strengths.push(`avg HRV <strong>${avgHRV} ms</strong> — at or above your ${hrv_baseline} ms baseline`);
-    else if (avgHRV) concerns.push(`avg HRV <strong>${avgHRV} ms</strong> — below your ${hrv_baseline} ms baseline; sleep debt is the likely driver`);
-
-    if (avgSleepMin && avgSleepMin >= 420) strengths.push(`avg sleep <strong>${Math.floor(avgSleepMin/60)}h ${avgSleepMin%60}m</strong> — solid rest week`);
-    else if (avgSleepMin) concerns.push(`avg sleep only <strong>${Math.floor(avgSleepMin/60)}h ${avgSleepMin%60}m</strong> — below the 7h floor your recovery needs`);
-
-    if (avgProtein && avgProtein >= 130) strengths.push(`avg protein <strong>${avgProtein}g</strong> — muscle preservation on track`);
-    else if (avgProtein) concerns.push(`avg protein <strong>${avgProtein}g</strong> — short of your 150g target; anabolic resistance at 57 means this gap costs more than it looks`);
-
-    if (wtChange !== null) {
-      if (wtChange <= -0.3 && wtChange >= -1.5) strengths.push(`weight moved <strong>${Math.abs(wtChange)} lbs down</strong> — deliberate deficit working`);
-      else if (wtChange > 0.5) callouts.push(`weight up <strong>${wtChange} lbs</strong> — check sodium, nutrition compliance, or sleep-driven cortisol`);
-    }
-
-    const nextWeekFocus = [];
-    if (sessionCount < 3) nextWeekFocus.push('Hit all 3 strength sessions — M/W/F. No session skipping.');
-    if (avgSleepMin && avgSleepMin < 420) nextWeekFocus.push('10 PM bedtime is not optional next week. Set it as a calendar block.');
-    if (avgProtein && avgProtein < 130) nextWeekFocus.push('Afternoon protein shake is non-negotiable — log it before 3 PM.');
-    if (!nextWeekFocus.length) nextWeekFocus.push('Maintain the standard. Progression on primary lifts and tighten corrective form.');
-
-    const strengthStr = strengths.length ? `<strong>✓ Wins:</strong> ${strengths.join(' · ')}.` : '';
-    const concernStr  = concerns.length  ? `<strong>⚠ Gaps:</strong> ${concerns.join(' · ')}.` : '';
-    const calloutStr  = callouts.length  ? `<strong>🔴 Flag:</strong> ${callouts.join(' · ')}.` : '';
-    const nextStr     = `<strong>Next week:</strong> ${nextWeekFocus.join(' ')}`;
-
-    verdict = [strengthStr, concernStr, calloutStr, nextStr].filter(Boolean).join('<br><br>');
-  }
-
-  return `
-  <div style="margin-bottom:16px">
-    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${color};margin-bottom:8px;display:flex;align-items:center;gap:5px">
-      <span style="font-size:7px">◆</span> ${weekLabel}${isSaturday ? ' · ' + weekDates : ''}
-    </div>
-    <div class="weekly-review-card" style="border-left-color:${color}">
-      ${isSaturday ? `<div class="weekly-review-header">
-        <div style="font-size:14px;font-weight:700">📊 ${weekDates} — End of Week Review</div>
-        <div style="font-size:11px;color:var(--text3);margin-top:3px">Full week analysis · training + sleep + nutrition + body</div>
-      </div>` : ''}
-      <div class="weekly-review-grid">
-        <div class="wr-stat">
-          <div class="wr-stat-val" style="color:var(--green)">${sessionCount}</div>
-          <div class="wr-stat-lbl">Sessions</div>
-        </div>
-        <div class="wr-stat">
-          <div class="wr-stat-val" style="color:var(--accent)">${avgHRV || '—'}</div>
-          <div class="wr-stat-lbl">Avg HRV ms</div>
-        </div>
-        <div class="wr-stat">
-          <div class="wr-stat-val" style="color:var(--purple)">${avgSleepMin ? Math.floor(avgSleepMin/60) + 'h' + (avgSleepMin%60 ? avgSleepMin%60 + 'm' : '') : '—'}</div>
-          <div class="wr-stat-lbl">Avg Sleep</div>
-        </div>
-      </div>
-      <div class="weekly-review-grid" style="border-bottom:1px solid var(--border)">
-        <div class="wr-stat">
-          <div class="wr-stat-val" style="color:var(--yellow)">${avgProtein ? avgProtein + 'g' : '—'}</div>
-          <div class="wr-stat-lbl">Avg Protein</div>
-        </div>
-        <div class="wr-stat">
-          <div class="wr-stat-val" style="color:${avgRecovery >= 70 ? 'var(--green)' : avgRecovery >= 40 ? 'var(--yellow)' : 'var(--red)'}">${avgRecovery || '—'}</div>
-          <div class="wr-stat-lbl">Avg Recovery</div>
-        </div>
-        <div class="wr-stat">
-          <div class="wr-stat-val" style="color:${wtChange < 0 ? 'var(--green)' : wtChange > 0.3 ? 'var(--yellow)' : 'var(--text2)'}">${wtChange !== null ? (wtChange > 0 ? '+' : '') + wtChange + ' lbs' : '—'}</div>
-          <div class="wr-stat-lbl">Wt Change</div>
-        </div>
-      </div>
-      ${weekStrength.length ? `<div class="wr-section">
-        <div class="wr-section-title">Sessions logged</div>
-        <div class="wr-section-content">${weekStrength.map(s => `<span style="margin-right:10px">${fmtDate(s.date)} · ${s.session_type || 'Strength'} · ${s.duration_min || '—'} min</span>`).join('')}</div>
-      </div>` : ''}
-      ${isSaturday && verdict ? `<div class="wr-verdict">${verdict}</div>` : ''}
-    </div>
-  </div>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   QUICK DATA LOG UI
-══════════════════════════════════════════════════════ */
-function buildQuickLogUI() {
-  const today = new Date().toISOString().slice(0,10);
-  let savedSource = '';
-  try { savedSource = localStorage.getItem('ql_source_' + today) || ''; } catch(e) {}
-
-  const sources = ['Cal AI', 'Oura', 'Bevel', 'Stelo', 'Manual'];
-  const chips   = sources.map(s =>
-    `<button class="ql-source-btn${savedSource === s ? ' active' : ''}" onclick="qlSource('${s}',this)">${s}</button>`
-  ).join('');
-
-  const quickFoods = [
-    'Whey shake (24g P)', 'Beef jerky (1oz)', 'Eggs x2', 'Chicken breast',
-    'Salmon 150g', 'Greek yogurt', 'Rice 1 cup', 'Sweet potato', 'Salad',
-  ];
-  const foodChips = quickFoods.map(f =>
-    `<button class="quick-chip" onclick="qlAddFood('${f.replace(/'/g,"\\'")}',this)">${f}</button>`
-  ).join('');
-
-  return `
-  <div style="margin-bottom:16px">
-    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);margin-bottom:8px;display:flex;align-items:center;gap:5px">
-      <span style="font-size:7px">◆</span> Quick Data Log
-    </div>
-    <div class="quick-log-card">
-      <div class="quick-log-header" onclick="toggleEl('qlBody')">
-        <span>📝 Log food, notes &amp; data</span>
-        <span style="font-size:10px;color:var(--text3)">tap to open ▾</span>
-      </div>
-      <div class="quick-log-body" id="qlBody">
-        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Data source</div>
-        <div class="ql-source-row">${chips}</div>
-        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Quick-add food</div>
-        <div class="quick-chips" id="qlFoodChips">${foodChips}</div>
-        <textarea class="ql-textarea" id="qlText" placeholder="Paste Cal AI output, describe a meal, or add any data note for the coach…"></textarea>
-        <div style="display:flex;gap:8px;margin-bottom:10px">
-          <button class="feedback-btn feedback-btn-save" onclick="qlSave()">Save Note</button>
-          <button class="feedback-btn feedback-btn-export" onclick="qlCopy()">📋 Copy for Coach</button>
-        </div>
-        <div style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--text3);line-height:1.6">
-          <strong style="color:var(--text2)">💡 Fastest workflows</strong><br>
-          <strong>Cal AI →</strong> After logging a meal, tap Share → Copy text → paste here<br>
-          <strong>Oura →</strong> Screenshot your daily ring scores → send to coach as image<br>
-          <strong>Bevel →</strong> Screenshot body comp → send to coach as image<br>
-          <strong>Stelo CGM →</strong> Screenshot trend chart after meals<br>
-          <strong>Shortcut tip →</strong> Set an iOS Shortcut on your home screen: "Ask Siri to open Personal Coach" for one-tap access
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-/* ── Quick-Add Food Database ── */
-let _qlPending = []; // pending items not yet written to DB
-
-function qlQuickAdd(food) {
-  _qlPending.push(food);
-  _qlUpdatePendingBanner();
-}
-
-function _qlUpdatePendingBanner() {
-  const banner = document.getElementById('ql-pending-banner');
-  const summary = document.getElementById('ql-pending-summary');
-  if (!banner || !summary) return;
-  if (_qlPending.length === 0) { banner.style.display = 'none'; return; }
-  const totals = _qlPending.reduce((acc, f) => ({
-    cal: acc.cal + f.cal, p: acc.p + f.p, c: acc.c + f.c, f: acc.f + f.f
-  }), {cal:0, p:0, c:0, f:0});
-  const names = _qlPending.map(f => f.name).join(', ');
-  summary.innerHTML = `<strong>${_qlPending.length} item${_qlPending.length>1?'s':''}</strong>: ${names} &nbsp;·&nbsp; <strong>${totals.cal} kcal</strong> | ${totals.p}P · ${totals.c}C · ${totals.f}F`;
-  banner.style.display = 'block';
-}
-
-function qlClearPending() {
-  _qlPending = [];
-  _qlUpdatePendingBanner();
-}
-
-async function qlConfirmQuickAdd() {
-  if (!_qlPending.length) return;
-  const btn = document.querySelector('#ql-pending-banner button');
-  if (btn) { btn.textContent = 'Logging…'; btn.disabled = true; }
-
-  // Build meal entry for today
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
-  const totals = _qlPending.reduce((acc, f) => ({
-    cal: acc.cal + f.cal, p: acc.p + f.p, c: acc.c + f.c, f: acc.f + f.f
-  }), {cal:0, p:0, c:0, f:0});
-  const meal = {
-    meal: 'snack',
-    time: timeStr,
-    source: 'Quick Add',
-    subtotals: { calories_kcal: totals.cal, protein_g: totals.p, carbs_g: totals.c, fat_g: totals.f },
-    items: _qlPending.map(f => ({
-      food: f.name,
-      amount: f.sub || '1 serving',
-      calories_kcal: f.cal,
-      protein_g: f.p,
-      carbs_g: f.c,
-      fat_g: f.f,
-      estimated: false
-    }))
-  };
-
-  try {
-    await ghWriteNutrition(meal);
-    _qlPending = [];
-    _qlUpdatePendingBanner();
-    // Reload data
-    const res = await fetch('./HEALTH_DATABASE.json?t=' + Date.now());
-    DB = await res.json();
-    renderTab('nutrition', DB);
-  } catch(e) {
-    if (btn) { btn.textContent = 'Log it'; btn.disabled = false; }
-    alert('Could not write to database: ' + e.message + '\n\nMake sure your GitHub token is set in Settings.');
-  }
-}
-
-async function ghWriteNutrition(newMeal) {
-  const token = (() => { try { return localStorage.getItem('gh_token') || ''; } catch(e) { return ''; } })();
-  if (!token) throw new Error('No GitHub token set. Go to Settings → GitHub Token.');
-  const GH_API = `https://api.github.com/repos/toddblackhurst/health-dashboard/contents/HEALTH_DATABASE.json`;
-  const todayStr = new Date().toISOString().slice(0,10);
-
-  // Fetch current file
-  const getRes = await fetch(GH_API, { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }});
-  if (!getRes.ok) throw new Error(`GitHub fetch failed: ${getRes.status}`);
-  const fileData = await getRes.json();
-  const db = JSON.parse(atob(fileData.content.replace(/\n/g,'')));
-
-  // Find or create today's nutrition entry
-  const nutIdx = (db.nutrition || []).findIndex(n => n.date === todayStr);
-  if (nutIdx >= 0) {
-    const entry = db.nutrition[nutIdx];
-    if (!entry.meals) entry.meals = [];
-    entry.meals.push(newMeal);
-    // Recalculate daily totals
-    const all = entry.meals;
-    entry.daily_totals = {
-      calories_kcal: all.reduce((s,m) => s + (m.subtotals?.calories_kcal||0), 0),
-      protein_g:     all.reduce((s,m) => s + (m.subtotals?.protein_g||0), 0),
-      carbs_g:       all.reduce((s,m) => s + (m.subtotals?.carbs_g||0), 0),
-      fat_g:         all.reduce((s,m) => s + (m.subtotals?.fat_g||0), 0),
-    };
-  } else {
-    if (!db.nutrition) db.nutrition = [];
-    db.nutrition.push({
-      date: todayStr,
-      meals: [newMeal],
-      daily_totals: { calories_kcal: newMeal.subtotals.calories_kcal, protein_g: newMeal.subtotals.protein_g, carbs_g: newMeal.subtotals.carbs_g, fat_g: newMeal.subtotals.fat_g }
-    });
-  }
-
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(db, null, 2))));
-  const putRes = await fetch(GH_API, {
-    method: 'PUT',
-    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: `Quick-add nutrition ${todayStr}`, content, sha: fileData.sha, branch: 'main' })
-  });
-  if (!putRes.ok) throw new Error(`GitHub write failed: ${putRes.status}`);
-}
-
-function qlSource(name, btn) {
-  document.querySelectorAll('.ql-source-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  try { localStorage.setItem('ql_source_' + new Date().toISOString().slice(0,10), name); } catch(e) {}
-}
-
-function qlAddFood(name, btn) {
-  btn.classList.toggle('selected');
-  const ta = document.getElementById('qlText');
-  if (!ta) return;
-  if (btn.classList.contains('selected')) {
-    ta.value = (ta.value ? ta.value + '\n' : '') + name;
-  } else {
-    ta.value = ta.value.replace('\n' + name, '').replace(name + '\n', '').replace(name, '').trim();
-  }
-}
-
-function qlSave() {
-  const today = new Date().toISOString().slice(0,10);
-  const txt = (document.getElementById('qlText') || {}).value || '';
-  try { localStorage.setItem('ql_note_' + today, txt); } catch(e) {}
-  const btn = document.querySelector('.feedback-btn-save');
-  if (btn) { btn.textContent = '✓ Saved'; setTimeout(() => btn.textContent = 'Save Note', 2000); }
-}
-
-function qlCopy() {
-  const today = new Date().toISOString().slice(0,10);
-  const txt = (document.getElementById('qlText') || {}).value || '';
-  let source = '';
-  try { source = localStorage.getItem('ql_source_' + today) || 'Manual'; } catch(e) {}
-  const out = `=== FOOD/DATA LOG · ${today} · Source: ${source} ===\n${txt}`;
-  try {
-    navigator.clipboard.writeText(out).then(() => {
-      const btn = document.querySelector('.feedback-btn-export');
-      if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '📋 Copy for Coach', 2000); }
-    });
-  } catch(e) {}
-}
-
-/* ══════════════════════════════════════════════════════
-   TRENDS TAB
-══════════════════════════════════════════════════════ */
-function renderTrends(db) {
-  const baseline = db.profile.oura_biology_baselines || {};
-
-  const hrvData  = sortAsc(db.recovery_sleep).filter(r=>r.hrv_ms).map(r=>({date:r.date,value:r.hrv_ms}));
-  const recData  = sortAsc(db.recovery_sleep).filter(r=>r.recovery_score_pct).map(r=>({date:r.date,value:r.recovery_score_pct}));
-  const sleepData= sortAsc(db.recovery_sleep).filter(r=>r.sleep_score_pct).map(r=>({date:r.date,value:r.sleep_score_pct}));
-  const wtData   = sortAsc(db.body_composition).filter(e=>e.weight_lbs||e.weight_kg).map(e=>({date:e.date,value:e.weight_lbs||(e.weight_kg*2.2046)}));
-  const bfData   = sortAsc(db.body_composition).filter(e=>e.body_fat_pct).map(e=>({date:e.date,value:e.body_fat_pct}));
-  const volData  = sortAsc(db.strength_logs).filter(s=>s.volume_kg).map(s=>({date:s.date,value:Math.round(s.volume_kg*2.2046)}));
-
-  const hrv  = buildLineChart(hrvData,  { color:'var(--chart-hrv)',      height:70, baseline:baseline.hrv_baseline_ms||32.5, baselineLabel:`Baseline ${baseline.hrv_baseline_ms||32.5}` });
-  const rec  = buildLineChart(recData,  { color:'var(--chart-recovery)', height:60 });
-  const slp  = buildLineChart(sleepData,{ color:'var(--chart-sleep)',    height:60 });
-  const wt   = buildLineChart(wtData,   { color:'var(--chart-weight)',   height:60, baseline:165, baselineLabel:'Goal 165' });
-  const bf   = buildLineChart(bfData,   { color:'var(--chart-bf)',       height:55 });
-  const vol  = buildLineChart(volData,  { color:'var(--chart-volume)',   height:60 });
-
-  const latestHrv = hrvData.length  ? hrvData[hrvData.length-1].value   : null;
-  const latestRec = recData.length  ? recData[recData.length-1].value   : null;
-  const latestSlp = sleepData.length? sleepData[sleepData.length-1].value:null;
-  const latestWt  = wtData.length   ? wtData[wtData.length-1].value     : null;
-  const latestBf  = bfData.length   ? bfData[bfData.length-1].value     : null;
-
-  // Changes
-  const change = (arr) => arr.length >= 2 ? (arr[arr.length-1].value - arr[0].value) : null;
-  const hrvChg = change(hrvData);
-  const wtChg  = change(wtData);
-  const bfChg  = change(bfData);
-
-  function trendCard(title, sub, val, unit, changeVal, chart, labels, opts = {}) {
-    const { changeGoodDir = 1, decimals = 1 } = opts; // 1 = up is good, -1 = down is good
-    const chgColor = changeVal === null ? 'var(--text3)'
-      : (changeVal * changeGoodDir > 0 ? 'var(--green)' : 'var(--red)');
-    const chgStr = changeVal !== null
-      ? (changeVal > 0 ? '↑' : '↓') + ' ' + Math.abs(changeVal).toFixed(decimals) + unit + ' since first'
-      : '';
-    return `
-    <div class="trend-chart-card">
-      <div class="trend-header">
-        <div class="trend-title-block">
-          <div class="t-title">${title}</div>
-          <div class="t-sub">${sub}</div>
-        </div>
-        <div class="trend-stat-block">
-          <div class="t-cur">${val !== null ? (+val).toFixed(decimals) + unit : '—'}</div>
-          <div class="t-change" style="color:${chgColor}">${chgStr}</div>
-        </div>
-      </div>
-      <div class="chart-area">${chart.svg}</div>
-      <div class="chart-x-labels">${chart.labels.map(l=>`<span>${l}</span>`).join('')}</div>
-    </div>`;
-  }
-
-  // ── Weekly nutrition summary ──
-  const nutEntries = sortAsc(db.nutrition || []);
-  // Last 7 days window
-  const now7 = new Date();
-  const cutoff = new Date(now7); cutoff.setDate(cutoff.getDate() - 7);
-  const cutoffStr = cutoff.toISOString().slice(0, 10);
-  const weekNut = nutEntries.filter(n => n.date >= cutoffStr);
-  const allNut  = nutEntries; // for all-time averages
-
-  function nutAvg(arr, key) {
-    const vals = arr.map(n => n.daily_totals ? n.daily_totals[key] : null).filter(v => v !== null && v !== undefined);
-    return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0) / vals.length) : null;
-  }
-  function nutSum(arr, key) {
-    const vals = arr.map(n => n.daily_totals ? n.daily_totals[key] : null).filter(v => v !== null && v !== undefined);
-    return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)) : null;
-  }
-
-  const wkAvgCal  = nutAvg(weekNut, 'calories_kcal');
-  const wkAvgProt = nutAvg(weekNut, 'protein_g');
-  const wkAvgCarb = nutAvg(weekNut, 'carbs_g');
-  const wkAvgFat  = nutAvg(weekNut, 'fat_g');
-  const wkDaysLogged = weekNut.filter(n => n.daily_totals && n.daily_totals.calories_kcal).length;
-
-  const allAvgCal  = nutAvg(allNut, 'calories_kcal');
-  const allAvgProt = nutAvg(allNut, 'protein_g');
-
-  function nutColor(val, target) {
-    if (!val) return 'var(--text3)';
-    const pct = val / target;
-    if (pct >= 0.9) return 'var(--green)';
-    if (pct >= 0.65) return 'var(--yellow)';
-    return 'var(--red)';
-  }
-
-  const weekNutHtml = `
-  <div class="section">
-    <div class="section-title">Weekly Nutrition · Last 7 Days</div>
-    <div class="card" style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div style="font-size:12px;color:var(--text2)">${wkDaysLogged} of 7 days logged</div>
-        ${wkDaysLogged < 4 ? badge('Log more days','yellow') : wkDaysLogged >= 6 ? badge('Great consistency','green') : badge('Getting there','blue')}
-      </div>
-      <div class="week-grid">
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgCal, 2000)}">${wkAvgCal || '—'}</div>
-          <div class="week-lbl">Avg kcal/day</div>
-          <div class="week-sub">Target: 2,000</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgProt, 150)}">${wkAvgProt || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">Avg Protein</div>
-          <div class="week-sub">Target: 150g</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgCarb, 190)}">${wkAvgCarb || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">Avg Carbs</div>
-          <div class="week-sub">Target: 190g</div>
-        </div>
-      </div>
-      <div class="week-grid" style="margin-top:6px">
-        <div class="week-cell">
-          <div class="week-val" style="color:${nutColor(wkAvgFat, 70)}">${wkAvgFat || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">Avg Fat</div>
-          <div class="week-sub">Target: 70g</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:var(--text2)">${allAvgCal || '—'}</div>
-          <div class="week-lbl">All-time avg kcal</div>
-          <div class="week-sub">${allNut.length} days logged</div>
-        </div>
-        <div class="week-cell">
-          <div class="week-val" style="color:var(--text2)">${allAvgProt || '—'}<span style="font-size:11px">g</span></div>
-          <div class="week-lbl">All-time protein</div>
-          <div class="week-sub">avg per day</div>
-        </div>
-      </div>
-      ${weekNut.length > 0 ? `
-      <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
-        <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Day-by-Day</div>
-        ${weekNut.slice().reverse().map(n => {
-          const c = n.daily_totals ? n.daily_totals.calories_kcal : null;
-          const p = n.daily_totals ? n.daily_totals.protein_g : null;
-          const pct = c ? Math.min(100, Math.round((c/2000)*100)) : 0;
-          return `<div class="data-row" style="padding:6px 0">
-            <div class="dr-key" style="font-size:11px">${fmtDate(n.date)}</div>
-            <div class="dr-bar"><div class="dr-bar-fill" style="width:${pct}%;background:${nutColor(c,2000)}"></div></div>
-            <div class="dr-val" style="font-size:11px">${c ? c+' kcal' : '—'}</div>
-            <div class="dr-badge">${p ? badge(p+'g P', p >= 135 ? 'green' : 'yellow') : badge('—','dim')}</div>
-          </div>`;
-        }).join('')}
-      </div>` : ''}
-    </div>
-  </div>`;
-
-  return `
-  <div class="section">
-    <div class="section-title">Recovery Signals</div>
-    ${trendCard('HRV', `Oura · Baseline ${baseline.hrv_baseline_ms||32.5} ms`, latestHrv, ' ms', hrvChg, hrv, hrv.labels, {changeGoodDir:1})}
-    ${trendCard('Recovery Score', 'Oura readiness · 0–100', latestRec, '%', null, rec, rec.labels)}
-    ${trendCard('Sleep Score', 'Oura · 0–100', latestSlp, '%', null, slp, slp.labels)}
-  </div>
-
-  <div class="section">
-    <div class="section-title">Body Composition</div>
-    ${trendCard('Weight', 'Goal: 165 lbs', latestWt, ' lbs', wtChg, wt, wt.labels, {changeGoodDir:-1, decimals:1})}
-    ${trendCard('Body Fat %', 'Lower is better · Target ~15%', latestBf, '%', bfChg, bf, bf.labels, {changeGoodDir:-1, decimals:1})}
-  </div>
-
-  <div class="section">
-    <div class="section-title">Training Load</div>
-    ${trendCard('Session Volume', `${volData.length} strength sessions`, volData.length ? volData[volData.length-1].value : null, ' lbs', null, vol, vol.labels, {decimals:0})}
-  </div>
-
-  ${weekNutHtml}
-
-  <!-- Oura baselines summary -->
-  <div class="section">
-    <div class="section-title">Biology Baselines · Oura</div>
-    <div class="card">
-      <div class="data-row">
-        <div class="dr-key">VO₂ Max</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:40%;background:var(--yellow)"></div></div>
-        <div class="dr-val">${baseline.vo2_max||'—'}</div>
-        <div class="dr-badge">${badge(baseline.vo2_max_status||'—','yellow')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">HRV Baseline</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:60%;background:var(--accent)"></div></div>
-        <div class="dr-val">${baseline.hrv_baseline_ms||'—'} ms</div>
-        <div class="dr-badge">${badge('Personal','blue')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">RHR Baseline</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:55%;background:var(--green)"></div></div>
-        <div class="dr-val">${baseline.rhr_baseline_bpm||'—'} bpm</div>
-        <div class="dr-badge">${badge('Normal','green')}</div>
-      </div>
-      <div class="data-row">
-        <div class="dr-key">Avg Sleep</div>
-        <div class="dr-bar"><div class="dr-bar-fill" style="width:58%;background:var(--purple)"></div></div>
-        <div class="dr-val">${baseline.avg_sleep_per_night_min ? Math.floor(baseline.avg_sleep_per_night_min/60) + 'h ' + (baseline.avg_sleep_per_night_min%60) + 'm' : '—'}</div>
-        <div class="dr-badge">${badge('Chronic debt','yellow')}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="spacer"></div>`;
-}
-
-/* ══════════════════════════════════════════════════════
-   TAB SWITCHING
-══════════════════════════════════════════════════════ */
-function switchTab(name) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
-  document.querySelectorAll('.bn-item').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
-
-  if (!rendered[name] && DB) {
-    renderTab(name, DB);
-  }
-}
-
-function renderTab(name, db) {
-  const panel = document.getElementById('tab-' + name);
-  try {
-    switch(name) {
-      case 'today':    panel.innerHTML = renderToday(db);    break;
-      case 'body':     panel.innerHTML = renderBody(db);     break;
-      case 'nutrition': panel.innerHTML = renderNutrition(db); break;
-      case 'trends':   panel.innerHTML = renderTrends(db);   break;
-      case 'coach':    panel.innerHTML = renderCoach(db);    break;
-    }
-    rendered[name] = true;
-  } catch(e) {
-    panel.innerHTML = `<div class="error-block">
-      <strong>Render error in ${name} tab</strong><br>
-      <code>${e.message}</code>
-    </div>`;
-    console.error(e);
-  }
-}
-
-/* ══════════════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════════════ */
-async function init() {
-  // Topbar date
-  const now = new Date();
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  document.getElementById('topbar-date').textContent =
-    `${days[now.getDay()]} · ${months[now.getMonth()]} ${now.getDate()} · ${now.getFullYear()}`;
-
-  // Tab click
-  document.querySelectorAll('.tab-btn, .bn-item').forEach(el => {
-    el.addEventListener('click', () => switchTab(el.dataset.tab));
-  });
-
-  // Load data
-  try {
-    const res = await fetch(DB_URL);
-    if (!res.ok) throw new Error(`HTTP ${res.status} — could not load ${DB_URL}`);
-    DB = await res.json();
-    renderTab('today', DB);
-    // Show last updated time
-    const updEl = document.getElementById('topbar-updated');
-    if (updEl) {
-      const cb = DB.coaching_brief;
-      let updTime = '';
-      if (cb && (cb.last_updated || cb.generated_at)) {
-        const d = new Date(cb.last_updated || cb.generated_at);
-        updTime = 'Updated ' + d.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
-      } else {
-        updTime = 'Loaded ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
-      }
-      updEl.textContent = updTime;
-    }
-  } catch(e) {
-    ['today','body','nutrition','trends'].forEach(name => {
-      document.getElementById('tab-' + name).innerHTML = `
-        <div class="error-block">
-          <strong>Could not load HEALTH_DATABASE.json</strong><br>
-          ${e.message}<br><br>
-          Make sure <code>HEALTH_DATABASE.json</code> is in the same folder as <code>index.html</code> in your GitHub repo.
-        </div>`;
-    });
-  }
-}
-
-init();
 </script>
-
-<!-- Token setup modal -->
-<div class="modal-overlay" id="tokenModal" onclick="if(event.target===this)closeTokenModal()">
-  <div class="modal-sheet">
-    <div class="modal-title">🔑 Connect GitHub Write-back</div>
-    <div class="modal-sub">
-      Paste your GitHub fine-grained PAT below. One-time setup — saves locally in your browser.<br><br>
-      <strong>Create one at:</strong> github.com → Settings → Developer settings → Fine-grained tokens<br>
-      Permissions needed: <strong>Contents: Read &amp; Write</strong> on repo <code>health-dashboard</code>
-    </div>
-    <input class="modal-input" id="tokenInput" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
-    <div class="modal-btns">
-      <button class="modal-btn-primary" onclick="saveToken()">Save Token</button>
-      <button class="modal-btn-secondary" onclick="closeTokenModal()">Cancel</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
