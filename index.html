@@ -1214,6 +1214,12 @@ function renderToday(db) {
   const startLbs  = 172.7; // from first body comp entry
   const progressPct = weightLbs ? Math.min(100, ((startLbs - weightLbs) / (startLbs - goalLbs)) * 100) : 0;
 
+  // ── Workout today ──
+  const todayStr = new Date().toISOString().slice(0,10);
+  const todayWorkout = (db.strength_logs || []).find(s => s.date === todayStr) || null;
+  const todayActivity = (db.activity_sessions || []).find(a => a.date === todayStr && (a.type === 'Strength Training' || a.source === 'Motra')) || null;
+  const wkt = todayWorkout || todayActivity;
+
   // ── Nutrition today ──
   const nutEntries = db.nutrition || [];
   const todayNut   = nutEntries.length ? latest(nutEntries) : null;
@@ -1463,6 +1469,57 @@ function renderToday(db) {
       </div>
     </div>
   </div>
+
+  <!-- Today's Workout -->
+  ${wkt ? (() => {
+    const volLbs = wkt.volume_kg ? Math.round(wkt.volume_kg * 2.2046).toLocaleString() : (wkt.total_volume_kg ? Math.round(wkt.total_volume_kg * 2.2046).toLocaleString() : null);
+    const hrFlag = wkt.peak_hr_bpm && wkt.peak_hr_bpm > 122;
+    const mainExercises = (wkt.exercises || []).filter(e => e.category === 'main_strength' || e.category === 'accessory').slice(0, 5);
+    return `
+  <div class="section">
+    <div class="section-title">Today's Session · ${wkt.time || '—'}</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <div style="font-size:15px;font-weight:700;letter-spacing:-0.01em">${wkt.session_type || wkt.type || 'Strength Training'}</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">${wkt.source || 'Motra'} · ${wkt.duration_min || '—'} min · ${wkt.exercises ? wkt.exercises.length + ' exercises' : ''}</div>
+        </div>
+        <div style="text-align:right">
+          ${hrFlag ? badge('Peak HR ⚠️ ' + wkt.peak_hr_bpm + ' bpm','red') : badge('HR OK','green')}
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px">
+        <div style="text-align:center">
+          <div style="font-size:18px;font-weight:800;color:var(--accent)">${volLbs ? volLbs : '—'}</div>
+          <div style="font-size:10px;color:var(--text3)">lbs volume</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:18px;font-weight:800;color:var(--teal)">${wkt.calories_kcal || '—'}</div>
+          <div style="font-size:10px;color:var(--text3)">kcal</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:18px;font-weight:800;color:var(--chart-hrv)">${wkt.avg_hr_bpm || '—'}</div>
+          <div style="font-size:10px;color:var(--text3)">avg HR</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:18px;font-weight:800;color:var(--yellow)">${wkt.total_reps || wkt.reps || '—'}</div>
+          <div style="font-size:10px;color:var(--text3)">total reps</div>
+        </div>
+      </div>
+      ${mainExercises.length ? `<div style="border-top:1px solid var(--border);padding-top:8px;margin-top:2px">
+        ${mainExercises.map(ex => {
+          const wtStr = ex.weight === 'BW' ? 'BW' : (Array.isArray(ex.weight_kg) ? ex.weight_kg[0] + 'kg' : (ex.weight_kg ? ex.weight_kg + 'kg' : ''));
+          return `<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid var(--border);font-size:12px">
+            <span style="color:var(--text)">${ex.name}</span>
+            <span style="color:var(--text3)">${ex.sets}×${Array.isArray(ex.reps) ? ex.reps[0] : (ex.reps || '—')} ${wtStr}</span>
+          </div>`;
+        }).join('')}
+        ${(wkt.exercises || []).filter(e => e.category === 'main_strength' || e.category === 'accessory').length > 5 ? `<div style="font-size:11px;color:var(--text3);padding-top:5px">+${(wkt.exercises||[]).filter(e=>e.category==='main_strength'||e.category==='accessory').length - 5} more exercises</div>` : ''}
+      </div>` : ''}
+      ${wkt.motra_link ? `<div style="margin-top:8px"><a href="${wkt.motra_link}" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:none">📱 View full session on Motra →</a></div>` : ''}
+    </div>
+  </div>`;
+  })() : ''}
 
   <div class="spacer"></div>`;
 }
