@@ -1851,13 +1851,57 @@
             "fat_g": 9
           },
           "notes": "Post-workout shake \u2014 Gold Standard Whey + almond milk. 28g protein within recovery window post-lift session. Clean: 220 kcal, only 9g fat."
+        },
+        {
+          "meal": "lunch_item_1",
+          "time": "13:49",
+          "items": [
+            {
+              "food": "Tomato Vegetable Soup",
+              "calories_kcal": 120,
+              "protein_g": 4,
+              "carbs_g": 20,
+              "fat_g": 3,
+              "estimated": false,
+              "source": "Cal AI screenshot 20260416-134943"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 120,
+            "protein_g": 4,
+            "carbs_g": 20,
+            "fat_g": 3
+          },
+          "notes": "120 kcal volume fill \u2014 light is fine at this point in a deficit day. 4g protein is background noise; the wings alongside are doing the actual work. Running totals after this: 848 kcal / 92g protein. Still 58g protein needed with 852 kcal left in today's budget."
+        },
+        {
+          "meal": "lunch_item_2",
+          "time": "13:50",
+          "items": [
+            {
+              "food": "Buffalo Chicken Wings",
+              "calories_kcal": 445,
+              "protein_g": 37,
+              "carbs_g": 1,
+              "fat_g": 30,
+              "estimated": false,
+              "source": "Cal AI screenshot 20260416-135042"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 445,
+            "protein_g": 37,
+            "carbs_g": 1,
+            "fat_g": 30
+          },
+          "notes": "37g protein \u2014 lunch earning its place. You're at 129g protein for the day, 21g from target. Fat at 49g total (82% of 60g budget) with only 407 kcal left. Dinner call: lean protein only \u2014 chicken breast, shrimp, or fish. No sauces, nothing fried."
         }
       ],
       "running_totals": {
-        "calories_kcal": 728,
-        "protein_g": 88,
-        "carbs_g": 60,
-        "fat_g": 16
+        "calories_kcal": 1293,
+        "protein_g": 129,
+        "carbs_g": 81,
+        "fat_g": 49
       },
       "day_closed": false
     }
@@ -8235,7 +8279,7 @@
       }
     }
   },
-  "last_updated": "2026-04-16T12:11:24",
+  "last_updated": "2026-04-16T14:18:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
