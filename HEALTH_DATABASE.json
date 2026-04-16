@@ -2525,6 +2525,47 @@
       "hr_constraint_met": true,
       "hr_cap": 122,
       "notes": "Indoor Cycle Apr 16, Tanzi District. 30:12, avg HR 100 bpm, peak 109 bpm \u2014 well within <122 bpm constraint. Easy effort (2/5). Day-after-heavy-session cardio (88-min strength + 154 bpm peak Apr 15). Active calories 143, total 191. Pattern: second consecutive day at Tanzi District Indoor Cycle (same session Apr 14: 31:10, avg HR 100, Easy). Consistent execution."
+    },
+    {
+      "date": "2026-04-17",
+      "source": "Apple Fitness",
+      "session_type": "Cardio \u2014 Low Aerobic",
+      "session_name": "Outdoor Walk",
+      "start_time": "05:26",
+      "end_time": "06:09",
+      "duration_min": 41.5,
+      "distance_mi": 2.24,
+      "active_calories_kcal": 169,
+      "total_calories_kcal": 236,
+      "avg_hr_bpm": 95,
+      "peak_hr_bpm": 106,
+      "avg_pace_per_mi": "18:31",
+      "elevation_gain_ft": 157,
+      "effort": "Easy (3/5)",
+      "location": "Beitun District",
+      "hr_constraint_met": true,
+      "hr_cap": 122,
+      "splits": [
+        {
+          "mile": 1,
+          "time": "17:25",
+          "pace": "17:25/mi",
+          "avg_hr_bpm": 94
+        },
+        {
+          "mile": 2,
+          "time": "17:10",
+          "pace": "17:10/mi",
+          "avg_hr_bpm": 98
+        },
+        {
+          "mile": "0.24 partial",
+          "time": "06:40",
+          "pace": "27:41/mi",
+          "avg_hr_bpm": 90
+        }
+      ],
+      "notes": "Outdoor Walk Apr 17, Beitun District. 41:29 workout / 43:00 elapsed. 2.24 mi. Avg HR 95 bpm / peak 106 bpm \u2014 well within 122 bpm cap. Easy effort (3/5). Pre-Friday strength session morning walk on Yellow readiness day (HRV 31ms, 3rd consecutive decline). Appropriate parasympathetic stimulus. No CNS cost. Active 169 kcal / total 236 kcal. Elevation gain 157 ft."
     }
   ],
   "strength_logs": [
@@ -8359,7 +8400,7 @@
       }
     }
   },
-  "last_updated": "2026-04-16T22:12:59",
+  "last_updated": "2026-04-17T06:37:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
