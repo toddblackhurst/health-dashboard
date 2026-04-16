@@ -396,6 +396,37 @@
       },
       "weekly_targets_met": "4/4",
       "notes": "Hume Pod BIA daily scale Apr 16, 6:40 AM. Weight 166.2 lbs \u2014 1.2 lbs above goal. Health Score 670 (was 673 on Apr 12 \u2014 small drop, within normal variance). Biological Age 30 (27 years younger than 57). Body Comp grade C+ \u2014 muscle balance flagged again. Trunk muscle 65.9 lbs (Low) \u2014 persistent. Right-side dominance confirmed: R-Arm 8.1 vs L-Arm 7.9 (+0.2 lbs), R-Leg 25.3 vs L-Leg 24.2 (+1.1 lbs). Body water 37.6% Low \u2014 dehydration flag, post-heavy-session yesterday. BF 10.5% BIA artifact \u2014 not reliable; use ADP Apr 10 (22.0%) as reference."
+    },
+    {
+      "date": "2026-04-17",
+      "time": "06:17",
+      "source_primary": "Hume Pod BIA",
+      "source_secondary": "Ocare3 BIA",
+      "weight_lbs": 165.6,
+      "weight_note": "Weighed 6:33 AM \u2014 Hume flagged not optimal (recommended 5:03 AM). Trend reading only.",
+      "body_fat_pct_hume": 10.6,
+      "body_fat_pct_ocare3": 17.6,
+      "body_fat_note": "BIA only \u2014 both devices BIA. Hume sectional 10.6% vs Ocare3 whole-body 17.6%. Trend tracking only.",
+      "lean_mass_lbs": 136.5,
+      "lean_mass_method": "Ocare3 BF% calc",
+      "skeletal_muscle_mass_lbs_hume": 94.9,
+      "visceral_fat_level": 3.0,
+      "bmi": 21.9,
+      "bmr_kcal": 1777,
+      "muscle_pct_ocare3": 77.9,
+      "bone_mass_lbs": 7.5,
+      "body_water_pct": 56.2,
+      "metabolic_age_yrs": 42,
+      "biological_age_yrs_hume": 30,
+      "health_score_hume": 670,
+      "fat_distribution_hume": {
+        "trunk_pct": 6.9,
+        "right_arm_pct": 10.0,
+        "left_arm_pct": 10.0,
+        "right_leg_pct": 4.3,
+        "left_leg_pct": 4.3
+      },
+      "last_week_avg_lbs": 164.8
     }
   ],
   "recovery_sleep": [
@@ -1984,6 +2015,98 @@
         "carbs_delta": -62.3,
         "fat_delta": 13.7
       }
+    },
+    {
+      "date": "2026-04-17",
+      "source": "Cal AI",
+      "targets": {
+        "calories_kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
+      },
+      "meals": [
+        {
+          "meal": "pre_workout_shake",
+          "time": "06:36",
+          "items": [
+            {
+              "food": "Gold Standard 100% Whey \u2014 Vanilla Ice Cream",
+              "amount": "2 scoops",
+              "calories_kcal": 252,
+              "protein_g": 48,
+              "carbs_g": 8,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Red Tractor Omega 3 Instant Oats",
+              "amount": "1 serving",
+              "calories_kcal": 39,
+              "protein_g": 2,
+              "carbs_g": 7,
+              "fat_g": 1,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Unsweetened Almond Milk",
+              "amount": "1 serving",
+              "calories_kcal": 45,
+              "protein_g": 1,
+              "carbs_g": 2,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Plain Yogurt",
+              "amount": "120g",
+              "calories_kcal": 75,
+              "protein_g": 4,
+              "carbs_g": 9,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Frozen Blueberries",
+              "amount": "1/2 cup",
+              "calories_kcal": 39,
+              "protein_g": 0,
+              "carbs_g": 10,
+              "fat_g": 0,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Unsweetened Frozen Strawberries",
+              "amount": "1/2 cup",
+              "calories_kcal": 38,
+              "protein_g": 0,
+              "carbs_g": 9,
+              "fat_g": 0,
+              "estimated": false,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 490,
+            "protein_g": 55,
+            "carbs_g": 41,
+            "fat_g": 13
+          },
+          "notes": "Pre-workout shake at 6:36 AM \u2014 same proven formula with strawberries added. 55g protein = 37% of daily target before the gym. Fat 13g uses 19% of the daily budget. Clean pre-session fuel for Friday Athletic Mixed."
+        }
+      ],
+      "running_totals": {
+        "calories_kcal": 490,
+        "protein_g": 55,
+        "carbs_g": 41,
+        "fat_g": 13
+      },
+      "day_closed": false
     }
   ],
   "activity_sessions": [
@@ -8400,7 +8523,7 @@
       }
     }
   },
-  "last_updated": "2026-04-17T06:37:00",
+  "last_updated": "2026-04-17T06:45:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
