@@ -8599,7 +8599,19 @@
     "first_session": "2026-04-19",
     "history": []
   },
-  "morning_checkins": [],
+  "morning_checkins": [
+    {
+      "date": "2026-04-17",
+      "timestamp": "2026-04-17T00:39:36.644Z",
+      "flags": {
+        "migraine_headache": true,
+        "poor_sleep": true,
+        "high_fatigue": true,
+        "joint_pain": false,
+        "high_stress": false
+      }
+    }
+  ],
   "session_overrides": [
     {
       "date": "2026-04-17",
