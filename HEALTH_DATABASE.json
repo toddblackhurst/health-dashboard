@@ -505,6 +505,33 @@
         "left_leg_pct": 4.3
       },
       "last_week_avg_lbs": 164.8
+    },
+    {
+      "date": "2026-04-18",
+      "time": "05:49:51",
+      "source": "Ocare3 BIA Scale + Hume Pod BIA",
+      "weight_lbs": 165.3,
+      "weight_lbs_hume": 166.2,
+      "weight_source_note": "BIA scale (Ocare3) + Hume Pod. Use DXA (Feb 23: 18.5% BF, 447g VAT) for body comp coaching. BIA figures below are directional only.",
+      "bmi": 21.9,
+      "body_fat_pct": 16.6,
+      "body_fat_pct_hume": 10.6,
+      "body_fat_source": "BIA \u2014 unreliable. Primary reference: DXA Feb 23 = 18.5%",
+      "visceral_fat_level": 3.0,
+      "visceral_fat_note": "BIA scale Lv 3.0 \u2014 directional only",
+      "bmr_kcal": 1777,
+      "body_water_pct": 57.2,
+      "bone_mass_lbs": 7.7,
+      "muscle_pct": 78.8,
+      "skeletal_muscle_mass_lbs": 94.8,
+      "metabolic_age_yrs": 42,
+      "hume_health_score": 670,
+      "weekly_targets_met": "4/4",
+      "last_week_avg_lbs": 164.8,
+      "last_week_max_lbs": 165.8,
+      "last_week_min_lbs": 160.7,
+      "goal_weight_lbs": 165,
+      "notes": "Weight 165.3 lbs (Ocare3 5:49 AM) / 166.2 lbs (Hume Pod). Goal weight 165 lbs \u2014 essentially at target. Weekly average 164.8 lbs. Metabolic age 42 yrs (Excellent) at chronological age 57. Hume Health Score 670 High. All BIA readings secondary \u2014 DXA Feb 23 primary for body fat/VAT coaching."
     }
   ],
   "recovery_sleep": [
@@ -946,6 +973,63 @@
       "oura_readiness_score": 79,
       "oura_readiness_status": "Good \u2014 Do what feels good",
       "notes": "Hume + Oura April 17 morning (5:03 AM). HRV 3rd consecutive drop: 51.3 \u2192 38.9 \u2192 31.0ms (Hume) / 33ms avg (Oura). Now at/below 32.5ms personal baseline. Hume flagged 'yesterday's double-session' as cause. Sleep was the counter: Oura 86 OPTIMAL, 7h27m asleep (8h25m in bed), efficiency 89%. Deep sleep 1h13m/16%, REM 1h41m/23% \u2014 both solid. Hume: sleep 72%, 7h48m, REM above normal 2h23m. Sleep debt improving: -2h40m moderate (Oura, down from -3h50m). Sleep window 8:34 PM \u2192 4:59 AM. SpO2 94.9% normal. Breathing Good. Wrist temp 97.6\u00b0F normal. Stress avg 28. Cardio Load 29 Maintaining. Friday Athletic Mixed session is on \u2014 strict 60-min cap, HR <122 bpm. Saturday sprint gate: HRV 31ms below 35ms threshold \u2014 reduce to 3\u00d720 sec tomorrow unless HRV rebounds."
+    },
+    {
+      "date": "2026-04-18",
+      "source": "Hume + Oura",
+      "recovery_score_pct": 52,
+      "recovery_trend": "4th consecutive HRV decline decelerating: 51.3ms (Apr 15) \u2192 38.9ms (Apr 16) \u2192 31.0ms (Apr 17) \u2192 29.1ms (Apr 18). Rate slowing sharply (\u22121.9ms vs \u22127.9ms prior night). Classic bottom-forming pattern post-load. Recovery 52% back to Normal range.",
+      "hrv_ms": 29.1,
+      "hrv_ms_hume": 29.1,
+      "hrv_ms_oura_avg": 26,
+      "hrv_ms_oura_max": 114,
+      "resting_hr_bpm": 59.8,
+      "resting_hr_bpm_hume": 59.8,
+      "resting_hr_bpm_oura_lowest": 54,
+      "resting_hr_bpm_oura_avg": 60,
+      "sleep_score_pct": 83,
+      "oura_sleep_score": 83,
+      "oura_sleep_label": "GOOD",
+      "hume_sleep_score_pct": 55,
+      "total_sleep_min": 372,
+      "total_sleep_min_oura": 369,
+      "total_sleep_min_hume": 372,
+      "time_in_bed_min": 426,
+      "time_in_bed_min_oura": 426,
+      "time_in_bed_min_hume": 398,
+      "sleep_efficiency_pct": 87,
+      "deep_sleep_min": 51,
+      "deep_sleep_pct": 14,
+      "deep_sleep_min_hume": 25,
+      "rem_sleep_min": 95,
+      "rem_sleep_pct": 26,
+      "rem_sleep_min_hume": 98,
+      "light_sleep_min": 223,
+      "light_sleep_pct": 60,
+      "awake_min": 57,
+      "sleep_latency_min": 18,
+      "sleep_bank_min": -149,
+      "sleep_debt_status": "Moderate \u2014 2h 29m (Hume) / 3h 20m (Oura)",
+      "sleep_time": "21:37",
+      "wake_time": "04:43",
+      "sleep_time_hume_winddown": "21:56",
+      "spo2_pct": 96.1,
+      "respiratory_rate_rpm": 14.0,
+      "wrist_temp_f": 97.1,
+      "hr_dip_pct": 18,
+      "hr_dip_status": "Above normal",
+      "breathing_regularity": "Good",
+      "body_clock_note": "Midpoint aligned with chronotype",
+      "stress_highest": 48,
+      "stress_lowest": 1,
+      "stress_avg": 26,
+      "strain_score": 17,
+      "cardio_load": 27,
+      "cardio_load_status": "Maintaining",
+      "readiness_tier": "Yellow",
+      "readiness_tier_basis": "HRV 29.1ms (Hume) / 26ms avg (Oura) \u2014 4th consecutive decline, now 3.4ms below personal baseline of 32.5ms. Sprint gate CLOSED (need \u226535ms). Recovery 52% Normal range (up from 47%). Oura sleep 83 GOOD, 6h9m, 87% efficiency.",
+      "sprint_gate_status": "CLOSED \u2014 HRV 29.1ms below 35ms gate",
+      "notes": "Hume + Oura Apr 18 morning (~5:42-5:43 AM). HRV 4th consecutive decline: 51.3\u219238.9\u219231.0\u219229.1ms (Hume) / 26ms avg (Oura). Rate slowing sharply. Recovery 52% Normal (up from 47%). Oura: 83 GOOD, 6h9m asleep, 7h6m in bed, eff 87%, deep 51m/14%, REM 1h35m/26%, light 3h43m/60%, awake 57m, latency 18m. Oura HR: lowest 54bpm / avg 60bpm. HRV avg 26ms / max 114ms. SpO2 96%, Breathing Good, sleep time 9:37pm, wake 4:43am. Hume: recovery 52%, HRV 29.1ms, RHR 59.8bpm, RR 14.0rpm, SpO2 96.1%, wrist 97.1F, sleep 55%/6h12m, sleep bank -2h29m, deep 25m, REM 1h38m, HR dip 18% above normal, sleep time 9:56pm. Strain 17%, Cardio Load 27 Maintaining. Saturday sprint session: GATE CLOSED. Strength session (Motra 20260417 Saturday template) appropriate."
     }
   ],
   "nutrition": [
@@ -2847,6 +2931,43 @@
         }
       ],
       "notes": "Outdoor Walk Apr 17, Beitun District. 41:29 workout / 43:00 elapsed. 2.24 mi. Avg HR 95 bpm / peak 106 bpm \u2014 well within 122 bpm cap. Easy effort (3/5). Pre-Friday strength session morning walk on Yellow readiness day (HRV 31ms, 3rd consecutive decline). Appropriate parasympathetic stimulus. No CNS cost. Active 169 kcal / total 236 kcal. Elevation gain 157 ft."
+    },
+    {
+      "date": "2026-04-18",
+      "type": "Outdoor Walk",
+      "subtype": "Fasted Walk",
+      "source": "Apple Fitness",
+      "time_start": "04:51",
+      "time_end": "05:28",
+      "duration_min": 34,
+      "elapsed_min": 37,
+      "distance_mi": 2.16,
+      "avg_hr_bpm": 99,
+      "peak_hr_bpm": 127,
+      "active_calories": 190,
+      "total_calories": 246,
+      "avg_pace_min_per_mi": "15:53",
+      "elevation_gain_ft": 39,
+      "effort": "Easy (3/5)",
+      "location": "Beitun District, Tongrong Village",
+      "splits": [
+        {
+          "mile": 1,
+          "time": "15:52",
+          "hr_bpm": 97
+        },
+        {
+          "mile": 2,
+          "time": "15:46",
+          "hr_bpm": 100
+        }
+      ],
+      "weather": {
+        "temp_f": 71,
+        "humidity_pct": 91
+      },
+      "hr_compliance": true,
+      "notes": "Fasted Saturday morning walk. 4th consecutive HRV decline day \u2014 walk only, sprint session gate closed. HR well below 122 cap. Hume confirmed: 2.17mi / Zone 1 for 23+ min / 17% strain."
     }
   ],
   "strength_logs": [
@@ -8625,62 +8746,12 @@
     }
   ],
   "coaching_brief": {
-    "generated_at": "2026-04-17T09:31:00+0800",
-    "date": "2026-04-17",
-    "last_updated": "2026-04-17T09:31:00+0800",
+    "date": "2026-04-18",
     "readiness_tier": "Yellow",
-    "readiness_tier_basis": "HRV 31.0ms (Hume) / 33ms avg (Oura) \u2014 3rd consecutive decline, at/below 32.5ms personal baseline. Offset by excellent sleep (Oura 86, 7h27m). Migraine + high fatigue flagged at 8:35\u20138:39 AM \u2014 Friday Athletic Mixed moved to Apr 18.",
-    "readiness_call": "Yellow \u2014 Modified Day",
-    "training_call": "Friday Athletic Mixed \u2192 MOVED to Saturday Apr 18. Morning walk completed (5:26\u20136:09 AM, 2.24 mi, avg HR 95 bpm) before symptoms escalated. Rest of day: recovery, hydration, migraine management.",
-    "daily_insight": "HRV is at the floor of your personal range \u2014 3-day loaded arc from double session + cardio. Sleep fought back hard (86 OPTIMAL, 7h27m, excellent deep+REM), but the body is clearly still absorbing. The migraine flag at 8:35 AM is the override trigger. The walk was appropriate \u2014 low HR, parasympathetic, zero CNS cost. Moving the session to Saturday is the right call. Saturday sprint gate is now critical: HRV needs to rebound AND migraine must be resolved before any intensity work.",
-    "nutrition_binding_constraint": "710 kcal / 83g protein logged (pre + post workout shakes). 67g protein remaining. Migraine priority: hydration + electrolytes at lunch. No high-sodium or high-caffeine foods. Pocari or coconut water recommended.",
-    "watch_for": [
-      "Migraine management \u2014 hydration is the first lever. Electrolytes (Pocari/coconut water), dark/quiet rest if needed. Avoid skipping meals despite low appetite.",
-      "Saturday double-gate \u2014 HRV must rebound to \u226535ms AND migraine must be fully resolved before Athletic Mixed + Sprint protocol consideration. If HRV <35ms Saturday, strength session only (no sprints). If migraine persists, move everything to Sunday.",
-      "Protein target \u2014 67g protein still needed across remaining meals. Lean meals are fine. This is a non-negotiable even on rest days (muscle preservation at 57).",
-      "Sleep tonight \u2014 HRV recovery depends on it. Target 9:00\u20139:30 PM bed. This is the third consecutive day of HRV decline \u2014 tonight's sleep is the most important recovery lever available."
-    ],
-    "session_override": {
-      "type": "move",
-      "from_date": "2026-04-17",
-      "to_date": "2026-04-18",
-      "reason": "Migraine + high fatigue flags (8:35\u20138:39 AM). HRV 31ms. Morning walk completed as low-cost movement."
-    },
-    "sections": {
-      "recovery": {
-        "traffic_light": "\ud83d\udd34 Yellow \u2014 HRV Floor, Post-Load Arc",
-        "bullets": [
-          "HRV: 31.0ms Hume / 33ms avg Oura (3rd consecutive decline from 51.3ms peak on Apr 15)",
-          "Recovery: 47% (Hume) \u2014 'Post-Double-Session Drop'",
-          "Oura Readiness: 79 \u2014 'Do what feels good'",
-          "Sleep: 86 OPTIMAL \u2014 7h27m asleep / 8h25m TIB / efficiency 89%",
-          "Deep: 1h13m (16%) | REM: 1h41m (23% \u2014 above normal per Hume)",
-          "Sleep debt: -2h40m moderate (improving from -3h50m yesterday)",
-          "RHR: 57 bpm lowest / 62 bpm avg | SpO2: 94.9% | Breathing: Good",
-          "\u26a0\ufe0f Morning checkin: Migraine, high fatigue, subjective poor sleep (8:39 AM)"
-        ]
-      },
-      "training": {
-        "traffic_light": "\u26a0\ufe0f Modified \u2014 Session Moved",
-        "bullets": [
-          "Morning walk completed: 5:26\u20136:09 AM, 2.24 mi, avg HR 95/peak 106 bpm \u2705",
-          "Friday Athletic Mixed \u2192 MOVED to Saturday Apr 18 (session_override logged 8:35 AM)",
-          "Migraine + high fatigue: no strength or CNS work today",
-          "Saturday sprint gate: HRV 31ms < 35ms \u2014 reduce to 3\u00d720 sec if HRV rebounds, skip if migraine persists"
-        ]
-      },
-      "nutrition": {
-        "traffic_light": "\ud83d\udfe1 On Track \u2014 Day Open",
-        "bullets": [
-          "Pre-workout shake: 490 kcal | P:55g | C:41g | F:13g (6:36 AM) \u2705",
-          "Post-workout shake: 220 kcal | P:28g | C:7g | F:9g (8:50 AM) \u2705",
-          "Running: 710 kcal / P:83g / C:48g / F:22g \u2014 3 meals remaining",
-          "Migraine nutrition: hydration + electrolytes priority at lunch"
-        ]
-      }
-    }
+    "call": "Sprint gate closed \u2014 HRV 29.1ms. Strength session on. Fasted walk done \u2705.",
+    "sprint_gate": "CLOSED \u2014 29.1ms below 35ms threshold"
   },
-  "last_updated": "2026-04-17T16:53:00",
+  "last_updated": "2026-04-18T06:30:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
