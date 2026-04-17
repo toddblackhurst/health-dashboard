@@ -2232,13 +2232,37 @@
             "fat_g": 2
           },
           "notes": "90 kcal volume fill \u2014 light starter, not a meal. Only 3g protein puts you at 86g/150g (57%) at 2:12 PM. 64g protein still needed; 1,200 kcal remaining in today's budget. This window is the protein make-or-break \u2014 follow with chicken, fish, or a shake before 4 PM."
+        },
+        {
+          "meal": "afternoon_sushi",
+          "time": "16:53",
+          "items": [
+            {
+              "food": "Salmon Nigiri Sushi",
+              "amount": "3 pieces",
+              "calories_kcal": 192,
+              "protein_g": 7,
+              "carbs_g": 36,
+              "fat_g": 1,
+              "estimated": false,
+              "source": "Cal AI",
+              "note": "Cal AI reading \u2014 protein likely undercounted (3 pieces salmon nigiri \u2248 15\u201318g typical). Logged as-is per Cal AI."
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 192,
+            "protein_g": 7,
+            "carbs_g": 36,
+            "fat_g": 1
+          },
+          "notes": "Salmon nigiri at 4:53 PM. Cal AI logged 7g protein \u2014 this is an undercount for 3 pieces of salmon (typical: 15\u201318g). Logged as-is. Running total 93g protein / 150g target (62%) with dinner remaining. 992 kcal in / 1,008 kcal remaining."
         }
       ],
       "running_totals": {
-        "calories_kcal": 800,
-        "protein_g": 86,
-        "carbs_g": 62,
-        "fat_g": 24
+        "calories_kcal": 992,
+        "protein_g": 93,
+        "carbs_g": 98,
+        "fat_g": 25
       },
       "day_closed": false
     }
@@ -8656,7 +8680,7 @@
       }
     }
   },
-  "last_updated": "2026-04-17T12:47:01.044923",
+  "last_updated": "2026-04-17T16:53:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
