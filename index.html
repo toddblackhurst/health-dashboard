@@ -332,6 +332,106 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 .progress-bar-wrap { width: 80px; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
 .progress-bar { height: 100%; border-radius: 3px; }
 
+/* ── Morning Check-in ── */
+.checkin-flag-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
+}
+.checkin-flag-row:last-of-type { border-bottom: none; }
+.checkin-flag-label { font-size: 13px; color: var(--text); font-weight: 500; }
+.checkin-yn { display: flex; gap: 6px; }
+.yn-btn {
+  padding: 4px 15px; border-radius: 20px; border: 1px solid var(--border);
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  background: var(--surface2); color: var(--text3);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.yn-btn.yes-on { background: var(--red-bg); color: var(--red); border-color: rgba(248,81,73,0.45); }
+.yn-btn.no-on  { background: var(--green-bg); color: var(--green); border-color: rgba(63,185,80,0.45); }
+.checkin-done-msg {
+  display: none; flex-direction: column; gap: 3px;
+  padding: 10px 0 4px;
+}
+.checkin-done-time-line { font-size: 12px; color: var(--green); font-weight: 700; }
+.checkin-done-flags-line { font-size: 11px; color: var(--text2); }
+.checkin-submit-btn {
+  width: 100%; background: var(--accent); border: none; border-radius: 8px;
+  padding: 10px; font-size: 12px; font-weight: 700; color: #0d1117;
+  cursor: pointer; margin-top: 12px;
+}
+.checkin-submit-btn:disabled { opacity: 0.45; cursor: default; }
+.checkin-setup-hint {
+  font-size: 11px; color: var(--yellow); cursor: pointer; text-decoration: underline;
+}
+
+/* ── Session Management ── */
+.smgmt-actions { display: flex; gap: 8px; margin-top: 10px; }
+.smgmt-btn {
+  flex: 1; padding: 10px 4px; border-radius: 10px;
+  border: 1px solid var(--border); font-size: 11px; font-weight: 700;
+  cursor: pointer; background: var(--surface2); color: var(--text2);
+  text-align: center; line-height: 1.5;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+}
+.smgmt-btn.done-active { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+.smgmt-btn.rest-active { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-bg); }
+.smgmt-btn.move-active { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.smgmt-detail {
+  margin-top: 12px; padding: 12px; background: var(--surface2);
+  border-radius: 10px; border: 1px solid var(--border); display: none;
+}
+.smgmt-detail.visible { display: block; }
+.smgmt-chip-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.smgmt-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.smgmt-chip {
+  padding: 4px 13px; border-radius: 20px; border: 1px solid var(--border);
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  background: var(--surface); color: var(--text3);
+  transition: all 0.15s; -webkit-tap-highlight-color: transparent;
+}
+.smgmt-chip.sel-reason { background: var(--yellow-bg); color: var(--yellow); border-color: rgba(210,153,34,0.4); }
+.smgmt-chip.sel-date   { background: var(--accent-bg); color: var(--accent); border-color: rgba(88,166,255,0.4); }
+.smgmt-confirm-btn {
+  width: 100%; background: var(--accent); border: none; border-radius: 8px;
+  padding: 10px; font-size: 12px; font-weight: 700; color: #0d1117;
+  cursor: pointer;
+}
+.smgmt-confirm-btn:disabled { opacity: 0.45; cursor: default; }
+.smgmt-confirmed {
+  display: none; margin-top: 10px; padding: 10px 12px;
+  background: var(--green-bg); border: 1px solid rgba(63,185,80,0.3);
+  border-radius: 8px; font-size: 12px; color: var(--green); font-weight: 600;
+}
+.smgmt-confirmed.visible { display: block; }
+
+/* ── Token modal ── */
+.tok-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  z-index: 500; align-items: center; justify-content: center; padding: 20px;
+}
+.tok-overlay.open { display: flex; }
+.tok-modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 22px; width: 100%; max-width: 340px;
+}
+.tok-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.tok-sub { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 14px; }
+.tok-input {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px; color: var(--text);
+  font-size: 12px; font-family: monospace; margin-bottom: 10px;
+}
+.tok-input:focus { outline: none; border-color: var(--accent); }
+.tok-save-btn {
+  width: 100%; background: var(--accent); border: none; border-radius: 8px;
+  padding: 10px; font-size: 13px; font-weight: 700; color: #0d1117; cursor: pointer;
+  margin-bottom: 8px;
+}
+.tok-cancel { font-size: 11px; color: var(--text3); text-align: center; cursor: pointer; }
+.tok-hint { font-size: 10px; color: var(--text3); line-height: 1.5; margin-top: 10px; }
+
 /* ── Inline note ── */
 .inline-note { font-size: 11px; color: var(--text3); line-height: 1.55; margin-top: 6px; }
 .tag { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; border-radius: 4px; padding: 1px 6px; }
@@ -350,7 +450,11 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     <div class="topbar-date">Friday, April 17, 2026</div>
     <div class="topbar-updated">Updated 7:26 AM · Apr 17</div>
   </div>
-  <div class="live-pill"><span class="live-dot"></span>Live</div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <div class="live-pill"><span class="live-dot"></span>Live</div>
+    <div id="tok-gear" onclick="openTokenModal()" title="Setup write-back token"
+         style="font-size:16px;cursor:pointer;opacity:0.45;line-height:1">⚙</div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════════ TABS -->
@@ -367,6 +471,59 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
      BRIEF TAB
 ══════════════════════════════════════════════════════ -->
 <div id="tab-brief" class="tab-content active">
+
+  <!-- ─── MORNING CHECK-IN ─── -->
+  <div class="card" id="checkin-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+      <div class="card-title" style="margin-bottom:0">Morning Check-in</div>
+      <span id="checkin-no-token" class="checkin-setup-hint" onclick="openTokenModal()" style="display:none">⚙ Setup to enable</span>
+    </div>
+
+    <div id="checkin-done-msg" class="checkin-done-msg">
+      <div class="checkin-done-time-line">✅ Logged · <span class="checkin-done-time"></span></div>
+      <div class="checkin-done-flags-line checkin-done-flags"></div>
+    </div>
+
+    <div id="checkin-flags">
+      <div class="checkin-flag-row">
+        <div class="checkin-flag-label">Migraine / Headache</div>
+        <div class="checkin-yn">
+          <button class="yn-btn" data-flag="migraine_headache" data-val="yes" onclick="ynTap(this)">Yes</button>
+          <button class="yn-btn" data-flag="migraine_headache" data-val="no"  onclick="ynTap(this)">No</button>
+        </div>
+      </div>
+      <div class="checkin-flag-row">
+        <div class="checkin-flag-label">Poor Sleep</div>
+        <div class="checkin-yn">
+          <button class="yn-btn" data-flag="poor_sleep" data-val="yes" onclick="ynTap(this)">Yes</button>
+          <button class="yn-btn" data-flag="poor_sleep" data-val="no"  onclick="ynTap(this)">No</button>
+        </div>
+      </div>
+      <div class="checkin-flag-row">
+        <div class="checkin-flag-label">High Fatigue</div>
+        <div class="checkin-yn">
+          <button class="yn-btn" data-flag="high_fatigue" data-val="yes" onclick="ynTap(this)">Yes</button>
+          <button class="yn-btn" data-flag="high_fatigue" data-val="no"  onclick="ynTap(this)">No</button>
+        </div>
+      </div>
+      <div class="checkin-flag-row">
+        <div class="checkin-flag-label">Joint Pain</div>
+        <div class="checkin-yn">
+          <button class="yn-btn" data-flag="joint_pain" data-val="yes" onclick="ynTap(this)">Yes</button>
+          <button class="yn-btn" data-flag="joint_pain" data-val="no"  onclick="ynTap(this)">No</button>
+        </div>
+      </div>
+      <div class="checkin-flag-row">
+        <div class="checkin-flag-label">High Stress</div>
+        <div class="checkin-yn">
+          <button class="yn-btn" data-flag="high_stress" data-val="yes" onclick="ynTap(this)">Yes</button>
+          <button class="yn-btn" data-flag="high_stress" data-val="no"  onclick="ynTap(this)">No</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="checkin-submit-btn" id="checkin-submit-btn" onclick="submitCheckin()">Log Check-in → Coach</button>
+  </div>
 
   <!-- Hero readiness call -->
   <div class="hero-card">
@@ -570,6 +727,38 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
         <div class="week-day-type">Plan Wk2</div>
       </div>
     </div>
+  </div>
+
+  <!-- ─── SESSION MANAGEMENT ─── -->
+  <div class="card">
+    <div class="card-title">Today's Session Status</div>
+    <div class="smgmt-actions">
+      <div class="smgmt-btn" id="smgmt-done" onclick="smgmtTap('done')">✅<br>Done as<br>Planned</div>
+      <div class="smgmt-btn" id="smgmt-rest" onclick="smgmtTap('rest')">😴<br>Rest<br>Day</div>
+      <div class="smgmt-btn" id="smgmt-move" onclick="smgmtTap('move')">📅<br>Move<br>Session</div>
+    </div>
+
+    <!-- Rest detail -->
+    <div class="smgmt-detail" id="smgmt-rest-detail">
+      <div class="smgmt-chip-label">Reason</div>
+      <div class="smgmt-chips">
+        <div class="smgmt-chip" onclick="selectReason(this,'migraine')">Migraine</div>
+        <div class="smgmt-chip" onclick="selectReason(this,'fatigue')">Fatigue</div>
+        <div class="smgmt-chip" onclick="selectReason(this,'illness')">Illness</div>
+        <div class="smgmt-chip" onclick="selectReason(this,'travel')">Travel</div>
+        <div class="smgmt-chip" onclick="selectReason(this,'other')">Other</div>
+      </div>
+      <button class="smgmt-confirm-btn" onclick="clickConfirmRest()">Confirm Rest Day</button>
+    </div>
+
+    <!-- Move detail -->
+    <div class="smgmt-detail" id="smgmt-move-detail">
+      <div class="smgmt-chip-label">Move to</div>
+      <div class="smgmt-chips" id="smgmt-date-btns"></div>
+      <button class="smgmt-confirm-btn" onclick="clickConfirmMove()">Confirm Move</button>
+    </div>
+
+    <div class="smgmt-confirmed" id="smgmt-confirmed"></div>
   </div>
 
   <!-- ─── UPCOMING SESSION ─── -->
@@ -1014,6 +1203,18 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 </div>
 
 
+<!-- ═══════════════════════════════════════════ TOKEN MODAL -->
+<div class="tok-overlay" id="tok-overlay">
+  <div class="tok-modal">
+    <div class="tok-title">🔑 Write-back Setup</div>
+    <div class="tok-sub">Enter your GitHub Personal Access Token to enable check-in and session logging. Token is stored locally on your device only.</div>
+    <input class="tok-input" id="tok-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+    <button class="tok-save-btn" onclick="saveToken()">Save Token</button>
+    <div class="tok-cancel" onclick="closeTokenModal()">Cancel</div>
+    <div class="tok-hint">Create at github.com/settings/tokens → repo scope required. Same token used by push_dashboard.py.</div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════════ BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="nav-btn active" onclick="switchTab('brief')" id="nav-brief">
@@ -1034,6 +1235,9 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 </div>
 
 <script>
+// ════════════════════════════════════════════════════════
+//  TAB NAVIGATION
+// ════════════════════════════════════════════════════════
 const TAB_IDS = ['brief','sleep','training','nutrition','ask'];
 
 function switchTab(id) {
@@ -1047,7 +1251,6 @@ function switchTab(id) {
 }
 
 function toggleChange(id) {
-  // In the future this would open a modal with alternatives and feed back to Coach
   const btn = event.target;
   btn.textContent = 'Noted ✓';
   btn.style.color = 'var(--green)';
@@ -1057,10 +1260,8 @@ function toggleChange(id) {
     btn.style.color = '';
     btn.style.borderColor = '';
   }, 2000);
-  // Future: POST to Coach pipeline with exercise id + "change requested"
 }
 
-// Submit handlers — stub for now, will wire to Coach pipeline
 document.querySelectorAll('.coach-q-submit').forEach(btn => {
   btn.addEventListener('click', function() {
     const textarea = this.previousElementSibling;
@@ -1068,13 +1269,292 @@ document.querySelectorAll('.coach-q-submit').forEach(btn => {
       const original = this.textContent;
       this.textContent = '✓ Sent to Coach';
       this.style.background = 'var(--green)';
-      setTimeout(() => {
-        this.textContent = original;
-        this.style.background = '';
-      }, 2500);
-      // Future: serialize and route to SESSION_MEMORY.md / coaching pipeline
+      setTimeout(() => { this.textContent = original; this.style.background = ''; }, 2500);
     }
   });
+});
+
+
+// ════════════════════════════════════════════════════════
+//  GITHUB WRITE-BACK ENGINE
+// ════════════════════════════════════════════════════════
+const GH_OWNER  = 'toddblackhurst';
+const GH_REPO   = 'health-dashboard';
+const GH_BRANCH = 'main';
+const DB_PATH   = 'HEALTH_DATABASE.json';
+
+function getToken()    { return localStorage.getItem('gh_token') || ''; }
+function setToken(t)   { localStorage.setItem('gh_token', t.trim()); }
+function hasToken()    { return !!getToken(); }
+
+function todayISO() {
+  const d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth()+1).padStart(2,'0') + '-' +
+    String(d.getDate()).padStart(2,'0');
+}
+
+async function ghReadDb() {
+  const tok = getToken();
+  if (!tok) { openTokenModal(); return null; }
+  try {
+    const r = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${DB_PATH}?ref=${GH_BRANCH}`,
+      { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json' } }
+    );
+    if (!r.ok) {
+      if (r.status === 401) openTokenModal();
+      return null;
+    }
+    const j = await r.json();
+    const text = decodeURIComponent(escape(atob(j.content.replace(/\n/g, ''))));
+    return { data: JSON.parse(text), sha: j.sha };
+  } catch(e) { console.error('ghReadDb:', e); return null; }
+}
+
+async function ghWriteDb(data, sha, msg) {
+  const tok = getToken();
+  if (!tok) { openTokenModal(); return false; }
+  try {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    const r = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${DB_PATH}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${tok}`,
+          Accept: 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: msg, content, sha, branch: GH_BRANCH })
+      }
+    );
+    return r.ok;
+  } catch(e) { console.error('ghWriteDb:', e); return false; }
+}
+
+
+// ════════════════════════════════════════════════════════
+//  TOKEN MODAL
+// ════════════════════════════════════════════════════════
+function openTokenModal() {
+  document.getElementById('tok-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('tok-input').focus(), 100);
+}
+function closeTokenModal() {
+  document.getElementById('tok-overlay').classList.remove('open');
+}
+function saveToken() {
+  const val = document.getElementById('tok-input').value.trim();
+  if (!val) return;
+  setToken(val);
+  closeTokenModal();
+  document.getElementById('tok-gear').style.opacity = '0.45';
+  document.getElementById('checkin-no-token').style.display = 'none';
+}
+
+
+// ════════════════════════════════════════════════════════
+//  MORNING CHECK-IN
+// ════════════════════════════════════════════════════════
+const _yn = {};
+
+function ynTap(btn) {
+  const flag = btn.dataset.flag;
+  const val  = btn.dataset.val;
+  const wasOn = btn.classList.contains(val + '-on');
+  document.querySelectorAll(`.yn-btn[data-flag="${flag}"]`).forEach(b => b.classList.remove('yes-on','no-on'));
+  if (!wasOn) { btn.classList.add(val + '-on'); _yn[flag] = val; }
+  else { delete _yn[flag]; }
+}
+
+async function submitCheckin() {
+  const submitBtn = document.getElementById('checkin-submit-btn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Logging…';
+
+  const flagMap = {
+    migraine_headache: 'Migraine',
+    poor_sleep:        'Poor Sleep',
+    high_fatigue:      'High Fatigue',
+    joint_pain:        'Joint Pain',
+    high_stress:       'High Stress'
+  };
+  const flags = {};
+  Object.keys(flagMap).forEach(k => { flags[k] = _yn[k] === 'yes'; });
+
+  const db = await ghReadDb();
+  if (!db) { submitBtn.disabled = false; submitBtn.textContent = 'Log Check-in → Coach'; return; }
+
+  if (!db.data.morning_checkins) db.data.morning_checkins = [];
+  db.data.morning_checkins = db.data.morning_checkins.filter(c => c.date !== todayISO());
+  db.data.morning_checkins.push({
+    date: todayISO(),
+    timestamp: new Date().toISOString(),
+    flags
+  });
+
+  const ok = await ghWriteDb(db.data, db.sha, `Morning check-in — ${todayISO()}`);
+
+  if (ok) {
+    document.getElementById('checkin-flags').style.display = 'none';
+    submitBtn.style.display = 'none';
+    const doneMsg = document.getElementById('checkin-done-msg');
+    doneMsg.style.display = 'flex';
+    doneMsg.querySelector('.checkin-done-time').textContent =
+      new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    const yesFlags = Object.entries(flags)
+      .filter(([,v]) => v)
+      .map(([k]) => flagMap[k]);
+    doneMsg.querySelector('.checkin-done-flags').textContent = yesFlags.length
+      ? '⚠ Flagged: ' + yesFlags.join(', ')
+      : '✓ All clear — no flags today';
+  } else {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Retry';
+  }
+}
+
+
+// ════════════════════════════════════════════════════════
+//  SESSION MANAGEMENT
+// ════════════════════════════════════════════════════════
+let _smMode   = null;
+let _smReason = null;
+let _smDate   = null;
+
+function smgmtTap(mode) {
+  // Deselect if already active (except 'done' which auto-confirms)
+  if (_smMode === mode && mode !== 'done') {
+    _smMode = null;
+    document.querySelectorAll('.smgmt-btn').forEach(b => b.className = 'smgmt-btn');
+    document.getElementById('smgmt-rest-detail').classList.remove('visible');
+    document.getElementById('smgmt-move-detail').classList.remove('visible');
+    return;
+  }
+  _smMode = mode;
+  _smReason = null;
+  _smDate   = null;
+  document.querySelectorAll('.smgmt-btn').forEach(b => b.className = 'smgmt-btn');
+  document.getElementById('smgmt-rest-detail').classList.remove('visible');
+  document.getElementById('smgmt-move-detail').classList.remove('visible');
+  document.getElementById('smgmt-' + mode).classList.add(mode + '-active');
+
+  if (mode === 'rest') {
+    document.getElementById('smgmt-rest-detail').classList.add('visible');
+  } else if (mode === 'move') {
+    document.getElementById('smgmt-move-detail').classList.add('visible');
+    buildDateChips();
+  } else if (mode === 'done') {
+    confirmOverride({ type: 'done', reason: null, target_date: null });
+  }
+}
+
+function selectReason(chip, reason) {
+  document.querySelectorAll('.smgmt-chip').forEach(c => c.classList.remove('sel-reason'));
+  chip.classList.add('sel-reason');
+  _smReason = reason;
+}
+
+function buildDateChips() {
+  const wrap = document.getElementById('smgmt-date-btns');
+  wrap.innerHTML = '';
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today = new Date();
+  for (let i = 1; i <= 6; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const ds = d.getFullYear() + '-' +
+      String(d.getMonth()+1).padStart(2,'0') + '-' +
+      String(d.getDate()).padStart(2,'0');
+    const label = dayNames[d.getDay()] + ' ' + (d.getMonth()+1) + '/' + d.getDate();
+    const chip = document.createElement('div');
+    chip.className = 'smgmt-chip';
+    chip.textContent = label;
+    chip.onclick = function() {
+      document.querySelectorAll('.smgmt-chip').forEach(c => c.classList.remove('sel-date'));
+      this.classList.add('sel-date');
+      _smDate = ds;
+    };
+    wrap.appendChild(chip);
+  }
+}
+
+function clickConfirmRest() {
+  if (!_smReason) {
+    document.getElementById('smgmt-rest-detail').querySelector('.smgmt-chip-label').style.color = 'var(--red)';
+    setTimeout(() => {
+      document.getElementById('smgmt-rest-detail').querySelector('.smgmt-chip-label').style.color = '';
+    }, 1200);
+    return;
+  }
+  confirmOverride({ type: 'rest', reason: _smReason, target_date: null });
+}
+
+function clickConfirmMove() {
+  if (!_smDate) {
+    document.getElementById('smgmt-move-detail').querySelector('.smgmt-chip-label').style.color = 'var(--red)';
+    setTimeout(() => {
+      document.getElementById('smgmt-move-detail').querySelector('.smgmt-chip-label').style.color = '';
+    }, 1200);
+    return;
+  }
+  confirmOverride({ type: 'move', reason: null, target_date: _smDate });
+}
+
+async function confirmOverride(override) {
+  // Disable all confirm buttons
+  document.querySelectorAll('.smgmt-confirm-btn').forEach(b => { b.disabled = true; b.textContent = 'Saving…'; });
+
+  const db = await ghReadDb();
+  if (!db) {
+    document.querySelectorAll('.smgmt-confirm-btn').forEach(b => { b.disabled = false; b.textContent = 'Confirm'; });
+    return;
+  }
+
+  if (!db.data.session_overrides) db.data.session_overrides = [];
+  db.data.session_overrides = db.data.session_overrides.filter(o => o.date !== todayISO());
+  db.data.session_overrides.push({
+    date: todayISO(),
+    timestamp: new Date().toISOString(),
+    ...override
+  });
+
+  const ok = await ghWriteDb(
+    db.data, db.sha,
+    `Session override — ${todayISO()} — ${override.type}`
+  );
+
+  if (ok) {
+    document.getElementById('smgmt-rest-detail').classList.remove('visible');
+    document.getElementById('smgmt-move-detail').classList.remove('visible');
+    document.querySelectorAll('.smgmt-btn').forEach(b => {
+      b.style.pointerEvents = 'none';
+      b.style.opacity = '0.45';
+    });
+    const conf = document.getElementById('smgmt-confirmed');
+    conf.classList.add('visible');
+    const msgs = {
+      done: '✅ Logged as complete — well done.',
+      rest: `😴 Rest day logged (${override.reason}). Coach will adapt.`,
+      move: `📅 Session moved to ${override.target_date}. Coach notified.`
+    };
+    conf.textContent = msgs[override.type] || 'Saved.';
+  } else {
+    document.querySelectorAll('.smgmt-confirm-btn').forEach(b => { b.disabled = false; b.textContent = 'Confirm'; });
+  }
+}
+
+
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  if (!hasToken()) {
+    document.getElementById('tok-gear').style.opacity = '0.9';
+    document.getElementById('tok-gear').style.color = 'var(--yellow)';
+    document.getElementById('checkin-no-token').style.display = 'inline';
+  }
 });
 </script>
 </body>
