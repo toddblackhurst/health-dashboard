@@ -154,7 +154,7 @@
       "current_weight_lbs": 173.4,
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
-    "goal_weight_lbs": 159.3,
+    "goal_weight_lbs": 165,
     "goal_bf_pct": 13.0,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
@@ -9082,7 +9082,7 @@
     "sprint_gate": "CLOSED — 29.1ms below 35ms threshold",
     "goal_summary": {
       "as_of": "2026-04-18",
-      "goal_weight_lbs": 159.3,
+      "goal_weight_lbs": 165,
       "goal_bf_pct": 13.0,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
@@ -9097,7 +9097,7 @@
       "protein_target_g": 150,
       "tdee_estimate_kcal": 2350,
       "daily_deficit_kcal": 200,
-      "rationale": "159 lbs at 13% BF clears VAT risk threshold (447→~285g). Raised cals from 2000→2150 to support lean mass gain. At 0.40 lbs/week fat loss the goal is on track with buffer."
+      "rationale": "Goal weight 165 lbs — essentially at target. Primary focus now shifts to body recomposition: reduce VAT to 285g and BF% toward 13% while maintaining lean mass. Raised cals from 2000→2150 to support lean mass preservation."
     }
   },
   "last_updated": "2026-04-18",
