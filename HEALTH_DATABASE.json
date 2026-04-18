@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13.0,
+    "goal_bf_pct": 13,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -403,7 +403,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75.0,
+      "weight_kg": 75,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -536,7 +536,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -1033,7 +1033,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -9149,16 +9149,16 @@
     "goal_summary": {
       "as_of": "2026-04-18",
       "goal_weight_lbs": 159,
-      "goal_bf_pct": 13.0,
+      "goal_bf_pct": 13,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
-      "weeks_remaining": 15.0,
+      "weeks_remaining": 15,
       "required_rate_lbs_per_week": 0.4,
       "current_weight_lbs": 165.3,
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
       "fat_to_lose_lbs": 8.6,
-      "lean_to_gain_lbs": 2.0,
+      "lean_to_gain_lbs": 2,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
       "tdee_estimate_kcal": 2350,
@@ -9229,6 +9229,56 @@
       "type": "move",
       "reason": null,
       "target_date": "2026-04-18"
+    }
+  ],
+  "session_feedback": [
+    {
+      "date": "2026-04-18",
+      "timestamp": "2026-04-18T22:49:21.099Z",
+      "rating": 3,
+      "note": "I felt good going into this workout. Kept it in the timeframe, which didn't leave me feeling exhausted. ",
+      "exercises": [
+        {
+          "name": "Dead Hang",
+          "note": "This was good, I had to classify it as a pull up in Motra, so it's in the first set of the uploaded motra workout as a pull up."
+        },
+        {
+          "name": "Resistance Band Pull Apart",
+          "note": "This is not difficult, but it does wear my arms out towards the end of each set."
+        },
+        {
+          "name": "Pull-Up",
+          "note": "I decided to add this in. I enjoy doing the pull ups, it gives me a sense of accomplishment."
+        },
+        {
+          "name": "Barbell Single-Arm Landmine Row",
+          "note": "This wasn't hard. I like the landmine work."
+        },
+        {
+          "name": "Barbell Landmine Rotational Press",
+          "note": "I saw this on the internet and wanted to try it - another Functional Fitness exercise. I needed a little more fun in this workout."
+        },
+        {
+          "name": "TRX Y Raise",
+          "note": "I'm getting stronger at this. I actually did 2 sets of 12. The log is wrong."
+        },
+        {
+          "name": "Kettlebell Swing",
+          "note": "Definitely enjoy this"
+        },
+        {
+          "name": "Kettlebell Suitcase Carry",
+          "note": "This is getting a little easier."
+        },
+        {
+          "name": "Dumbbell Chest-Supported Row",
+          "note": "Doesn't feel like it does much."
+        },
+        {
+          "name": "Lying Leg Raise",
+          "note": "I need variation in the abs core routine."
+        }
+      ]
     }
   ]
 }
