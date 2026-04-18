@@ -1197,50 +1197,8 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     These questions help Coach know you more precisely — not generic answers, but the specific things that sharpen your program. Answer when you have a minute. There's no pressure and no wrong answers.
   </div>
 
-  <!-- Question 1 -->
-  <div class="coach-q-card">
-    <div class="coach-q-header">
-      <div class="coach-q-icon">🧠</div>
-      <div>
-        <div class="coach-q-text">When you walk into the gym, what's the clearest signal — physically or mentally — that it's going to be a good session?</div>
-        <div class="coach-q-context">Not the data. What do YOU feel? Your subjective read before you start is something no app captures, and it matters for how Coach calibrates your warm-up and opening loads.</div>
-      </div>
-    </div>
-    <div class="coach-q-body">
-      <textarea class="coach-q-input" rows="3" placeholder="Your answer here..."></textarea>
-      <button class="coach-q-submit">Send Answer to Coach</button>
-    </div>
-  </div>
-
-  <!-- Question 2 -->
-  <div class="coach-q-card">
-    <div class="coach-q-header">
-      <div class="coach-q-icon">🍫</div>
-      <div>
-        <div class="coach-q-text">On the chocolate and sweets — is there a specific trigger, or does it feel more random?</div>
-        <div class="coach-q-context">Boredom, post-dinner habit, social context, stress? One sentence is enough. Knowing the pattern helps Coach build a specific response rather than a generic note.</div>
-      </div>
-    </div>
-    <div class="coach-q-body">
-      <textarea class="coach-q-input" rows="3" placeholder="Your answer here..."></textarea>
-      <button class="coach-q-submit">Send Answer to Coach</button>
-    </div>
-  </div>
-
-  <!-- Question 3 -->
-  <div class="coach-q-card">
-    <div class="coach-q-header">
-      <div class="coach-q-icon">⏰</div>
-      <div>
-        <div class="coach-q-text">What time of day do you typically train, and is that fixed or variable depending on the week?</div>
-        <div class="coach-q-context">This shapes when Coach should front-load your nutrition, when to expect meal logs, and how to read HRV in context of training timing.</div>
-      </div>
-    </div>
-    <div class="coach-q-body">
-      <textarea class="coach-q-input" rows="2" placeholder="e.g. 6am most days, sometimes afternoon on Fridays..."></textarea>
-      <button class="coach-q-submit">Send Answer to Coach</button>
-    </div>
-  </div>
+  <!-- Questions rendered dynamically by JS — see cqInit() -->
+  <div id="coach-q-container"></div>
 
   <div class="card" style="margin-top:4px">
     <div class="card-title">Drop Anything for Coach</div>
@@ -1311,17 +1269,204 @@ function toggleChange(id) {
   }, 2000);
 }
 
-document.querySelectorAll('.coach-q-submit').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const textarea = this.previousElementSibling;
-    if (textarea && textarea.value.trim()) {
-      const original = this.textContent;
-      this.textContent = '✓ Sent to Coach';
-      this.style.background = 'var(--green)';
-      setTimeout(() => { this.textContent = original; this.style.background = ''; }, 2500);
+// ════════════════════════════════════════════════════════
+//  ASK COACH — DYNAMIC QUESTION ROTATION
+// ════════════════════════════════════════════════════════
+const COACH_QUESTION_POOL = [
+  {
+    icon: '🧠',
+    text: 'When you walk into the gym, what\'s the clearest signal — physically or mentally — that it\'s going to be a good session?',
+    context: 'Not the data. What do YOU feel? Your subjective read before you start is something no app captures, and it matters for how Coach calibrates your warm-up and opening loads.',
+    rows: 3, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '🍫',
+    text: 'On the chocolate and sweets — is there a specific trigger, or does it feel more random?',
+    context: 'Boredom, post-dinner habit, social context, stress? One sentence is enough. Knowing the pattern helps Coach build a specific response rather than a generic note.',
+    rows: 3, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '⏰',
+    text: 'What time of day do you typically train, and is that fixed or variable depending on the week?',
+    context: 'This shapes when Coach should front-load your nutrition, when to expect meal logs, and how to read HRV in context of training timing.',
+    rows: 2, placeholder: 'e.g. 6am most days, sometimes afternoon on Fridays...'
+  },
+  {
+    icon: '😴',
+    text: 'What does a genuinely great night of sleep look and feel like for you — and how often does that actually happen?',
+    context: 'Oura captures the numbers, but your subjective feel matters separately. If they frequently disagree, that gap is a useful signal for Coach.',
+    rows: 3, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '💪',
+    text: 'Is there any exercise or movement you\'ve been avoiding — and what\'s the story behind that?',
+    context: 'Pain, boredom, past injury, or just not vibing with it? This helps Coach decide whether to reintroduce, substitute, or explicitly leave it out.',
+    rows: 3, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '🥗',
+    text: 'What\'s your go-to meal when you\'re low on energy and motivation to plan — and does it usually serve your protein target?',
+    context: 'The "lazy default" meal is one of the most important data points Coach can have. It shows up on your worst days, which is exactly when it matters most.',
+    rows: 2, placeholder: 'e.g. rice + eggs, convenience store chicken...'
+  },
+  {
+    icon: '📊',
+    text: 'When you see HRV trending down for a few days in a row, what\'s your gut reaction?',
+    context: 'Curiosity, frustration, resignation? Your emotional relationship with the data affects how Coach frames its calls and thresholds for you.',
+    rows: 2, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '🦴',
+    text: 'Where do you feel your structural imbalances most in everyday life — not just in training, but in how you move through the day?',
+    context: 'Carrying bags, reaching overhead, sitting, stairs? Real-world asymmetry signals often matter more than gym-specific ones.',
+    rows: 3, placeholder: 'e.g. right shoulder always feels tighter when I carry my bag...'
+  },
+  {
+    icon: '🎯',
+    text: 'If you had to pick ONE outcome from this training block — strength, aesthetics, or daily energy — which is actually most important to you right now?',
+    context: 'Not what you think you should say. What actually matters when you\'re honest about it? This shapes how Coach balances your program.',
+    rows: 2, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '😤',
+    text: 'What does the internal dialogue sound like when you\'re talking yourself out of a session?',
+    context: 'The specific excuse pattern is useful — it\'s usually the same 2–3 thoughts. Knowing your script helps Coach build a pre-emptive counter.',
+    rows: 3, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '🌙',
+    text: 'Do you notice what affects your sleep most — training timing, food late at night, stress, alcohol, or screen time?',
+    context: 'Even a rough pattern ("I always sleep worse after late carbs") helps Coach sequence your day more intentionally.',
+    rows: 2, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '🏋️',
+    text: 'Is there a movement or lift you used to be good at that you\'d like to get back to?',
+    context: 'History matters. If something felt athletic and capable before, there\'s a path back — and rebuilding that signal is motivating.',
+    rows: 2, placeholder: 'e.g. weighted pull-ups, landmine press, heavy KB swings...'
+  },
+  {
+    icon: '🤔',
+    text: 'What does "feeling recovered" actually feel like for you the morning after a hard session — physically and mentally?',
+    context: 'Your personal recovery signature is unique. Coach uses this to calibrate whether a yellow-tier day means "load as normal" or "back off 20%."',
+    rows: 3, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '🧂',
+    text: 'Are there foods that reliably affect how you feel or perform the next day — for better or worse?',
+    context: 'No judgment, just signal. A food-to-performance pattern — even an informal one — helps Coach flag days where you may be starting in a hole.',
+    rows: 2, placeholder: 'Your answer here...'
+  },
+  {
+    icon: '📅',
+    text: 'In the next 4 weeks, what\'s the biggest scheduling or life wildcard Coach should factor in?',
+    context: 'Travel, ministry load, family commitments, high-stress periods. These affect readiness and should adjust the plan before they show up in your HRV.',
+    rows: 2, placeholder: 'e.g. travel April 28–May 3, heavy preaching week coming...'
+  }
+];
+
+const CQ_ACTIVE_KEY   = 'coach_q_active';
+const CQ_ANSWERED_KEY = 'coach_q_answered';
+const CQ_ACTIVE_COUNT = 2;
+
+function cqGetActive()     { try { return JSON.parse(localStorage.getItem(CQ_ACTIVE_KEY)   || 'null'); } catch(e) { return null; } }
+function cqGetAnswered()   { try { return JSON.parse(localStorage.getItem(CQ_ANSWERED_KEY) || '[]');   } catch(e) { return []; } }
+function cqSaveActive(a)   { localStorage.setItem(CQ_ACTIVE_KEY,   JSON.stringify(a)); }
+function cqSaveAnswered(a) { localStorage.setItem(CQ_ANSWERED_KEY, JSON.stringify(a)); }
+
+function cqPickNext(excluding) {
+  let answered = cqGetAnswered();
+  const pool   = COACH_QUESTION_POOL.map((_,i) => i);
+  let available = pool.filter(i => !answered.includes(i) && !excluding.includes(i));
+  if (available.length === 0) {
+    // Full cycle complete — reset and start fresh (keep active excluded)
+    cqSaveAnswered([]);
+    available = pool.filter(i => !excluding.includes(i));
+  }
+  if (available.length === 0) return 0;
+  return available[Math.floor(Math.random() * available.length)];
+}
+
+function cqInit() {
+  let active = cqGetActive();
+  if (!active || active.length !== CQ_ACTIVE_COUNT) {
+    active = [];
+    for (let i = 0; i < CQ_ACTIVE_COUNT; i++) {
+      active.push(cqPickNext(active));
     }
+    cqSaveActive(active);
+  }
+  cqRender(active);
+}
+
+function cqRender(active) {
+  const container = document.getElementById('coach-q-container');
+  if (!container) return;
+  container.innerHTML = '';
+  active.forEach((qi, slot) => {
+    const q = COACH_QUESTION_POOL[qi];
+    if (!q) return;
+    const card = document.createElement('div');
+    card.className = 'coach-q-card';
+    card.dataset.slot = slot;
+    card.dataset.qi   = qi;
+    card.innerHTML = `
+      <div class="coach-q-header">
+        <div class="coach-q-icon">${q.icon}</div>
+        <div>
+          <div class="coach-q-text">${q.text}</div>
+          <div class="coach-q-context">${q.context}</div>
+        </div>
+      </div>
+      <div class="coach-q-body">
+        <textarea class="coach-q-input" rows="${q.rows}" placeholder="${q.placeholder}"></textarea>
+        <button class="coach-q-submit" onclick="cqSubmit(this,${slot},${qi})">Send Answer to Coach</button>
+      </div>`;
+    container.appendChild(card);
   });
-});
+}
+
+function cqSubmit(btn, slot, qi) {
+  const textarea = btn.previousElementSibling;
+  if (!textarea || !textarea.value.trim()) return;
+
+  // Confirm sent
+  btn.textContent = '✓ Sent to Coach';
+  btn.style.background = 'var(--green)';
+  btn.disabled = true;
+  textarea.disabled = true;
+
+  // Mark answered
+  const answered = cqGetAnswered();
+  if (!answered.includes(qi)) { answered.push(qi); cqSaveAnswered(answered); }
+
+  // After brief pause, swap in a fresh question
+  setTimeout(() => {
+    const active = cqGetActive();
+    const newQi  = cqPickNext(active.filter((_,i) => i !== slot));
+    active[slot] = newQi;
+    cqSaveActive(active);
+
+    const card = btn.closest('.coach-q-card');
+    card.style.transition = 'opacity 0.3s, transform 0.3s';
+    card.style.opacity    = '0';
+    card.style.transform  = 'translateY(-8px)';
+
+    setTimeout(() => {
+      cqRender(active);
+      const newCard = document.querySelector(`.coach-q-card[data-slot="${slot}"]`);
+      if (newCard) {
+        newCard.style.opacity    = '0';
+        newCard.style.transform  = 'translateY(8px)';
+        newCard.style.transition = 'opacity 0.35s, transform 0.35s';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          newCard.style.opacity   = '1';
+          newCard.style.transform = 'translateY(0)';
+        }));
+      }
+    }, 320);
+  }, 1600);
+}
 
 
 // ════════════════════════════════════════════════════════
@@ -1665,6 +1810,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tok-gear').style.color = 'var(--yellow)';
     document.getElementById('checkin-no-token').style.display = 'inline';
   }
+  cqInit();
 });
 </script>
 </body>
