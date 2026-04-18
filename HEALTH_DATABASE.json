@@ -150,11 +150,11 @@
       "bmr_kcal": 1666,
       "protein_per_kg_lean_mass": 2.6,
       "lean_mass_kg_basis": 57.1,
-      "goal_weight_lbs": 165,
+      "goal_weight_lbs": 159,
       "current_weight_lbs": 173.4,
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
-    "goal_weight_lbs": 165,
+    "goal_weight_lbs": 159,
     "goal_bf_pct": 13.0,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
@@ -238,7 +238,7 @@
       "bmi": 22.9,
       "body_water_pct": 57.4,
       "bone_mass_kg": null,
-      "goal_weight_lbs": 165,
+      "goal_weight_lbs": 159,
       "segmental_muscle_lbs": {
         "right_arm": {
           "value_lbs": 7.1,
@@ -341,7 +341,7 @@
       "health_score_rating": "High",
       "skeletal_muscle_mass_lbs": 95.4,
       "skeletal_muscle_mass_rating": "Standard",
-      "goal_weight_lbs": 165,
+      "goal_weight_lbs": 159,
       "segmental_muscle_lbs": {
         "right_arm": {
           "value_lbs": 8.3,
@@ -448,7 +448,7 @@
       "health_score_rating": "High",
       "health_score_body_comp_grade": "C+",
       "health_score_body_comp_note": "Excellent metabolic age (33 years younger) and healthy body fat, but need to address muscle balance.",
-      "goal_weight_lbs": 165,
+      "goal_weight_lbs": 159,
       "bmr_kcal": 1769,
       "bmr_rating": "High",
       "recommended_calorie_intake_kcal": 2000,
@@ -549,7 +549,7 @@
       "last_week_avg_lbs": 164.8,
       "last_week_max_lbs": 165.8,
       "last_week_min_lbs": 160.7,
-      "goal_weight_lbs": 165,
+      "goal_weight_lbs": 159,
       "notes": "Weight 165.3 lbs (Ocare3 5:49 AM) / 166.2 lbs (Hume Pod). Goal weight 165 lbs — essentially at target. Weekly average 164.8 lbs. Metabolic age 42 yrs (Excellent) at chronological age 57. Hume Health Score 670 High. All BIA readings secondary — DXA Feb 23 primary for body fat/VAT coaching."
     }
   ],
@@ -9148,7 +9148,7 @@
     "sprint_gate": "CLOSED — 29.1ms below 35ms threshold",
     "goal_summary": {
       "as_of": "2026-04-18",
-      "goal_weight_lbs": 165,
+      "goal_weight_lbs": 159,
       "goal_bf_pct": 13.0,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
