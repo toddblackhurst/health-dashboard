@@ -867,6 +867,10 @@ function renderTraining(db) {
   // Week strip — last 7 days
   html += buildWeekStrip(logs, acts, today);
 
+  // ── Upcoming Session ──
+  const us = db.upcoming_session;
+  if (us) { html += buildUpcomingSessionCard(us); }
+
   // Session management (only show if no session logged today)
   html += `<div class="card" id="smgmt-card">
     <div class="card-title">Today's Session</div>
@@ -933,6 +937,60 @@ function buildWeekStrip(logs, acts, today) {
   return `<div class="card" style="padding:12px">
     <div class="card-title" style="margin-bottom:8px">This Week</div>
     <div class="week-strip">${cells}</div>
+  </div>`;
+}
+
+function buildUpcomingSessionCard(us) {
+  const blockColors = { prep:'var(--text3)', a:'var(--accent)', b:'var(--green)', c:'var(--purple)' };
+
+  const blocks = (us.blocks || []).map(block => {
+    const color = blockColors[block.id] || 'var(--text3)';
+    const exercises = (block.exercises || []).map(ex => `
+      <div class="exercise-row">
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-prescription">${ex.prescription}${ex.load ? ' · ' + ex.load : ''}</div>
+        <div class="ex-note">${ex.cues}</div>
+        ${ex.alts?.length ? `<div style="font-size:10px;color:var(--text3)">Swap: ${ex.alts.join(' · ')}</div>` : ''}
+      </div>`).join('');
+    return `<div class="block-section">
+      <div class="block-header">
+        <span style="color:${color}">${block.label}</span>
+        <span class="block-floor">${block.floor}</span>
+        ${block.pairing ? `<span style="font-size:9px;color:var(--text3)">${block.pairing}</span>` : ''}
+        <span class="block-time">${block.time_min} min</span>
+      </div>
+      ${exercises}
+    </div>`;
+  }).join('');
+
+  // Saved athlete notes from localStorage
+  const savedNotes = localStorage.getItem('athlete_notes_' + us.planned_date) || us.athlete_notes || '';
+
+  return `<div class="upcoming-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+      <div class="upcoming-label">⬆ Up Next · ${us.day_label || us.planned_date}</div>
+      <span class="lock-badge" style="background:rgba(88,166,255,0.15);border-color:rgba(88,166,255,0.4);color:var(--accent)">Wk ${us.week || '—'} · ${us.time_cap_min} min cap</span>
+    </div>
+    <div class="upcoming-title">${us.session_type}</div>
+    <div class="upcoming-sub">${us.floor_plan}${us.gate_condition ? ' · Gate: ' + us.gate_condition : ''}</div>
+
+    ${us.why ? `<div class="why-para" style="background:var(--accent-bg);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:10px 12px;margin-bottom:12px">${us.why}</div>` : ''}
+
+    <hr class="coach-divider" style="margin:0 0 14px">
+
+    ${blocks}
+
+    ${us.coach_note ? `<div style="background:var(--surface2);border-radius:8px;padding:9px 11px;font-size:11px;color:var(--text2);margin-top:4px;line-height:1.6">📋 ${us.coach_note}</div>` : ''}
+
+    <div style="margin-top:14px">
+      <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Notes to Coach</div>
+      <textarea id="athlete-notes-${us.planned_date}" class="coach-q-input" rows="3"
+        placeholder="Want to swap something out? Flagging a joint issue? Time pressure? Tell Coach before you go in…"
+        oninput="localStorage.setItem('athlete_notes_${us.planned_date}', this.value)"
+      >${savedNotes}</textarea>
+      <button class="coach-q-submit" onclick="submitAthleteNotes('${us.planned_date}')">Send to Coach</button>
+      <div id="athlete-notes-done-${us.planned_date}" style="display:none;font-size:11px;color:var(--green);margin-top:6px">✅ Notes sent — Coach will update the plan</div>
+    </div>
   </div>`;
 }
 
@@ -1273,6 +1331,25 @@ async function submitSessionFeedback(date) {
   db.data.session_feedback.push({ date, timestamp: new Date().toISOString(), rating, note, exercises });
   const ok = await ghWriteDb(db.data, db.sha, `Session feedback — ${date}`);
   if (ok && doneEl) { doneEl.style.display = 'block'; }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  ATHLETE NOTES → UPCOMING SESSION
+// ═══════════════════════════════════════════════════════════
+async function submitAthleteNotes(date) {
+  if (!hasToken()) { openTokenModal(); return; }
+  const ta = e('athlete-notes-' + date);
+  const note = ta ? ta.value.trim() : '';
+  if (!note) return;
+  const db = await ghReadDb();
+  if (!db) return;
+  if (db.data.upcoming_session && db.data.upcoming_session.planned_date === date) {
+    db.data.upcoming_session.athlete_notes = note;
+    db.data.upcoming_session.athlete_notes_timestamp = new Date().toISOString();
+  }
+  const ok = await ghWriteDb(db.data, db.sha, `Athlete notes for upcoming session — ${date}`);
+  const doneEl = e('athlete-notes-done-' + date);
+  if (ok && doneEl) { doneEl.style.display = 'block'; lastHash = ''; }
 }
 
 // ═══════════════════════════════════════════════════════════
