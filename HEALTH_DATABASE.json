@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-18T13:50:32+08:00",
+    "last_updated": "2026-04-18T14:08:00+08:00",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -2451,13 +2451,79 @@
             "fat_g": 13
           },
           "notes": "Workout shake at 7:29 AM pre-session. Same proven stack. 55g protein = 37% of daily target before the gym. Day open — 95g protein still needed."
+        },
+        {
+          "meal": "post_workout_shake",
+          "time": "11:53",
+          "items": [
+            {
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
+              "amount": "1 scoop",
+              "calories_kcal": 120,
+              "protein_g": 24,
+              "carbs_g": 3,
+              "fat_g": 1,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Unsweetened Almond Milk",
+              "amount": "2 servings",
+              "calories_kcal": 60,
+              "protein_g": 2,
+              "carbs_g": 2,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Additional (Cal AI total 220 kcal)",
+              "amount": "—",
+              "calories_kcal": 40,
+              "protein_g": 2,
+              "carbs_g": 2,
+              "fat_g": 4,
+              "estimated": true,
+              "source": "Cal AI"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 220,
+            "protein_g": 28,
+            "carbs_g": 7,
+            "fat_g": 9
+          },
+          "notes": "Post-workout shake. 1 scoop Gold Standard Whey + 2x unsweetened almond milk. 28g protein inside recovery window post-sprint session. Clean 220 kcal. Running total 83g protein / 710 kcal after 2 meals."
+        },
+        {
+          "meal": "poke_bowl_lunch",
+          "time": "14:04",
+          "items": [
+            {
+              "food": "PokéPoké Customized Poke Bowl — Salmon (Raw) x2 + Egg + Crabmeat",
+              "amount": "1 bowl",
+              "calories_kcal": 488,
+              "protein_g": 33,
+              "carbs_g": 24,
+              "fat_g": 28,
+              "estimated": false,
+              "source": "Cal AI (487.75 kcal)"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 488,
+            "protein_g": 33,
+            "carbs_g": 24,
+            "fat_g": 28
+          },
+          "notes": "PokéPoké 波奇波奇 崇德店. Customized poke bowl — brown rice + lettuce base (less portion), double salmon (raw), sliced egg, crabmeat, wasabi mayo, hummus, onion, bell pepper, cucumber, pumpkin seed. Cal AI: 487.75 kcal / 23.63g C / 32.79g P / 28.43g F. Rounded to 488/33/24/28. Fat driven by salmon fat + wasabi mayo + hummus. Same bowl pattern as Apr 16 dinner."
         }
       ],
       "running_totals": {
-        "calories_kcal": 490,
-        "protein_g": 55,
-        "carbs_g": 41,
-        "fat_g": 13
+        "calories_kcal": 1198,
+        "protein_g": 116,
+        "carbs_g": 72,
+        "fat_g": 50
       },
       "day_closed": false
     },
