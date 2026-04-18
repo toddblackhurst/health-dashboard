@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-18T14:08:00+08:00",
+    "last_updated": "2026-04-19T07:40:00+08:00",
     "description": "Personal health and training database \u2014 Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -3269,6 +3269,46 @@
       },
       "hr_compliance": true,
       "notes": "Fasted Saturday morning walk. 4th consecutive HRV decline day \u2014 walk only, sprint session gate closed. HR well below 122 cap. Hume confirmed: 2.17mi / Zone 1 for 23+ min / 17% strain."
+    },
+    {
+      "date": "2026-04-19",
+      "type": "Outdoor Walk",
+      "subtype": "Fasted Walk",
+      "source": "Apple Fitness",
+      "time_start": "05:30",
+      "time_end": "06:13",
+      "duration_min": 43,
+      "distance_mi": 2.28,
+      "avg_hr_bpm": 90,
+      "active_calories": 194,
+      "total_calories": 263,
+      "avg_pace_min_per_mi": "18:46",
+      "elevation_gain_ft": 37,
+      "effort": "Easy (3/5)",
+      "location": "Beitun District",
+      "splits": [
+        {
+          "mile": 1,
+          "time": "16:52",
+          "hr_bpm": 89
+        },
+        {
+          "mile": 2,
+          "time": "18:56",
+          "hr_bpm": 92
+        },
+        {
+          "mile": "0.28 partial",
+          "time": "05:42",
+          "hr_bpm": 91
+        }
+      ],
+      "weather": {
+        "temp_f": 69,
+        "humidity_pct": 88
+      },
+      "hr_compliance": true,
+      "notes": "Fasted Sunday morning walk. First HRV uptick day after 4-day decline (29.8ms, +0.7ms). Oura readiness 88 OPTIMAL. HR avg 90bpm \u2014 clean Zone 2, well within 122bpm cap. 2.28mi / 43 min. Slightly longer and slower pace than Saturday (18:46 vs 15:53/mi). Sunday = active recovery, no strength session."
     }
   ],
   "strength_logs": [
