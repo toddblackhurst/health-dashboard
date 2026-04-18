@@ -208,6 +208,14 @@ body {
 .block-floor { font-size: 9px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
 .block-time { font-size: 9px; color: var(--text3); margin-left: auto; }
 
+.exfb-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.exfb-name { font-size:12px; font-weight:600; color:var(--text2); flex:1; min-width:120px; }
+.exfb-btn { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:3px 8px; font-size:13px; cursor:pointer; color:var(--text2); }
+.exfb-btn.open { border-color:var(--accent); color:var(--accent); }
+.exfb-ta { display:none; width:100%; margin-top:4px; box-sizing:border-box; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-size:11.5px; padding:7px 10px; resize:vertical; min-height:52px; }
+.exfb-ta.open { display:block; }
+.rating-btn { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:5px 10px; font-size:12px; cursor:pointer; color:var(--text2); }
+.rating-btn.sel { border-color:var(--accent); background:rgba(88,166,255,0.1); color:var(--text); font-weight:700; }
 .exercise-row {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; padding: 10px 12px; margin-bottom: 6px;
@@ -939,7 +947,35 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     <div class="coach-para" style="padding-top:0">
       Yellow day, but you didn't train yellow. Volume up 18% above your 14-day average — Motra flagged a Strength Intensity Spike — and the HR stayed at 114 avg the whole hour. That's the combination you're chasing: more weight, same heart. HR recovery came in at −49 bpm post-session, which lands in the Superior tier for your age. Your cardiovascular system is more resilient than this morning's HRV suggested. Posterior chain emphasis exactly right: Lats 24%, Glutes 17%, Traps 9% — correction targets hit. One flag: TRX Y Raise dropped 12 → 9 reps on set 2. Shoulder endurance ceiling showing up again — hold 12 on both sets next Saturday before touching load. Morning fasted walk (34 min, 99 bpm) also logged — clean Zone 1 on a Yellow day.
     </div>
-    <div class="lock-badge" style="margin-top:6px">🔒 Locked · Written Apr 18 12:00 PM</div>
+    <!-- ── Exercise feedback ── -->
+    <div style="margin-top:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Exercise Notes</div>
+      <div id="exfb-apr18" style="display:flex;flex-direction:column;gap:6px">
+        <!-- each row: name + 💬 toggle + inline textarea -->
+        <div class="exfb-row" data-ex="Pull-Up"><span class="exfb-name">Pull-Up</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="How did it feel? Reps easy / hard? Grip position? Next time..."></textarea></div>
+        <div class="exfb-row" data-ex="Barbell Single-Arm Landmine Row"><span class="exfb-name">Landmine Row</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="25 kg middle set — too heavy? Grip fatigue? Left vs right?"></textarea></div>
+        <div class="exfb-row" data-ex="Barbell Landmine Rotational Press"><span class="exfb-name">Landmine Rotational Press</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="First time in a while — shoulder feel OK? 27.5 kg manageable?"></textarea></div>
+        <div class="exfb-row" data-ex="TRX Y Raise"><span class="exfb-name">TRX Y Raise</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="Dropped 12→9 on set 2. Where did it fail — shoulder endurance or form breakdown?"></textarea></div>
+        <div class="exfb-row" data-ex="Kettlebell Swing"><span class="exfb-name">KB Swing</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="3×12 @ 20kg — HR spike? Hip feel?"></textarea></div>
+        <div class="exfb-row" data-ex="Kettlebell Suitcase Carry"><span class="exfb-name">Suitcase Carry</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="14kg felt heavier than 12? Left vs right side difference?"></textarea></div>
+        <div class="exfb-row" data-ex="Dead Hang"><span class="exfb-name">Dead Hang</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="30 sec holds — shoulder decompression felt? Grip gave out first?"></textarea></div>
+        <div class="exfb-row" data-ex="Dumbbell Chest-Supported Row"><span class="exfb-name">Chest-Supported Row</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="4.5 kg felt light — ready to go heavier? Mid-back engagement?"></textarea></div>
+      </div>
+      <div style="margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">Overall Session Rating</div>
+        <div id="session-rating-apr18" style="display:flex;gap:8px;margin-bottom:8px">
+          <button class="rating-btn" onclick="setRating(this,'apr18',1)">😴 1</button>
+          <button class="rating-btn" onclick="setRating(this,'apr18',2)">😐 2</button>
+          <button class="rating-btn" onclick="setRating(this,'apr18',3)">💪 3</button>
+          <button class="rating-btn" onclick="setRating(this,'apr18',4)">🔥 4</button>
+          <button class="rating-btn" onclick="setRating(this,'apr18',5)">⚡ 5</button>
+        </div>
+        <textarea id="session-note-apr18" class="coach-q-input" rows="2" placeholder="Overall feel, energy, anything the coach should know about today..."></textarea>
+        <button class="coach-q-submit" onclick="submitSessionFeedback('2026-04-18','apr18')" style="margin-top:6px">Save & Sync to Coach</button>
+        <div id="exfb-done-apr18" style="display:none;font-size:11px;color:var(--green);margin-top:6px">✅ Feedback saved to Coach</div>
+      </div>
+    </div>
+    <div class="lock-badge" style="margin-top:10px">🔒 Locked · Written Apr 18 post-session</div>
   </div>
 
   <div class="session-review-card" style="border-color:rgba(63,185,80,0.3)">
@@ -1038,11 +1074,11 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     <div class="macro-date-row">
       <div>
         <div class="macro-date-label">Sat Apr 18 · Training Day</div>
-        <div style="font-size:10px;color:var(--text3)">Target: 2,000 kcal</div>
+        <div style="font-size:10px;color:var(--text3)">Target: 2,150 kcal ↑ updated</div>
       </div>
       <div style="text-align:right">
-        <div class="macro-kcal-live">490 <span class="macro-kcal-target">/ 2,000</span></div>
-        <div style="font-size:10px;color:var(--text3)">1 logged</div>
+        <div class="macro-kcal-live">490 <span class="macro-kcal-target">/ 2,150</span></div>
+        <div style="font-size:10px;color:var(--text3)">1 logged · day open</div>
       </div>
     </div>
     <div class="macro-row">
@@ -1052,13 +1088,13 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     </div>
     <div class="macro-row">
       <div class="macro-label">CARB</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:22%;background:var(--purple)"></div></div>
-      <div class="macro-val">41g / 190g</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:20%;background:var(--purple)"></div></div>
+      <div class="macro-val">41g / 210g</div>
     </div>
     <div class="macro-row">
       <div class="macro-label">FAT</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:19%;background:var(--yellow)"></div></div>
-      <div class="macro-val">13g / 70g</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:18%;background:var(--yellow)"></div></div>
+      <div class="macro-val">13g / 72g</div>
     </div>
   </div>
 
@@ -1099,12 +1135,12 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 
   <!-- Coach's nutrition callout -->
   <div class="card">
-    <div class="card-title">Coach's Nutrition Call · Apr 17 <span class="lock-badge" style="float:right">🔒 First Meal</span></div>
+    <div class="card-title">Coach's Nutrition Call · Apr 18 <span class="lock-badge" style="float:right">🔒 Post-Session</span></div>
     <div class="coach-para" style="padding-top:0;font-size:12px">
-      Yesterday closed at 1,853 kcal — technically within the 1,600–1,800 reset window despite the +153 over. Protein was 196g, 46g over target ✅. Fat 74g (14g over) came entirely from the buffalo wings at lunch — manageable, not a recurring pattern problem. Today is back to standard 2,000 kcal / 150g protein. Pre-workout shake is already in: 490 kcal / 55g protein — strong opener.
+      New target is 2,150 kcal / 150g P / 210g C / 72g F — effective today. The previous 2,000 kcal deficit was too aggressive for the amount of lean mass work you're doing. The extra 150 kcal goes toward carb fuel and training recovery, not fat. Workout shake opened strong: 490 kcal / 55g protein before the gym is exactly right. 1,660 kcal remaining over 3 meals.
     </div>
     <div class="coach-para" style="padding-top:0;font-size:12px">
-      Post-session shake will get you near 83g protein by mid-morning. Hit 150g before dinner and tonight's meal is just an add — not a rescue mission. Fat is clear at 13g with 57g budget remaining. Don't repeat the wings at lunch — one lean protein + veg meal keeps today clean through dinner.
+      Post-session window is open now. A second shake or solid meal hitting 30–40g protein should go in before noon. That puts you at ~95g by midday — then two more meals of 25–30g each closes the target cleanly. Fat budget is wide open at 59g remaining. Don't let the training day become a calorie catch-up problem by skipping lunch.
     </div>
   </div>
 
@@ -1119,34 +1155,34 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     </div>
     <div class="meal-macros">490 kcal &nbsp;·&nbsp; P: 55g &nbsp;·&nbsp; C: 41g &nbsp;·&nbsp; F: 13g</div>
     <div class="meal-coach-callout">
-      Pre-session fuel in the bank. 55g protein before the gym = 37% of daily target — the session math works. 490 kcal opens the day clean; 1,510 kcal remaining over 3 meals to hit 2,000. Priority: hit 95g more protein before end of day.
+      Pre-session fuel in the bank. 55g protein before the gym = 37% of daily target — the session math works. 490 kcal opens the day clean; 1,660 kcal remaining over 3 meals to hit 2,150. Priority: hit 95g more protein before end of day.
     </div>
   </div>
 
-  <!-- Yesterday closed -->
+  <!-- Yesterday partial (migraine day, day not closed) -->
   <div class="card" style="margin-top:12px">
-    <div class="card-title">Yesterday Closed · Apr 16 <span class="lock-badge" style="float:right">🔒 Final</span></div>
+    <div class="card-title">Yesterday · Apr 17 <span class="lock-badge" style="float:right">⚠ Partial · Migraine Day</span></div>
     <div class="macro-row">
       <div class="macro-label">KCAL</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--yellow)"></div></div>
-      <div class="macro-val" style="color:var(--yellow)">1,853 / 1,700 ⚠ +153</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:46%;background:var(--text3)"></div></div>
+      <div class="macro-val" style="color:var(--text2)">992 / 2,000 · day not closed</div>
     </div>
     <div class="macro-row">
       <div class="macro-label">PROT</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--green)"></div></div>
-      <div class="macro-val" style="color:var(--green)">196g / 150g ✅</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:62%;background:var(--yellow)"></div></div>
+      <div class="macro-val" style="color:var(--yellow)">93g / 150g · 57%</div>
     </div>
     <div class="macro-row">
       <div class="macro-label">CARB</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:61%;background:var(--purple)"></div></div>
-      <div class="macro-val">98g / 160g</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:52%;background:var(--purple)"></div></div>
+      <div class="macro-val">98g / 190g</div>
     </div>
     <div class="macro-row">
       <div class="macro-label">FAT</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:100%;background:var(--yellow)"></div></div>
-      <div class="macro-val" style="color:var(--yellow)">74g / 60g ⚠ +14</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:36%;background:var(--text3)"></div></div>
+      <div class="macro-val">25g / 70g</div>
     </div>
-    <div class="inline-note" style="margin-top:8px">Protein crushed it (196g ✅). Buffalo wings at lunch = 30g fat in one shot — that's where the +14g overage came from. Poke bowl dinner executed correctly. Carbs significantly under (98g vs 160g target) — that headroom exists today.</div>
+    <div class="inline-note" style="margin-top:8px">Migraine hit mid-morning — 4 meals logged through 4:53 PM (pre-workout shake, post-workout shake, tomato mushroom soup, salmon nigiri). Day was never closed. Protein deficit was real at 57% — migraine reduced appetite and disrupted the back half of the day. Not a pattern failure.</div>
   </div>
 
 </div>
@@ -1555,6 +1591,67 @@ async function confirmOverride(override) {
     conf.textContent = msgs[override.type] || 'Saved.';
   } else {
     document.querySelectorAll('.smgmt-confirm-btn').forEach(b => { b.disabled = false; b.textContent = 'Confirm'; });
+  }
+}
+
+
+// ════════════════════════════════════════════════════════
+//  EXERCISE FEEDBACK
+// ════════════════════════════════════════════════════════
+const _ratings = {};
+
+function toggleExFb(btn) {
+  const ta = btn.nextElementSibling;
+  const open = ta.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  if (open) ta.focus();
+}
+
+function setRating(btn, sessionId, val) {
+  _ratings[sessionId] = val;
+  document.querySelectorAll(`#session-rating-${sessionId} .rating-btn`)
+    .forEach((b,i) => b.classList.toggle('sel', i+1 === val));
+}
+
+async function submitSessionFeedback(dateISO, sessionId) {
+  const submitBtn = document.querySelector(`button[onclick="submitSessionFeedback('${dateISO}','${sessionId}')"]`);
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Saving…';
+
+  // Collect exercise comments
+  const exercises = [];
+  document.querySelectorAll('#exfb-apr18 .exfb-row').forEach(row => {
+    const name = row.dataset.ex;
+    const ta   = row.querySelector('.exfb-ta');
+    if (ta && ta.value.trim()) {
+      exercises.push({ exercise: name, comment: ta.value.trim() });
+    }
+  });
+
+  const note   = document.getElementById(`session-note-${sessionId}`).value.trim();
+  const rating = _ratings[sessionId] || null;
+
+  const db = await ghReadDb();
+  if (!db) { submitBtn.disabled = false; submitBtn.textContent = 'Save & Sync to Coach'; return; }
+
+  if (!db.data.session_feedback) db.data.session_feedback = [];
+  db.data.session_feedback = db.data.session_feedback.filter(f => f.date !== dateISO);
+  db.data.session_feedback.push({
+    date: dateISO,
+    timestamp: new Date().toISOString(),
+    rating,
+    overall_note: note,
+    exercises
+  });
+  db.data.meta.last_updated = new Date().toISOString();
+
+  const ok = await ghWriteDb(db.data, db.sha, `Session feedback — ${dateISO}`);
+  if (ok) {
+    submitBtn.style.display = 'none';
+    document.getElementById(`exfb-done-${sessionId}`).style.display = 'block';
+  } else {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Retry';
   }
 }
 
