@@ -508,11 +508,9 @@ async function pollDb() {
   if (db) {
     DB = db;
     renderAll(db);
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    // Flash to signal new data arrived — timestamp is set by renderAll via db.last_updated
     const updated = e('topbar-updated');
     if (updated) {
-      updated.textContent = `Updated ${timeStr}`;
       updated.classList.add('update-flash');
       setTimeout(() => updated.classList.remove('update-flash'), 600);
     }
@@ -538,7 +536,22 @@ function initTopbar() {
 // ═══════════════════════════════════════════════════════════
 //  RENDER ALL
 // ═══════════════════════════════════════════════════════════
+function updateLastDataChange(db) {
+  const ts = e('topbar-updated');
+  if (!ts || !db.last_updated) return;
+  const raw = db.last_updated;
+  const d = new Date(raw);
+  if (isNaN(d.getTime())) { ts.textContent = 'Data: ' + raw; return; }
+  const hasTime = raw.includes('T');
+  if (hasTime) {
+    ts.textContent = 'Data ' + fmtDate(raw.substring(0,10)) + ' · ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  } else {
+    ts.textContent = 'Data ' + fmtDate(raw);
+  }
+}
+
 function renderAll(db) {
+  updateLastDataChange(db);
   renderBrief(db);
   renderSleep(db);
   renderTraining(db);
@@ -1438,14 +1451,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const db = await fetchDb();
   if (db) {
     DB = db;
-    renderAll(db);
-    const now = new Date();
-    const ts = e('topbar-updated');
-    if (ts) ts.textContent = `Updated ${now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
+    renderAll(db); // sets topbar-updated via updateLastDataChange
   } else {
-    // DB available but no change, or failed
     const ts = e('topbar-updated');
-    if (ts) ts.textContent = 'Loaded from cache';
+    if (ts) ts.textContent = 'Connecting…';
   }
 
   startPolling();
