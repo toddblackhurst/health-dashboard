@@ -1386,7 +1386,14 @@ async function submitCheckin() {
     lastHash = '';
     pollDb();
   } else {
-    if (btn) { btn.disabled = false; btn.textContent = 'Retry'; }
+    if (btn) { btn.disabled = false; btn.textContent = '⚠ Save failed — Tap to retry'; btn.style.background = 'var(--red,#e05)'; }
+    const card = e('checkin-card');
+    if (card) {
+      let errEl = card.querySelector('.checkin-save-err');
+      if (!errEl) { errEl = document.createElement('div'); errEl.className = 'checkin-save-err'; card.appendChild(errEl); }
+      errEl.style.cssText = 'color:#ff6b6b;font-size:11px;margin-top:6px;text-align:center';
+      errEl.textContent = '⚠ Check-in did not save. Check your connection and try again.';
+    }
   }
 }
 
