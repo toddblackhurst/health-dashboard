@@ -37,8 +37,6 @@ body {
   margin: 0 auto;
   padding-bottom: max(88px, calc(env(safe-area-inset-bottom) + 72px));
 }
-
-/* ── Topbar ── */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 16px 12px;
@@ -56,11 +54,11 @@ body {
   border-radius: 20px; padding: 4px 10px;
   font-size: 11px; font-weight: 700; color: var(--green);
   text-transform: uppercase; letter-spacing: 0.08em;
+  transition: background 0.4s, border-color 0.4s;
 }
-.live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+.live-pill.syncing { background: var(--accent-bg); border-color: rgba(88,166,255,0.3); color: var(--accent); }
+.live-dot { width: 6px; height: 6px; background: currentColor; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
-
-/* ── Tabs ── */
 .tabs {
   display: flex; background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -78,8 +76,6 @@ body {
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-content { display: none; padding: 12px 12px 0; }
 .tab-content.active { display: block; }
-
-/* ── Cards ── */
 .card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 14px; margin-bottom: 10px;
@@ -87,34 +83,23 @@ body {
 .card-title { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
 .card-value { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
 .card-sub { font-size: 11px; color: var(--text2); margin-top: 4px; }
-
-/* ── Hero card ── */
 .hero-card {
-  background: rgba(210,153,34,0.10); border: 1px solid #d2992230;
   border-radius: 14px; padding: 16px; margin-bottom: 10px;
 }
-.hero-tier { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #d29922; margin-bottom: 6px; }
+.hero-tier { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
 .hero-call { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 8px; }
 .hero-basis { font-size: 11.5px; color: var(--text2); line-height: 1.6; }
-.hero-insight { margin-top: 12px; font-size: 12px; color: var(--text); line-height: 1.7; padding-top: 12px; border-top: 1px solid #d2992225; }
-
-/* ── Stats ── */
+.hero-insight { margin-top: 12px; font-size: 12px; color: var(--text); line-height: 1.7; padding-top: 12px; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
 .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
 .stat-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
 .stat-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
 .stat-unit { font-size: 11px; color: var(--text2); font-weight: 400; }
 .stat-note { font-size: 10px; color: var(--text3); margin-top: 3px; }
-
-/* ── Section label ── */
 .section-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin: 14px 0 8px; }
-
-/* ── Bullets ── */
 .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .bullet-list li { font-size: 12px; color: var(--text2); line-height: 1.6; padding-left: 14px; position: relative; }
 .bullet-list li::before { content: "·"; position: absolute; left: 4px; color: var(--accent); font-size: 14px; line-height: 1.3; }
-
-/* ── Watch items ── */
 .watch-list { display: flex; flex-direction: column; gap: 7px; }
 .watch-item {
   display: flex; gap: 8px; font-size: 11.5px; color: var(--text2); line-height: 1.6;
@@ -122,8 +107,6 @@ body {
   border-radius: 8px; padding: 9px 10px;
 }
 .watch-icon { color: var(--yellow); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
-
-/* ── Lock badge ── */
 .lock-badge {
   display: inline-flex; align-items: center; gap: 4px;
   font-size: 9px; font-weight: 700; color: var(--text3);
@@ -131,26 +114,14 @@ body {
   border-radius: 20px; padding: 2px 7px;
   text-transform: uppercase; letter-spacing: 0.06em;
 }
-
-/* ── Coach paragraph ── */
-.coach-para {
-  font-size: 13px; color: var(--text); line-height: 1.75;
-  padding: 14px 0 2px;
-}
-.coach-para-header {
-  font-size: 10px; font-weight: 700; color: var(--accent);
-  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
-}
+.coach-para { font-size: 13px; color: var(--text); line-height: 1.75; padding: 14px 0 2px; }
+.coach-para-header { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
 .coach-divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
-
-/* ── Sleep stages ── */
 .sleep-stage-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .stage-label { font-size: 10px; color: var(--text3); width: 42px; }
 .stage-bar-wrap { flex: 1; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
 .stage-bar { height: 100%; border-radius: 3px; }
 .stage-val { font-size: 10px; color: var(--text2); width: 80px; text-align: right; white-space: nowrap; }
-
-/* ── Macro / nutrition ── */
 .macro-sticky {
   background: rgba(13,17,23,0.97);
   border-bottom: 1px solid var(--border);
@@ -168,8 +139,6 @@ body {
 .macro-bar-wrap { flex: 1; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
 .macro-bar { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
 .macro-val { font-size: 11px; font-weight: 600; color: var(--text2); width: 88px; text-align: right; white-space: nowrap; }
-
-/* ── Meal cards ── */
 .meal-card {
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: 10px; padding: 11px 12px; margin-bottom: 8px;
@@ -183,12 +152,7 @@ body {
   border-radius: 7px; padding: 7px 9px;
   font-size: 11px; color: var(--accent); line-height: 1.5;
 }
-.meal-empty {
-  text-align: center; padding: 24px 0; color: var(--text3);
-  font-size: 12px; line-height: 1.6;
-}
-
-/* ── Training cards ── */
+.meal-empty { text-align: center; padding: 24px 0; color: var(--text3); font-size: 12px; line-height: 1.6; }
 .upcoming-card {
   background: var(--accent-bg); border: 1px solid rgba(88,166,255,0.25);
   border-radius: 14px; padding: 16px; margin-bottom: 10px;
@@ -197,7 +161,6 @@ body {
 .upcoming-title { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 4px; }
 .upcoming-sub { font-size: 11px; color: var(--text2); margin-bottom: 12px; }
 .why-para { font-size: 12px; color: var(--text); line-height: 1.7; margin-bottom: 10px; }
-
 .block-section { margin-bottom: 14px; }
 .block-header {
   display: flex; align-items: center; gap: 8px;
@@ -207,7 +170,6 @@ body {
 }
 .block-floor { font-size: 9px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; }
 .block-time { font-size: 9px; color: var(--text3); margin-left: auto; }
-
 .exfb-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
 .exfb-name { font-size:12px; font-weight:600; color:var(--text2); flex:1; min-width:120px; }
 .exfb-btn { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:3px 8px; font-size:13px; cursor:pointer; color:var(--text2); }
@@ -223,44 +185,24 @@ body {
 .ex-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
 .ex-prescription { font-size: 11px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
 .ex-note { font-size: 11px; color: var(--text2); line-height: 1.5; margin-bottom: 6px; }
-.ex-footer { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.ex-alt-label { font-size: 10px; color: var(--text3); }
-.ex-alts { font-size: 10px; color: var(--text2); }
-.ex-change-btn {
-  margin-left: auto; background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 6px; padding: 3px 9px; font-size: 10px; font-weight: 700;
-  color: var(--text3); cursor: pointer; white-space: nowrap;
-}
-.ex-change-btn:active { background: var(--surface3); }
-
 .session-review-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 14px; margin-bottom: 10px;
 }
-.review-label {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 10px; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;
-}
+.review-label { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
 .review-session-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
 .review-stats { display: flex; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
 .review-stat { font-size: 11px; color: var(--text2); }
 .review-stat strong { color: var(--text); }
-
 .week-strip { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 2px; }
 .week-strip::-webkit-scrollbar { display: none; }
-.week-day {
-  flex: 1; min-width: 64px; background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 8px 6px; text-align: center;
-}
+.week-day { flex: 1; min-width: 54px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 6px; text-align: center; }
 .week-day.today { border-color: var(--accent); background: var(--accent-bg); }
 .week-day.done { border-color: rgba(63,185,80,0.3); background: var(--green-bg); }
-.week-day.sprint { border-color: rgba(240,136,62,0.3); background: rgba(240,136,62,0.08); }
+.week-day.rest { border-color: rgba(210,153,34,0.3); background: var(--yellow-bg); }
 .week-day-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 3px; }
 .week-day-icon { font-size: 16px; line-height: 1; margin-bottom: 3px; }
 .week-day-type { font-size: 9px; color: var(--text2); line-height: 1.3; }
-
-/* ── Status pill ── */
 .status-pill {
   display: inline-flex; align-items: center; gap: 4px;
   font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
@@ -269,29 +211,18 @@ body {
 .pill-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.25); }
 .pill-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(210,153,34,0.25); }
 .pill-blue { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(88,166,255,0.25); }
+.pill-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,0.25); }
 .pill-orange { background: rgba(240,136,62,0.1); color: var(--orange); border: 1px solid rgba(240,136,62,0.25); }
-
-/* ── Weight card ── */
 .weight-row { display: flex; gap: 8px; margin-bottom: 10px; }
 .weight-box { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; }
 .weight-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
 .weight-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
-
-/* ── Ask Coach ── */
-.coach-q-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden; margin-bottom: 10px;
-}
-.coach-q-header {
-  background: rgba(163,113,247,0.1); border-bottom: 1px solid rgba(163,113,247,0.2);
-  padding: 11px 14px; display: flex; gap: 8px; align-items: flex-start;
-}
+.coach-q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+.coach-q-header { background: rgba(163,113,247,0.1); border-bottom: 1px solid rgba(163,113,247,0.2); padding: 11px 14px; display: flex; gap: 8px; align-items: flex-start; }
 .coach-q-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 .coach-q-text { font-size: 13px; color: var(--text); line-height: 1.6; font-weight: 600; }
 .coach-q-context { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.5; font-weight: 400; }
 .coach-q-body { padding: 12px 14px; }
-.coach-q-answered { font-size: 12px; color: var(--text2); background: var(--surface2); border-radius: 7px; padding: 8px 10px; margin-bottom: 8px; }
-.coach-q-answered-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
 .coach-q-input {
   width: 100%; background: var(--surface2); border: 1px solid var(--border);
   border-radius: 8px; padding: 10px 12px; color: var(--text);
@@ -305,20 +236,12 @@ body {
   cursor: pointer; letter-spacing: 0.02em;
 }
 .coach-q-submit:active { opacity: 0.85; }
-
-.coach-q-intro {
-  font-size: 12px; color: var(--text2); line-height: 1.6;
-  margin-bottom: 12px; padding: 12px; background: var(--surface2); border-radius: 10px;
-}
-
-/* ── Charts ── */
+.coach-q-intro { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 12px; padding: 12px; background: var(--surface2); border-radius: 10px; }
 .chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
 .chart-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
 .chart-title { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
 .chart-latest { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
-svg.sparkline { width: 100%; height: 90px; overflow: visible; }
-
-/* ── Bottom nav ── */
+svg.sparkline { width: 100%; height: 60px; overflow: visible; }
 .bottom-nav {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
   width: 100%; max-width: 480px;
@@ -330,21 +253,12 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 .nav-icon { font-size: 20px; line-height: 1; }
 .nav-label { font-size: 9px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
 .nav-btn.active .nav-label { color: var(--accent); }
-.nav-btn.active .nav-icon { filter: none; }
-
-/* ── Progress bar ── */
-.progress-section { margin-top: 8px; }
 .progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
 .progress-label { font-size: 11px; color: var(--text2); flex: 1; }
 .progress-val { font-size: 11px; font-weight: 700; color: var(--text); width: 48px; text-align: right; }
 .progress-bar-wrap { width: 80px; height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
 .progress-bar { height: 100%; border-radius: 3px; }
-
-/* ── Morning Check-in ── */
-.checkin-flag-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 9px 0; border-bottom: 1px solid var(--border);
-}
+.checkin-flag-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
 .checkin-flag-row:last-of-type { border-bottom: none; }
 .checkin-flag-label { font-size: 13px; color: var(--text); font-weight: 500; }
 .checkin-yn { display: flex; gap: 6px; }
@@ -357,23 +271,12 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 }
 .yn-btn.yes-on { background: var(--red-bg); color: var(--red); border-color: rgba(248,81,73,0.45); }
 .yn-btn.no-on  { background: var(--green-bg); color: var(--green); border-color: rgba(63,185,80,0.45); }
-.checkin-done-msg {
-  display: none; flex-direction: column; gap: 3px;
-  padding: 10px 0 4px;
-}
-.checkin-done-time-line { font-size: 12px; color: var(--green); font-weight: 700; }
-.checkin-done-flags-line { font-size: 11px; color: var(--text2); }
 .checkin-submit-btn {
   width: 100%; background: var(--accent); border: none; border-radius: 8px;
   padding: 10px; font-size: 12px; font-weight: 700; color: #0d1117;
   cursor: pointer; margin-top: 12px;
 }
 .checkin-submit-btn:disabled { opacity: 0.45; cursor: default; }
-.checkin-setup-hint {
-  font-size: 11px; color: var(--yellow); cursor: pointer; text-decoration: underline;
-}
-
-/* ── Session Management ── */
 .smgmt-actions { display: flex; gap: 8px; margin-top: 10px; }
 .smgmt-btn {
   flex: 1; padding: 10px 4px; border-radius: 10px;
@@ -386,10 +289,7 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 .smgmt-btn.done-active { border-color: var(--green); color: var(--green); background: var(--green-bg); }
 .smgmt-btn.rest-active { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-bg); }
 .smgmt-btn.move-active { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
-.smgmt-detail {
-  margin-top: 12px; padding: 12px; background: var(--surface2);
-  border-radius: 10px; border: 1px solid var(--border); display: none;
-}
+.smgmt-detail { margin-top: 12px; padding: 12px; background: var(--surface2); border-radius: 10px; border: 1px solid var(--border); display: none; }
 .smgmt-detail.visible { display: block; }
 .smgmt-chip-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
 .smgmt-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
@@ -401,71 +301,50 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
 }
 .smgmt-chip.sel-reason { background: var(--yellow-bg); color: var(--yellow); border-color: rgba(210,153,34,0.4); }
 .smgmt-chip.sel-date   { background: var(--accent-bg); color: var(--accent); border-color: rgba(88,166,255,0.4); }
-.smgmt-confirm-btn {
-  width: 100%; background: var(--accent); border: none; border-radius: 8px;
-  padding: 10px; font-size: 12px; font-weight: 700; color: #0d1117;
-  cursor: pointer;
-}
+.smgmt-confirm-btn { width: 100%; background: var(--accent); border: none; border-radius: 8px; padding: 10px; font-size: 12px; font-weight: 700; color: #0d1117; cursor: pointer; }
 .smgmt-confirm-btn:disabled { opacity: 0.45; cursor: default; }
-.smgmt-confirmed {
-  display: none; margin-top: 10px; padding: 10px 12px;
-  background: var(--green-bg); border: 1px solid rgba(63,185,80,0.3);
-  border-radius: 8px; font-size: 12px; color: var(--green); font-weight: 600;
-}
+.smgmt-confirmed { display: none; margin-top: 10px; padding: 10px 12px; background: var(--green-bg); border: 1px solid rgba(63,185,80,0.3); border-radius: 8px; font-size: 12px; color: var(--green); font-weight: 600; }
 .smgmt-confirmed.visible { display: block; }
-
-/* ── Token modal ── */
-.tok-overlay {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-  z-index: 500; align-items: center; justify-content: center; padding: 20px;
-}
+.tok-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
 .tok-overlay.open { display: flex; }
-.tok-modal {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 16px; padding: 22px; width: 100%; max-width: 340px;
-}
+.tok-modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; width: 100%; max-width: 340px; }
 .tok-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
 .tok-sub { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 14px; }
-.tok-input {
-  width: 100%; background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 12px; color: var(--text);
-  font-size: 12px; font-family: monospace; margin-bottom: 10px;
-}
+.tok-input { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-size: 12px; font-family: monospace; margin-bottom: 10px; }
 .tok-input:focus { outline: none; border-color: var(--accent); }
-.tok-save-btn {
-  width: 100%; background: var(--accent); border: none; border-radius: 8px;
-  padding: 10px; font-size: 13px; font-weight: 700; color: #0d1117; cursor: pointer;
-  margin-bottom: 8px;
-}
+.tok-save-btn { width: 100%; background: var(--accent); border: none; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 700; color: #0d1117; cursor: pointer; margin-bottom: 8px; }
 .tok-cancel { font-size: 11px; color: var(--text3); text-align: center; cursor: pointer; }
 .tok-hint { font-size: 10px; color: var(--text3); line-height: 1.5; margin-top: 10px; }
-
-/* ── Inline note ── */
 .inline-note { font-size: 11px; color: var(--text3); line-height: 1.55; margin-top: 6px; }
 .tag { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; border-radius: 4px; padding: 1px 6px; }
 .tag-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.2); }
 .tag-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(210,153,34,0.2); }
 .tag-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,0.2); }
 .tag-blue { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(88,166,255,0.2); }
+.hrv-dot-row { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+.hrv-dot { background: var(--surface2); border: 1px solid var(--border); border-radius: 7px; padding: 5px 8px; text-align: center; min-width: 48px; }
+.hrv-dot-label { font-size: 9px; color: var(--text3); margin-bottom: 2px; }
+.hrv-dot-val { font-size: 13px; font-weight: 700; }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text3); font-size: 13px; line-height: 1.6; }
+.update-flash { animation: flashIn 0.5s ease; }
+@keyframes flashIn { from { opacity: 0.3; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.checkin-setup-hint { font-size: 11px; color: var(--yellow); cursor: pointer; text-decoration: underline; }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════ TOPBAR -->
 <div class="topbar">
   <div>
     <div class="topbar-name">Todd · Coach</div>
-    <div class="topbar-date">Friday, April 17, 2026</div>
-    <div class="topbar-updated">Updated 2:08 PM · Apr 18</div>
+    <div class="topbar-date" id="topbar-date"></div>
+    <div class="topbar-updated" id="topbar-updated">Connecting…</div>
   </div>
   <div style="display:flex;align-items:center;gap:8px">
-    <div class="live-pill"><span class="live-dot"></span>Live</div>
-    <div id="tok-gear" onclick="openTokenModal()" title="Setup write-back token"
-         style="font-size:16px;cursor:pointer;opacity:0.45;line-height:1">⚙</div>
+    <div id="live-pill" class="live-pill"><span class="live-dot"></span><span id="live-label">Live</span></div>
+    <div id="tok-gear" onclick="openTokenModal()" title="Setup write-back token" style="font-size:16px;cursor:pointer;opacity:0.45;line-height:1">⚙</div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ TABS -->
 <div class="tabs">
   <div class="tab-btn active" onclick="switchTab('brief')">Brief</div>
   <div class="tab-btn" onclick="switchTab('sleep')">Sleep</div>
@@ -474,767 +353,12 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
   <div class="tab-btn" onclick="switchTab('ask')">Ask Coach</div>
 </div>
 
+<div id="tab-brief"    class="tab-content active"><div class="empty-state">Loading…</div></div>
+<div id="tab-sleep"    class="tab-content"><div class="empty-state">Loading…</div></div>
+<div id="tab-training" class="tab-content"><div class="empty-state">Loading…</div></div>
+<div id="tab-nutrition"class="tab-content"><div class="empty-state">Loading…</div></div>
+<div id="tab-ask"      class="tab-content"></div>
 
-<!-- ══════════════════════════════════════════════════════
-     BRIEF TAB
-══════════════════════════════════════════════════════ -->
-<div id="tab-brief" class="tab-content active">
-
-  <!-- ─── MORNING CHECK-IN ─── -->
-  <div class="card" id="checkin-card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
-      <div class="card-title" style="margin-bottom:0">Morning Check-in</div>
-      <span id="checkin-no-token" class="checkin-setup-hint" onclick="openTokenModal()" style="display:none">⚙ Setup to enable</span>
-    </div>
-
-    <div id="checkin-done-msg" class="checkin-done-msg">
-      <div class="checkin-done-time-line">✅ Logged · <span class="checkin-done-time"></span></div>
-      <div class="checkin-done-flags-line checkin-done-flags"></div>
-    </div>
-
-    <div id="checkin-flags">
-      <div class="checkin-flag-row">
-        <div class="checkin-flag-label">Migraine / Headache</div>
-        <div class="checkin-yn">
-          <button class="yn-btn" data-flag="migraine_headache" data-val="yes" onclick="ynTap(this)">Yes</button>
-          <button class="yn-btn" data-flag="migraine_headache" data-val="no"  onclick="ynTap(this)">No</button>
-        </div>
-      </div>
-      <div class="checkin-flag-row">
-        <div class="checkin-flag-label">Poor Sleep</div>
-        <div class="checkin-yn">
-          <button class="yn-btn" data-flag="poor_sleep" data-val="yes" onclick="ynTap(this)">Yes</button>
-          <button class="yn-btn" data-flag="poor_sleep" data-val="no"  onclick="ynTap(this)">No</button>
-        </div>
-      </div>
-      <div class="checkin-flag-row">
-        <div class="checkin-flag-label">High Fatigue</div>
-        <div class="checkin-yn">
-          <button class="yn-btn" data-flag="high_fatigue" data-val="yes" onclick="ynTap(this)">Yes</button>
-          <button class="yn-btn" data-flag="high_fatigue" data-val="no"  onclick="ynTap(this)">No</button>
-        </div>
-      </div>
-      <div class="checkin-flag-row">
-        <div class="checkin-flag-label">Joint Pain</div>
-        <div class="checkin-yn">
-          <button class="yn-btn" data-flag="joint_pain" data-val="yes" onclick="ynTap(this)">Yes</button>
-          <button class="yn-btn" data-flag="joint_pain" data-val="no"  onclick="ynTap(this)">No</button>
-        </div>
-      </div>
-      <div class="checkin-flag-row">
-        <div class="checkin-flag-label">High Stress</div>
-        <div class="checkin-yn">
-          <button class="yn-btn" data-flag="high_stress" data-val="yes" onclick="ynTap(this)">Yes</button>
-          <button class="yn-btn" data-flag="high_stress" data-val="no"  onclick="ynTap(this)">No</button>
-        </div>
-      </div>
-    </div>
-
-    <button class="checkin-submit-btn" id="checkin-submit-btn" onclick="submitCheckin()">Log Check-in → Coach</button>
-  </div>
-
-  <!-- Hero readiness call -->
-  <div class="hero-card">
-    <div class="hero-tier" style="display:flex;justify-content:space-between;align-items:center">
-      <span>🟡 Yellow · Apr 18</span>
-      <span class="lock-badge">🔒 Updated · 6:30 AM</span>
-    </div>
-    <div class="hero-call" style="margin-top:8px">Sprint gate closed — HRV 29.1ms. Strength session on. Fasted walk done ✅.</div>
-    <div class="hero-basis">HRV 29.1ms (Hume) / 26ms avg (Oura) — 4th consecutive decline (51.3→38.9→31.0→29.1ms), now 3.4ms below 32.5ms baseline. Sprint gate CLOSED (need ≥35ms). Recovery 52% Normal (up from 47%). Oura sleep 83 GOOD, 6h9m, 87% efficiency. Fasted walk completed 4:51–5:28 AM, 2.16mi, 99 bpm avg ✅.</div>
-    <div class="hero-insight">The decline is decelerating — the gap narrowed to just −1.9ms overnight versus −7.9ms two nights ago. That's the classic bottom-forming pattern after accumulated load, and Friday's rest day is doing what it was supposed to do. Sleep quality held up (Oura 83, 87% efficiency, good REM at 26%), but the HRV hasn't rebounded yet — so the sprint gate stays closed. Strength work is on: the Motra Saturday session is the right frame. Keep HR below 122, stay inside 65 minutes, and pay attention to KB Swings and Cable Pull Through — both will spike toward threshold at these loads. Tonight's bedtime is the most important variable remaining in this week. 9 PM gives Sunday the best shot at clearing the gate.</div>
-  </div>
-
-  <!-- Quick stats -->
-  <div class="stat-grid">
-    <div class="stat-box">
-      <div class="stat-label">HRV</div>
-      <div class="stat-val" style="color:var(--yellow)">29.1<span class="stat-unit"> ms</span></div>
-      <div class="stat-note">↓ from 31.0ms · −1.9ms</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Sleep</div>
-      <div class="stat-val" style="color:var(--yellow)">6h9m</div>
-      <div class="stat-note">Oura 83 GOOD · Eff 87%</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">RHR</div>
-      <div class="stat-val" style="color:var(--green)">54<span class="stat-unit"> bpm</span></div>
-      <div class="stat-note">Lowest · avg 60</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Recovery</div>
-      <div class="stat-val" style="color:var(--yellow)">52<span class="stat-unit">%</span></div>
-      <div class="stat-note">Hume Normal ↑ from 47%</div>
-    </div>
-  </div>
-
-  <!-- Watch for today -->
-  <div class="card">
-    <div class="card-title">⚠ Watch For Today <span class="lock-badge" style="float:right">🔒 Locked</span></div>
-    <div class="watch-list">
-      <div class="watch-item"><span class="watch-icon">🚫</span><span><strong>Sprint session is OFF.</strong> HRV 29.1ms — sprint gate requires ≥35ms. Do not attempt sprint intervals today. The Motra Saturday strength template is the correct session.</span></div>
-      <div class="watch-item"><span class="watch-icon">⚠</span><span><strong>HR cap on KB Swings and Cable Pull Through.</strong> KB Swings (3×10 @ 20kg) and Cable Pull Through (3×15 @ 19kg) will push HR toward threshold fast. If you hit 120 bpm, extend rest before the next set — don't cut the exercise, slow the transitions.</span></div>
-      <div class="watch-item"><span class="watch-icon">📉</span><span><strong>Decline is decelerating — don't mistake that for clearance.</strong> −1.9ms overnight vs −7.9ms the night before is a good sign. But the rebound depends on tonight's sleep, not today's effort. Bed by 9 PM. Sunday is the real gate.</span></div>
-      <div class="watch-item"><span class="watch-icon">🥩</span><span><strong>Protein anchor today.</strong> 6h9m sleep with moderate sleep debt tends to drive carb cravings. Hit 150g protein before dinner so tonight's choice doesn't decide the total.</span></div>
-    </div>
-  </div>
-
-  <!-- Progress snapshot -->
-  <div class="card">
-    <div class="card-title">Block 1 · Week 1 — Progress</div>
-    <div style="font-size:13px;font-weight:700;margin-bottom:8px">2/3 sessions complete · <strong>Fri session loading</strong> 🏋️</div>
-    <ul class="bullet-list">
-      <li>Mon ✅ Pull + Glute Hinge · Wed ✅ Push + Quad · <strong>Fri = Athletic Mixed / Corrective Close</strong></li>
-      <li>Volume baseline locked at 6,300 kg (Mon + Wed). Consistent anchor for Week 2 comparison.</li>
-      <li>HRV arc this week: 51.3 → 38.9 → 31.0ms. Double session Thu accelerated the drop. Sleep quality (Oura 86) is the counter-signal — body is managing the load.</li>
-    </ul>
-  </div>
-
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════
-     SLEEP TAB
-══════════════════════════════════════════════════════ -->
-<div id="tab-sleep" class="tab-content">
-
-  <!-- Coach interpretation — LOCKED at morning data arrival -->
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <div class="card-title" style="margin-bottom:0">Sleep · Apr 18</div>
-      <span class="lock-badge">🔒 Locked · 6:30 AM</span>
-    </div>
-    <div class="coach-para-header">Coach's Read</div>
-    <div class="coach-para">
-      Oura 83 GOOD, 6h9m asleep, 87% efficiency — solid quality but shorter than ideal. The body clock aligned with chronotype and sleep time held (9:37 PM in, 4:43 AM out), which is good discipline. REM at 1h35m/26% is normal range; deep sleep at 51m/14% is slightly down from Thursday's 1h13m but acceptable on a rest day. The key structural fact: HRV dropped only 1.9ms overnight (31.0→29.1ms), compared to 7.9ms the night before and 12.4ms the night before that. The rate of decline is collapsing. That's the bottom-forming signal.
-    </div>
-    <div class="coach-para" style="padding-top:0">
-      Sleep debt moved slightly in the wrong direction — from −2h40m (Apr 17) to −2h29m (Hume) / −3h20m (Oura). The Oura figure is higher likely due to different sleep detection. Either way, it's still moderate. Tonight is the most important sleep of this recovery sequence. A 9 PM bedtime, no exceptions, is the single variable that determines whether Sunday's HRV clears the sprint gate or not.
-    </div>
-    <hr class="coach-divider">
-    <div class="coach-para-header">7-Day Trend</div>
-    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 11</div><div style="font-size:13px;font-weight:700;color:var(--red)">20ms</div></div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 12</div><div style="font-size:13px;font-weight:700;color:var(--yellow)">42ms</div></div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 13</div><div style="font-size:13px;font-weight:700;color:var(--red)">20ms</div></div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 14</div><div style="font-size:13px;font-weight:700;color:var(--yellow)">35ms</div></div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 15</div><div style="font-size:13px;font-weight:700;color:var(--green)">51ms</div></div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 16</div><div style="font-size:13px;font-weight:700;color:var(--yellow)">39ms</div></div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--text3)">Apr 17</div><div style="font-size:13px;font-weight:700;color:var(--yellow)">31ms</div></div>
-      <div style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:7px;padding:5px 8px;text-align:center"><div style="font-size:9px;color:var(--yellow)">Today</div><div style="font-size:13px;font-weight:700;color:var(--yellow)">29ms</div></div>
-    </div>
-    <div class="inline-note">Baseline: 32.5ms. Sprint gate: ≥35ms. 4th consecutive decline but rate slowing (−1.9ms overnight vs −7.9ms prior). Bottom-forming pattern — rebound window is Sunday.</div>
-  </div>
-
-  <!-- Raw numbers — reference only -->
-  <div class="card">
-    <div class="card-title">Raw Data · Apr 18 <span style="color:var(--text3);font-size:9px;font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px">(reference)</span></div>
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
-      <div>
-        <div class="card-value" style="color:var(--yellow)">6h9m</div>
-        <div class="card-sub">Oura 83 GOOD · Eff 87%</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-size:12px;color:var(--text2)">Debt: −2h29m</div>
-        <div style="font-size:10px;color:var(--text3)">Moderate · Hume</div>
-      </div>
-    </div>
-    <div class="section-label" style="margin-top:0">Sleep Stages (Oura)</div>
-    <div class="sleep-stage-row">
-      <div class="stage-label">Deep</div>
-      <div class="stage-bar-wrap"><div class="stage-bar" style="width:14%;background:#58a6ff"></div></div>
-      <div class="stage-val">51m · 14%</div>
-    </div>
-    <div class="sleep-stage-row">
-      <div class="stage-label">REM</div>
-      <div class="stage-bar-wrap"><div class="stage-bar" style="width:26%;background:#a371f7"></div></div>
-      <div class="stage-val">1h35m · 26% <span class="tag tag-green">Normal</span></div>
-    </div>
-    <div class="sleep-stage-row">
-      <div class="stage-label">Light</div>
-      <div class="stage-bar-wrap"><div class="stage-bar" style="width:60%;background:#3fb950"></div></div>
-      <div class="stage-val">3h43m · 60%</div>
-    </div>
-    <div class="sleep-stage-row">
-      <div class="stage-label">Awake</div>
-      <div class="stage-bar-wrap"><div class="stage-bar" style="width:13%;background:#f85149"></div></div>
-      <div class="stage-val">0h58m</div>
-    </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--text2)">
-      SpO₂ 94.9% (Hume) · Breathing: Good · Latency 6m · Bedtime 8:34 PM · Wake 4:59 AM
-    </div>
-  </div>
-
-  <div class="stat-grid">
-    <div class="stat-box">
-      <div class="stat-label">RHR Lowest</div>
-      <div class="stat-val" style="color:var(--green)">57<span class="stat-unit"> bpm</span></div>
-      <div class="stat-note">avg 62 bpm · sleep</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Stress Avg</div>
-      <div class="stat-val" style="color:var(--yellow)">28</div>
-      <div class="stat-note">High 58 · Low 4</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Hume Recovery</div>
-      <div class="stat-val" style="color:var(--yellow)">47<span class="stat-unit">%</span></div>
-      <div class="stat-note">Sleep Bank −1h39m</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">HRV Oura avg</div>
-      <div class="stat-val" style="color:var(--yellow)">33<span class="stat-unit"> ms</span></div>
-      <div class="stat-note">Max 165ms in sleep</div>
-    </div>
-  </div>
-
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════
-     TRAINING TAB
-══════════════════════════════════════════════════════ -->
-<div id="tab-training" class="tab-content">
-
-  <!-- Week strip -->
-  <div class="card" style="padding:12px">
-    <div class="card-title" style="margin-bottom:8px">Block 1 · Week of Apr 13</div>
-    <div class="week-strip">
-      <div class="week-day done">
-        <div class="week-day-label">Mon</div>
-        <div class="week-day-icon">✅</div>
-        <div class="week-day-type" style="color:var(--green)">Pull · Hinge</div>
-      </div>
-      <div class="week-day done">
-        <div class="week-day-label">Tue</div>
-        <div class="week-day-icon">✅</div>
-        <div class="week-day-type" style="color:var(--green)">Z1/Z2</div>
-      </div>
-      <div class="week-day done">
-        <div class="week-day-label">Wed</div>
-        <div class="week-day-icon">✅</div>
-        <div class="week-day-type" style="color:var(--green)">Push · Quad</div>
-      </div>
-      <div class="week-day done">
-        <div class="week-day-label">Thu</div>
-        <div class="week-day-icon">✅</div>
-        <div class="week-day-type" style="color:var(--green)">Double</div>
-      </div>
-      <div class="week-day done">
-        <div class="week-day-label">Fri</div>
-        <div class="week-day-icon">🚶</div>
-        <div class="week-day-type" style="color:var(--green)">Walk · Override</div>
-      </div>
-      <div class="week-day today">
-        <div class="week-day-label" style="color:var(--accent)">Sat</div>
-        <div class="week-day-icon">💪</div>
-        <div class="week-day-type" style="color:var(--accent)">Strength</div>
-      </div>
-      <div class="week-day">
-        <div class="week-day-label">Sun</div>
-        <div class="week-day-icon">📋</div>
-        <div class="week-day-type">Plan Wk2</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── SESSION MANAGEMENT ─── -->
-  <div class="card">
-    <div class="card-title">Today's Session Status</div>
-    <div class="smgmt-actions">
-      <div class="smgmt-btn" id="smgmt-done" onclick="smgmtTap('done')">✅<br>Done as<br>Planned</div>
-      <div class="smgmt-btn" id="smgmt-rest" onclick="smgmtTap('rest')">😴<br>Rest<br>Day</div>
-      <div class="smgmt-btn" id="smgmt-move" onclick="smgmtTap('move')">📅<br>Move<br>Session</div>
-    </div>
-
-    <!-- Rest detail -->
-    <div class="smgmt-detail" id="smgmt-rest-detail">
-      <div class="smgmt-chip-label">Reason</div>
-      <div class="smgmt-chips">
-        <div class="smgmt-chip" onclick="selectReason(this,'migraine')">Migraine</div>
-        <div class="smgmt-chip" onclick="selectReason(this,'fatigue')">Fatigue</div>
-        <div class="smgmt-chip" onclick="selectReason(this,'illness')">Illness</div>
-        <div class="smgmt-chip" onclick="selectReason(this,'travel')">Travel</div>
-        <div class="smgmt-chip" onclick="selectReason(this,'other')">Other</div>
-      </div>
-      <button class="smgmt-confirm-btn" onclick="clickConfirmRest()">Confirm Rest Day</button>
-    </div>
-
-    <!-- Move detail -->
-    <div class="smgmt-detail" id="smgmt-move-detail">
-      <div class="smgmt-chip-label">Move to</div>
-      <div class="smgmt-chips" id="smgmt-date-btns"></div>
-      <button class="smgmt-confirm-btn" onclick="clickConfirmMove()">Confirm Move</button>
-    </div>
-
-    <div class="smgmt-confirmed" id="smgmt-confirmed"></div>
-  </div>
-
-  <!-- ─── UPCOMING SESSION ─── -->
-  <div class="upcoming-card">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div class="upcoming-label">⬆ Up Next · Saturday Apr 18</div>
-      <span class="lock-badge" style="background:rgba(210,153,34,0.15);border-color:rgba(210,153,34,0.4);color:var(--yellow)">📅 Moved from Apr 17</span>
-    </div>
-    <div class="upcoming-title">Athletic Mixed / Corrective Close</div>
-    <div class="upcoming-sub">Floor 3 → Floor 2 → Floor 3 · Time cap: <strong style="color:var(--red)">60 min hard</strong> · Gate: HRV ≥35ms + migraine resolved</div>
-
-    <div class="why-para" style="background:rgba(210,153,34,0.08);border:1px solid rgba(210,153,34,0.25);border-radius:8px;padding:10px 12px;margin-bottom:10px">
-      ⚠️ <strong>Session Override — Apr 17 → Apr 18.</strong> Migraine + high fatigue flagged at 8:35 AM. This session moves to Saturday under a double gate condition: HRV must rebound to ≥35ms AND migraine must be fully resolved. If either condition fails, push to Sunday or treat Saturday as Z2 cardio only. Sprint protocol (Apr 19) is on hold pending Saturday's readiness.
-    </div>
-    <div class="why-para">
-      Saturday closes Week 1 with the pattern that matters most for your structural priorities: horizontal pulling. Meadows Row and Chest-Supported Row are directly targeting your right-side dominance and shoulder imbalance — the two issues most flagged in your AI assessment. Left side leads on everything unilateral. The Cable Pull-Through gives you hip hinge mechanics without loading the OA joint — posterior chain work, no joint stress. The finish block isn't conditioning accessory work — KB Swing and Suitcase Carry address the anti-rotation weakness and asymmetrical carry strength your Hume trunk "Low" rating is telling us to fix.
-    </div>
-    <div class="why-para" style="margin-bottom:0">
-      Time cap is still 60 minutes hard. Saturday also had the Sprint Block scheduled (Apr 19 originally, but moved to Apr 18 for potential same-day stacking). Do NOT attempt both Athletic Mixed + Sprints on Saturday. Athletic Mixed first, full recovery, then reassess sprint protocol for a separate Sunday session if HRV permits.
-    </div>
-
-    <hr class="coach-divider" style="margin:14px 0">
-
-    <!-- PREP BLOCK -->
-    <div class="block-section">
-      <div class="block-header">
-        <span>PREP</span>
-        <span class="block-floor">Floor 3</span>
-        <span class="block-time">10 min</span>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">Open Book Stretch</div>
-        <div class="ex-prescription">1 × 8 each side · slow</div>
-        <div class="ex-note">Start left. Thoracic rotation — sets range of motion for every row that follows.</div>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">Banded Hip Abduction</div>
-        <div class="ex-prescription">2 × 15 each side</div>
-        <div class="ex-note">Standing or side-lying. Glute activation before hinge work — non-negotiable with mild OA.</div>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">Hanging Scapular Pull</div>
-        <div class="ex-prescription">2 × 8 · controlled</div>
-        <div class="ex-note">Dead hang, depress and retract scapulae only. No elbow bend. Primes pull pattern and shoulder stability.</div>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">Band Pull-Aparts</div>
-        <div class="ex-prescription">2 × 15 · elbows soft</div>
-        <div class="ex-note">Rear delt and external rotation primer. Shoulder imbalance correction starts here.</div>
-      </div>
-    </div>
-
-    <!-- BLOCK A -->
-    <div class="block-section">
-      <div class="block-header">
-        <span>BLOCK A</span>
-        <span class="block-floor">Floor 2</span>
-        <span class="block-time">18 min</span>
-      </div>
-      <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Superset A1 + A2 · Rest 90 sec after each pair</div>
-      <div class="exercise-row">
-        <div class="ex-name">A1 · Meadows Row</div>
-        <div class="ex-prescription">3 × 10 each side · Left first</div>
-        <div class="ex-note">Single-arm landmine row. Heavy horizontal pull — drives left-side activation and right-dominance correction. Full retraction at top, control the descent.</div>
-        <div class="ex-footer">
-          <span class="ex-alt-label">Swap:</span>
-          <span class="ex-alts">Cable Single-Arm Row · DB Chest-Supported Row · TRX Row</span>
-          <button class="ex-change-btn" onclick="toggleChange('a1')">Change</button>
-        </div>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">A2 · Cable Pull-Through</div>
-        <div class="ex-prescription">3 × 15 · hip hinge pattern</div>
-        <div class="ex-note">Hip hinge with posterior chain drive — no deep hip flexion, no joint loading. Glute-led extension. This is the safe hinge for your OA.</div>
-        <div class="ex-footer">
-          <span class="ex-alt-label">Swap:</span>
-          <span class="ex-alts">KB Deadlift · RDL light · Good Morning</span>
-          <button class="ex-change-btn" onclick="toggleChange('a2')">Change</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- BLOCK B -->
-    <div class="block-section">
-      <div class="block-header">
-        <span>BLOCK B</span>
-        <span class="block-floor">Floor 2</span>
-        <span class="block-time">18 min</span>
-      </div>
-      <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Superset B1 + B2 · Rest 90 sec after each pair</div>
-      <div class="exercise-row">
-        <div class="ex-name">B1 · DB Chest-Supported Row</div>
-        <div class="ex-prescription">3 × 12 · neutral grip</div>
-        <div class="ex-note">Incline bench, arms hanging neutral. Eliminates lower back compensation — pure mid-back and rhomboids. Target: full retract, 1-sec hold at top.</div>
-        <div class="ex-footer">
-          <span class="ex-alt-label">Swap:</span>
-          <span class="ex-alts">Machine Row · Cable Row seated · Hammer Row</span>
-          <button class="ex-change-btn" onclick="toggleChange('b1')">Change</button>
-        </div>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">B2 · TRX Y-Raise</div>
-        <div class="ex-prescription">3 × 12 · slow tempo</div>
-        <div class="ex-note">Scapular stability and lower trap activation. This is the structural correction work — not optional. 3 seconds up, control down. Both arms must feel symmetrical.</div>
-        <div class="ex-footer">
-          <span class="ex-alt-label">Swap:</span>
-          <span class="ex-alts">Cable Face Pull · DB Rear Delt Raise · Band Pull-Apart</span>
-          <button class="ex-change-btn" onclick="toggleChange('b2')">Change</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- BLOCK C -->
-    <div class="block-section">
-      <div class="block-header">
-        <span>BLOCK C — Finish</span>
-        <span class="block-floor">Floor 3</span>
-        <span class="block-time">12 min</span>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">KB Swing</div>
-        <div class="ex-prescription">3 × 10 · explosive</div>
-        <div class="ex-note">True hip hinge power — not a squat. Hip drive to horizontal, glutes contract at the top. This is the athletic piece of the session. Fun factor.</div>
-        <div class="ex-footer">
-          <span class="ex-alt-label">Swap:</span>
-          <span class="ex-alts">Cable Pull-Through × 12 · Box Hip Hinge · Med Ball Hip Pop</span>
-          <button class="ex-change-btn" onclick="toggleChange('c1')">Change</button>
-        </div>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">Suitcase Carry</div>
-        <div class="ex-prescription">3 × 25m · Left hand only</div>
-        <div class="ex-note">Anti-lateral flexion — left hand loads the weaker side of the asymmetry. Walk tall, no lean. This is core work, not cardio. Breathing steady throughout.</div>
-        <div class="ex-footer">
-          <span class="ex-alt-label">Swap:</span>
-          <span class="ex-alts">Farmer Carry both · Offset KB Carry · Pallof Press × 12</span>
-          <button class="ex-change-btn" onclick="toggleChange('c2')">Change</button>
-        </div>
-      </div>
-      <div class="exercise-row">
-        <div class="ex-name">Dead Bug</div>
-        <div class="ex-prescription">2 × 8 each side · slow</div>
-        <div class="ex-note">Low back flat to the floor throughout. Opposite arm-leg extension, breathe out on extension. Anti-extension core — closes the trunk weakness pattern every session.</div>
-        <div class="ex-footer">
-          <span class="ex-alt-label">Swap:</span>
-          <span class="ex-alts">Plank 30 sec · Bird Dog × 8 · Hollow Hold</span>
-          <button class="ex-change-btn" onclick="toggleChange('c3')">Change</button>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- end upcoming-card -->
-
-  <!-- Notes to Coach input -->
-  <div class="card">
-    <div class="card-title">Notes to Coach</div>
-    <textarea class="coach-q-input" rows="3" placeholder="Anything you want Coach to know before Friday's session... fatigue, joint issues, time pressure, etc."></textarea>
-    <button class="coach-q-submit" style="background:var(--surface2);color:var(--text2);border:1px solid var(--border);">Send to Coach</button>
-  </div>
-
-  <!-- ─── TODAY'S WALK — Apr 17 ─── -->
-  <!-- ─── TODAY'S SESSION — Apr 18 ─── -->
-  <div class="session-review-card" style="border-color:rgba(88,166,255,0.3)">
-    <div class="review-label">
-      <span class="status-pill pill-blue">✓ This Morning</span>
-    </div>
-    <div class="review-session-title">Saturday Apr 18 — Strength Training · WorldGym</div>
-    <div class="review-stats">
-      <div class="review-stat"><strong>1:02:39</strong> duration ✅</div>
-      <div class="review-stat"><strong>3,959 kg</strong> volume</div>
-      <div class="review-stat"><strong>114 bpm</strong> avg HR ✅</div>
-      <div class="review-stat"><strong>265</strong> total reps</div>
-      <div class="review-stat"><strong>465 kcal</strong> active</div>
-      <div class="review-stat"><strong>−49 bpm</strong> HR recovery 🔝</div>
-    </div>
-    <div class="coach-para-header">Coach's Read</div>
-    <div class="coach-para" style="padding-top:0">
-      Yellow day, but you didn't train yellow. Volume up 18% above your 14-day average — Motra flagged a Strength Intensity Spike — and the HR stayed at 114 avg the whole hour. That's the combination you're chasing: more weight, same heart. HR recovery came in at −49 bpm post-session, which lands in the Superior tier for your age. Your cardiovascular system is more resilient than this morning's HRV suggested. Posterior chain emphasis exactly right: Lats 24%, Glutes 17%, Traps 9% — correction targets hit. One flag: TRX Y Raise dropped 12 → 9 reps on set 2. Shoulder endurance ceiling showing up again — hold 12 on both sets next Saturday before touching load. Morning fasted walk (34 min, 99 bpm) also logged — clean Zone 1 on a Yellow day.
-    </div>
-    <!-- ── Exercise feedback ── -->
-    <div style="margin-top:12px">
-      <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Exercise Notes</div>
-      <div id="exfb-apr18" style="display:flex;flex-direction:column;gap:6px">
-        <!-- each row: name + 💬 toggle + inline textarea -->
-        <div class="exfb-row" data-ex="Pull-Up"><span class="exfb-name">Pull-Up</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="How did it feel? Reps easy / hard? Grip position? Next time..."></textarea></div>
-        <div class="exfb-row" data-ex="Barbell Single-Arm Landmine Row"><span class="exfb-name">Landmine Row</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="25 kg middle set — too heavy? Grip fatigue? Left vs right?"></textarea></div>
-        <div class="exfb-row" data-ex="Barbell Landmine Rotational Press"><span class="exfb-name">Landmine Rotational Press</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="First time in a while — shoulder feel OK? 27.5 kg manageable?"></textarea></div>
-        <div class="exfb-row" data-ex="TRX Y Raise"><span class="exfb-name">TRX Y Raise</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="Dropped 12→9 on set 2. Where did it fail — shoulder endurance or form breakdown?"></textarea></div>
-        <div class="exfb-row" data-ex="Kettlebell Swing"><span class="exfb-name">KB Swing</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="3×12 @ 20kg — HR spike? Hip feel?"></textarea></div>
-        <div class="exfb-row" data-ex="Kettlebell Suitcase Carry"><span class="exfb-name">Suitcase Carry</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="14kg felt heavier than 12? Left vs right side difference?"></textarea></div>
-        <div class="exfb-row" data-ex="Dead Hang"><span class="exfb-name">Dead Hang</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="30 sec holds — shoulder decompression felt? Grip gave out first?"></textarea></div>
-        <div class="exfb-row" data-ex="Dumbbell Chest-Supported Row"><span class="exfb-name">Chest-Supported Row</span><button class="exfb-btn" onclick="toggleExFb(this)">💬</button><textarea class="exfb-ta" placeholder="4.5 kg felt light — ready to go heavier? Mid-back engagement?"></textarea></div>
-      </div>
-      <div style="margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px">
-        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">Overall Session Rating</div>
-        <div id="session-rating-apr18" style="display:flex;gap:8px;margin-bottom:8px">
-          <button class="rating-btn" onclick="setRating(this,'apr18',1)">😴 1</button>
-          <button class="rating-btn" onclick="setRating(this,'apr18',2)">😐 2</button>
-          <button class="rating-btn" onclick="setRating(this,'apr18',3)">💪 3</button>
-          <button class="rating-btn" onclick="setRating(this,'apr18',4)">🔥 4</button>
-          <button class="rating-btn" onclick="setRating(this,'apr18',5)">⚡ 5</button>
-        </div>
-        <textarea id="session-note-apr18" class="coach-q-input" rows="2" placeholder="Overall feel, energy, anything the coach should know about today..."></textarea>
-        <button class="coach-q-submit" onclick="submitSessionFeedback('2026-04-18','apr18')" style="margin-top:6px">Save & Sync to Coach</button>
-        <div id="exfb-done-apr18" style="display:none;font-size:11px;color:var(--green);margin-top:6px">✅ Feedback saved to Coach</div>
-      </div>
-    </div>
-    <div class="lock-badge" style="margin-top:10px">🔒 Locked · Written Apr 18 post-session</div>
-  </div>
-
-  <div class="session-review-card" style="border-color:rgba(63,185,80,0.3)">
-    <div class="review-label">
-      <span class="status-pill pill-green">✓ Yesterday</span>
-    </div>
-    <div class="review-session-title">Friday Apr 17 — Outdoor Walk · Beitun District</div>
-    <div class="review-stats">
-      <div class="review-stat"><strong>41:29</strong> duration</div>
-      <div class="review-stat"><strong>2.24 mi</strong> distance</div>
-      <div class="review-stat"><strong>95 bpm</strong> avg HR ✅</div>
-      <div class="review-stat"><strong>106 bpm</strong> peak ✅</div>
-      <div class="review-stat"><strong>169 kcal</strong> active</div>
-      <div class="review-stat"><strong>Easy (3/5)</strong> effort</div>
-    </div>
-    <div class="coach-para-header">Coach's Read</div>
-    <div class="coach-para" style="padding-top:0">
-      Right call on a Yellow day. HRV at 31ms (3rd consecutive drop from 51 → 39 → 31ms) means the CNS is taxed from the double session Tuesday — but you didn't sit still. 41 minutes at 95 bpm avg / 106 peak is pure parasympathetic stimulus. No HR drift, no effort creep. Mile 2 was actually faster than Mile 1 at the same HR. That's not a fitness win — that's a body warming up and loosening. On a Yellow readiness day before a 60-minute strength session, this is exactly the correct use of your early morning.
-    </div>
-    <div class="coach-para" style="padding-top:0">
-      ⚠️ Update (8:35 AM): Migraine + high fatigue flags came in after the walk. Friday Athletic Mixed has been moved to Saturday Apr 18. The walk is where today ends — right call. Rest, hydrate (Pocari or coconut water), and focus on a 9:00 PM bedtime. Saturday gate: HRV ≥35ms AND migraine resolved before any intensity work.
-    </div>
-    <div class="lock-badge" style="margin-top:6px">🔒 Locked · Written Apr 17 post-walk</div>
-  </div>
-
-  <!-- ─── TODAY'S SESSION — Apr 16 ─── -->
-  <div class="session-review-card" style="border-color:rgba(63,185,80,0.3)">
-    <div class="review-label">
-      <span class="status-pill pill-green">✓ Completed Today</span>
-    </div>
-    <div class="review-session-title">Thursday Apr 16 — Indoor Cycle · Tanzi District</div>
-    <div class="review-stats">
-      <div class="review-stat"><strong>30:12</strong> duration</div>
-      <div class="review-stat"><strong>100 bpm</strong> avg HR ✅</div>
-      <div class="review-stat"><strong>109 bpm</strong> peak ✅</div>
-      <div class="review-stat"><strong>143 kcal</strong> active</div>
-      <div class="review-stat"><strong>Easy (2/5)</strong> effort</div>
-    </div>
-    <div class="coach-para-header">Coach's Read</div>
-    <div class="coach-para" style="padding-top:0">
-      Day-after-heavy-session execution was exactly right. HR stayed at 100 bpm avg and peaked at 109 — well inside the 122 cap — on the same day your HRV was at 44ms post-88-minute push. You showed up, kept it short, kept it easy. That's the protocol. This is the same session you ran Apr 14 (31 min, avg HR 100, Easy) — clean bookend for the week's strength days.
-    </div>
-    <div class="coach-para" style="padding-top:0">
-      One flag to carry forward: Hume Pod logged body water at 37.6% this morning — Low. The Liquid IV at 7:38 AM was the right call, but 30 minutes of cycling on a recovery day means hydration needs to be a priority through the rest of today, especially heading into Friday's 60-minute strength session.
-    </div>
-    <div class="lock-badge" style="margin-top:6px">🔒 Locked · Written Apr 16 post-session</div>
-  </div>
-
-  <!-- ─── LAST SESSION REVIEW ─── -->
-  <div class="session-review-card">
-    <div class="review-label">
-      <span class="status-pill pill-green">✓ Completed</span>
-    </div>
-    <div class="review-session-title">Wednesday Apr 15 — Push + Quad / Anti-Rotation</div>
-    <div class="review-stats">
-      <div class="review-stat"><strong>6,300 kg</strong> volume</div>
-      <div class="review-stat"><strong>88 min</strong> <span class="tag tag-red">23 over</span></div>
-      <div class="review-stat"><strong>118 bpm</strong> avg HR ✅</div>
-      <div class="review-stat"><strong>154 bpm</strong> peak <span class="tag tag-red">⚠</span></div>
-    </div>
-    <div class="coach-para-header">Coach's Review</div>
-    <div class="coach-para" style="padding-top:0">
-      You matched Monday's 6,300 kg exactly — that's a meaningful consistency signal in Week 1. The strength work was solid: V-Squat jumped 40→50 kg with 13 reps on the final set, which is real progressive load, not just going through the motions. Pallof Press held at 5.7 kg across all 3 sets — the anti-rotation anchor is sticking. Corrective work was complete. All of that is a win.
-    </div>
-    <div class="coach-para" style="padding-top:0">
-      Here's what you fix on Friday: the session ran 88 minutes, and the peak HR hit 154 bpm. That's the same drift that's happened in 3 of your last 5 sessions — you feel good, the work is going well, and you keep going. The cost is a heavier recovery tax and a higher HR peak than a 65-minute cap would have produced. The 154 bpm peak is what put your HRV at 39ms instead of 45ms this morning. Friday's cap is 60 minutes. Not a suggestion. If the accessory block needs to be trimmed, trim it — the structural anchors come first.
-    </div>
-    <div class="lock-badge" style="margin-top:6px">🔒 Locked · Written Apr 15 post-session</div>
-  </div>
-
-  <!-- Saturday sprint block -->
-  <div class="card" style="border-color:rgba(240,136,62,0.3);background:rgba(240,136,62,0.05)">
-    <div class="card-title" style="color:var(--orange)">⚡ Saturday Apr 19 — Sprint Block (HGH Protocol)</div>
-    <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">Matrix Upright Bike · Floor 1 · 25–30 min standalone</div>
-    <ul class="bullet-list">
-      <li><strong>Gate condition:</strong> Saturday morning HRV ≥35ms AND sleep debt &lt;5h AND Friday session felt normal. Skip or reduce to 3×20 sec if any gate fails.</li>
-      <li><strong>Warm-up:</strong> 5 min easy pedaling. HR 85–100 bpm going in.</li>
-      <li><strong>Work:</strong> 4 × 20 sec ALL OUT. Resistance 8–10 dial. True maximal output. You will exceed 122 bpm — this is the point.</li>
-      <li><strong>Recovery:</strong> 3 min easy pedaling between efforts. Do not stop — keep legs moving.</li>
-      <li><strong>Cool-down:</strong> 5–8 min easy. HR below 110 bpm before leaving.</li>
-    </ul>
-    <div style="margin-top:10px;font-size:11px;color:var(--orange)">Week 1–2: 4×20 sec / 3 min rest · Progression to 5×20 sec starts Week 3 only if HRV trend supports it</div>
-    <div class="lock-badge" style="margin-top:8px">🔒 Locked · Block 1 Sprint Protocol</div>
-  </div>
-
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════
-     NUTRITION TAB
-══════════════════════════════════════════════════════ -->
-<div id="tab-nutrition" class="tab-content">
-
-  <!-- STICKY MACRO HEADER — always visible -->
-  <div class="macro-sticky">
-    <div class="macro-date-row">
-      <div>
-        <div class="macro-date-label">Sat Apr 18 · Training Day</div>
-        <div style="font-size:10px;color:var(--text3)">Target: 2,150 kcal ↑ updated</div>
-      </div>
-      <div style="text-align:right">
-        <div class="macro-kcal-live">1,198 <span class="macro-kcal-target">/ 2,150</span></div>
-        <div style="font-size:10px;color:var(--text3)">3 logged · day open</div>
-      </div>
-    </div>
-    <div class="macro-row">
-      <div class="macro-label">PROT</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:77%;background:var(--green)"></div></div>
-      <div class="macro-val">116g / 150g</div>
-    </div>
-    <div class="macro-row">
-      <div class="macro-label">CARB</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:34%;background:var(--purple)"></div></div>
-      <div class="macro-val">72g / 210g</div>
-    </div>
-    <div class="macro-row">
-      <div class="macro-label">FAT</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:69%;background:var(--yellow)"></div></div>
-      <div class="macro-val">50g / 72g</div>
-    </div>
-  </div>
-
-  <!-- Weight & body comp -->
-  <div class="card">
-    <div class="card-title">Weight & Body Comp</div>
-    <div class="weight-row">
-      <div class="weight-box">
-        <div class="weight-label">Weight (today)</div>
-        <div class="weight-val" style="color:var(--green)">165.3 <span style="font-size:12px;color:var(--text2)">lbs</span></div>
-        <div style="font-size:10px;color:var(--text3);margin-top:2px">Ocare3 5:49 AM · Apr 18</div>
-      </div>
-      <div class="weight-box">
-        <div class="weight-label">Goal</div>
-        <div class="weight-val" style="color:var(--accent)">159 <span style="font-size:12px;color:var(--text2)">lbs</span></div>
-        <div style="font-size:10px;color:var(--text3);margin-top:2px">6.3 lbs away</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
-        <div class="weight-label">BF%</div>
-        <div style="font-size:16px;font-weight:700;color:var(--text)">17.6% <span style="font-size:10px;color:var(--text3)">(Hume: 10.6%)</span></div>
-        <div style="font-size:9px;color:var(--text3)">Ocare3 BIA · Apr 17</div>
-      </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
-        <div class="weight-label">Visceral</div>
-        <div style="font-size:16px;font-weight:700;color:var(--yellow)">Lv 3</div>
-        <div style="font-size:9px;color:var(--text3)">Ocare3 BIA · Apr 17</div>
-      </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
-        <div class="weight-label">Muscle</div>
-        <div style="font-size:16px;font-weight:700;color:var(--green)">94.9 lb</div>
-        <div style="font-size:9px;color:var(--text3)">Hume Skeletal · Apr 17</div>
-      </div>
-    </div>
-    <div class="inline-note" style="margin-top:10px">Weekly avg 164.8 lbs (last week range 160.7–166.0). Goal 159 lbs — 6.3 lbs away. Weight at 6:33 AM today — Hume flagged non-optimal timing (rec: 5:03 AM). Body water 56.2% ✅ recovered from Low (37.6%) yesterday. Visceral Fat Lv 3.0 stable. Biological Age 30 vs chronological 57 — 27 years younger.</div>
-  </div>
-
-  <!-- Coach's nutrition callout -->
-  <div class="card">
-    <div class="card-title">Coach's Nutrition Call · Apr 18 <span class="lock-badge" style="float:right">🔒 Post-Session</span></div>
-    <div class="coach-para" style="padding-top:0;font-size:12px">
-      New target is 2,150 kcal / 150g P / 210g C / 72g F — effective today. The previous 2,000 kcal deficit was too aggressive for the amount of lean mass work you're doing. The extra 150 kcal goes toward carb fuel and training recovery, not fat. Workout shake opened strong: 490 kcal / 55g protein before the gym is exactly right. 1,660 kcal remaining over 3 meals.
-    </div>
-    <div class="coach-para" style="padding-top:0;font-size:12px">
-      Post-session window is open now. A second shake or solid meal hitting 30–40g protein should go in before noon. That puts you at ~95g by midday — then two more meals of 25–30g each closes the target cleanly. Fat budget is wide open at 59g remaining. Don't let the training day become a calorie catch-up problem by skipping lunch.
-    </div>
-  </div>
-
-  <!-- Today's meals section label -->
-  <div class="section-label" style="margin-top:4px">Today's Meals</div>
-
-  <!-- MEAL 1: Workout Shake · Apr 18 · 07:29 AM -->
-  <div class="meal-card">
-    <div class="meal-header">
-      <div class="meal-name">Workout Shake</div>
-      <div class="meal-time">7:29 AM</div>
-    </div>
-    <div class="meal-macros">490 kcal &nbsp;·&nbsp; P: 55g &nbsp;·&nbsp; C: 41g &nbsp;·&nbsp; F: 13g</div>
-    <div class="meal-coach-callout">
-      Pre-session fuel in the bank. 55g protein before the gym = 37% of daily target — the session math works. 490 kcal opens the day clean; 1,660 kcal remaining over 3 meals to hit 2,150. Priority: hit 95g more protein before end of day.
-    </div>
-  </div>
-
-  <!-- MEAL 2: Post Workout Shake · Apr 18 · 11:53 AM -->
-  <div class="meal-card">
-    <div class="meal-header">
-      <div class="meal-name">Post Workout Shake</div>
-      <div class="meal-time">11:53 AM</div>
-    </div>
-    <div class="meal-macros">220 kcal &nbsp;·&nbsp; P: 28g &nbsp;·&nbsp; C: 7g &nbsp;·&nbsp; F: 9g</div>
-    <div class="meal-coach-callout">
-      Post-session window captured. 28g protein inside the recovery window — exactly right after sprints. Running total: 83g protein / 710 kcal. Fat only 22g used — wide open. Two more meals need 34g protein to close the day.
-    </div>
-  </div>
-
-  <!-- MEAL 3: PokéPoké Poke Bowl · Apr 18 · 2:04 PM -->
-  <div class="meal-card">
-    <div class="meal-header">
-      <div class="meal-name">PokéPoké — Salmon Poke Bowl</div>
-      <div class="meal-time">2:04 PM</div>
-    </div>
-    <div class="meal-macros">488 kcal &nbsp;·&nbsp; P: 33g &nbsp;·&nbsp; C: 24g &nbsp;·&nbsp; F: 28g</div>
-    <div class="meal-coach-callout">
-      Same bowl as Apr 16 — your strongest template lunch. Double salmon + egg + crab = 33g clean protein. Fat at 28g (salmon fat + wasabi mayo + hummus) puts you at 50g / 72g for the day — 22g fat remaining. Dinner needs to stay lean: 30–35g protein under 20g fat closes the day. 34g protein to go.
-    </div>
-  </div>
-
-  <!-- Yesterday partial (migraine day, day not closed) -->
-  <div class="card" style="margin-top:12px">
-    <div class="card-title">Yesterday · Apr 17 <span class="lock-badge" style="float:right">⚠ Partial · Migraine Day</span></div>
-    <div class="macro-row">
-      <div class="macro-label">KCAL</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:46%;background:var(--text3)"></div></div>
-      <div class="macro-val" style="color:var(--text2)">992 / 2,000 · day not closed</div>
-    </div>
-    <div class="macro-row">
-      <div class="macro-label">PROT</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:62%;background:var(--yellow)"></div></div>
-      <div class="macro-val" style="color:var(--yellow)">93g / 150g · 57%</div>
-    </div>
-    <div class="macro-row">
-      <div class="macro-label">CARB</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:52%;background:var(--purple)"></div></div>
-      <div class="macro-val">98g / 190g</div>
-    </div>
-    <div class="macro-row">
-      <div class="macro-label">FAT</div>
-      <div class="macro-bar-wrap"><div class="macro-bar" style="width:36%;background:var(--text3)"></div></div>
-      <div class="macro-val">25g / 70g</div>
-    </div>
-    <div class="inline-note" style="margin-top:8px">Migraine hit mid-morning — 4 meals logged through 4:53 PM (pre-workout shake, post-workout shake, tomato mushroom soup, salmon nigiri). Day was never closed. Protein deficit was real at 57% — migraine reduced appetite and disrupted the back half of the day. Not a pattern failure.</div>
-  </div>
-
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════
-     ASK COACH TAB
-══════════════════════════════════════════════════════ -->
-<div id="tab-ask" class="tab-content">
-
-  <div class="coach-q-intro">
-    These questions help Coach know you more precisely — not generic answers, but the specific things that sharpen your program. Answer when you have a minute. There's no pressure and no wrong answers.
-  </div>
-
-  <!-- Questions rendered dynamically by JS — see cqInit() -->
-  <div id="coach-q-container"></div>
-
-  <div class="card" style="margin-top:4px">
-    <div class="card-title">Drop Anything for Coach</div>
-    <div style="font-size:11.5px;color:var(--text2);margin-bottom:10px;line-height:1.6">Feedback on a session, something that felt off, a pattern you've noticed, a question about the plan — put it here and Coach will process it at the next update.</div>
-    <textarea class="coach-q-input" rows="4" placeholder="Anything Coach should know..."></textarea>
-    <button class="coach-q-submit">Send to Coach</button>
-  </div>
-
-</div>
-
-
-<!-- ═══════════════════════════════════════════ TOKEN MODAL -->
 <div class="tok-overlay" id="tok-overlay">
   <div class="tok-modal">
     <div class="tok-title">🔑 Write-back Setup</div>
@@ -1242,290 +366,835 @@ svg.sparkline { width: 100%; height: 90px; overflow: visible; }
     <input class="tok-input" id="tok-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
     <button class="tok-save-btn" onclick="saveToken()">Save Token</button>
     <div class="tok-cancel" onclick="closeTokenModal()">Cancel</div>
-    <div class="tok-hint">Create at github.com/settings/tokens → repo scope required. Same token used by push_dashboard.py.</div>
+    <div class="tok-hint">Create at github.com/settings/tokens → repo scope required.</div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ BOTTOM NAV -->
 <div class="bottom-nav">
-  <div class="nav-btn active" onclick="switchTab('brief')" id="nav-brief">
-    <div class="nav-icon">📋</div><div class="nav-label">Brief</div>
-  </div>
-  <div class="nav-btn" onclick="switchTab('sleep')" id="nav-sleep">
-    <div class="nav-icon">💤</div><div class="nav-label">Sleep</div>
-  </div>
-  <div class="nav-btn" onclick="switchTab('training')" id="nav-training">
-    <div class="nav-icon">💪</div><div class="nav-label">Training</div>
-  </div>
-  <div class="nav-btn" onclick="switchTab('nutrition')" id="nav-nutrition">
-    <div class="nav-icon">🥗</div><div class="nav-label">Nutrition</div>
-  </div>
-  <div class="nav-btn" onclick="switchTab('ask')" id="nav-ask">
-    <div class="nav-icon">🤔</div><div class="nav-label">Ask Coach</div>
-  </div>
+  <div class="nav-btn active" onclick="switchTab('brief')"    id="nav-brief">    <div class="nav-icon">📋</div><div class="nav-label">Brief</div></div>
+  <div class="nav-btn"        onclick="switchTab('sleep')"    id="nav-sleep">    <div class="nav-icon">💤</div><div class="nav-label">Sleep</div></div>
+  <div class="nav-btn"        onclick="switchTab('training')" id="nav-training"> <div class="nav-icon">💪</div><div class="nav-label">Training</div></div>
+  <div class="nav-btn"        onclick="switchTab('nutrition')"id="nav-nutrition"><div class="nav-icon">🥗</div><div class="nav-label">Nutrition</div></div>
+  <div class="nav-btn"        onclick="switchTab('ask')"      id="nav-ask">      <div class="nav-icon">🤔</div><div class="nav-label">Ask</div></div>
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════
-//  TAB NAVIGATION
-// ════════════════════════════════════════════════════════
-const TAB_IDS = ['brief','sleep','training','nutrition','ask'];
-
-function switchTab(id) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  document.querySelectorAll('.tab-btn')[TAB_IDS.indexOf(id)].classList.add('active');
-  document.getElementById('nav-' + id).classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-function toggleChange(id) {
-  const btn = event.target;
-  btn.textContent = 'Noted ✓';
-  btn.style.color = 'var(--green)';
-  btn.style.borderColor = 'rgba(63,185,80,0.3)';
-  setTimeout(() => {
-    btn.textContent = 'Change';
-    btn.style.color = '';
-    btn.style.borderColor = '';
-  }, 2000);
-}
-
-// ════════════════════════════════════════════════════════
-//  ASK COACH — DYNAMIC QUESTION ROTATION
-// ════════════════════════════════════════════════════════
-const COACH_QUESTION_POOL = [
-  {
-    icon: '🧠',
-    text: 'When you walk into the gym, what\'s the clearest signal — physically or mentally — that it\'s going to be a good session?',
-    context: 'Not the data. What do YOU feel? Your subjective read before you start is something no app captures, and it matters for how Coach calibrates your warm-up and opening loads.',
-    rows: 3, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '🍫',
-    text: 'On the chocolate and sweets — is there a specific trigger, or does it feel more random?',
-    context: 'Boredom, post-dinner habit, social context, stress? One sentence is enough. Knowing the pattern helps Coach build a specific response rather than a generic note.',
-    rows: 3, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '⏰',
-    text: 'What time of day do you typically train, and is that fixed or variable depending on the week?',
-    context: 'This shapes when Coach should front-load your nutrition, when to expect meal logs, and how to read HRV in context of training timing.',
-    rows: 2, placeholder: 'e.g. 6am most days, sometimes afternoon on Fridays...'
-  },
-  {
-    icon: '😴',
-    text: 'What does a genuinely great night of sleep look and feel like for you — and how often does that actually happen?',
-    context: 'Oura captures the numbers, but your subjective feel matters separately. If they frequently disagree, that gap is a useful signal for Coach.',
-    rows: 3, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '💪',
-    text: 'Is there any exercise or movement you\'ve been avoiding — and what\'s the story behind that?',
-    context: 'Pain, boredom, past injury, or just not vibing with it? This helps Coach decide whether to reintroduce, substitute, or explicitly leave it out.',
-    rows: 3, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '🥗',
-    text: 'What\'s your go-to meal when you\'re low on energy and motivation to plan — and does it usually serve your protein target?',
-    context: 'The "lazy default" meal is one of the most important data points Coach can have. It shows up on your worst days, which is exactly when it matters most.',
-    rows: 2, placeholder: 'e.g. rice + eggs, convenience store chicken...'
-  },
-  {
-    icon: '📊',
-    text: 'When you see HRV trending down for a few days in a row, what\'s your gut reaction?',
-    context: 'Curiosity, frustration, resignation? Your emotional relationship with the data affects how Coach frames its calls and thresholds for you.',
-    rows: 2, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '🦴',
-    text: 'Where do you feel your structural imbalances most in everyday life — not just in training, but in how you move through the day?',
-    context: 'Carrying bags, reaching overhead, sitting, stairs? Real-world asymmetry signals often matter more than gym-specific ones.',
-    rows: 3, placeholder: 'e.g. right shoulder always feels tighter when I carry my bag...'
-  },
-  {
-    icon: '🎯',
-    text: 'If you had to pick ONE outcome from this training block — strength, aesthetics, or daily energy — which is actually most important to you right now?',
-    context: 'Not what you think you should say. What actually matters when you\'re honest about it? This shapes how Coach balances your program.',
-    rows: 2, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '😤',
-    text: 'What does the internal dialogue sound like when you\'re talking yourself out of a session?',
-    context: 'The specific excuse pattern is useful — it\'s usually the same 2–3 thoughts. Knowing your script helps Coach build a pre-emptive counter.',
-    rows: 3, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '🌙',
-    text: 'Do you notice what affects your sleep most — training timing, food late at night, stress, alcohol, or screen time?',
-    context: 'Even a rough pattern ("I always sleep worse after late carbs") helps Coach sequence your day more intentionally.',
-    rows: 2, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '🏋️',
-    text: 'Is there a movement or lift you used to be good at that you\'d like to get back to?',
-    context: 'History matters. If something felt athletic and capable before, there\'s a path back — and rebuilding that signal is motivating.',
-    rows: 2, placeholder: 'e.g. weighted pull-ups, landmine press, heavy KB swings...'
-  },
-  {
-    icon: '🤔',
-    text: 'What does "feeling recovered" actually feel like for you the morning after a hard session — physically and mentally?',
-    context: 'Your personal recovery signature is unique. Coach uses this to calibrate whether a yellow-tier day means "load as normal" or "back off 20%."',
-    rows: 3, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '🧂',
-    text: 'Are there foods that reliably affect how you feel or perform the next day — for better or worse?',
-    context: 'No judgment, just signal. A food-to-performance pattern — even an informal one — helps Coach flag days where you may be starting in a hole.',
-    rows: 2, placeholder: 'Your answer here...'
-  },
-  {
-    icon: '📅',
-    text: 'In the next 4 weeks, what\'s the biggest scheduling or life wildcard Coach should factor in?',
-    context: 'Travel, ministry load, family commitments, high-stress periods. These affect readiness and should adjust the plan before they show up in your HRV.',
-    rows: 2, placeholder: 'e.g. travel April 28–May 3, heavy preaching week coming...'
-  }
-];
-
-const CQ_ACTIVE_KEY   = 'coach_q_active';
-const CQ_ANSWERED_KEY = 'coach_q_answered';
-const CQ_ACTIVE_COUNT = 2;
-
-function cqGetActive()     { try { return JSON.parse(localStorage.getItem(CQ_ACTIVE_KEY)   || 'null'); } catch(e) { return null; } }
-function cqGetAnswered()   { try { return JSON.parse(localStorage.getItem(CQ_ANSWERED_KEY) || '[]');   } catch(e) { return []; } }
-function cqSaveActive(a)   { localStorage.setItem(CQ_ACTIVE_KEY,   JSON.stringify(a)); }
-function cqSaveAnswered(a) { localStorage.setItem(CQ_ANSWERED_KEY, JSON.stringify(a)); }
-
-function cqPickNext(excluding) {
-  let answered = cqGetAnswered();
-  const pool   = COACH_QUESTION_POOL.map((_,i) => i);
-  let available = pool.filter(i => !answered.includes(i) && !excluding.includes(i));
-  if (available.length === 0) {
-    // Full cycle complete — reset and start fresh (keep active excluded)
-    cqSaveAnswered([]);
-    available = pool.filter(i => !excluding.includes(i));
-  }
-  if (available.length === 0) return 0;
-  return available[Math.floor(Math.random() * available.length)];
-}
-
-function cqInit() {
-  let active = cqGetActive();
-  if (!active || active.length !== CQ_ACTIVE_COUNT) {
-    active = [];
-    for (let i = 0; i < CQ_ACTIVE_COUNT; i++) {
-      active.push(cqPickNext(active));
-    }
-    cqSaveActive(active);
-  }
-  cqRender(active);
-}
-
-function cqRender(active) {
-  const container = document.getElementById('coach-q-container');
-  if (!container) return;
-  container.innerHTML = '';
-  active.forEach((qi, slot) => {
-    const q = COACH_QUESTION_POOL[qi];
-    if (!q) return;
-    const card = document.createElement('div');
-    card.className = 'coach-q-card';
-    card.dataset.slot = slot;
-    card.dataset.qi   = qi;
-    card.innerHTML = `
-      <div class="coach-q-header">
-        <div class="coach-q-icon">${q.icon}</div>
-        <div>
-          <div class="coach-q-text">${q.text}</div>
-          <div class="coach-q-context">${q.context}</div>
-        </div>
-      </div>
-      <div class="coach-q-body">
-        <textarea class="coach-q-input" rows="${q.rows}" placeholder="${q.placeholder}"></textarea>
-        <button class="coach-q-submit" onclick="cqSubmit(this,${slot},${qi})">Send Answer to Coach</button>
-      </div>`;
-    container.appendChild(card);
-  });
-}
-
-function cqSubmit(btn, slot, qi) {
-  const textarea = btn.previousElementSibling;
-  if (!textarea || !textarea.value.trim()) return;
-
-  // Confirm sent
-  btn.textContent = '✓ Sent to Coach';
-  btn.style.background = 'var(--green)';
-  btn.disabled = true;
-  textarea.disabled = true;
-
-  // Mark answered
-  const answered = cqGetAnswered();
-  if (!answered.includes(qi)) { answered.push(qi); cqSaveAnswered(answered); }
-
-  // After brief pause, swap in a fresh question
-  setTimeout(() => {
-    const active = cqGetActive();
-    const newQi  = cqPickNext(active.filter((_,i) => i !== slot));
-    active[slot] = newQi;
-    cqSaveActive(active);
-
-    const card = btn.closest('.coach-q-card');
-    card.style.transition = 'opacity 0.3s, transform 0.3s';
-    card.style.opacity    = '0';
-    card.style.transform  = 'translateY(-8px)';
-
-    setTimeout(() => {
-      cqRender(active);
-      const newCard = document.querySelector(`.coach-q-card[data-slot="${slot}"]`);
-      if (newCard) {
-        newCard.style.opacity    = '0';
-        newCard.style.transform  = 'translateY(8px)';
-        newCard.style.transition = 'opacity 0.35s, transform 0.35s';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          newCard.style.opacity   = '1';
-          newCard.style.transform = 'translateY(0)';
-        }));
-      }
-    }, 320);
-  }, 1600);
-}
-
-
-// ════════════════════════════════════════════════════════
-//  GITHUB WRITE-BACK ENGINE
-// ════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════════
 const GH_OWNER  = 'toddblackhurst';
 const GH_REPO   = 'health-dashboard';
 const GH_BRANCH = 'main';
 const DB_PATH   = 'HEALTH_DATABASE.json';
+const RAW_URL   = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${DB_PATH}`;
+const API_URL   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${DB_PATH}`;
+const POLL_MS   = 60000;
 
-function getToken()    { return localStorage.getItem('gh_token') || ''; }
-function setToken(t)   { localStorage.setItem('gh_token', t.trim()); }
-function hasToken()    { return !!getToken(); }
+// ═══════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════
+let DB        = null;
+let lastHash  = '';
+let pollTimer = null;
 
+// ═══════════════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════════════
 function todayISO() {
   const d = new Date();
-  return d.getFullYear() + '-' +
-    String(d.getMonth()+1).padStart(2,'0') + '-' +
-    String(d.getDate()).padStart(2,'0');
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function fmtDate(iso) {
+  if (!iso) return '';
+  const [,m,d] = iso.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[parseInt(m)-1] + ' ' + parseInt(d);
+}
+function fmtDateLong(iso) {
+  if (!iso) return '';
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const d = new Date(iso + 'T12:00:00');
+  return days[d.getDay()] + ', ' + fmtDate(iso) + ', ' + iso.split('-')[0];
+}
+function fmtMins(m) {
+  if (!m) return '—';
+  const h = Math.floor(m/60);
+  const min = Math.round(m%60);
+  return h > 0 ? `${h}h${min > 0 ? min+'m' : ''}` : `${min}m`;
+}
+function fmtDuration(m) {
+  if (!m) return '—';
+  const h = Math.floor(m/60);
+  const min = Math.round(m%60);
+  return h > 0 ? `${h}:${String(min).padStart(2,'0')}` : `${min}m`;
+}
+function strHash(s) {
+  let h = 0;
+  for (let i = 0; i < Math.min(s.length, 2000); i++) {
+    h = ((h << 5) - h) + s.charCodeAt(i); h |= 0;
+  }
+  return (h >>> 0).toString(36) + s.length;
+}
+function getToken()  { return localStorage.getItem('gh_token') || ''; }
+function setToken(t) { localStorage.setItem('gh_token', t.trim()); }
+function hasToken()  { return !!getToken(); }
+
+function tierColors(tier) {
+  if (!tier) return { bg: 'rgba(88,166,255,0.1)', border: 'rgba(88,166,255,0.3)', text: '#58a6ff' };
+  const t = tier.toLowerCase();
+  if (t.includes('green'))  return { bg: 'rgba(63,185,80,0.1)',  border: 'rgba(63,185,80,0.3)',  text: '#3fb950' };
+  if (t.includes('yellow')) return { bg: 'rgba(210,153,34,0.1)', border: 'rgba(210,153,34,0.3)', text: '#d29922' };
+  if (t.includes('red'))    return { bg: 'rgba(248,81,73,0.1)',  border: 'rgba(248,81,73,0.3)',  text: '#f85149' };
+  return                             { bg: 'rgba(88,166,255,0.1)', border: 'rgba(88,166,255,0.3)', text: '#58a6ff' };
+}
+function hrvColor(hrv, baseline) {
+  const b = baseline || 32.5;
+  if (hrv >= b * 1.15) return 'var(--green)';
+  if (hrv >= b * 0.9)  return 'var(--yellow)';
+  return 'var(--red)';
+}
+function pct(val, max) { return Math.min(100, Math.round((val/max)*100)) + '%'; }
+
+function sparklineSVG(values, color, w, h) {
+  w = w || 280; h = h || 50;
+  if (!values || values.length < 2) return '';
+  const min = Math.min(...values), max = Math.max(...values);
+  const range = max - min || 1;
+  const pts = values.map((v, i) => {
+    const x = (i / (values.length-1)) * w;
+    const y = h - ((v - min) / range) * (h - 10) - 5;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const area = `M${pts[0]} ` + pts.slice(1).map(p => `L${p}`).join(' ') + ` L${w},${h} L0,${h} Z`;
+  const line = `M${pts[0]} ` + pts.slice(1).map(p => `L${p}`).join(' ');
+  return `<svg class="sparkline" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <defs><linearGradient id="sg_${color.replace(/[^a-z]/gi,'')}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0.02"/>
+    </linearGradient></defs>
+    <path d="${area}" fill="url(#sg_${color.replace(/[^a-z]/gi,'')})" />
+    <path d="${line}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${pts[pts.length-1].split(',')[0]}" cy="${pts[pts.length-1].split(',')[1]}" r="3" fill="${color}"/>
+  </svg>`;
 }
 
+function e(id) { return document.getElementById(id); }
+function qs(sel, root) { return (root||document).querySelector(sel); }
+
+// ═══════════════════════════════════════════════════════════
+//  DB FETCH + POLL
+// ═══════════════════════════════════════════════════════════
+async function fetchDb() {
+  try {
+    const r = await fetch(RAW_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const text = await r.text();
+    const hash = strHash(text);
+    if (hash === lastHash) return null;
+    lastHash = hash;
+    return JSON.parse(text);
+  } catch(err) {
+    console.warn('fetchDb failed:', err);
+    return null;
+  }
+}
+
+async function pollDb() {
+  const pill = e('live-pill');
+  const label = e('live-label');
+  if (pill) { pill.classList.add('syncing'); label.textContent = 'Syncing'; }
+  const db = await fetchDb();
+  if (pill) { pill.classList.remove('syncing'); label.textContent = 'Live'; }
+  if (db) {
+    DB = db;
+    renderAll(db);
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    const updated = e('topbar-updated');
+    if (updated) {
+      updated.textContent = `Updated ${timeStr}`;
+      updated.classList.add('update-flash');
+      setTimeout(() => updated.classList.remove('update-flash'), 600);
+    }
+  }
+}
+
+function startPolling() {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(pollDb, POLL_MS);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TOPBAR
+// ═══════════════════════════════════════════════════════════
+function initTopbar() {
+  const d = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dateEl = e('topbar-date');
+  if (dateEl) dateEl.textContent = `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER ALL
+// ═══════════════════════════════════════════════════════════
+function renderAll(db) {
+  renderBrief(db);
+  renderSleep(db);
+  renderTraining(db);
+  renderNutrition(db);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  BRIEF TAB
+// ═══════════════════════════════════════════════════════════
+function renderBrief(db) {
+  const today = todayISO();
+  const cb = db.coaching_brief || {};
+  const sleeps = db.recovery_sleep || [];
+  const latestSleep = sleeps[sleeps.length - 1];
+  const sessions = db.strength_logs || [];
+  const todayCheckin = (db.morning_checkins || []).find(c => c.date === today);
+  const goal = cb.goal_summary || db.profile?.nutrition_targets || {};
+  const latestSession = sessions[sessions.length - 1];
+  const tc = tierColors(cb.readiness_tier || (latestSleep && latestSleep.readiness_tier));
+
+  let html = '';
+
+  // ── Morning Check-in ──
+  html += buildCheckinCard(todayCheckin, today);
+
+  // ── Readiness Hero ──
+  const tier = cb.readiness_tier || (latestSleep && latestSleep.readiness_tier) || 'Unknown';
+  const call = cb.call || (latestSleep && latestSleep.readiness_tier_basis) || 'No brief yet for today.';
+  html += `
+  <div class="hero-card" style="background:${tc.bg};border:1px solid ${tc.border}">
+    <div class="hero-tier" style="color:${tc.text}">${tier} Day</div>
+    <div class="hero-call">${call}</div>`;
+  if (latestSleep) {
+    html += `<div class="hero-basis">HRV ${latestSleep.hrv_ms || '—'}ms · Recovery ${latestSleep.recovery_score_pct || '—'}% · Sleep ${fmtMins(latestSleep.total_sleep_min_oura || latestSleep.total_sleep_min)}</div>`;
+  }
+  html += `</div>`;
+
+  // ── Sprint Gate ──
+  if (cb.sprint_gate || (latestSleep && latestSleep.sprint_gate_status)) {
+    const sg = cb.sprint_gate || latestSleep.sprint_gate_status;
+    const gateOpen = sg && sg.toLowerCase().includes('open') && !sg.toLowerCase().includes('closed');
+    const gateColor = gateOpen ? 'var(--green)' : 'var(--yellow)';
+    const gateBg = gateOpen ? 'var(--green-bg)' : 'var(--yellow-bg)';
+    const gateBorder = gateOpen ? 'rgba(63,185,80,0.25)' : 'rgba(210,153,34,0.25)';
+    html += `<div class="card" style="border-color:${gateBorder};background:${gateBg}">
+      <div class="card-title" style="color:${gateColor}">⚡ Sprint Gate</div>
+      <div style="font-size:13px;font-weight:700;color:${gateColor}">${sg}</div>
+    </div>`;
+  }
+
+  // ── Goal Progress ──
+  if (goal.goal_weight_lbs || goal.current_weight_lbs) {
+    const cw = goal.current_weight_lbs || (db.body_composition && db.body_composition.slice(-1)[0]?.weight_lbs);
+    const gw = goal.goal_weight_lbs || 159;
+    const gdate = goal.goal_date || '2026-08-01';
+    const weeksLeft = goal.weeks_remaining ? goal.weeks_remaining.toFixed(0) : '—';
+    const rate = goal.required_rate_lbs_per_week ? goal.required_rate_lbs_per_week.toFixed(1) : '0.4';
+    const diff = cw ? (cw - gw).toFixed(1) : '—';
+
+    html += `<div class="card">
+      <div class="card-title">Goal Progress</div>
+      <div class="weight-row">
+        <div class="weight-box">
+          <div class="weight-label">Current</div>
+          <div class="weight-val" style="color:var(--text)">${cw ? cw.toFixed(1) : '—'} <span style="font-size:12px;color:var(--text2)">lbs</span></div>
+        </div>
+        <div class="weight-box">
+          <div class="weight-label">Goal</div>
+          <div class="weight-val" style="color:var(--accent)">${gw} <span style="font-size:12px;color:var(--text2)">lbs</span></div>
+          <div style="font-size:10px;color:var(--text3);margin-top:2px">${diff !== '—' ? diff + ' lbs away' : ''}</div>
+        </div>
+      </div>
+      <div class="inline-note">${weeksLeft} weeks to ${fmtDate(gdate)} · Target rate ${rate} lbs/week · Cal target ${goal.calorie_target_kcal || 2150} kcal · Protein ${goal.protein_target_g || 150}g</div>
+    </div>`;
+  }
+
+  // ── Latest Session Summary ──
+  if (latestSession) {
+    const daysDiff = Math.round((new Date(today) - new Date(latestSession.date)) / 86400000);
+    const when = daysDiff === 0 ? 'Today' : daysDiff === 1 ? 'Yesterday' : `${daysDiff}d ago`;
+    const hrColor = latestSession.avg_hr_bpm <= 122 ? 'var(--green)' : 'var(--yellow)';
+    html += `<div class="session-review-card">
+      <div class="review-label"><span class="status-pill pill-${daysDiff===0?'blue':'green'}">✓ ${when}</span></div>
+      <div class="review-session-title">${fmtDate(latestSession.date)} — ${latestSession.session_type || latestSession.session_name || 'Session'}</div>
+      <div class="review-stats">
+        ${latestSession.duration_min ? `<div class="review-stat"><strong>${fmtDuration(latestSession.duration_min)}</strong> duration</div>` : ''}
+        ${latestSession.volume_kg ? `<div class="review-stat"><strong>${latestSession.volume_kg.toLocaleString()} kg</strong> volume</div>` : ''}
+        ${latestSession.avg_hr_bpm ? `<div class="review-stat"><strong style="color:${hrColor}">${latestSession.avg_hr_bpm} bpm</strong> avg HR</div>` : ''}
+        ${latestSession.total_reps ? `<div class="review-stat"><strong>${latestSession.total_reps}</strong> reps</div>` : ''}
+        ${latestSession.total_energy_kcal ? `<div class="review-stat"><strong>${latestSession.total_energy_kcal}</strong> kcal</div>` : ''}
+      </div>
+      ${latestSession.coaching_note ? `<div class="coach-para-header">Coach's Read</div><div class="coach-para" style="padding-top:0;font-size:12px">${latestSession.coaching_note}</div>` : ''}
+    </div>`;
+  }
+
+  e('tab-brief').innerHTML = html;
+  initCheckinHandlers(todayCheckin);
+}
+
+function buildCheckinCard(todayCheckin, today) {
+  if (todayCheckin) {
+    const yesFlags = Object.entries(todayCheckin.flags || {})
+      .filter(([,v]) => v)
+      .map(([k]) => ({
+        migraine_headache:'Migraine', poor_sleep:'Poor Sleep',
+        high_fatigue:'High Fatigue', joint_pain:'Joint Pain', high_stress:'High Stress'
+      }[k] || k));
+    const time = todayCheckin.timestamp ? new Date(todayCheckin.timestamp).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+    return `<div class="card" id="checkin-card">
+      <div class="card-title">Morning Check-in</div>
+      <div style="color:var(--green);font-size:12px;font-weight:700">✅ Logged · ${time}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px">${yesFlags.length ? '⚠ Flagged: ' + yesFlags.join(', ') : '✓ All clear — no flags'}</div>
+    </div>`;
+  }
+  const noTok = !hasToken() ? `<span id="checkin-no-token" class="checkin-setup-hint" onclick="openTokenModal()">⚙ Setup to enable</span>` : '';
+  return `<div class="card" id="checkin-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+      <div class="card-title" style="margin-bottom:0">Morning Check-in</div>
+      ${noTok}
+    </div>
+    <div id="checkin-flags">
+      ${['migraine_headache:Migraine / Headache','poor_sleep:Poor Sleep','high_fatigue:High Fatigue','joint_pain:Joint Pain','high_stress:High Stress'].map(pair => {
+        const [flag, label] = pair.split(':');
+        return `<div class="checkin-flag-row">
+          <div class="checkin-flag-label">${label}</div>
+          <div class="checkin-yn">
+            <button class="yn-btn" data-flag="${flag}" data-val="yes" onclick="ynTap(this)">Yes</button>
+            <button class="yn-btn" data-flag="${flag}" data-val="no"  onclick="ynTap(this)">No</button>
+          </div></div>`;
+      }).join('')}
+      <button class="checkin-submit-btn" id="checkin-submit-btn" onclick="submitCheckin()">Log Check-in → Coach</button>
+    </div>
+  </div>`;
+}
+
+const _yn = {};
+function initCheckinHandlers(todayCheckin) {
+  if (todayCheckin) return;
+  if (!hasToken()) {
+    const btn = e('checkin-submit-btn');
+    if (btn) btn.disabled = true;
+  }
+}
+
+function ynTap(btn) {
+  const flag = btn.dataset.flag, val = btn.dataset.val;
+  const wasOn = btn.classList.contains(val + '-on');
+  document.querySelectorAll(`.yn-btn[data-flag="${flag}"]`).forEach(b => b.classList.remove('yes-on','no-on'));
+  if (!wasOn) { btn.classList.add(val + '-on'); _yn[flag] = val; }
+  else { delete _yn[flag]; }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SLEEP TAB
+// ═══════════════════════════════════════════════════════════
+function renderSleep(db) {
+  const sleeps = db.recovery_sleep || [];
+  if (!sleeps.length) {
+    e('tab-sleep').innerHTML = '<div class="empty-state">No sleep data yet.<br>Data syncs automatically when you open the Oura app.</div>';
+    return;
+  }
+  const s = sleeps[sleeps.length - 1];
+  const last7 = sleeps.slice(-8);
+  const today = todayISO();
+  const isToday = s.date === today;
+  const tc = tierColors(s.readiness_tier);
+  const baseline = db.profile?.oura_biology_baselines?.hrv_baseline_ms || 32.5;
+
+  // Build HRV dot row
+  const hrvDots = last7.map((n, i) => {
+    const isLast = i === last7.length - 1;
+    const c = hrvColor(n.hrv_ms, baseline);
+    return `<div class="hrv-dot" style="${isLast ? `background:${tc.bg};border-color:${tc.border}` : ''}">
+      <div class="hrv-dot-label" style="${isLast ? `color:${tc.text}` : ''}">${isLast ? 'Today' : fmtDate(n.date).replace(/\d{4}/,'').trim()}</div>
+      <div class="hrv-dot-val" style="color:${c}">${n.hrv_ms || '—'}</div>
+    </div>`;
+  }).join('');
+
+  // Sleep stage bars
+  const deep  = s.deep_sleep_pct  || 0;
+  const rem   = s.rem_sleep_pct   || 0;
+  const light = s.light_sleep_pct || 0;
+  const awake = s.awake_min && s.total_sleep_min ? Math.round((s.awake_min/(s.total_sleep_min+(s.awake_min||0)))*100) : 0;
+
+  // 7-day sparkline data
+  const hrvVals = last7.map(n => n.hrv_ms).filter(Boolean);
+  const recVals = last7.map(n => n.recovery_score_pct).filter(Boolean);
+  const slpVals = last7.map(n => (n.oura_sleep_score || n.sleep_score_pct)).filter(Boolean);
+
+  const sleepTimeStr = s.sleep_time ? `${s.sleep_time}` : '—';
+  const wakeTimeStr  = s.wake_time  ? `${s.wake_time}`  : '—';
+  const debtStr = s.sleep_debt_status || (s.sleep_bank_min ? `${fmtMins(Math.abs(s.sleep_bank_min))} debt` : '—');
+  const hrv = s.hrv_ms;
+  const rec = s.recovery_score_pct;
+  const slpScore = s.oura_sleep_score || s.sleep_score_pct;
+
+  let html = '';
+
+  // Hero sleep card
+  html += `<div class="hero-card" style="background:${tc.bg};border:1px solid ${tc.border}">
+    <div class="hero-tier" style="color:${tc.text}">${isToday ? 'Last Night' : fmtDate(s.date)}</div>
+    <div style="display:flex;gap:16px;align-items:baseline;margin-bottom:8px">
+      <div>
+        <div class="card-value" style="color:${hrvColor(hrv, baseline)}">${hrv || '—'}<span style="font-size:14px;font-weight:400;color:var(--text2)"> ms</span></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">HRV · Baseline ${baseline}ms</div>
+      </div>
+      <div>
+        <div class="card-value" style="font-size:22px;color:${tc.text}">${rec || '—'}<span style="font-size:12px;color:var(--text2)">%</span></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">Recovery</div>
+      </div>
+      <div>
+        <div class="card-value" style="font-size:22px;color:var(--text)">${fmtMins(s.total_sleep_min_oura || s.total_sleep_min)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">Oura ${slpScore ? slpScore + ' ' + (s.oura_sleep_label||'') : ''}</div>
+      </div>
+    </div>
+    <div class="hero-basis" style="font-size:11px">${s.readiness_tier_basis || s.notes?.substring(0,120) || ''}</div>
+  </div>`;
+
+  // 7-day HRV trend
+  html += `<div class="card">
+    <div class="card-title">7-Day HRV · Baseline ${baseline}ms</div>
+    <div class="hrv-dot-row">${hrvDots}</div>
+    ${sparklineSVG(hrvVals, '#58a6ff') ? `<div style="margin-top:4px">${sparklineSVG(hrvVals, '#58a6ff')}</div>` : ''}
+    <div class="inline-note">Sprint gate: ≥35ms. ${s.recovery_trend || ''}</div>
+  </div>`;
+
+  // Sleep stages
+  html += `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="card-title" style="margin-bottom:0">Sleep Stages · Oura</div>
+      <div style="font-size:10px;color:var(--text3)">${sleepTimeStr} → ${wakeTimeStr}</div>
+    </div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">Deep</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:${deep}%;background:#58a6ff"></div></div>
+      <div class="stage-val">${fmtMins(s.deep_sleep_min)} · ${deep}%</div>
+    </div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">REM</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:${rem}%;background:#a371f7"></div></div>
+      <div class="stage-val">${fmtMins(s.rem_sleep_min)} · ${rem}% <span class="tag ${rem>=20?'tag-green':'tag-yellow'}">${rem>=20?'Normal':'Low'}</span></div>
+    </div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">Light</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:${Math.min(light,100)}%;background:#3fb950"></div></div>
+      <div class="stage-val">${fmtMins(s.light_sleep_min)} · ${light}%</div>
+    </div>
+    <div class="sleep-stage-row">
+      <div class="stage-label">Awake</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:${awake}%;background:#f85149"></div></div>
+      <div class="stage-val">${fmtMins(s.awake_min)}</div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text2)">
+      Eff ${s.sleep_efficiency_pct||'—'}% · SpO₂ ${s.spo2_pct||'—'}% · Breathing ${s.breathing_regularity||'—'} · Latency ${s.sleep_latency_min||'—'}m
+    </div>
+    <div style="margin-top:4px;font-size:11px;color:var(--${debtStr.toLowerCase().includes('moderate')||debtStr.toLowerCase().includes('high')?'yellow':'text3'})">${debtStr}</div>
+  </div>`;
+
+  // Recovery + RHR sparklines
+  if (recVals.length > 1) {
+    html += `<div class="chart-wrap">
+      <div class="chart-header">
+        <div class="chart-title">Recovery Score %</div>
+        <div class="chart-latest" style="color:${tc.text}">${rec || '—'}%</div>
+      </div>
+      ${sparklineSVG(recVals, tc.text)}
+    </div>`;
+  }
+
+  // Stats grid
+  html += `<div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-label">RHR Lowest</div>
+      <div class="stat-val" style="color:var(--green)">${s.resting_hr_bpm_oura_lowest || s.resting_hr_bpm || '—'}<span class="stat-unit"> bpm</span></div>
+      <div class="stat-note">avg ${s.resting_hr_bpm_oura_avg || '—'} bpm</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Stress Avg</div>
+      <div class="stat-val" style="color:var(--yellow)">${s.stress_avg || '—'}</div>
+      <div class="stat-note">High ${s.stress_highest||'—'} · Low ${s.stress_lowest||'—'}</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">HR Dip</div>
+      <div class="stat-val" style="color:var(--accent)">${s.hr_dip_pct || '—'}<span class="stat-unit">%</span></div>
+      <div class="stat-note">${s.hr_dip_status || '—'}</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Resp Rate</div>
+      <div class="stat-val" style="color:var(--text)">${s.respiratory_rate_rpm || '—'}<span class="stat-unit"> rpm</span></div>
+      <div class="stat-note">${s.body_clock_note || ''}</div>
+    </div>
+  </div>`;
+
+  e('tab-sleep').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TRAINING TAB
+// ═══════════════════════════════════════════════════════════
+function renderTraining(db) {
+  const today = todayISO();
+  const logs = db.strength_logs || [];
+  const acts = db.activity_sessions || [];
+  const todayLog = logs.find(l => l.date === today);
+  const latestLog = logs[logs.length - 1];
+  const overrides = db.session_overrides || [];
+
+  // Save any open exercise feedback before re-render
+  saveExFbState();
+
+  let html = '';
+
+  // Week strip — last 7 days
+  html += buildWeekStrip(logs, acts, today);
+
+  // Session management (only show if no session logged today)
+  html += `<div class="card" id="smgmt-card">
+    <div class="card-title">Today's Session</div>
+    <div class="smgmt-actions">
+      <div class="smgmt-btn" id="smgmt-done" onclick="smgmtTap('done')">✅<br>Done as<br>Planned</div>
+      <div class="smgmt-btn" id="smgmt-rest" onclick="smgmtTap('rest')">😴<br>Rest<br>Day</div>
+      <div class="smgmt-btn" id="smgmt-move" onclick="smgmtTap('move')">📅<br>Move<br>Session</div>
+    </div>
+    <div class="smgmt-detail" id="smgmt-rest-detail">
+      <div class="smgmt-chip-label">Reason</div>
+      <div class="smgmt-chips">
+        ${['Migraine','Fatigue','Illness','Travel','Other'].map(r => `<div class="smgmt-chip" onclick="selectReason(this,'${r.toLowerCase()}')">${r}</div>`).join('')}
+      </div>
+      <button class="smgmt-confirm-btn" onclick="clickConfirmRest()">Confirm Rest Day</button>
+    </div>
+    <div class="smgmt-detail" id="smgmt-move-detail">
+      <div class="smgmt-chip-label">Move to</div>
+      <div class="smgmt-chips" id="smgmt-date-btns"></div>
+      <button class="smgmt-confirm-btn" onclick="clickConfirmMove()">Confirm Move</button>
+    </div>
+    <div class="smgmt-confirmed" id="smgmt-confirmed"></div>
+  </div>`;
+
+  // Latest session with exercise feedback
+  const feedbackSession = todayLog || latestLog;
+  if (feedbackSession) {
+    html += buildSessionFeedbackCard(feedbackSession, feedbackSession === todayLog ? 'today' : 'recent');
+  }
+
+  // Past sessions (last 3, not the feedback session)
+  const pastSessions = logs.slice(-6).reverse().filter(l => l !== feedbackSession).slice(0,3);
+  pastSessions.forEach(sess => { html += buildPastSessionCard(sess); });
+
+  e('tab-training').innerHTML = html;
+
+  // Restore exercise feedback
+  restoreExFbState(feedbackSession);
+}
+
+function buildWeekStrip(logs, acts, today) {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const d = new Date(today + 'T12:00:00');
+  // Start from Mon of current week
+  const dow = d.getDay();
+  const startOffset = dow === 0 ? -6 : 1 - dow;
+  let cells = '';
+  for (let i = 0; i < 7; i++) {
+    const cd = new Date(d);
+    cd.setDate(d.getDate() + startOffset + i);
+    const ciso = cd.getFullYear()+'-'+String(cd.getMonth()+1).padStart(2,'0')+'-'+String(cd.getDate()).padStart(2,'0');
+    const isToday = ciso === today;
+    const isFuture = cd > new Date(today + 'T23:59:59');
+    const dayLog = logs.find(l => l.date === ciso);
+    const actLog = acts.find(a => a.date === ciso);
+    let cls = isToday ? 'week-day today' : isFuture ? 'week-day' : (dayLog || actLog) ? 'week-day done' : 'week-day';
+    let icon = isFuture ? '📋' : (dayLog ? '💪' : actLog ? '🚶' : (isToday ? '⬆' : '—'));
+    let type = isFuture ? '' : (dayLog ? (dayLog.session_type||'Strength').replace('Saturday ','').replace(' Training','') : actLog ? (actLog.name||'Activity').substring(0,12) : isToday ? 'Today' : 'Rest');
+    cells += `<div class="${cls}">
+      <div class="week-day-label" style="${isToday?'color:var(--accent)':''}">${days[cd.getDay()]}</div>
+      <div class="week-day-icon">${icon}</div>
+      <div class="week-day-type" style="${isToday?'color:var(--accent)':dayLog?'color:var(--green)':''}">${type}</div>
+    </div>`;
+  }
+  return `<div class="card" style="padding:12px">
+    <div class="card-title" style="margin-bottom:8px">This Week</div>
+    <div class="week-strip">${cells}</div>
+  </div>`;
+}
+
+function buildSessionFeedbackCard(sess, when) {
+  const date = sess.date;
+  const title = `${fmtDate(date)} — ${sess.session_type || sess.session_name || 'Session'}`;
+  const hrColor = sess.avg_hr_bpm <= 122 ? 'var(--green)' : 'var(--yellow)';
+  const pillClass = when === 'today' ? 'pill-blue' : 'pill-green';
+  const pillLabel = when === 'today' ? '✓ Today' : '✓ Latest Session';
+
+  // Main exercises only (exclude warm_up, activation)
+  const mainExercises = (sess.exercises || []).filter(ex =>
+    ex.category && !['warm_up','activation'].includes(ex.category)
+  );
+
+  const fbRows = mainExercises.map(ex => {
+    const key = exFbKey(date, ex.name);
+    const repsStr = ex.timed_sec ? ex.timed_sec.map(t=>t+'s').join(', ') : (ex.reps||[]).join(', ');
+    const pres = `${ex.sets}×${repsStr} · ${ex.weight||'BW'}`;
+    return `<div class="exfb-row" data-ex="${ex.name}" data-date="${date}">
+      <span class="exfb-name">${ex.name}</span>
+      <span style="font-size:10px;color:var(--text3);flex-shrink:0">${pres}</span>
+      <button class="exfb-btn" onclick="toggleExFb(this)">💬</button>
+      <textarea class="exfb-ta" id="${key}" placeholder="How did it feel? Load right? Notes for next time…"></textarea>
+    </div>`;
+  }).join('');
+
+  return `<div class="session-review-card" style="border-color:rgba(88,166,255,0.3)">
+    <div class="review-label"><span class="status-pill ${pillClass}">${pillLabel}</span></div>
+    <div class="review-session-title">${title}</div>
+    <div class="review-stats">
+      ${sess.duration_min ? `<div class="review-stat"><strong>${fmtDuration(sess.duration_min)}</strong> duration</div>` : ''}
+      ${sess.volume_kg ? `<div class="review-stat"><strong>${sess.volume_kg.toLocaleString()} kg</strong> volume</div>` : ''}
+      ${sess.avg_hr_bpm ? `<div class="review-stat"><strong style="color:${hrColor}">${sess.avg_hr_bpm} bpm</strong> avg HR</div>` : ''}
+      ${sess.total_reps ? `<div class="review-stat"><strong>${sess.total_reps}</strong> reps</div>` : ''}
+      ${sess.hr_recovery_bpm ? `<div class="review-stat"><strong>${sess.hr_recovery_bpm} bpm</strong> HR rec ${sess.hr_recovery_tier ? `<span class="tag tag-${sess.hr_recovery_tier==='Superior'?'green':'blue'}">${sess.hr_recovery_tier}</span>` : ''}</div>` : ''}
+    </div>
+    ${sess.coaching_note ? `<div class="coach-para-header">Coach's Read</div><div class="coach-para" style="padding-top:0;font-size:12px">${sess.coaching_note}</div>` : ''}
+    ${mainExercises.length ? `
+    <div style="margin-top:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Exercise Notes</div>
+      <div id="exfb-rows-${date}" style="display:flex;flex-direction:column;gap:6px">${fbRows}</div>
+      <div style="margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">Overall Session Rating</div>
+        <div id="session-rating-${date}" style="display:flex;gap:8px;margin-bottom:8px">
+          ${[1,2,3,4,5].map(n => `<button class="rating-btn" onclick="setRating(this,'${date}',${n})">${['😴','😐','💪','🔥','⚡'][n-1]} ${n}</button>`).join('')}
+        </div>
+        <textarea id="session-note-${date}" class="coach-q-input" rows="2" placeholder="Overall feel, energy, anything Coach should know…"></textarea>
+        <button class="coach-q-submit" onclick="submitSessionFeedback('${date}')" style="margin-top:6px">Save & Sync to Coach</button>
+        <div id="exfb-done-${date}" style="display:none;font-size:11px;color:var(--green);margin-top:6px">✅ Feedback saved to Coach</div>
+      </div>
+    </div>` : ''}
+  </div>`;
+}
+
+function buildPastSessionCard(sess) {
+  const hrColor = sess.avg_hr_bpm <= 122 ? 'var(--green)' : 'var(--yellow)';
+  return `<div class="session-review-card">
+    <div class="review-label"><span class="status-pill pill-green">✓ ${fmtDate(sess.date)}</span></div>
+    <div class="review-session-title">${sess.session_type || sess.session_name || 'Session'}</div>
+    <div class="review-stats">
+      ${sess.duration_min ? `<div class="review-stat"><strong>${fmtDuration(sess.duration_min)}</strong></div>` : ''}
+      ${sess.volume_kg ? `<div class="review-stat"><strong>${sess.volume_kg.toLocaleString()} kg</strong> vol</div>` : ''}
+      ${sess.avg_hr_bpm ? `<div class="review-stat"><strong style="color:${hrColor}">${sess.avg_hr_bpm}</strong> bpm</div>` : ''}
+      ${sess.total_reps ? `<div class="review-stat"><strong>${sess.total_reps}</strong> reps</div>` : ''}
+    </div>
+    ${sess.coaching_note ? `<div class="coach-para" style="font-size:11.5px;color:var(--text2);padding:6px 0 0">${sess.coaching_note.substring(0,200)}${sess.coaching_note.length>200?'…':''}</div>` : ''}
+  </div>`;
+}
+
+// Exercise feedback localStorage
+function exFbKey(date, exName) { return 'exfb_' + date + '_' + exName.replace(/[^a-z0-9]/gi,'_'); }
+let _exFbSaved = {};
+function saveExFbState() {
+  document.querySelectorAll('.exfb-ta').forEach(ta => {
+    if (ta.id && ta.value) _exFbSaved[ta.id] = ta.value;
+  });
+}
+function restoreExFbState(sess) {
+  if (!sess) return;
+  const date = sess.date;
+  document.querySelectorAll('.exfb-ta').forEach(ta => {
+    // Restore from in-memory saved state first
+    const saved = _exFbSaved[ta.id];
+    if (saved) { ta.value = saved; ta.classList.add('open'); ta.previousElementSibling?.classList.add('open'); }
+    // Then restore from localStorage
+    const ls = localStorage.getItem(ta.id);
+    if (ls && !saved) { ta.value = ls; ta.classList.add('open'); ta.previousElementSibling?.classList.add('open'); }
+  });
+  // Restore rating
+  const savedRating = localStorage.getItem('sessionRating_' + date);
+  if (savedRating) {
+    document.querySelectorAll(`#session-rating-${date} .rating-btn`).forEach(b => {
+      if (b.dataset.n == savedRating) b.classList.add('sel');
+    });
+  }
+}
+
+function toggleExFb(btn) {
+  const row = btn.closest('.exfb-row');
+  const ta = row.querySelector('.exfb-ta');
+  const open = ta.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  if (open) ta.focus();
+  ta.addEventListener('input', () => localStorage.setItem(ta.id, ta.value), {once:false});
+}
+
+function setRating(btn, date, n) {
+  document.querySelectorAll(`#session-rating-${date} .rating-btn`).forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  btn.dataset.n = n;
+  localStorage.setItem('sessionRating_' + date, n);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  NUTRITION TAB
+// ═══════════════════════════════════════════════════════════
+function renderNutrition(db) {
+  const today = todayISO();
+  const cb = db.coaching_brief || {};
+  const goal = cb.goal_summary || {};
+  const nlArr = db.nutrition_log || [];
+  const todayNutrition = nlArr.find(n => n.date === today);
+  const bc = db.body_composition || [];
+  const latestBc = bc[bc.length - 1];
+  const sprints = db.sprint_protocol;
+
+  // Targets — from goal_summary or profile
+  const tkcal = goal.calorie_target_kcal || db.profile?.nutrition_targets?.calories_kcal || 2150;
+  const tprot = goal.protein_target_g || db.profile?.nutrition_targets?.protein_g || 150;
+  const tcarb = 210;
+  const tfat  = 72;
+
+  // Actuals — from today's nutrition_log entry
+  const meals = todayNutrition?.meals || [];
+  const totals = todayNutrition?.totals || {};
+  const kcalLogged = totals.kcal || meals.reduce((s,m) => s+(m.kcal||0), 0);
+  const protLogged = totals.protein_g || meals.reduce((s,m) => s+(m.protein_g||0), 0);
+  const carbLogged = totals.carbs_g || meals.reduce((s,m) => s+(m.carbs_g||0), 0);
+  const fatLogged  = totals.fat_g || meals.reduce((s,m) => s+(m.fat_g||0), 0);
+
+  let html = '';
+
+  // Sticky macro header
+  html += `<div class="macro-sticky">
+    <div class="macro-date-row">
+      <div>
+        <div class="macro-date-label">${fmtDate(today)} · ${cb.readiness_tier ? cb.readiness_tier + ' Day' : 'Today'}</div>
+        <div style="font-size:10px;color:var(--text3)">Target: ${tkcal.toLocaleString()} kcal</div>
+      </div>
+      <div style="text-align:right">
+        <div class="macro-kcal-live">${kcalLogged > 0 ? kcalLogged.toLocaleString() : '—'} <span class="macro-kcal-target">/ ${tkcal.toLocaleString()}</span></div>
+        <div style="font-size:10px;color:var(--text3)">${meals.length > 0 ? meals.length + ' logged' : 'No meals logged'}</div>
+      </div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">PROT</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(protLogged,tprot)};background:var(--green)"></div></div>
+      <div class="macro-val">${protLogged > 0 ? protLogged+'g' : '—'} / ${tprot}g</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">CARB</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(carbLogged,tcarb)};background:var(--purple)"></div></div>
+      <div class="macro-val">${carbLogged > 0 ? carbLogged+'g' : '—'} / ${tcarb}g</div>
+    </div>
+    <div class="macro-row">
+      <div class="macro-label">FAT</div>
+      <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(fatLogged,tfat)};background:var(--yellow)"></div></div>
+      <div class="macro-val">${fatLogged > 0 ? fatLogged+'g' : '—'} / ${tfat}g</div>
+    </div>
+  </div>`;
+
+  // Weight & body comp
+  if (latestBc) {
+    const gw = goal.goal_weight_lbs || 159;
+    const cw = latestBc.weight_lbs;
+    const diff = cw ? (cw - gw).toFixed(1) : null;
+    html += `<div class="card">
+      <div class="card-title">Weight & Body Comp</div>
+      <div class="weight-row">
+        <div class="weight-box">
+          <div class="weight-label">Weight (${fmtDate(latestBc.date)})</div>
+          <div class="weight-val" style="color:var(--green)">${cw?.toFixed(1) || '—'} <span style="font-size:12px;color:var(--text2)">lbs</span></div>
+          <div style="font-size:10px;color:var(--text3);margin-top:2px">${latestBc.source || ''}</div>
+        </div>
+        <div class="weight-box">
+          <div class="weight-label">Goal</div>
+          <div class="weight-val" style="color:var(--accent)">${gw} <span style="font-size:12px;color:var(--text2)">lbs</span></div>
+          <div style="font-size:10px;color:var(--text3);margin-top:2px">${diff !== null ? diff + ' lbs away' : ''}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${latestBc.body_fat_pct ? `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
+          <div class="weight-label">BF%</div>
+          <div style="font-size:16px;font-weight:700;color:var(--text)">${latestBc.body_fat_pct}%</div>
+          <div style="font-size:9px;color:var(--text3)">${latestBc.source} · ${fmtDate(latestBc.date)}</div>
+        </div>` : ''}
+        ${latestBc.visceral_fat_level ? `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
+          <div class="weight-label">Visceral</div>
+          <div style="font-size:16px;font-weight:700;color:var(--yellow)">Lv ${latestBc.visceral_fat_level}</div>
+          <div style="font-size:9px;color:var(--text3)">${fmtDate(latestBc.date)}</div>
+        </div>` : ''}
+        ${latestBc.lean_mass_lbs ? `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex:1;min-width:80px">
+          <div class="weight-label">Lean Mass</div>
+          <div style="font-size:16px;font-weight:700;color:var(--green)">${latestBc.lean_mass_lbs} lb</div>
+          <div style="font-size:9px;color:var(--text3)">${latestBc.source}</div>
+        </div>` : ''}
+      </div>
+    </div>`;
+  }
+
+  // Today's meals (from nutrition_log)
+  html += `<div class="section-label">Today's Meals</div>`;
+  if (meals.length === 0) {
+    html += `<div class="card"><div class="meal-empty">No meals logged yet today.<br><span style="color:var(--text3);font-size:11px">Tell Coach what you ate and it will log automatically.</span></div></div>`;
+  } else {
+    meals.forEach(meal => {
+      html += `<div class="meal-card">
+        <div class="meal-header">
+          <div class="meal-name">${meal.name}</div>
+          <div class="meal-time">${meal.time || ''}</div>
+        </div>
+        <div class="meal-macros">${meal.kcal} kcal &nbsp;·&nbsp; P: ${meal.protein_g}g &nbsp;·&nbsp; C: ${meal.carbs_g}g &nbsp;·&nbsp; F: ${meal.fat_g}g</div>
+        ${meal.coach_note ? `<div class="meal-coach-callout">${meal.coach_note}</div>` : ''}
+      </div>`;
+    });
+  }
+
+  // Yesterday's summary if available
+  const yesterday = new Date(today); yesterday.setDate(yesterday.getDate()-1);
+  const yIso = yesterday.getFullYear()+'-'+String(yesterday.getMonth()+1).padStart(2,'0')+'-'+String(yesterday.getDate()).padStart(2,'0');
+  const yNutr = nlArr.find(n => n.date === yIso);
+  if (yNutr?.totals) {
+    const yt = yNutr.totals;
+    const status = yNutr.day_status || 'closed';
+    html += `<div class="card" style="margin-top:4px">
+      <div class="card-title">Yesterday · ${fmtDate(yIso)} <span class="lock-badge" style="float:right">${status==='closed'?'✓ Closed':'⚠ Partial'}</span></div>
+      <div class="macro-row"><div class="macro-label">KCAL</div>
+        <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(yt.kcal||0,tkcal)};background:var(--text3)"></div></div>
+        <div class="macro-val" style="color:var(--text2)">${yt.kcal||0} / ${tkcal}</div></div>
+      <div class="macro-row"><div class="macro-label">PROT</div>
+        <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(yt.protein_g||0,tprot)};background:var(--green)"></div></div>
+        <div class="macro-val">${yt.protein_g||0}g / ${tprot}g</div></div>
+    </div>`;
+  }
+
+  e('tab-nutrition').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TAB NAVIGATION
+// ═══════════════════════════════════════════════════════════
+const TAB_IDS = ['brief','sleep','training','nutrition','ask'];
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active'));
+  e('tab-' + id).classList.add('active');
+  document.querySelectorAll('.tab-btn')[TAB_IDS.indexOf(id)].classList.add('active');
+  e('nav-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  GITHUB WRITE-BACK ENGINE
+// ═══════════════════════════════════════════════════════════
 async function ghReadDb() {
   const tok = getToken();
   if (!tok) { openTokenModal(); return null; }
   try {
-    const r = await fetch(
-      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${DB_PATH}?ref=${GH_BRANCH}`,
-      { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json' } }
-    );
-    if (!r.ok) {
-      if (r.status === 401) openTokenModal();
-      return null;
-    }
+    const r = await fetch(`${API_URL}?ref=${GH_BRANCH}`,
+      { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json' } });
+    if (!r.ok) { if (r.status === 401) openTokenModal(); return null; }
     const j = await r.json();
-    const text = decodeURIComponent(escape(atob(j.content.replace(/\n/g, ''))));
+    const text = decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))));
     return { data: JSON.parse(text), sha: j.sha };
   } catch(e) { console.error('ghReadDb:', e); return null; }
 }
@@ -1535,306 +1204,251 @@ async function ghWriteDb(data, sha, msg) {
   if (!tok) { openTokenModal(); return false; }
   try {
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-    const r = await fetch(
-      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${DB_PATH}`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${tok}`,
-          Accept: 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: msg, content, sha, branch: GH_BRANCH })
-      }
-    );
+    const r = await fetch(API_URL, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg, content, sha, branch: GH_BRANCH })
+    });
     return r.ok;
   } catch(e) { console.error('ghWriteDb:', e); return false; }
 }
 
-
-// ════════════════════════════════════════════════════════
-//  TOKEN MODAL
-// ════════════════════════════════════════════════════════
-function openTokenModal() {
-  document.getElementById('tok-overlay').classList.add('open');
-  setTimeout(() => document.getElementById('tok-input').focus(), 100);
-}
-function closeTokenModal() {
-  document.getElementById('tok-overlay').classList.remove('open');
-}
-function saveToken() {
-  const val = document.getElementById('tok-input').value.trim();
-  if (!val) return;
-  setToken(val);
-  closeTokenModal();
-  document.getElementById('tok-gear').style.opacity = '0.45';
-  document.getElementById('checkin-no-token').style.display = 'none';
-}
-
-
-// ════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 //  MORNING CHECK-IN
-// ════════════════════════════════════════════════════════
-const _yn = {};
-
-function ynTap(btn) {
-  const flag = btn.dataset.flag;
-  const val  = btn.dataset.val;
-  const wasOn = btn.classList.contains(val + '-on');
-  document.querySelectorAll(`.yn-btn[data-flag="${flag}"]`).forEach(b => b.classList.remove('yes-on','no-on'));
-  if (!wasOn) { btn.classList.add(val + '-on'); _yn[flag] = val; }
-  else { delete _yn[flag]; }
-}
-
+// ═══════════════════════════════════════════════════════════
 async function submitCheckin() {
-  const submitBtn = document.getElementById('checkin-submit-btn');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Logging…';
-
-  const flagMap = {
-    migraine_headache: 'Migraine',
-    poor_sleep:        'Poor Sleep',
-    high_fatigue:      'High Fatigue',
-    joint_pain:        'Joint Pain',
-    high_stress:       'High Stress'
-  };
+  if (!hasToken()) { openTokenModal(); return; }
+  const btn = e('checkin-submit-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Logging…'; }
+  const flagMap = { migraine_headache:'Migraine', poor_sleep:'Poor Sleep', high_fatigue:'High Fatigue', joint_pain:'Joint Pain', high_stress:'High Stress' };
   const flags = {};
   Object.keys(flagMap).forEach(k => { flags[k] = _yn[k] === 'yes'; });
-
   const db = await ghReadDb();
-  if (!db) { submitBtn.disabled = false; submitBtn.textContent = 'Log Check-in → Coach'; return; }
-
+  if (!db) { if (btn) { btn.disabled = false; btn.textContent = 'Retry'; } return; }
   if (!db.data.morning_checkins) db.data.morning_checkins = [];
   db.data.morning_checkins = db.data.morning_checkins.filter(c => c.date !== todayISO());
-  db.data.morning_checkins.push({
-    date: todayISO(),
-    timestamp: new Date().toISOString(),
-    flags
-  });
-
+  db.data.morning_checkins.push({ date: todayISO(), timestamp: new Date().toISOString(), flags });
   const ok = await ghWriteDb(db.data, db.sha, `Morning check-in — ${todayISO()}`);
-
   if (ok) {
-    document.getElementById('checkin-flags').style.display = 'none';
-    submitBtn.style.display = 'none';
-    const doneMsg = document.getElementById('checkin-done-msg');
-    doneMsg.style.display = 'flex';
-    doneMsg.querySelector('.checkin-done-time').textContent =
-      new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-    const yesFlags = Object.entries(flags)
-      .filter(([,v]) => v)
-      .map(([k]) => flagMap[k]);
-    doneMsg.querySelector('.checkin-done-flags').textContent = yesFlags.length
-      ? '⚠ Flagged: ' + yesFlags.join(', ')
-      : '✓ All clear — no flags today';
+    // Trigger immediate re-poll to pick up change
+    lastHash = '';
+    pollDb();
   } else {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Retry';
+    if (btn) { btn.disabled = false; btn.textContent = 'Retry'; }
   }
 }
 
+// ═══════════════════════════════════════════════════════════
+//  SESSION FEEDBACK
+// ═══════════════════════════════════════════════════════════
+async function submitSessionFeedback(date) {
+  if (!hasToken()) { openTokenModal(); return; }
+  const doneEl = e('exfb-done-' + date);
+  const rows = document.querySelectorAll(`[data-date="${date}"] .exfb-ta`);
+  const exercises = [];
+  rows.forEach(ta => {
+    const row = ta.closest('.exfb-row');
+    if (ta.value.trim()) exercises.push({ name: row.dataset.ex, note: ta.value.trim() });
+  });
+  const ratingBtn = document.querySelector(`#session-rating-${date} .rating-btn.sel`);
+  const rating = ratingBtn ? parseInt(ratingBtn.dataset.n || '0') : null;
+  const note = (e('session-note-' + date) || {}).value || '';
+  const db = await ghReadDb();
+  if (!db) return;
+  if (!db.data.session_feedback) db.data.session_feedback = [];
+  db.data.session_feedback = db.data.session_feedback.filter(f => f.date !== date);
+  db.data.session_feedback.push({ date, timestamp: new Date().toISOString(), rating, note, exercises });
+  const ok = await ghWriteDb(db.data, db.sha, `Session feedback — ${date}`);
+  if (ok && doneEl) { doneEl.style.display = 'block'; }
+}
 
-// ════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 //  SESSION MANAGEMENT
-// ════════════════════════════════════════════════════════
-let _smMode   = null;
-let _smReason = null;
-let _smDate   = null;
-
+// ═══════════════════════════════════════════════════════════
+let _smMode = null, _smReason = null, _smDate = null;
 function smgmtTap(mode) {
-  // Deselect if already active (except 'done' which auto-confirms)
   if (_smMode === mode && mode !== 'done') {
     _smMode = null;
     document.querySelectorAll('.smgmt-btn').forEach(b => b.className = 'smgmt-btn');
-    document.getElementById('smgmt-rest-detail').classList.remove('visible');
-    document.getElementById('smgmt-move-detail').classList.remove('visible');
+    e('smgmt-rest-detail').classList.remove('visible');
+    e('smgmt-move-detail').classList.remove('visible');
     return;
   }
-  _smMode = mode;
-  _smReason = null;
-  _smDate   = null;
+  _smMode = mode; _smReason = null; _smDate = null;
   document.querySelectorAll('.smgmt-btn').forEach(b => b.className = 'smgmt-btn');
-  document.getElementById('smgmt-rest-detail').classList.remove('visible');
-  document.getElementById('smgmt-move-detail').classList.remove('visible');
-  document.getElementById('smgmt-' + mode).classList.add(mode + '-active');
-
-  if (mode === 'rest') {
-    document.getElementById('smgmt-rest-detail').classList.add('visible');
-  } else if (mode === 'move') {
-    document.getElementById('smgmt-move-detail').classList.add('visible');
-    buildDateChips();
-  } else if (mode === 'done') {
-    confirmOverride({ type: 'done', reason: null, target_date: null });
-  }
+  e('smgmt-rest-detail').classList.remove('visible');
+  e('smgmt-move-detail').classList.remove('visible');
+  e('smgmt-' + mode).classList.add(mode + '-active');
+  if (mode === 'rest') e('smgmt-rest-detail').classList.add('visible');
+  else if (mode === 'move') { e('smgmt-move-detail').classList.add('visible'); buildDateChips(); }
+  else if (mode === 'done') confirmOverride({ type: 'done', reason: null, target_date: null });
 }
-
 function selectReason(chip, reason) {
   document.querySelectorAll('.smgmt-chip').forEach(c => c.classList.remove('sel-reason'));
-  chip.classList.add('sel-reason');
-  _smReason = reason;
+  chip.classList.add('sel-reason'); _smReason = reason;
 }
-
 function buildDateChips() {
-  const wrap = document.getElementById('smgmt-date-btns');
+  const wrap = e('smgmt-date-btns'); if (!wrap) return;
   wrap.innerHTML = '';
   const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const today = new Date();
   for (let i = 1; i <= 6; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() + i);
-    const ds = d.getFullYear() + '-' +
-      String(d.getMonth()+1).padStart(2,'0') + '-' +
-      String(d.getDate()).padStart(2,'0');
-    const label = dayNames[d.getDay()] + ' ' + (d.getMonth()+1) + '/' + d.getDate();
+    const d = new Date(today); d.setDate(today.getDate() + i);
+    const ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
     const chip = document.createElement('div');
     chip.className = 'smgmt-chip';
-    chip.textContent = label;
+    chip.textContent = dayNames[d.getDay()] + ' ' + (d.getMonth()+1) + '/' + d.getDate();
     chip.onclick = function() {
       document.querySelectorAll('.smgmt-chip').forEach(c => c.classList.remove('sel-date'));
-      this.classList.add('sel-date');
-      _smDate = ds;
+      this.classList.add('sel-date'); _smDate = ds;
     };
     wrap.appendChild(chip);
   }
 }
-
-function clickConfirmRest() {
-  if (!_smReason) {
-    document.getElementById('smgmt-rest-detail').querySelector('.smgmt-chip-label').style.color = 'var(--red)';
-    setTimeout(() => {
-      document.getElementById('smgmt-rest-detail').querySelector('.smgmt-chip-label').style.color = '';
-    }, 1200);
-    return;
-  }
-  confirmOverride({ type: 'rest', reason: _smReason, target_date: null });
+async function clickConfirmRest() {
+  if (!_smReason) { alert('Pick a reason first.'); return; }
+  await confirmOverride({ type: 'rest', reason: _smReason, target_date: null });
 }
-
-function clickConfirmMove() {
-  if (!_smDate) {
-    document.getElementById('smgmt-move-detail').querySelector('.smgmt-chip-label').style.color = 'var(--red)';
-    setTimeout(() => {
-      document.getElementById('smgmt-move-detail').querySelector('.smgmt-chip-label').style.color = '';
-    }, 1200);
-    return;
-  }
-  confirmOverride({ type: 'move', reason: null, target_date: _smDate });
+async function clickConfirmMove() {
+  if (!_smDate) { alert('Pick a date first.'); return; }
+  await confirmOverride({ type: 'move', reason: null, target_date: _smDate });
 }
-
 async function confirmOverride(override) {
-  // Disable all confirm buttons
-  document.querySelectorAll('.smgmt-confirm-btn').forEach(b => { b.disabled = true; b.textContent = 'Saving…'; });
-
+  if (!hasToken()) { openTokenModal(); return; }
   const db = await ghReadDb();
-  if (!db) {
-    document.querySelectorAll('.smgmt-confirm-btn').forEach(b => { b.disabled = false; b.textContent = 'Confirm'; });
-    return;
-  }
-
+  if (!db) return;
   if (!db.data.session_overrides) db.data.session_overrides = [];
-  db.data.session_overrides = db.data.session_overrides.filter(o => o.date !== todayISO());
-  db.data.session_overrides.push({
-    date: todayISO(),
-    timestamp: new Date().toISOString(),
-    ...override
-  });
-
-  const ok = await ghWriteDb(
-    db.data, db.sha,
-    `Session override — ${todayISO()} — ${override.type}`
-  );
-
-  if (ok) {
-    document.getElementById('smgmt-rest-detail').classList.remove('visible');
-    document.getElementById('smgmt-move-detail').classList.remove('visible');
-    document.querySelectorAll('.smgmt-btn').forEach(b => {
-      b.style.pointerEvents = 'none';
-      b.style.opacity = '0.45';
-    });
-    const conf = document.getElementById('smgmt-confirmed');
-    conf.classList.add('visible');
-    const msgs = {
-      done: '✅ Logged as complete — well done.',
-      rest: `😴 Rest day logged (${override.reason}). Coach will adapt.`,
-      move: `📅 Session moved to ${override.target_date}. Coach notified.`
-    };
-    conf.textContent = msgs[override.type] || 'Saved.';
-  } else {
-    document.querySelectorAll('.smgmt-confirm-btn').forEach(b => { b.disabled = false; b.textContent = 'Confirm'; });
+  db.data.session_overrides.push({ date: todayISO(), timestamp: new Date().toISOString(), ...override });
+  const ok = await ghWriteDb(db.data, db.sha, `Session override — ${todayISO()} ${override.type}`);
+  const el = e('smgmt-confirmed');
+  if (ok && el) {
+    el.textContent = override.type === 'done' ? '✅ Logged as complete' : override.type === 'rest' ? `😴 Rest day logged (${override.reason})` : `📅 Moved to ${fmtDate(override.target_date)}`;
+    el.classList.add('visible');
+    if (ok) { lastHash = ''; setTimeout(pollDb, 500); }
   }
 }
 
-
-// ════════════════════════════════════════════════════════
-//  EXERCISE FEEDBACK
-// ════════════════════════════════════════════════════════
-const _ratings = {};
-
-function toggleExFb(btn) {
-  const ta = btn.nextElementSibling;
-  const open = ta.classList.toggle('open');
-  btn.classList.toggle('open', open);
-  if (open) ta.focus();
+// ═══════════════════════════════════════════════════════════
+//  TOKEN MODAL
+// ═══════════════════════════════════════════════════════════
+function openTokenModal()  { e('tok-overlay').classList.add('open'); setTimeout(() => e('tok-input').focus(), 100); }
+function closeTokenModal() { e('tok-overlay').classList.remove('open'); }
+function saveToken() {
+  const val = e('tok-input').value.trim();
+  if (!val) return;
+  setToken(val); closeTokenModal();
+  e('tok-gear').style.opacity = '0.45';
 }
 
-function setRating(btn, sessionId, val) {
-  _ratings[sessionId] = val;
-  document.querySelectorAll(`#session-rating-${sessionId} .rating-btn`)
-    .forEach((b,i) => b.classList.toggle('sel', i+1 === val));
+// ═══════════════════════════════════════════════════════════
+//  ASK COACH — DYNAMIC QUESTIONS
+// ═══════════════════════════════════════════════════════════
+const COACH_QUESTION_POOL = [
+  { icon:'🧠', text:"When you walk into the gym, what's the clearest signal — physically or mentally — that it's going to be a good session?", context:"Not the data. What do YOU feel? Your subjective read before you start is something no app captures.", rows:3, placeholder:'Your answer here…' },
+  { icon:'🍫', text:"On the chocolate and sweets — is there a specific trigger, or does it feel more random?", context:"Boredom, post-dinner habit, social context, stress? One sentence is enough.", rows:3, placeholder:'Your answer here…' },
+  { icon:'⏰', text:"What time of day do you typically train, and is that fixed or variable?", context:"This shapes when Coach should front-load your nutrition and how to read HRV in context of training timing.", rows:2, placeholder:'e.g. 6am most days, sometimes afternoon on Fridays…' },
+  { icon:'😴', text:"What does a genuinely great night of sleep look and feel like for you — and how often does that actually happen?", context:"Oura captures the numbers, but your subjective feel matters separately.", rows:3, placeholder:'Your answer here…' },
+  { icon:'💪', text:"Is there any exercise or movement you've been avoiding — and what's the story behind that?", context:"Pain, boredom, past injury, or just not vibing with it? This helps Coach decide whether to reintroduce or substitute.", rows:3, placeholder:'Your answer here…' },
+  { icon:'🥗', text:"What's your go-to meal when you're low on energy and motivation to plan?", context:"The 'lazy default' meal shows up on your worst days, which is exactly when it matters most.", rows:2, placeholder:'e.g. rice + eggs, convenience store chicken…' },
+  { icon:'📊', text:"When you see HRV trending down for a few days in a row, what's your gut reaction?", context:"Your emotional relationship with the data affects how Coach frames its calls and thresholds.", rows:2, placeholder:'Your answer here…' },
+  { icon:'🦴', text:"Where do you feel your structural imbalances most in everyday life — not just in training?", context:"Carrying bags, reaching overhead, sitting, stairs? Real-world asymmetry signals often matter more than gym-specific ones.", rows:3, placeholder:'e.g. right shoulder always feels tighter when I carry my bag…' },
+  { icon:'🎯', text:"If you had to pick ONE outcome from this training block — strength, aesthetics, or daily energy — which is actually most important right now?", context:"Not what you think you should say. What actually matters when you're honest about it?", rows:2, placeholder:'Your answer here…' },
+  { icon:'📅', text:"In the next 4 weeks, what's the biggest scheduling or life wildcard Coach should factor in?", context:"Travel, ministry load, family commitments, high-stress periods. These affect readiness and should adjust the plan.", rows:2, placeholder:'e.g. travel April 28–May 3, heavy preaching week…' }
+];
+const CQ_ACTIVE_KEY = 'coach_q_active', CQ_ANSWERED_KEY = 'coach_q_answered', CQ_ACTIVE_COUNT = 2;
+function cqGetActive()   { try { return JSON.parse(localStorage.getItem(CQ_ACTIVE_KEY)||'null'); } catch(e) { return null; } }
+function cqGetAnswered() { try { return JSON.parse(localStorage.getItem(CQ_ANSWERED_KEY)||'[]');   } catch(e) { return []; } }
+function cqSaveActive(a)   { localStorage.setItem(CQ_ACTIVE_KEY, JSON.stringify(a)); }
+function cqSaveAnswered(a) { localStorage.setItem(CQ_ANSWERED_KEY, JSON.stringify(a)); }
+function cqPickNext(excl) {
+  const answered = cqGetAnswered();
+  let avail = COACH_QUESTION_POOL.map((_,i)=>i).filter(i => !answered.includes(i) && !excl.includes(i));
+  if (!avail.length) { cqSaveAnswered([]); avail = COACH_QUESTION_POOL.map((_,i)=>i).filter(i => !excl.includes(i)); }
+  return avail[Math.floor(Math.random()*avail.length)] || 0;
 }
-
-async function submitSessionFeedback(dateISO, sessionId) {
-  const submitBtn = document.querySelector(`button[onclick="submitSessionFeedback('${dateISO}','${sessionId}')"]`);
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Saving…';
-
-  // Collect exercise comments
-  const exercises = [];
-  document.querySelectorAll('#exfb-apr18 .exfb-row').forEach(row => {
-    const name = row.dataset.ex;
-    const ta   = row.querySelector('.exfb-ta');
-    if (ta && ta.value.trim()) {
-      exercises.push({ exercise: name, comment: ta.value.trim() });
-    }
+function cqInit() {
+  let active = cqGetActive();
+  if (!active || active.length !== CQ_ACTIVE_COUNT) {
+    active = [];
+    for (let i = 0; i < CQ_ACTIVE_COUNT; i++) active.push(cqPickNext(active));
+    cqSaveActive(active);
+  }
+  cqRender(active);
+}
+function cqRender(active) {
+  const container = e('coach-q-container');
+  if (!container) return;
+  container.innerHTML = '';
+  active.forEach((qi, slot) => {
+    const q = COACH_QUESTION_POOL[qi]; if (!q) return;
+    const card = document.createElement('div');
+    card.className = 'coach-q-card'; card.dataset.slot = slot; card.dataset.qi = qi;
+    card.innerHTML = `<div class="coach-q-header"><div class="coach-q-icon">${q.icon}</div><div><div class="coach-q-text">${q.text}</div><div class="coach-q-context">${q.context}</div></div></div>
+      <div class="coach-q-body"><textarea class="coach-q-input" rows="${q.rows}" placeholder="${q.placeholder}"></textarea>
+      <button class="coach-q-submit" onclick="cqSubmit(this,${slot},${qi})">Send Answer to Coach</button></div>`;
+    container.appendChild(card);
   });
-
-  const note   = document.getElementById(`session-note-${sessionId}`).value.trim();
-  const rating = _ratings[sessionId] || null;
-
-  const db = await ghReadDb();
-  if (!db) { submitBtn.disabled = false; submitBtn.textContent = 'Save & Sync to Coach'; return; }
-
-  if (!db.data.session_feedback) db.data.session_feedback = [];
-  db.data.session_feedback = db.data.session_feedback.filter(f => f.date !== dateISO);
-  db.data.session_feedback.push({
-    date: dateISO,
-    timestamp: new Date().toISOString(),
-    rating,
-    overall_note: note,
-    exercises
-  });
-  db.data.meta.last_updated = new Date().toISOString();
-
-  const ok = await ghWriteDb(db.data, db.sha, `Session feedback — ${dateISO}`);
-  if (ok) {
-    submitBtn.style.display = 'none';
-    document.getElementById(`exfb-done-${sessionId}`).style.display = 'block';
-  } else {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Retry';
+  // Ask tab static content
+  const ask = e('tab-ask');
+  if (ask && !ask.querySelector('.coach-q-intro')) {
+    // Already rendered
   }
 }
+function cqSubmit(btn, slot, qi) {
+  const ta = btn.previousElementSibling;
+  if (!ta?.value.trim()) return;
+  btn.textContent = '✓ Sent to Coach'; btn.style.background = 'var(--green)'; btn.disabled = true; ta.disabled = true;
+  const answered = cqGetAnswered(); if (!answered.includes(qi)) { answered.push(qi); cqSaveAnswered(answered); }
+  setTimeout(() => {
+    const active = cqGetActive();
+    const newQi = cqPickNext(active.filter((_,i)=>i!==slot));
+    active[slot] = newQi; cqSaveActive(active);
+    const card = btn.closest('.coach-q-card');
+    card.style.transition = 'opacity 0.3s,transform 0.3s'; card.style.opacity='0'; card.style.transform='translateY(-8px)';
+    setTimeout(() => {
+      cqRender(active);
+      const newCard = document.querySelector(`.coach-q-card[data-slot="${slot}"]`);
+      if (newCard) { newCard.style.opacity='0'; newCard.style.transform='translateY(8px)'; newCard.style.transition='opacity 0.35s,transform 0.35s'; requestAnimationFrame(()=>requestAnimationFrame(()=>{ newCard.style.opacity='1'; newCard.style.transform='translateY(0)'; })); }
+    }, 320);
+  }, 1600);
+}
 
-
-// ════════════════════════════════════════════════════════
-//  INIT
-// ════════════════════════════════════════════════════════
-window.addEventListener('DOMContentLoaded', () => {
-  if (!hasToken()) {
-    document.getElementById('tok-gear').style.opacity = '0.9';
-    document.getElementById('tok-gear').style.color = 'var(--yellow)';
-    document.getElementById('checkin-no-token').style.display = 'inline';
-  }
+function initAskTab() {
+  const tab = e('tab-ask');
+  if (!tab) return;
+  tab.innerHTML = `<div class="coach-q-intro">These questions help Coach know you more precisely — not generic answers, but the specific things that sharpen your program. Answer when you have a minute.</div>
+    <div id="coach-q-container"></div>
+    <div class="card" style="margin-top:4px">
+      <div class="card-title">Drop Anything for Coach</div>
+      <div style="font-size:11.5px;color:var(--text2);margin-bottom:10px;line-height:1.6">Feedback on a session, something that felt off, a pattern you've noticed — put it here and Coach will process it at the next update.</div>
+      <textarea class="coach-q-input" rows="4" placeholder="Anything Coach should know…"></textarea>
+      <button class="coach-q-submit">Send to Coach</button>
+    </div>`;
   cqInit();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  initTopbar();
+  initAskTab();
+
+  // Initial fetch
+  const db = await fetchDb();
+  if (db) {
+    DB = db;
+    renderAll(db);
+    const now = new Date();
+    const ts = e('topbar-updated');
+    if (ts) ts.textContent = `Updated ${now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
+  } else {
+    // DB available but no change, or failed
+    const ts = e('topbar-updated');
+    if (ts) ts.textContent = 'Loaded from cache';
+  }
+
+  startPolling();
 });
 </script>
 </body>
