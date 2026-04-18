@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-17T05:17:04.972487+08:00",
+    "last_updated": "2026-04-18T12:00:00+08:00",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -517,7 +517,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3,
+      "visceral_fat_level": 3.0,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -1014,7 +1014,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14,
+      "respiratory_rate_rpm": 14.0,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -2347,6 +2347,98 @@
         "protein_g": 93,
         "carbs_g": 98,
         "fat_g": 25
+      },
+      "day_closed": false
+    },
+    {
+      "date": "2026-04-18",
+      "source": "Cal AI",
+      "targets": {
+        "calories_kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
+      },
+      "meals": [
+        {
+          "meal": "workout_shake",
+          "time": "07:29",
+          "items": [
+            {
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
+              "amount": "2 scoops",
+              "calories_kcal": 252,
+              "protein_g": 48,
+              "carbs_g": 8,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Red Tractor Omega 3 Instant Oats",
+              "amount": "1 serving",
+              "calories_kcal": 39,
+              "protein_g": 2,
+              "carbs_g": 7,
+              "fat_g": 1,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Unsweetened Almond Milk",
+              "amount": "1 serving",
+              "calories_kcal": 45,
+              "protein_g": 1,
+              "carbs_g": 2,
+              "fat_g": 4,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Plain Yogurt",
+              "amount": "120g",
+              "calories_kcal": 75,
+              "protein_g": 4,
+              "carbs_g": 9,
+              "fat_g": 2,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Frozen Blueberries",
+              "amount": "1/2 cup",
+              "calories_kcal": 39,
+              "protein_g": 0,
+              "carbs_g": 10,
+              "fat_g": 0,
+              "estimated": false,
+              "source": "Cal AI"
+            },
+            {
+              "food": "Additional ingredients (below screen)",
+              "amount": "—",
+              "calories_kcal": 40,
+              "protein_g": 0,
+              "carbs_g": 5,
+              "fat_g": 2,
+              "estimated": true,
+              "source": "Cal AI total 490 kcal"
+            }
+          ],
+          "subtotals": {
+            "calories_kcal": 490,
+            "protein_g": 55,
+            "carbs_g": 41,
+            "fat_g": 13
+          },
+          "notes": "Workout shake at 7:29 AM pre-session. Same proven stack. 55g protein = 37% of daily target before the gym. Day open — 95g protein still needed."
+        }
+      ],
+      "running_totals": {
+        "calories_kcal": 490,
+        "protein_g": 55,
+        "carbs_g": 41,
+        "fat_g": 13
       },
       "day_closed": false
     }
@@ -8636,6 +8728,208 @@
       "motra_link": "https://motra.com/share/workout/90e59c5410",
       "coaching_note": "High-volume session — 124% above 14-day calorie average. Peak HR 154 bpm exceeded 122 cap significantly during hinge work. Total energy 692 kcal. 12 exercises, 88 min. Lower body anchor was V Squat (not Hip Thrust as planned). Cardio load: High.",
       "volume_kg": 6300
+    },
+    {
+      "date": "2026-04-18",
+      "time": "09:04",
+      "source": "Motra + Apple Fitness",
+      "session_type": "Saturday Strength Training",
+      "session_name": "20260417 Saturday",
+      "duration_min": 62.65,
+      "total_reps": 265,
+      "calories_kcal": 368,
+      "total_energy_kcal": 465,
+      "avg_hr_bpm": 114,
+      "activity_strain_pct": 63,
+      "session_split": {
+        "muscular_pct": 65,
+        "cardio_pct": 35
+      },
+      "hr_zones": {
+        "zone0_min": 7.47,
+        "zone0_pct": 12,
+        "zone1_min": 28.72,
+        "zone1_pct": 46,
+        "zone2_min": 20.33,
+        "zone2_pct": 33,
+        "zone3_min": 5.45,
+        "zone3_pct": 9,
+        "zone4_min": 0.38,
+        "zone4_pct": 1,
+        "zone5_min": 0,
+        "zone5_pct": 0
+      },
+      "hr_recovery_bpm": -49,
+      "hr_recovery_tier": "Superior",
+      "cardio_focus": {
+        "low_aerobic_pct": 97,
+        "high_aerobic_pct": 3,
+        "anaerobic_pct": 0
+      },
+      "muscle_focus": {
+        "lats_pct": 24,
+        "glutes_pct": 17,
+        "shoulder_pct": 11,
+        "traps_pct": 9,
+        "quads_pct": 7,
+        "abs_pct": 5,
+        "upper_back_pct": 5,
+        "middle_back_pct": 4,
+        "rotator_cuff_pct": 2,
+        "abductors_pct": 2
+      },
+      "exercises": [
+        {
+          "name": "Side-Lying Thoracic Rotation Stretch",
+          "sets": 1,
+          "reps": [
+            8
+          ],
+          "weight": "BW",
+          "category": "warm_up"
+        },
+        {
+          "name": "Resistance Band Standing Hip Abduction",
+          "sets": 2,
+          "reps": [
+            15,
+            15
+          ],
+          "weight": "BW",
+          "category": "activation"
+        },
+        {
+          "name": "Dead Hang",
+          "sets": 2,
+          "timed_sec": [
+            30,
+            30
+          ],
+          "weight": "BW",
+          "category": "shoulder_correction"
+        },
+        {
+          "name": "Resistance Band Pull Apart",
+          "sets": 2,
+          "reps": [
+            15,
+            15
+          ],
+          "weight": "BW",
+          "category": "shoulder_correction"
+        },
+        {
+          "name": "Pull-Up",
+          "sets": 2,
+          "reps": [
+            4,
+            4
+          ],
+          "weight": "BW",
+          "category": "main_strength"
+        },
+        {
+          "name": "Barbell Single-Arm Landmine Row",
+          "sets": 3,
+          "reps": [
+            10,
+            10,
+            10
+          ],
+          "weight_kg": [
+            20,
+            25,
+            20
+          ],
+          "category": "main_strength",
+          "note": "Middle set at 25kg — good load test"
+        },
+        {
+          "name": "Barbell Landmine Rotational Press",
+          "sets": 2,
+          "reps": [
+            20,
+            20
+          ],
+          "weight_kg": [
+            25,
+            27.5
+          ],
+          "category": "main_strength",
+          "note": "Progressive — 27.5kg on set 2"
+        },
+        {
+          "name": "TRX Y Raise",
+          "sets": 2,
+          "reps": [
+            12,
+            9
+          ],
+          "weight": "BW",
+          "category": "shoulder_correction",
+          "note": "Rep drop set 2: 12→9. Shoulder endurance ceiling flagged."
+        },
+        {
+          "name": "Kettlebell Swing",
+          "sets": 3,
+          "reps": [
+            12,
+            12,
+            12
+          ],
+          "weight_kg": [
+            20,
+            20,
+            20
+          ],
+          "category": "hinge_power"
+        },
+        {
+          "name": "Kettlebell Suitcase Carry",
+          "sets": 3,
+          "reps": [
+            50,
+            50,
+            50
+          ],
+          "unit": "ft",
+          "weight_kg": [
+            12,
+            14,
+            14
+          ],
+          "category": "core_stability"
+        },
+        {
+          "name": "Dumbbell Chest-Supported Row",
+          "sets": 3,
+          "reps": [
+            10,
+            10,
+            10
+          ],
+          "weight_kg": [
+            4.5,
+            4.5,
+            4.5
+          ],
+          "category": "accessory",
+          "note": "10 lb / 4.5 kg — light; good form control exercise"
+        },
+        {
+          "name": "Lying Leg Raise",
+          "sets": 2,
+          "reps": [
+            10,
+            10
+          ],
+          "weight": "BW",
+          "category": "core"
+        }
+      ],
+      "motra_link": "https://motra.com/share/workout/b52c62c285",
+      "coaching_note": "Volume +18% above 14-day average (Motra Strength Intensity Spike). Avg HR 114 bpm — under 122 cap throughout. HR recovery -49 bpm = Superior tier. Yellow readiness day, trained well above Yellow intensity without the HR cost. TRX Y Raise 12→9 reps flagged. Duration 62:39 — within 65-min cap.",
+      "volume_kg": 3959
     }
   ],
   "glucose": [
@@ -8751,7 +9045,7 @@
     "call": "Sprint gate closed — HRV 29.1ms. Strength session on. Fasted walk done ✅.",
     "sprint_gate": "CLOSED — 29.1ms below 35ms threshold"
   },
-  "last_updated": "2026-04-18T06:30:00",
+  "last_updated": "2026-04-18T12:00:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -8802,17 +9096,6 @@
         "migraine_headache": true,
         "poor_sleep": true,
         "high_fatigue": true,
-        "joint_pain": false,
-        "high_stress": false
-      }
-    },
-    {
-      "date": "2026-04-18",
-      "timestamp": "2026-04-17T23:51:14.139Z",
-      "flags": {
-        "migraine_headache": false,
-        "poor_sleep": false,
-        "high_fatigue": false,
         "joint_pain": false,
         "high_stress": false
       }
