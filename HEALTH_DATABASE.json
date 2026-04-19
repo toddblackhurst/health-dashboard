@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13,
+    "goal_bf_pct": 13.0,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -403,7 +403,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75,
+      "weight_kg": 75.0,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -536,7 +536,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3,
+      "visceral_fat_level": 3.0,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -563,7 +563,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 2,
+      "visceral_fat_level": 2.0,
       "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
@@ -1068,7 +1068,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14,
+      "respiratory_rate_rpm": 14.0,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -1126,7 +1126,7 @@
       "spo2_pct": 96.5,
       "spo2_pct_oura_avg": 97,
       "respiratory_rate_rpm": 14.8,
-      "wrist_temp_f": 97,
+      "wrist_temp_f": 97.0,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
       "breathing_regularity": "Optimal",
@@ -9296,7 +9296,7 @@
     "goal_summary": {
       "as_of": "2026-04-19",
       "goal_weight_lbs": 159,
-      "goal_bf_pct": 13,
+      "goal_bf_pct": 13.0,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
       "weeks_remaining": 14.9,
@@ -9306,7 +9306,7 @@
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
       "fat_to_lose_lbs": 6.1,
-      "lean_to_gain_lbs": 2,
+      "lean_to_gain_lbs": 2.0,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
       "tdee_estimate_kcal": 2350,
@@ -9365,17 +9365,6 @@
         "migraine_headache": true,
         "poor_sleep": true,
         "high_fatigue": true,
-        "joint_pain": false,
-        "high_stress": false
-      }
-    },
-    {
-      "date": "2026-04-19",
-      "timestamp": "2026-04-18T23:54:19.651Z",
-      "flags": {
-        "migraine_headache": false,
-        "poor_sleep": false,
-        "high_fatigue": false,
         "joint_pain": false,
         "high_stress": false
       }
@@ -9548,5 +9537,163 @@
     "athlete_notes": "",
     "created_date": "2026-04-19",
     "coach_note": "HRV recovery window is Sunday → Monday. TRX Y-Raise anchor test (12 on both sets) is the key progression marker for Week 2. Time cap is 60 min hard — if Block C needs trimming, drop Goblet Carry Walk last."
-  }
+  },
+  "coach_questions": [
+    {
+      "id": "cq_001",
+      "icon": "⚡",
+      "text": "Where do you actually feel your right-side dominance most — in the gym, or in daily life?",
+      "context": "Carrying bags, reaching, stairs, sitting crooked? The real-life signal often reveals more than any single exercise. This calibrates which correctives matter most to prioritize.",
+      "placeholder": "e.g. right shoulder always rides higher when I carry groceries, or I notice my right hip loads more on stairs…",
+      "rows": 3,
+      "category": "structural",
+      "coaching_purpose": "calibrate structural correction priority in daily vs. gym context",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_002",
+      "icon": "🕐",
+      "text": "When during the day does your energy actually peak — and is that when you typically train?",
+      "context": "Misalignment between peak energy and training time is one of the most underrated performance drains. This shapes when Coach should front-load nutrition and how to read readiness scores.",
+      "placeholder": "e.g. I'm sharpest 8-10am but often train at noon because of schedule…",
+      "rows": 2,
+      "category": "readiness",
+      "coaching_purpose": "align training timing recommendations with biological energy peak",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_003",
+      "icon": "⛪",
+      "text": "On a heavy preaching/ministry week — how does it actually affect your training energy?",
+      "context": "Cognitive and emotional load from ministry is real physiological stress. Coach needs to know whether heavy ministry weeks = lower readiness, or whether training is your release valve.",
+      "placeholder": "e.g. big sermon week = mentally drained but still want to train / or = body feels flat…",
+      "rows": 3,
+      "category": "readiness",
+      "coaching_purpose": "model ministry load as a readiness variable alongside HRV and sleep",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_004",
+      "icon": "🚴",
+      "text": "On cardio days — what type actually feels good vs. what feels like punishment?",
+      "context": "Coach knows you train cardio on off-days, but not what format works best mentally and physically given hip OA. This directly affects what Coach recommends for cardio options.",
+      "placeholder": "e.g. bike is fine, treadmill walking is boring, swimming is great but inconvenient…",
+      "rows": 3,
+      "category": "preferences",
+      "coaching_purpose": "build an accurate cardio preference profile for off-day programming",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_005",
+      "icon": "✅",
+      "text": "What's the specific feeling — physical or mental — that tells you a session was actually worth it?",
+      "context": "Not 'I worked hard.' The precise signal. Pump? Movement quality? A specific exercise that landed? Coach uses this to calibrate when to call a session a win vs. when to adjust.",
+      "placeholder": "e.g. when I leave feeling taller / when I hit all my pull-up reps / when the last set felt controlled…",
+      "rows": 3,
+      "category": "feedback",
+      "coaching_purpose": "define personal session success signal for post-session coaching accuracy",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_006",
+      "icon": "💧",
+      "text": "What does your hydration look like on training days — before, during, and after?",
+      "context": "Dehydration tanks HRV and perceived effort faster than most people realize. Coach has no visibility into this. Even a rough pattern is useful.",
+      "placeholder": "e.g. coffee in the morning, water during session, forget to drink after…",
+      "rows": 2,
+      "category": "nutrition",
+      "coaching_purpose": "assess hydration as a hidden factor in readiness and HR control",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_007",
+      "icon": "🧳",
+      "text": "When you travel for ministry — what training do you actually manage to do?",
+      "context": "Travel breaks are predictable stress on your program. Knowing what's realistic on the road lets Coach build a proper travel protocol instead of a generic 'do what you can.'",
+      "placeholder": "e.g. hotel gym basics, bodyweight only, usually nothing for 3+ days…",
+      "rows": 2,
+      "category": "logistics",
+      "coaching_purpose": "build a realistic travel training protocol based on actual behavior",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_008",
+      "icon": "🩻",
+      "text": "Outside of hip OA — any other past injuries or surgeries Coach should factor into exercise selection?",
+      "context": "Things that healed years ago can still create compensation patterns today. Shoulder, knee, back, wrist — even old stuff matters for long-term programming.",
+      "placeholder": "e.g. right knee had surgery in 2010, left shoulder impingement a few years ago…",
+      "rows": 3,
+      "category": "structural",
+      "coaching_purpose": "build complete injury history to prevent accidental re-aggravation",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_009",
+      "icon": "🌙",
+      "text": "What's the last thing you typically eat or drink before bed — and does it vary much night to night?",
+      "context": "Late-night eating (especially sweets vs. protein vs. nothing) directly impacts Oura sleep scores and overnight HRV. Coach can't see this from the data alone.",
+      "placeholder": "e.g. usually nothing after 8pm / or I always have a small snack around 9…",
+      "rows": 2,
+      "category": "nutrition",
+      "coaching_purpose": "connect late-eating patterns to overnight HRV and sleep quality trends",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_010",
+      "icon": "📍",
+      "text": "Which floor of WorldGym do you prefer to start on — and does the starting floor affect your mindset?",
+      "context": "Coach has the layout rules, but not your personal preference. If starting on Floor 3 puts you in the right headspace, that's worth baking into the default session structure.",
+      "placeholder": "e.g. I like starting on F2 and going up / or F3 activation feel is better for me mentally…",
+      "rows": 2,
+      "category": "logistics",
+      "coaching_purpose": "personalize gym floor sequencing to match preference vs. just logical flow",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_011",
+      "icon": "🧘",
+      "text": "What do your off-days actually look like — intentional rest, light activity, or just whatever happens?",
+      "context": "Recovery days aren't all equal. Walking, stretching, and light movement all affect the readiness picture. Coach needs to know what 'rest day' actually means for you.",
+      "placeholder": "e.g. usually a lot of walking, or mostly sedentary with desk work, or I try to do light stretching…",
+      "rows": 2,
+      "category": "recovery",
+      "coaching_purpose": "model off-day activity level when interpreting mid-week readiness data",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    },
+    {
+      "id": "cq_012",
+      "icon": "🎵",
+      "text": "Do you train with music — and does the type of music change how hard you actually push?",
+      "context": "Sounds minor but isn't. Tempo and arousal from music is a real variable in effort output. Some athletes train completely differently with headphones on vs. off.",
+      "placeholder": "e.g. always headphones — worship keeps me focused / or I need high BPM to push hard…",
+      "rows": 2,
+      "category": "preferences",
+      "coaching_purpose": "understand arousal inputs that affect session performance",
+      "status": "pending",
+      "answer": null,
+      "answered_at": null
+    }
+  ]
 }
