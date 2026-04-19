@@ -1342,8 +1342,8 @@ async function ghReadDb() {
   const tok = getToken();
   if (!tok) { openTokenModal(); return null; }
   try {
-    const r = await fetch(`${API_URL}?ref=${GH_BRANCH}`,
-      { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json' } });
+    const r = await fetch(`${API_URL}?ref=${GH_BRANCH}&_=${Date.now()}`,
+      { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json' }, cache: 'no-store' });
     if (!r.ok) { if (r.status === 401) openTokenModal(); return null; }
     const j = await r.json();
     const text = decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))));
@@ -1361,6 +1361,7 @@ async function ghWriteDb(data, sha, msg) {
       headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: msg, content, sha, branch: GH_BRANCH })
     });
+    if (!r.ok) { const err = await r.json().catch(() => ({})); console.error('ghWriteDb failed', r.status, err.message || ''); }
     return r.ok;
   } catch(e) { console.error('ghWriteDb:', e); return false; }
 }
@@ -1380,10 +1381,17 @@ async function submitCheckin() {
   if (!db.data.morning_checkins) db.data.morning_checkins = [];
   db.data.morning_checkins = db.data.morning_checkins.filter(c => c.date !== todayISO());
   db.data.morning_checkins.push({ date: todayISO(), timestamp: new Date().toISOString(), flags });
+  const checkinEntry = { date: todayISO(), timestamp: new Date().toISOString(), flags };
   const ok = await ghWriteDb(db.data, db.sha, `Morning check-in — ${todayISO()}`);
   if (ok) {
-    // Trigger immediate re-poll to pick up change
+    // Update local DB immediately so re-render locks the card before poll returns
+    if (DB) {
+      if (!DB.morning_checkins) DB.morning_checkins = [];
+      DB.morning_checkins = DB.morning_checkins.filter(c => c.date !== todayISO());
+      DB.morning_checkins.push(checkinEntry);
+    }
     lastHash = '';
+    renderAll(DB);
     pollDb();
   } else {
     if (btn) { btn.disabled = false; btn.textContent = '⚠ Save failed — Tap to retry'; btn.style.background = 'var(--red,#e05)'; }
