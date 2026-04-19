@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13.0,
+    "goal_bf_pct": 13,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -403,7 +403,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75.0,
+      "weight_kg": 75,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -536,7 +536,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -563,7 +563,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
@@ -1068,7 +1068,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -1126,7 +1126,7 @@
       "spo2_pct": 96.5,
       "spo2_pct_oura_avg": 97,
       "respiratory_rate_rpm": 14.8,
-      "wrist_temp_f": 97.0,
+      "wrist_temp_f": 97,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
       "breathing_regularity": "Optimal",
@@ -9296,7 +9296,7 @@
     "goal_summary": {
       "as_of": "2026-04-19",
       "goal_weight_lbs": 159,
-      "goal_bf_pct": 13.0,
+      "goal_bf_pct": 13,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
       "weeks_remaining": 14.9,
@@ -9306,7 +9306,7 @@
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
       "fat_to_lose_lbs": 6.1,
-      "lean_to_gain_lbs": 2.0,
+      "lean_to_gain_lbs": 2,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
       "tdee_estimate_kcal": 2350,
@@ -9574,9 +9574,9 @@
       "rows": 3,
       "category": "readiness",
       "coaching_purpose": "model ministry load as a readiness variable alongside HRV and sleep",
-      "status": "pending",
-      "answer": null,
-      "answered_at": null
+      "status": "answered",
+      "answer": "I would say training is my release valve. I need it to feel centered and settled. Even a short session is better than no session.",
+      "answered_at": "2026-04-19T00:11:57.815Z"
     },
     {
       "id": "cq_004",
