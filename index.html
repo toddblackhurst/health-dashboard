@@ -1519,90 +1519,157 @@ function saveToken() {
 }
 
 // ═══════════════════════════════════════════════════════════
-//  ASK COACH — DYNAMIC QUESTIONS
+//  ASK COACH — DB-DRIVEN QUESTIONS (max 3 at a time)
 // ═══════════════════════════════════════════════════════════
-const COACH_QUESTION_POOL = [
-  { icon:'🧠', text:"When you walk into the gym, what's the clearest signal — physically or mentally — that it's going to be a good session?", context:"Not the data. What do YOU feel? Your subjective read before you start is something no app captures.", rows:3, placeholder:'Your answer here…' },
-  { icon:'🍫', text:"On the chocolate and sweets — is there a specific trigger, or does it feel more random?", context:"Boredom, post-dinner habit, social context, stress? One sentence is enough.", rows:3, placeholder:'Your answer here…' },
-  { icon:'⏰', text:"What time of day do you typically train, and is that fixed or variable?", context:"This shapes when Coach should front-load your nutrition and how to read HRV in context of training timing.", rows:2, placeholder:'e.g. 6am most days, sometimes afternoon on Fridays…' },
-  { icon:'😴', text:"What does a genuinely great night of sleep look and feel like for you — and how often does that actually happen?", context:"Oura captures the numbers, but your subjective feel matters separately.", rows:3, placeholder:'Your answer here…' },
-  { icon:'💪', text:"Is there any exercise or movement you've been avoiding — and what's the story behind that?", context:"Pain, boredom, past injury, or just not vibing with it? This helps Coach decide whether to reintroduce or substitute.", rows:3, placeholder:'Your answer here…' },
-  { icon:'🥗', text:"What's your go-to meal when you're low on energy and motivation to plan?", context:"The 'lazy default' meal shows up on your worst days, which is exactly when it matters most.", rows:2, placeholder:'e.g. rice + eggs, convenience store chicken…' },
-  { icon:'📊', text:"When you see HRV trending down for a few days in a row, what's your gut reaction?", context:"Your emotional relationship with the data affects how Coach frames its calls and thresholds.", rows:2, placeholder:'Your answer here…' },
-  { icon:'🦴', text:"Where do you feel your structural imbalances most in everyday life — not just in training?", context:"Carrying bags, reaching overhead, sitting, stairs? Real-world asymmetry signals often matter more than gym-specific ones.", rows:3, placeholder:'e.g. right shoulder always feels tighter when I carry my bag…' },
-  { icon:'🎯', text:"If you had to pick ONE outcome from this training block — strength, aesthetics, or daily energy — which is actually most important right now?", context:"Not what you think you should say. What actually matters when you're honest about it?", rows:2, placeholder:'Your answer here…' },
-  { icon:'📅', text:"In the next 4 weeks, what's the biggest scheduling or life wildcard Coach should factor in?", context:"Travel, ministry load, family commitments, high-stress periods. These affect readiness and should adjust the plan.", rows:2, placeholder:'e.g. travel April 28–May 3, heavy preaching week…' }
-];
-const CQ_ACTIVE_KEY = 'coach_q_active', CQ_ANSWERED_KEY = 'coach_q_answered', CQ_ACTIVE_COUNT = 2;
-function cqGetActive()   { try { return JSON.parse(localStorage.getItem(CQ_ACTIVE_KEY)||'null'); } catch(e) { return null; } }
-function cqGetAnswered() { try { return JSON.parse(localStorage.getItem(CQ_ANSWERED_KEY)||'[]');   } catch(e) { return []; } }
-function cqSaveActive(a)   { localStorage.setItem(CQ_ACTIVE_KEY, JSON.stringify(a)); }
-function cqSaveAnswered(a) { localStorage.setItem(CQ_ANSWERED_KEY, JSON.stringify(a)); }
-function cqPickNext(excl) {
-  const answered = cqGetAnswered();
-  let avail = COACH_QUESTION_POOL.map((_,i)=>i).filter(i => !answered.includes(i) && !excl.includes(i));
-  if (!avail.length) { cqSaveAnswered([]); avail = COACH_QUESTION_POOL.map((_,i)=>i).filter(i => !excl.includes(i)); }
-  return avail[Math.floor(Math.random()*avail.length)] || 0;
+const CQ_MAX = 3;
+
+// Returns array of pending question objects from DB
+function cqGetPool() {
+  return (DB && DB.coach_questions) ? DB.coach_questions : [];
 }
-function cqInit() {
-  let active = cqGetActive();
-  if (!active || active.length !== CQ_ACTIVE_COUNT) {
-    active = [];
-    for (let i = 0; i < CQ_ACTIVE_COUNT; i++) active.push(cqPickNext(active));
-    cqSaveActive(active);
+function cqGetPending() {
+  return cqGetPool().filter(q => q.status === 'pending');
+}
+function cqGetActive() {
+  // Active = first CQ_MAX pending questions (stable order, no random)
+  return cqGetPending().slice(0, CQ_MAX);
+}
+
+// Write an answer back to DB via GitHub
+async function cqSaveAnswer(questionId, answerText) {
+  const db = await ghReadDb();
+  if (!db) return false;
+  const qs = db.data.coach_questions || [];
+  const idx = qs.findIndex(q => q.id === questionId);
+  if (idx === -1) return false;
+  qs[idx].status = 'answered';
+  qs[idx].answer = answerText;
+  qs[idx].answered_at = new Date().toISOString();
+  db.data.coach_questions = qs;
+  // Also update local DB so re-renders work immediately
+  if (DB && DB.coach_questions) {
+    DB.coach_questions[idx] = qs[idx];
   }
-  cqRender(active);
+  return await ghWriteDb(db.data, db.sha, `Coach Q answered: ${questionId} — ${todayISO()}`);
 }
-function cqRender(active) {
+
+function cqRender() {
   const container = e('coach-q-container');
   if (!container) return;
-  container.innerHTML = '';
-  active.forEach((qi, slot) => {
-    const q = COACH_QUESTION_POOL[qi]; if (!q) return;
-    const card = document.createElement('div');
-    card.className = 'coach-q-card'; card.dataset.slot = slot; card.dataset.qi = qi;
-    card.innerHTML = `<div class="coach-q-header"><div class="coach-q-icon">${q.icon}</div><div><div class="coach-q-text">${q.text}</div><div class="coach-q-context">${q.context}</div></div></div>
-      <div class="coach-q-body"><textarea class="coach-q-input" rows="${q.rows}" placeholder="${q.placeholder}"></textarea>
-      <button class="coach-q-submit" onclick="cqSubmit(this,${slot},${qi})">Send Answer to Coach</button></div>`;
-    container.appendChild(card);
-  });
-  // Ask tab static content
-  const ask = e('tab-ask');
-  if (ask && !ask.querySelector('.coach-q-intro')) {
-    // Already rendered
+  const active = cqGetActive();
+  const total = cqGetPool().length;
+  const answered = total - cqGetPending().length;
+
+  // Progress line
+  let progressHtml = '';
+  if (total > 0) {
+    const pct = Math.round((answered / total) * 100);
+    progressHtml = `<div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+        <span style="font-size:11px;color:var(--text2);font-weight:600;letter-spacing:.03em">COACH CALIBRATION</span>
+        <span style="font-size:11px;color:var(--text2)">${answered} of ${total} answered</span>
+      </div>
+      <div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:var(--accent);border-radius:2px;transition:width .5s"></div>
+      </div>
+    </div>`;
   }
+
+  if (active.length === 0) {
+    container.innerHTML = progressHtml + `<div class="card" style="text-align:center;padding:28px 20px;color:var(--text2);font-size:13px;line-height:1.7">
+      ✅ All current questions answered.<br>Coach will add new questions as your program develops.
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = progressHtml + active.map((q, slot) => `
+    <div class="coach-q-card" data-id="${q.id}" data-slot="${slot}">
+      <div class="coach-q-header">
+        <div class="coach-q-icon">${q.icon}</div>
+        <div>
+          <div class="coach-q-text">${q.text}</div>
+          <div class="coach-q-context">${q.context}</div>
+        </div>
+      </div>
+      <div class="coach-q-body">
+        <textarea class="coach-q-input" rows="${q.rows}" placeholder="${q.placeholder || 'Your answer here…'}"></textarea>
+        <button class="coach-q-submit" onclick="cqSubmit(this,'${q.id}',${slot})">Send Answer to Coach</button>
+      </div>
+    </div>`).join('');
 }
-function cqSubmit(btn, slot, qi) {
+
+async function cqSubmit(btn, questionId, slot) {
   const ta = btn.previousElementSibling;
-  if (!ta?.value.trim()) return;
-  btn.textContent = '✓ Sent to Coach'; btn.style.background = 'var(--green)'; btn.disabled = true; ta.disabled = true;
-  const answered = cqGetAnswered(); if (!answered.includes(qi)) { answered.push(qi); cqSaveAnswered(answered); }
+  const answer = ta?.value.trim();
+  if (!answer) return;
+
+  btn.textContent = 'Saving…'; btn.disabled = true; ta.disabled = true;
+  btn.style.background = 'var(--text2)';
+
+  const ok = await cqSaveAnswer(questionId, answer);
+
+  if (ok) {
+    btn.textContent = '✓ Saved to Coach'; btn.style.background = 'var(--green)';
+  } else {
+    btn.textContent = '✓ Recorded locally'; btn.style.background = 'var(--green)';
+    // Still mark answered locally so card rotates even if GitHub write failed
+    if (DB && DB.coach_questions) {
+      const idx = DB.coach_questions.findIndex(q => q.id === questionId);
+      if (idx !== -1) { DB.coach_questions[idx].status = 'answered'; DB.coach_questions[idx].answer = answer; DB.coach_questions[idx].answered_at = new Date().toISOString(); }
+    }
+  }
+
+  // Animate out then re-render
+  const card = btn.closest('.coach-q-card');
+  card.style.transition = 'opacity 0.3s,transform 0.3s';
+  card.style.opacity = '0'; card.style.transform = 'translateY(-8px)';
   setTimeout(() => {
-    const active = cqGetActive();
-    const newQi = cqPickNext(active.filter((_,i)=>i!==slot));
-    active[slot] = newQi; cqSaveActive(active);
-    const card = btn.closest('.coach-q-card');
-    card.style.transition = 'opacity 0.3s,transform 0.3s'; card.style.opacity='0'; card.style.transform='translateY(-8px)';
-    setTimeout(() => {
-      cqRender(active);
-      const newCard = document.querySelector(`.coach-q-card[data-slot="${slot}"]`);
-      if (newCard) { newCard.style.opacity='0'; newCard.style.transform='translateY(8px)'; newCard.style.transition='opacity 0.35s,transform 0.35s'; requestAnimationFrame(()=>requestAnimationFrame(()=>{ newCard.style.opacity='1'; newCard.style.transform='translateY(0)'; })); }
-    }, 320);
-  }, 1600);
+    cqRender();
+    // Animate in the replacement card at that slot
+    const newCard = document.querySelector(`.coach-q-card[data-slot="${slot}"]`);
+    if (newCard) {
+      newCard.style.opacity = '0'; newCard.style.transform = 'translateY(8px)';
+      newCard.style.transition = 'opacity 0.35s,transform 0.35s';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        newCard.style.opacity = '1'; newCard.style.transform = 'translateY(0)';
+      }));
+    }
+  }, 350);
 }
 
 function initAskTab() {
   const tab = e('tab-ask');
   if (!tab) return;
-  tab.innerHTML = `<div class="coach-q-intro">These questions help Coach know you more precisely — not generic answers, but the specific things that sharpen your program. Answer when you have a minute.</div>
+  tab.innerHTML = `
+    <div class="coach-q-intro">These questions are from Coach — each one targets a specific gap in what's known about how you train and recover. Max 3 at a time. Answer when you have a minute.</div>
     <div id="coach-q-container"></div>
     <div class="card" style="margin-top:4px">
       <div class="card-title">Drop Anything for Coach</div>
       <div style="font-size:11.5px;color:var(--text2);margin-bottom:10px;line-height:1.6">Feedback on a session, something that felt off, a pattern you've noticed — put it here and Coach will process it at the next update.</div>
       <textarea class="coach-q-input" rows="4" placeholder="Anything Coach should know…"></textarea>
-      <button class="coach-q-submit">Send to Coach</button>
+      <button class="coach-q-submit" onclick="cqFreeformSend(this)">Send to Coach</button>
     </div>`;
-  cqInit();
+  cqRender();
+}
+
+async function cqFreeformSend(btn) {
+  const ta = btn.previousElementSibling;
+  const text = ta?.value.trim();
+  if (!text) return;
+  btn.textContent = 'Saving…'; btn.disabled = true; ta.disabled = true;
+  btn.style.background = 'var(--text2)';
+  const db = await ghReadDb();
+  if (db) {
+    if (!db.data.coach_freeform) db.data.coach_freeform = [];
+    db.data.coach_freeform.push({ text, submitted_at: new Date().toISOString() });
+    const ok = await ghWriteDb(db.data, db.sha, `Coach freeform note — ${todayISO()}`);
+    btn.textContent = ok ? '✓ Sent to Coach' : '✓ Recorded';
+  } else {
+    btn.textContent = '✓ Recorded';
+  }
+  btn.style.background = 'var(--green)';
+  ta.value = '';
+  setTimeout(() => { btn.textContent = 'Send to Coach'; btn.disabled = false; ta.disabled = false; btn.style.background = ''; }, 2500);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1610,13 +1677,14 @@ function initAskTab() {
 // ═══════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', async () => {
   initTopbar();
-  initAskTab();
+  initAskTab(); // Renders shell structure; questions re-render after DB loads
 
   // Initial fetch
   const db = await fetchDb();
   if (db) {
     DB = db;
     renderAll(db); // sets topbar-updated via updateLastDataChange
+    cqRender();    // Re-render coach questions now that DB.coach_questions is available
   } else {
     const ts = e('topbar-updated');
     if (ts) ts.textContent = 'Connecting…';
