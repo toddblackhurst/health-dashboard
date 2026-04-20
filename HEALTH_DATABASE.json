@@ -9573,7 +9573,7 @@
       "rationale": "Weight 163.1 lbs (Ocare3) / 164.4 lbs (Hume). Primary focus: body recomposition \u2014 reduce VAT to 285g and BF% toward 13% while maintaining lean mass. Scale weight now below goal weight of 165 lbs. Visceral fat BIA Lv 2.0 (directional, down from 3.0). DXA Feb 23 remains primary body comp reference."
     }
   },
-  "last_updated": "2026-04-20T08:49:15+08:00",
+  "last_updated": "2026-04-20T17:16:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -10048,6 +10048,43 @@
         "protein_g": 121.03,
         "carbs_g": 114.11,
         "fat_g": 44.52
+      }
+    },
+    {
+      "date": "2026-04-20",
+      "meals": [
+        {
+          "name": "Post Workout Shake",
+          "time": "11:13",
+          "source": "Cal AI",
+          "kcal": 220,
+          "protein_g": 28,
+          "carbs_g": 7,
+          "fat_g": 9,
+          "notes": "Gold Standard 100% Whey Vanilla Ice Cream 1 scoop + Unsweetened Almond Milk x2"
+        },
+        {
+          "name": "Pocari Sweat",
+          "time": "11:14",
+          "source": "Cal AI",
+          "kcal": 203,
+          "protein_g": 0,
+          "carbs_g": 49.3,
+          "fat_g": 0,
+          "notes": "290g bottle"
+        }
+      ],
+      "totals": {
+        "kcal": 423,
+        "protein_g": 28,
+        "carbs_g": 56.3,
+        "fat_g": 9
+      },
+      "targets": {
+        "kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
       }
     }
   ]
