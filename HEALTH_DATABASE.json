@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13.0,
+    "goal_bf_pct": 13,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -403,7 +403,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75.0,
+      "weight_kg": 75,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -536,7 +536,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -563,7 +563,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
@@ -618,7 +618,7 @@
       "weight_lbs": 164.7,
       "bmi": 21.8,
       "body_fat_pct": 16.6,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmr_kcal": 1773,
       "body_water_pct": 57.3,
       "bone_mass_lbs": 7.7,
@@ -1109,7 +1109,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -1167,7 +1167,7 @@
       "spo2_pct": 96.5,
       "spo2_pct_oura_avg": 97,
       "respiratory_rate_rpm": 14.8,
-      "wrist_temp_f": 97.0,
+      "wrist_temp_f": 97,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
       "breathing_regularity": "Optimal",
@@ -1301,7 +1301,7 @@
       "spo2_pct_hume": 95.9,
       "spo2_pct_oura_avg": 97,
       "spo2_status": "Normal (Hume) / Normal (Oura)",
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 96.9,
       "hr_dip_pct": 23,
       "hr_dip_status": "Above normal — 23% dip, strongest cardiovascular response in current block",
@@ -9917,7 +9917,7 @@
     "goal_summary": {
       "as_of": "2026-04-19",
       "goal_weight_lbs": 159,
-      "goal_bf_pct": 13.0,
+      "goal_bf_pct": 13,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
       "weeks_remaining": 14.9,
@@ -9927,7 +9927,7 @@
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
       "fat_to_lose_lbs": 6.1,
-      "lean_to_gain_lbs": 2.0,
+      "lean_to_gain_lbs": 2,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
       "tdee_estimate_kcal": 2350,
@@ -9986,6 +9986,17 @@
         "migraine_headache": true,
         "poor_sleep": true,
         "high_fatigue": true,
+        "joint_pain": false,
+        "high_stress": false
+      }
+    },
+    {
+      "date": "2026-04-21",
+      "timestamp": "2026-04-21T02:18:40.134Z",
+      "flags": {
+        "migraine_headache": false,
+        "poor_sleep": false,
+        "high_fatigue": false,
         "joint_pain": false,
         "high_stress": false
       }
@@ -10381,9 +10392,9 @@
           "time": null,
           "source": "Cal AI",
           "kcal": 326,
-          "protein_g": 43.0,
-          "carbs_g": 12.0,
-          "fat_g": 11.0
+          "protein_g": 43,
+          "carbs_g": 12,
+          "fat_g": 11
         },
         {
           "meal_name": "Grilled Chicken Breast Pieces",
@@ -10400,8 +10411,8 @@
           "source": "Manual / Photo",
           "serving": "3/4 cup",
           "kcal": 154,
-          "protein_g": 3.0,
-          "carbs_g": 33.0,
+          "protein_g": 3,
+          "carbs_g": 33,
           "fat_g": 0.33
         }
       ],
