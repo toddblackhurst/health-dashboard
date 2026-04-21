@@ -586,6 +586,18 @@ function renderBrief(db) {
 
   let html = '';
 
+  // ── Staleness warning ──
+  if (cb.date && cb.date !== today) {
+    const daysStale = Math.round((new Date(today) - new Date(cb.date)) / 86400000);
+    html += `<div style="background:var(--yellow-bg);border:1px solid rgba(210,153,34,0.35);border-radius:10px;padding:10px 13px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+      <span style="font-size:14px">⚠</span>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--yellow)">Brief is from ${fmtDate(cb.date)} · ${daysStale} day${daysStale!==1?'s':''} ago</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">HRV trend below is current — ask Coach to refresh the brief</div>
+      </div>
+    </div>`;
+  }
+
   // ── Morning Check-in ──
   html += buildCheckinCard(todayCheckin, today);
 
@@ -675,7 +687,10 @@ function renderBrief(db) {
 
   // ── Goal Progress ──
   if (goal.goal_weight_lbs || goal.current_weight_lbs) {
-    const cw = goal.current_weight_lbs || (db.body_composition && db.body_composition.slice(-1)[0]?.weight_lbs);
+    // Prefer freshest body_comp entry over the possibly-stale coaching_brief weight
+    const latestBcWeight = db.body_composition && db.body_composition.length
+      ? db.body_composition.slice(-1)[0]?.weight_lbs : null;
+    const cw = latestBcWeight || goal.current_weight_lbs;
     const gw = goal.goal_weight_lbs || 159;
     const gdate = goal.goal_date || '2026-08-01';
     const weeksLeft = goal.weeks_remaining ? goal.weeks_remaining.toFixed(0) : '—';
@@ -950,7 +965,18 @@ function renderTraining(db) {
 
   // ── Upcoming Session ──
   const us = db.upcoming_session;
-  if (us) { html += buildUpcomingSessionCard(us); }
+  if (us) {
+    if (us.planned_date >= today) {
+      html += buildUpcomingSessionCard(us);
+    } else {
+      // Session date is in the past — show a subtle completed note instead
+      const daysDiff = Math.round((new Date(today) - new Date(us.planned_date)) / 86400000);
+      html += `<div class="card" style="border-color:rgba(63,185,80,0.3);background:var(--green-bg)">
+        <div style="font-size:11px;font-weight:700;color:var(--green)">✓ ${us.session_type || 'Session'} · ${us.day_label || fmtDate(us.planned_date)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">${daysDiff === 1 ? 'Yesterday' : daysDiff + 'd ago'} — ask Coach to set next session plan</div>
+      </div>`;
+    }
+  }
 
   // Session management (only show if no session logged today)
   html += `<div class="card" id="smgmt-card">
@@ -1107,7 +1133,7 @@ function buildSessionFeedbackCard(sess, when) {
       ${sess.volume_kg ? `<div class="review-stat"><strong>${sess.volume_kg.toLocaleString()} kg</strong> volume</div>` : ''}
       ${sess.avg_hr_bpm ? `<div class="review-stat"><strong style="color:${hrColor}">${sess.avg_hr_bpm} bpm</strong> avg HR</div>` : ''}
       ${sess.total_reps ? `<div class="review-stat"><strong>${sess.total_reps}</strong> reps</div>` : ''}
-      ${sess.hr_recovery_bpm ? `<div class="review-stat"><strong>${sess.hr_recovery_bpm} bpm</strong> HR rec ${sess.hr_recovery_tier ? `<span class="tag tag-${sess.hr_recovery_tier==='Superior'?'green':'blue'}">${sess.hr_recovery_tier}</span>` : ''}</div>` : ''}
+      ${sess.hr_recovery_bpm != null ? `<div class="review-stat"><strong>↓ ${Math.abs(sess.hr_recovery_bpm)} bpm</strong> HR drop ${sess.hr_recovery_tier ? `<span class="tag tag-${sess.hr_recovery_tier==='Superior'?'green':'blue'}">${sess.hr_recovery_tier}</span>` : ''}</div>` : ''}
     </div>
     ${sess.coaching_note ? `<div class="coach-para-header">Coach's Read</div><div class="coach-para" style="padding-top:0;font-size:12px">${sess.coaching_note}</div>` : ''}
     ${mainExercises.length ? `
@@ -1193,7 +1219,7 @@ function renderNutrition(db) {
   const today = todayISO();
   const cb = db.coaching_brief || {};
   const goal = cb.goal_summary || {};
-  const nlArr = db.nutrition_log || [];
+  const nlArr = db.nutrition || [];
   const todayNutrition = nlArr.find(n => n.date === today);
   const bc = db.body_composition || [];
   const latestBc = bc[bc.length - 1];
@@ -1202,16 +1228,16 @@ function renderNutrition(db) {
   // Targets — from goal_summary or profile
   const tkcal = goal.calorie_target_kcal || db.profile?.nutrition_targets?.calories_kcal || 2150;
   const tprot = goal.protein_target_g || db.profile?.nutrition_targets?.protein_g || 150;
-  const tcarb = 210;
-  const tfat  = 72;
+  const tcarb = goal.carb_target_g || db.profile?.nutrition_targets?.carbs_g || 190;
+  const tfat  = goal.fat_target_g  || db.profile?.nutrition_targets?.fat_g   || 70;
 
-  // Actuals — from today's nutrition_log entry
+  // Actuals — from today's nutrition entry
   const meals = todayNutrition?.meals || [];
-  const totals = todayNutrition?.totals || {};
-  const kcalLogged = totals.kcal || meals.reduce((s,m) => s+(m.kcal||0), 0);
-  const protLogged = totals.protein_g || meals.reduce((s,m) => s+(m.protein_g||0), 0);
-  const carbLogged = totals.carbs_g || meals.reduce((s,m) => s+(m.carbs_g||0), 0);
-  const fatLogged  = totals.fat_g || meals.reduce((s,m) => s+(m.fat_g||0), 0);
+  const totals = todayNutrition?.daily_totals || {};
+  const kcalLogged = totals.calories_kcal ?? meals.reduce((s,m) => s+(m.subtotals?.calories_kcal||0), 0);
+  const protLogged = totals.protein_g      ?? meals.reduce((s,m) => s+(m.subtotals?.protein_g||0), 0);
+  const carbLogged = totals.carbs_g        ?? meals.reduce((s,m) => s+(m.subtotals?.carbs_g||0), 0);
+  const fatLogged  = totals.fat_g          ?? meals.reduce((s,m) => s+(m.subtotals?.fat_g||0), 0);
 
   let html = '';
 
@@ -1283,18 +1309,26 @@ function renderNutrition(db) {
     </div>`;
   }
 
-  // Today's meals (from nutrition_log)
+  // Today's meals (from nutrition array)
   html += `<div class="section-label">Today's Meals</div>`;
   if (meals.length === 0) {
     html += `<div class="card"><div class="meal-empty">No meals logged yet today.<br><span style="color:var(--text3);font-size:11px">Tell Coach what you ate and it will log automatically.</span></div></div>`;
   } else {
     meals.forEach(meal => {
+      const mealName = String(meal.meal || 'meal')
+        .replace(/[_-]+/g, ' ')
+        .replace(/\b\w/g, c => c.toUpperCase());
+      const sub = meal.subtotals || {};
+      const mKcal = sub.calories_kcal || 0;
+      const mProt = sub.protein_g || 0;
+      const mCarb = sub.carbs_g || 0;
+      const mFat  = sub.fat_g || 0;
       html += `<div class="meal-card">
         <div class="meal-header">
-          <div class="meal-name">${meal.name}</div>
+          <div class="meal-name">${mealName}</div>
           <div class="meal-time">${meal.time || ''}</div>
         </div>
-        <div class="meal-macros">${meal.kcal} kcal &nbsp;·&nbsp; P: ${meal.protein_g}g &nbsp;·&nbsp; C: ${meal.carbs_g}g &nbsp;·&nbsp; F: ${meal.fat_g}g</div>
+        <div class="meal-macros">${mKcal} kcal &nbsp;·&nbsp; P: ${mProt}g &nbsp;·&nbsp; C: ${mCarb}g &nbsp;·&nbsp; F: ${mFat}g</div>
         ${meal.coach_note ? `<div class="meal-coach-callout">${meal.coach_note}</div>` : ''}
       </div>`;
     });
@@ -1304,14 +1338,14 @@ function renderNutrition(db) {
   const yesterday = new Date(today); yesterday.setDate(yesterday.getDate()-1);
   const yIso = yesterday.getFullYear()+'-'+String(yesterday.getMonth()+1).padStart(2,'0')+'-'+String(yesterday.getDate()).padStart(2,'0');
   const yNutr = nlArr.find(n => n.date === yIso);
-  if (yNutr?.totals) {
-    const yt = yNutr.totals;
-    const status = yNutr.day_status || 'closed';
+  if (yNutr?.daily_totals) {
+    const yt = yNutr.daily_totals;
+    const status = yNutr.day_closed ? 'closed' : (yNutr.day_status || 'open');
     html += `<div class="card" style="margin-top:4px">
       <div class="card-title">Yesterday · ${fmtDate(yIso)} <span class="lock-badge" style="float:right">${status==='closed'?'✓ Closed':'⚠ Partial'}</span></div>
       <div class="macro-row"><div class="macro-label">KCAL</div>
-        <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(yt.kcal||0,tkcal)};background:var(--text3)"></div></div>
-        <div class="macro-val" style="color:var(--text2)">${yt.kcal||0} / ${tkcal}</div></div>
+        <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(yt.calories_kcal||0,tkcal)};background:var(--text3)"></div></div>
+        <div class="macro-val" style="color:var(--text2)">${yt.calories_kcal||0} / ${tkcal}</div></div>
       <div class="macro-row"><div class="macro-label">PROT</div>
         <div class="macro-bar-wrap"><div class="macro-bar" style="width:${pct(yt.protein_g||0,tprot)};background:var(--green)"></div></div>
         <div class="macro-val">${yt.protein_g||0}g / ${tprot}g</div></div>
