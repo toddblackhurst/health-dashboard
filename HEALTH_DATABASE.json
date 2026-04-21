@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13,
+    "goal_bf_pct": 13.0,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -403,7 +403,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75,
+      "weight_kg": 75.0,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -536,7 +536,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3,
+      "visceral_fat_level": 3.0,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -563,7 +563,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 2,
+      "visceral_fat_level": 2.0,
       "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
@@ -618,7 +618,7 @@
       "weight_lbs": 164.7,
       "bmi": 21.8,
       "body_fat_pct": 16.6,
-      "visceral_fat_level": 2,
+      "visceral_fat_level": 2.0,
       "bmr_kcal": 1773,
       "body_water_pct": 57.3,
       "bone_mass_lbs": 7.7,
@@ -872,7 +872,34 @@
       "motra_weight_trend": "Increasing — 30-day new high; +0.8 lbs/wk trend; 30-day projection 169.3 lbs",
       "motra_body_fat_pct": 13.2,
       "motra_body_fat_rating": "Fit",
-      "motra_body_fat_30d_avg_pct": 16.3
+      "motra_body_fat_30d_avg_pct": 16.3,
+      "oura_sleep_score": 70,
+      "oura_sleep_label": "Good — Counting sheep (37m to fall asleep)",
+      "hrv_ms_oura_avg": 35,
+      "hrv_ms_oura_max": 134,
+      "resting_hr_bpm_oura_lowest": 56,
+      "resting_hr_bpm_oura_avg": 63,
+      "total_sleep_min_oura": 375,
+      "sleep_efficiency_pct_oura": 78,
+      "rem_sleep_min_oura": 62,
+      "deep_sleep_min_oura": 50,
+      "sleep_latency_min_oura": 37,
+      "hume_strain_pct": 30,
+      "hume_recovery_pct": 68,
+      "hume_sleep_pct": 64,
+      "hume_energy_pct": 23,
+      "hume_stress_avg": 40,
+      "hume_stress_highest": 85,
+      "hume_stress_lowest": 1,
+      "hume_cardio_load": 30,
+      "hume_cardio_load_status": "Maintaining",
+      "hume_spo2_pct": 96.1,
+      "hume_rr_rpm": 14.1,
+      "hume_rhr_bpm": 62.3,
+      "hume_hrv_ms": 41.7,
+      "hume_temp_f": 97.3,
+      "hume_sleep_min": 414,
+      "hume_activity_note": "Outdoor Walk 5:55 AM"
     },
     {
       "date": "2026-04-13",
@@ -904,7 +931,40 @@
       "sleep_timing_rise": "Normal",
       "sleep_timing_oura": "Good",
       "sleep_time": "21:48",
-      "notes": "HRV 20ms — significant drop from 41.7ms yesterday, well below ~32.5ms baseline. Sleep short at 5h19m (Oura)/5h34m (Rise). Sleep debt accumulating: -4h10m (Oura) / -3h23m (Rise). Positives: deep sleep 59min/18% solid, restfulness Optimal, HR stable. Fasted morning walk already done (5:16 AM, 2.43mi, Zone 0-1, 16% Activity Strain). Training guidance: Amber — proceed with programmed strength session, HR cap 122 bpm, treat first sets as warm-in, reduce Block C if fatigue surfaces."
+      "notes": "HRV 20ms — significant drop from 41.7ms yesterday, well below ~32.5ms baseline. Sleep short at 5h19m (Oura)/5h34m (Rise). Sleep debt accumulating: -4h10m (Oura) / -3h23m (Rise). Positives: deep sleep 59min/18% solid, restfulness Optimal, HR stable. Fasted morning walk already done (5:16 AM, 2.43mi, Zone 0-1, 16% Activity Strain). Training guidance: Amber — proceed with programmed strength session, HR cap 122 bpm, treat first sets as warm-in, reduce Block C if fatigue surfaces.",
+      "oura_sleep_score": 66,
+      "oura_sleep_label": "Fair — It's going to be alright (Sleep Score declining)",
+      "hrv_ms_oura_avg": 20,
+      "hrv_ms_oura_max": 75,
+      "resting_hr_bpm_oura_lowest": 56,
+      "resting_hr_bpm_oura_avg": 64,
+      "total_sleep_min_oura": 320,
+      "sleep_efficiency_pct_oura": 68,
+      "rem_sleep_min_oura": 49,
+      "deep_sleep_min_oura": 67,
+      "sleep_latency_min_oura": 28,
+      "stress_avg": 40,
+      "stress_highest": 83,
+      "stress_lowest": 4,
+      "strain_score": 91,
+      "cardio_load": 39,
+      "cardio_load_status": "Productive",
+      "hume_strain_pct": 91,
+      "hume_recovery_pct": 51,
+      "hume_sleep_pct": 51,
+      "hume_energy_pct": 13,
+      "hume_stress_avg": 40,
+      "hume_stress_highest": 83,
+      "hume_stress_lowest": 4,
+      "hume_cardio_load": 39,
+      "hume_cardio_load_status": "Productive",
+      "hume_spo2_pct": 96.2,
+      "hume_rr_rpm": 13.8,
+      "hume_rhr_bpm": 62.2,
+      "hume_hrv_ms": 32.4,
+      "hume_temp_f": 96.9,
+      "hume_sleep_min": 334,
+      "hume_activity_note": "Outdoor Walk 6:17 PM"
     },
     {
       "date": "2026-04-14",
@@ -933,7 +993,17 @@
       "bevel_energy_pct": 66,
       "wake_time": "~04:00",
       "readiness_tier": "Green",
-      "readiness_tier_basis": "HRV 35.4ms >= 30ms threshold; above personal baseline 32.5ms"
+      "readiness_tier_basis": "HRV 35.4ms >= 30ms threshold; above personal baseline 32.5ms",
+      "hume_strain_pct": 41,
+      "hume_recovery_pct": 44,
+      "hume_sleep_pct": 58,
+      "hume_energy_pct": 19,
+      "hume_stress_avg": 37,
+      "hume_stress_highest": 85,
+      "hume_stress_lowest": 1,
+      "hume_cardio_load": 34,
+      "hume_cardio_load_status": "Maintaining",
+      "hume_activity_note": "Indoor Cycle 7:57 AM"
     },
     {
       "date": "2026-04-15",
@@ -974,7 +1044,12 @@
       "readiness_tier_basis": "HRV 51.3ms >> 32.5ms baseline (57% above). Best reading in recent block. Sleep bank -2h52m — improving from -3h13m.",
       "notes": "Bevel + Oura April 15 morning scan. HRV 51.3ms — strongest reading this block. 31% increase from yesterday (35.4ms). Bevel flagged 'Significant Recovery Bounce' and 'Efficiency Breakthrough' (97% sleep efficiency). SpO2 cleared to 96.5% Normal (from 95.1% Apr 14). Wrist temp 97.5°F normalized. Sleep bank -2h52m (improving from -3h13m). Oura sleep score 79 Good with optimal sleep timing. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms — dose-response confirmed across 3 nights. | Oura Readiness confirmed 76 Good from screenshot (Apr 15 08:51). RHR 59 bpm. HRV balance Fair. Body temp Optimal. Sleep/Sleep balance Good.",
       "oura_readiness_score": 76,
-      "oura_readiness_status": "Good — On schedule"
+      "oura_readiness_status": "Good — On schedule",
+      "hume_strain_pct": 85,
+      "hume_recovery_pct": 75,
+      "hume_sleep_pct": 66,
+      "hume_energy_pct": 20,
+      "hume_activity_note": "Strength Training 7:54 AM (88-min session)"
     },
     {
       "date": "2026-04-16",
@@ -1015,7 +1090,12 @@
       "readiness_tier_basis": "HRV 38.9ms (Hume) / 44ms avg (Oura) — above 35ms watch threshold but down from 51.3ms. Oura 75 readiness 'Pace yourself'. Recovery 58% green. Sleep debt 3h50m moderate.",
       "oura_readiness_score": 75,
       "oura_readiness_status": "Good — Pace yourself",
-      "notes": "Oura + Hume April 16 morning scan (4:46 AM). HRV dropped from 51.3ms → 38.9ms (Hume) / 44ms avg (Oura) — expected post-session response from 88-min strength session + 154 bpm peak. Sleep 6h21m, efficiency 84%, deep sleep 19% (1h12m — excellent), REM 17% (1h4m). Sleep started ~9:02 PM, ended 4:38 AM. Oura 'Sleep trending — above average, keep it up.' Sleep debt at 3h50m moderate (up from 2h52m — training debt adding to sleep debt). Energy 77%, strain 0% (new day). Hume: 'Recovery Within Green Threshold — body absorbing yesterday\\'s 66% strain.' Oura: 'Resting heart rate lowered late last night — pace yourself.' RHR 57 bpm (lowest), 63 bpm avg. SpO2 96% stable. Breathing regularity Good. HRV max 129ms during sleep."
+      "notes": "Oura + Hume April 16 morning scan (4:46 AM). HRV dropped from 51.3ms → 38.9ms (Hume) / 44ms avg (Oura) — expected post-session response from 88-min strength session + 154 bpm peak. Sleep 6h21m, efficiency 84%, deep sleep 19% (1h12m — excellent), REM 17% (1h4m). Sleep started ~9:02 PM, ended 4:38 AM. Oura 'Sleep trending — above average, keep it up.' Sleep debt at 3h50m moderate (up from 2h52m — training debt adding to sleep debt). Energy 77%, strain 0% (new day). Hume: 'Recovery Within Green Threshold — body absorbing yesterday\\'s 66% strain.' Oura: 'Resting heart rate lowered late last night — pace yourself.' RHR 57 bpm (lowest), 63 bpm avg. SpO2 96% stable. Breathing regularity Good. HRV max 129ms during sleep.",
+      "hume_strain_pct": 43,
+      "hume_recovery_pct": 57,
+      "hume_sleep_pct": 59,
+      "hume_energy_pct": 27,
+      "hume_activity_note": "42-min Hike + 30-min Indoor Cycle 8:09 AM"
     },
     {
       "date": "2026-04-17",
@@ -1067,7 +1147,12 @@
       "readiness_tier_basis": "HRV 31.0ms (Hume) / 33ms (Oura) — at/below personal baseline of 32.5ms. 3-day declining trend from double-session loading. Recovery 47%. Partially offset by Oura readiness 79 and excellent sleep quality.",
       "oura_readiness_score": 79,
       "oura_readiness_status": "Good — Do what feels good",
-      "notes": "Hume + Oura April 17 morning (5:03 AM). HRV 3rd consecutive drop: 51.3 → 38.9 → 31.0ms (Hume) / 33ms avg (Oura). Now at/below 32.5ms personal baseline. Hume flagged 'yesterday's double-session' as cause. Sleep was the counter: Oura 86 OPTIMAL, 7h27m asleep (8h25m in bed), efficiency 89%. Deep sleep 1h13m/16%, REM 1h41m/23% — both solid. Hume: sleep 72%, 7h48m, REM above normal 2h23m. Sleep debt improving: -2h40m moderate (Oura, down from -3h50m). Sleep window 8:34 PM → 4:59 AM. SpO2 94.9% normal. Breathing Good. Wrist temp 97.6°F normal. Stress avg 28. Cardio Load 29 Maintaining. Friday Athletic Mixed session is on — strict 60-min cap, HR <122 bpm. Saturday sprint gate: HRV 31ms below 35ms threshold — reduce to 3×20 sec tomorrow unless HRV rebounds."
+      "notes": "Hume + Oura April 17 morning (5:03 AM). HRV 3rd consecutive drop: 51.3 → 38.9 → 31.0ms (Hume) / 33ms avg (Oura). Now at/below 32.5ms personal baseline. Hume flagged 'yesterday's double-session' as cause. Sleep was the counter: Oura 86 OPTIMAL, 7h27m asleep (8h25m in bed), efficiency 89%. Deep sleep 1h13m/16%, REM 1h41m/23% — both solid. Hume: sleep 72%, 7h48m, REM above normal 2h23m. Sleep debt improving: -2h40m moderate (Oura, down from -3h50m). Sleep window 8:34 PM → 4:59 AM. SpO2 94.9% normal. Breathing Good. Wrist temp 97.6°F normal. Stress avg 28. Cardio Load 29 Maintaining. Friday Athletic Mixed session is on — strict 60-min cap, HR <122 bpm. Saturday sprint gate: HRV 31ms below 35ms threshold — reduce to 3×20 sec tomorrow unless HRV rebounds.",
+      "hume_strain_pct": 49,
+      "hume_recovery_pct": 46,
+      "hume_sleep_pct": 72,
+      "hume_energy_pct": 21,
+      "hume_steps_note": "~20,000 steps"
     },
     {
       "date": "2026-04-18",
@@ -1109,7 +1194,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14,
+      "respiratory_rate_rpm": 14.0,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -1124,7 +1209,12 @@
       "readiness_tier": "Yellow",
       "readiness_tier_basis": "HRV 29.1ms (Hume) / 26ms avg (Oura) — 4th consecutive decline, now 3.4ms below personal baseline of 32.5ms. Sprint gate CLOSED (need ≥35ms). Recovery 52% Normal range (up from 47%). Oura sleep 83 GOOD, 6h9m, 87% efficiency.",
       "sprint_gate_status": "CLOSED — HRV 29.1ms below 35ms gate",
-      "notes": "Hume + Oura Apr 18 morning (~5:42-5:43 AM). HRV 4th consecutive decline: 51.3→38.9→31.0→29.1ms (Hume) / 26ms avg (Oura). Rate slowing sharply. Recovery 52% Normal (up from 47%). Oura: 83 GOOD, 6h9m asleep, 7h6m in bed, eff 87%, deep 51m/14%, REM 1h35m/26%, light 3h43m/60%, awake 57m, latency 18m. Oura HR: lowest 54bpm / avg 60bpm. HRV avg 26ms / max 114ms. SpO2 96%, Breathing Good, sleep time 9:37pm, wake 4:43am. Hume: recovery 52%, HRV 29.1ms, RHR 59.8bpm, RR 14.0rpm, SpO2 96.1%, wrist 97.1F, sleep 55%/6h12m, sleep bank -2h29m, deep 25m, REM 1h38m, HR dip 18% above normal, sleep time 9:56pm. Strain 17%, Cardio Load 27 Maintaining. Saturday sprint session: GATE CLOSED. Strength session (Motra 20260417 Saturday template) appropriate."
+      "notes": "Hume + Oura Apr 18 morning (~5:42-5:43 AM). HRV 4th consecutive decline: 51.3→38.9→31.0→29.1ms (Hume) / 26ms avg (Oura). Rate slowing sharply. Recovery 52% Normal (up from 47%). Oura: 83 GOOD, 6h9m asleep, 7h6m in bed, eff 87%, deep 51m/14%, REM 1h35m/26%, light 3h43m/60%, awake 57m, latency 18m. Oura HR: lowest 54bpm / avg 60bpm. HRV avg 26ms / max 114ms. SpO2 96%, Breathing Good, sleep time 9:37pm, wake 4:43am. Hume: recovery 52%, HRV 29.1ms, RHR 59.8bpm, RR 14.0rpm, SpO2 96.1%, wrist 97.1F, sleep 55%/6h12m, sleep bank -2h29m, deep 25m, REM 1h38m, HR dip 18% above normal, sleep time 9:56pm. Strain 17%, Cardio Load 27 Maintaining. Saturday sprint session: GATE CLOSED. Strength session (Motra 20260417 Saturday template) appropriate.",
+      "hume_strain_pct": 81,
+      "hume_recovery_pct": 51,
+      "hume_sleep_pct": 55,
+      "hume_energy_pct": 13,
+      "hume_activity_note": "Strength Training + Daily Walk"
     },
     {
       "date": "2026-04-19",
@@ -1167,7 +1257,7 @@
       "spo2_pct": 96.5,
       "spo2_pct_oura_avg": 97,
       "respiratory_rate_rpm": 14.8,
-      "wrist_temp_f": 97,
+      "wrist_temp_f": 97.0,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
       "breathing_regularity": "Optimal",
@@ -1196,7 +1286,12 @@
         "elevation_gain_ft": 37,
         "effort": "Easy (3)"
       },
-      "notes": "Hume + Oura Apr 19 morning (5:18 AM). First HRV uptick: 29.8ms vs 29.1ms yesterday (+0.7ms). Bottom forming. Oura 88 OPTIMAL — 'Above and beyond'. Deep sleep breakthrough: 1h27m/21% (Oura) / 1h3m (Hume). Sleep 7h6m (Oura) / 7h19m (Hume). Efficiency 86%. REM 1h39m/23% (Oura). HR dip 18% above normal. Sleep bank -1h57m (Hume) / -2h40m (Oura), improving trajectory. Sleep window 9:02 PM → 5:18 AM (early bedtime driving quality). Oura lowest HR 54bpm / avg 60bpm. SpO2 96.5% above normal (Hume) / 97% avg (Oura). Breathing optimal. RR 14.8rpm normal. Wrist 97.0°F normal. Stress avg 24 Low. Cardio load 27 Maintaining. Fasted walk done 5:30–6:13 AM: 2.28mi, 43min, avg HR 90bpm — clean Z2. Sunday = active recovery / rest day. No strength session."
+      "notes": "Hume + Oura Apr 19 morning (5:18 AM). First HRV uptick: 29.8ms vs 29.1ms yesterday (+0.7ms). Bottom forming. Oura 88 OPTIMAL — 'Above and beyond'. Deep sleep breakthrough: 1h27m/21% (Oura) / 1h3m (Hume). Sleep 7h6m (Oura) / 7h19m (Hume). Efficiency 86%. REM 1h39m/23% (Oura). HR dip 18% above normal. Sleep bank -1h57m (Hume) / -2h40m (Oura), improving trajectory. Sleep window 9:02 PM → 5:18 AM (early bedtime driving quality). Oura lowest HR 54bpm / avg 60bpm. SpO2 96.5% above normal (Hume) / 97% avg (Oura). Breathing optimal. RR 14.8rpm normal. Wrist 97.0°F normal. Stress avg 24 Low. Cardio load 27 Maintaining. Fasted walk done 5:30–6:13 AM: 2.28mi, 43min, avg HR 90bpm — clean Z2. Sunday = active recovery / rest day. No strength session.",
+      "hume_strain_pct": 27,
+      "hume_recovery_pct": 52,
+      "hume_sleep_pct": 77,
+      "hume_energy_pct": 15,
+      "hume_activity_note": "Outdoor Walk 5:30 AM"
     },
     {
       "date": "2026-04-20",
@@ -1256,7 +1351,12 @@
       "readiness_tier": "Red",
       "readiness_tier_basis": "Recovery 39% Low Depth Recovery. HRV 27.9ms — slight pullback from yesterday's uptick (29.8ms). Deep sleep collapsed: 18m Hume / 40m Oura, both well below normal. Oura sleep 72 Good (down from 88 Optimal). Early wake 4:12 AM. SpO2 94.5% below normal (Hume). Sprint gate: closed (Monday — not sprint day).",
       "sprint_gate_status": "Closed — Red recovery + not sprint day (Monday)",
-      "notes": "Hume + Oura Apr 20 morning (4:17–4:18 AM). HRV 27.9ms (Hume) / 24ms avg (Oura) — slight drop from yesterday's 29.8ms uptick. Recovery 39% Low Depth: driven by 45-min deep sleep deficit and 2% SpO2 dip vs yesterday. Early fragmented wake at 4:02–4:12 AM. Oura sleep 72 Good (down from 88 Optimal yesterday). Deep sleep: 18m Hume / 40m Oura — both below normal. REM: 1h20m Hume / 57m Oura. Sleep efficiency 82%. Sleep debt -2h30m (Hume) / -2h50m (Oura) — slightly worse than yesterday. Sleep start 9:17 PM. Cardio load 22 Maintaining. Stress avg 29 Low, peak 76. Energy 61%. SpO2 94.5% below normal (Hume) / 96% avg (Oura). Breathing optimal. HR dip 18% above normal — cardiovascular strength held despite sleep disruption. Sleep fragmented cycle confirmed both apps."
+      "notes": "Hume + Oura Apr 20 morning (4:17–4:18 AM). HRV 27.9ms (Hume) / 24ms avg (Oura) — slight drop from yesterday's 29.8ms uptick. Recovery 39% Low Depth: driven by 45-min deep sleep deficit and 2% SpO2 dip vs yesterday. Early fragmented wake at 4:02–4:12 AM. Oura sleep 72 Good (down from 88 Optimal yesterday). Deep sleep: 18m Hume / 40m Oura — both below normal. REM: 1h20m Hume / 57m Oura. Sleep efficiency 82%. Sleep debt -2h30m (Hume) / -2h50m (Oura) — slightly worse than yesterday. Sleep start 9:17 PM. Cardio load 22 Maintaining. Stress avg 29 Low, peak 76. Energy 61%. SpO2 94.5% below normal (Hume) / 96% avg (Oura). Breathing optimal. HR dip 18% above normal — cardiovascular strength held despite sleep disruption. Sleep fragmented cycle confirmed both apps.",
+      "hume_strain_pct": 92,
+      "hume_recovery_pct": 39,
+      "hume_sleep_pct": 44,
+      "hume_energy_pct": 6,
+      "hume_activity_note": "1h 20m Strength Training + Outdoor Walk 1:32 PM"
     },
     {
       "date": "2026-04-21",
@@ -1301,7 +1401,7 @@
       "spo2_pct_hume": 95.9,
       "spo2_pct_oura_avg": 97,
       "spo2_status": "Normal (Hume) / Normal (Oura)",
-      "respiratory_rate_rpm": 14,
+      "respiratory_rate_rpm": 14.0,
       "wrist_temp_f": 96.9,
       "hr_dip_pct": 23,
       "hr_dip_status": "Above normal — 23% dip, strongest cardiovascular response in current block",
@@ -1316,7 +1416,12 @@
       "readiness_tier": "Green",
       "readiness_tier_basis": "Recovery 100% — Recovery Breakthrough. HRV 53.5ms (Hume) / 69ms avg (Oura) — highest HRV in current tracking period. Deep sleep 1h 7m above normal. HR dip 23% above normal. RHR 56.4 bpm (Hume) / 54 bpm lowest (Oura). Sprint gate: open (Tuesday — sprint-eligible day, Green recovery).",
       "sprint_gate_status": "Open — Green recovery + sprint-eligible day (Tuesday)",
-      "notes": "Hume + Oura Apr 21 morning (~4:42–4:43 AM). Recovery Breakthrough — 100% first perfect score in current block. HRV surged +25.6ms from 27.9ms → 53.5ms (Hume); Oura avg HRV 69ms (max 130ms). Body supercompensated to Monday's 80-min Push/Quad session. RHR 56.4 bpm (Hume) / 54 bpm lowest, 57 bpm avg (Oura). HR dip 23% — above normal, strongest cardiovascular adaptation seen. Hume sleep: 83% quality, 7h 5m asleep (7h 22m in bed), 1h 44m REM, 1h 8m deep. Oura sleep: 75 Good, 6h 18m total (7h 30m in bed), 1h 7m deep (18%), 46m REM (12%), 4h 25m light (70%), 1h 12m awake, sleep efficiency 84%. Oura SpO2 97% / Hume SpO2 95.9% — both normal. Respiratory rate 14.0 rpm (below normal per Hume — low = efficient). Wrist temp 96.9°F normal. Breathing regularity Good (Oura). Sleep debt: -2h 9m (Hume) / -2h 50m (Oura) — debt persists but recovery quality excellent. Sleep start ~9:10–9:16 PM, wake ~4:40 AM. Oura: sleep latency 5m, efficiency 84%, sleep debt 2h 50m moderate. This is a high green day."
+      "notes": "Hume + Oura Apr 21 morning (~4:42–4:43 AM). Recovery Breakthrough — 100% first perfect score in current block. HRV surged +25.6ms from 27.9ms → 53.5ms (Hume); Oura avg HRV 69ms (max 130ms). Body supercompensated to Monday's 80-min Push/Quad session. RHR 56.4 bpm (Hume) / 54 bpm lowest, 57 bpm avg (Oura). HR dip 23% — above normal, strongest cardiovascular adaptation seen. Hume sleep: 83% quality, 7h 5m asleep (7h 22m in bed), 1h 44m REM, 1h 8m deep. Oura sleep: 75 Good, 6h 18m total (7h 30m in bed), 1h 7m deep (18%), 46m REM (12%), 4h 25m light (70%), 1h 12m awake, sleep efficiency 84%. Oura SpO2 97% / Hume SpO2 95.9% — both normal. Respiratory rate 14.0 rpm (below normal per Hume — low = efficient). Wrist temp 96.9°F normal. Breathing regularity Good (Oura). Sleep debt: -2h 9m (Hume) / -2h 50m (Oura) — debt persists but recovery quality excellent. Sleep start ~9:10–9:16 PM, wake ~4:40 AM. Oura: sleep latency 5m, efficiency 84%, sleep debt 2h 50m moderate. This is a high green day.",
+      "hume_strain_pct": 28,
+      "hume_recovery_pct": 100,
+      "hume_sleep_pct": 83,
+      "hume_energy_pct": 26,
+      "hume_activity_note": "Active recovery day — Evening Transition Window"
     }
   ],
   "nutrition": [
@@ -9917,7 +10022,7 @@
     "goal_summary": {
       "as_of": "2026-04-21",
       "goal_weight_lbs": 159,
-      "goal_bf_pct": 13,
+      "goal_bf_pct": 13.0,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
       "weeks_remaining": 14.4,
@@ -9927,7 +10032,7 @@
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
       "fat_to_lose_lbs": 5.7,
-      "lean_to_gain_lbs": 2,
+      "lean_to_gain_lbs": 2.0,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
       "carb_target_g": 190,
@@ -9937,7 +10042,7 @@
       "rationale": "Weight 164.7 lbs (Ocare3 Apr 20). 5.7 lbs to goal. Visceral fat BIA Lv 2.0 (down from 3.0 — directional only). DXA Feb 23 remains primary body comp reference. Week 2 execution on track: Monday session logged, HR compliant, superior cardiovascular recovery confirmed."
     }
   },
-  "last_updated": "2026-04-21T22:00:00+08:00",
+  "last_updated": "2026-04-21T19:05:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -10145,10 +10250,9 @@
         ]
       }
     ],
-    "athlete_notes": "Quit giving me the same exercises. I told you I don’t like repetitive boring workouts. I’ve done almost everything in this session multiple times over the past couple of weeks. Fun - functional fitness - new complex moves to challenge me.",
+    "athlete_notes": "",
     "created_date": "2026-04-21",
-    "coach_note": "Week 2 Wednesday Pull + Posterior Chain. Pulling at a different angle than Week 1 Monday — Front Lat Pulldown (neutral grip) vs wide-grip Hammer Strength. Meadows Row added for athletic anti-rotation pulling stimulus — left side first, right-side dominance corrective. Hip Thrust is your progression anchor vs Week 1 Monday — track the load. Cable Pull-Through replaces Low Step-Up: same posterior chain work, less hip OA demand. Face Pull and Suitcase Carry carry over as structural correction standards. Time cap 65 min — drop Dead Bug first if Block C runs long.",
-    "athlete_notes_timestamp": "2026-04-21T10:42:15.087Z"
+    "coach_note": "Week 2 Wednesday Pull + Posterior Chain. Pulling at a different angle than Week 1 Monday — Front Lat Pulldown (neutral grip) vs wide-grip Hammer Strength. Meadows Row added for athletic anti-rotation pulling stimulus — left side first, right-side dominance corrective. Hip Thrust is your progression anchor vs Week 1 Monday — track the load. Cable Pull-Through replaces Low Step-Up: same posterior chain work, less hip OA demand. Face Pull and Suitcase Carry carry over as structural correction standards. Time cap 65 min — drop Dead Bug first if Block C runs long."
   },
   "coach_questions": [
     {
@@ -10352,9 +10456,9 @@
           "time": null,
           "source": "Cal AI",
           "kcal": 326,
-          "protein_g": 43,
-          "carbs_g": 12,
-          "fat_g": 11
+          "protein_g": 43.0,
+          "carbs_g": 12.0,
+          "fat_g": 11.0
         },
         {
           "meal_name": "Grilled Chicken Breast Pieces",
@@ -10371,8 +10475,8 @@
           "source": "Manual / Photo",
           "serving": "3/4 cup",
           "kcal": 154,
-          "protein_g": 3,
-          "carbs_g": 33,
+          "protein_g": 3.0,
+          "carbs_g": 33.0,
           "fat_g": 0.33
         }
       ],
@@ -10457,25 +10561,25 @@
           "kcal": 133.5,
           "protein_g": 1.5,
           "carbs_g": 6.75,
-          "fat_g": 12
+          "fat_g": 12.0
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129,
-          "protein_g": 6,
-          "carbs_g": 0,
-          "fat_g": 11
+          "kcal": 129.0,
+          "protein_g": 6.0,
+          "carbs_g": 0.0,
+          "fat_g": 11.0
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129,
-          "protein_g": 6,
-          "carbs_g": 0,
-          "fat_g": 11
+          "kcal": 129.0,
+          "protein_g": 6.0,
+          "carbs_g": 0.0,
+          "fat_g": 11.0
         },
         {
           "meal_name": "Breakfast Sausage Patties with Chives",
@@ -10484,15 +10588,118 @@
           "kcal": 113.04,
           "protein_g": 11.5,
           "carbs_g": 0.01,
-          "fat_g": 7
+          "fat_g": 7.0
+        },
+        {
+          "meal_name": "Tomato Vegetable Soup",
+          "time": "12:59",
+          "source": "Cal AI",
+          "kcal": 120,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "note": "Partial — macros not visible in screenshot"
+        },
+        {
+          "meal_name": "Grilled Chicken Breast",
+          "time": "17:54",
+          "source": "Cal AI",
+          "kcal": 357,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "note": "Partial — macros not visible in screenshot"
+        },
+        {
+          "meal_name": "White Rice (Long-Grain, Cooked)",
+          "time": "18:43",
+          "source": "Cal AI",
+          "kcal": 154,
+          "protein_g": 3,
+          "carbs_g": 33,
+          "fat_g": 0
+        },
+        {
+          "meal_name": "Salmon Poke Bowl with Toppings",
+          "time": "18:23",
+          "source": "Cal AI",
+          "kcal": 560,
+          "protein_g": 67,
+          "carbs_g": 17,
+          "fat_g": 25
         }
       ],
       "totals": {
-        "kcal": 504.54,
-        "protein_g": 25,
-        "carbs_g": 6.76,
-        "fat_g": 41
-      }
+        "kcal": 2189,
+        "protein_g": 163,
+        "carbs_g": 169,
+        "fat_g": 93
+      },
+      "cal_ai_note": "Cal AI final total 2189 kcal as of 6:43 PM — includes breakfast + additional meals"
+    },
+    {
+      "date": "2026-04-17",
+      "source": "Cal AI daily summary",
+      "meals": [
+        {
+          "meal_name": "Salmon Nigiri Sushi",
+          "time": "16:50",
+          "source": "Cal AI",
+          "kcal": 192,
+          "protein_g": 7,
+          "carbs_g": 36,
+          "fat_g": 1
+        },
+        {
+          "meal_name": "Salmon Tuna Sushi Rolls",
+          "time": "16:49",
+          "source": "Cal AI",
+          "kcal": 288,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "note": "Partial — macros not visible in screenshot"
+        }
+      ],
+      "totals": {
+        "kcal": 1754,
+        "protein_g": 145,
+        "carbs_g": 192,
+        "fat_g": 53
+      },
+      "cal_ai_note": "Daily summary only; individual meals partially visible"
+    },
+    {
+      "date": "2026-04-18",
+      "source": "Cal AI daily summary",
+      "meals": [
+        {
+          "meal_name": "Post Workout Shake",
+          "time": "11:53",
+          "source": "Cal AI",
+          "kcal": 220,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "note": "Partial — macros not visible in screenshot"
+        },
+        {
+          "meal_name": "Hamburger with 1/4 Lb Meat on Bun",
+          "time": "18:36",
+          "source": "Cal AI",
+          "kcal": 459,
+          "protein_g": 28,
+          "carbs_g": 32,
+          "fat_g": 23
+        }
+      ],
+      "totals": {
+        "kcal": 1656,
+        "protein_g": 144,
+        "carbs_g": 104,
+        "fat_g": 74
+      },
+      "cal_ai_note": "Daily summary only; individual meals partially visible"
     }
   ]
 }
