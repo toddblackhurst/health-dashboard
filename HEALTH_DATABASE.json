@@ -627,6 +627,52 @@
       "weekly_max_lbs": 165.6,
       "weekly_min_lbs": 160.7,
       "note": "BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
+    },
+    {
+      "date": "2026-04-22",
+      "time": "05:37:17",
+      "source": "Ocare3 BIA Scale",
+      "weight_lbs": 165.6,
+      "bmi": 21.9,
+      "body_fat_pct": 16.5,
+      "visceral_fat_level": 3.0,
+      "bmr_kcal": 1777,
+      "body_water_pct": 57.7,
+      "bone_mass_lbs": 7.7,
+      "lean_body_mass_pct": 79.0,
+      "weekly_avg_lbs": 164.8,
+      "weekly_max_lbs": 165.6,
+      "weekly_min_lbs": 163.1,
+      "note": "BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
+    },
+    {
+      "date": "2026-04-22",
+      "time": "05:38:00",
+      "source": "Hume Body Pod",
+      "weight_lbs": 166.3,
+      "health_score": 683,
+      "health_score_label": "High",
+      "metabolic_age_yrs": 42,
+      "skeletal_muscle_mass_lbs": 95.0,
+      "body_fat_pct": 10.6,
+      "body_fat_label": "Very low",
+      "muscle_mass_by_segment": {
+        "right_arm_lbs": 8.2,
+        "left_arm_lbs": 7.8,
+        "trunk_lbs": 65.8,
+        "trunk_label": "Low",
+        "right_leg_lbs": 25.2,
+        "left_leg_lbs": 23.9
+      },
+      "fat_pct_by_segment": {
+        "right_arm_pct": 9.7,
+        "left_arm_pct": 9.7,
+        "trunk_pct": 7.0,
+        "trunk_label": "Very low",
+        "right_leg_pct": 4.1,
+        "left_leg_pct": 4.1
+      },
+      "note": "Hume BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
     }
   ],
   "recovery_sleep": [
@@ -3650,6 +3696,29 @@
       "hr_min_bpm": 79,
       "effort_level": 2,
       "effort_label": "Easy"
+    },
+    {
+      "date": "2026-04-22",
+      "source": "Apple Fitness",
+      "type": "Outdoor Walk",
+      "start_time": "04:44",
+      "end_time": "05:26",
+      "location": "Beitun District, Taichung",
+      "workout_time_min": 40.0,
+      "elapsed_time_min": 41.8,
+      "distance_mi": 2.35,
+      "active_calories": 175,
+      "total_calories": 239,
+      "elevation_gain_ft": 34,
+      "avg_pace_per_mi": "16:59",
+      "avg_heart_rate_bpm": 91,
+      "hr_max_bpm": 102,
+      "hr_min_bpm": 78,
+      "effort_level": 3,
+      "effort_label": "Easy",
+      "temperature_f": 72,
+      "humidity_pct": 85,
+      "award": "Earth Day Challenge 4/22/26"
     }
   ],
   "strength_logs": [
@@ -10097,7 +10166,7 @@
       "rationale": "Weight 164.7 lbs (Ocare3 Apr 20). 5.7 lbs to goal. Visceral fat BIA Lv 2.0 (down from 3.0 \u2014 directional only). DXA Feb 23 remains primary body comp reference. Week 2 execution on track: Monday session logged, HR compliant, superior cardiovascular recovery confirmed."
     }
   },
-  "last_updated": "2026-04-22T04:20:00+08:00",
+  "last_updated": "2026-04-22T05:45:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
