@@ -9910,32 +9910,34 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-04-19",
-    "readiness_tier": "Yellow-Green",
-    "call": "HRV bottoming out \u2014 first uptick to 29.8ms. Oura 88 Optimal. Deep sleep breakthrough. Fasted walk done \u2705. Sunday = active recovery.",
-    "sprint_gate": "N/A \u2014 Sunday",
+    "date": "2026-04-21",
+    "readiness_tier": "Green",
+    "call": "Recovery Breakthrough — HRV 53.5ms, first 100% recovery score in this block. Body supercompensated perfectly to Monday's 80-min push session. Full Green. Today is Zone 2 active recovery (walk or bike, 30–40 min, HR 100–115 bpm). Wednesday is your next strength session.",
+    "sprint_gate": "N/A — Tuesday is Zone 2 recovery day, not sprint day (sprints are Saturday-only standalone)",
     "goal_summary": {
-      "as_of": "2026-04-19",
+      "as_of": "2026-04-21",
       "goal_weight_lbs": 159,
       "goal_bf_pct": 13.0,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
-      "weeks_remaining": 14.9,
+      "weeks_remaining": 14.4,
       "required_rate_lbs_per_week": 0.4,
-      "current_weight_lbs": 163.1,
-      "current_weight_lbs_hume": 164.4,
+      "current_weight_lbs": 164.7,
+      "current_weight_lbs_source": "Ocare3 Apr 20",
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
-      "fat_to_lose_lbs": 6.1,
+      "fat_to_lose_lbs": 5.7,
       "lean_to_gain_lbs": 2.0,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
+      "carb_target_g": 190,
+      "fat_target_g": 70,
       "tdee_estimate_kcal": 2350,
       "daily_deficit_kcal": 200,
-      "rationale": "Weight 163.1 lbs (Ocare3) / 164.4 lbs (Hume). Primary focus: body recomposition \u2014 reduce VAT to 285g and BF% toward 13% while maintaining lean mass. Scale weight now below goal weight of 165 lbs. Visceral fat BIA Lv 2.0 (directional, down from 3.0). DXA Feb 23 remains primary body comp reference."
+      "rationale": "Weight 164.7 lbs (Ocare3 Apr 20). 5.7 lbs to goal. Visceral fat BIA Lv 2.0 (down from 3.0 — directional only). DXA Feb 23 remains primary body comp reference. Week 2 execution on track: Monday session logged, HR compliant, superior cardiovascular recovery confirmed."
     }
   },
-  "last_updated": "2026-04-21T13:15:00+08:00",
+  "last_updated": "2026-04-21T22:00:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -10001,14 +10003,14 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-04-20",
-    "day_label": "Monday Apr 20",
-    "session_type": "Push + Quad + Landmine Power",
+    "planned_date": "2026-04-23",
+    "day_label": "Wednesday Apr 23",
+    "session_type": "Pull + Posterior Chain",
     "week": 2,
     "floor_plan": "Floor 3 \u2192 Floor 2",
     "time_cap_min": 65,
     "gate_condition": null,
-    "why": "Week 2 Monday upgraded with landmine substitutions and two new functional exercises. DB Reverse Lunge replaced with Landmine Reverse Lunge \u2014 adds anti-rotation demand, better right-side dominance correction with left leg leading. Cable Pallof replaced with Landmine Half-Kneeling Arc Press \u2014 same anti-rotation function, fresh stimulus. Landmine Push Press added to Block A as explosive power work \u2014 different stimulus from the controlled press. Landmine Rainbow added to Block C \u2014 thoracic rotation and anti-rotation combined. Goblet Carry reduced to 2 sets to protect the time cap.",
+    "why": "Week 2 Wednesday pulls from a different angle than Week 1 Monday. Front Lat Pulldown (neutral grip) replaces the wide-grip Hammer Strength — different ROM and lat emphasis. Meadows Row added for athletic, anti-rotation row stimulus (left first — right-side corrective). Hip Thrust stays as the anchor for posterior chain progression tracking. Cable Pull-Through swaps in for Low Step-Up — keeps the hinge pattern, removes the step-up load on hip OA. Face Pull, Suitcase Carry, and Dead Bug carry over as structural correction anchors. Open Book Stretch in prep adds thoracic rotation warm-up ahead of the pulling work.",
     "blocks": [
       {
         "id": "prep",
@@ -10017,43 +10019,31 @@
         "time_min": 10,
         "exercises": [
           {
-            "name": "Wall Slides",
-            "prescription": "2 \u00d7 10",
+            "name": "Open Book Stretch",
+            "prescription": "2 \u00d7 6 each side",
             "load": "BW",
-            "cues": "Right side loses contact first \u2014 watch for it. Keep both forearms and wrists equal pressure against the wall through the entire slide. 3 sec up, 2 sec hold at top, controlled return. If right blade floats, reduce range. Don't rush this.",
+            "cues": "Left side first. Lie on your side, knees stacked at 90\u00b0. Top arm sweeps across to the floor behind you \u2014 follow it with your eyes, not just your arm. The rotation should come from your thoracic spine, not your lower back. Hold the end range 2 sec before returning. If right side rotates less, add one extra rep."
+          },
+          {
+            "name": "Banded Hip Abduction",
+            "prescription": "2 \u00d7 15 each side",
+            "load": "Light band",
+            "cues": "Stand sideways to anchor or use a loop band just above knees. Controlled push outward \u2014 no hip hike. Left side first. This is glute med activation for the hinge work ahead, not a fatigue set.",
             "alts": [
-              "Band Pull-Apart \u00d7 15",
-              "Face Pull \u00d7 12"
+              "Side-Lying Hip Abduction \u00d7 15"
             ]
           },
           {
-            "name": "Hip Flexor Stretch",
-            "prescription": "2 \u00d7 30 sec each",
+            "name": "Hanging Scapular Pull",
+            "prescription": "2 \u00d7 8",
             "load": "BW",
-            "cues": "Left hip first \u2014 typically tighter. Posterior pelvic tilt BEFORE leaning forward \u2014 tuck pelvis, don't just arch the low back. Add gentle thoracic rotation toward the front leg once locked in. Hip OA: stay in pain-free range. This earns you the landmine work.",
-            "alts": [
-              "Couch Stretch 30 sec each"
-            ]
+            "cues": "Dead hang from the pull-up bar. Without bending the elbows, depress and retract the shoulder blades \u2014 like trying to put them in your back pockets. Hold 1 sec at the top of the pull. This sets the scapular position for all the pulling work. Quality over speed."
           },
           {
-            "name": "TRX Y-Raise",
+            "name": "Band Pull-Apart",
             "prescription": "2 \u00d7 12",
-            "load": "BW \u00b7 lean back ~30\u00b0",
-            "cues": "TARGET: 12 clean reps both sets. You hit 12/9 last Saturday \u2014 both sets must reach 12 before anything changes. Left arm tends to lag in set 2 \u2014 add 1 sec pause at top on each left rep if breaking down. Shoulder blades down and back before each rep starts.",
-            "alts": [
-              "Band W-Raise \u00d7 12",
-              "Cable Y-Raise \u00d7 10"
-            ]
-          },
-          {
-            "name": "Dead Bug",
-            "prescription": "2 \u00d7 8 each side \u00b7 slow",
-            "load": "BW",
-            "cues": "Low back pinned throughout \u2014 shorten range before grinding. Breathe out on extension. Left side first. 3 sec down, 1 sec hold at full extension, return. If it feels like conditioning, you're going too fast.",
-            "alts": [
-              "Hollow Hold 20 sec",
-              "Bird Dog \u00d7 8"
-            ]
+            "load": "Light band",
+            "cues": "Arms straight, band at chest height. Pull apart to a T \u2014 squeeze the rear delts at end range for 1 sec. Don't let the hands drift downward. Slow and deliberate."
           }
         ]
       },
@@ -10062,36 +10052,26 @@
         "label": "BLOCK A",
         "floor": "Floor 2",
         "time_min": 20,
-        "pairing": "Superset A1/A2 + A3 straight sets",
+        "pairing": "Superset A1/A2",
         "exercises": [
           {
-            "name": "Half-Kneeling Landmine Press",
-            "prescription": "3 \u00d7 10 each side",
-            "load": "Match Week 1 load",
-            "cues": "Left side first every set. Back knee down, hips square. Press along the arc, not straight up. Anti-rotation demand is highest in set 3 \u2014 if lateral lean creeps in, that's your form limit, not a weight limit. Left-right symmetry matters more than load.",
-            "alts": [
-              "DB Shoulder Press \u00d7 10",
-              "Cable Single-Arm Press \u00d7 10"
-            ]
-          },
-          {
-            "name": "Landmine Single-Arm Push Press",
-            "prescription": "3 \u00d7 6 each side",
-            "load": "Start light \u2014 power, not grind",
-            "cues": "Left side first. Bar at shoulder height, elbow bent, palm facing in. Dip at hips and knees \u2014 quarter squat \u2014 then drive through the legs and punch the bar up along the arc. Full arm extension at top. If the bar is slow, the load is too heavy. Reset fully between reps \u2014 no bounce.",
-            "alts": [
-              "DB Push Press \u00d7 6",
-              "KB Clean and Press \u00d7 6"
-            ]
-          },
-          {
-            "name": "Incline DB Press",
+            "name": "Machine Front Lat Pulldown",
             "prescription": "3 \u00d7 10",
-            "load": "16 kg \u00b7 test 18 kg set 3 if all reps clean",
-            "cues": "Left arm starts every set. Elbows at 45\u00b0 \u2014 not flared. 3 sec eccentric. Scapulae retracted and depressed throughout \u2014 don't let shoulders roll forward at the top.",
+            "load": "Match comfortable Week 1 lat pulldown weight \u00b7 test +5 kg set 3 if all reps clean",
+            "cues": "Neutral or underhand grip \u2014 different angle from the wide-grip Hammer Strength you ran Week 1 Monday. Initiate with shoulder blades down before arms bend. Pull elbows toward hip pockets. Full hang at the top \u2014 don't cut the range. 2 sec hold at the bottom of each rep.",
             "alts": [
-              "Flat DB Press \u00d7 10",
-              "Hammer Strength Chest Press \u00d7 10"
+              "Cable Lat Pulldown \u00d7 10",
+              "Machine Assisted Pull-Up \u00d7 8"
+            ]
+          },
+          {
+            "name": "Meadows Row",
+            "prescription": "3 \u00d7 10 each side",
+            "load": "Start moderate \u2014 control over load",
+            "cues": "Left side first every set. Stand perpendicular to the landmine, stagger stance, hinge forward. Pull the bar to your hip \u2014 elbow drives back and up, not out. Anti-rotation demand is high: your torso should stay square. Squeeze the lat and rhomboid at the top 1 sec. If you're rotating into the pull, drop the load.",
+            "alts": [
+              "Cable Single-Arm Row \u00d7 10",
+              "DB Single-Arm Row \u00d7 10 (braced)"
             ]
           }
         ]
@@ -10100,27 +10080,27 @@
         "id": "b",
         "label": "BLOCK B",
         "floor": "Floor 2",
-        "time_min": 15,
+        "time_min": 18,
         "pairing": "Superset B1/B2",
         "exercises": [
           {
-            "name": "Hammer Strength V-Squat",
+            "name": "Machine Hip Thrust",
             "prescription": "3 \u00d7 12",
-            "load": "40/50/50 kg",
-            "cues": "Stay above the depth where hip pinching occurs \u2014 that's your OA boundary. Full hip extension and glute squeeze at the top. Drive through full foot, not toes. Reduce range before touching load if any discomfort appears.",
+            "load": "Match or add 5 kg vs Week 1 Monday \u2014 anchor for progression",
+            "cues": "Track load vs Week 1 Monday. Full hip extension and glute squeeze at top \u2014 hold 1 sec. Don't hyperextend the lower back. Feet hip-width, toes slightly out. If hip pinching appears at any point, reduce range immediately.",
             "alts": [
-              "Leg Press \u00d7 12",
-              "Goblet Squat \u00d7 12 @ 16 kg"
+              "Glute Bridge on floor \u00d7 15",
+              "Cable Pull-Through \u00d7 15"
             ]
           },
           {
-            "name": "Landmine Reverse Lunge",
-            "prescription": "3 \u00d7 10 each leg",
-            "load": "Start conservative \u2014 new movement",
-            "cues": "Left leg steps back first every set. Hold bar end at chest in goblet grip. Stride far enough that front shin stays vertical at the bottom. Resist lateral pull from the bar \u2014 that anti-rotation demand is the upgrade over DB. Hip OA safe: less hip flexion demand than split squat.",
+            "name": "Cable Pull-Through",
+            "prescription": "3 \u00d7 15",
+            "load": "Moderate \u2014 hip hinge, not low-back grind",
+            "cues": "Cable between legs from a low pulley. Hinge at hips \u2014 soft knee, neutral spine, sit back like you\u2019re loading a deadlift. Drive hips forward to stand, squeezing glutes at the top. The cable should stay close to your body throughout. Hip OA: this is a long-lever glute/hamstring pattern \u2014 safe and effective. Drop weight before form breaks.",
             "alts": [
-              "DB Reverse Lunge \u00d7 10",
-              "Low Step-Up \u00d7 10 (left first)"
+              "KB Swing \u00d7 12",
+              "DB Romanian Deadlift \u00d7 10"
             ]
           }
         ]
@@ -10129,55 +10109,45 @@
         "id": "c",
         "label": "BLOCK C",
         "floor": "Floor 2",
-        "time_min": 15,
-        "pairing": "Circuit",
+        "time_min": 12,
+        "pairing": "Straight sets",
         "exercises": [
           {
-            "name": "Hammer Strength Lateral Raise",
-            "prescription": "3 \u00d7 12 each side",
-            "load": "Left arm first \u2014 match plates left/right unless asymmetry shows",
-            "cues": "Iso-lateral machine \u2014 run the left arm for all 3 sets first, then right. Or alternate left/right per set. Raise to shoulder height only \u2014 above that is trap work. 3 sec eccentric on every rep. If the right side feels noticeably stronger or easier, drop one plate on the right to force left-side development. This is your shoulder imbalance corrective \u2014 treat the load asymmetry as the goal, not a problem.",
+            "name": "Cable Face Pull",
+            "prescription": "3 \u00d7 15",
+            "load": "Match or add 2.5 kg vs last week \u2014 shoulder corrective anchor",
+            "cues": "Rope at eye level, neutral grip. Pull to forehead \u2014 elbows high and wide at the end, not low. External rotation is the point, not the pull. 2 sec hold at end range. If right arm drives forward on the return, slow that side down intentionally.",
             "alts": [
-              "DB Lateral Raise \u00d7 12",
-              "Cross Cable Lateral Raise \u00d7 12 (Floor 3 \u2014 only if machine occupied)"
-            ]
-          },
-          {
-            "name": "Landmine Half-Kneeling Arc Press",
-            "prescription": "3 \u00d7 12 each side",
-            "load": "5.5\u20136 kg on bar",
-            "cues": "Kneel BESIDE the anchor, not in front. Hold bar at chest, press out along the arc, hold 2 sec at full extension. The arc pulls you to rotate \u2014 resist it. Core braced before each rep starts. Left side first. Lighter than cable Pallof \u2014 the lever arm is longer.",
-            "alts": [
-              "Cable Pallof Press \u00d7 12",
-              "Half-Kneeling Pallof \u00d7 10"
-            ]
-          },
-          {
-            "name": "Landmine Rainbow",
-            "prescription": "3 \u00d7 6 each direction",
-            "load": "Light \u2014 control the arc",
-            "cues": "Stand perpendicular to anchor. Both hands on bar end, arms extended. Sweep bar from hip height up and over to the opposite hip in a wide arc \u2014 smooth, not momentum-driven. Pause at the bottom each side. Hips stay square \u2014 rotation is thoracic, not pelvic.",
-            "alts": [
-              "Cable Woodchop \u00d7 8",
-              "Medicine Ball Rotation \u00d7 8"
+              "Band Face Pull \u00d7 20",
+              "TRX Y-Raise \u00d7 12"
             ]
           },
           {
             "name": "KB Suitcase Carry",
-            "prescription": "2 \u00d7 15m out / 15m back",
-            "load": "16 kg \u00b7 left hand only",
-            "cues": "Left hand only \u2014 suitcase position. Walk tall, no lateral lean into the weight. Resist the pull \u2014 that resistance is the corrective work. Normal stride, don't shuffle. Drop this first if Block C runs long.",
+            "prescription": "3 \u00d7 25m",
+            "load": "16\u201318 kg \u00b7 left hand only",
+            "cues": "Left hand only. Walk tall \u2014 neutral spine, ribs down, no lateral lean into the weight. Resist the pull through your obliques, not by hiking the hip. Slow controlled stride. This is your right-side dominance corrective \u2014 the challenge is standing symmetrically against asymmetric load.",
             "alts": [
-              "Farmer Carry \u00d7 20m (light)",
-              "KB Goblet Hold \u00d7 30 sec"
+              "Farmer Carry 20m (light)",
+              "KB Goblet Hold 30 sec (standing)"
+            ]
+          },
+          {
+            "name": "Dead Bug",
+            "prescription": "2 \u00d7 8 each side \u00b7 slow",
+            "load": "BW",
+            "cues": "Low back pinned to floor throughout \u2014 shorten range before grinding. Left side first. Breathe out on extension, breathe in on return. 3 sec down, 1 sec hold at full extension. If the low back loses the floor, you\u2019ve gone too far. This is anti-rotation and core endurance \u2014 not a conditioning set.",
+            "alts": [
+              "Hollow Hold 20 sec",
+              "Bird Dog \u00d7 8 each side"
             ]
           }
         ]
       }
     ],
     "athlete_notes": "",
-    "created_date": "2026-04-19",
-    "coach_note": "Landmine-upgraded Week 2 Monday. Two replacements: Reverse Lunge \u2192 Landmine Reverse Lunge, Pallof \u2192 Arc Press. Two additions: Push Press (Block A, explosive), Rainbow (Block C, rotational). Push Press is power work \u2014 if the bar moves slow, drop the load. Arc Press replaces Pallof with same anti-rotation function. Rainbow is new \u2014 feel it out on load before adding weight. TRX Y-Raise anchor: 12 reps both sets before anything changes. Time cap 65 min \u2014 drop Suitcase Carry first if running long."
+    "created_date": "2026-04-21",
+    "coach_note": "Week 2 Wednesday Pull + Posterior Chain. Pulling at a different angle than Week 1 Monday \u2014 Front Lat Pulldown (neutral grip) vs wide-grip Hammer Strength. Meadows Row added for athletic anti-rotation pulling stimulus \u2014 left side first, right-side dominance corrective. Hip Thrust is your progression anchor vs Week 1 Monday \u2014 track the load. Cable Pull-Through replaces Low Step-Up: same posterior chain work, less hip OA demand. Face Pull and Suitcase Carry carry over as structural correction standards. Time cap 65 min \u2014 drop Dead Bug first if Block C runs long."
   },
   "coach_questions": [
     {
