@@ -3719,6 +3719,20 @@
       "temperature_f": 72,
       "humidity_pct": 85,
       "award": "Earth Day Challenge 4/22/26"
+    },
+    {
+      "date": "2026-04-22",
+      "source": "Motra / Apple Fitness",
+      "type": "Strength Training",
+      "start_time": "07:14",
+      "end_time": "08:23",
+      "workout_time_min": 68.5,
+      "active_calories": 417,
+      "total_calories": 524,
+      "avg_hr_bpm": 114,
+      "max_hr_bpm": 154,
+      "steps": 763,
+      "distance_m": 491
     }
   ],
   "strength_logs": [
@@ -10029,6 +10043,238 @@
         }
       ],
       "coaching_note": "Excellent compliance session. Avg HR 119 bpm \u2014 just under 122 cap. HR Recovery -49 bpm = Superior. Zone 2 dominated at 46%. Session ran 80 min vs 65-min cap \u2014 15 min over (recurring). Fatigue signals mid-session: Single Arm Push Press dropped 10\u21926 reps, Arc Press weight dropped 25\u219220kg. Both are appropriate regulation, not failure. Pull-ups 5+4 = solid bodyweight press pairing. Shoulder 24% strain \u2014 monitor as asymmetry focus area."
+    },
+    {
+      "date": "2026-04-22",
+      "source": "Motra",
+      "session_name": "Strength Training",
+      "start_time": "07:14",
+      "end_time": "08:23",
+      "duration_min": 68.5,
+      "total_volume_lbs": 4555,
+      "total_volume_kg": 2066,
+      "total_reps": 203,
+      "calories_kcal": 417,
+      "avg_hr_bpm": 114,
+      "min_hr_bpm": 74,
+      "max_hr_bpm": 154,
+      "activity_strain_pct": 61,
+      "cardio_focus": "100% Low Aerobic",
+      "hr_zones": {
+        "Z0_min": 12.4,
+        "Z1_min": 26.4,
+        "Z2_min": 20.2,
+        "Z3_min": 9.2,
+        "Z4_min": 0,
+        "Z5_min": 0
+      },
+      "muscular_strain": {
+        "lats_pct": 25,
+        "traps_pct": 12,
+        "abs_pct": 10,
+        "quads_pct": 10,
+        "glutes_pct": 9,
+        "obliques_pct": 8,
+        "shoulder_pct": 6,
+        "hamstrings_pct": 4,
+        "upper_back_pct": 3,
+        "adductors_pct": 2,
+        "forearm_pct": 2,
+        "rotator_cuff_pct": 2,
+        "biceps_pct": 2,
+        "calves_pct": 2,
+        "hip_flexors_pct": 1,
+        "triceps_pct": 1,
+        "lower_back_pct": 0
+      },
+      "exercises": [
+        {
+          "name": "Side-Lying Thoracic Rotation Stretch",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 8,
+              "weight_kg": null
+            }
+          ]
+        },
+        {
+          "name": "Glute Kickback",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 12,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Dead Hang",
+          "sets": [
+            {
+              "set": 1,
+              "duration_s": 26,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "duration_s": 23,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Resistance Band Pull Apart",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 15,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "reps": 15,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Half-Kneeling Single Arm Cable Pull Down",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": 7.9
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": 10.2
+            },
+            {
+              "set": 3,
+              "reps": 10,
+              "weight_kg": 12.5
+            }
+          ]
+        },
+        {
+          "name": "Suspension Trainer Back Row",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 3,
+              "reps": 10,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Pull-Up",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 4,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "reps": 4,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 3,
+              "reps": 3,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Kettlebell Sumo Deadlift",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": 16
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": 16
+            },
+            {
+              "set": 3,
+              "reps": 10,
+              "weight_kg": 16
+            }
+          ]
+        },
+        {
+          "name": "Cable Chop (High to Low)",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": 10.2
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": 10.2
+            },
+            {
+              "set": 3,
+              "reps": 10,
+              "weight_kg": 10.2
+            }
+          ]
+        },
+        {
+          "name": "Hanging Leg Raise",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Offset Farmer Carry",
+          "sets": [
+            {
+              "set": 1,
+              "distance_ft": 50,
+              "weight_kg": 24
+            },
+            {
+              "set": 2,
+              "distance_ft": 50,
+              "weight_kg": 24
+            },
+            {
+              "set": 3,
+              "distance_ft": 50,
+              "weight_kg": 24
+            }
+          ]
+        }
+      ],
+      "notes": "Intensity Spike flag from Motra: max HR 154 bpm, 33% above 14-day avg. All time in low aerobic zone."
     }
   ],
   "glucose": [
@@ -10166,7 +10412,7 @@
       "rationale": "Weight 164.7 lbs (Ocare3 Apr 20). 5.7 lbs to goal. Visceral fat BIA Lv 2.0 (down from 3.0 \u2014 directional only). DXA Feb 23 remains primary body comp reference. Week 2 execution on track: Monday session logged, HR compliant, superior cardiovascular recovery confirmed."
     }
   },
-  "last_updated": "2026-04-22T05:45:00+08:00",
+  "last_updated": "2026-04-22T08:35:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
