@@ -1578,7 +1578,13 @@
         "Recovery Surge (+54% from yesterday)",
         "Resilience Surge - HRV rebounded to 46 ms"
       ],
-      "notes": "Strong recovery rebound after Apr 22 poor night. Oura readiness 83, sleep 82 (Good), 7h14m actual. WHOOP 83% recovery - significant bounce-back. HRV 46.2 ms above personal norm (34.5 ms avg). RHR 59.1 bpm trending down (-4 bpm over 30 days - improving cardio efficiency). WHOOP REM strong at 2h8m; Oura REM low at 44m (discrepancy normal across devices). Sleep bank still -2h40m debt ongoing."
+      "notes": "Strong recovery rebound after Apr 22 poor night. Oura readiness 83, sleep 82 (Good), 7h14m actual. WHOOP 83% recovery - significant bounce-back. HRV 46.2 ms above personal norm (34.5 ms avg). RHR 59.1 bpm trending down (-4 bpm over 30 days - improving cardio efficiency). WHOOP REM strong at 2h8m; Oura REM low at 44m (discrepancy normal across devices). Sleep bank still -2h40m debt ongoing.",
+      "hrv_ms": 48,
+      "recovery_score_pct": 83,
+      "total_sleep_min": 434,
+      "total_sleep_min_oura": 434,
+      "readiness_tier": "Green",
+      "sleep_score_pct": 82
     }
   ],
   "nutrition": [
@@ -10740,7 +10746,7 @@
       "rationale": "Weight 165.6 lbs (Ocare3 Apr 22). Apr 22 elevated weight consistent with poor sleep / cortisol / water retention — not a fat gain signal. Recovery bounced strongly today (83% WHOOP). Week 2 on track: Monday Push session logged, Wednesday Pull session planned. 3 days of training and cardio in 4-day window."
     }
   },
-  "last_updated": "2026-04-23T10:30:00+08:00",
+  "last_updated": "2026-04-23T10:35:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
