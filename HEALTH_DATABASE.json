@@ -673,6 +673,42 @@
         "left_leg_pct": 4.1
       },
       "note": "Hume BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
+    },
+    {
+      "date": "2026-04-24",
+      "source": "Hume Body Pod",
+      "note": "BF%/VAT not used for coaching \u2014 DXA only. Weight and muscle segmentation logged for reference.",
+      "weight_lbs": 166.8,
+      "metabolic_age_yrs": 42,
+      "muscle_mass_segments": {
+        "right_arm_lbs": 7.9,
+        "right_arm_rating": "Standard",
+        "left_arm_lbs": 7.9,
+        "left_arm_rating": "Standard",
+        "trunk_lbs": 65.9,
+        "trunk_rating": "Low",
+        "right_leg_lbs": 25.5,
+        "right_leg_rating": "Standard",
+        "left_leg_lbs": 23.8,
+        "left_leg_rating": "Standard"
+      }
+    },
+    {
+      "date": "2026-04-24",
+      "source": "Ocare3 BIA Scale",
+      "measurement_time": "05:23:46",
+      "weight_lbs": 166.0,
+      "bmi": 22.0,
+      "body_fat_pct": 16.4,
+      "visceral_fat_level": 2.0,
+      "bmr_kcal": 1780,
+      "body_water_pct": 57.5,
+      "bone_mass_lbs": 7.7,
+      "lean_body_mass_pct": 79.0,
+      "last_week_avg_lbs": 164.9,
+      "last_week_max_lbs": 166.0,
+      "last_week_min_lbs": 163.1,
+      "weight_status": "Normal"
     }
   ],
   "recovery_sleep": [
@@ -4128,6 +4164,44 @@
           "time": "11:53",
           "pace": "44'26\"/mi",
           "avg_hr_bpm": 101
+        }
+      ]
+    },
+    {
+      "date": "2026-04-24",
+      "source": "Apple Fitness",
+      "type": "Outdoor Walk",
+      "start_time": "04:24",
+      "end_time": "05:03",
+      "location": "Beitun District, Taichung",
+      "workout_duration_min": 37.97,
+      "elapsed_duration_min": 39.6,
+      "distance_mi": 2.17,
+      "active_calories": 158,
+      "total_calories": 219,
+      "avg_pace_per_mi": "17'25\"",
+      "avg_hr_bpm": 92,
+      "max_hr_bpm": 128,
+      "elevation_gain_ft": 25,
+      "effort_level": "Easy",
+      "effort_score": 2,
+      "weather_temp_f": 70,
+      "weather_humidity_pct": 91,
+      "splits": [
+        {
+          "mile": 1,
+          "time": "17:21",
+          "hr_bpm": 90
+        },
+        {
+          "mile": 2,
+          "time": "17:22",
+          "hr_bpm": 93
+        },
+        {
+          "mile": 3,
+          "time": "3:12 (partial)",
+          "hr_bpm": 92
         }
       ]
     }
@@ -10782,34 +10856,36 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-04-23",
+    "date": "2026-04-24",
     "readiness_tier": "Green",
-    "call": "Strong rebound after Tuesday's rough night. WHOOP recovery surged 29% \u2192 83% (+54%). HRV 46.2ms above personal norm (34.5ms avg) \u2014 resilience confirmed. Deep sleep 70m above normal. Today is Week 2 Pull + Posterior Chain. Full session: Front Lat Pulldown \u2192 Meadows Row \u2192 Hip Thrust \u2192 Cable Pull-Through \u2192 Face Pull \u2192 Suitcase Carry \u2192 Dead Bug. HR cap 122 bpm enforced.",
-    "sprint_gate": "N/A \u2014 Wednesday is not sprint day (sprints are Saturday-only standalone)",
+    "call": "\ud83d\udfe2 Green \u2014 full session. WHOOP recovery 83% (+54% rebound from Tuesday's red), HRV 46.2 ms above norm (34.5 avg), RHR 59.1 trending down. Body has reset. Today is Week 2 Friday: Corrective / Unilateral, 60-min cap. Left side leads every anchor \u2014 that's the whole point of today.",
+    "sprint_gate": "N/A \u2014 sprints are Saturday-standalone; tomorrow's gate check: HRV \u226535ms = go.",
     "goal_summary": {
-      "as_of": "2026-04-23",
+      "as_of": "2026-04-24",
       "goal_weight_lbs": 159,
       "goal_bf_pct": 13.0,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
       "weeks_remaining": 14.1,
       "required_rate_lbs_per_week": 0.4,
-      "current_weight_lbs": 165.6,
-      "current_weight_lbs_source": "Ocare3 Apr 22 (latest weigh-in)",
+      "current_weight_lbs": 166.3,
+      "current_weight_lbs_source": "Hume Body Pod 2026-04-22 (latest weigh-in)",
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
-      "fat_to_lose_lbs": 6.6,
+      "fat_to_lose_lbs": 7.3,
       "lean_to_gain_lbs": 2.0,
-      "calorie_target_kcal": 2000,
+      "calorie_target_kcal": 2150,
       "protein_target_g": 150,
-      "carb_target_g": 190,
+      "carb_target_g": 210,
       "fat_target_g": 70,
       "tdee_estimate_kcal": 2380,
-      "daily_deficit_kcal": 380,
-      "rationale": "Weight 165.6 lbs (Ocare3 Apr 22). Apr 22 elevated weight consistent with poor sleep / cortisol / water retention \u2014 not a fat gain signal. Recovery bounced strongly today (83% WHOOP). Week 2 on track: Monday Push session logged, Wednesday Pull session planned. 3 days of training and cardio in 4-day window."
-    }
+      "daily_deficit_kcal": 200,
+      "rationale": "Week 2 close. Target 159 lbs / 13% BF / Aug 1. Need 0.4 lbs/week over 14 weeks. Calorie target 2,150 kcal/day (raised Apr 18 to support lean mass gain \u2014 trunk still rated LOW). Protein 150g non-negotiable. Recovery confirmed green after Tuesday's red day."
+    },
+    "progress_note": "Week 2 is on track: Mon Push + Landmine Power \u2705, Wed Pull + Posterior Chain \u2705. Friday completes the week. Recovery bounced from 29% \u2192 83% in 24 hours \u2014 that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms \u2014 the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
+    "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like \u2014 not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
   },
-  "last_updated": "2026-04-24T04:00:00+08:00",
+  "last_updated": "2026-04-24T05:45:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -10875,151 +10951,119 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-04-23",
-    "day_label": "Wednesday Apr 23",
-    "session_type": "Pull + Posterior Chain",
+    "planned_date": "2026-04-24",
+    "day_label": "Friday Apr 24",
+    "session_type": "Corrective / Unilateral",
     "week": 2,
-    "floor_plan": "Floor 3 \u2192 Floor 2",
-    "time_cap_min": 65,
+    "floor_plan": "Floor 3 \u2192 Floor 2 \u2192 Floor 3",
+    "time_cap_min": 60,
     "gate_condition": null,
-    "why": "Week 2 Wednesday pulls from a different angle than Week 1 Monday. Front Lat Pulldown (neutral grip) replaces the wide-grip Hammer Strength \u2014 different ROM and lat emphasis. Meadows Row added for athletic, anti-rotation row stimulus (left first \u2014 right-side corrective). Hip Thrust stays as the anchor for posterior chain progression tracking. Cable Pull-Through swaps in for Low Step-Up \u2014 keeps the hinge pattern, removes the step-up load on hip OA. Face Pull, Suitcase Carry, and Dead Bug carry over as structural correction anchors. Open Book Stretch in prep adds thoracic rotation warm-up ahead of the pulling work.",
+    "why": "Week 2 close \u2014 corrective day. No landmine (different from Monday), no KB Sumo DL or Half-Kneeling Pull-Down (different from Wednesday). Every anchor is unilateral: DB Split Squat, Single-Arm Row, Pallof Press kneel, and left-hand Suitcase Carry to correct right-side dominance. Pull-Up goes early and fresh \u2014 expect 5s, not the 4/4/3 you hit pre-fatigued on Wednesday. Short cap (60 min) \u2014 end the week clean.",
     "blocks": [
       {
         "id": "prep",
-        "label": "PREP",
+        "label": "PREP \u2014 Activation",
         "floor": "Floor 3",
         "time_min": 10,
         "exercises": [
           {
+            "name": "Wall Slides",
+            "prescription": "2\u00d710",
+            "load": "BW",
+            "cues": "Scap priming \u2014 low traps engage, keep lower ribs down. Slow tempo."
+          },
+          {
             "name": "Open Book Stretch",
-            "prescription": "2 \u00d7 6 each side",
+            "prescription": "2\u00d78/side (left first)",
             "load": "BW",
-            "cues": "Left side first. Lie on your side, knees stacked at 90\u00b0. Top arm sweeps across to the floor behind you \u2014 follow it with your eyes, not just your arm. The rotation should come from your thoracic spine, not your lower back. Hold the end range 2 sec before returning. If right side rotates less, add one extra rep."
+            "cues": "Thoracic rotation + anterior chain opening. Pause at end range, exhale deeper."
           },
           {
-            "name": "Banded Hip Abduction",
-            "prescription": "2 \u00d7 15 each side",
-            "load": "Light band",
-            "cues": "Stand sideways to anchor or use a loop band just above knees. Controlled push outward \u2014 no hip hike. Left side first. This is glute med activation for the hinge work ahead, not a fatigue set.",
-            "alts": [
-              "Side-Lying Hip Abduction \u00d7 15"
-            ]
+            "name": "Cable Hip Abduction",
+            "prescription": "2\u00d712/side (left first)",
+            "load": "Light",
+            "cues": "Glute med activation \u2014 standing, keep pelvis level, drive the heel out, not the knee."
           },
           {
-            "name": "Hanging Scapular Pull",
-            "prescription": "2 \u00d7 8",
+            "name": "Scapular Pull-Up Hang",
+            "prescription": "2\u00d76",
             "load": "BW",
-            "cues": "Dead hang from the pull-up bar. Without bending the elbows, depress and retract the shoulder blades \u2014 like trying to put them in your back pockets. Hold 1 sec at the top of the pull. This sets the scapular position for all the pulling work. Quality over speed."
-          },
-          {
-            "name": "Band Pull-Apart",
-            "prescription": "2 \u00d7 12",
-            "load": "Light band",
-            "cues": "Arms straight, band at chest height. Pull apart to a T \u2014 squeeze the rear delts at end range for 1 sec. Don't let the hands drift downward. Slow and deliberate."
+            "cues": "Shoulders DOWN and back from ears \u2014 prime lats before Block B."
           }
         ]
       },
       {
         "id": "a",
-        "label": "BLOCK A",
+        "label": "Block A \u2014 Unilateral Split (Anchor)",
         "floor": "Floor 2",
-        "time_min": 20,
-        "pairing": "Superset A1/A2",
+        "time_min": 18,
+        "pairing": "superset",
         "exercises": [
           {
-            "name": "Machine Front Lat Pulldown",
-            "prescription": "3 \u00d7 10",
-            "load": "Match comfortable Week 1 lat pulldown weight \u00b7 test +5 kg set 3 if all reps clean",
-            "cues": "Neutral or underhand grip \u2014 different angle from the wide-grip Hammer Strength you ran Week 1 Monday. Initiate with shoulder blades down before arms bend. Pull elbows toward hip pockets. Full hang at the top \u2014 don't cut the range. 2 sec hold at the bottom of each rep.",
-            "alts": [
-              "Cable Lat Pulldown \u00d7 10",
-              "Machine Assisted Pull-Up \u00d7 8"
-            ]
+            "name": "Dumbbell Supported Split Squat",
+            "prescription": "3\u00d710/side (left forward first)",
+            "load": "Start DB 12\u201314 kg each hand",
+            "cues": "Front heel drives the floor. Hand on rack for balance only. Knee tracks over toe, NOT over foot."
           },
           {
-            "name": "Meadows Row",
-            "prescription": "3 \u00d7 10 each side",
-            "load": "Start moderate \u2014 control over load",
-            "cues": "Left side first every set. Stand perpendicular to the landmine, stagger stance, hinge forward. Pull the bar to your hip \u2014 elbow drives back and up, not out. Anti-rotation demand is high: your torso should stay square. Squeeze the lat and rhomboid at the top 1 sec. If you're rotating into the pull, drop the load.",
-            "alts": [
-              "Cable Single-Arm Row \u00d7 10",
-              "DB Single-Arm Row \u00d7 10 (braced)"
-            ]
+            "name": "Single-Arm Dumbbell Row (bench)",
+            "prescription": "3\u00d710/side (left first)",
+            "load": "Start 16\u201318 kg, progress if easy",
+            "cues": "Elbow to hip \u2014 NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
           }
         ]
       },
       {
         "id": "b",
-        "label": "BLOCK B",
+        "label": "Block B \u2014 Pull-Up Anchor + Glute",
         "floor": "Floor 2",
-        "time_min": 18,
-        "pairing": "Superset B1/B2",
+        "time_min": 16,
+        "pairing": "superset",
         "exercises": [
           {
-            "name": "Machine Hip Thrust",
-            "prescription": "3 \u00d7 12",
-            "load": "Match or add 5 kg vs Week 1 Monday \u2014 anchor for progression",
-            "cues": "Track load vs Week 1 Monday. Full hip extension and glute squeeze at top \u2014 hold 1 sec. Don't hyperextend the lower back. Feet hip-width, toes slightly out. If hip pinching appears at any point, reduce range immediately.",
-            "alts": [
-              "Glute Bridge on floor \u00d7 15",
-              "Cable Pull-Through \u00d7 15"
-            ]
+            "name": "Pull-Up",
+            "prescription": "3\u00d75",
+            "load": "BW",
+            "cues": "2-sec hold at top every rep. Chin over bar. Slow 3-count descent. Fresh = expect 5; don't cheat the hold."
           },
           {
-            "name": "Cable Pull-Through",
-            "prescription": "3 \u00d7 15",
-            "load": "Moderate \u2014 hip hinge, not low-back grind",
-            "cues": "Cable between legs from a low pulley. Hinge at hips \u2014 soft knee, neutral spine, sit back like you\u2019re loading a deadlift. Drive hips forward to stand, squeezing glutes at the top. The cable should stay close to your body throughout. Hip OA: this is a long-lever glute/hamstring pattern \u2014 safe and effective. Drop weight before form breaks.",
-            "alts": [
-              "KB Swing \u00d7 12",
-              "DB Romanian Deadlift \u00d7 10"
-            ]
+            "name": "Machine Hip Thrust",
+            "prescription": "3\u00d712",
+            "load": "Match Week 1 load; +1 plate if all 12 clean",
+            "cues": "Heel-drive cue \u2014 feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
           }
         ]
       },
       {
         "id": "c",
-        "label": "BLOCK C",
-        "floor": "Floor 2",
-        "time_min": 12,
-        "pairing": "Straight sets",
+        "label": "Block C \u2014 Unilateral Trunk + Scapular Close",
+        "floor": "Floor 3",
+        "time_min": 14,
         "exercises": [
           {
-            "name": "Cable Face Pull",
-            "prescription": "3 \u00d7 15",
-            "load": "Match or add 2.5 kg vs last week \u2014 shoulder corrective anchor",
-            "cues": "Rope at eye level, neutral grip. Pull to forehead \u2014 elbows high and wide at the end, not low. External rotation is the point, not the pull. 2 sec hold at end range. If right arm drives forward on the return, slow that side down intentionally.",
-            "alts": [
-              "Band Face Pull \u00d7 20",
-              "TRX Y-Raise \u00d7 12"
-            ]
+            "name": "Half-Kneeling Pallof Press",
+            "prescription": "3\u00d712/side (left knee up first, face cable)",
+            "load": "10.2 kg",
+            "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull \u2014 don't chase it. Unilateral kneel = hip stability bonus."
           },
           {
-            "name": "KB Suitcase Carry",
-            "prescription": "3 \u00d7 25m",
-            "load": "16\u201318 kg \u00b7 left hand only",
-            "cues": "Left hand only. Walk tall \u2014 neutral spine, ribs down, no lateral lean into the weight. Resist the pull through your obliques, not by hiking the hip. Slow controlled stride. This is your right-side dominance corrective \u2014 the challenge is standing symmetrically against asymmetric load.",
-            "alts": [
-              "Farmer Carry 20m (light)",
-              "KB Goblet Hold 30 sec (standing)"
-            ]
+            "name": "Cable Face Pull to W",
+            "prescription": "3\u00d712",
+            "load": "Moderate \u2014 form over load",
+            "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W \u2014 hands out, shoulders packed. 1-sec hold at W."
           },
           {
-            "name": "Dead Bug",
-            "prescription": "2 \u00d7 8 each side \u00b7 slow",
-            "load": "BW",
-            "cues": "Low back pinned to floor throughout \u2014 shorten range before grinding. Left side first. Breathe out on extension, breathe in on return. 3 sec down, 1 sec hold at full extension. If the low back loses the floor, you\u2019ve gone too far. This is anti-rotation and core endurance \u2014 not a conditioning set.",
-            "alts": [
-              "Hollow Hold 20 sec",
-              "Bird Dog \u00d7 8 each side"
-            ]
+            "name": "Suitcase Carry \u2014 Left Hand",
+            "prescription": "3\u00d725m",
+            "load": "24 kg KB, left hand only",
+            "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy \u2014 drop a step."
           }
         ]
       }
     ],
     "athlete_notes": "",
-    "created_date": "2026-04-21",
-    "coach_note": "Week 2 Wednesday Pull + Posterior Chain. Pulling at a different angle than Week 1 Monday \u2014 Front Lat Pulldown (neutral grip) vs wide-grip Hammer Strength. Meadows Row added for athletic anti-rotation pulling stimulus \u2014 left side first, right-side dominance corrective. Hip Thrust is your progression anchor vs Week 1 Monday \u2014 track the load. Cable Pull-Through replaces Low Step-Up: same posterior chain work, less hip OA demand. Face Pull and Suitcase Carry carry over as structural correction standards. Time cap 65 min \u2014 drop Dead Bug first if Block C runs long."
+    "created_date": "2026-04-24",
+    "coach_note": "\ud83d\udfe2 Green day. WHOOP rebounded to 83% recovery, HRV 46.2 ms (above norm). Go full intent. Three specific focuses: (1) Split Squat left-forward first \u2014 right side will want to take over, don't let it. (2) Pull-Up 2-sec hold at top on EVERY rep \u2014 the hold is the point. (3) Suitcase Carry left-hand-only \u2014 this is the most important 3 minutes of your week for right-dominance correction."
   },
   "coach_questions": [
     {
@@ -11787,15 +11831,116 @@
         "session_notes": "0 repeated exercises from Week 1 pull day. 3 new movements. Full session executable Floor 3 + Floor 2 \u2014 no mid-session floor changes. Time cap 60 min."
       },
       "5": {
-        "date": "2026-04-25",
+        "date": "2026-04-24",
         "day": "Friday",
         "session_type": "Corrective / Unilateral",
-        "theme": "TBD \u2014 design pending as of Apr 19",
-        "floor_plan": "TBD",
-        "time_cap_min": 65,
-        "status": "PENDING \u2014 to be designed before Friday Apr 25",
-        "blocks": [],
-        "session_notes": "Corrective / Unilateral focus. Design to be finalized mid-week based on Apr 20 and Apr 22 fatigue response."
+        "theme": "Unilateral close \u2014 right-side correction, anti-rotation, pull-up anchor. Lower systemic fatigue than Mon/Wed \u2014 end the week clean, not grindy.",
+        "floor_plan": "Floor 3 \u2192 Floor 2 \u2192 Floor 3",
+        "time_cap_min": 60,
+        "status": "LIVE \u2014 active session for today",
+        "blocks": [
+          {
+            "id": "prep",
+            "label": "PREP \u2014 Activation",
+            "floor": "Floor 3",
+            "time_min": 10,
+            "exercises": [
+              {
+                "name": "Wall Slides",
+                "prescription": "2\u00d710",
+                "load": "BW",
+                "cues": "Scap priming \u2014 low traps engage, keep lower ribs down. Slow tempo."
+              },
+              {
+                "name": "Open Book Stretch",
+                "prescription": "2\u00d78/side (left first)",
+                "load": "BW",
+                "cues": "Thoracic rotation + anterior chain opening. Pause at end range, exhale deeper."
+              },
+              {
+                "name": "Cable Hip Abduction",
+                "prescription": "2\u00d712/side (left first)",
+                "load": "Light",
+                "cues": "Glute med activation \u2014 standing, keep pelvis level, drive the heel out, not the knee."
+              },
+              {
+                "name": "Scapular Pull-Up Hang",
+                "prescription": "2\u00d76",
+                "load": "BW",
+                "cues": "Shoulders DOWN and back from ears \u2014 prime lats before Block B."
+              }
+            ]
+          },
+          {
+            "id": "a",
+            "label": "Block A \u2014 Unilateral Split (Anchor)",
+            "floor": "Floor 2",
+            "time_min": 18,
+            "pairing": "superset",
+            "exercises": [
+              {
+                "name": "Dumbbell Supported Split Squat",
+                "prescription": "3\u00d710/side (left forward first)",
+                "load": "Start DB 12\u201314 kg each hand",
+                "cues": "Front heel drives the floor. Hand on rack for balance only. Knee tracks over toe, NOT over foot."
+              },
+              {
+                "name": "Single-Arm Dumbbell Row (bench)",
+                "prescription": "3\u00d710/side (left first)",
+                "load": "Start 16\u201318 kg, progress if easy",
+                "cues": "Elbow to hip \u2014 NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
+              }
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Block B \u2014 Pull-Up Anchor + Glute",
+            "floor": "Floor 2",
+            "time_min": 16,
+            "pairing": "superset",
+            "exercises": [
+              {
+                "name": "Pull-Up",
+                "prescription": "3\u00d75",
+                "load": "BW",
+                "cues": "2-sec hold at top every rep. Chin over bar. Slow 3-count descent. Fresh = expect 5; don't cheat the hold."
+              },
+              {
+                "name": "Machine Hip Thrust",
+                "prescription": "3\u00d712",
+                "load": "Match Week 1 load; +1 plate if all 12 clean",
+                "cues": "Heel-drive cue \u2014 feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "label": "Block C \u2014 Unilateral Trunk + Scapular Close",
+            "floor": "Floor 3",
+            "time_min": 14,
+            "exercises": [
+              {
+                "name": "Half-Kneeling Pallof Press",
+                "prescription": "3\u00d712/side (left knee up first, face cable)",
+                "load": "10.2 kg",
+                "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull \u2014 don't chase it. Unilateral kneel = hip stability bonus."
+              },
+              {
+                "name": "Cable Face Pull to W",
+                "prescription": "3\u00d712",
+                "load": "Moderate \u2014 form over load",
+                "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W \u2014 hands out, shoulders packed. 1-sec hold at W."
+              },
+              {
+                "name": "Suitcase Carry \u2014 Left Hand",
+                "prescription": "3\u00d725m",
+                "load": "24 kg KB, left hand only",
+                "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy \u2014 drop a step."
+              }
+            ]
+          }
+        ],
+        "session_notes": "Week 2 close. No repeats from Mon (landmine-heavy push) or Wed (pull + posterior chain). Zero landmine movements today \u2014 deliberate variation. Pull-up is fresh (pre-pull), so target 5 reps per set with the 2-sec hold. Left-side leads every unilateral. Suitcase Carry left-hand-only is the right-dominance corrective \u2014 non-negotiable, last thing you do."
       }
     }
   }
