@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13.0,
+    "goal_bf_pct": 13,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -403,7 +403,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75.0,
+      "weight_kg": 75,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -536,7 +536,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -563,7 +563,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
@@ -618,7 +618,7 @@
       "weight_lbs": 164.7,
       "bmi": 21.8,
       "body_fat_pct": 16.6,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmr_kcal": 1773,
       "body_water_pct": 57.3,
       "bone_mass_lbs": 7.7,
@@ -635,11 +635,11 @@
       "weight_lbs": 165.6,
       "bmi": 21.9,
       "body_fat_pct": 16.5,
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "bmr_kcal": 1777,
       "body_water_pct": 57.7,
       "bone_mass_lbs": 7.7,
-      "lean_body_mass_pct": 79.0,
+      "lean_body_mass_pct": 79,
       "weekly_avg_lbs": 164.8,
       "weekly_max_lbs": 165.6,
       "weekly_min_lbs": 163.1,
@@ -653,7 +653,7 @@
       "health_score": 683,
       "health_score_label": "High",
       "metabolic_age_yrs": 42,
-      "skeletal_muscle_mass_lbs": 95.0,
+      "skeletal_muscle_mass_lbs": 95,
       "body_fat_pct": 10.6,
       "body_fat_label": "Very low",
       "muscle_mass_by_segment": {
@@ -667,7 +667,7 @@
       "fat_pct_by_segment": {
         "right_arm_pct": 9.7,
         "left_arm_pct": 9.7,
-        "trunk_pct": 7.0,
+        "trunk_pct": 7,
         "trunk_label": "Very low",
         "right_leg_pct": 4.1,
         "left_leg_pct": 4.1
@@ -697,16 +697,16 @@
       "date": "2026-04-24",
       "source": "Ocare3 BIA Scale",
       "measurement_time": "05:23:46",
-      "weight_lbs": 166.0,
-      "bmi": 22.0,
+      "weight_lbs": 166,
+      "bmi": 22,
       "body_fat_pct": 16.4,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmr_kcal": 1780,
       "body_water_pct": 57.5,
       "bone_mass_lbs": 7.7,
-      "lean_body_mass_pct": 79.0,
+      "lean_body_mass_pct": 79,
       "last_week_avg_lbs": 164.9,
-      "last_week_max_lbs": 166.0,
+      "last_week_max_lbs": 166,
       "last_week_min_lbs": 163.1,
       "weight_status": "Normal"
     }
@@ -1276,7 +1276,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -1339,7 +1339,7 @@
       "spo2_pct": 96.5,
       "spo2_pct_oura_avg": 97,
       "respiratory_rate_rpm": 14.8,
-      "wrist_temp_f": 97.0,
+      "wrist_temp_f": 97,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
       "breathing_regularity": "Optimal",
@@ -1483,7 +1483,7 @@
       "spo2_pct_hume": 95.9,
       "spo2_pct_oura_avg": 97,
       "spo2_status": "Normal (Hume) / Normal (Oura)",
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 96.9,
       "hr_dip_pct": 23,
       "hr_dip_status": "Above normal — 23% dip, strongest cardiovascular response in current block",
@@ -1598,7 +1598,7 @@
       "bevel_rhr_status": "Below normal",
       "bevel_respiratory_rate": 14.5,
       "bevel_spo2_pct": 95.4,
-      "bevel_wrist_temp_f": 97.0,
+      "bevel_wrist_temp_f": 97,
       "bevel_wrist_temp_status": "Normal",
       "bevel_sleep_duration_min": 451,
       "bevel_time_in_bed_min": 475,
@@ -3865,7 +3865,7 @@
       "start_time": "04:44",
       "end_time": "05:26",
       "location": "Beitun District, Taichung",
-      "workout_time_min": 40.0,
+      "workout_time_min": 40,
       "elapsed_time_min": 41.8,
       "distance_mi": 2.35,
       "active_calories": 175,
@@ -4097,7 +4097,7 @@
       "end_time": "06:32",
       "location": "Beitun District, Taichung",
       "workout_time_min": 45.58,
-      "elapsed_time_min": 46.0,
+      "elapsed_time_min": 46,
       "distance_mi": 2.68,
       "active_calories": 225,
       "total_calories": 298,
@@ -4139,7 +4139,7 @@
       "end_time": "08:27",
       "location": "Beitun District, Taichung",
       "workout_time_min": 31.17,
-      "elapsed_time_min": 32.0,
+      "elapsed_time_min": 32,
       "distance_mi": 1.26,
       "active_calories": 123,
       "total_calories": 172,
@@ -11144,7 +11144,7 @@
     "goal_summary": {
       "as_of": "2026-04-24",
       "goal_weight_lbs": 159,
-      "goal_bf_pct": 13.0,
+      "goal_bf_pct": 13,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
       "weeks_remaining": 14.1,
@@ -11154,7 +11154,7 @@
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
       "fat_to_lose_lbs": 7.3,
-      "lean_to_gain_lbs": 2.0,
+      "lean_to_gain_lbs": 2,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
       "carb_target_g": 210,
@@ -11217,6 +11217,17 @@
         "migraine_headache": true,
         "poor_sleep": true,
         "high_fatigue": true,
+        "joint_pain": false,
+        "high_stress": false
+      }
+    },
+    {
+      "date": "2026-04-24",
+      "timestamp": "2026-04-24T07:29:17.430Z",
+      "flags": {
+        "migraine_headache": false,
+        "poor_sleep": false,
+        "high_fatigue": false,
         "joint_pain": false,
         "high_stress": false
       }
@@ -11548,9 +11559,9 @@
           "time": null,
           "source": "Cal AI",
           "kcal": 326,
-          "protein_g": 43.0,
-          "carbs_g": 12.0,
-          "fat_g": 11.0
+          "protein_g": 43,
+          "carbs_g": 12,
+          "fat_g": 11
         },
         {
           "meal_name": "Grilled Chicken Breast Pieces",
@@ -11567,8 +11578,8 @@
           "source": "Manual / Photo",
           "serving": "3/4 cup",
           "kcal": 154,
-          "protein_g": 3.0,
-          "carbs_g": 33.0,
+          "protein_g": 3,
+          "carbs_g": 33,
           "fat_g": 0.33
         }
       ],
@@ -11653,25 +11664,25 @@
           "kcal": 133.5,
           "protein_g": 1.5,
           "carbs_g": 6.75,
-          "fat_g": 12.0
+          "fat_g": 12
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129.0,
-          "protein_g": 6.0,
-          "carbs_g": 0.0,
-          "fat_g": 11.0
+          "kcal": 129,
+          "protein_g": 6,
+          "carbs_g": 0,
+          "fat_g": 11
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129.0,
-          "protein_g": 6.0,
-          "carbs_g": 0.0,
-          "fat_g": 11.0
+          "kcal": 129,
+          "protein_g": 6,
+          "carbs_g": 0,
+          "fat_g": 11
         },
         {
           "meal_name": "Breakfast Sausage Patties with Chives",
@@ -11680,7 +11691,7 @@
           "kcal": 113.04,
           "protein_g": 11.5,
           "carbs_g": 0.01,
-          "fat_g": 7.0
+          "fat_g": 7
         },
         {
           "meal_name": "Tomato Vegetable Soup",
