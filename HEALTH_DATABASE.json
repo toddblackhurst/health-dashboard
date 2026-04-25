@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-24T11:06:11+08:00",
+    "last_updated": "2026-04-25T11:45:00+08:00",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13,
+    "goal_bf_pct": 13.0,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -403,7 +403,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75,
+      "weight_kg": 75.0,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -536,7 +536,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3,
+      "visceral_fat_level": 3.0,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -563,7 +563,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 2,
+      "visceral_fat_level": 2.0,
       "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
@@ -618,7 +618,7 @@
       "weight_lbs": 164.7,
       "bmi": 21.8,
       "body_fat_pct": 16.6,
-      "visceral_fat_level": 2,
+      "visceral_fat_level": 2.0,
       "bmr_kcal": 1773,
       "body_water_pct": 57.3,
       "bone_mass_lbs": 7.7,
@@ -635,11 +635,11 @@
       "weight_lbs": 165.6,
       "bmi": 21.9,
       "body_fat_pct": 16.5,
-      "visceral_fat_level": 3,
+      "visceral_fat_level": 3.0,
       "bmr_kcal": 1777,
       "body_water_pct": 57.7,
       "bone_mass_lbs": 7.7,
-      "lean_body_mass_pct": 79,
+      "lean_body_mass_pct": 79.0,
       "weekly_avg_lbs": 164.8,
       "weekly_max_lbs": 165.6,
       "weekly_min_lbs": 163.1,
@@ -653,7 +653,7 @@
       "health_score": 683,
       "health_score_label": "High",
       "metabolic_age_yrs": 42,
-      "skeletal_muscle_mass_lbs": 95,
+      "skeletal_muscle_mass_lbs": 95.0,
       "body_fat_pct": 10.6,
       "body_fat_label": "Very low",
       "muscle_mass_by_segment": {
@@ -667,7 +667,7 @@
       "fat_pct_by_segment": {
         "right_arm_pct": 9.7,
         "left_arm_pct": 9.7,
-        "trunk_pct": 7,
+        "trunk_pct": 7.0,
         "trunk_label": "Very low",
         "right_leg_pct": 4.1,
         "left_leg_pct": 4.1
@@ -697,18 +697,62 @@
       "date": "2026-04-24",
       "source": "Ocare3 BIA Scale",
       "measurement_time": "05:23:46",
-      "weight_lbs": 166,
-      "bmi": 22,
+      "weight_lbs": 166.0,
+      "bmi": 22.0,
       "body_fat_pct": 16.4,
-      "visceral_fat_level": 2,
+      "visceral_fat_level": 2.0,
       "bmr_kcal": 1780,
       "body_water_pct": 57.5,
       "bone_mass_lbs": 7.7,
-      "lean_body_mass_pct": 79,
+      "lean_body_mass_pct": 79.0,
       "last_week_avg_lbs": 164.9,
-      "last_week_max_lbs": 166,
+      "last_week_max_lbs": 166.0,
       "last_week_min_lbs": 163.1,
       "weight_status": "Normal"
+    },
+    {
+      "date": "2026-04-25",
+      "source": "Ocare3 BIA Scale + Hume Pod BIA",
+      "weight_kg": 75.3,
+      "weight_lbs": 166.0,
+      "body_fat_pct": 17.8,
+      "fat_mass_kg": null,
+      "fat_mass_lbs": null,
+      "lean_mass_kg": null,
+      "lean_mass_lbs": null,
+      "subcutaneous_fat_kg": null,
+      "subcutaneous_fat_lbs": null,
+      "visceral_fat_g": null,
+      "visceral_fat_level": 3.0,
+      "bmi": 22.0,
+      "body_water_pct": 55.6,
+      "bone_mass_kg": null,
+      "segmental": null,
+      "hume_weight_lbs": 166.8,
+      "hume_lean_mass_lbs": 140.2,
+      "hume_skeletal_muscle_lbs": 94.8,
+      "hume_visceral_fat_index": 4,
+      "hume_body_water_pct": 44.0,
+      "hume_metabolic_age_yrs": 42,
+      "hume_health_score": 683,
+      "hume_bmi": 22,
+      "ocare_muscle_pct": 77.6,
+      "ocare_bmr_kcal": 1779,
+      "notes": "Ocare3 weekly trend (Apr 19-25): weight 163.1→166.0 lbs (net +2.9 lbs, low was dehydration), BF% 16.6→17.8%, VF Level 2.0→3.0, Muscle% 78.8→77.6%, BMR 1766→1779 kcal, Body Water 56.8→55.6% (dehydration trending). Hume Pod (Apr 25 ~11am - not optimal weigh-in time): weight 166.8 lbs, lean 140.2 lbs, skeletal muscle 94.8 lbs Standard (slight ↓), VFI 4 Low (↓), body water 44% Low (dehydration confirmed), health score 683 High, metabolic age 42 (Excellent, 15 years younger than 57). Goal weight 159 lbs — 7.8 lbs to go.",
+      "ocare_bone_mass_lbs": 7.5,
+      "hume_body_fat_pct": 10.8,
+      "hume_body_fat_note": "BIA artifact — not used for coaching per DXA-only protocol",
+      "hume_body_fat_mass_lbs": 18.1,
+      "hume_lean_mass_pct": 84.1,
+      "hume_subcutaneous_fat_lbs": 15.7,
+      "hume_subcutaneous_fat_pct": 9.4,
+      "hume_skeletal_mass_lbs": 24.1,
+      "hume_bone_mineral_content_lbs": 8.2,
+      "hume_extracellular_water_lbs": 40.8,
+      "hume_intracellular_water_lbs": 70.5,
+      "hume_mineral_mass_lbs": 2.0,
+      "hume_bmr_kcal": 1769,
+      "hume_body_cell_mass_lbs": 100.3
     }
   ],
   "recovery_sleep": [
@@ -1276,7 +1320,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14,
+      "respiratory_rate_rpm": 14.0,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -1339,7 +1383,7 @@
       "spo2_pct": 96.5,
       "spo2_pct_oura_avg": 97,
       "respiratory_rate_rpm": 14.8,
-      "wrist_temp_f": 97,
+      "wrist_temp_f": 97.0,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
       "breathing_regularity": "Optimal",
@@ -1483,7 +1527,7 @@
       "spo2_pct_hume": 95.9,
       "spo2_pct_oura_avg": 97,
       "spo2_status": "Normal (Hume) / Normal (Oura)",
-      "respiratory_rate_rpm": 14,
+      "respiratory_rate_rpm": 14.0,
       "wrist_temp_f": 96.9,
       "hr_dip_pct": 23,
       "hr_dip_status": "Above normal — 23% dip, strongest cardiovascular response in current block",
@@ -1598,7 +1642,7 @@
       "bevel_rhr_status": "Below normal",
       "bevel_respiratory_rate": 14.5,
       "bevel_spo2_pct": 95.4,
-      "bevel_wrist_temp_f": 97,
+      "bevel_wrist_temp_f": 97.0,
       "bevel_wrist_temp_status": "Normal",
       "bevel_sleep_duration_min": 451,
       "bevel_time_in_bed_min": 475,
@@ -1684,6 +1728,46 @@
       ],
       "recovery_score_pct": 47,
       "notes": "Early wake at 3:50 AM (3:52 AM Oura) cut sleep short. Bevel: 47% recovery, 56% sleep quality - recovery dip. HRV 29.5 ms (Bevel) / 27 ms avg (Oura). RHR 60.8 bpm (Bevel) / 55 bpm lowest (Oura). SpO2 94.8% flagged below normal on Bevel (96% Oura avg). Sleep bank: -3h 7m (Bevel) / -3h 30m (Oura) - cumulative debt. Oura readiness 84 (Green) and sleep 81 Good despite short night: 90% efficiency, 1h18m deep, 1h19m REM. Breathing regularity optimal. Moderate readiness day - strength training with caution advised."
+    },
+    {
+      "date": "2026-04-25",
+      "source": "Bevel + Oura",
+      "recovery_score_pct": 65,
+      "sleep_score_pct": 75,
+      "hrv_ms": 39.9,
+      "resting_hr_bpm": 61.1,
+      "respiratory_rate_rpm": 14.7,
+      "spo2_pct": 96.0,
+      "wrist_temp_c": null,
+      "wrist_temp_f": 97.6,
+      "wrist_temp_status": "above_normal",
+      "strain_score": 6,
+      "total_sleep_min": 485,
+      "time_in_bed_min": 521,
+      "sleep_efficiency_pct": 93,
+      "deep_sleep_min": 41,
+      "rem_sleep_min": 134,
+      "sleep_latency_min": 51,
+      "hr_dip_pct": 17,
+      "sleep_bank_min": -94,
+      "cardio_load": null,
+      "oura_readiness": 84,
+      "oura_sleep_score": 76,
+      "oura_activity": 87,
+      "oura_total_sleep_min": 443,
+      "oura_time_in_bed_min": 549,
+      "oura_efficiency_pct": 81,
+      "oura_deep_min": 41,
+      "oura_rem_min": 63,
+      "oura_latency_min": 51,
+      "oura_hrv_avg_ms": 48,
+      "oura_hrv_max_ms": 151,
+      "oura_rhr_lowest_bpm": 56,
+      "oura_rhr_avg_bpm": 61,
+      "oura_sleep_debt_min": 160,
+      "sleep_time": "20:35",
+      "wake_time": "05:17",
+      "notes": "Bevel: Recovery Breakout — surged +18% to 65%, HRV 39.9ms highest in 3 days, sleep 8h5m/93% efficiency. Wrist temp 97.6°F above normal — monitor. Sleep bank improved to -1h34m (Bevel) / -2h40m (Oura). Oura readiness 84 Good. Sleep 76 Good, 7h23m total, latency 51m (elevated post-active day — workout kept metabolism up per Oura). Deep 41m/9%, REM 1h3m/14%. Oura HRV avg 48ms / max 151ms. RHR 56 lowest / 61 avg. SpO2 96%. Sprint block gate: HRV 39.9ms > 35ms threshold — GATE OPEN for tomorrow Apr 26."
     }
   ],
   "nutrition": [
@@ -3865,7 +3949,7 @@
       "start_time": "04:44",
       "end_time": "05:26",
       "location": "Beitun District, Taichung",
-      "workout_time_min": 40,
+      "workout_time_min": 40.0,
       "elapsed_time_min": 41.8,
       "distance_mi": 2.35,
       "active_calories": 175,
@@ -4097,7 +4181,7 @@
       "end_time": "06:32",
       "location": "Beitun District, Taichung",
       "workout_time_min": 45.58,
-      "elapsed_time_min": 46,
+      "elapsed_time_min": 46.0,
       "distance_mi": 2.68,
       "active_calories": 225,
       "total_calories": 298,
@@ -4139,7 +4223,7 @@
       "end_time": "08:27",
       "location": "Beitun District, Taichung",
       "workout_time_min": 31.17,
-      "elapsed_time_min": 32,
+      "elapsed_time_min": 32.0,
       "distance_mi": 1.26,
       "active_calories": 123,
       "total_calories": 172,
@@ -11144,7 +11228,7 @@
     "goal_summary": {
       "as_of": "2026-04-24",
       "goal_weight_lbs": 159,
-      "goal_bf_pct": 13,
+      "goal_bf_pct": 13.0,
       "goal_vat_g": 285,
       "goal_date": "2026-08-01",
       "weeks_remaining": 14.1,
@@ -11154,7 +11238,7 @@
       "current_bf_pct_est": 17.5,
       "current_vat_g_est": 447,
       "fat_to_lose_lbs": 7.3,
-      "lean_to_gain_lbs": 2,
+      "lean_to_gain_lbs": 2.0,
       "calorie_target_kcal": 2150,
       "protein_target_g": 150,
       "carb_target_g": 210,
@@ -11166,7 +11250,7 @@
     "progress_note": "Week 2 is on track: Mon Push + Landmine Power ✅, Wed Pull + Posterior Chain ✅. Friday completes the week. Recovery bounced from 29% → 83% in 24 hours — that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms — the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
     "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like — not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
   },
-  "last_updated": "2026-04-24T09:30:00+08:00",
+  "last_updated": "2026-04-25T11:25:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -11217,17 +11301,6 @@
         "migraine_headache": true,
         "poor_sleep": true,
         "high_fatigue": true,
-        "joint_pain": false,
-        "high_stress": false
-      }
-    },
-    {
-      "date": "2026-04-24",
-      "timestamp": "2026-04-24T07:29:17.430Z",
-      "flags": {
-        "migraine_headache": false,
-        "poor_sleep": false,
-        "high_fatigue": false,
         "joint_pain": false,
         "high_stress": false
       }
@@ -11559,9 +11632,9 @@
           "time": null,
           "source": "Cal AI",
           "kcal": 326,
-          "protein_g": 43,
-          "carbs_g": 12,
-          "fat_g": 11
+          "protein_g": 43.0,
+          "carbs_g": 12.0,
+          "fat_g": 11.0
         },
         {
           "meal_name": "Grilled Chicken Breast Pieces",
@@ -11578,8 +11651,8 @@
           "source": "Manual / Photo",
           "serving": "3/4 cup",
           "kcal": 154,
-          "protein_g": 3,
-          "carbs_g": 33,
+          "protein_g": 3.0,
+          "carbs_g": 33.0,
           "fat_g": 0.33
         }
       ],
@@ -11664,25 +11737,25 @@
           "kcal": 133.5,
           "protein_g": 1.5,
           "carbs_g": 6.75,
-          "fat_g": 12
+          "fat_g": 12.0
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129,
-          "protein_g": 6,
-          "carbs_g": 0,
-          "fat_g": 11
+          "kcal": 129.0,
+          "protein_g": 6.0,
+          "carbs_g": 0.0,
+          "fat_g": 11.0
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129,
-          "protein_g": 6,
-          "carbs_g": 0,
-          "fat_g": 11
+          "kcal": 129.0,
+          "protein_g": 6.0,
+          "carbs_g": 0.0,
+          "fat_g": 11.0
         },
         {
           "meal_name": "Breakfast Sausage Patties with Chives",
@@ -11691,7 +11764,7 @@
           "kcal": 113.04,
           "protein_g": 11.5,
           "carbs_g": 0.01,
-          "fat_g": 7
+          "fat_g": 7.0
         },
         {
           "meal_name": "Tomato Vegetable Soup",
@@ -12376,6 +12449,30 @@
         ]
       },
       "notes": "Compromised readiness day (47%). SpO2 below normal at 94.8%. Woke at 3:50 AM with 3h8m sleep bank deficit. Executed push/landmine session 7:21 AM. Morning Z2 walk completed separately. Session ran 81 min, slightly over target window."
+    },
+    "2026-04-25": {
+      "date": "2026-04-25",
+      "day_of_week": "Saturday",
+      "recovery": {
+        "recovery_pct": 65,
+        "hrv_ms": 39.9,
+        "rhr_bpm": 61.1,
+        "sleep_hours": 8.08,
+        "sleep_score_pct": 75,
+        "source": "Bevel",
+        "oura_readiness": 84,
+        "oura_sleep": 76
+      },
+      "planned_activity": "Rest + weekly review + sprint block gate check",
+      "sprint_gate": "OPEN — HRV 39.9ms > 35ms. Sprint block authorized for Sunday Apr 26.",
+      "weekly_review": "Written Apr 25 — see WEEKLY_REVIEWS.md",
+      "notes": "Rest day. Weekly review completed. Data ingested from 28 screenshots (Bevel, Oura, Ocare3, Hume Pod). Sprint gate open for tomorrow. Key flags: dehydration (body water low on both scales), nutrition blackout all week, time cap violations all 3 sessions."
+    },
+    "2026-04-26": {
+      "date": "2026-04-26",
+      "day_of_week": "Sunday",
+      "planned_activity": "rest",
+      "notes": "Planned rest day. No training."
     }
   }
 }
