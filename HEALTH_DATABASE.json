@@ -2,8 +2,8 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-25T11:45:00+08:00",
-    "description": "Personal health and training database \u2014 Todd Blackhurst AI coaching system",
+    "last_updated": "2026-04-27T04:40:00+08:00",
+    "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
       "Bevel",
@@ -14,7 +14,7 @@
       "Manual Entry"
     ],
     "unit_conventions": {
-      "weight": "kg (convert lbs \u00f7 2.2046)",
+      "weight": "kg (convert lbs ÷ 2.2046)",
       "volume": "kg total lifted",
       "distance": "km",
       "duration": "minutes",
@@ -47,7 +47,7 @@
     "goals": [
       "reduce VAT to <300g (from 447g Feb DXA)",
       "reach 159 lbs at 13% BF by August 1, 2026",
-      "gain 2 lbs lean mass (trunk priority \u2014 currently rated LOW)",
+      "gain 2 lbs lean mass (trunk priority — currently rated LOW)",
       "improve sleep quality and duration",
       "correct structural imbalances",
       "V-taper development"
@@ -62,7 +62,7 @@
       "avg_bedtime": "21:23",
       "avg_wake_time": "05:44",
       "avg_sleep_per_night_min": 385,
-      "notes": "Oura Biology personal baselines. VO2 Max 38.9 (Below Average \u2014 cardio fitness improvement goal). HRV baseline 32.5 ms (any reading below this signals recovery deficit). Avg sleep 6h 25m/night \u2014 chronic mild sleep debt."
+      "notes": "Oura Biology personal baselines. VO2 Max 38.9 (Below Average — cardio fitness improvement goal). HRV baseline 32.5 ms (any reading below this signals recovery deficit). Avg sleep 6h 25m/night — chronic mild sleep debt."
     },
     "medications": {
       "as_of": "2026-04-17",
@@ -77,7 +77,7 @@
           "name": "Osteo Biflex Triple Strength (glucosamine/chondroitin/MSM)",
           "dose": "standard",
           "timing": "morning + evening",
-          "purpose": "joint support \u2014 hip OA"
+          "purpose": "joint support — hip OA"
         },
         {
           "name": "B-Complex",
@@ -89,7 +89,7 @@
           "name": "Relvar inhaler (fluticasone furoate + vilanterol)",
           "dose": "standard",
           "timing": "morning",
-          "purpose": "respiratory \u2014 likely asthma"
+          "purpose": "respiratory — likely asthma"
         },
         {
           "name": "Fluticasone nasal spray",
@@ -131,12 +131,12 @@
         }
       ],
       "coaching_flags": [
-        "Topiramate may reduce heat tolerance \u2014 monitor during warm-weather or high-HR sessions",
+        "Topiramate may reduce heat tolerance — monitor during warm-weather or high-HR sessions",
         "Pitavastatin: watch for disproportionate muscle soreness/fatigue not explained by training load",
-        "Berberine before lunch and dinner \u2014 avoid scheduling training immediately post-dose to prevent glucose dip",
+        "Berberine before lunch and dinner — avoid scheduling training immediately post-dose to prevent glucose dip",
         "Morning strength sessions avoid Berberine conflict entirely",
-        "Magnesium glycinate supports sleep \u2014 do not adjust or question timing",
-        "Migraine day = mandatory rest or significant session downgrade \u2014 no exceptions"
+        "Magnesium glycinate supports sleep — do not adjust or question timing",
+        "Migraine day = mandatory rest or significant session downgrade — no exceptions"
       ]
     },
     "nutrition_targets": {
@@ -152,7 +152,7 @@
       "lean_mass_kg_basis": 57.1,
       "goal_weight_lbs": 159,
       "current_weight_lbs": 173.4,
-      "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes \u00b13 kg or training frequency shifts."
+      "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
     "goal_bf_pct": 13.0,
@@ -182,7 +182,7 @@
       "hume_left_arm_lbs": 7.9,
       "hume_right_leg_lbs": 25.3,
       "hume_left_leg_lbs": 24.0,
-      "notes": "Weight stable (last week avg 164.9). Lean body mass % +0.6 week over week. Visceral fat at top of ideal range (Lv 3.0, ideal 1.0-3.0) \u2014 primary training target. Trunk muscle flagged Low by Hume \u2014 consistent with structural correction priorities. Metabolic age 42 = 15 yrs below calendar age. Bioimpedance BF% (17.3% Ocare3 / 10.8% Hume) directional only \u2014 DXA Feb 23 authoritative at 18.5%."
+      "notes": "Weight stable (last week avg 164.9). Lean body mass % +0.6 week over week. Visceral fat at top of ideal range (Lv 3.0, ideal 1.0-3.0) — primary training target. Trunk muscle flagged Low by Hume — consistent with structural correction priorities. Metabolic age 42 = 15 yrs below calendar age. Bioimpedance BF% (17.3% Ocare3 / 10.8% Hume) directional only — DXA Feb 23 authoritative at 18.5%."
     },
     {
       "date": "2025-11-05",
@@ -202,7 +202,7 @@
       "body_water_pct": null,
       "bone_mass_kg": null,
       "segmental": null,
-      "notes": "Baseline from Bevel 30-day Progress Report (Nov 5 \u2013 Nov 24)"
+      "notes": "Baseline from Bevel 30-day Progress Report (Nov 5 – Nov 24)"
     },
     {
       "date": "2025-11-24",
@@ -222,7 +222,7 @@
       "body_water_pct": null,
       "bone_mass_kg": null,
       "segmental": null,
-      "notes": "End-point from Bevel 30-day Progress Report \u2014 marked as Low on fat distribution"
+      "notes": "End-point from Bevel 30-day Progress Report — marked as Low on fat distribution"
     },
     {
       "date": "2026-04-06",
@@ -307,7 +307,7 @@
           "rating": "Standard"
         }
       },
-      "notes": "Hume Body Pod full scan, updated Apr 10. Air-displacement plethysmography (higher BF% than BIA/Bevel). Trunk muscle Low \u2014 core/anti-rotation priority confirmed. Bilateral arm fat High. Goal weight 165 lbs."
+      "notes": "Hume Body Pod full scan, updated Apr 10. Air-displacement plethysmography (higher BF% than BIA/Bevel). Trunk muscle Low — core/anti-rotation priority confirmed. Bilateral arm fat High. Goal weight 165 lbs."
     },
     {
       "date": "2026-04-11",
@@ -327,7 +327,7 @@
       "bone_mass_lbs": 7.7,
       "bone_mass_kg": 3.5,
       "muscle_pct": 78.1,
-      "notes": "Bevel morning scan Apr 11, 4:29 AM. Weight stable at 166.0 lbs. Body fat 17.4% \u2014 excellent control. Lean mass 137.1 lbs (78.1% muscle) \u2014 preserved well. Visceral fat Lv 3.0 indicates modest VAT. BMR 1779 kcal baseline for deficit calculations."
+      "notes": "Bevel morning scan Apr 11, 4:29 AM. Weight stable at 166.0 lbs. Body fat 17.4% — excellent control. Lean mass 137.1 lbs (78.1% muscle) — preserved well. Visceral fat Lv 3.0 indicates modest VAT. BMR 1779 kcal baseline for deficit calculations."
     },
     {
       "date": "2026-04-12",
@@ -347,7 +347,7 @@
       "bone_mass_lbs": 7.7,
       "bone_mass_kg": 3.5,
       "muscle_pct": 79.1,
-      "notes": "Bevel morning scan Apr 12, 6:47 AM. Weight 165.8 lbs \u2014 down 0.2 lbs from Apr 11. BF 16.3% stable. Lean mass 138.8 lbs (79.1%). Visceral Fat Lv 2.0 (down from 3.0 on Apr 11 \u2014 positive signal). BMR 1779 kcal consistent. Trending toward 165 lb goal."
+      "notes": "Bevel morning scan Apr 12, 6:47 AM. Weight 165.8 lbs — down 0.2 lbs from Apr 11. BF 16.3% stable. Lean mass 138.8 lbs (79.1%). Visceral Fat Lv 2.0 (down from 3.0 on Apr 11 — positive signal). BMR 1779 kcal consistent. Trending toward 165 lb goal."
     },
     {
       "date": "2026-04-12",
@@ -358,7 +358,7 @@
       "bmi": 22,
       "body_fat_pct": 10.2,
       "body_fat_rating": "Very Low",
-      "body_fat_note": "BIA underestimate \u2014 not reliable for body fat tracking; use Bevel and Hume ADP pod scan as primary reference",
+      "body_fat_note": "BIA underestimate — not reliable for body fat tracking; use Bevel and Hume ADP pod scan as primary reference",
       "metabolic_age_yrs": 42,
       "metabolic_age_rating": "Excellent",
       "health_score": 673,
@@ -388,7 +388,7 @@
           "rating": "Standard"
         }
       },
-      "notes": "Hume Pod BIA daily scale Apr 12, 6:51 AM. Weight 166.8 lbs. Metabolic Age 42 yrs (Excellent). Health Score 673. Trunk muscle Low (consistent with ADP scan Apr 10). BF 10.2% is a BIA artifact \u2014 ADP scan (Apr 10) measured 22.0%. Segmental swings vs Apr 10 are hydration-driven, not real muscle change. Trunk Low rating structurally persistent."
+      "notes": "Hume Pod BIA daily scale Apr 12, 6:51 AM. Weight 166.8 lbs. Metabolic Age 42 yrs (Excellent). Health Score 673. Trunk muscle Low (consistent with ADP scan Apr 10). BF 10.2% is a BIA artifact — ADP scan (Apr 10) measured 22.0%. Segmental swings vs Apr 10 are hydration-driven, not real muscle change. Trunk Low rating structurally persistent."
     },
     {
       "date": "2026-04-13",
@@ -403,7 +403,7 @@
       "body_water_pct": 58.6,
       "bone_mass_lbs": 7.7,
       "muscle_pct": 79.6,
-      "notes": "Ocare3 BIA scan Apr 13, 06:11 AM. Weight 165.6 lbs \u2014 essentially AT goal weight (165 lbs). BF 15.7% (BIA \u2014 use Bevel/Hume ADP as primary reference). Muscle 79.6%, Visceral Fat Lv 2.0 stable. BMR 1778 kcal consistent. Last week avg 165.6, max 166.0, min 164.9 \u2014 trend holding at goal range."
+      "notes": "Ocare3 BIA scan Apr 13, 06:11 AM. Weight 165.6 lbs — essentially AT goal weight (165 lbs). BF 15.7% (BIA — use Bevel/Hume ADP as primary reference). Muscle 79.6%, Visceral Fat Lv 2.0 stable. BMR 1778 kcal consistent. Last week avg 165.6, max 166.0, min 164.9 — trend holding at goal range."
     },
     {
       "date": "2026-04-13",
@@ -414,7 +414,7 @@
       "weekly_avg_lbs": 165.6,
       "weekly_max_lbs": 166,
       "weekly_min_lbs": 164.9,
-      "notes": "Hume Pod daily Apr 13, 6:43 AM. Weight 166.8 lbs. Weekly avg 165.6 lbs \u2014 within 1 lb of 165 lb goal. Health Score 673 High, Biological Age 30 yrs (vs chronological 57). Steps 5,230 by 6:43 AM, Active Cal 261 (day ongoing). BF% from BIA not reliable \u2014 use ADP scan Apr 10 (22.0%) as reference."
+      "notes": "Hume Pod daily Apr 13, 6:43 AM. Weight 166.8 lbs. Weekly avg 165.6 lbs — within 1 lb of 165 lb goal. Health Score 673 High, Biological Age 30 yrs (vs chronological 57). Steps 5,230 by 6:43 AM, Active Cal 261 (day ongoing). BF% from BIA not reliable — use ADP scan Apr 10 (22.0%) as reference."
     },
     {
       "date": "2026-04-14",
@@ -446,19 +446,19 @@
       "weekly_avg_lbs": 164.7,
       "weekly_max_lbs": 166,
       "weekly_min_lbs": 160.7,
-      "notes": "Ocare3 BIA scale Apr 16, 06:09 AM. Weight 165.3 lbs \u2014 at goal (165 lbs). BF 17.0% (BIA \u2014 use Bevel/Hume ADP as primary reference). Visceral Fat Lv 3.0 stable. BMR 1776 kcal consistent. Last week avg 164.7 lbs, range 160.7\u2013166.0 \u2014 high variance week (88-min session Apr 15 likely drove water retention). Body water 56.7% slightly below typical."
+      "notes": "Ocare3 BIA scale Apr 16, 06:09 AM. Weight 165.3 lbs — at goal (165 lbs). BF 17.0% (BIA — use Bevel/Hume ADP as primary reference). Visceral Fat Lv 3.0 stable. BMR 1776 kcal consistent. Last week avg 164.7 lbs, range 160.7–166.0 — high variance week (88-min session Apr 15 likely drove water retention). Body water 56.7% slightly below typical."
     },
     {
       "date": "2026-04-16",
       "time": "06:40",
-      "source": "Hume Pod (BIA daily scale) \u2014 Primary",
+      "source": "Hume Pod (BIA daily scale) — Primary",
       "weight_lbs": 166.2,
       "weight_kg": 75.4,
       "bmi": 22,
       "body_fat_pct": 10.5,
       "body_fat_mass_lbs": 17.4,
       "body_fat_rating": "Very Low",
-      "body_fat_note": "BIA reading \u2014 use Hume ADP pod scan as primary fat reference. BF likely ~22% per ADP (Apr 10 reference).",
+      "body_fat_note": "BIA reading — use Hume ADP pod scan as primary fat reference. BF likely ~22% per ADP (Apr 10 reference).",
       "lean_mass_lbs": 140.5,
       "lean_mass_pct": 84.5,
       "lean_mass_rating": "Standard",
@@ -513,10 +513,10 @@
         "arm_dominant_side": "Right",
         "leg_delta_lbs": 1.1,
         "leg_dominant_side": "Right",
-        "trunk_rating": "Low \u2014 persistent structural finding"
+        "trunk_rating": "Low — persistent structural finding"
       },
       "weekly_targets_met": "4/4",
-      "notes": "Hume Pod BIA daily scale Apr 16, 6:40 AM. Weight 166.2 lbs \u2014 1.2 lbs above goal. Health Score 670 (was 673 on Apr 12 \u2014 small drop, within normal variance). Biological Age 30 (27 years younger than 57). Body Comp grade C+ \u2014 muscle balance flagged again. Trunk muscle 65.9 lbs (Low) \u2014 persistent. Right-side dominance confirmed: R-Arm 8.1 vs L-Arm 7.9 (+0.2 lbs), R-Leg 25.3 vs L-Leg 24.2 (+1.1 lbs). Body water 37.6% Low \u2014 dehydration flag, post-heavy-session yesterday. BF 10.5% BIA artifact \u2014 not reliable; use ADP Apr 10 (22.0%) as reference."
+      "notes": "Hume Pod BIA daily scale Apr 16, 6:40 AM. Weight 166.2 lbs — 1.2 lbs above goal. Health Score 670 (was 673 on Apr 12 — small drop, within normal variance). Biological Age 30 (27 years younger than 57). Body Comp grade C+ — muscle balance flagged again. Trunk muscle 65.9 lbs (Low) — persistent. Right-side dominance confirmed: R-Arm 8.1 vs L-Arm 7.9 (+0.2 lbs), R-Leg 25.3 vs L-Leg 24.2 (+1.1 lbs). Body water 37.6% Low — dehydration flag, post-heavy-session yesterday. BF 10.5% BIA artifact — not reliable; use ADP Apr 10 (22.0%) as reference."
     },
     {
       "date": "2026-04-17",
@@ -524,10 +524,10 @@
       "source_primary": "Hume Pod BIA",
       "source_secondary": "Ocare3 BIA",
       "weight_lbs": 165.6,
-      "weight_note": "Weighed 6:33 AM \u2014 Hume flagged not optimal (recommended 5:03 AM). Trend reading only.",
+      "weight_note": "Weighed 6:33 AM — Hume flagged not optimal (recommended 5:03 AM). Trend reading only.",
       "body_fat_pct_hume": 10.6,
       "body_fat_pct_ocare3": 17.6,
-      "body_fat_note": "BIA only \u2014 both devices BIA. Hume sectional 10.6% vs Ocare3 whole-body 17.6%. Trend tracking only.",
+      "body_fat_note": "BIA only — both devices BIA. Hume sectional 10.6% vs Ocare3 whole-body 17.6%. Trend tracking only.",
       "lean_mass_lbs": 136.5,
       "lean_mass_method": "Ocare3 BF% calc",
       "skeletal_muscle_mass_lbs_hume": 94.9,
@@ -559,9 +559,9 @@
       "bmi": 21.9,
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
-      "body_fat_source": "BIA \u2014 unreliable. Primary reference: DXA Feb 23 = 18.5%",
+      "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
       "visceral_fat_level": 3.0,
-      "visceral_fat_note": "BIA scale Lv 3.0 \u2014 directional only",
+      "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
       "bone_mass_lbs": 7.7,
@@ -574,7 +574,7 @@
       "last_week_max_lbs": 165.8,
       "last_week_min_lbs": 160.7,
       "goal_weight_lbs": 159,
-      "notes": "Weight 165.3 lbs (Ocare3 5:49 AM) / 166.2 lbs (Hume Pod). Goal weight 165 lbs \u2014 essentially at target. Weekly average 164.8 lbs. Metabolic age 42 yrs (Excellent) at chronological age 57. Hume Health Score 670 High. All BIA readings secondary \u2014 DXA Feb 23 primary for body fat/VAT coaching."
+      "notes": "Weight 165.3 lbs (Ocare3 5:49 AM) / 166.2 lbs (Hume Pod). Goal weight 165 lbs — essentially at target. Weekly average 164.8 lbs. Metabolic age 42 yrs (Excellent) at chronological age 57. Hume Health Score 670 High. All BIA readings secondary — DXA Feb 23 primary for body fat/VAT coaching."
     },
     {
       "date": "2026-04-19",
@@ -586,9 +586,9 @@
       "bmi": 21.6,
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
-      "body_fat_source": "BIA \u2014 unreliable. Primary reference: DXA Feb 23 = 18.5%",
+      "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
       "visceral_fat_level": 2.0,
-      "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) \u2014 directional only",
+      "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
       "bone_mass_lbs": 7.5,
@@ -609,7 +609,7 @@
       "last_week_max_lbs": 165.8,
       "last_week_min_lbs": 160.7,
       "goal_weight_lbs": 159,
-      "notes": "Weight 163.1 lbs (Ocare3 6:32 AM) / 164.4 lbs (Hume Pod 6:34 AM). Down 2.2 lbs from yesterday (165.3). Weekly average 164.6 lbs. Visceral fat Lv 2.0 (down from 3.0 yesterday \u2014 BIA directional only). Arms now symmetric: R 7.9 / L 7.9 lbs. Trunk 65.6 lbs (Low \u2014 ongoing focus). Leg asymmetry R 25.2 / L 23.9 lbs. Metabolic age 42 yrs (Excellent). Hume Health Score 670 High."
+      "notes": "Weight 163.1 lbs (Ocare3 6:32 AM) / 164.4 lbs (Hume Pod 6:34 AM). Down 2.2 lbs from yesterday (165.3). Weekly average 164.6 lbs. Visceral fat Lv 2.0 (down from 3.0 yesterday — BIA directional only). Arms now symmetric: R 7.9 / L 7.9 lbs. Trunk 65.6 lbs (Low — ongoing focus). Leg asymmetry R 25.2 / L 23.9 lbs. Metabolic age 42 yrs (Excellent). Hume Health Score 670 High."
     },
     {
       "date": "2026-04-20",
@@ -633,7 +633,7 @@
         "left_leg_lbs": 23.8,
         "left_leg_status": "Standard"
       },
-      "note": "BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
+      "note": "BIA measurement — not used for body comp coaching per DXA-only protocol"
     },
     {
       "date": "2026-04-20",
@@ -650,7 +650,7 @@
       "weekly_avg_lbs": 164.5,
       "weekly_max_lbs": 165.6,
       "weekly_min_lbs": 160.7,
-      "note": "BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
+      "note": "BIA measurement — not used for body comp coaching per DXA-only protocol"
     },
     {
       "date": "2026-04-22",
@@ -667,7 +667,7 @@
       "weekly_avg_lbs": 164.8,
       "weekly_max_lbs": 165.6,
       "weekly_min_lbs": 163.1,
-      "note": "BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
+      "note": "BIA measurement — not used for body comp coaching per DXA-only protocol"
     },
     {
       "date": "2026-04-22",
@@ -696,12 +696,12 @@
         "right_leg_pct": 4.1,
         "left_leg_pct": 4.1
       },
-      "note": "Hume BIA measurement \u2014 not used for body comp coaching per DXA-only protocol"
+      "note": "Hume BIA measurement — not used for body comp coaching per DXA-only protocol"
     },
     {
       "date": "2026-04-24",
       "source": "Hume Body Pod",
-      "note": "BF%/VAT not used for coaching \u2014 DXA only. Weight and muscle segmentation logged for reference.",
+      "note": "BF%/VAT not used for coaching — DXA only. Weight and muscle segmentation logged for reference.",
       "weight_lbs": 166.8,
       "metabolic_age_yrs": 42,
       "muscle_mass_segments": {
@@ -762,10 +762,10 @@
       "hume_bmi": 22,
       "ocare_muscle_pct": 77.6,
       "ocare_bmr_kcal": 1779,
-      "notes": "Ocare3 weekly trend (Apr 19-25): weight 163.1\u2192166.0 lbs (net +2.9 lbs, low was dehydration), BF% 16.6\u219217.8%, VF Level 2.0\u21923.0, Muscle% 78.8\u219277.6%, BMR 1766\u21921779 kcal, Body Water 56.8\u219255.6% (dehydration trending). Hume Pod (Apr 25 ~11am - not optimal weigh-in time): weight 166.8 lbs, lean 140.2 lbs, skeletal muscle 94.8 lbs Standard (slight \u2193), VFI 4 Low (\u2193), body water 44% Low (dehydration confirmed), health score 683 High, metabolic age 42 (Excellent, 15 years younger than 57). Goal weight 159 lbs \u2014 7.8 lbs to go.",
+      "notes": "Ocare3 weekly trend (Apr 19-25): weight 163.1→166.0 lbs (net +2.9 lbs, low was dehydration), BF% 16.6→17.8%, VF Level 2.0→3.0, Muscle% 78.8→77.6%, BMR 1766→1779 kcal, Body Water 56.8→55.6% (dehydration trending). Hume Pod (Apr 25 ~11am - not optimal weigh-in time): weight 166.8 lbs, lean 140.2 lbs, skeletal muscle 94.8 lbs Standard (slight ↓), VFI 4 Low (↓), body water 44% Low (dehydration confirmed), health score 683 High, metabolic age 42 (Excellent, 15 years younger than 57). Goal weight 159 lbs — 7.8 lbs to go.",
       "ocare_bone_mass_lbs": 7.5,
       "hume_body_fat_pct": 10.8,
-      "hume_body_fat_note": "BIA artifact \u2014 not used for coaching per DXA-only protocol",
+      "hume_body_fat_note": "BIA artifact — not used for coaching per DXA-only protocol",
       "hume_body_fat_mass_lbs": 18.1,
       "hume_lean_mass_pct": 84.1,
       "hume_subcutaneous_fat_lbs": 15.7,
@@ -818,7 +818,7 @@
       "oura_sleep_debt_min": 130,
       "sleep_time": "21:09",
       "wake_time": "04:42",
-      "notes": "Bevel: Significant Recovery Breakthrough \u2014 88% recovery, HRV 51.2ms (+11.3ms above typical range), strong parasympathetic rebound after training week. RHR 58.9 below normal. SpO2 94.7% flagged below normal \u2014 3rd+ consecutive day. Wrist temp 97.5\u00b0F normal. Sleep bank -1h25m improving. HR dip 19% above normal. Oura: Readiness 85 OPTIMAL, Sleep 74 GOOD but score declining warning. HRV avg 66ms / max 138ms \u2014 best in 7+ days. Deep 81m/20% strong. Latency 48m elevated (recurring). Breathing Fair with regularity concerns. Fasted walk already done: 2.16 mi / 38:35 / 92 bpm Zone 2. Sprint gate OPEN."
+      "notes": "Bevel: Significant Recovery Breakthrough — 88% recovery, HRV 51.2ms (+11.3ms above typical range), strong parasympathetic rebound after training week. RHR 58.9 below normal. SpO2 94.7% flagged below normal — 3rd+ consecutive day. Wrist temp 97.5°F normal. Sleep bank -1h25m improving. HR dip 19% above normal. Oura: Readiness 85 OPTIMAL, Sleep 74 GOOD but score declining warning. HRV avg 66ms / max 138ms — best in 7+ days. Deep 81m/20% strong. Latency 48m elevated (recurring). Breathing Fair with regularity concerns. Fasted walk already done: 2.16 mi / 38:35 / 92 bpm Zone 2. Sprint gate OPEN."
     },
     {
       "date": "2026-01-29",
@@ -840,7 +840,7 @@
       "hr_dip_pct": null,
       "sleep_bank_min": null,
       "cardio_load": null,
-      "notes": "Low strain day \u2014 Oura. Productive Sleep Debt Recovery noted. Outdoor cycling session same morning."
+      "notes": "Low strain day — Oura. Productive Sleep Debt Recovery noted. Outdoor cycling session same morning."
     },
     {
       "date": "2026-03-22",
@@ -912,7 +912,7 @@
       "hr_dip_pct": null,
       "sleep_bank_min": null,
       "cardio_load": null,
-      "notes": "Significant HRV Drop \u2014 Recovery crashed to 26% (HRV 19.3 ms, ~20ms below baseline). Despite 1h 6min deep sleep. Sleep started Apr 3 at 10:19 PM. Reduction in training intensity indicated."
+      "notes": "Significant HRV Drop — Recovery crashed to 26% (HRV 19.3 ms, ~20ms below baseline). Despite 1h 6min deep sleep. Sleep started Apr 3 at 10:19 PM. Reduction in training intensity indicated."
     },
     {
       "date": "2026-04-05",
@@ -934,7 +934,7 @@
       "hr_dip_pct": null,
       "sleep_bank_min": null,
       "cardio_load": null,
-      "notes": "Recovery Breakthrough \u2014 HRV surged to 51.4 ms (+52% rebound from Apr 4's 26%). Nervous system adapting well to training. Sleep 5h 50m (started Apr 4 at 10:56 PM). Sleep Score 69 FAIR.",
+      "notes": "Recovery Breakthrough — HRV surged to 51.4 ms (+52% rebound from Apr 4's 26%). Nervous system adapting well to training. Sleep 5h 50m (started Apr 4 at 10:56 PM). Sleep Score 69 FAIR.",
       "wrist_temp_f": 97.3,
       "lowest_hr_bpm": 57,
       "avg_hr_sleep_bpm": 62
@@ -959,7 +959,7 @@
       "hr_dip_pct": 15,
       "sleep_bank_min": -133,
       "cardio_load": null,
-      "notes": "Recovery Slide 41% \u2014 HRV 36.2 ms (Recovery metric), 25 ms avg overnight. HRV/HR spike after Apr 8 high-strain session. Sleep Score 69 FAIR. 5h 28m asleep / 7h 4m in bed (9:21 PM \u2013 4:25 AM). Efficiency 77%. Deep 38m, REM 65m. HR Dip 15%. Debt -2h 13m.",
+      "notes": "Recovery Slide 41% — HRV 36.2 ms (Recovery metric), 25 ms avg overnight. HRV/HR spike after Apr 8 high-strain session. Sleep Score 69 FAIR. 5h 28m asleep / 7h 4m in bed (9:21 PM – 4:25 AM). Efficiency 77%. Deep 38m, REM 65m. HR Dip 15%. Debt -2h 13m.",
       "lowest_hr_bpm": 60,
       "avg_hr_sleep_bpm": 68,
       "hrv_avg_sleep_ms": 25,
@@ -997,13 +997,13 @@
       "autosleep_deep_min": 30,
       "autosleep_sleep_bank_min": -128,
       "autosleep_sleep_time": "21:38",
-      "notes": "Resilience Signal \u2014 steady 57% recovery despite Apr 10 high-strain session. HR dropped 3.1 bpm. Rise: 6h 48m sleep / 8h 13m in bed (9:18 PM \u2013 5:31 AM), Efficiency 83%, Deep 43m, REM 1h 18m, Latency 22m, Restfulness Good, Timing Optimal, Debt -2h 30m Moderate. AutoSleep: 7h 14m total, REM 2h 6m, Deep 30m, Debt -2h 8m, Sleep Time 9:38 PM. HR Dip 14%. Lowest HR 58. HRV avg 26ms / max 151ms. Avg HR 64. SpO2 95.2%."
+      "notes": "Resilience Signal — steady 57% recovery despite Apr 10 high-strain session. HR dropped 3.1 bpm. Rise: 6h 48m sleep / 8h 13m in bed (9:18 PM – 5:31 AM), Efficiency 83%, Deep 43m, REM 1h 18m, Latency 22m, Restfulness Good, Timing Optimal, Debt -2h 30m Moderate. AutoSleep: 7h 14m total, REM 2h 6m, Deep 30m, Debt -2h 8m, Sleep Time 9:38 PM. HR Dip 14%. Lowest HR 58. HRV avg 26ms / max 151ms. Avg HR 64. SpO2 95.2%."
     },
     {
       "date": "2026-04-12",
       "source": "Rise + Oura",
       "recovery_score_pct": 68,
-      "recovery_trend": "Above normal \u2014 Recovery Breakthrough (+12% from 2026-04-11)",
+      "recovery_trend": "Above normal — Recovery Breakthrough (+12% from 2026-04-11)",
       "sleep_score_pct": 62,
       "rise_sleep_score": 70,
       "hrv_ms": 41.7,
@@ -1042,7 +1042,7 @@
       "stress_lowest": 1,
       "oura_energy_pct": 84,
       "strain_score": 0,
-      "notes": "Recovery Breakthrough \u2014 Oura 68% (Above normal, +12% from yesterday). Rise sleep score 70/GOOD. REM above normal at 2h 28m (Oura) / 1h 2m (Rise). HRV 41.7ms above personal baseline of 32.5ms. Sleep short at 6h 15m\u20136h 54m. Moderate sleep debt (~2h 12m). Latency 37m \u2014 attributed to elevated metabolism from prior workout. Restfulness flagged. Respiratory rate slightly below normal (14.1 rpm) \u2014 monitor. SpO2 96.1% normal. Training guidance: Amber-Green, full session OK, HR <122 bpm. | Motra supplement: HRV Stabilizing (7d +1.6ms, 30d -3.8ms), RHR 62.7 bpm Stable, VO2 Max 39.6 Good (+4.9 over 90d), Weight 166.3 lbs (30d high, +0.8 lbs/wk trend). Training status: Amber-Green confirmed.",
+      "notes": "Recovery Breakthrough — Oura 68% (Above normal, +12% from yesterday). Rise sleep score 70/GOOD. REM above normal at 2h 28m (Oura) / 1h 2m (Rise). HRV 41.7ms above personal baseline of 32.5ms. Sleep short at 6h 15m–6h 54m. Moderate sleep debt (~2h 12m). Latency 37m — attributed to elevated metabolism from prior workout. Restfulness flagged. Respiratory rate slightly below normal (14.1 rpm) — monitor. SpO2 96.1% normal. Training guidance: Amber-Green, full session OK, HR <122 bpm. | Motra supplement: HRV Stabilizing (7d +1.6ms, 30d -3.8ms), RHR 62.7 bpm Stable, VO2 Max 39.6 Good (+4.9 over 90d), Weight 166.3 lbs (30d high, +0.8 lbs/wk trend). Training status: Amber-Green confirmed.",
       "motra_hrv_baseline_status": "Stabilizing",
       "motra_hrv_trend_3d_ms": 0.4,
       "motra_hrv_trend_7d_ms": 1.6,
@@ -1059,12 +1059,12 @@
       "motra_vo2max_trend_30d": 3,
       "motra_vo2max_trend_90d": 4.9,
       "motra_weight_lbs": 166.3,
-      "motra_weight_trend": "Increasing \u2014 30-day new high; +0.8 lbs/wk trend; 30-day projection 169.3 lbs",
+      "motra_weight_trend": "Increasing — 30-day new high; +0.8 lbs/wk trend; 30-day projection 169.3 lbs",
       "motra_body_fat_pct": 13.2,
       "motra_body_fat_rating": "Fit",
       "motra_body_fat_30d_avg_pct": 16.3,
       "oura_sleep_score": 70,
-      "oura_sleep_label": "Good \u2014 Counting sheep (37m to fall asleep)",
+      "oura_sleep_label": "Good — Counting sheep (37m to fall asleep)",
       "hrv_ms_oura_avg": 35,
       "hrv_ms_oura_max": 134,
       "resting_hr_bpm_oura_lowest": 56,
@@ -1095,7 +1095,7 @@
       "date": "2026-04-13",
       "source": "Rise + Oura",
       "recovery_score_pct": null,
-      "recovery_trend": "HRV drop after Recovery Breakthrough day \u2014 regression to mean",
+      "recovery_trend": "HRV drop after Recovery Breakthrough day — regression to mean",
       "sleep_score_pct": null,
       "rise_sleep_score": 51,
       "hrv_ms": 20,
@@ -1121,9 +1121,9 @@
       "sleep_timing_rise": "Normal",
       "sleep_timing_oura": "Good",
       "sleep_time": "21:48",
-      "notes": "HRV 20ms \u2014 significant drop from 41.7ms yesterday, well below ~32.5ms baseline. Sleep short at 5h19m (Oura)/5h34m (Rise). Sleep debt accumulating: -4h10m (Oura) / -3h23m (Rise). Positives: deep sleep 59min/18% solid, restfulness Optimal, HR stable. Fasted morning walk already done (5:16 AM, 2.43mi, Zone 0-1, 16% Activity Strain). Training guidance: Amber \u2014 proceed with programmed strength session, HR cap 122 bpm, treat first sets as warm-in, reduce Block C if fatigue surfaces.",
+      "notes": "HRV 20ms — significant drop from 41.7ms yesterday, well below ~32.5ms baseline. Sleep short at 5h19m (Oura)/5h34m (Rise). Sleep debt accumulating: -4h10m (Oura) / -3h23m (Rise). Positives: deep sleep 59min/18% solid, restfulness Optimal, HR stable. Fasted morning walk already done (5:16 AM, 2.43mi, Zone 0-1, 16% Activity Strain). Training guidance: Amber — proceed with programmed strength session, HR cap 122 bpm, treat first sets as warm-in, reduce Block C if fatigue surfaces.",
       "oura_sleep_score": 66,
-      "oura_sleep_label": "Fair \u2014 It's going to be alright (Sleep Score declining)",
+      "oura_sleep_label": "Fair — It's going to be alright (Sleep Score declining)",
       "hrv_ms_oura_avg": 20,
       "hrv_ms_oura_max": 75,
       "resting_hr_bpm_oura_lowest": 56,
@@ -1160,7 +1160,7 @@
       "date": "2026-04-14",
       "source": "Bevel",
       "recovery_score_pct": 44,
-      "recovery_trend": "HRV rebound after rest day \u2014 back above baseline following early 9:01 PM bedtime",
+      "recovery_trend": "HRV rebound after rest day — back above baseline following early 9:01 PM bedtime",
       "hrv_ms": 35.4,
       "resting_hr_bpm": 65,
       "sleep_score_pct": 58,
@@ -1174,10 +1174,10 @@
       "respiratory_rate_rpm": 14.4,
       "spo2_pct": 95.1,
       "wrist_temp_f": 96.9,
-      "wrist_temp_note": "Below normal \u2014 mild flag; possible inflammation or dehydration",
+      "wrist_temp_note": "Below normal — mild flag; possible inflammation or dehydration",
       "stress_avg": 30,
       "stress_highest": 67,
-      "notes": "Bevel April 14 morning. HRV 35.4ms \u2014 rebound from 20ms yesterday, back above 32.5ms baseline. Green readiness tier. Recovery 44% reflects post-strength training adaptation. Sleep 6h43m asleep / 6h59m in bed, efficiency 96% (excellent). Sleep debt reduced from -4h10m to -3h13m \u2014 early bedtime (9:01 PM) made a measurable difference. Wrist temp 96.9\u00b0F below normal \u2014 monitor for dehydration or low-grade inflammation. Morning walk already completed: 5:53\u20136:26 AM, 2.11 mi, 33:28, avg HR 99 bpm.",
+      "notes": "Bevel April 14 morning. HRV 35.4ms — rebound from 20ms yesterday, back above 32.5ms baseline. Green readiness tier. Recovery 44% reflects post-strength training adaptation. Sleep 6h43m asleep / 6h59m in bed, efficiency 96% (excellent). Sleep debt reduced from -4h10m to -3h13m — early bedtime (9:01 PM) made a measurable difference. Wrist temp 96.9°F below normal — monitor for dehydration or low-grade inflammation. Morning walk already completed: 5:53–6:26 AM, 2.11 mi, 33:28, avg HR 99 bpm.",
       "hr_dip_pct": 11,
       "strain_score": 0,
       "bevel_energy_pct": 66,
@@ -1199,7 +1199,7 @@
       "date": "2026-04-15",
       "source": "Bevel + Oura + Rise",
       "recovery_score_pct": 75,
-      "recovery_trend": "Significant Recovery Bounce \u2014 HRV surged from 35.4ms to 51.3ms (+45%), well above 32.5ms baseline. 9:36 PM bedtime drove the gain.",
+      "recovery_trend": "Significant Recovery Bounce — HRV surged from 35.4ms to 51.3ms (+45%), well above 32.5ms baseline. 9:36 PM bedtime drove the gain.",
       "hrv_ms": 51.3,
       "resting_hr_bpm": 61.9,
       "resting_hr_bpm_oura": 59,
@@ -1221,7 +1221,7 @@
       "respiratory_rate_rpm": 14.5,
       "spo2_pct": 96.5,
       "wrist_temp_f": 97.5,
-      "wrist_temp_note": "Normal \u2014 cleared from yesterday's 96.9\u00b0F flag. Pre-bed hydration call worked.",
+      "wrist_temp_note": "Normal — cleared from yesterday's 96.9°F flag. Pre-bed hydration call worked.",
       "hr_dip_pct": 15,
       "stress_highest": 46,
       "stress_lowest": 3,
@@ -1231,10 +1231,10 @@
       "cardio_load_status": "Maintaining",
       "strain_score": 0,
       "readiness_tier": "Green",
-      "readiness_tier_basis": "HRV 51.3ms >> 32.5ms baseline (57% above). Best reading in recent block. Sleep bank -2h52m \u2014 improving from -3h13m.",
-      "notes": "Bevel + Oura April 15 morning scan. HRV 51.3ms \u2014 strongest reading this block. 31% increase from yesterday (35.4ms). Bevel flagged 'Significant Recovery Bounce' and 'Efficiency Breakthrough' (97% sleep efficiency). SpO2 cleared to 96.5% Normal (from 95.1% Apr 14). Wrist temp 97.5\u00b0F normalized. Sleep bank -2h52m (improving from -3h13m). Oura sleep score 79 Good with optimal sleep timing. Two consecutive early bedtimes (9:01 PM \u2192 9:36 PM) drove HRV from 20ms \u2192 35.4ms \u2192 51.3ms \u2014 dose-response confirmed across 3 nights. | Oura Readiness confirmed 76 Good from screenshot (Apr 15 08:51). RHR 59 bpm. HRV balance Fair. Body temp Optimal. Sleep/Sleep balance Good.",
+      "readiness_tier_basis": "HRV 51.3ms >> 32.5ms baseline (57% above). Best reading in recent block. Sleep bank -2h52m — improving from -3h13m.",
+      "notes": "Bevel + Oura April 15 morning scan. HRV 51.3ms — strongest reading this block. 31% increase from yesterday (35.4ms). Bevel flagged 'Significant Recovery Bounce' and 'Efficiency Breakthrough' (97% sleep efficiency). SpO2 cleared to 96.5% Normal (from 95.1% Apr 14). Wrist temp 97.5°F normalized. Sleep bank -2h52m (improving from -3h13m). Oura sleep score 79 Good with optimal sleep timing. Two consecutive early bedtimes (9:01 PM → 9:36 PM) drove HRV from 20ms → 35.4ms → 51.3ms — dose-response confirmed across 3 nights. | Oura Readiness confirmed 76 Good from screenshot (Apr 15 08:51). RHR 59 bpm. HRV balance Fair. Body temp Optimal. Sleep/Sleep balance Good.",
       "oura_readiness_score": 76,
-      "oura_readiness_status": "Good \u2014 On schedule",
+      "oura_readiness_status": "Good — On schedule",
       "hume_strain_pct": 85,
       "hume_recovery_pct": 75,
       "hume_sleep_pct": 66,
@@ -1245,7 +1245,7 @@
       "date": "2026-04-16",
       "source": "Oura (primary) + Hume",
       "recovery_score_pct": 58,
-      "recovery_trend": "Post-Heavy-Session Drop \u2014 HRV fell from 51.3ms (Apr 15) to 38.9ms (Hume) / 44ms avg (Oura) after 88-min session + 154 bpm peak. Still above 35ms watch threshold. Recovery absorbing yesterday's 66% strain load.",
+      "recovery_trend": "Post-Heavy-Session Drop — HRV fell from 51.3ms (Apr 15) to 38.9ms (Hume) / 44ms avg (Oura) after 88-min session + 154 bpm peak. Still above 35ms watch threshold. Recovery absorbing yesterday's 66% strain load.",
       "hrv_ms": 44,
       "hrv_ms_hume": 38.9,
       "hrv_ms_oura_max": 129,
@@ -1264,23 +1264,23 @@
       "light_sleep_pct": 64,
       "awake_min": 75,
       "sleep_bank_min": -230,
-      "sleep_debt_status": "Moderate \u2014 3h 50m",
+      "sleep_debt_status": "Moderate — 3h 50m",
       "sleep_time": "21:02",
       "wake_time": "04:38",
       "sleep_latency_min": 14,
       "spo2_pct": 96,
       "breathing_regularity": "Good",
-      "body_clock_note": "Midpoint 46 min ahead of chronotype \u2014 Optimal timing",
+      "body_clock_note": "Midpoint 46 min ahead of chronotype — Optimal timing",
       "stress_highest": 53,
       "stress_lowest": 2,
       "stress_avg": 26,
       "energy_pct": 77,
       "strain_score": 0,
       "readiness_tier": "Yellow-Green",
-      "readiness_tier_basis": "HRV 38.9ms (Hume) / 44ms avg (Oura) \u2014 above 35ms watch threshold but down from 51.3ms. Oura 75 readiness 'Pace yourself'. Recovery 58% green. Sleep debt 3h50m moderate.",
+      "readiness_tier_basis": "HRV 38.9ms (Hume) / 44ms avg (Oura) — above 35ms watch threshold but down from 51.3ms. Oura 75 readiness 'Pace yourself'. Recovery 58% green. Sleep debt 3h50m moderate.",
       "oura_readiness_score": 75,
-      "oura_readiness_status": "Good \u2014 Pace yourself",
-      "notes": "Oura + Hume April 16 morning scan (4:46 AM). HRV dropped from 51.3ms \u2192 38.9ms (Hume) / 44ms avg (Oura) \u2014 expected post-session response from 88-min strength session + 154 bpm peak. Sleep 6h21m, efficiency 84%, deep sleep 19% (1h12m \u2014 excellent), REM 17% (1h4m). Sleep started ~9:02 PM, ended 4:38 AM. Oura 'Sleep trending \u2014 above average, keep it up.' Sleep debt at 3h50m moderate (up from 2h52m \u2014 training debt adding to sleep debt). Energy 77%, strain 0% (new day). Hume: 'Recovery Within Green Threshold \u2014 body absorbing yesterday\\'s 66% strain.' Oura: 'Resting heart rate lowered late last night \u2014 pace yourself.' RHR 57 bpm (lowest), 63 bpm avg. SpO2 96% stable. Breathing regularity Good. HRV max 129ms during sleep.",
+      "oura_readiness_status": "Good — Pace yourself",
+      "notes": "Oura + Hume April 16 morning scan (4:46 AM). HRV dropped from 51.3ms → 38.9ms (Hume) / 44ms avg (Oura) — expected post-session response from 88-min strength session + 154 bpm peak. Sleep 6h21m, efficiency 84%, deep sleep 19% (1h12m — excellent), REM 17% (1h4m). Sleep started ~9:02 PM, ended 4:38 AM. Oura 'Sleep trending — above average, keep it up.' Sleep debt at 3h50m moderate (up from 2h52m — training debt adding to sleep debt). Energy 77%, strain 0% (new day). Hume: 'Recovery Within Green Threshold — body absorbing yesterday\\'s 66% strain.' Oura: 'Resting heart rate lowered late last night — pace yourself.' RHR 57 bpm (lowest), 63 bpm avg. SpO2 96% stable. Breathing regularity Good. HRV max 129ms during sleep.",
       "hume_strain_pct": 43,
       "hume_recovery_pct": 57,
       "hume_sleep_pct": 59,
@@ -1291,7 +1291,7 @@
       "date": "2026-04-17",
       "source": "Hume + Oura",
       "recovery_score_pct": 47,
-      "recovery_trend": "Post-Double-Session Drop \u2014 HRV 3rd consecutive decline: 51.3ms (Apr 15) \u2192 38.9ms (Apr 16) \u2192 31.0ms (Apr 17). Now at/below personal baseline of 32.5ms. Sleep quality excellent (Oura 86 OPTIMAL, 7h27m) absorbing the load.",
+      "recovery_trend": "Post-Double-Session Drop — HRV 3rd consecutive decline: 51.3ms (Apr 15) → 38.9ms (Apr 16) → 31.0ms (Apr 17). Now at/below personal baseline of 32.5ms. Sleep quality excellent (Oura 86 OPTIMAL, 7h27m) absorbing the load.",
       "hrv_ms": 31,
       "hrv_ms_hume": 31,
       "hrv_ms_oura_avg": 33,
@@ -1316,7 +1316,7 @@
       "light_sleep_pct": 61,
       "awake_min": 58,
       "sleep_bank_min": -160,
-      "sleep_debt_status": "Moderate \u2014 2h 40m (Oura) / -1h 39m (Hume)",
+      "sleep_debt_status": "Moderate — 2h 40m (Oura) / -1h 39m (Hume)",
       "sleep_time": "20:34",
       "wake_time": "04:59",
       "sleep_latency_min": 6,
@@ -1334,10 +1334,10 @@
       "cardio_load": 29,
       "cardio_load_status": "Maintaining",
       "readiness_tier": "Yellow",
-      "readiness_tier_basis": "HRV 31.0ms (Hume) / 33ms (Oura) \u2014 at/below personal baseline of 32.5ms. 3-day declining trend from double-session loading. Recovery 47%. Partially offset by Oura readiness 79 and excellent sleep quality.",
+      "readiness_tier_basis": "HRV 31.0ms (Hume) / 33ms (Oura) — at/below personal baseline of 32.5ms. 3-day declining trend from double-session loading. Recovery 47%. Partially offset by Oura readiness 79 and excellent sleep quality.",
       "oura_readiness_score": 79,
-      "oura_readiness_status": "Good \u2014 Do what feels good",
-      "notes": "Hume + Oura April 17 morning (5:03 AM). HRV 3rd consecutive drop: 51.3 \u2192 38.9 \u2192 31.0ms (Hume) / 33ms avg (Oura). Now at/below 32.5ms personal baseline. Hume flagged 'yesterday's double-session' as cause. Sleep was the counter: Oura 86 OPTIMAL, 7h27m asleep (8h25m in bed), efficiency 89%. Deep sleep 1h13m/16%, REM 1h41m/23% \u2014 both solid. Hume: sleep 72%, 7h48m, REM above normal 2h23m. Sleep debt improving: -2h40m moderate (Oura, down from -3h50m). Sleep window 8:34 PM \u2192 4:59 AM. SpO2 94.9% normal. Breathing Good. Wrist temp 97.6\u00b0F normal. Stress avg 28. Cardio Load 29 Maintaining. Friday Athletic Mixed session is on \u2014 strict 60-min cap, HR <122 bpm. Saturday sprint gate: HRV 31ms below 35ms threshold \u2014 reduce to 3\u00d720 sec tomorrow unless HRV rebounds.",
+      "oura_readiness_status": "Good — Do what feels good",
+      "notes": "Hume + Oura April 17 morning (5:03 AM). HRV 3rd consecutive drop: 51.3 → 38.9 → 31.0ms (Hume) / 33ms avg (Oura). Now at/below 32.5ms personal baseline. Hume flagged 'yesterday's double-session' as cause. Sleep was the counter: Oura 86 OPTIMAL, 7h27m asleep (8h25m in bed), efficiency 89%. Deep sleep 1h13m/16%, REM 1h41m/23% — both solid. Hume: sleep 72%, 7h48m, REM above normal 2h23m. Sleep debt improving: -2h40m moderate (Oura, down from -3h50m). Sleep window 8:34 PM → 4:59 AM. SpO2 94.9% normal. Breathing Good. Wrist temp 97.6°F normal. Stress avg 28. Cardio Load 29 Maintaining. Friday Athletic Mixed session is on — strict 60-min cap, HR <122 bpm. Saturday sprint gate: HRV 31ms below 35ms threshold — reduce to 3×20 sec tomorrow unless HRV rebounds.",
       "hume_strain_pct": 49,
       "hume_recovery_pct": 46,
       "hume_sleep_pct": 72,
@@ -1348,7 +1348,7 @@
       "date": "2026-04-18",
       "source": "Hume + Oura",
       "recovery_score_pct": 52,
-      "recovery_trend": "4th consecutive HRV decline decelerating: 51.3ms (Apr 15) \u2192 38.9ms (Apr 16) \u2192 31.0ms (Apr 17) \u2192 29.1ms (Apr 18). Rate slowing sharply (\u22121.9ms vs \u22127.9ms prior night). Classic bottom-forming pattern post-load. Recovery 52% back to Normal range.",
+      "recovery_trend": "4th consecutive HRV decline decelerating: 51.3ms (Apr 15) → 38.9ms (Apr 16) → 31.0ms (Apr 17) → 29.1ms (Apr 18). Rate slowing sharply (−1.9ms vs −7.9ms prior night). Classic bottom-forming pattern post-load. Recovery 52% back to Normal range.",
       "hrv_ms": 29.1,
       "hrv_ms_hume": 29.1,
       "hrv_ms_oura_avg": 26,
@@ -1379,7 +1379,7 @@
       "awake_min": 57,
       "sleep_latency_min": 18,
       "sleep_bank_min": -149,
-      "sleep_debt_status": "Moderate \u2014 2h 29m (Hume) / 3h 20m (Oura)",
+      "sleep_debt_status": "Moderate — 2h 29m (Hume) / 3h 20m (Oura)",
       "sleep_time": "21:37",
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
@@ -1397,9 +1397,9 @@
       "cardio_load": 27,
       "cardio_load_status": "Maintaining",
       "readiness_tier": "Yellow",
-      "readiness_tier_basis": "HRV 29.1ms (Hume) / 26ms avg (Oura) \u2014 4th consecutive decline, now 3.4ms below personal baseline of 32.5ms. Sprint gate CLOSED (need \u226535ms). Recovery 52% Normal range (up from 47%). Oura sleep 83 GOOD, 6h9m, 87% efficiency.",
-      "sprint_gate_status": "CLOSED \u2014 HRV 29.1ms below 35ms gate",
-      "notes": "Hume + Oura Apr 18 morning (~5:42-5:43 AM). HRV 4th consecutive decline: 51.3\u219238.9\u219231.0\u219229.1ms (Hume) / 26ms avg (Oura). Rate slowing sharply. Recovery 52% Normal (up from 47%). Oura: 83 GOOD, 6h9m asleep, 7h6m in bed, eff 87%, deep 51m/14%, REM 1h35m/26%, light 3h43m/60%, awake 57m, latency 18m. Oura HR: lowest 54bpm / avg 60bpm. HRV avg 26ms / max 114ms. SpO2 96%, Breathing Good, sleep time 9:37pm, wake 4:43am. Hume: recovery 52%, HRV 29.1ms, RHR 59.8bpm, RR 14.0rpm, SpO2 96.1%, wrist 97.1F, sleep 55%/6h12m, sleep bank -2h29m, deep 25m, REM 1h38m, HR dip 18% above normal, sleep time 9:56pm. Strain 17%, Cardio Load 27 Maintaining. Saturday sprint session: GATE CLOSED. Strength session (Motra 20260417 Saturday template) appropriate.",
+      "readiness_tier_basis": "HRV 29.1ms (Hume) / 26ms avg (Oura) — 4th consecutive decline, now 3.4ms below personal baseline of 32.5ms. Sprint gate CLOSED (need ≥35ms). Recovery 52% Normal range (up from 47%). Oura sleep 83 GOOD, 6h9m, 87% efficiency.",
+      "sprint_gate_status": "CLOSED — HRV 29.1ms below 35ms gate",
+      "notes": "Hume + Oura Apr 18 morning (~5:42-5:43 AM). HRV 4th consecutive decline: 51.3→38.9→31.0→29.1ms (Hume) / 26ms avg (Oura). Rate slowing sharply. Recovery 52% Normal (up from 47%). Oura: 83 GOOD, 6h9m asleep, 7h6m in bed, eff 87%, deep 51m/14%, REM 1h35m/26%, light 3h43m/60%, awake 57m, latency 18m. Oura HR: lowest 54bpm / avg 60bpm. HRV avg 26ms / max 114ms. SpO2 96%, Breathing Good, sleep time 9:37pm, wake 4:43am. Hume: recovery 52%, HRV 29.1ms, RHR 59.8bpm, RR 14.0rpm, SpO2 96.1%, wrist 97.1F, sleep 55%/6h12m, sleep bank -2h29m, deep 25m, REM 1h38m, HR dip 18% above normal, sleep time 9:56pm. Strain 17%, Cardio Load 27 Maintaining. Saturday sprint session: GATE CLOSED. Strength session (Motra 20260417 Saturday template) appropriate.",
       "hume_strain_pct": 81,
       "hume_recovery_pct": 51,
       "hume_sleep_pct": 55,
@@ -1410,7 +1410,7 @@
       "date": "2026-04-19",
       "source": "Hume + Oura",
       "recovery_score_pct": 53,
-      "recovery_trend": "First HRV uptick after 4-day decline: 51.3ms (Apr 15) \u2192 38.9ms (Apr 16) \u2192 31.0ms (Apr 17) \u2192 29.1ms (Apr 18) \u2192 29.8ms (Apr 19). +0.7ms. Bottom forming. Oura readiness 88 Optimal \u2014 strongest signal yet. Deep sleep breakthrough.",
+      "recovery_trend": "First HRV uptick after 4-day decline: 51.3ms (Apr 15) → 38.9ms (Apr 16) → 31.0ms (Apr 17) → 29.1ms (Apr 18) → 29.8ms (Apr 19). +0.7ms. Bottom forming. Oura readiness 88 Optimal — strongest signal yet. Deep sleep breakthrough.",
       "hrv_ms": 29.8,
       "hrv_ms_hume": 29.8,
       "hrv_ms_oura_avg": 26,
@@ -1420,7 +1420,7 @@
       "resting_hr_bpm_oura_avg": 60,
       "sleep_score_pct": 88,
       "oura_sleep_score": 88,
-      "oura_sleep_label": "OPTIMAL \u2014 Well-rested",
+      "oura_sleep_label": "OPTIMAL — Well-rested",
       "hume_sleep_score_pct": 77,
       "total_sleep_min": 426,
       "total_sleep_min_oura": 426,
@@ -1432,7 +1432,7 @@
       "deep_sleep_min": 87,
       "deep_sleep_pct": 21,
       "deep_sleep_min_hume": 63,
-      "deep_sleep_status": "Above normal \u2014 Deep Sleep Breakthrough (Hume)",
+      "deep_sleep_status": "Above normal — Deep Sleep Breakthrough (Hume)",
       "rem_sleep_min": 99,
       "rem_sleep_pct": 23,
       "rem_sleep_min_hume": 115,
@@ -1441,7 +1441,7 @@
       "awake_min": 70,
       "sleep_latency_min": 12,
       "sleep_bank_min": -117,
-      "sleep_debt_status": "Moderate \u2014 -1h 57m (Hume) / -2h 40m (Oura) \u2014 improving",
+      "sleep_debt_status": "Moderate — -1h 57m (Hume) / -2h 40m (Oura) — improving",
       "sleep_time": "21:02",
       "wake_time": "05:18",
       "spo2_pct": 96.5,
@@ -1458,14 +1458,14 @@
       "cardio_load": 27,
       "cardio_load_status": "Maintaining",
       "oura_readiness_score": 88,
-      "oura_readiness_status": "Optimal \u2014 Above and beyond",
+      "oura_readiness_status": "Optimal — Above and beyond",
       "oura_activity_score": 95,
       "readiness_tier": "Yellow-Green",
-      "readiness_tier_basis": "HRV 29.8ms (Hume) \u2014 first uptick after 4-day decline, still 2.7ms below 32.5ms baseline. Sprint gate still closed (Sunday = N/A). Oura readiness 88 Optimal is strongest counterweight yet. Deep sleep breakthrough (1h27m, 21%). Sleep debt improving: -1h57m. Recovery bouncing from floor.",
-      "sprint_gate_status": "N/A \u2014 Sunday (sprint protocol is Saturday only)",
+      "readiness_tier_basis": "HRV 29.8ms (Hume) — first uptick after 4-day decline, still 2.7ms below 32.5ms baseline. Sprint gate still closed (Sunday = N/A). Oura readiness 88 Optimal is strongest counterweight yet. Deep sleep breakthrough (1h27m, 21%). Sleep debt improving: -1h57m. Recovery bouncing from floor.",
+      "sprint_gate_status": "N/A — Sunday (sprint protocol is Saturday only)",
       "morning_activity": {
         "type": "Outdoor Walk (Fasted)",
-        "time": "05:30\u201306:13",
+        "time": "05:30–06:13",
         "location": "Beitun District",
         "duration_min": 43,
         "distance_mi": 2.28,
@@ -1476,7 +1476,7 @@
         "elevation_gain_ft": 37,
         "effort": "Easy (3)"
       },
-      "notes": "Hume + Oura Apr 19 morning (5:18 AM). First HRV uptick: 29.8ms vs 29.1ms yesterday (+0.7ms). Bottom forming. Oura 88 OPTIMAL \u2014 'Above and beyond'. Deep sleep breakthrough: 1h27m/21% (Oura) / 1h3m (Hume). Sleep 7h6m (Oura) / 7h19m (Hume). Efficiency 86%. REM 1h39m/23% (Oura). HR dip 18% above normal. Sleep bank -1h57m (Hume) / -2h40m (Oura), improving trajectory. Sleep window 9:02 PM \u2192 5:18 AM (early bedtime driving quality). Oura lowest HR 54bpm / avg 60bpm. SpO2 96.5% above normal (Hume) / 97% avg (Oura). Breathing optimal. RR 14.8rpm normal. Wrist 97.0\u00b0F normal. Stress avg 24 Low. Cardio load 27 Maintaining. Fasted walk done 5:30\u20136:13 AM: 2.28mi, 43min, avg HR 90bpm \u2014 clean Z2. Sunday = active recovery / rest day. No strength session.",
+      "notes": "Hume + Oura Apr 19 morning (5:18 AM). First HRV uptick: 29.8ms vs 29.1ms yesterday (+0.7ms). Bottom forming. Oura 88 OPTIMAL — 'Above and beyond'. Deep sleep breakthrough: 1h27m/21% (Oura) / 1h3m (Hume). Sleep 7h6m (Oura) / 7h19m (Hume). Efficiency 86%. REM 1h39m/23% (Oura). HR dip 18% above normal. Sleep bank -1h57m (Hume) / -2h40m (Oura), improving trajectory. Sleep window 9:02 PM → 5:18 AM (early bedtime driving quality). Oura lowest HR 54bpm / avg 60bpm. SpO2 96.5% above normal (Hume) / 97% avg (Oura). Breathing optimal. RR 14.8rpm normal. Wrist 97.0°F normal. Stress avg 24 Low. Cardio load 27 Maintaining. Fasted walk done 5:30–6:13 AM: 2.28mi, 43min, avg HR 90bpm — clean Z2. Sunday = active recovery / rest day. No strength session.",
       "hume_strain_pct": 27,
       "hume_recovery_pct": 52,
       "hume_sleep_pct": 77,
@@ -1487,7 +1487,7 @@
       "date": "2026-04-20",
       "source": "Hume + Oura",
       "recovery_score_pct": 39,
-      "recovery_trend": "HRV 27.9ms \u2014 slight pullback from yesterday's 29.8ms uptick. Trend: 51.3ms (Apr 15) \u2192 38.9ms (Apr 16) \u2192 31.0ms (Apr 17) \u2192 29.1ms (Apr 18) \u2192 29.8ms (Apr 19) \u2192 27.9ms (Apr 20). Base still fragile. Early wake 4:12 AM disrupted deep sleep.",
+      "recovery_trend": "HRV 27.9ms — slight pullback from yesterday's 29.8ms uptick. Trend: 51.3ms (Apr 15) → 38.9ms (Apr 16) → 31.0ms (Apr 17) → 29.1ms (Apr 18) → 29.8ms (Apr 19) → 27.9ms (Apr 20). Base still fragile. Early wake 4:12 AM disrupted deep sleep.",
       "hrv_ms": 27.9,
       "hrv_ms_hume": 27.9,
       "hrv_ms_oura_avg": 24,
@@ -1498,7 +1498,7 @@
       "resting_hr_bpm_oura_avg": 61,
       "sleep_score_pct": 44,
       "oura_sleep_score": 72,
-      "oura_sleep_label": "Good \u2014 Optimal sleep latency",
+      "oura_sleep_label": "Good — Optimal sleep latency",
       "hume_sleep_score_pct": 44,
       "total_sleep_min": 374,
       "total_sleep_min_oura": 374,
@@ -1510,7 +1510,7 @@
       "deep_sleep_min": 40,
       "deep_sleep_pct": 11,
       "deep_sleep_min_hume": 18,
-      "deep_sleep_status": "Below normal \u2014 significant deficit (45-min shortfall vs yesterday)",
+      "deep_sleep_status": "Below normal — significant deficit (45-min shortfall vs yesterday)",
       "rem_sleep_min": 57,
       "rem_sleep_pct": 15,
       "rem_sleep_min_hume": 80,
@@ -1519,7 +1519,7 @@
       "awake_min": 82,
       "sleep_latency_min": 16,
       "sleep_bank_min": -150,
-      "sleep_debt_status": "Moderate \u2014 -2h30m (Hume) / -2h50m (Oura) \u2014 slightly worse than yesterday",
+      "sleep_debt_status": "Moderate — -2h30m (Hume) / -2h50m (Oura) — slightly worse than yesterday",
       "sleep_time": "21:17",
       "wake_time": "04:12",
       "spo2_pct": 94.5,
@@ -1529,7 +1529,7 @@
       "respiratory_rate_rpm": 14.2,
       "wrist_temp_f": 97.3,
       "hr_dip_pct": 18,
-      "hr_dip_status": "Above normal \u2014 cardiovascular system held",
+      "hr_dip_status": "Above normal — cardiovascular system held",
       "breathing_regularity": "Optimal",
       "stress_highest": 76,
       "stress_lowest": 1,
@@ -1539,9 +1539,9 @@
       "cardio_load": 22,
       "cardio_load_status": "Maintaining",
       "readiness_tier": "Red",
-      "readiness_tier_basis": "Recovery 39% Low Depth Recovery. HRV 27.9ms \u2014 slight pullback from yesterday's uptick (29.8ms). Deep sleep collapsed: 18m Hume / 40m Oura, both well below normal. Oura sleep 72 Good (down from 88 Optimal). Early wake 4:12 AM. SpO2 94.5% below normal (Hume). Sprint gate: closed (Monday \u2014 not sprint day).",
-      "sprint_gate_status": "Closed \u2014 Red recovery + not sprint day (Monday)",
-      "notes": "Hume + Oura Apr 20 morning (4:17\u20134:18 AM). HRV 27.9ms (Hume) / 24ms avg (Oura) \u2014 slight drop from yesterday's 29.8ms uptick. Recovery 39% Low Depth: driven by 45-min deep sleep deficit and 2% SpO2 dip vs yesterday. Early fragmented wake at 4:02\u20134:12 AM. Oura sleep 72 Good (down from 88 Optimal yesterday). Deep sleep: 18m Hume / 40m Oura \u2014 both below normal. REM: 1h20m Hume / 57m Oura. Sleep efficiency 82%. Sleep debt -2h30m (Hume) / -2h50m (Oura) \u2014 slightly worse than yesterday. Sleep start 9:17 PM. Cardio load 22 Maintaining. Stress avg 29 Low, peak 76. Energy 61%. SpO2 94.5% below normal (Hume) / 96% avg (Oura). Breathing optimal. HR dip 18% above normal \u2014 cardiovascular strength held despite sleep disruption. Sleep fragmented cycle confirmed both apps.",
+      "readiness_tier_basis": "Recovery 39% Low Depth Recovery. HRV 27.9ms — slight pullback from yesterday's uptick (29.8ms). Deep sleep collapsed: 18m Hume / 40m Oura, both well below normal. Oura sleep 72 Good (down from 88 Optimal). Early wake 4:12 AM. SpO2 94.5% below normal (Hume). Sprint gate: closed (Monday — not sprint day).",
+      "sprint_gate_status": "Closed — Red recovery + not sprint day (Monday)",
+      "notes": "Hume + Oura Apr 20 morning (4:17–4:18 AM). HRV 27.9ms (Hume) / 24ms avg (Oura) — slight drop from yesterday's 29.8ms uptick. Recovery 39% Low Depth: driven by 45-min deep sleep deficit and 2% SpO2 dip vs yesterday. Early fragmented wake at 4:02–4:12 AM. Oura sleep 72 Good (down from 88 Optimal yesterday). Deep sleep: 18m Hume / 40m Oura — both below normal. REM: 1h20m Hume / 57m Oura. Sleep efficiency 82%. Sleep debt -2h30m (Hume) / -2h50m (Oura) — slightly worse than yesterday. Sleep start 9:17 PM. Cardio load 22 Maintaining. Stress avg 29 Low, peak 76. Energy 61%. SpO2 94.5% below normal (Hume) / 96% avg (Oura). Breathing optimal. HR dip 18% above normal — cardiovascular strength held despite sleep disruption. Sleep fragmented cycle confirmed both apps.",
       "hume_strain_pct": 92,
       "hume_recovery_pct": 39,
       "hume_sleep_pct": 44,
@@ -1552,7 +1552,7 @@
       "date": "2026-04-21",
       "source": "Hume + Oura",
       "recovery_score_pct": 100,
-      "recovery_trend": "Recovery Breakthrough. HRV surged +25.6ms to 53.5ms (Hume) \u2014 highest reading in current tracking period. Previous: 27.9ms (Apr 20) \u2192 53.5ms (Apr 21). Body supercompensated perfectly to Monday's heavy push session.",
+      "recovery_trend": "Recovery Breakthrough. HRV surged +25.6ms to 53.5ms (Hume) — highest reading in current tracking period. Previous: 27.9ms (Apr 20) → 53.5ms (Apr 21). Body supercompensated perfectly to Monday's heavy push session.",
       "hrv_ms": 53.5,
       "hrv_ms_hume": 53.5,
       "hrv_ms_oura_avg": 69,
@@ -1563,7 +1563,7 @@
       "resting_hr_bpm_oura_avg": 57,
       "sleep_score_pct": 83,
       "oura_sleep_score": 75,
-      "oura_sleep_label": "Good \u2014 A night of deep sleep",
+      "oura_sleep_label": "Good — A night of deep sleep",
       "hume_sleep_score_pct": 83,
       "total_sleep_min": 378,
       "total_sleep_min_oura": 378,
@@ -1575,7 +1575,7 @@
       "deep_sleep_min": 67,
       "deep_sleep_pct": 18,
       "deep_sleep_min_hume": 68,
-      "deep_sleep_status": "Above normal \u2014 1h 7m Oura / 1h 8m Hume, both above normal",
+      "deep_sleep_status": "Above normal — 1h 7m Oura / 1h 8m Hume, both above normal",
       "rem_sleep_min": 46,
       "rem_sleep_pct": 12,
       "rem_sleep_min_hume": 104,
@@ -1584,7 +1584,7 @@
       "awake_min": 72,
       "sleep_latency_min": 5,
       "sleep_bank_min": -129,
-      "sleep_debt_status": "Moderate \u2014 -2h 9m (Hume) / -2h 50m (Oura) \u2014 debt persists despite excellent recovery response",
+      "sleep_debt_status": "Moderate — -2h 9m (Hume) / -2h 50m (Oura) — debt persists despite excellent recovery response",
       "sleep_time": "21:10",
       "wake_time": "04:40",
       "spo2_pct": 95.9,
@@ -1594,7 +1594,7 @@
       "respiratory_rate_rpm": 14.0,
       "wrist_temp_f": 96.9,
       "hr_dip_pct": 23,
-      "hr_dip_status": "Above normal \u2014 23% dip, strongest cardiovascular response in current block",
+      "hr_dip_status": "Above normal — 23% dip, strongest cardiovascular response in current block",
       "breathing_regularity": "Good",
       "stress_highest": null,
       "stress_lowest": null,
@@ -1604,14 +1604,14 @@
       "cardio_load": 37,
       "cardio_load_status": "Maintaining (post-Monday session)",
       "readiness_tier": "Green",
-      "readiness_tier_basis": "Recovery 100% \u2014 Recovery Breakthrough. HRV 53.5ms (Hume) / 69ms avg (Oura) \u2014 highest HRV in current tracking period. Deep sleep 1h 7m above normal. HR dip 23% above normal. RHR 56.4 bpm (Hume) / 54 bpm lowest (Oura). Sprint gate: open (Tuesday \u2014 sprint-eligible day, Green recovery).",
-      "sprint_gate_status": "Open \u2014 Green recovery + sprint-eligible day (Tuesday)",
-      "notes": "Hume + Oura Apr 21 morning (~4:42\u20134:43 AM). Recovery Breakthrough \u2014 100% first perfect score in current block. HRV surged +25.6ms from 27.9ms \u2192 53.5ms (Hume); Oura avg HRV 69ms (max 130ms). Body supercompensated to Monday's 80-min Push/Quad session. RHR 56.4 bpm (Hume) / 54 bpm lowest, 57 bpm avg (Oura). HR dip 23% \u2014 above normal, strongest cardiovascular adaptation seen. Hume sleep: 83% quality, 7h 5m asleep (7h 22m in bed), 1h 44m REM, 1h 8m deep. Oura sleep: 75 Good, 6h 18m total (7h 30m in bed), 1h 7m deep (18%), 46m REM (12%), 4h 25m light (70%), 1h 12m awake, sleep efficiency 84%. Oura SpO2 97% / Hume SpO2 95.9% \u2014 both normal. Respiratory rate 14.0 rpm (below normal per Hume \u2014 low = efficient). Wrist temp 96.9\u00b0F normal. Breathing regularity Good (Oura). Sleep debt: -2h 9m (Hume) / -2h 50m (Oura) \u2014 debt persists but recovery quality excellent. Sleep start ~9:10\u20139:16 PM, wake ~4:40 AM. Oura: sleep latency 5m, efficiency 84%, sleep debt 2h 50m moderate. This is a high green day.",
+      "readiness_tier_basis": "Recovery 100% — Recovery Breakthrough. HRV 53.5ms (Hume) / 69ms avg (Oura) — highest HRV in current tracking period. Deep sleep 1h 7m above normal. HR dip 23% above normal. RHR 56.4 bpm (Hume) / 54 bpm lowest (Oura). Sprint gate: open (Tuesday — sprint-eligible day, Green recovery).",
+      "sprint_gate_status": "Open — Green recovery + sprint-eligible day (Tuesday)",
+      "notes": "Hume + Oura Apr 21 morning (~4:42–4:43 AM). Recovery Breakthrough — 100% first perfect score in current block. HRV surged +25.6ms from 27.9ms → 53.5ms (Hume); Oura avg HRV 69ms (max 130ms). Body supercompensated to Monday's 80-min Push/Quad session. RHR 56.4 bpm (Hume) / 54 bpm lowest, 57 bpm avg (Oura). HR dip 23% — above normal, strongest cardiovascular adaptation seen. Hume sleep: 83% quality, 7h 5m asleep (7h 22m in bed), 1h 44m REM, 1h 8m deep. Oura sleep: 75 Good, 6h 18m total (7h 30m in bed), 1h 7m deep (18%), 46m REM (12%), 4h 25m light (70%), 1h 12m awake, sleep efficiency 84%. Oura SpO2 97% / Hume SpO2 95.9% — both normal. Respiratory rate 14.0 rpm (below normal per Hume — low = efficient). Wrist temp 96.9°F normal. Breathing regularity Good (Oura). Sleep debt: -2h 9m (Hume) / -2h 50m (Oura) — debt persists but recovery quality excellent. Sleep start ~9:10–9:16 PM, wake ~4:40 AM. Oura: sleep latency 5m, efficiency 84%, sleep debt 2h 50m moderate. This is a high green day.",
       "hume_strain_pct": 28,
       "hume_recovery_pct": 100,
       "hume_sleep_pct": 83,
       "hume_energy_pct": 26,
-      "hume_activity_note": "Active recovery day \u2014 Evening Transition Window"
+      "hume_activity_note": "Active recovery day — Evening Transition Window"
     },
     {
       "date": "2026-04-22",
@@ -1650,7 +1650,7 @@
       "bevel_respiratory_rate": 15.5,
       "bevel_spo2_pct": 95.2,
       "bevel_wrist_temp_f": 98.3,
-      "bevel_wrist_temp_deviation": "+1.4\u00b0F above typical",
+      "bevel_wrist_temp_deviation": "+1.4°F above typical",
       "bevel_sleep_duration_min": 315,
       "bevel_time_in_bed_min": 337,
       "bevel_rem_min": 59,
@@ -1666,7 +1666,7 @@
         "Significant Systemic Stress",
         "Significant Sleep Fragmentation"
       ],
-      "notes": "Poor night \u2014 woke at ~3am, Bevel recovery crashed to 29% with elevated wrist temp (+1.4\u00b0F) and RR. Oura readiness 74 (moderate). Oura sleep 4h44m actual. Bevel sleep bank -3h46m, Oura sleep debt 4h20m."
+      "notes": "Poor night — woke at ~3am, Bevel recovery crashed to 29% with elevated wrist temp (+1.4°F) and RR. Oura readiness 74 (moderate). Oura sleep 4h44m actual. Bevel sleep bank -3h46m, Oura sleep debt 4h20m."
     },
     {
       "date": "2026-04-23",
@@ -1831,7 +1831,61 @@
       "oura_sleep_debt_min": 160,
       "sleep_time": "20:35",
       "wake_time": "05:17",
-      "notes": "Bevel: Recovery Breakout \u2014 surged +18% to 65%, HRV 39.9ms highest in 3 days, sleep 8h5m/93% efficiency. Wrist temp 97.6\u00b0F above normal \u2014 monitor. Sleep bank improved to -1h34m (Bevel) / -2h40m (Oura). Oura readiness 84 Good. Sleep 76 Good, 7h23m total, latency 51m (elevated post-active day \u2014 workout kept metabolism up per Oura). Deep 41m/9%, REM 1h3m/14%. Oura HRV avg 48ms / max 151ms. RHR 56 lowest / 61 avg. SpO2 96%. Sprint block gate: HRV 39.9ms > 35ms threshold \u2014 GATE OPEN for tomorrow Apr 26."
+      "notes": "Bevel: Recovery Breakout — surged +18% to 65%, HRV 39.9ms highest in 3 days, sleep 8h5m/93% efficiency. Wrist temp 97.6°F above normal — monitor. Sleep bank improved to -1h34m (Bevel) / -2h40m (Oura). Oura readiness 84 Good. Sleep 76 Good, 7h23m total, latency 51m (elevated post-active day — workout kept metabolism up per Oura). Deep 41m/9%, REM 1h3m/14%. Oura HRV avg 48ms / max 151ms. RHR 56 lowest / 61 avg. SpO2 96%. Sprint block gate: HRV 39.9ms > 35ms threshold — GATE OPEN for tomorrow Apr 26."
+    },
+    {
+      "date": "2026-04-27",
+      "source": "Bevel + Oura",
+      "bevel": {
+        "recovery_pct": 55,
+        "sleep_quality_pct": 61,
+        "strain_pct": 0,
+        "rhr_bpm": 60.0,
+        "hrv_ms": 31.9,
+        "respiratory_rate_rpm": 14.1,
+        "spo2_pct": 95.8,
+        "wrist_temp_f": 97.2,
+        "wrist_temp_c": 36.2,
+        "time_asleep_min": 354,
+        "time_in_bed_min": 375,
+        "deep_sleep_min": 64,
+        "rem_sleep_min": 72,
+        "sleep_bank_min": -149,
+        "notes": "Recovery dropped to 55% — HRV down 19.3 ms, sleep bank deficit 2h 29m. Deep sleep excellent (1h 4m, above normal). REM below normal (1h 12m). Early wake at 3:58 AM."
+      },
+      "oura": {
+        "readiness_score": 76,
+        "sleep_score": 68,
+        "sleep_score_label": "Fair",
+        "activity_score": 85,
+        "rhr_bpm_lowest": 53,
+        "rhr_bpm_avg": 60,
+        "hrv_avg_ms": 35,
+        "hrv_max_ms": 97,
+        "total_sleep_min": 323,
+        "time_in_bed_min": 393,
+        "sleep_efficiency_pct": 82,
+        "rem_sleep_min": 18,
+        "rem_sleep_pct": 5,
+        "light_sleep_min": 264,
+        "light_sleep_pct": 82,
+        "deep_sleep_min": 41,
+        "deep_sleep_pct": 13,
+        "awake_min": 70,
+        "spo2_avg_pct": 95,
+        "breathing_regularity": "Optimal",
+        "sleep_debt_min": 190,
+        "sleep_start": "2026-04-26T21:32",
+        "sleep_end": "2026-04-27T04:05",
+        "notes": "Readiness 76 — power of pausing. Low REM (only 18m). Sleep debt 3h 10m moderate. Breathing optimal. HRV avg 35 ms (above Bevel 31.9 ms baseline). Activity score strong at 85."
+      },
+      "coaching_flags": [
+        "Recovery 55% (Bevel) / Readiness 76 (Oura) — moderate day, not a push day",
+        "HRV below recent baseline (31.9 ms Bevel vs 32.5 baseline) — keep HR below 118 today",
+        "Sleep debt accumulating (-2h 29m Bevel / -3h 10m Oura) — prioritize sleep tonight",
+        "Deep sleep good despite short night — quality foundation present",
+        "REM very low (18m Oura / 72m Bevel — significant discrepancy, note source difference)"
+      ]
     }
   ],
   "nutrition": [
@@ -1843,7 +1897,7 @@
         "protein_g": 135,
         "carbs_g": 180,
         "fat_g": 60,
-        "_note": "Legacy targets \u2014 superseded 2026-04-11. Current targets: 2000 kcal / 150g P / 190g C / 70g F."
+        "_note": "Legacy targets — superseded 2026-04-11. Current targets: 2000 kcal / 150g P / 190g C / 70g F."
       },
       "meals": [],
       "daily_totals": {
@@ -1859,7 +1913,7 @@
         "fat_delta": null
       },
       "nutrition_score": null,
-      "notes": "Goal set at maintenance (TDEE 1800 kcal). Significant undereating that day \u2014 below target by 1147 kcal. Meal-level breakdown not available (legacy entry)."
+      "notes": "Goal set at maintenance (TDEE 1800 kcal). Significant undereating that day — below target by 1147 kcal. Meal-level breakdown not available (legacy entry)."
     },
     {
       "date": "2026-04-01",
@@ -1869,12 +1923,12 @@
         "protein_g": 135,
         "carbs_g": 180,
         "fat_g": 60,
-        "_note": "Legacy targets \u2014 superseded 2026-04-11. Current targets: 2000 kcal / 150g P / 190g C / 70g F."
+        "_note": "Legacy targets — superseded 2026-04-11. Current targets: 2000 kcal / 150g P / 190g C / 70g F."
       },
       "meals": [
         {
           "meal": "supplement",
-          "time": "07:00\u201310:00",
+          "time": "07:00–10:00",
           "items": [
             {
               "food": "Gold Standard Whey Protein (Vanilla)",
@@ -1930,7 +1984,7 @@
         "protein_g": 59,
         "carbs_g": 38,
         "fat_g": 8.5,
-        "note": "Partial data only \u2014 Oura shows net deficit of -2136 kcal suggesting full day intake was not logged"
+        "note": "Partial data only — Oura shows net deficit of -2136 kcal suggesting full day intake was not logged"
       },
       "vs_targets": {
         "calories_delta": -1350,
@@ -1939,7 +1993,7 @@
         "fat_delta": -51.5
       },
       "nutrition_score": 50,
-      "notes": "Oura nutrition screen Apr 1. Nutrition Score 50 (Normal). Net Energy deficit -2,136 kcal per Oura. Only supplement/shake data captured \u2014 remainder of day's food not logged. Likely significant undereating or incomplete logging."
+      "notes": "Oura nutrition screen Apr 1. Nutrition Score 50 (Normal). Net Energy deficit -2,136 kcal per Oura. Only supplement/shake data captured — remainder of day's food not logged. Likely significant undereating or incomplete logging."
     },
     {
       "date": "2026-04-12",
@@ -2099,7 +2153,7 @@
             "carbs_g": 17,
             "fat_g": 8
           },
-          "notes": "Sugar gap. The peanut M&M's are the signature sweets pattern \u2014 17g carbs, 8g fat, 3g protein. Swap: 1 oz beef jerky next time \u2014 same pocket snack, 10g protein, 0g fat, 0g carbs."
+          "notes": "Sugar gap. The peanut M&M's are the signature sweets pattern — 17g carbs, 8g fat, 3g protein. Swap: 1 oz beef jerky next time — same pocket snack, 10g protein, 0g fat, 0g carbs."
         },
         {
           "meal": "dinner",
@@ -2132,7 +2186,7 @@
             "carbs_g": 54,
             "fat_g": 8
           },
-          "notes": "Best macro decision of the day \u2014 lean protein + rice carbs, minimal fat. Sashimi (6 slices) did most of the protein work at 20g. Roll added the carbs efficiently. Good instinct given the fat overrun earlier."
+          "notes": "Best macro decision of the day — lean protein + rice carbs, minimal fat. Sashimi (6 slices) did most of the protein work at 20g. Roll added the carbs efficiently. Good instinct given the fat overrun earlier."
         },
         {
           "meal": "late_snack",
@@ -2165,7 +2219,7 @@
             "carbs_g": 5,
             "fat_g": 4
           },
-          "notes": "Retroactive addition \u2014 Cal AI screenshots uploaded Apr 13 morning. Late-night whey + almond milk at 8:45 PM. Closes the protein gap: updated Apr 12 protein = 141g (was 116g)."
+          "notes": "Retroactive addition — Cal AI screenshots uploaded Apr 13 morning. Late-night whey + almond milk at 8:45 PM. Closes the protein gap: updated Apr 12 protein = 141g (was 116g)."
         }
       ],
       "daily_totals": {
@@ -2173,7 +2227,7 @@
         "protein_g": 141,
         "carbs_g": 135,
         "fat_g": 117,
-        "note": "RETROACTIVELY UPDATED Apr 13 \u2014 late-night whey shake added. Final: 2104 kcal / 141g P / 135g C / 117g F. Protein gap closed to -9g (excellent). Calories 104 over target. Fat still over (+47g) due to breakfast walnuts + lunch ranch."
+        "note": "RETROACTIVELY UPDATED Apr 13 — late-night whey shake added. Final: 2104 kcal / 141g P / 135g C / 117g F. Protein gap closed to -9g (excellent). Calories 104 over target. Fat still over (+47g) due to breakfast walnuts + lunch ranch."
       },
       "vs_targets": {
         "calories_delta": 104,
@@ -2181,7 +2235,7 @@
         "carbs_delta": -55,
         "fat_delta": 47
       },
-      "notes": "5 entries logged via Cal AI. Fat target significantly blown (113g vs 70g target, +43g) \u2014 damage concentrated at breakfast (walnuts +26g) and lunch (ranch +39g). Dinner (sushi + sashimi) was a strong recovery choice: 31g protein, 54g carbs, only 8g fat. M&M snack at 4:15 PM was the sweets pattern showing up \u2014 8g fat, 17g sugar. Day calories nearly on target at 1954/2000. Protein 34g short \u2014 one more whey shake would close it. Morning walk: 2.22 mi, 198 active cal, avg HR 101 bpm.",
+      "notes": "5 entries logged via Cal AI. Fat target significantly blown (113g vs 70g target, +43g) — damage concentrated at breakfast (walnuts +26g) and lunch (ranch +39g). Dinner (sushi + sashimi) was a strong recovery choice: 31g protein, 54g carbs, only 8g fat. M&M snack at 4:15 PM was the sweets pattern showing up — 8g fat, 17g sugar. Day calories nearly on target at 1954/2000. Protein 34g short — one more whey shake would close it. Morning walk: 2.22 mi, 198 active cal, avg HR 101 bpm.",
       "day_closed": true,
       "day_closed_time": "2026-04-12 evening"
     },
@@ -2200,7 +2254,7 @@
           "time": "06:25",
           "items": [
             {
-              "food": "Gold Standard 100% Whey - Vanilla Ice Cream (\u00d72 scoops)",
+              "food": "Gold Standard 100% Whey - Vanilla Ice Cream (×2 scoops)",
               "calories_kcal": 252,
               "protein_g": 48,
               "carbs_g": 8,
@@ -2253,7 +2307,7 @@
             "carbs_g": 41,
             "fat_g": 13
           },
-          "notes": "Pre-strength-session shake. Strong protein start (55g). 41g carbs for fuel. Fat only 13g \u2014 excellent for a day with yesterday's 117g fat overrun. Two scoops whey is the right call on a training day."
+          "notes": "Pre-strength-session shake. Strong protein start (55g). 41g carbs for fuel. Fat only 13g — excellent for a day with yesterday's 117g fat overrun. Two scoops whey is the right call on a training day."
         },
         {
           "meal": "post_workout_shake",
@@ -2286,7 +2340,7 @@
             "carbs_g": 8,
             "fat_g": 12
           },
-          "notes": "Post-workout shake at 10:05 AM. Note: Cal AI shows 8g carbs + 12g fat \u2014 fat higher than typical due to 2 cups almond milk. Protein solid at 29g."
+          "notes": "Post-workout shake at 10:05 AM. Note: Cal AI shows 8g carbs + 12g fat — fat higher than typical due to 2 cups almond milk. Protein solid at 29g."
         },
         {
           "meal": "lunch",
@@ -2309,7 +2363,7 @@
             "carbs_g": 24,
             "fat_g": 11
           },
-          "notes": "Lunch at 12:01 PM. Light on protein (6g only). Creamy potato soup \u2014 calorie-moderate but low protein impact. Fat budget still fine."
+          "notes": "Lunch at 12:01 PM. Light on protein (6g only). Creamy potato soup — calorie-moderate but low protein impact. Fat budget still fine."
         },
         {
           "meal": "lunch_addon",
@@ -2352,7 +2406,7 @@
             "carbs_g": 20,
             "fat_g": 38
           },
-          "notes": "Lunch main course at 12:10 PM. BBQ ribs are the protein engine \u2014 46g in one meal. Fat heavy at 38g (pork ribs + coleslaw dressing). Steamed veggies and Pocari Sweat round out the meal. Strong protein result."
+          "notes": "Lunch main course at 12:10 PM. BBQ ribs are the protein engine — 46g in one meal. Fat heavy at 38g (pork ribs + coleslaw dressing). Steamed veggies and Pocari Sweat round out the meal. Strong protein result."
         },
         {
           "meal": "dinner",
@@ -2385,7 +2439,7 @@
             "carbs_g": 60,
             "fat_g": 31
           },
-          "notes": "Dinner at 6 PM \u2014 breakfast-for-dinner combo. 27g protein from eggs and bacon. Pancakes added 41g carbs but minimal protein. Fat heavy at 31g (bacon + eggs + hash browns). Two consecutive days fat over target."
+          "notes": "Dinner at 6 PM — breakfast-for-dinner combo. 27g protein from eggs and bacon. Pancakes added 41g carbs but minimal protein. Fat heavy at 31g (bacon + eggs + hash browns). Two consecutive days fat over target."
         }
       ],
       "daily_totals": {
@@ -2393,7 +2447,7 @@
         "protein_g": 165,
         "carbs_g": 153,
         "fat_g": 105,
-        "note": "Day closed \u2014 7 meals logged. Protein over target (+15g). Calories slightly over (+175 kcal). Fat significantly over (+35g, 2nd consecutive day). Carbs under target (-37g)."
+        "note": "Day closed — 7 meals logged. Protein over target (+15g). Calories slightly over (+175 kcal). Fat significantly over (+35g, 2nd consecutive day). Carbs under target (-37g)."
       },
       "vs_targets": {
         "calories_delta": 175,
@@ -2418,7 +2472,7 @@
           "time": "06:45",
           "items": [
             {
-              "food": "Gold Standard 100% Whey \u2014 Vanilla Ice Cream",
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
               "amount": "2 scoops",
               "calories_kcal": 252,
               "protein_g": 48,
@@ -2474,14 +2528,14 @@
             "carbs_g": 41,
             "fat_g": 13
           },
-          "notes": "Pre-workout shake at 6:45 AM \u2014 same formula as Apr 13. 55g protein strong start. Fat 13g manageable. Solid pre-walk/pre-session fuel."
+          "notes": "Pre-workout shake at 6:45 AM — same formula as Apr 13. 55g protein strong start. Fat 13g manageable. Solid pre-walk/pre-session fuel."
         },
         {
           "meal": "post_workout_shake",
           "time": "09:24",
           "items": [
             {
-              "food": "Gold Standard 100% Whey \u2014 Vanilla Ice Cream",
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
               "amount": "1 scoop",
               "calories_kcal": 120,
               "protein_g": 24,
@@ -2507,7 +2561,7 @@
             "carbs_g": 26,
             "fat_g": 18
           },
-          "notes": "Post-workout shake at 9:24 AM \u2014 Cal AI logged. 1 scoop whey + vegan protein milk. 40g protein solid post-cardio hit. Fat 18g from vegan milk \u2014 higher than almond milk alternative. Running fat total now 31g / 70g target (39g remaining for 3+ meals)."
+          "notes": "Post-workout shake at 9:24 AM — Cal AI logged. 1 scoop whey + vegan protein milk. 40g protein solid post-cardio hit. Fat 18g from vegan milk — higher than almond milk alternative. Running fat total now 31g / 70g target (39g remaining for 3+ meals)."
         },
         {
           "meal": "lunch_starter",
@@ -2530,7 +2584,7 @@
             "carbs_g": 18,
             "fat_g": 2
           },
-          "notes": "Lunch starter at 12:20 \u2014 Cal AI logged. Tomato vegetable soup: clean carb hit (18g), minimal fat (2g). Protein contribution small (3g). Good fat-sparing lunch choice. Running totals now: 1,002 kcal / 98g P / 85g C / 33g F."
+          "notes": "Lunch starter at 12:20 — Cal AI logged. Tomato vegetable soup: clean carb hit (18g), minimal fat (2g). Protein contribution small (3g). Good fat-sparing lunch choice. Running totals now: 1,002 kcal / 98g P / 85g C / 33g F."
         },
         {
           "meal": "lunch_main",
@@ -2553,7 +2607,7 @@
             "carbs_g": 65,
             "fat_g": 28
           },
-          "notes": "Lunch main at ~13:00 \u2014 Cal AI screenshot. Spaghetti with meatballs and tomato sauce. Strong protein hit (47g) closes the protein day (145g/150g total \u2014 essentially done). Fat now 61g/70g, only 9g remaining. Calories at 1,715/2,000 \u2014 285 kcal left for dinner only."
+          "notes": "Lunch main at ~13:00 — Cal AI screenshot. Spaghetti with meatballs and tomato sauce. Strong protein hit (47g) closes the protein day (145g/150g total — essentially done). Fat now 61g/70g, only 9g remaining. Calories at 1,715/2,000 — 285 kcal left for dinner only."
         },
         {
           "meal": "dinner",
@@ -2576,7 +2630,7 @@
             "carbs_g": 54,
             "fat_g": 2
           },
-          "notes": "Dinner at ~19:00 \u2014 Cal AI screenshot. Salmon sushi roll. Clean lean protein + rice carbs, minimal fat (2g). Fat streak broken: Apr 12 +47g, Apr 13 +35g, Apr 14 -7g under target. Day closes at 2,003 kcal / 156g P / 204g C / 63g F \u2014 essentially all targets met."
+          "notes": "Dinner at ~19:00 — Cal AI screenshot. Salmon sushi roll. Clean lean protein + rice carbs, minimal fat (2g). Fat streak broken: Apr 12 +47g, Apr 13 +35g, Apr 14 -7g under target. Day closes at 2,003 kcal / 156g P / 204g C / 63g F — essentially all targets met."
         }
       ],
       "daily_totals": {
@@ -2584,7 +2638,7 @@
         "protein_g": 156,
         "carbs_g": 204,
         "fat_g": 63,
-        "note": "Day closed \u2014 5 meals logged. All targets met. Fat streak broken after 2 consecutive over-target days."
+        "note": "Day closed — 5 meals logged. All targets met. Fat streak broken after 2 consecutive over-target days."
       },
       "vs_targets": {
         "calories_delta": 3,
@@ -2633,7 +2687,7 @@
             "carbs_g": 46,
             "fat_g": 7
           },
-          "notes": "Pre-workout shake + drink logged via Cal AI upload 06:27 AM. Queued from DAILY_LOG. Strong protein start (56g). Fat only 7g \u2014 excellent. Pre-workout drink 10 kcal (3g carbs, trace). Session fueled."
+          "notes": "Pre-workout shake + drink logged via Cal AI upload 06:27 AM. Queued from DAILY_LOG. Strong protein start (56g). Fat only 7g — excellent. Pre-workout drink 10 kcal (3g carbs, trace). Session fueled."
         },
         {
           "meal": "intra_workout_drink",
@@ -2655,7 +2709,7 @@
             "carbs_g": 56,
             "fat_g": 0
           },
-          "notes": "Pocari Sweat 500ml intra-workout. High carb (56g) \u2014 electrolyte support during 88-min session."
+          "notes": "Pocari Sweat 500ml intra-workout. High carb (56g) — electrolyte support during 88-min session."
         },
         {
           "meal": "post_workout_shake",
@@ -2708,7 +2762,7 @@
             "carbs_g": 42,
             "fat_g": 1
           },
-          "notes": "Brunch smoothie \u2014 mango and orange, no added sugar. 42g carbs, only 3g protein. Logged evening pass."
+          "notes": "Brunch smoothie — mango and orange, no added sugar. 42g carbs, only 3g protein. Logged evening pass."
         },
         {
           "meal": "brunch_plate",
@@ -2721,7 +2775,7 @@
               "carbs_g": 42,
               "fat_g": 53,
               "estimated": false,
-              "source": "Cal AI IMG_0099 \u2014 Plain French Toast 3 pcs 229 kcal + Scrambled Egg 1 srv 199 kcal + other items"
+              "source": "Cal AI IMG_0099 — Plain French Toast 3 pcs 229 kcal + Scrambled Egg 1 srv 199 kcal + other items"
             }
           ],
           "subtotals": {
@@ -2730,7 +2784,7 @@
             "carbs_g": 42,
             "fat_g": 53
           },
-          "notes": "Brunch plate \u2014 scrambled eggs, fried egg, plain French toast (3 pieces). Primary fat spike of the day: 53g fat in one meal against a 70g daily target. Pattern repeat from Apr 12/13 fat overruns. Fix: no fried bread or hash browns at brunch."
+          "notes": "Brunch plate — scrambled eggs, fried egg, plain French toast (3 pieces). Primary fat spike of the day: 53g fat in one meal against a 70g daily target. Pattern repeat from Apr 12/13 fat overruns. Fix: no fried bread or hash browns at brunch."
         },
         {
           "meal": "dinner",
@@ -2743,7 +2797,7 @@
               "carbs_g": 45,
               "fat_g": 21,
               "estimated": false,
-              "source": "Cal AI IMG_0101 \u2014 Salmon + Brown Rice as primary components"
+              "source": "Cal AI IMG_0101 — Salmon + Brown Rice as primary components"
             }
           ],
           "subtotals": {
@@ -2752,7 +2806,7 @@
             "carbs_g": 45,
             "fat_g": 21
           },
-          "notes": "Dinner \u2014 salmon and crab poke bowl, pumpkin seeds, brown rice. Clean protein + complex carbs. Excellent dinner choice despite brunch fat overrun. Template dinner format."
+          "notes": "Dinner — salmon and crab poke bowl, pumpkin seeds, brown rice. Clean protein + complex carbs. Excellent dinner choice despite brunch fat overrun. Template dinner format."
         }
       ],
       "daily_totals": {
@@ -2760,7 +2814,7 @@
         "protein_g": 159,
         "carbs_g": 238,
         "fat_g": 91,
-        "note": "Day closed \u2014 7 meals logged. Fat spike from brunch plate (53g). Protein target exceeded \u2705. Calories 340 over."
+        "note": "Day closed — 7 meals logged. Fat spike from brunch plate (53g). Protein target exceeded ✅. Calories 340 over."
       },
       "vs_targets": {
         "calories_delta": 340,
@@ -2769,7 +2823,7 @@
         "fat_delta": 21
       },
       "nutrition_score": 5,
-      "nutrition_score_notes": "Protein hit \u2705 (+9g). Calories +340 over (17%), Fat +21g over (30%), Carbs +48g over (25%). Primary driver: brunch plate 53g fat. Poke bowl dinner was clean. Score 5/10.",
+      "nutrition_score_notes": "Protein hit ✅ (+9g). Calories +340 over (17%), Fat +21g over (30%), Carbs +48g over (25%). Primary driver: brunch plate 53g fat. Poke bowl dinner was clean. Score 5/10.",
       "day_closed": true
     },
     {
@@ -2842,7 +2896,7 @@
             "carbs_g": 42,
             "fat_g": 7
           },
-          "notes": "60g protein in one shot \u2014 40% of daily target before 7am. Fat only 7g keeps the deficit day intact (53g budget remaining). Strawberries + frozen fruit swap replaces blueberries \u2014 same macro profile. With 1,237 kcal remaining, this is clean fuel for a lift session without front-loading the deficit."
+          "notes": "60g protein in one shot — 40% of daily target before 7am. Fat only 7g keeps the deficit day intact (53g budget remaining). Strawberries + frozen fruit swap replaces blueberries — same macro profile. With 1,237 kcal remaining, this is clean fuel for a lift session without front-loading the deficit."
         },
         {
           "meal": "morning_supplement",
@@ -2865,7 +2919,7 @@
             "carbs_g": 11,
             "fat_g": 0
           },
-          "notes": "Liquid IV Lemon Lime at 7:38 AM \u2014 electrolyte supplement pre-cycle. 45 kcal, 11g carbs. Smart call given body water flagged Low (37.6% on Hume Pod this morning). With 508 kcal total and protein at 60g, 90g of protein target still needs today's main meals."
+          "notes": "Liquid IV Lemon Lime at 7:38 AM — electrolyte supplement pre-cycle. 45 kcal, 11g carbs. Smart call given body water flagged Low (37.6% on Hume Pod this morning). With 508 kcal total and protein at 60g, 90g of protein target still needs today's main meals."
         },
         {
           "meal": "post_workout_shake",
@@ -2897,7 +2951,7 @@
             "carbs_g": 7,
             "fat_g": 9
           },
-          "notes": "Post-workout shake \u2014 Gold Standard Whey + almond milk. 28g protein within recovery window post-lift session. Clean: 220 kcal, only 9g fat."
+          "notes": "Post-workout shake — Gold Standard Whey + almond milk. 28g protein within recovery window post-lift session. Clean: 220 kcal, only 9g fat."
         },
         {
           "meal": "lunch_item_1",
@@ -2919,7 +2973,7 @@
             "carbs_g": 20,
             "fat_g": 3
           },
-          "notes": "120 kcal volume fill \u2014 light is fine at this point in a deficit day. 4g protein is background noise; the wings alongside are doing the actual work. Running totals after this: 848 kcal / 92g protein. Still 58g protein needed with 852 kcal left in today's budget."
+          "notes": "120 kcal volume fill — light is fine at this point in a deficit day. 4g protein is background noise; the wings alongside are doing the actual work. Running totals after this: 848 kcal / 92g protein. Still 58g protein needed with 852 kcal left in today's budget."
         },
         {
           "meal": "lunch_item_2",
@@ -2941,7 +2995,7 @@
             "carbs_g": 1,
             "fat_g": 30
           },
-          "notes": "37g protein \u2014 lunch earning its place. You're at 129g protein for the day, 21g from target. Fat at 49g total (82% of 60g budget) with only 407 kcal left. Dinner call: lean protein only \u2014 chicken breast, shrimp, or fish. No sauces, nothing fried."
+          "notes": "37g protein — lunch earning its place. You're at 129g protein for the day, 21g from target. Fat at 49g total (82% of 60g budget) with only 407 kcal left. Dinner call: lean protein only — chicken breast, shrimp, or fish. No sauces, nothing fried."
         },
         {
           "meal": "dinner",
@@ -2963,7 +3017,7 @@
             "carbs_g": 16.7,
             "fat_g": 24.7
           },
-          "notes": "Poke bowl made the right call \u2014 66.7g protein in one shot puts you at 196g for the day, 45g over target \u2705. Day lands at 1,853 kcal (153 over the 1,700 deficit target). Fat at 73.7g (13.7g over 60g budget \u2014 salmon fat, not fried bread; different problem). Carbs finished at 97.7g against a 160g budget, 62g of room unused. Tomorrow: tighten fat at lunch if poke is back in rotation."
+          "notes": "Poke bowl made the right call — 66.7g protein in one shot puts you at 196g for the day, 45g over target ✅. Day lands at 1,853 kcal (153 over the 1,700 deficit target). Fat at 73.7g (13.7g over 60g budget — salmon fat, not fried bread; different problem). Carbs finished at 97.7g against a 160g budget, 62g of room unused. Tomorrow: tighten fat at lunch if poke is back in rotation."
         }
       ],
       "running_totals": {
@@ -2995,7 +3049,7 @@
           "time": "06:36",
           "items": [
             {
-              "food": "Gold Standard 100% Whey \u2014 Vanilla Ice Cream",
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
               "amount": "2 scoops",
               "calories_kcal": 252,
               "protein_g": 48,
@@ -3061,14 +3115,14 @@
             "carbs_g": 41,
             "fat_g": 13
           },
-          "notes": "Pre-workout shake at 6:36 AM \u2014 same proven formula with strawberries added. 55g protein = 37% of daily target before the gym. Fat 13g uses 19% of the daily budget. Clean pre-session fuel for Friday Athletic Mixed."
+          "notes": "Pre-workout shake at 6:36 AM — same proven formula with strawberries added. 55g protein = 37% of daily target before the gym. Fat 13g uses 19% of the daily budget. Clean pre-session fuel for Friday Athletic Mixed."
         },
         {
           "meal": "post_workout_shake",
           "time": "08:50",
           "items": [
             {
-              "food": "Gold Standard 100% Whey \u2014 Vanilla Ice Cream",
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
               "amount": "1 scoop",
               "calories_kcal": 120,
               "protein_g": 24,
@@ -3094,7 +3148,7 @@
             "carbs_g": 7,
             "fat_g": 9
           },
-          "notes": "Post-workout shake at 8:50 AM \u2014 single scoop whey + 2x almond milk. 28g protein. Running total 83g protein / 150g target (55%). Day open \u2014 3 meals remaining."
+          "notes": "Post-workout shake at 8:50 AM — single scoop whey + 2x almond milk. 28g protein. Running total 83g protein / 150g target (55%). Day open — 3 meals remaining."
         },
         {
           "meal": "lunch_soup",
@@ -3117,7 +3171,7 @@
             "carbs_g": 14,
             "fat_g": 2
           },
-          "notes": "90 kcal volume fill \u2014 light starter, not a meal. Only 3g protein puts you at 86g/150g (57%) at 2:12 PM. 64g protein still needed; 1,200 kcal remaining in today's budget. This window is the protein make-or-break \u2014 follow with chicken, fish, or a shake before 4 PM."
+          "notes": "90 kcal volume fill — light starter, not a meal. Only 3g protein puts you at 86g/150g (57%) at 2:12 PM. 64g protein still needed; 1,200 kcal remaining in today's budget. This window is the protein make-or-break — follow with chicken, fish, or a shake before 4 PM."
         },
         {
           "meal": "afternoon_sushi",
@@ -3132,7 +3186,7 @@
               "fat_g": 1,
               "estimated": false,
               "source": "Cal AI",
-              "note": "Cal AI reading \u2014 protein likely undercounted (3 pieces salmon nigiri \u2248 15\u201318g typical). Logged as-is per Cal AI."
+              "note": "Cal AI reading — protein likely undercounted (3 pieces salmon nigiri ≈ 15–18g typical). Logged as-is per Cal AI."
             }
           ],
           "subtotals": {
@@ -3141,7 +3195,7 @@
             "carbs_g": 36,
             "fat_g": 1
           },
-          "notes": "Salmon nigiri at 4:53 PM. Cal AI logged 7g protein \u2014 this is an undercount for 3 pieces of salmon (typical: 15\u201318g). Logged as-is. Running total 93g protein / 150g target (62%) with dinner remaining. 992 kcal in / 1,008 kcal remaining."
+          "notes": "Salmon nigiri at 4:53 PM. Cal AI logged 7g protein — this is an undercount for 3 pieces of salmon (typical: 15–18g). Logged as-is. Running total 93g protein / 150g target (62%) with dinner remaining. 992 kcal in / 1,008 kcal remaining."
         }
       ],
       "running_totals": {
@@ -3167,7 +3221,7 @@
           "time": "07:29",
           "items": [
             {
-              "food": "Gold Standard 100% Whey \u2014 Vanilla Ice Cream",
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
               "amount": "2 scoops",
               "calories_kcal": 252,
               "protein_g": 48,
@@ -3218,7 +3272,7 @@
             },
             {
               "food": "Additional ingredients (below screen)",
-              "amount": "\u2014",
+              "amount": "—",
               "calories_kcal": 40,
               "protein_g": 0,
               "carbs_g": 5,
@@ -3233,14 +3287,14 @@
             "carbs_g": 41,
             "fat_g": 13
           },
-          "notes": "Workout shake at 7:29 AM pre-session. Same proven stack. 55g protein = 37% of daily target before the gym. Day open \u2014 95g protein still needed."
+          "notes": "Workout shake at 7:29 AM pre-session. Same proven stack. 55g protein = 37% of daily target before the gym. Day open — 95g protein still needed."
         },
         {
           "meal": "post_workout_shake",
           "time": "11:53",
           "items": [
             {
-              "food": "Gold Standard 100% Whey \u2014 Vanilla Ice Cream",
+              "food": "Gold Standard 100% Whey — Vanilla Ice Cream",
               "amount": "1 scoop",
               "calories_kcal": 120,
               "protein_g": 24,
@@ -3261,7 +3315,7 @@
             },
             {
               "food": "Additional (Cal AI total 220 kcal)",
-              "amount": "\u2014",
+              "amount": "—",
               "calories_kcal": 40,
               "protein_g": 2,
               "carbs_g": 2,
@@ -3283,7 +3337,7 @@
           "time": "14:04",
           "items": [
             {
-              "food": "Pok\u00e9Pok\u00e9 Customized Poke Bowl \u2014 Salmon (Raw) x2 + Egg + Crabmeat",
+              "food": "PokéPoké Customized Poke Bowl — Salmon (Raw) x2 + Egg + Crabmeat",
               "amount": "1 bowl",
               "calories_kcal": 488,
               "protein_g": 33,
@@ -3299,7 +3353,7 @@
             "carbs_g": 24,
             "fat_g": 28
           },
-          "notes": "Pok\u00e9Pok\u00e9 \u6ce2\u5947\u6ce2\u5947 \u5d07\u5fb7\u5e97. Customized poke bowl \u2014 brown rice + lettuce base (less portion), double salmon (raw), sliced egg, crabmeat, wasabi mayo, hummus, onion, bell pepper, cucumber, pumpkin seed. Cal AI: 487.75 kcal / 23.63g C / 32.79g P / 28.43g F. Rounded to 488/33/24/28. Fat driven by salmon fat + wasabi mayo + hummus. Same bowl pattern as Apr 16 dinner."
+          "notes": "PokéPoké 波奇波奇 崇德店. Customized poke bowl — brown rice + lettuce base (less portion), double salmon (raw), sliced egg, crabmeat, wasabi mayo, hummus, onion, bell pepper, cucumber, pumpkin seed. Cal AI: 487.75 kcal / 23.63g C / 32.79g P / 28.43g F. Rounded to 488/33/24/28. Fat driven by salmon fat + wasabi mayo + hummus. Same bowl pattern as Apr 16 dinner."
         }
       ],
       "running_totals": {
@@ -3390,7 +3444,7 @@
       "tracked_with": "Bevel",
       "cardio_load_change": 15,
       "cardio_load_status": "Detraining",
-      "notes": "High strain score (78%) despite moderate activity \u2014 short active window. Cardio load detraining zone."
+      "notes": "High strain score (78%) despite moderate activity — short active window. Cardio load detraining zone."
     },
     {
       "date": "2026-04-08",
@@ -3414,7 +3468,7 @@
       "tracked_with": "Motra",
       "cardio_load_change": null,
       "cardio_load_status": null,
-      "notes": "Volume Spike flagged by Oura \u2014 nearly doubled 14-day avg for a single session. High chest and hinge day. HR stayed mostly in lower aerobic zones."
+      "notes": "Volume Spike flagged by Oura — nearly doubled 14-day avg for a single session. High chest and hinge day. HR stayed mostly in lower aerobic zones."
     },
     {
       "date": "2026-04-08",
@@ -3471,7 +3525,7 @@
       "tracked_with": "Oura + Motra",
       "cardio_load_change": null,
       "cardio_load_status": null,
-      "notes": "Volume Spike \u2014 nearly doubled 14-day average for single session. Warmup block included Cervical CARS, Thoracic Open Book, Glute Bridge, Band Pull Apart, Ext Shoulder Rotation, Kettlebell Swings. HR stayed mostly Z1-Z2. High chest and hinge focus."
+      "notes": "Volume Spike — nearly doubled 14-day average for single session. Warmup block included Cervical CARS, Thoracic Open Book, Glute Bridge, Band Pull Apart, Ext Shoulder Rotation, Kettlebell Swings. HR stayed mostly Z1-Z2. High chest and hinge focus."
     },
     {
       "date": "2026-04-10",
@@ -3495,7 +3549,7 @@
       "tracked_with": "Motra",
       "cardio_load_change": 13,
       "cardio_load_status": "Productive",
-      "notes": "Productive Shape Session \u2014 7,764 kg volume. Cardio stayed within HRV limits. Added 13 pts to Cardio Load. Well-executed session."
+      "notes": "Productive Shape Session — 7,764 kg volume. Cardio stayed within HRV limits. Added 13 pts to Cardio Load. Well-executed session."
     },
     {
       "date": "2026-04-11",
@@ -3511,7 +3565,7 @@
       "stress_lowest": 4,
       "stress_average": 28,
       "energy_bank_pct": 71,
-      "metabolic_opportunity": "At 11 AM \u2014 good window to transition into planned session. Energy Bank at 71% despite 67% daily stress.",
+      "metabolic_opportunity": "At 11 AM — good window to transition into planned session. Energy Bank at 71% despite 67% daily stress.",
       "sleep_metrics": {
         "time_in_bed_min": 469,
         "time_asleep_min": 434,
@@ -3527,7 +3581,7 @@
         "body_temperature_f": 97.6,
         "blood_glucose_mgdl": 101
       },
-      "notes": "Oura snapshot at 11:00 AM. Recovery at 57% \u2014 moderate state. Low strain (6%) allows for structured session. Sleep quality 61% reflects solid rest. All vitals normal. Blood glucose 101 mg/dL stable via Stelo integration."
+      "notes": "Oura snapshot at 11:00 AM. Recovery at 57% — moderate state. Low strain (6%) allows for structured session. Sleep quality 61% reflects solid rest. All vitals normal. Blood glucose 101 mg/dL stable via Stelo integration."
     },
     {
       "date": "2026-04-06",
@@ -3570,13 +3624,13 @@
         "z5_min": 0
       },
       "tracked_with": "Bevel",
-      "pr_notes": "Lifetime PR: Hip Abduction 54 reps in a single set. Total volume 15,409 lbs \u2014 18% above 14-day average of 13,040 lbs. Cardio Status shifted from Maintaining to Peaking.",
-      "notes": "Glute Volume Spike session, Apr 6. Motra session ID 20260306 \u2014 naming discrepancy, actual date confirmed Apr 6, 2026 by timestamp and Monday day-of-week match. High-volume posterior chain day. All HR within Zone 1-2, well within <122 bpm constraint. Oura daily recovery 41%."
+      "pr_notes": "Lifetime PR: Hip Abduction 54 reps in a single set. Total volume 15,409 lbs — 18% above 14-day average of 13,040 lbs. Cardio Status shifted from Maintaining to Peaking.",
+      "notes": "Glute Volume Spike session, Apr 6. Motra session ID 20260306 — naming discrepancy, actual date confirmed Apr 6, 2026 by timestamp and Monday day-of-week match. High-volume posterior chain day. All HR within Zone 1-2, well within <122 bpm constraint. Oura daily recovery 41%."
     },
     {
       "date": "2026-04-12",
       "source": "Apple Fitness",
-      "session_type": "Cardio \u2014 Low Aerobic",
+      "session_type": "Cardio — Low Aerobic",
       "session_name": "Outdoor Walk",
       "location": "Beitun District",
       "start_time": "05:55",
@@ -3614,7 +3668,7 @@
       ],
       "tracked_with": "Apple Fitness",
       "hr_constraint_met": true,
-      "notes": "Morning walk in Beitun District. Avg HR 101 bpm \u2014 well within <122 bpm constraint. Easy effort, Zone 1. Good morning activation / low-intensity fat-burning cardio. Supports VAT reduction goal without adding training load."
+      "notes": "Morning walk in Beitun District. Avg HR 101 bpm — well within <122 bpm constraint. Easy effort, Zone 1. Good morning activation / low-intensity fat-burning cardio. Supports VAT reduction goal without adding training load."
     },
     {
       "date": "2026-04-12",
@@ -3623,12 +3677,12 @@
       "session_name": "Daily Step Count",
       "total_steps": 10292,
       "distance_mi": 4.81,
-      "notes": "Apple Fitness daily step summary as of 8:15 PM. 10,292 steps / 4.81 miles. Morning walk (2.22 mi) + general daily movement (2.59 mi). High NEAT day \u2014 well above average. Supports VAT reduction goal. No additional training load added."
+      "notes": "Apple Fitness daily step summary as of 8:15 PM. 10,292 steps / 4.81 miles. Morning walk (2.22 mi) + general daily movement (2.59 mi). High NEAT day — well above average. Supports VAT reduction goal. No additional training load added."
     },
     {
       "date": "2026-04-13",
       "source": "Motra + Apple Fitness",
-      "session_type": "Cardio \u2014 Low Aerobic",
+      "session_type": "Cardio — Low Aerobic",
       "session_name": "Outdoor Walk",
       "location": "Beitun District, Taichung City",
       "start_time": "05:16",
@@ -3665,13 +3719,13 @@
       ],
       "tracked_with": "Apple Watch Ultra 3 (via Motra)",
       "hr_constraint_met": true,
-      "notes": "Fasted morning walk, Beitun District. 71\u00b0F/86% humidity. Avg HR 96 bpm, Zone 0-1, 16% Activity Strain only. HR well within <122 bpm constraint. Low-intensity aerobic work \u2014 fasted state VAT reduction protocol. Pre-strength session burn."
+      "notes": "Fasted morning walk, Beitun District. 71°F/86% humidity. Avg HR 96 bpm, Zone 0-1, 16% Activity Strain only. HR well within <122 bpm constraint. Low-intensity aerobic work — fasted state VAT reduction protocol. Pre-strength session burn."
     },
     {
       "date": "2026-04-13",
       "source": "Motra",
       "session_type": "Strength Training",
-      "session_name": "Week 1 Monday \u2014 Pull + Glute Hinge",
+      "session_name": "Week 1 Monday — Pull + Glute Hinge",
       "location": "WorldGym Taichung",
       "start_time": "07:56",
       "duration_min": 80,
@@ -3774,13 +3828,13 @@
       ],
       "tracked_with": "Motra",
       "motra_url": "https://motra.com/share/workout/5515084e71",
-      "notes": "Week 1 Monday \u2014 Pull + Glute Hinge. Added Pull-Ups (unplanned) and Wall Slides to PREP. 80 min session \u2014 OVER 65 min cap. Volume 6.3K kg / 475 kcal. Progressed Single-Arm Row from 10kg to 12kg in sets 3-4. Suitcase Carry heavy set dropped from 16kg to 12kg (fatigue management). Good execution of corrective block. HR context: Amber day (HRV 20ms, below 32.5ms baseline)."
+      "notes": "Week 1 Monday — Pull + Glute Hinge. Added Pull-Ups (unplanned) and Wall Slides to PREP. 80 min session — OVER 65 min cap. Volume 6.3K kg / 475 kcal. Progressed Single-Arm Row from 10kg to 12kg in sets 3-4. Suitcase Carry heavy set dropped from 16kg to 12kg (fatigue management). Good execution of corrective block. HR context: Amber day (HRV 20ms, below 32.5ms baseline)."
     },
     {
       "date": "2026-04-13",
       "source": "Apple Fitness",
-      "session_type": "Cardio \u2014 Low Aerobic",
-      "session_name": "Outdoor Walk \u2014 Evening",
+      "session_type": "Cardio — Low Aerobic",
+      "session_name": "Outdoor Walk — Evening",
       "start_time": "18:17",
       "end_time": "18:57",
       "duration_min": 40.3,
@@ -3795,13 +3849,13 @@
       "temperature_f": 79,
       "humidity_pct": 67,
       "hr_constraint_met": true,
-      "notes": "Evening walk Apr 13, West District. 1.86 mi, 40:19, avg HR 89 bpm \u2014 Easy effort. HR well within <122 bpm constraint. Zone 0-1 active recovery. Lower pace than morning walks (21:37/mi vs typical 15-16/mi)."
+      "notes": "Evening walk Apr 13, West District. 1.86 mi, 40:19, avg HR 89 bpm — Easy effort. HR well within <122 bpm constraint. Zone 0-1 active recovery. Lower pace than morning walks (21:37/mi vs typical 15-16/mi)."
     },
     {
       "date": "2026-04-14",
       "source": "Apple Fitness",
-      "session_type": "Cardio \u2014 Low Aerobic",
-      "session_name": "Outdoor Walk \u2014 Morning (Fasted)",
+      "session_type": "Cardio — Low Aerobic",
+      "session_name": "Outdoor Walk — Morning (Fasted)",
       "start_time": "05:53",
       "end_time": "06:26",
       "duration_min": 33.5,
@@ -3816,12 +3870,12 @@
       "temperature_f": 71,
       "humidity_pct": 85,
       "hr_constraint_met": true,
-      "notes": "Fasted morning walk Apr 14, Beitun District. 2.11 mi, 33:28, avg HR 99 bpm \u2014 Easy-Moderate effort. HR within <122 bpm constraint. Faster pace than yesterday's evening walk (15:50 vs 21:37/mi). Peak HR touched 104 bpm on split 3. Active recovery day \u2014 walk already complete."
+      "notes": "Fasted morning walk Apr 14, Beitun District. 2.11 mi, 33:28, avg HR 99 bpm — Easy-Moderate effort. HR within <122 bpm constraint. Faster pace than yesterday's evening walk (15:50 vs 21:37/mi). Peak HR touched 104 bpm on split 3. Active recovery day — walk already complete."
     },
     {
       "date": "2026-04-14",
       "source": "Apple Fitness",
-      "session_type": "Cardio \u2014 Low Aerobic",
+      "session_type": "Cardio — Low Aerobic",
       "session_name": "Indoor Cycle",
       "start_time": "07:57",
       "end_time": "08:28",
@@ -3832,7 +3886,7 @@
       "effort": "Easy (2/5)",
       "location": "Tanzi District",
       "hr_constraint_met": true,
-      "notes": "Indoor Cycle Apr 14, Tanzi District. 31:10, avg HR 100 bpm \u2014 Easy effort. Second movement session of the day (following 5:53 AM outdoor walk). HR well within <122 bpm constraint. Total active calories today: 371 (walk 187 + cycle 184). Double cardio on active recovery day \u2014 volume appropriate given Easy effort on both sessions."
+      "notes": "Indoor Cycle Apr 14, Tanzi District. 31:10, avg HR 100 bpm — Easy effort. Second movement session of the day (following 5:53 AM outdoor walk). HR well within <122 bpm constraint. Total active calories today: 371 (walk 187 + cycle 184). Double cardio on active recovery day — volume appropriate given Easy effort on both sessions."
     },
     {
       "date": "2026-04-15",
@@ -3853,7 +3907,7 @@
     {
       "date": "2026-04-16",
       "source": "Apple Fitness",
-      "session_type": "Cardio \u2014 Low Aerobic",
+      "session_type": "Cardio — Low Aerobic",
       "session_name": "Indoor Cycle",
       "start_time": "08:09",
       "end_time": "08:39",
@@ -3866,12 +3920,12 @@
       "location": "Tanzi District",
       "hr_constraint_met": true,
       "hr_cap": 122,
-      "notes": "Indoor Cycle Apr 16, Tanzi District. 30:12, avg HR 100 bpm, peak 109 bpm \u2014 well within <122 bpm constraint. Easy effort (2/5). Day-after-heavy-session cardio (88-min strength + 154 bpm peak Apr 15). Active calories 143, total 191. Pattern: second consecutive day at Tanzi District Indoor Cycle (same session Apr 14: 31:10, avg HR 100, Easy). Consistent execution."
+      "notes": "Indoor Cycle Apr 16, Tanzi District. 30:12, avg HR 100 bpm, peak 109 bpm — well within <122 bpm constraint. Easy effort (2/5). Day-after-heavy-session cardio (88-min strength + 154 bpm peak Apr 15). Active calories 143, total 191. Pattern: second consecutive day at Tanzi District Indoor Cycle (same session Apr 14: 31:10, avg HR 100, Easy). Consistent execution."
     },
     {
       "date": "2026-04-17",
       "source": "Apple Fitness",
-      "session_type": "Cardio \u2014 Low Aerobic",
+      "session_type": "Cardio — Low Aerobic",
       "session_name": "Outdoor Walk",
       "start_time": "05:26",
       "end_time": "06:09",
@@ -3907,7 +3961,7 @@
           "avg_hr_bpm": 90
         }
       ],
-      "notes": "Outdoor Walk Apr 17, Beitun District. 41:29 workout / 43:00 elapsed. 2.24 mi. Avg HR 95 bpm / peak 106 bpm \u2014 well within 122 bpm cap. Easy effort (3/5). Pre-Friday strength session morning walk on Yellow readiness day (HRV 31ms, 3rd consecutive decline). Appropriate parasympathetic stimulus. No CNS cost. Active 169 kcal / total 236 kcal. Elevation gain 157 ft."
+      "notes": "Outdoor Walk Apr 17, Beitun District. 41:29 workout / 43:00 elapsed. 2.24 mi. Avg HR 95 bpm / peak 106 bpm — well within 122 bpm cap. Easy effort (3/5). Pre-Friday strength session morning walk on Yellow readiness day (HRV 31ms, 3rd consecutive decline). Appropriate parasympathetic stimulus. No CNS cost. Active 169 kcal / total 236 kcal. Elevation gain 157 ft."
     },
     {
       "date": "2026-04-18",
@@ -3944,7 +3998,7 @@
         "humidity_pct": 91
       },
       "hr_compliance": true,
-      "notes": "Fasted Saturday morning walk. 4th consecutive HRV decline day \u2014 walk only, sprint session gate closed. HR well below 122 cap. Hume confirmed: 2.17mi / Zone 1 for 23+ min / 17% strain."
+      "notes": "Fasted Saturday morning walk. 4th consecutive HRV decline day — walk only, sprint session gate closed. HR well below 122 cap. Hume confirmed: 2.17mi / Zone 1 for 23+ min / 17% strain."
     },
     {
       "date": "2026-04-19",
@@ -3984,7 +4038,7 @@
         "humidity_pct": 88
       },
       "hr_compliance": true,
-      "notes": "Fasted Sunday morning walk. First HRV uptick day after 4-day decline (29.8ms, +0.7ms). Oura readiness 88 OPTIMAL. HR avg 90bpm \u2014 clean Zone 2, well within 122bpm cap. 2.28mi / 43 min. Slightly longer and slower pace than Saturday (18:46 vs 15:53/mi). Sunday = active recovery, no strength session."
+      "notes": "Fasted Sunday morning walk. First HRV uptick day after 4-day decline (29.8ms, +0.7ms). Oura readiness 88 OPTIMAL. HR avg 90bpm — clean Zone 2, well within 122bpm cap. 2.28mi / 43 min. Slightly longer and slower pace than Saturday (18:46 vs 15:53/mi). Sunday = active recovery, no strength session."
     },
     {
       "date": "2026-04-20",
@@ -4234,7 +4288,7 @@
           ]
         }
       ],
-      "coaching_flag": "Max HR 154 bpm exceeded 122 bpm guideline \u2014 likely during carries/pull-ups. Avg HR 114 bpm acceptable. 9 min in Z3. Monitor next session.",
+      "coaching_flag": "Max HR 154 bpm exceeded 122 bpm guideline — likely during carries/pull-ups. Avg HR 114 bpm acceptable. 9 min in Z3. Monitor next session.",
       "zone_2_cardio_fulfilled": true
     },
     {
@@ -4408,7 +4462,7 @@
         "adductors_pct": 1,
         "forearm_pct": 1
       },
-      "notes": "Bevel session metrics for Landmine Push/Shoulder/Core. HR well-controlled \u2014 66% of session in Z0/Z1, only 8% Z3, 0% Z4/Z5. Avg 110 bpm within target ceiling. Shoulder dominant at 22% muscular strain, strong oblique/trap/glute loading."
+      "notes": "Bevel session metrics for Landmine Push/Shoulder/Core. HR well-controlled — 66% of session in Z0/Z1, only 8% Z3, 0% Z4/Z5. Avg 110 bpm within target ceiling. Shoulder dominant at 22% muscular strain, strong oblique/trap/glute loading."
     },
     {
       "date": "2026-04-26",
@@ -5517,7 +5571,7 @@
       "volume_kg": 11400,
       "calories_kcal": 591,
       "exercise_count": 17,
-      "session_focus": "Full Body \u2014 Pull / Glutes / Correctives",
+      "session_focus": "Full Body — Pull / Glutes / Correctives",
       "motra_url": "https://motra.com/share/workout/5c74b0660a",
       "exercises": [
         {
@@ -6073,7 +6127,7 @@
       "volume_kg": 9300,
       "calories_kcal": 332,
       "exercise_count": 10,
-      "session_focus": "Full Body \u2014 Push / Pull / Glutes",
+      "session_focus": "Full Body — Push / Pull / Glutes",
       "motra_url": "https://motra.com/share/workout/1622596ca6",
       "exercises": [
         {
@@ -6275,7 +6329,7 @@
       "volume_kg": 7900,
       "calories_kcal": 464,
       "exercise_count": 10,
-      "session_focus": "Full Body \u2014 Pull / Push / Lower",
+      "session_focus": "Full Body — Pull / Push / Lower",
       "motra_url": "https://motra.com/share/workout/9f424d4915",
       "exercises": [
         {
@@ -7141,7 +7195,7 @@
       "volume_kg": 7700,
       "calories_kcal": 337,
       "exercise_count": 9,
-      "session_focus": "Full Body \u2014 Pull / Glutes / Shoulders",
+      "session_focus": "Full Body — Pull / Glutes / Shoulders",
       "motra_url": "https://motra.com/share/workout/3d54f60f8e",
       "exercises": [
         {
@@ -7521,9 +7575,9 @@
       "volume_kg": 13200,
       "calories_kcal": 907,
       "exercise_count": 16,
-      "session_focus": "Full Body \u2014 Functional / Correctives / Pull / Glutes",
+      "session_focus": "Full Body — Functional / Correctives / Pull / Glutes",
       "motra_url": "https://motra.com/share/workout/5c5317ac89",
-      "notes": "Long session \u2014 includes extensive functional fitness block, medicine ball slams, rotational work, and Pallof press. High calorie output.",
+      "notes": "Long session — includes extensive functional fitness block, medicine ball slams, rotational work, and Pallof press. High calorie output.",
       "exercises": [
         {
           "name": "Standing Hip Flexor Stretch",
@@ -7851,7 +7905,7 @@
       "volume_kg": 11200,
       "calories_kcal": 585,
       "exercise_count": 14,
-      "session_focus": "Push / Pull / Glutes / Functional \u2014 KB emphasis",
+      "session_focus": "Push / Pull / Glutes / Functional — KB emphasis",
       "motra_url": "https://motra.com/share/workout/29e06dbb91",
       "exercises": [
         {
@@ -8133,7 +8187,7 @@
       "volume_kg": 3600,
       "calories_kcal": 171,
       "exercise_count": 6,
-      "session_focus": "Functional Fitness \u2014 Landmine Supersets",
+      "session_focus": "Functional Fitness — Landmine Supersets",
       "motra_url": "https://motra.com/share/workout/228b8de18a",
       "exercises": [
         {
@@ -8458,7 +8512,7 @@
       "volume_kg": 8500,
       "calories_kcal": 388,
       "exercise_count": 7,
-      "session_focus": "Pull / Glutes / Shoulders / Core \u2014 Anchor Session",
+      "session_focus": "Pull / Glutes / Shoulders / Core — Anchor Session",
       "motra_url": "https://motra.com/share/workout/4fc9942a67",
       "exercises": [
         {
@@ -9134,7 +9188,7 @@
       "exercise_count": 11,
       "session_focus": "Push / Landmine / Functional / Pull / Glutes",
       "motra_url": "https://motra.com/share/workout/7513a5d273",
-      "notes": "File mislabeled as 20260430 \u2014 confirmed date Apr 10, 2026 from Motra timestamp.",
+      "notes": "File mislabeled as 20260430 — confirmed date Apr 10, 2026 from Motra timestamp.",
       "exercises": [
         {
           "name": "Barbell Landmine Rotational Press",
@@ -9379,7 +9433,7 @@
         "cardio": 42
       },
       "pr_notes": "Lifetime PR: Hip Abduction 54 reps in single set. Volume 18% above 14-day average (13,040 lbs).",
-      "notes": "Glute Volume Spike. High-volume posterior chain and shoulder correction day. Motra session ID 20260306 \u2014 naming discrepancy, actual date confirmed Apr 6, 2026 (Monday). Cardio load +13, Status shifted to Peaking (26 \u2192 39). HR fully within Zone 1 \u2014 well within <122 bpm constraint. Perceived effort Moderate (4/10).",
+      "notes": "Glute Volume Spike. High-volume posterior chain and shoulder correction day. Motra session ID 20260306 — naming discrepancy, actual date confirmed Apr 6, 2026 (Monday). Cardio load +13, Status shifted to Peaking (26 → 39). HR fully within Zone 1 — well within <122 bpm constraint. Perceived effort Moderate (4/10).",
       "exercises": [
         {
           "name": "Stationary Bike",
@@ -9967,7 +10021,7 @@
           ],
           "volume_kg": 1100,
           "category": "main_strength",
-          "note": "Descending weight \u2014 good volume management. Top set 30kg."
+          "note": "Descending weight — good volume management. Top set 30kg."
         },
         {
           "name": "Dumbbell Incline Bench Press",
@@ -10002,7 +10056,7 @@
           ],
           "volume_kg": 1105,
           "category": "main_strength",
-          "note": "Progressive load \u2014 good. 13 reps on final set at 50kg."
+          "note": "Progressive load — good. 13 reps on final set at 50kg."
         },
         {
           "name": "Dumbbell Split Squat",
@@ -10068,7 +10122,7 @@
           ],
           "volume_kg": 65,
           "category": "accessory",
-          "note": "Short reps \u2014 likely fatigue-limited by end of session."
+          "note": "Short reps — likely fatigue-limited by end of session."
         },
         {
           "name": "Pull-Up",
@@ -10079,11 +10133,11 @@
           "weight": "BW",
           "volume_kg": 0,
           "category": "main_strength",
-          "note": "Only 1 set completed \u2014 session was long (88 min), likely fatigue."
+          "note": "Only 1 set completed — session was long (88 min), likely fatigue."
         }
       ],
       "motra_link": "https://motra.com/share/workout/90e59c5410",
-      "coaching_note": "High-volume session \u2014 124% above 14-day calorie average. Peak HR 154 bpm exceeded 122 cap significantly during hinge work. Total energy 692 kcal. 12 exercises, 88 min. Lower body anchor was V Squat (not Hip Thrust as planned). Cardio load: High.",
+      "coaching_note": "High-volume session — 124% above 14-day calorie average. Peak HR 154 bpm exceeded 122 cap significantly during hinge work. Total energy 692 kcal. 12 exercises, 88 min. Lower body anchor was V Squat (not Hip Thrust as planned). Cardio load: High.",
       "volume_kg": 6300
     },
     {
@@ -10199,7 +10253,7 @@
             20
           ],
           "category": "main_strength",
-          "note": "Middle set at 25kg \u2014 good load test"
+          "note": "Middle set at 25kg — good load test"
         },
         {
           "name": "Barbell Landmine Rotational Press",
@@ -10213,7 +10267,7 @@
             27.5
           ],
           "category": "main_strength",
-          "note": "Progressive \u2014 27.5kg on set 2"
+          "note": "Progressive — 27.5kg on set 2"
         },
         {
           "name": "TRX Y Raise",
@@ -10224,7 +10278,7 @@
           ],
           "weight": "BW",
           "category": "shoulder_correction",
-          "note": "Rep drop set 2: 12\u21929. Shoulder endurance ceiling flagged."
+          "note": "Rep drop set 2: 12→9. Shoulder endurance ceiling flagged."
         },
         {
           "name": "Kettlebell Swing",
@@ -10271,7 +10325,7 @@
             4.5
           ],
           "category": "accessory",
-          "note": "10 lb / 4.5 kg \u2014 light; good form control exercise"
+          "note": "10 lb / 4.5 kg — light; good form control exercise"
         },
         {
           "name": "Lying Leg Raise",
@@ -10285,12 +10339,12 @@
         }
       ],
       "motra_link": "https://motra.com/share/workout/b52c62c285",
-      "coaching_note": "Volume +18% above 14-day average (Motra Strength Intensity Spike). Avg HR 114 bpm \u2014 under 122 cap throughout. HR recovery -49 bpm = Superior tier. Yellow readiness day, trained well above Yellow intensity without the HR cost. TRX Y Raise 12\u21929 reps flagged. Duration 62:39 \u2014 within 65-min cap.",
+      "coaching_note": "Volume +18% above 14-day average (Motra Strength Intensity Spike). Avg HR 114 bpm — under 122 cap throughout. HR recovery -49 bpm = Superior tier. Yellow readiness day, trained well above Yellow intensity without the HR cost. TRX Y Raise 12→9 reps flagged. Duration 62:39 — within 65-min cap.",
       "volume_kg": 3959
     },
     {
       "date": "2026-04-19",
-      "session_name": "20260419 Monday \u2014 Pull/Lower/Corrective",
+      "session_name": "20260419 Monday — Pull/Lower/Corrective",
       "source": "Workout App Template (Todd Blackhurst)",
       "type": "template_logged",
       "duration_min": 70,
@@ -10428,7 +10482,7 @@
     },
     {
       "date": "2026-04-20",
-      "session_name": "20260420 Monday \u2014 Push + Quad + Landmine Power",
+      "session_name": "20260420 Monday — Push + Quad + Landmine Power",
       "source": "Motra + Apple Fitness",
       "type": "strength",
       "location": "WorldGym Taichung",
@@ -10444,7 +10498,7 @@
       "avg_hr_bpm": 119,
       "hr_zone": "Zone 2",
       "hr_compliance": true,
-      "hr_cap_note": "119 bpm avg \u2014 compliant with 122 bpm cap",
+      "hr_cap_note": "119 bpm avg — compliant with 122 bpm cap",
       "hr_recovery_bpm": -49,
       "hr_recovery_peak": 156,
       "hr_recovery_end": 107,
@@ -10605,7 +10659,7 @@
               "weight_kg": 25
             }
           ],
-          "note": "Rep drop S2-3 \u2192 fatigue signal in press chain",
+          "note": "Rep drop S2-3 → fatigue signal in press chain",
           "category": "push_power"
         },
         {
@@ -10647,7 +10701,7 @@
         },
         {
           "name": "Machine V Squat",
-          "note": "Sets/reps not captured in PDF export \u2014 performed between Landmine Reverse Lunge and Hammer ISO Lateral Raise",
+          "note": "Sets/reps not captured in PDF export — performed between Landmine Reverse Lunge and Hammer ISO Lateral Raise",
           "category": "quad"
         },
         {
@@ -10685,7 +10739,7 @@
               "weight_kg": 20
             }
           ],
-          "note": "Weight drop S2 (25\u219220kg) \u2014 late session shoulder fatigue",
+          "note": "Weight drop S2 (25→20kg) — late session shoulder fatigue",
           "category": "anti_rotation"
         },
         {
@@ -10726,7 +10780,7 @@
           "category": "carry_core"
         }
       ],
-      "coaching_note": "Excellent compliance session. Avg HR 119 bpm \u2014 just under 122 cap. HR Recovery -49 bpm = Superior. Zone 2 dominated at 46%. Session ran 80 min vs 65-min cap \u2014 15 min over (recurring). Fatigue signals mid-session: Single Arm Push Press dropped 10\u21926 reps, Arc Press weight dropped 25\u219220kg. Both are appropriate regulation, not failure. Pull-ups 5+4 = solid bodyweight press pairing. Shoulder 24% strain \u2014 monitor as asymmetry focus area."
+      "coaching_note": "Excellent compliance session. Avg HR 119 bpm — just under 122 cap. HR Recovery -49 bpm = Superior. Zone 2 dominated at 46%. Session ran 80 min vs 65-min cap — 15 min over (recurring). Fatigue signals mid-session: Single Arm Push Press dropped 10→6 reps, Arc Press weight dropped 25→20kg. Both are appropriate regulation, not failure. Pull-ups 5+4 = solid bodyweight press pairing. Shoulder 24% strain — monitor as asymmetry focus area."
     },
     {
       "date": "2026-04-22",
@@ -11217,8 +11271,8 @@
       "overnight_peak_time": "03:12",
       "overnight_reading_mgdl": 110,
       "overnight_reading_time": "01:42",
-      "sleep_window": "22:15\u201305:13",
-      "notes": "Stelo CGM Apr 8. Current 124 mg/dL at 9:57 AM. Overnight peak 132 mg/dL at 3:12 AM. Variability 11% Good. Avg 109 mg/dL. TAR 12m Optimal. Yesterday (Apr 7) TAR was 3h 26m Elevated \u2014 likely dinner-related."
+      "sleep_window": "22:15–05:13",
+      "notes": "Stelo CGM Apr 8. Current 124 mg/dL at 9:57 AM. Overnight peak 132 mg/dL at 3:12 AM. Variability 11% Good. Avg 109 mg/dL. TAR 12m Optimal. Yesterday (Apr 7) TAR was 3h 26m Elevated — likely dinner-related."
     },
     {
       "date": "2026-04-09",
@@ -11236,8 +11290,8 @@
       "overnight_peak_time": null,
       "overnight_reading_mgdl": 83,
       "overnight_reading_time": "00:52",
-      "sleep_window": "21:21\u201304:25",
-      "notes": "Stelo CGM Apr 9. Current 99 mg/dL Steady. Overnight glucose 83 mg/dL (12:52 AM). Variability 3% Optimal \u2014 best reading to date. TAR 0 Optimal. Avg 94 mg/dL for the day."
+      "sleep_window": "21:21–04:25",
+      "notes": "Stelo CGM Apr 9. Current 99 mg/dL Steady. Overnight glucose 83 mg/dL (12:52 AM). Variability 3% Optimal — best reading to date. TAR 0 Optimal. Avg 94 mg/dL for the day."
     },
     {
       "date": "2026-04-11",
@@ -11257,7 +11311,7 @@
   "posture_assessment": [
     {
       "date": "2026-04",
-      "date_note": "Approximate \u2014 from screenshots batch Apr 11, 2026",
+      "date_note": "Approximate — from screenshots batch Apr 11, 2026",
       "source": "Crosspoint / WorldGym Taiwan AI Assessment",
       "assessment_url": "i.worldgymtaiwan.com",
       "overall": {
@@ -11283,10 +11337,10 @@
         "biceps"
       ],
       "coaching_relevance": {
-        "hip_offset": "Right-side dominance confirmed \u2014 unilateral work and hip alignment cues critical",
-        "head_deviation": "Forward head posture / cervical alignment deficit \u2014 cervical CARS and wall slides priority",
-        "spine_deviation": "Significant lateral spine deviation (11.4 cm) \u2014 anti-rotation and quadratus lumborum work",
-        "right_arm_low_score": "Right shoulder asymmetry \u2014 matches structural correction system priorities",
+        "hip_offset": "Right-side dominance confirmed — unilateral work and hip alignment cues critical",
+        "head_deviation": "Forward head posture / cervical alignment deficit — cervical CARS and wall slides priority",
+        "spine_deviation": "Significant lateral spine deviation (11.4 cm) — anti-rotation and quadratus lumborum work",
+        "right_arm_low_score": "Right shoulder asymmetry — matches structural correction system priorities",
         "flagged_muscles_summary": "Posterior chain (traps, infraspinatus, lats, erectors) and anterior chain (serratus, oblique) imbalances both present"
       },
       "notes": "WorldGym Taiwan AI posture scan (Crosspoint system). Dynamic score 77/100. Hip offset -4.3 cm (right dominant). Spine deviation 11.4 cm is significant. Right arm 45 vs left arm 58 confirms shoulder asymmetry. Directly validates structural correction priorities in 20_STRUCTURAL_CORRECTION_PRIORITY_USER.md."
@@ -11295,8 +11349,8 @@
   "coaching_brief": {
     "date": "2026-04-24",
     "readiness_tier": "Green",
-    "call": "\ud83d\udfe2 Green \u2014 full session. Bevel recovery 83% (+54% rebound from Tuesday's red), HRV 46.2 ms above norm (34.5 avg), RHR 59.1 trending down. Body has reset. Today is Week 2 Friday: Corrective / Unilateral, 60-min cap. Left side leads every anchor \u2014 that's the whole point of today.",
-    "sprint_gate": "N/A \u2014 sprints are Saturday-standalone; tomorrow's gate check: HRV \u226535ms = go.",
+    "call": "🟢 Green — full session. Bevel recovery 83% (+54% rebound from Tuesday's red), HRV 46.2 ms above norm (34.5 avg), RHR 59.1 trending down. Body has reset. Today is Week 2 Friday: Corrective / Unilateral, 60-min cap. Left side leads every anchor — that's the whole point of today.",
+    "sprint_gate": "N/A — sprints are Saturday-standalone; tomorrow's gate check: HRV ≥35ms = go.",
     "goal_summary": {
       "as_of": "2026-04-24",
       "goal_weight_lbs": 159,
@@ -11317,17 +11371,17 @@
       "fat_target_g": 70,
       "tdee_estimate_kcal": 2380,
       "daily_deficit_kcal": 200,
-      "rationale": "Week 2 close. Target 159 lbs / 13% BF / Aug 1. Need 0.4 lbs/week over 14 weeks. Calorie target 2,150 kcal/day (raised Apr 18 to support lean mass gain \u2014 trunk still rated LOW). Protein 150g non-negotiable. Recovery confirmed green after Tuesday's red day."
+      "rationale": "Week 2 close. Target 159 lbs / 13% BF / Aug 1. Need 0.4 lbs/week over 14 weeks. Calorie target 2,150 kcal/day (raised Apr 18 to support lean mass gain — trunk still rated LOW). Protein 150g non-negotiable. Recovery confirmed green after Tuesday's red day."
     },
-    "progress_note": "Week 2 is on track: Mon Push + Landmine Power \u2705, Wed Pull + Posterior Chain \u2705. Friday completes the week. Recovery bounced from 29% \u2192 83% in 24 hours \u2014 that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms \u2014 the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
-    "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like \u2014 not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
+    "progress_note": "Week 2 is on track: Mon Push + Landmine Power ✅, Wed Pull + Posterior Chain ✅. Friday completes the week. Recovery bounced from 29% → 83% in 24 hours — that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms — the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
+    "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like — not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
   },
   "last_updated": "2026-04-26T21:00:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
-    "equipment": "Matrix upright stationary bike \u2014 Floor 1, WorldGym Taichung",
-    "placement": "Saturday standalone session \u2014 NOT on designated recovery days (Tue/Thu), NOT as a strength-day finisher",
+    "equipment": "Matrix upright stationary bike — Floor 1, WorldGym Taichung",
+    "placement": "Saturday standalone session — NOT on designated recovery days (Tue/Thu), NOT as a strength-day finisher",
     "frequency": "1x per week (conservative start)",
     "gate_condition": {
       "skip_if": [
@@ -11335,14 +11389,14 @@
         "Sleep debt > 5 hours",
         "Friday session ran > 80 min or felt heavy"
       ],
-      "reduce_to_3_reps_if": "HRV 33\u201335ms (borderline green)"
+      "reduce_to_3_reps_if": "HRV 33–35ms (borderline green)"
     },
     "protocol": {
       "warm_up_min": 5,
       "warm_up_notes": "Easy pedaling, conversational pace, build HR to 85-100 bpm",
       "cool_down_min": 7,
       "cool_down_notes": "Easy pedaling until HR returns below 110 bpm",
-      "hr_note": "Sprint sessions intentionally exceed 122 bpm cap \u2014 this is therapeutic, not a compliance failure. HR cap only applies to Z1/Z2 recovery days.",
+      "hr_note": "Sprint sessions intentionally exceed 122 bpm cap — this is therapeutic, not a compliance failure. HR cap only applies to Z1/Z2 recovery days.",
       "weeks_1_2": {
         "sets": 4,
         "duration_sec": 20,
@@ -11353,13 +11407,13 @@
         "sets": 5,
         "duration_sec": 20,
         "rest_min": 2.5,
-        "notes": "Add 1 rep only \u2014 maintain 3 min rest if recovery data marginal"
+        "notes": "Add 1 rep only — maintain 3 min rest if recovery data marginal"
       },
       "weeks_5_plus": {
         "sets": 6,
         "duration_sec": 25,
         "rest_min": 2.5,
-        "notes": "Conditional \u2014 only progress if HRV trend supports it and gate conditions routinely met"
+        "notes": "Conditional — only progress if HRV trend supports it and gate conditions routinely met"
       }
     },
     "first_session": "2026-04-19",
@@ -11392,123 +11446,123 @@
     "day_label": "Friday Apr 24",
     "session_type": "Corrective / Unilateral",
     "week": 2,
-    "floor_plan": "Floor 3 \u2192 Floor 2 \u2192 Floor 3",
+    "floor_plan": "Floor 3 → Floor 2 → Floor 3",
     "time_cap_min": 60,
     "gate_condition": null,
-    "why": "Week 2 close \u2014 corrective day. No landmine (different from Monday), no KB Sumo DL or Half-Kneeling Pull-Down (different from Wednesday). Every anchor is unilateral: DB Split Squat, Single-Arm Row, Pallof Press kneel, and left-hand Suitcase Carry to correct right-side dominance. Pull-Up goes early and fresh \u2014 expect 5s, not the 4/4/3 you hit pre-fatigued on Wednesday. Short cap (60 min) \u2014 end the week clean.",
+    "why": "Week 2 close — corrective day. No landmine (different from Monday), no KB Sumo DL or Half-Kneeling Pull-Down (different from Wednesday). Every anchor is unilateral: DB Split Squat, Single-Arm Row, Pallof Press kneel, and left-hand Suitcase Carry to correct right-side dominance. Pull-Up goes early and fresh — expect 5s, not the 4/4/3 you hit pre-fatigued on Wednesday. Short cap (60 min) — end the week clean.",
     "blocks": [
       {
         "id": "prep",
-        "label": "PREP \u2014 Activation",
+        "label": "PREP — Activation",
         "floor": "Floor 3",
         "time_min": 10,
         "exercises": [
           {
             "name": "Wall Slides",
-            "prescription": "2\u00d710",
+            "prescription": "2×10",
             "load": "BW",
-            "cues": "Scap priming \u2014 low traps engage, keep lower ribs down. Slow tempo."
+            "cues": "Scap priming — low traps engage, keep lower ribs down. Slow tempo."
           },
           {
             "name": "Open Book Stretch",
-            "prescription": "2\u00d78/side (left first)",
+            "prescription": "2×8/side (left first)",
             "load": "BW",
             "cues": "Thoracic rotation + anterior chain opening. Pause at end range, exhale deeper."
           },
           {
             "name": "Cable Hip Abduction",
-            "prescription": "2\u00d712/side (left first)",
+            "prescription": "2×12/side (left first)",
             "load": "Light",
-            "cues": "Glute med activation \u2014 standing, keep pelvis level, drive the heel out, not the knee."
+            "cues": "Glute med activation — standing, keep pelvis level, drive the heel out, not the knee."
           },
           {
             "name": "Scapular Pull-Up Hang",
-            "prescription": "2\u00d76",
+            "prescription": "2×6",
             "load": "BW",
-            "cues": "Shoulders DOWN and back from ears \u2014 prime lats before Block B."
+            "cues": "Shoulders DOWN and back from ears — prime lats before Block B."
           }
         ]
       },
       {
         "id": "a",
-        "label": "Block A \u2014 Unilateral Split (Anchor)",
+        "label": "Block A — Unilateral Split (Anchor)",
         "floor": "Floor 2",
         "time_min": 18,
         "pairing": "superset",
         "exercises": [
           {
             "name": "Dumbbell Supported Split Squat",
-            "prescription": "3\u00d710/side (left forward first)",
-            "load": "Start DB 12\u201314 kg each hand",
+            "prescription": "3×10/side (left forward first)",
+            "load": "Start DB 12–14 kg each hand",
             "cues": "Front heel drives the floor. Hand on rack for balance only. Knee tracks over toe, NOT over foot."
           },
           {
             "name": "Single-Arm Dumbbell Row (bench)",
-            "prescription": "3\u00d710/side (left first)",
-            "load": "Start 16\u201318 kg, progress if easy",
-            "cues": "Elbow to hip \u2014 NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
+            "prescription": "3×10/side (left first)",
+            "load": "Start 16–18 kg, progress if easy",
+            "cues": "Elbow to hip — NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
           }
         ]
       },
       {
         "id": "b",
-        "label": "Block B \u2014 Pull-Up Anchor + Glute",
+        "label": "Block B — Pull-Up Anchor + Glute",
         "floor": "Floor 2",
         "time_min": 16,
         "pairing": "superset",
         "exercises": [
           {
             "name": "Pull-Up",
-            "prescription": "3\u00d75",
+            "prescription": "3×5",
             "load": "BW",
             "cues": "2-sec hold at top every rep. Chin over bar. Slow 3-count descent. Fresh = expect 5; don't cheat the hold."
           },
           {
             "name": "Machine Hip Thrust",
-            "prescription": "3\u00d712",
+            "prescription": "3×12",
             "load": "Match Week 1 load; +1 plate if all 12 clean",
-            "cues": "Heel-drive cue \u2014 feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
+            "cues": "Heel-drive cue — feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
           }
         ]
       },
       {
         "id": "c",
-        "label": "Block C \u2014 Unilateral Trunk + Scapular Close",
+        "label": "Block C — Unilateral Trunk + Scapular Close",
         "floor": "Floor 3",
         "time_min": 14,
         "exercises": [
           {
             "name": "Half-Kneeling Pallof Press",
-            "prescription": "3\u00d712/side (left knee up first, face cable)",
+            "prescription": "3×12/side (left knee up first, face cable)",
             "load": "10.2 kg",
-            "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull \u2014 don't chase it. Unilateral kneel = hip stability bonus."
+            "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull — don't chase it. Unilateral kneel = hip stability bonus."
           },
           {
             "name": "Cable Face Pull to W",
-            "prescription": "3\u00d712",
-            "load": "Moderate \u2014 form over load",
-            "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W \u2014 hands out, shoulders packed. 1-sec hold at W."
+            "prescription": "3×12",
+            "load": "Moderate — form over load",
+            "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W — hands out, shoulders packed. 1-sec hold at W."
           },
           {
-            "name": "Suitcase Carry \u2014 Left Hand",
-            "prescription": "3\u00d725m",
+            "name": "Suitcase Carry — Left Hand",
+            "prescription": "3×25m",
             "load": "24 kg KB, left hand only",
-            "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy \u2014 drop a step."
+            "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy — drop a step."
           }
         ]
       }
     ],
     "athlete_notes": "",
     "created_date": "2026-04-24",
-    "coach_note": "\ud83d\udfe2 Green day. Bevel rebounded to 83% recovery, HRV 46.2 ms (above norm). Go full intent. Three specific focuses: (1) Split Squat left-forward first \u2014 right side will want to take over, don't let it. (2) Pull-Up 2-sec hold at top on EVERY rep \u2014 the hold is the point. (3) Suitcase Carry left-hand-only \u2014 this is the most important 3 minutes of your week for right-dominance correction."
+    "coach_note": "🟢 Green day. Bevel rebounded to 83% recovery, HRV 46.2 ms (above norm). Go full intent. Three specific focuses: (1) Split Squat left-forward first — right side will want to take over, don't let it. (2) Pull-Up 2-sec hold at top on EVERY rep — the hold is the point. (3) Suitcase Carry left-hand-only — this is the most important 3 minutes of your week for right-dominance correction."
   },
   "coach_questions": [
     {
       "id": "cq_001",
-      "icon": "\u26a1",
-      "text": "Where do you actually feel your right-side dominance most \u2014 in the gym, or in daily life?",
+      "icon": "⚡",
+      "text": "Where do you actually feel your right-side dominance most — in the gym, or in daily life?",
       "context": "Carrying bags, reaching, stairs, sitting crooked? The real-life signal often reveals more than any single exercise. This calibrates which correctives matter most to prioritize.",
-      "placeholder": "e.g. right shoulder always rides higher when I carry groceries, or I notice my right hip loads more on stairs\u2026",
+      "placeholder": "e.g. right shoulder always rides higher when I carry groceries, or I notice my right hip loads more on stairs…",
       "rows": 3,
       "category": "structural",
       "coaching_purpose": "calibrate structural correction priority in daily vs. gym context",
@@ -11518,10 +11572,10 @@
     },
     {
       "id": "cq_002",
-      "icon": "\ud83d\udd50",
-      "text": "When during the day does your energy actually peak \u2014 and is that when you typically train?",
+      "icon": "🕐",
+      "text": "When during the day does your energy actually peak — and is that when you typically train?",
       "context": "Misalignment between peak energy and training time is one of the most underrated performance drains. This shapes when Coach should front-load nutrition and how to read readiness scores.",
-      "placeholder": "e.g. I'm sharpest 8-10am but often train at noon because of schedule\u2026",
+      "placeholder": "e.g. I'm sharpest 8-10am but often train at noon because of schedule…",
       "rows": 2,
       "category": "readiness",
       "coaching_purpose": "align training timing recommendations with biological energy peak",
@@ -11531,10 +11585,10 @@
     },
     {
       "id": "cq_003",
-      "icon": "\u26ea",
-      "text": "On a heavy preaching/ministry week \u2014 how does it actually affect your training energy?",
+      "icon": "⛪",
+      "text": "On a heavy preaching/ministry week — how does it actually affect your training energy?",
       "context": "Cognitive and emotional load from ministry is real physiological stress. Coach needs to know whether heavy ministry weeks = lower readiness, or whether training is your release valve.",
-      "placeholder": "e.g. big sermon week = mentally drained but still want to train / or = body feels flat\u2026",
+      "placeholder": "e.g. big sermon week = mentally drained but still want to train / or = body feels flat…",
       "rows": 3,
       "category": "readiness",
       "coaching_purpose": "model ministry load as a readiness variable alongside HRV and sleep",
@@ -11544,10 +11598,10 @@
     },
     {
       "id": "cq_004",
-      "icon": "\ud83d\udeb4",
-      "text": "On cardio days \u2014 what type actually feels good vs. what feels like punishment?",
+      "icon": "🚴",
+      "text": "On cardio days — what type actually feels good vs. what feels like punishment?",
       "context": "Coach knows you train cardio on off-days, but not what format works best mentally and physically given hip OA. This directly affects what Coach recommends for cardio options.",
-      "placeholder": "e.g. bike is fine, treadmill walking is boring, swimming is great but inconvenient\u2026",
+      "placeholder": "e.g. bike is fine, treadmill walking is boring, swimming is great but inconvenient…",
       "rows": 3,
       "category": "preferences",
       "coaching_purpose": "build an accurate cardio preference profile for off-day programming",
@@ -11557,10 +11611,10 @@
     },
     {
       "id": "cq_005",
-      "icon": "\u2705",
-      "text": "What's the specific feeling \u2014 physical or mental \u2014 that tells you a session was actually worth it?",
+      "icon": "✅",
+      "text": "What's the specific feeling — physical or mental — that tells you a session was actually worth it?",
       "context": "Not 'I worked hard.' The precise signal. Pump? Movement quality? A specific exercise that landed? Coach uses this to calibrate when to call a session a win vs. when to adjust.",
-      "placeholder": "e.g. when I leave feeling taller / when I hit all my pull-up reps / when the last set felt controlled\u2026",
+      "placeholder": "e.g. when I leave feeling taller / when I hit all my pull-up reps / when the last set felt controlled…",
       "rows": 3,
       "category": "feedback",
       "coaching_purpose": "define personal session success signal for post-session coaching accuracy",
@@ -11570,10 +11624,10 @@
     },
     {
       "id": "cq_006",
-      "icon": "\ud83d\udca7",
-      "text": "What does your hydration look like on training days \u2014 before, during, and after?",
+      "icon": "💧",
+      "text": "What does your hydration look like on training days — before, during, and after?",
       "context": "Dehydration tanks HRV and perceived effort faster than most people realize. Coach has no visibility into this. Even a rough pattern is useful.",
-      "placeholder": "e.g. coffee in the morning, water during session, forget to drink after\u2026",
+      "placeholder": "e.g. coffee in the morning, water during session, forget to drink after…",
       "rows": 2,
       "category": "nutrition",
       "coaching_purpose": "assess hydration as a hidden factor in readiness and HR control",
@@ -11583,10 +11637,10 @@
     },
     {
       "id": "cq_007",
-      "icon": "\ud83e\uddf3",
-      "text": "When you travel for ministry \u2014 what training do you actually manage to do?",
+      "icon": "🧳",
+      "text": "When you travel for ministry — what training do you actually manage to do?",
       "context": "Travel breaks are predictable stress on your program. Knowing what's realistic on the road lets Coach build a proper travel protocol instead of a generic 'do what you can.'",
-      "placeholder": "e.g. hotel gym basics, bodyweight only, usually nothing for 3+ days\u2026",
+      "placeholder": "e.g. hotel gym basics, bodyweight only, usually nothing for 3+ days…",
       "rows": 2,
       "category": "logistics",
       "coaching_purpose": "build a realistic travel training protocol based on actual behavior",
@@ -11596,10 +11650,10 @@
     },
     {
       "id": "cq_008",
-      "icon": "\ud83e\ude7b",
-      "text": "Outside of hip OA \u2014 any other past injuries or surgeries Coach should factor into exercise selection?",
-      "context": "Things that healed years ago can still create compensation patterns today. Shoulder, knee, back, wrist \u2014 even old stuff matters for long-term programming.",
-      "placeholder": "e.g. right knee had surgery in 2010, left shoulder impingement a few years ago\u2026",
+      "icon": "🩻",
+      "text": "Outside of hip OA — any other past injuries or surgeries Coach should factor into exercise selection?",
+      "context": "Things that healed years ago can still create compensation patterns today. Shoulder, knee, back, wrist — even old stuff matters for long-term programming.",
+      "placeholder": "e.g. right knee had surgery in 2010, left shoulder impingement a few years ago…",
       "rows": 3,
       "category": "structural",
       "coaching_purpose": "build complete injury history to prevent accidental re-aggravation",
@@ -11609,10 +11663,10 @@
     },
     {
       "id": "cq_009",
-      "icon": "\ud83c\udf19",
-      "text": "What's the last thing you typically eat or drink before bed \u2014 and does it vary much night to night?",
+      "icon": "🌙",
+      "text": "What's the last thing you typically eat or drink before bed — and does it vary much night to night?",
       "context": "Late-night eating (especially sweets vs. protein vs. nothing) directly impacts Oura sleep scores and overnight HRV. Coach can't see this from the data alone.",
-      "placeholder": "e.g. usually nothing after 8pm / or I always have a small snack around 9\u2026",
+      "placeholder": "e.g. usually nothing after 8pm / or I always have a small snack around 9…",
       "rows": 2,
       "category": "nutrition",
       "coaching_purpose": "connect late-eating patterns to overnight HRV and sleep quality trends",
@@ -11622,10 +11676,10 @@
     },
     {
       "id": "cq_010",
-      "icon": "\ud83d\udccd",
-      "text": "Which floor of WorldGym do you prefer to start on \u2014 and does the starting floor affect your mindset?",
+      "icon": "📍",
+      "text": "Which floor of WorldGym do you prefer to start on — and does the starting floor affect your mindset?",
       "context": "Coach has the layout rules, but not your personal preference. If starting on Floor 3 puts you in the right headspace, that's worth baking into the default session structure.",
-      "placeholder": "e.g. I like starting on F2 and going up / or F3 activation feel is better for me mentally\u2026",
+      "placeholder": "e.g. I like starting on F2 and going up / or F3 activation feel is better for me mentally…",
       "rows": 2,
       "category": "logistics",
       "coaching_purpose": "personalize gym floor sequencing to match preference vs. just logical flow",
@@ -11635,10 +11689,10 @@
     },
     {
       "id": "cq_011",
-      "icon": "\ud83e\uddd8",
-      "text": "What do your off-days actually look like \u2014 intentional rest, light activity, or just whatever happens?",
+      "icon": "🧘",
+      "text": "What do your off-days actually look like — intentional rest, light activity, or just whatever happens?",
       "context": "Recovery days aren't all equal. Walking, stretching, and light movement all affect the readiness picture. Coach needs to know what 'rest day' actually means for you.",
-      "placeholder": "e.g. usually a lot of walking, or mostly sedentary with desk work, or I try to do light stretching\u2026",
+      "placeholder": "e.g. usually a lot of walking, or mostly sedentary with desk work, or I try to do light stretching…",
       "rows": 2,
       "category": "recovery",
       "coaching_purpose": "model off-day activity level when interpreting mid-week readiness data",
@@ -11648,10 +11702,10 @@
     },
     {
       "id": "cq_012",
-      "icon": "\ud83c\udfb5",
-      "text": "Do you train with music \u2014 and does the type of music change how hard you actually push?",
+      "icon": "🎵",
+      "text": "Do you train with music — and does the type of music change how hard you actually push?",
       "context": "Sounds minor but isn't. Tempo and arousal from music is a real variable in effort output. Some athletes train completely differently with headphones on vs. off.",
-      "placeholder": "e.g. always headphones \u2014 worship keeps me focused / or I need high BPM to push hard\u2026",
+      "placeholder": "e.g. always headphones — worship keeps me focused / or I need high BPM to push hard…",
       "rows": 2,
       "category": "preferences",
       "coaching_purpose": "understand arousal inputs that affect session performance",
@@ -11673,8 +11727,8 @@
             "Red Tractor Omega 3 Instant Oats (39 cal)",
             "Unsweetened Almond Milk (45 cal)",
             "Plain Yogurt 120g (75 cal)",
-            "Frozen Blueberries \u00bd cup (39 cal)",
-            "Unsweetened Frozen Strawberries \u00bd cup (38 cal)"
+            "Frozen Blueberries ½ cup (39 cal)",
+            "Unsweetened Frozen Strawberries ½ cup (38 cal)"
           ],
           "kcal": 364,
           "protein_g": 31,
@@ -11766,10 +11820,10 @@
           "protein_g": 41.3,
           "carbs_g": 50.57,
           "fat_g": 31.25,
-          "notes": "Restaurant lunch \u2014 Pasta + grilled chicken breast, tomato cream sauce, grated parmesan"
+          "notes": "Restaurant lunch — Pasta + grilled chicken breast, tomato cream sauce, grated parmesan"
         },
         {
-          "name": "Chili's \u2014 Chicken Fajita Skillet + 2 Tortillas",
+          "name": "Chili's — Chicken Fajita Skillet + 2 Tortillas",
           "time": "~18:30",
           "source": "Cal AI",
           "kcal": 408,
@@ -11791,7 +11845,7 @@
         "carbs_g": 190,
         "fat_g": 70
       },
-      "status": "partial \u2014 day open",
+      "status": "partial — day open",
       "remaining": {
         "kcal": 516,
         "protein_g": 35.5,
@@ -11846,7 +11900,7 @@
           "protein_g": null,
           "carbs_g": null,
           "fat_g": null,
-          "note": "Partial \u2014 macros not visible in screenshot"
+          "note": "Partial — macros not visible in screenshot"
         },
         {
           "meal_name": "Grilled Chicken Breast",
@@ -11856,7 +11910,7 @@
           "protein_g": null,
           "carbs_g": null,
           "fat_g": null,
-          "note": "Partial \u2014 macros not visible in screenshot"
+          "note": "Partial — macros not visible in screenshot"
         },
         {
           "meal_name": "White Rice (Long-Grain, Cooked)",
@@ -11883,7 +11937,7 @@
         "carbs_g": 169,
         "fat_g": 93
       },
-      "cal_ai_note": "Cal AI final total 2189 kcal as of 6:43 PM \u2014 includes breakfast + additional meals"
+      "cal_ai_note": "Cal AI final total 2189 kcal as of 6:43 PM — includes breakfast + additional meals"
     },
     {
       "date": "2026-04-17",
@@ -11906,7 +11960,7 @@
           "protein_g": null,
           "carbs_g": null,
           "fat_g": null,
-          "note": "Partial \u2014 macros not visible in screenshot"
+          "note": "Partial — macros not visible in screenshot"
         }
       ],
       "totals": {
@@ -11929,7 +11983,7 @@
           "protein_g": null,
           "carbs_g": null,
           "fat_g": null,
-          "note": "Partial \u2014 macros not visible in screenshot"
+          "note": "Partial — macros not visible in screenshot"
         },
         {
           "meal_name": "Hamburger with 1/4 Lb Meat on Bun",
@@ -12070,20 +12124,20 @@
   ],
   "weekly_session_plans": {
     "week_start": "2026-04-20",
-    "week_label": "Week 2 \u2014 Apr 20\u201325, 2026",
+    "week_label": "Week 2 — Apr 20–25, 2026",
     "planned_on": "2026-04-19",
     "sessions": {
       "1": {
         "date": "2026-04-20",
         "day": "Monday",
         "session_type": "Push + Quad + Landmine Power",
-        "theme": "Landmine push power \u2014 functional pressing in multiple planes",
-        "floor_plan": "Floor 3 \u2192 Floor 2",
+        "theme": "Landmine push power — functional pressing in multiple planes",
+        "floor_plan": "Floor 3 → Floor 2",
         "time_cap_min": 65,
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP \u2014 Floor 3",
+            "label": "PREP — Floor 3",
             "time_min": 10,
             "exercises": [
               {
@@ -12115,7 +12169,7 @@
           },
           {
             "id": "A",
-            "label": "Block A \u2014 Landmine Press (Floor 2)",
+            "label": "Block A — Landmine Press (Floor 2)",
             "exercises": [
               {
                 "name": "Landmine Press",
@@ -12124,7 +12178,7 @@
                 "each_side": true,
                 "weight_kg": 25,
                 "motra": "Landmine Single-Arm Press",
-                "location": "\ud83d\udccd Floor 2, landmine"
+                "location": "📍 Floor 2, landmine"
               },
               {
                 "name": "Landmine Single-Arm Push Press",
@@ -12133,8 +12187,8 @@
                 "each_side": true,
                 "weight_kg": 25,
                 "motra": "Landmine Single-Arm Push Press",
-                "location": "\ud83d\udccd Floor 2, landmine",
-                "note": "NEW \u2014 leg drive into overhead press"
+                "location": "📍 Floor 2, landmine",
+                "note": "NEW — leg drive into overhead press"
               },
               {
                 "name": "Incline DB Press",
@@ -12142,14 +12196,14 @@
                 "reps": 10,
                 "weight_kg": 16,
                 "motra": "Dumbbell Incline Bench Press",
-                "location": "\ud83d\udccd Floor 2, incline bench"
+                "location": "📍 Floor 2, incline bench"
               }
             ],
             "rest_sec": 75
           },
           {
             "id": "B",
-            "label": "Block B \u2014 Quad + Hinge (Floor 2)",
+            "label": "Block B — Quad + Hinge (Floor 2)",
             "exercises": [
               {
                 "name": "Hammer Strength V-Squat",
@@ -12157,8 +12211,8 @@
                 "reps": 12,
                 "weight_kg": "40/50/50",
                 "motra": "Machine V Squat",
-                "location": "\ud83d\udccd Floor 2, V-squat machine",
-                "note": "Limited depth \u2014 OA-safe"
+                "location": "📍 Floor 2, V-squat machine",
+                "note": "Limited depth — OA-safe"
               },
               {
                 "name": "Landmine Reverse Lunge",
@@ -12167,15 +12221,15 @@
                 "each_side": true,
                 "weight_kg": 25,
                 "motra": "Landmine Reverse Lunge",
-                "location": "\ud83d\udccd Floor 2, landmine",
-                "note": "NEW \u2014 left leg first"
+                "location": "📍 Floor 2, landmine",
+                "note": "NEW — left leg first"
               }
             ],
             "rest_sec": 90
           },
           {
             "id": "C",
-            "label": "Block C \u2014 Shoulder + Trunk Close (Floor 2)",
+            "label": "Block C — Shoulder + Trunk Close (Floor 2)",
             "exercises": [
               {
                 "name": "Hammer Strength Lateral Raise",
@@ -12183,17 +12237,17 @@
                 "reps": 12,
                 "weight_kg": 5,
                 "motra": "Hammer Strength Lateral Raise",
-                "location": "\ud83d\udccd Floor 2"
+                "location": "📍 Floor 2"
               },
               {
                 "name": "Landmine Half-Kneeling Arc Press",
                 "sets": 3,
                 "reps": 12,
                 "each_side": true,
-                "weight_kg": "25\u219220",
+                "weight_kg": "25→20",
                 "motra": "Landmine Half-Kneeling Arc Press",
-                "location": "\ud83d\udccd Floor 2, landmine",
-                "note": "NEW \u2014 arc motion, obliques + shoulder"
+                "location": "📍 Floor 2, landmine",
+                "note": "NEW — arc motion, obliques + shoulder"
               },
               {
                 "name": "Landmine Rainbow",
@@ -12202,8 +12256,8 @@
                 "each_side": true,
                 "weight_kg": 20,
                 "motra": "Landmine Rainbow",
-                "location": "\ud83d\udccd Floor 2, landmine",
-                "note": "NEW \u2014 full arc anti-rotation"
+                "location": "📍 Floor 2, landmine",
+                "note": "NEW — full arc anti-rotation"
               },
               {
                 "name": "Suitcase Carry",
@@ -12212,26 +12266,26 @@
                 "weight_kg": 16,
                 "hand": "left",
                 "motra": "Kettlebell Suitcase Carry",
-                "location": "\ud83d\udccd Floor 2"
+                "location": "📍 Floor 2"
               }
             ],
             "rest_sec": 60
           }
         ],
         "hr_rule": "Stay below 122 bpm during strength blocks",
-        "session_notes": "4 new landmine movements. No TRX Y-Raise progression \u2014 confirm 12 reps clean before adding load. Watch session time \u2014 cap is 65 min."
+        "session_notes": "4 new landmine movements. No TRX Y-Raise progression — confirm 12 reps clean before adding load. Watch session time — cap is 65 min."
       },
       "3": {
         "date": "2026-04-22",
         "day": "Wednesday",
         "session_type": "Pull + Posterior Chain: Athletic Movement",
-        "theme": "Movement integration \u2014 pull in varied positions, new posterior chain, dynamic core close",
-        "floor_plan": "Floor 3 (Prep + Block A) \u2192 Floor 2 (Blocks B + C)",
+        "theme": "Movement integration — pull in varied positions, new posterior chain, dynamic core close",
+        "floor_plan": "Floor 3 (Prep + Block A) → Floor 2 (Blocks B + C)",
         "time_cap_min": 60,
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP \u2014 Floor 3",
+            "label": "PREP — Floor 3",
             "time_min": 10,
             "exercises": [
               {
@@ -12251,20 +12305,20 @@
                 "name": "Dead Hang",
                 "sets": 2,
                 "duration_sec": 30,
-                "note": "Progress from 20\u219230 sec. Active shoulder depression: pull blades DOWN from ears"
+                "note": "Progress from 20→30 sec. Active shoulder depression: pull blades DOWN from ears"
               },
               {
                 "name": "Band Pull-Apart to External Rotation",
                 "sets": 2,
                 "reps": 15,
                 "motra": "Resistance Band Pull Apart",
-                "note": "Hold form through all 15. Fatigue = external rotators working \u2014 good"
+                "note": "Hold form through all 15. Fatigue = external rotators working — good"
               }
             ]
           },
           {
             "id": "A",
-            "label": "Block A \u2014 Functional Pull: Two Positions (Floor 3)",
+            "label": "Block A — Functional Pull: Two Positions (Floor 3)",
             "exercises": [
               {
                 "name": "Half-Kneeling Single-Arm Cable Pull-Down",
@@ -12273,31 +12327,31 @@
                 "each_side": true,
                 "weight_kg_start": 10,
                 "motra": "Half-Kneeling Single-Arm Cable Pull-Down",
-                "location": "\ud83d\udccd Floor 3, functional trainer",
-                "note": "Left knee down first. Right side cue: set scapula DOWN and IN before pulling \u2014 'Elbow to pocket, not hand to hip.' Start at 10kg."
+                "location": "📍 Floor 3, functional trainer",
+                "note": "Left knee down first. Right side cue: set scapula DOWN and IN before pulling — 'Elbow to pocket, not hand to hip.' Start at 10kg."
               },
               {
                 "name": "Rope Cable Face Pull to W",
                 "sets": 3,
-                "reps": "10\u201312",
+                "reps": "10–12",
                 "motra": "Cable Face Pull",
-                "location": "\ud83d\udccd Floor 3, functional trainer (rope)",
-                "note": "Replaces TRX Row to T permanently. Rope at face height. Pull to forehead, elbows high \u2192 rotate to W, hold 1 sec, slow return."
+                "location": "📍 Floor 3, functional trainer (rope)",
+                "note": "Replaces TRX Row to T permanently. Rope at face height. Pull to forehead, elbows high → rotate to W, hold 1 sec, slow return."
               }
             ],
             "rest_sec": 75
           },
           {
             "id": "B",
-            "label": "Block B \u2014 Vertical Pull + Posterior Chain (Floor 2)",
+            "label": "Block B — Vertical Pull + Posterior Chain (Floor 2)",
             "exercises": [
               {
                 "name": "Pull-Up",
                 "sets": 3,
-                "reps": "4\u20135",
+                "reps": "4–5",
                 "motra": "Pull Up",
-                "location": "\ud83d\udccd Floor 2, pull-up bar",
-                "note": "Anchor lift. 2-sec hold at top each rep. 3-count slow descent. Pre-fatigued on pull day = 3\u20134 reps expected, not 5."
+                "location": "📍 Floor 2, pull-up bar",
+                "note": "Anchor lift. 2-sec hold at top each rep. 3-count slow descent. Pre-fatigued on pull day = 3–4 reps expected, not 5."
               },
               {
                 "name": "KB Sumo Deadlift",
@@ -12305,15 +12359,15 @@
                 "reps": 10,
                 "weight_kg": 20,
                 "motra": "KB Sumo Deadlift",
-                "location": "\ud83d\udccd Floor 2 or Floor 3 KBs",
-                "note": "Progress from 16kg (too light). Target 20kg \u2192 24kg. Sumo stance (OA-safe). Squeeze glutes hard at lockout, hold 1 sec."
+                "location": "📍 Floor 2 or Floor 3 KBs",
+                "note": "Progress from 16kg (too light). Target 20kg → 24kg. Sumo stance (OA-safe). Squeeze glutes hard at lockout, hold 1 sec."
               }
             ],
             "rest_sec": 90
           },
           {
             "id": "C",
-            "label": "Block C \u2014 Trunk + Athletic Close (Floor 2)",
+            "label": "Block C — Trunk + Athletic Close (Floor 2)",
             "exercises": [
               {
                 "name": "Half-Kneeling Cable High-to-Low Chop",
@@ -12321,15 +12375,15 @@
                 "reps": "10/side",
                 "weight_kg": 10.2,
                 "motra": "Cable Chop (High to Low)",
-                "location": "\ud83d\udccd Floor 2, cable",
-                "note": "Left knee up, facing machine. Slow tempo. Modified Pallof Press \u2014 anti-rotation diagonal. Stay at 10.2kg."
+                "location": "📍 Floor 2, cable",
+                "note": "Left knee up, facing machine. Slow tempo. Modified Pallof Press — anti-rotation diagonal. Stay at 10.2kg."
               },
               {
                 "name": "Hanging Leg Raise",
                 "sets": 3,
                 "reps": 10,
                 "motra": "Hanging Leg Raise",
-                "location": "\ud83d\udccd Floor 2, captain's chair with back pad",
+                "location": "📍 Floor 2, captain's chair with back pad",
                 "note": "Use back-support station to eliminate swing. Core exercise, not hip flexor."
               },
               {
@@ -12339,127 +12393,127 @@
                 "weight_kg_left": 24,
                 "weight_kg_right": 12,
                 "motra": "Offset Farmer Carry",
-                "location": "\ud83d\udccd Floor 3 KBs \u2192 plan as final exercise",
-                "note": "Left hand 24kg, right hand 12kg. Left hand ceiling on Floor 3 = 24kg. Next session: left to 28kg \u2192 use Floor 2 DBs."
+                "location": "📍 Floor 3 KBs → plan as final exercise",
+                "note": "Left hand 24kg, right hand 12kg. Left hand ceiling on Floor 3 = 24kg. Next session: left to 28kg → use Floor 2 DBs."
               }
             ],
             "rest_sec": 60
           }
         ],
         "hr_rule": "Stay below 122 bpm during strength blocks",
-        "session_notes": "0 repeated exercises from Week 1 pull day. 3 new movements. Full session executable Floor 3 + Floor 2 \u2014 no mid-session floor changes. Time cap 60 min."
+        "session_notes": "0 repeated exercises from Week 1 pull day. 3 new movements. Full session executable Floor 3 + Floor 2 — no mid-session floor changes. Time cap 60 min."
       },
       "5": {
         "date": "2026-04-24",
         "day": "Friday",
         "session_type": "Corrective / Unilateral",
-        "theme": "Unilateral close \u2014 right-side correction, anti-rotation, pull-up anchor. Lower systemic fatigue than Mon/Wed \u2014 end the week clean, not grindy.",
-        "floor_plan": "Floor 3 \u2192 Floor 2 \u2192 Floor 3",
+        "theme": "Unilateral close — right-side correction, anti-rotation, pull-up anchor. Lower systemic fatigue than Mon/Wed — end the week clean, not grindy.",
+        "floor_plan": "Floor 3 → Floor 2 → Floor 3",
         "time_cap_min": 60,
-        "status": "LIVE \u2014 active session for today",
+        "status": "LIVE — active session for today",
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP \u2014 Activation",
+            "label": "PREP — Activation",
             "floor": "Floor 3",
             "time_min": 10,
             "exercises": [
               {
                 "name": "Wall Slides",
-                "prescription": "2\u00d710",
+                "prescription": "2×10",
                 "load": "BW",
-                "cues": "Scap priming \u2014 low traps engage, keep lower ribs down. Slow tempo."
+                "cues": "Scap priming — low traps engage, keep lower ribs down. Slow tempo."
               },
               {
                 "name": "Open Book Stretch",
-                "prescription": "2\u00d78/side (left first)",
+                "prescription": "2×8/side (left first)",
                 "load": "BW",
                 "cues": "Thoracic rotation + anterior chain opening. Pause at end range, exhale deeper."
               },
               {
                 "name": "Cable Hip Abduction",
-                "prescription": "2\u00d712/side (left first)",
+                "prescription": "2×12/side (left first)",
                 "load": "Light",
-                "cues": "Glute med activation \u2014 standing, keep pelvis level, drive the heel out, not the knee."
+                "cues": "Glute med activation — standing, keep pelvis level, drive the heel out, not the knee."
               },
               {
                 "name": "Scapular Pull-Up Hang",
-                "prescription": "2\u00d76",
+                "prescription": "2×6",
                 "load": "BW",
-                "cues": "Shoulders DOWN and back from ears \u2014 prime lats before Block B."
+                "cues": "Shoulders DOWN and back from ears — prime lats before Block B."
               }
             ]
           },
           {
             "id": "a",
-            "label": "Block A \u2014 Unilateral Split (Anchor)",
+            "label": "Block A — Unilateral Split (Anchor)",
             "floor": "Floor 2",
             "time_min": 18,
             "pairing": "superset",
             "exercises": [
               {
                 "name": "Dumbbell Supported Split Squat",
-                "prescription": "3\u00d710/side (left forward first)",
-                "load": "Start DB 12\u201314 kg each hand",
+                "prescription": "3×10/side (left forward first)",
+                "load": "Start DB 12–14 kg each hand",
                 "cues": "Front heel drives the floor. Hand on rack for balance only. Knee tracks over toe, NOT over foot."
               },
               {
                 "name": "Single-Arm Dumbbell Row (bench)",
-                "prescription": "3\u00d710/side (left first)",
-                "load": "Start 16\u201318 kg, progress if easy",
-                "cues": "Elbow to hip \u2014 NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
+                "prescription": "3×10/side (left first)",
+                "load": "Start 16–18 kg, progress if easy",
+                "cues": "Elbow to hip — NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
               }
             ]
           },
           {
             "id": "b",
-            "label": "Block B \u2014 Pull-Up Anchor + Glute",
+            "label": "Block B — Pull-Up Anchor + Glute",
             "floor": "Floor 2",
             "time_min": 16,
             "pairing": "superset",
             "exercises": [
               {
                 "name": "Pull-Up",
-                "prescription": "3\u00d75",
+                "prescription": "3×5",
                 "load": "BW",
                 "cues": "2-sec hold at top every rep. Chin over bar. Slow 3-count descent. Fresh = expect 5; don't cheat the hold."
               },
               {
                 "name": "Machine Hip Thrust",
-                "prescription": "3\u00d712",
+                "prescription": "3×12",
                 "load": "Match Week 1 load; +1 plate if all 12 clean",
-                "cues": "Heel-drive cue \u2014 feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
+                "cues": "Heel-drive cue — feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
               }
             ]
           },
           {
             "id": "c",
-            "label": "Block C \u2014 Unilateral Trunk + Scapular Close",
+            "label": "Block C — Unilateral Trunk + Scapular Close",
             "floor": "Floor 3",
             "time_min": 14,
             "exercises": [
               {
                 "name": "Half-Kneeling Pallof Press",
-                "prescription": "3\u00d712/side (left knee up first, face cable)",
+                "prescription": "3×12/side (left knee up first, face cable)",
                 "load": "10.2 kg",
-                "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull \u2014 don't chase it. Unilateral kneel = hip stability bonus."
+                "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull — don't chase it. Unilateral kneel = hip stability bonus."
               },
               {
                 "name": "Cable Face Pull to W",
-                "prescription": "3\u00d712",
-                "load": "Moderate \u2014 form over load",
-                "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W \u2014 hands out, shoulders packed. 1-sec hold at W."
+                "prescription": "3×12",
+                "load": "Moderate — form over load",
+                "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W — hands out, shoulders packed. 1-sec hold at W."
               },
               {
-                "name": "Suitcase Carry \u2014 Left Hand",
-                "prescription": "3\u00d725m",
+                "name": "Suitcase Carry — Left Hand",
+                "prescription": "3×25m",
                 "load": "24 kg KB, left hand only",
-                "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy \u2014 drop a step."
+                "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy — drop a step."
               }
             ]
           }
         ],
-        "session_notes": "Week 2 close. No repeats from Mon (landmine-heavy push) or Wed (pull + posterior chain). Zero landmine movements today \u2014 deliberate variation. Pull-up is fresh (pre-pull), so target 5 reps per set with the 2-sec hold. Left-side leads every unilateral. Suitcase Carry left-hand-only is the right-dominance corrective \u2014 non-negotiable, last thing you do."
+        "session_notes": "Week 2 close. No repeats from Mon (landmine-heavy push) or Wed (pull + posterior chain). Zero landmine movements today — deliberate variation. Pull-up is fresh (pre-pull), so target 5 reps per set with the 2-sec hold. Left-side leads every unilateral. Suitcase Carry left-hand-only is the right-dominance corrective — non-negotiable, last thing you do."
       }
     }
   },
@@ -12618,15 +12672,15 @@
         "oura_sleep": 76
       },
       "planned_activity": "Rest + weekly review + sprint block gate check",
-      "sprint_gate": "OPEN \u2014 HRV 39.9ms > 35ms. Sprint block authorized for Sunday Apr 26.",
-      "weekly_review": "Written Apr 25 \u2014 see WEEKLY_REVIEWS.md",
+      "sprint_gate": "OPEN — HRV 39.9ms > 35ms. Sprint block authorized for Sunday Apr 26.",
+      "weekly_review": "Written Apr 25 — see WEEKLY_REVIEWS.md",
       "notes": "Rest day. Weekly review completed. Data ingested from 28 screenshots (Bevel, Oura, Ocare3, Hume Pod). Sprint gate open for tomorrow. Key flags: dehydration (body water low on both scales), nutrition blackout all week, time cap violations all 3 sessions."
     },
     "2026-04-26": {
       "date": "2026-04-26",
       "day_of_week": "Sunday",
       "planned_activity": "sprint",
-      "notes": "Sprint day \u2014 gate open. HRV 51.2ms / Recovery 88%. Fasted walk done. 21 screenshots processed."
+      "notes": "Sprint day — gate open. HRV 51.2ms / Recovery 88%. Fasted walk done. 21 screenshots processed."
     }
   }
 }
