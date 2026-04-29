@@ -821,6 +821,47 @@
       "ocare_bone_mass_lbs": 7.7,
       "hume_body_fat_note": "BIA artifact \u2014 not used for coaching per DXA-only protocol",
       "notes": "Ocare3 (05:53 AM): weight 164.7 lbs, BF% 16.4%, VF Lv 2.0 (down from 3.0 on Apr 25 \u2014 good trend), muscle% 79.0% (up from 77.6%), body water 57.3% (up from 55.6% \u2014 hydration improved), BMR 1773 kcal, bone mass 7.7 lbs. Hume Pod: weight 165.5 lbs, skeletal muscle 94.9 lbs Standard (up from 94.8 lbs), health score 692 High (up from 683), metabolic age 42 yrs Excellent (15 yrs younger than chronological). Segmental muscle: trunk 65.8 lbs (Low \u2014 focus area), R arm 8.1 / L arm 7.8 lbs (0.3 lb asymmetry, confirms right dominance), R leg 25.3 / L leg 24.0 lbs (1.3 lb asymmetry). Segmental fat: trunk 7.2% Very Low, arms 9.6% Low, legs 4.1-4.8% Very Low. Week-over-week (vs Apr 25): weight -1.3 lbs, BF% -1.4%, VF level -1.0, muscle% +1.4%, body water +1.7%. Strong positive trend."
+    },
+    {
+      "date": "2026-04-30",
+      "source": "Ocare3 BIA Scale + Hume Pod BIA",
+      "weight_kg": 74.5,
+      "weight_lbs": 164.2,
+      "body_fat_pct": 16.7,
+      "fat_mass_kg": null,
+      "fat_mass_lbs": null,
+      "lean_mass_kg": null,
+      "lean_mass_lbs": null,
+      "visceral_fat_g": null,
+      "visceral_fat_level": 2.0,
+      "bmi": 21.8,
+      "body_water_pct": 57.0,
+      "bone_mass_kg": null,
+      "bone_mass_lbs": 7.5,
+      "ocare_muscle_pct": 78.7,
+      "ocare_bmr_kcal": 1770,
+      "segmental": {
+        "muscle_mass_right_arm_lbs": 7.9,
+        "muscle_mass_left_arm_lbs": 7.9,
+        "muscle_mass_trunk_lbs": 65.8,
+        "muscle_mass_right_leg_lbs": 25.0,
+        "muscle_mass_left_leg_lbs": 24.1,
+        "muscle_mass_trunk_rating": "Low",
+        "fat_pct_right_arm": 9.2,
+        "fat_pct_left_arm": 9.2,
+        "fat_pct_trunk": 7.4,
+        "fat_pct_right_leg": 4.6,
+        "fat_pct_left_leg": 4.6
+      },
+      "hume_weight_lbs": 165.0,
+      "hume_skeletal_muscle_lbs": 94.8,
+      "hume_lean_mass_lbs": 140.0,
+      "hume_body_fat_mass_lbs": 18.0,
+      "hume_metabolic_age_yrs": 42,
+      "hume_health_score": 692,
+      "hume_avg_water_pct": 39,
+      "hume_body_fat_note": "BIA artifact \u2014 not used for coaching per DXA-only protocol",
+      "notes": "Ocare3 (05:55 AM): weight 164.2 lbs (down 0.5 lbs from Apr 29), BF% 16.7% (up 0.3%), VF Lv 2.0 (stable), muscle% 78.7% (down 0.3%), body water 57.0% (down 0.3%), BMR 1770 kcal, bone mass 7.5 lbs. Hume Pod: weight 165.0 lbs, skeletal muscle 94.8 lbs (Standard, -0.1 lbs), health score 692 High, metabolic age 42 yrs Excellent (-15 yrs below chronological). Segmental: arms symmetric (7.9/7.9 lbs, 0 asymmetry \u2014 improved from 0.3 lbs Apr 29), trunk 65.8 lbs Low (consistent focus area), legs R 25.0 / L 24.1 lbs (0.9 lb asymmetry, reduced from 1.3 lbs Apr 29). Body comp holding steady."
     }
   ],
   "recovery_sleep": [
@@ -1988,6 +2029,66 @@
         "HR Dip 20% above normal \u2014 cardiac recovery functioning well despite sleep debt",
         "SpO2 high (96.5% Bevel / 97% Oura) \u2014 respiratory health good",
         "RHR trending low (58.4 bpm Bevel / 50 bpm Oura lowest) \u2014 aerobic adaptation continuing"
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "source": "Bevel + Oura",
+      "bevel": {
+        "recovery_pct": 70,
+        "sleep_quality_pct": 65,
+        "strain_pct": 0,
+        "rhr_bpm": 59.4,
+        "hrv_ms": 38.0,
+        "respiratory_rate_rpm": 14.1,
+        "spo2_pct": 95.2,
+        "wrist_temp_f": 97.1,
+        "wrist_temp_c": 36.2,
+        "time_asleep_min": 368,
+        "time_in_bed_min": 383,
+        "deep_sleep_min": 68,
+        "rem_sleep_min": 84,
+        "hr_dip_pct": 19,
+        "sleep_bank_min": -225,
+        "sleep_start": "2026-04-29T21:59",
+        "wake_time": "2026-04-30T04:22",
+        "notes": "Recovery held steady at 70% despite previous day's high 21-strain hike+lift. HRV up to 38.0 ms (from 35.2 yesterday). Deep Sleep 1h 8m \u2014 27\u201328% above typical range (Bevel: Deep Sleep Breakthrough). Resilient Adaptation \u2014 body handling load effectively. Sleep bank deficit -3h 45m. RHR 59.4 bpm."
+      },
+      "oura": {
+        "readiness_score": 78,
+        "readiness_label": "Good",
+        "sleep_score": 72,
+        "sleep_score_label": "Good",
+        "activity_score": 89,
+        "rhr_bpm_lowest": 52,
+        "rhr_bpm_avg": 59,
+        "hrv_avg_ms": 40,
+        "hrv_max_ms": 134,
+        "total_sleep_min": 353,
+        "time_in_bed_min": 443,
+        "sleep_efficiency_pct": 80,
+        "rem_sleep_min": 95,
+        "rem_sleep_pct": 27,
+        "light_sleep_min": 203,
+        "light_sleep_pct": 57,
+        "deep_sleep_min": 55,
+        "deep_sleep_pct": 16,
+        "awake_min": 90,
+        "latency_min": 57,
+        "spo2_avg_pct": 95,
+        "breathing_regularity": "Good",
+        "sleep_debt_min": 280,
+        "sleep_start": "2026-04-29T21:06",
+        "sleep_end": "2026-04-30T04:29",
+        "notes": "Readiness 78 ('Boost with breaks' \u2014 resting HR lowered late last night). Sleep score 72 Good but restless \u2014 1h 30m awake, 57-min latency flagged orange. Total sleep only 5h 53m. Sleep debt 4h 40m moderate. RHR dipped to 52 bpm in early AM. HRV avg 40 ms (up from 34 yesterday). Body clock midpoint 30 min ahead of chronotype."
+      },
+      "coaching_flags": [
+        "Recovery 70% (Bevel) / Readiness 78 (Oura) \u2014 green-moderate day, training appropriate",
+        "HRV 38.0 ms (Bevel) / 40 ms (Oura) \u2014 both up from yesterday, positive adaptation signal",
+        "Deep Sleep breakthrough \u2014 1h 8-9m, 27-28% above typical (Bevel) / 0h 55m (Oura) \u2014 sources diverge slightly",
+        "Sleep debt chronic: -3h 45m (Bevel) / -4h 40m (Oura) \u2014 prioritize early sleep tonight",
+        "Oura latency 57 min flagged \u2014 suggest pre-sleep wind-down routine",
+        "SpO2 95-95.2% \u2014 slightly lower end of normal, breathing regularity Good"
       ]
     }
   ],
@@ -4725,6 +4826,49 @@
       "effort_level": "Easy",
       "effort_score": 3,
       "notes": "Morning hike 5:00 AM, Beitun District. 2.30 mi, 41:50 total. 75% Zone 1, excellent HR control. Elevation 162 ft \u2014 158% above 14-day average. Pace 13% faster than average. Tracked with Todd's Ultra 3. Bevel: Steady Base Building + Peak Elevation Performance."
+    },
+    {
+      "date": "2026-04-30",
+      "source": "Apple Fitness",
+      "activity_type": "Outdoor Walk",
+      "start_time": "05:03",
+      "end_time": "05:41",
+      "location": "Beitun District, Taichung City",
+      "total_duration_min": 38.5,
+      "distance_mi": 2.29,
+      "active_calories_kcal": 177,
+      "total_calories_kcal": 239,
+      "elevation_gain_ft": 70,
+      "avg_pace_per_mi": "16:47",
+      "avg_heart_rate_bpm": 99,
+      "peak_heart_rate_bpm": 126,
+      "effort_level": "Easy",
+      "effort_score": 3,
+      "splits": [
+        {
+          "mile": 1,
+          "time": "15:48",
+          "pace": "15:48",
+          "avg_hr_bpm": 98
+        },
+        {
+          "mile": 2,
+          "time": "17:17",
+          "pace": "17:17",
+          "avg_hr_bpm": 99
+        },
+        {
+          "mile": 2.29,
+          "time": "05:26",
+          "pace": "18:28",
+          "avg_hr_bpm": 97
+        }
+      ],
+      "weather": {
+        "temp_f": 67,
+        "humidity_pct": 92
+      },
+      "notes": "Morning outdoor walk 5:03\u20135:41 AM, Beitun District. 2.29 mi in 38:31. Avg HR 99 bpm (peak 126 bpm \u2014 brief spike). Effort 3/Easy. Elevation 70 ft. Humidity 92%, temp 67\u00b0F. Good active recovery walk post previous day's strength+hike session."
     }
   ],
   "strength_logs": [
@@ -11630,7 +11774,7 @@
     "progress_note": "Week 2 is on track: Mon Push + Landmine Power \u2705, Wed Pull + Posterior Chain \u2705. Friday completes the week. Recovery bounced from 29% \u2192 83% in 24 hours \u2014 that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms \u2014 the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
     "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like \u2014 not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
   },
-  "last_updated": "2026-04-29T06:45:00+08:00",
+  "last_updated": "2026-04-30T06:15:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12508,6 +12652,85 @@
         "net_energy_kcal": -3911,
         "calories_burned": 5681
       }
+    },
+    {
+      "date": "2026-04-29",
+      "meals": [
+        {
+          "name": "Berry Protein Shake",
+          "time": "06:11",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Poke Bowl",
+          "time": "11:36",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Sizzling Chicken Fajitas",
+          "time": "21:06",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Taco Size Flour Tortillas",
+          "time": "21:06",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Mexican Condiment Trio",
+          "time": "21:06",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Blueberries",
+          "time": "21:07",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        }
+      ],
+      "totals": {
+        "kcal": 2095,
+        "protein_g": 120.8,
+        "carbs_g": 222,
+        "fat_g": 85.4
+      },
+      "targets": {
+        "kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
+      },
+      "source": "Bevel",
+      "notes": "Data from Bevel app nutrition screenshots captured 4:39\u20134:41 AM Apr 30. Nutrition Score: 91/100 (Above normal). Total: 2095 kcal, 120.8g protein (29g short of target), 222g carbs (12g over), 85.4g fat (6g over). Net energy: -3970 kcal (6065 burned, 2095 food). Quality contributors: Vegetables +10, Whole grains +10.",
+      "bevel_metrics": {
+        "nutrition_score": 91,
+        "nutrition_score_label": "above_normal",
+        "net_energy_kcal": -3970,
+        "calories_burned": 6065
+      }
     }
   ],
   "weekly_session_plans": {
@@ -13209,5 +13432,16 @@
       "planned_session": "Pull + Glute Hinge \u2014 Week 3 Monday",
       "notes": "Post-sprint HRV crash expected (51.2 \u2192 31.9ms). Sleep short again (woke 3:58 AM). Readiness 55% \u2014 train modified. Body comp trending right: BF% 16.9% (down from 17.1% avg last week), Muscle% 78.5% (up from 78.3%). Scale flat week-over-week (165.3 lbs)."
     }
-  }
+  },
+  "blood_pressure": [
+    {
+      "date": "2026-04-30",
+      "time": "04:35",
+      "systolic_mmhg": 126,
+      "diastolic_mmhg": 85,
+      "heart_rate_bpm": 63,
+      "source": "BP App",
+      "notes": "Morning BP reading 4:35 AM. 126/85 mmHg \u2014 systolic elevated above ideal (<120), diastolic at Stage 1 boundary (85 mmHg). HR 63 bpm normal. Note: early morning readings typically higher due to morning surge."
+    }
+  ]
 }
