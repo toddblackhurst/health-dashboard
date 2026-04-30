@@ -2090,6 +2090,15 @@
         "Oura latency 57 min flagged \u2014 suggest pre-sleep wind-down routine",
         "SpO2 95-95.2% \u2014 slightly lower end of normal, breathing regularity Good"
       ]
+    },
+    {
+      "date": "2026-05-01",
+      "recovery_score": 87,
+      "hrv_ms": 59.4,
+      "rhr_bpm": 56.6,
+      "sleep_score": 45,
+      "source": "Bevel",
+      "notes": "Resilience Surge \u2014 nervous system adapting well to Apr 30 Indoor Cycle and walks. HRV up 20ms despite sleep score 45% and sleep bank debt ~4h."
     }
   ],
   "nutrition": [
@@ -11809,7 +11818,7 @@
     "progress_note": "Week 2 is on track: Mon Push + Landmine Power \u2705, Wed Pull + Posterior Chain \u2705. Friday completes the week. Recovery bounced from 29% \u2192 83% in 24 hours \u2014 that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms \u2014 the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
     "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like \u2014 not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
   },
-  "last_updated": "2026-04-30T19:45:00+08:00",
+  "last_updated": "2026-05-01T04:40:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
