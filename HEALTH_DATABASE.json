@@ -4869,6 +4869,41 @@
         "humidity_pct": 92
       },
       "notes": "Morning outdoor walk 5:03\u20135:41 AM, Beitun District. 2.29 mi in 38:31. Avg HR 99 bpm (peak 126 bpm \u2014 brief spike). Effort 3/Easy. Elevation 70 ft. Humidity 92%, temp 67\u00b0F. Good active recovery walk post previous day's strength+hike session."
+    },
+    {
+      "date": "2026-04-30",
+      "source": "Bevel",
+      "activity_type": "Indoor Cycle",
+      "start_time": "07:24",
+      "total_duration_min": 30.57,
+      "active_duration_min": 30.57,
+      "active_calories_kcal": 220,
+      "avg_heart_rate_bpm": 112,
+      "hr_zone": "Zone 1",
+      "activity_strain_pct": 18,
+      "cardio_load_delta": 4,
+      "cardio_load_before": 35,
+      "cardio_load_after": 39,
+      "cardio_load_status": "Productive",
+      "cardio_focus": {
+        "low_aerobic_pct": 100,
+        "high_aerobic_pct": 0,
+        "anaerobic_pct": 0
+      },
+      "perceived_effort": "Light",
+      "hr_zones_breakdown": {
+        "zone_0_duration": "0:01:08",
+        "zone_0_pct": 4,
+        "zone_1_duration": "0:24:42",
+        "zone_1_pct": 81,
+        "zone_2_duration": "0:04:35",
+        "zone_2_pct": 15,
+        "zone_3_pct": 0,
+        "zone_4_pct": 0,
+        "zone_5_pct": 0
+      },
+      "device": "Todd's Ultra 3",
+      "notes": "Indoor Cycle 7:24 AM, 30:34 duration. Avg HR 112 bpm (Zone 1). 220 kcal. Activity strain 18%. Cardio load +4 (35\u219239, Productive). 100% low aerobic \u2014 well-controlled, all under threshold. Perceived effort: Light."
     }
   ],
   "strength_logs": [
@@ -11774,7 +11809,7 @@
     "progress_note": "Week 2 is on track: Mon Push + Landmine Power \u2705, Wed Pull + Posterior Chain \u2705. Friday completes the week. Recovery bounced from 29% \u2192 83% in 24 hours \u2014 that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms \u2014 the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
     "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like \u2014 not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
   },
-  "last_updated": "2026-04-30T06:15:00+08:00",
+  "last_updated": "2026-04-30T08:05:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
