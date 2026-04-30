@@ -523,6 +523,36 @@ function fmtDuration(m) {
   const min = Math.round(m%60);
   return h > 0 ? `${h}:${String(min).padStart(2,'0')}` : `${min}m`;
 }
+function firstValue(...values) {
+  return values.find(v => v !== undefined && v !== null && v !== '');
+}
+function recoveryPctFrom(sleep, brief = {}) {
+  return firstValue(
+    sleep?.recovery_score_pct,
+    sleep?.bevel?.recovery_pct,
+    sleep?.readiness?.bevel_recovery_pct,
+    sleep?.hume_recovery_pct,
+    sleep?.readiness?.oura_readiness,
+    brief?.recovery_pct
+  );
+}
+function hrvFrom(sleep) {
+  return firstValue(
+    sleep?.hrv_ms,
+    sleep?.bevel?.hrv_ms,
+    sleep?.readiness?.hrv_ms,
+    sleep?.hrv_ms_oura_avg,
+    sleep?.oura_hrv_avg_ms
+  );
+}
+function sleepMinsFrom(sleep) {
+  return firstValue(
+    sleep?.total_sleep_min_oura,
+    sleep?.total_sleep_min,
+    sleep?.readiness?.oura_total_sleep_hours ? Math.round(sleep.readiness.oura_total_sleep_hours * 60) : null,
+    sleep?.readiness?.sleep_hours_bevel ? Math.round(sleep.readiness.sleep_hours_bevel * 60) : null
+  );
+}
 function strHash(s) {
   let h = 0;
   for (let i = 0; i < Math.min(s.length, 2000); i++) {
@@ -701,6 +731,7 @@ function renderCoach(db) {
   const bpText = latestBp.diastolic_mmhg ? `${latestBp.systolic_mmhg}/${latestBp.diastolic_mmhg}` : '—';
   const protein = nutrition?.totals?.protein_g || nutrition?.daily_totals?.protein_g || 0;
   const proteinTarget = cb.goal_summary?.protein_target_g || db.profile?.nutrition_targets?.protein_g || 150;
+  const recoveryPct = recoveryPctFrom(latestSleep, cb);
 
   const savedChat = JSON.parse(localStorage.getItem('coach_chat_local') || '[]').slice(-6);
   const coachCall = compactCoachCall(cb.call || latestSleep.notes || 'No current coach call yet.');
@@ -724,7 +755,7 @@ function renderCoach(db) {
     <div class="coach-status-rail">
       <div class="coach-status">
         <div class="coach-status-label">Today</div>
-        <div class="coach-status-value" style="color:${readinessColor}">${latestSleep.recovery_score_pct || cb.recovery_pct || '—'}%</div>
+        <div class="coach-status-value" style="color:${readinessColor}">${recoveryPct ?? '—'}%</div>
         <div class="coach-status-note">${readiness}</div>
       </div>
       <div class="coach-status">
@@ -994,7 +1025,7 @@ function renderBrief(db) {
     <div class="hero-tier" style="color:${tc.text}">${tierVerdict(tier)}</div>
     <div class="hero-call">${call}</div>`;
   if (latestSleep) {
-    html += `<div class="hero-basis">HRV ${latestSleep.hrv_ms || '—'}ms · Recovery ${latestSleep.recovery_score_pct || '—'}% · Sleep ${fmtMins(latestSleep.total_sleep_min_oura || latestSleep.total_sleep_min)}</div>`;
+    html += `<div class="hero-basis">HRV ${hrvFrom(latestSleep) || '—'}ms · Recovery ${recoveryPctFrom(latestSleep, cb) || '—'}% · Sleep ${fmtMins(sleepMinsFrom(latestSleep))}</div>`;
   }
   html += `</div>`;
 
