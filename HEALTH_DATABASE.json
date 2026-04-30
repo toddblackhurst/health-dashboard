@@ -11809,7 +11809,7 @@
     "progress_note": "Week 2 is on track: Mon Push + Landmine Power \u2705, Wed Pull + Posterior Chain \u2705. Friday completes the week. Recovery bounced from 29% \u2192 83% in 24 hours \u2014 that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms \u2014 the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
     "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like \u2014 not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
   },
-  "last_updated": "2026-04-30T08:05:00+08:00",
+  "last_updated": "2026-04-30T19:45:00+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12765,6 +12765,94 @@
         "nutrition_score_label": "above_normal",
         "net_energy_kcal": -3970,
         "calories_burned": 6065
+      }
+    },
+    {
+      "date": "2026-04-30",
+      "meals": [
+        {
+          "name": "Berry Protein Shake",
+          "time": "06:20",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Grilled Salmon Salad",
+          "time": "12:07",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Grilled Vegetables",
+          "time": "12:07",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Chocolate Chip Ice Cream",
+          "time": "13:03",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Whole Fried Eggs",
+          "time": "16:38",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Fried Mushrooms with Ranch",
+          "time": "16:39",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        },
+        {
+          "name": "Pancake",
+          "time": "16:44",
+          "kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "source": "Bevel"
+        }
+      ],
+      "totals": {
+        "kcal": 2035,
+        "protein_g": 100.9,
+        "carbs_g": 195.7,
+        "fat_g": 94.4
+      },
+      "targets": {
+        "kcal": 2000,
+        "protein_g": 150,
+        "carbs_g": 190,
+        "fat_g": 70
+      },
+      "source": "Bevel",
+      "notes": "Data from Bevel app nutrition screenshots captured 7:42 PM Apr 30. Nutrition Score: 67/100 (Fair / Below normal). Totals: 2035 kcal (+35 over target), 100.9g protein (-49.1g short), 195.7g carbs (+5.7g over), 94.4g fat (+24.4g over). Net energy: -2853 kcal (4839 burned, 1985 food per app). Quality contributors: Omega-3s +10, Whole grains +9.3, Vegetables +7, Fruit +2.9, Nuts/Legumes +2.1, Excess sugar -10. Ice cream flagged as excess sugar penalty. Protein well short of 150g target.",
+      "bevel_metrics": {
+        "nutrition_score": 67,
+        "nutrition_score_label": "below_normal",
+        "net_energy_kcal": -2853,
+        "calories_burned": 4839
       }
     }
   ],
