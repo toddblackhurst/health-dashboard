@@ -1,0 +1,218 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Todd Personal Coach API",
+    "version": "1.0.0",
+    "description": "Private coaching API for Todd's personal health, training, nutrition, recovery, and workout feedback system."
+  },
+  "servers": [
+    {
+      "url": "https://todd-personal-coach.netlify.app"
+    }
+  ],
+  "paths": {
+    "/api/coach/dashboard": {
+      "get": {
+        "operationId": "getCoachDashboard",
+        "summary": "Get current coaching dashboard and profile context",
+        "description": "Returns the current coaching dashboard from Supabase, including readiness, training, nutrition, body, and recent context where available.",
+        "responses": {
+          "200": {
+            "description": "Current coach dashboard",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/message": {
+      "post": {
+        "operationId": "sendCoachMessage",
+        "summary": "Send a chat message to coach",
+        "description": "Logs a user message and returns a coach reply based on the current dashboard context.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["text"],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "The user's message to coach."
+                  },
+                  "channel": {
+                    "type": "string",
+                    "default": "chatgpt-gpt"
+                  },
+                  "raw": {
+                    "type": "object",
+                    "description": "Optional source metadata."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Coach reply",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "reply": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/intake": {
+      "post": {
+        "operationId": "submitCoachIntake",
+        "summary": "Submit structured coach intake",
+        "description": "Stores structured health and coaching data such as BP readings, Bevel food summaries, body metrics, workout feedback, or coach notes.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["type"],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["bp", "food", "body", "workout", "note"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "slot": {
+                    "type": "string",
+                    "description": "For BP readings, such as Morning or Evening."
+                  },
+                  "systolic": {
+                    "type": "number"
+                  },
+                  "diastolic": {
+                    "type": "number"
+                  },
+                  "heart_rate": {
+                    "type": "number"
+                  },
+                  "calories": {
+                    "type": "number"
+                  },
+                  "protein": {
+                    "type": "number"
+                  },
+                  "carbs": {
+                    "type": "number"
+                  },
+                  "fat": {
+                    "type": "number"
+                  },
+                  "fiber": {
+                    "type": "number"
+                  },
+                  "sodium": {
+                    "type": "number"
+                  },
+                  "weight_lbs": {
+                    "type": "number"
+                  },
+                  "body_fat_pct": {
+                    "type": "number"
+                  },
+                  "lean_mass_lbs": {
+                    "type": "number"
+                  },
+                  "visceral_fat_level": {
+                    "type": "number"
+                  },
+                  "rating_label": {
+                    "type": "string"
+                  },
+                  "completed_minutes": {
+                    "type": "number"
+                  },
+                  "best_movement": {
+                    "type": "string"
+                  },
+                  "worst_movement": {
+                    "type": "string"
+                  },
+                  "pain_notes": {
+                    "type": "string"
+                  },
+                  "difficulty": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Intake stored",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "CoachSecret": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-coach-secret"
+      }
+    }
+  },
+  "security": [
+    {
+      "CoachSecret": []
+    }
+  ]
+}
