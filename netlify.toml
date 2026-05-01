@@ -12,6 +12,21 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
 [[redirects]]
+  from = "/api/coach/dashboard"
+  to = "/.netlify/functions/coach-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/message"
+  to = "/.netlify/functions/coach-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/intake"
+  to = "/.netlify/functions/coach-api"
+  status = 200
+
+[[redirects]]
   from = "/api/coach"
   to = "/.netlify/functions/coach-api"
   status = 200
