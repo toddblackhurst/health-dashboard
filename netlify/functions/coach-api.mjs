@@ -18,7 +18,10 @@ export default async function handler(req) {
 
   try {
     const url = new URL(req.url);
-    const action = url.searchParams.get("action") || "dashboard";
+    const pathAction = url.pathname.split("/").filter(Boolean).pop();
+    const action = url.searchParams.get("action")
+      || (["dashboard", "message", "feedback", "intake"].includes(pathAction) ? pathAction : null)
+      || "dashboard";
 
     if (req.method === "GET" && action === "dashboard") {
       const dashboard = await dashboardFromSupabase();
