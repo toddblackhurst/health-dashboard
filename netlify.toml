@@ -1,6 +1,9 @@
 [build]
   publish = "."
 
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "COACH_API_BASE"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
