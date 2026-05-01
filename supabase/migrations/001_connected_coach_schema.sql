@@ -6,7 +6,7 @@ create extension if not exists pgcrypto;
 create table if not exists profiles (
   id uuid primary key default gen_random_uuid(),
   owner_user_id uuid,
-  name text not null,
+  name text not null unique,
   sex text,
   age integer,
   height_cm numeric,
@@ -66,6 +66,8 @@ create table if not exists blood_pressure_readings (
   notes text,
   raw jsonb not null default '{}'::jsonb,
   created_at timestamptz not null default now()
+  ,
+  unique(profile_id, measured_date, source)
 );
 
 create table if not exists body_comp_measurements (
@@ -87,6 +89,8 @@ create table if not exists body_comp_measurements (
   notes text,
   raw jsonb not null default '{}'::jsonb,
   created_at timestamptz not null default now()
+  ,
+  unique(profile_id, measured_date, source)
 );
 
 create table if not exists activity_sessions (
@@ -104,7 +108,8 @@ create table if not exists activity_sessions (
   effort_level text,
   notes text,
   raw jsonb not null default '{}'::jsonb,
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  unique(profile_id, activity_date, source, activity_type, start_time)
 );
 
 create table if not exists strength_sessions (
@@ -124,7 +129,8 @@ create table if not exists strength_sessions (
   motra_url text,
   coaching_note text,
   raw jsonb not null default '{}'::jsonb,
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  unique(profile_id, session_date, source, session_name)
 );
 
 create table if not exists strength_exercises (
