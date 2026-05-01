@@ -30,11 +30,14 @@ def load_db() -> dict:
     return json.loads(DB_PATH.read_text())
 
 
-def post_json(url: str, key: str, table: str, rows: list[dict]) -> None:
+def post_json(url: str, key: str, table: str, rows: list[dict], on_conflict: str | None = None) -> list[dict]:
     if not rows:
-        return
+        return []
+    endpoint = f"{url.rstrip('/')}/rest/v1/{table}"
+    if on_conflict:
+        endpoint += f"?on_conflict={on_conflict}"
     req = urllib.request.Request(
-        f"{url.rstrip('/')}/rest/v1/{table}",
+        endpoint,
         data=json.dumps(rows).encode("utf-8"),
         headers={
             "apikey": key,
@@ -46,7 +49,8 @@ def post_json(url: str, key: str, table: str, rows: list[dict]) -> None:
     )
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
-            resp.read()
+            body = resp.read().decode("utf-8")
+            return json.loads(body) if body else []
     except urllib.error.HTTPError as e:
         body = e.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"{table} import failed: {e.code} {body}") from e
@@ -84,6 +88,10 @@ def one_profile(db: dict) -> dict:
             "nutrition": "Cal AI/Bevel when day is complete enough to judge",
         },
     }
+
+
+def with_profile(rows: list[dict], profile_id: str) -> list[dict]:
+    return [{**row, "profile_id": profile_id} for row in rows]
 
 
 def body_comp_rows(db: dict) -> list[dict]:
@@ -202,13 +210,19 @@ def main() -> int:
     args = ap.parse_args()
 
     db = load_db()
+    profile = one_profile(db)
     tables = {
-        "profiles": [one_profile(db)],
+        "profiles": [profile],
         "body_comp_measurements": body_comp_rows(db),
         "recovery_sleep": recovery_rows(db),
         "blood_pressure_readings": bp_rows(db),
         "nutrition_days": nutrition_day_rows(db),
         "strength_sessions": strength_rows(db),
+        "raw_imports": [{
+            "source": "HEALTH_DATABASE.json",
+            "source_date": (db.get("meta", {}).get("last_updated") or db.get("meta", {}).get("created") or "")[:10] or None,
+            "payload": db,
+        }],
     }
 
     if args.dry_run:
@@ -222,9 +236,25 @@ def main() -> int:
         print("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required for live import.", file=sys.stderr)
         return 2
 
-    for name, rows in tables.items():
+    inserted = post_json(url, key, "profiles", [profile], on_conflict="name")
+    if not inserted:
+        print("Could not upsert profile.", file=sys.stderr)
+        return 1
+    profile_id = inserted[0]["id"]
+    print(f"Profile: {profile['name']} ({profile_id})")
+
+    import_plan = [
+        ("body_comp_measurements", with_profile(tables["body_comp_measurements"], profile_id), "profile_id,measured_date,source"),
+        ("recovery_sleep", with_profile(tables["recovery_sleep"], profile_id), "profile_id,measured_date,source"),
+        ("blood_pressure_readings", with_profile(tables["blood_pressure_readings"], profile_id), "profile_id,measured_date,source"),
+        ("nutrition_days", with_profile(tables["nutrition_days"], profile_id), "profile_id,log_date,source"),
+        ("strength_sessions", with_profile(tables["strength_sessions"], profile_id), "profile_id,session_date,source,session_name"),
+        ("raw_imports", with_profile(tables["raw_imports"], profile_id), None),
+    ]
+
+    for name, rows, conflict in import_plan:
         print(f"Importing {name}: {len(rows)} rows")
-        post_json(url, key, name, rows)
+        post_json(url, key, name, rows, on_conflict=conflict)
     return 0
 
 
