@@ -18,7 +18,7 @@ WHATSAPP_VERIFY_TOKEN=make-a-second-random-token
 WHATSAPP_ACCESS_TOKEN=meta-system-user-access-token
 WHATSAPP_PHONE_NUMBER_ID=meta-phone-number-id
 WHATSAPP_ALLOWED_FROM=your-whatsapp-number-with-country-code
-WHATSAPP_GRAPH_VERSION=v22.0
+WHATSAPP_GRAPH_VERSION=meta-graph-api-version
 ```
 
 Only the first three are required for the web coach API. The WhatsApp variables are required for WhatsApp.
