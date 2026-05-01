@@ -11,8 +11,8 @@ import {
 async function sendWhatsAppText(to, body) {
   const token = env("WHATSAPP_ACCESS_TOKEN");
   const phoneId = env("WHATSAPP_PHONE_NUMBER_ID");
-  const version = env("WHATSAPP_GRAPH_VERSION") || "v22.0";
-  if (!token || !phoneId || !to) return { skipped: true };
+  const version = env("WHATSAPP_GRAPH_VERSION");
+  if (!token || !phoneId || !version || !to) return { skipped: true };
 
   const res = await fetch(`https://graph.facebook.com/${version}/${phoneId}/messages`, {
     method: "POST",
