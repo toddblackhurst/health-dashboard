@@ -456,12 +456,14 @@ svg.sparkline { width: 100%; height: 60px; overflow: visible; }
 
 <div class="tok-overlay" id="tok-overlay">
   <div class="tok-modal">
-    <div class="tok-title">🔑 Write-back Setup</div>
-    <div class="tok-sub">Enter your GitHub Personal Access Token to enable check-in and session logging. Token is stored locally on your device only.</div>
+    <div class="tok-title">Coach Connection</div>
+    <div class="tok-sub">Connect the secure coach API when it is deployed. GitHub write-back remains as a fallback. Secrets are stored locally on this device only.</div>
+    <input class="tok-input" id="coach-api-base-input" type="url" placeholder="Coach API base, e.g. https://your-site.netlify.app" />
+    <input class="tok-input" id="coach-api-secret-input" type="password" placeholder="Coach API secret" />
     <input class="tok-input" id="tok-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
-    <button class="tok-save-btn" onclick="saveToken()">Save Token</button>
+    <button class="tok-save-btn" onclick="saveToken()">Save Connection</button>
     <div class="tok-cancel" onclick="closeTokenModal()">Cancel</div>
-    <div class="tok-hint">Create at github.com/settings/tokens → repo scope required.</div>
+    <div class="tok-hint">Preferred: Coach API + secret. Fallback: GitHub PAT with repo scope.</div>
   </div>
 </div>
 
@@ -563,6 +565,32 @@ function strHash(s) {
 function getToken()  { return localStorage.getItem('gh_token') || ''; }
 function setToken(t) { localStorage.setItem('gh_token', t.trim()); }
 function hasToken()  { return !!getToken(); }
+function getCoachApiBase() {
+  return (window.COACH_API_BASE || localStorage.getItem('coach_api_base') || '').replace(/\/$/, '');
+}
+function getCoachApiSecret() {
+  return window.COACH_API_SECRET || localStorage.getItem('coach_api_secret') || '';
+}
+function hasCoachApi() {
+  return !!(getCoachApiBase() && getCoachApiSecret());
+}
+async function coachApi(action, payload) {
+  if (!hasCoachApi()) throw new Error('Coach API is not configured.');
+  const base = getCoachApiBase();
+  const opts = {
+    method: payload ? 'POST' : 'GET',
+    headers: { 'x-coach-secret': getCoachApiSecret() },
+    cache: 'no-store'
+  };
+  if (payload) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(payload);
+  }
+  const r = await fetch(`${base}/api/coach?action=${encodeURIComponent(action)}`, opts);
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || `Coach API ${r.status}`);
+  return data;
+}
 
 function tierColors(tier) {
   if (!tier) return { bg: 'rgba(88,166,255,0.1)', border: 'rgba(88,166,255,0.3)', text: '#58a6ff' };
@@ -613,6 +641,14 @@ function qs(sel, root) { return (root||document).querySelector(sel); }
 // ═══════════════════════════════════════════════════════════
 async function fetchDb() {
   try {
+    if (hasCoachApi()) {
+      const api = await coachApi('dashboard');
+      const text = JSON.stringify(api.dashboard || {});
+      const h = strHash(text);
+      if (h === lastHash) return null;
+      lastHash = h;
+      return api.dashboard;
+    }
     const tok = getToken();
     if (!tok) return await fetchDbStaticFallback();
     const headers = { Accept: 'application/vnd.github.v3+json' };
@@ -905,11 +941,27 @@ function restoreCoachFeedbackState(date) {
 }
 
 async function submitCoachWorkoutFeedback(date) {
-  if (!hasToken()) { openTokenModal(); return; }
   const rating = localStorage.getItem('coachFeedback_' + date + '_rating') || null;
   const minutes = e('coach-fb-time-' + date)?.value.trim() || '';
   const best = e('coach-fb-best-' + date)?.value.trim() || '';
   const note = e('coach-fb-note-' + date)?.value.trim() || '';
+  const payload = {
+    date,
+    rating_label: rating,
+    completed_minutes: minutes ? Number(minutes) : null,
+    best_movement: best,
+    note,
+    source: 'Coach chat feedback panel'
+  };
+  if (hasCoachApi()) {
+    await coachApi('feedback', payload);
+    const done = e('coach-fb-done-' + date);
+    if (done) done.style.display = 'block';
+    lastHash = '';
+    setTimeout(pollDb, 600);
+    return;
+  }
+  if (!hasToken()) { openTokenModal(); return; }
   const db = await ghReadDb();
   if (!db) return;
   if (!db.data.session_feedback) db.data.session_feedback = [];
@@ -917,14 +969,9 @@ async function submitCoachWorkoutFeedback(date) {
   db.data.session_feedback = db.data.session_feedback.filter(f => f.date !== date);
   db.data.session_feedback.push({
     ...prior,
-    date,
+    ...payload,
     timestamp: new Date().toISOString(),
-    coach_console: true,
-    rating_label: rating,
-    completed_minutes: minutes ? Number(minutes) : null,
-    best_movement: best,
-    note,
-    source: 'Coach chat feedback panel'
+    coach_console: true
   });
   const ok = await ghWriteDb(db.data, db.sha, `Workout feedback — ${date}`);
   if (ok) {
@@ -951,6 +998,22 @@ async function coachSendMessage() {
   localStorage.setItem('coach_chat_local', JSON.stringify(msgs.slice(-12)));
   if (input) input.value = '';
   if (DB) renderCoach(DB);
+  if (hasCoachApi()) {
+    try {
+      const res = await coachApi('message', { text, channel: 'web' });
+      const updated = JSON.parse(localStorage.getItem('coach_chat_local') || '[]');
+      if (res.reply) {
+        updated[updated.length - 1] = { role: 'coach', text: res.reply, at: new Date().toISOString() };
+        localStorage.setItem('coach_chat_local', JSON.stringify(updated.slice(-12)));
+        if (DB) renderCoach(DB);
+      }
+      lastHash = '';
+      setTimeout(pollDb, 600);
+    } catch (err) {
+      console.warn('Coach API message failed:', err);
+    }
+    return;
+  }
   if (hasToken()) {
     const db = await ghReadDb();
     if (db) {
@@ -1166,7 +1229,7 @@ function buildCheckinCard(todayCheckin, today) {
       <div style="font-size:11px;color:var(--text3);margin-top:8px;text-align:center">${anyFlag ? '⚠ Flags noted — coaching adjusted' : '✓ All clear'} · Unlocks tomorrow</div>
     </div>`;
   }
-  const noTok = !hasToken() ? `<span id="checkin-no-token" class="checkin-setup-hint" onclick="openTokenModal()">⚙ Setup to enable</span>` : '';
+  const noTok = !(hasCoachApi() || hasToken()) ? `<span id="checkin-no-token" class="checkin-setup-hint" onclick="openTokenModal()">Setup to enable</span>` : '';
   return `<div class="card" id="checkin-card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
       <div class="card-title" style="margin-bottom:0">Morning Check-in</div>
@@ -1849,7 +1912,6 @@ async function submitCheckin() {
 //  SESSION FEEDBACK
 // ═══════════════════════════════════════════════════════════
 async function submitSessionFeedback(date) {
-  if (!hasToken()) { openTokenModal(); return; }
   const doneEl = e('exfb-done-' + date);
   const rows = document.querySelectorAll(`[data-date="${date}"] .exfb-ta`);
   const exercises = [];
@@ -1860,6 +1922,20 @@ async function submitSessionFeedback(date) {
   const ratingBtn = document.querySelector(`#session-rating-${date} .rating-btn.sel`);
   const rating = ratingBtn ? parseInt(ratingBtn.dataset.n || '0') : null;
   const note = (e('session-note-' + date) || {}).value || '';
+  if (hasCoachApi()) {
+    await coachApi('feedback', {
+      date,
+      rating_label: rating,
+      note,
+      exercises,
+      source: 'Workout console exercise feedback'
+    });
+    if (doneEl) doneEl.style.display = 'block';
+    lastHash = '';
+    setTimeout(pollDb, 600);
+    return;
+  }
+  if (!hasToken()) { openTokenModal(); return; }
   const db = await ghReadDb();
   if (!db) return;
   if (!db.data.session_feedback) db.data.session_feedback = [];
@@ -1957,13 +2033,28 @@ async function confirmOverride(override) {
 // ═══════════════════════════════════════════════════════════
 //  TOKEN MODAL
 // ═══════════════════════════════════════════════════════════
-function openTokenModal()  { e('tok-overlay').classList.add('open'); setTimeout(() => e('tok-input').focus(), 100); }
+function openTokenModal()  {
+  e('coach-api-base-input').value = getCoachApiBase();
+  e('coach-api-secret-input').value = getCoachApiSecret();
+  e('tok-input').value = getToken();
+  e('tok-overlay').classList.add('open');
+  setTimeout(() => e('coach-api-base-input').focus(), 100);
+}
 function closeTokenModal() { e('tok-overlay').classList.remove('open'); }
 function saveToken() {
-  const val = e('tok-input').value.trim();
-  if (!val) return;
-  setToken(val); closeTokenModal();
+  const apiBase = e('coach-api-base-input').value.trim().replace(/\/$/, '');
+  const apiSecret = e('coach-api-secret-input').value.trim();
+  const gh = e('tok-input').value.trim();
+  if (apiBase) localStorage.setItem('coach_api_base', apiBase);
+  else localStorage.removeItem('coach_api_base');
+  if (apiSecret) localStorage.setItem('coach_api_secret', apiSecret);
+  else localStorage.removeItem('coach_api_secret');
+  if (gh) setToken(gh);
+  else localStorage.removeItem('gh_token');
+  closeTokenModal();
   e('tok-gear').style.opacity = '0.45';
+  lastHash = '';
+  pollDb();
 }
 
 // ═══════════════════════════════════════════════════════════
