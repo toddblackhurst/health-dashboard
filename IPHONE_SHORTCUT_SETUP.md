@@ -2,25 +2,51 @@
 
 Use this to send phone data directly into the connected coach.
 
-## Shortcut name
+## Installed shortcuts
 
-`Coach Intake`
+- `Coach Message`: installed and ready now. Use this from iPhone to send any note to coach.
+- `Coach Intake`: installed as the future structured intake version, but it needs the newer Netlify function deploy before use.
 
-## What it sends
+## Use now: Coach Message
 
-The shortcut sends a JSON payload to:
+`Coach Message` sends a JSON payload to the live coach message endpoint:
 
 ```text
-https://todd-personal-coach.netlify.app/api/coach?action=intake
+https://todd-personal-coach.netlify.app/api/coach?action=message
 ```
 
-It must include this header:
+It includes this header:
 
 ```text
 x-coach-secret: your COACH_API_SECRET value
 ```
 
-## Build the Shortcut
+Payload shape:
+
+```json
+{
+  "text": "Your note from the iPhone prompt",
+  "channel": "iphone-shortcut"
+}
+```
+
+Use it for:
+
+- workout feedback
+- BP notes
+- food notes from Bevel
+- recovery/travel updates
+- anything coach should remember
+
+## Later: structured Coach Intake
+
+Once the `action=intake` Netlify function is live, `Coach Intake` can send typed payloads for BP, food, body, workout, and notes:
+
+```text
+https://todd-personal-coach.netlify.app/api/coach?action=intake
+```
+
+## Manual structured build reference
 
 Open **Shortcuts** on iPhone and create a new shortcut.
 
