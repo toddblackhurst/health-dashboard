@@ -1,19 +1,19 @@
 # iCloud Screenshot Watcher
 
-This watcher lets an iPhone Shortcut save screenshots to iCloud Drive and have the Mac read them with OpenAI vision, categorize them, interpret the visible data, and log structured rows into the live coach API.
+This watcher lets an iPhone Shortcut save screenshots to a Mac/iCloud-accessible folder and have the Mac read them with OpenAI vision, categorize them, interpret the visible data, and log structured rows into the live coach API.
 
 ## Folder To Use
 
 Save screenshots here from Shortcuts:
 
 ```text
-iCloud Drive/Coach Screenshots
+/Users/toddsdesktop/Desktop/Codex Projects/Todd's Personal Coach/Todd's Personal Coach/screenshots
 ```
 
 On the Mac, that folder is:
 
 ```text
-/Users/toddsdesktop/Library/Mobile Documents/com~apple~CloudDocs/Coach Screenshots
+/Users/toddsdesktop/Desktop/Codex Projects/Todd's Personal Coach/Todd's Personal Coach/screenshots
 ```
 
 ## What It Does
