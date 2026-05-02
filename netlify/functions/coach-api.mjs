@@ -1,5 +1,6 @@
 import {
   coachReply,
+  compactDashboard,
   dashboardFromSupabase,
   getProfile,
   insertCoachMessage,
@@ -26,7 +27,12 @@ export default async function handler(req) {
     if (req.method === "GET" && action === "dashboard") {
       const dashboard = await dashboardFromSupabase();
       if (!dashboard) return json({ error: "No Supabase profile found. Run the importer first." }, 404);
-      return json({ dashboard, source: "supabase" });
+      const isFull = url.searchParams.get("full") === "1";
+      return json({
+        dashboard: isFull ? dashboard : compactDashboard(dashboard),
+        source: "supabase",
+        mode: isFull ? "full" : "compact",
+      });
     }
 
     if (req.method === "POST" && action === "message") {
