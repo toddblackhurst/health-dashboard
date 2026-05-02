@@ -22,7 +22,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "dashboard": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "profile": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "recent": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
@@ -53,7 +74,8 @@
                   },
                   "raw": {
                     "type": "object",
-                    "description": "Optional source metadata."
+                    "description": "Optional source metadata.",
+                    "additionalProperties": true
                   }
                 }
               }
@@ -74,7 +96,8 @@
                     "reply": {
                       "type": "string"
                     }
-                  }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
@@ -167,13 +190,14 @@
                   "pain_notes": {
                     "type": "string"
                   },
-                  "difficulty": {
-                    "type": "string"
-                  }
+                    "difficulty": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
-          }
         },
         "responses": {
           "200": {
@@ -190,9 +214,14 @@
                       "type": "string"
                     },
                     "results": {
-                      "type": "array"
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
                     }
-                  }
+                  },
+                  "additionalProperties": true
                 }
               }
             }
@@ -202,6 +231,7 @@
     }
   },
   "components": {
+    "schemas": {},
     "securitySchemes": {
       "CoachSecret": {
         "type": "apiKey",
