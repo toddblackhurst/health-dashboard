@@ -113,6 +113,95 @@ export function buildBrief(base) {
   };
 }
 
+function latest(items, count = 1) {
+  if (!Array.isArray(items) || !items.length) return count === 1 ? null : [];
+  const slice = items.slice(-count);
+  return count === 1 ? slice[0] : slice;
+}
+
+function pick(obj, keys) {
+  if (!obj || typeof obj !== "object") return null;
+  return Object.fromEntries(keys.filter(k => obj[k] !== undefined && obj[k] !== null && obj[k] !== "").map(k => [k, obj[k]]));
+}
+
+export function compactDashboard(base) {
+  const profile = base.profile || {};
+  const latestBp = latest(base.blood_pressure);
+  const recentBp = latest(base.blood_pressure, 7).map(bp => pick(bp, [
+    "date",
+    "measured_at",
+    "systolic_mmhg",
+    "diastolic_mmhg",
+    "heart_rate_bpm",
+    "notes",
+  ]));
+  const latestSleep = latest(base.recovery_sleep);
+  const latestBody = latest(base.body_composition);
+  const latestNutrition = latest(base.nutrition_log);
+  const recentNutrition = latest(base.nutrition_log, 5).map(day => ({
+    date: day.date,
+    source: day.source,
+    totals: day.totals || null,
+    notes: day.notes || null,
+  }));
+  const recentStrength = latest(base.strength_logs, 6).map(session => ({
+    date: session.date || session.session_date,
+    title: session.title || session.name || session.workout_name || "Strength session",
+    duration_min: session.duration_min || session.duration_minutes || session.completed_minutes || null,
+    volume: session.volume || session.total_volume || null,
+    notes: session.notes || session.summary || null,
+  }));
+  const recentFeedback = latest(base.session_feedback, 6).map(f => pick(f, [
+    "date",
+    "rating_label",
+    "completed_minutes",
+    "best_movement",
+    "worst_movement",
+    "pain_notes",
+    "difficulty",
+    "note",
+  ]));
+  const recentCoachNotes = latest(base.coach_chat_notes, 10).map(m => ({
+    role: m.role,
+    text: String(m.text || "").slice(0, 500),
+    at: m.at,
+    channel: m.channel,
+  }));
+
+  return {
+    last_updated: base.last_updated,
+    coaching_brief: base.coaching_brief || buildBrief(base),
+    profile: pick(profile, ["name", "age", "sex", "location", "timezone", "training_gym", "primary_goals"]),
+    constraints: {
+      schedule: "Walk most mornings; strength training usually Mon/Wed/Fri mornings; cycling on off days; weekends off formal training.",
+      gym: "World Gym, Taichung",
+      hip: "Hip OA/deep hip positions require caution; avoid forced deep loaded flexion.",
+      asthma: "Controlled with daily Relvar and emergency inhaler.",
+      bp: "Doctor requested one week of consistent BP readings before determining concern.",
+      nutrition_source: "Bevel food tracking",
+      workout_source: "Motra workout logs",
+    },
+    current: {
+      blood_pressure: latestBp ? pick(latestBp, ["date", "measured_at", "systolic_mmhg", "diastolic_mmhg", "heart_rate_bpm", "notes"]) : null,
+      recovery_sleep: latestSleep ? pick(latestSleep, ["date", "recovery_score_pct", "hrv_ms", "resting_hr_bpm", "sleep_score_pct", "sleep_duration_min"]) : null,
+      body_composition: latestBody ? pick(latestBody, ["date", "weight_lbs", "body_fat_pct", "lean_mass_lbs", "visceral_fat_level", "notes"]) : null,
+      nutrition: latestNutrition ? {
+        date: latestNutrition.date,
+        source: latestNutrition.source,
+        totals: latestNutrition.totals || null,
+        notes: latestNutrition.notes || null,
+      } : null,
+    },
+    recent: {
+      blood_pressure: recentBp,
+      nutrition: recentNutrition,
+      strength_sessions: recentStrength,
+      workout_feedback: recentFeedback,
+      coach_notes: recentCoachNotes,
+    },
+  };
+}
+
 export async function dashboardFromSupabase() {
   const profile = await getProfile();
   if (!profile) return null;
