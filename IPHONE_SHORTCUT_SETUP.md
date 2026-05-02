@@ -4,10 +4,10 @@ Use this to send phone data directly into the connected coach.
 
 ## Screenshot inbox watcher
 
-The Mac now watches this iCloud Drive folder:
+The Mac now watches this screenshot folder:
 
 ```text
-iCloud Drive/Coach Screenshots
+/Users/toddsdesktop/Desktop/Codex Projects/Todd's Personal Coach/Todd's Personal Coach/screenshots
 ```
 
 Use your screenshot-upload Shortcut to save screenshots there. The Mac watcher checks the folder every minute, copies new image files into `~/.todd-coach/screenshots/inbox/`, reads the image with OpenAI vision when `OPENAI_API_KEY` is configured, categorizes the screenshot, extracts visible metrics, and logs structured coach intake rows through the live API.
