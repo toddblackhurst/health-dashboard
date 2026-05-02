@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.toddblackhurst.coach-icloud-screenshot-watcher</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/toddsdesktop/.todd-coach/bin/watch_icloud_screenshots.py</string>
+        <string>--max-files</string>
+        <string>10</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/toddsdesktop/.todd-coach</string>
+
+    <key>StartInterval</key>
+    <integer>60</integer>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/toddsdesktop/.todd-coach/logs/icloud-screenshot-watcher.out.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/toddsdesktop/.todd-coach/logs/icloud-screenshot-watcher.err.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+        <string>/Users/toddsdesktop</string>
+        <key>PYTHONUNBUFFERED</key>
+        <string>1</string>
+    </dict>
+</dict>
+</plist>
