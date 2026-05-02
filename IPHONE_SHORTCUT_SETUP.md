@@ -2,6 +2,27 @@
 
 Use this to send phone data directly into the connected coach.
 
+## Screenshot inbox watcher
+
+The Mac now watches this iCloud Drive folder:
+
+```text
+iCloud Drive/Coach Screenshots
+```
+
+Use your screenshot-upload Shortcut to save screenshots there. The Mac watcher checks the folder every minute, copies new image files into `~/.todd-coach/screenshots/inbox/`, reads the image with OpenAI vision when `OPENAI_API_KEY` is configured, categorizes the screenshot, extracts visible metrics, and logs structured coach intake rows through the live API.
+
+Supported files:
+
+- `.jpg`
+- `.jpeg`
+- `.png`
+- `.heic`
+- `.heif`
+- `.webp`
+
+Important constraint: the watcher only extracts what is visible in the screenshot. If the screenshot is cropped, covered by a notification, blurred, or missing the date, the stored data will be limited to what can be seen.
+
 ## Installed shortcuts
 
 - `Coach Message`: installed and ready now. Use this from iPhone to send any note to coach.
