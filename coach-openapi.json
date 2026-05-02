@@ -109,7 +109,7 @@
       "post": {
         "operationId": "submitCoachIntake",
         "summary": "Submit structured coach intake",
-        "description": "Stores structured health and coaching data such as BP readings, Bevel food summaries, body metrics, workout feedback, or coach notes.",
+        "description": "Stores structured health and coaching data such as BP readings, Bevel food summaries, body metrics, recovery, activities, strength sessions, workout feedback, doctor notes, or coach notes.",
         "requestBody": {
           "required": true,
           "content": {
@@ -118,10 +118,10 @@
                 "type": "object",
                 "required": ["type"],
                 "properties": {
-                  "type": {
-                    "type": "string",
-                    "enum": ["bp", "food", "body", "workout", "note"]
-                  },
+	                  "type": {
+	                    "type": "string",
+	                    "enum": ["bp", "food", "body", "recovery", "activity", "strength", "workout", "doctor", "note"]
+	                  },
                   "date": {
                     "type": "string",
                     "format": "date"
@@ -172,12 +172,60 @@
                   "lean_mass_lbs": {
                     "type": "number"
                   },
-                  "visceral_fat_level": {
-                    "type": "number"
-                  },
-                  "rating_label": {
-                    "type": "string"
-                  },
+	                  "visceral_fat_level": {
+	                    "type": "number"
+	                  },
+	                  "recovery_score_pct": {
+	                    "type": "number"
+	                  },
+	                  "sleep_score_pct": {
+	                    "type": "number"
+	                  },
+	                  "hrv_ms": {
+	                    "type": "number"
+	                  },
+	                  "resting_hr_bpm": {
+	                    "type": "number"
+	                  },
+	                  "total_sleep_min": {
+	                    "type": "number"
+	                  },
+	                  "activity_type": {
+	                    "type": "string"
+	                  },
+	                  "duration_min": {
+	                    "type": "number"
+	                  },
+	                  "distance_mi": {
+	                    "type": "number"
+	                  },
+	                  "avg_heart_rate_bpm": {
+	                    "type": "number"
+	                  },
+	                  "peak_heart_rate_bpm": {
+	                    "type": "number"
+	                  },
+	                  "session_name": {
+	                    "type": "string"
+	                  },
+	                  "total_volume_kg": {
+	                    "type": "number"
+	                  },
+	                  "total_reps": {
+	                    "type": "number"
+	                  },
+	                  "topic": {
+	                    "type": "string"
+	                  },
+	                  "guidance": {
+	                    "type": "string"
+	                  },
+	                  "training_impact": {
+	                    "type": "string"
+	                  },
+	                  "rating_label": {
+	                    "type": "string"
+	                  },
                   "completed_minutes": {
                     "type": "number"
                   },
