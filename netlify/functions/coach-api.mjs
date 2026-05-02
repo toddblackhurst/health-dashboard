@@ -10,6 +10,21 @@ import {
   supabase,
 } from "./_coach-lib.mjs";
 
+function asNumber(value) {
+  if (value === undefined || value === null || value === "") return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function asInteger(value) {
+  const n = asNumber(value);
+  return n === null ? null : Math.round(n);
+}
+
+function cleanSource(value, fallback) {
+  return String(value || fallback || "mobile-intake").trim().slice(0, 120);
+}
+
 export default async function handler(req) {
   const pre = preflight(req);
   if (pre) return pre;
@@ -94,8 +109,8 @@ export default async function handler(req) {
           measured_at: body.measured_at || now.toISOString(),
           systolic_mmhg: Math.round(systolic),
           diastolic_mmhg: Math.round(diastolic),
-          heart_rate_bpm: body.heart_rate ? Math.round(Number(body.heart_rate)) : null,
-          source: `mobile-intake-${slot}-${suffix}`,
+          heart_rate_bpm: asInteger(body.heart_rate),
+          source: cleanSource(body.source, `mobile-intake-${slot}-${suffix}`),
           doctor_review_flag: true,
           notes: body.notes || null,
           raw: body,
@@ -108,32 +123,56 @@ export default async function handler(req) {
         const row = {
           profile_id: profile.id,
           log_date: date,
-          source: "bevel-mobile",
+          source: cleanSource(body.source, "bevel-mobile"),
           completeness: body.completeness || "partial",
-          calories_kcal: body.calories ? Number(body.calories) : null,
-          protein_g: body.protein ? Number(body.protein) : null,
-          carbs_g: body.carbs ? Number(body.carbs) : null,
-          fat_g: body.fat ? Number(body.fat) : null,
-          fiber_g: body.fiber ? Number(body.fiber) : null,
-          sodium_mg: body.sodium ? Number(body.sodium) : null,
+          calories_kcal: asNumber(body.calories),
+          protein_g: asNumber(body.protein),
+          carbs_g: asNumber(body.carbs),
+          fat_g: asNumber(body.fat),
+          fiber_g: asNumber(body.fiber),
+          sodium_mg: asNumber(body.sodium),
           notes: body.notes || null,
           raw: body,
         };
-        results.push({ nutrition: (await supabase("nutrition_days?on_conflict=profile_id,log_date,source", {
+        const nutrition = (await supabase("nutrition_days?on_conflict=profile_id,log_date,source", {
           method: "POST",
           body: JSON.stringify([row]),
-        }))?.[0] || null });
+        }))?.[0] || null;
+        results.push({ nutrition });
+        if (nutrition?.id && Array.isArray(body.meals) && body.meals.length) {
+          const meals = body.meals.map(meal => ({
+            nutrition_day_id: nutrition.id,
+            meal_time: meal.meal_time || null,
+            name: meal.name || meal.meal_name || "Meal",
+            calories_kcal: asNumber(meal.calories || meal.calories_kcal),
+            protein_g: asNumber(meal.protein || meal.protein_g),
+            carbs_g: asNumber(meal.carbs || meal.carbs_g),
+            fat_g: asNumber(meal.fat || meal.fat_g),
+            source: cleanSource(meal.source || body.source, "bevel-mobile"),
+            coach_callout: meal.coach_callout || null,
+            raw: meal,
+          }));
+          results.push({ meals: await supabase("meals", {
+            method: "POST",
+            body: JSON.stringify(meals),
+          }) });
+        }
       } else if (type === "body") {
         const row = {
           profile_id: profile.id,
           measured_date: date,
-          source: "bevel-mobile",
-          method: "bevel",
-          confidence_tier: 2,
-          weight_lbs: body.weight_lbs ? Number(body.weight_lbs) : null,
-          body_fat_pct: body.body_fat_pct ? Number(body.body_fat_pct) : null,
-          lean_mass_lbs: body.lean_mass_lbs ? Number(body.lean_mass_lbs) : null,
-          visceral_fat_level: body.visceral_fat_level ? Number(body.visceral_fat_level) : null,
+          measured_time: body.measured_time || null,
+          source: cleanSource(body.source, "bevel-mobile"),
+          method: body.method || "bevel",
+          confidence_tier: body.confidence_tier ? Math.round(Number(body.confidence_tier)) : 2,
+          weight_lbs: asNumber(body.weight_lbs),
+          body_fat_pct: asNumber(body.body_fat_pct),
+          lean_mass_lbs: asNumber(body.lean_mass_lbs),
+          visceral_fat_g: asNumber(body.visceral_fat_g),
+          visceral_fat_level: asNumber(body.visceral_fat_level),
+          skeletal_muscle_lbs: asNumber(body.skeletal_muscle_lbs),
+          trunk_muscle_lbs: asNumber(body.trunk_muscle_lbs),
+          body_water_pct: asNumber(body.body_water_pct),
           notes: body.notes || null,
           raw: body,
         };
@@ -146,16 +185,113 @@ export default async function handler(req) {
           profile_id: profile.id,
           session_date: date,
           rating_label: body.rating_label || null,
-          completed_minutes: body.completed_minutes ? Number(body.completed_minutes) : null,
+          completed_minutes: asNumber(body.completed_minutes),
           best_movement: body.best_movement || null,
           worst_movement: body.worst_movement || null,
           pain_notes: body.pain_notes || null,
           difficulty: body.difficulty || body.rating_label || null,
           freeform_note: body.notes || null,
-          source: "mobile-intake",
+          source: cleanSource(body.source, "mobile-intake"),
           raw: body,
         };
         results.push({ feedback: (await supabase("session_feedback", {
+          method: "POST",
+          body: JSON.stringify([row]),
+        }))?.[0] || null });
+      } else if (type === "recovery") {
+        const row = {
+          profile_id: profile.id,
+          measured_date: date,
+          source: cleanSource(body.source, "vision-recovery"),
+          recovery_score_pct: asNumber(body.recovery_score_pct),
+          sleep_score_pct: asNumber(body.sleep_score_pct),
+          hrv_ms: asNumber(body.hrv_ms),
+          resting_hr_bpm: asNumber(body.resting_hr_bpm),
+          respiratory_rate_rpm: asNumber(body.respiratory_rate_rpm),
+          spo2_pct: asNumber(body.spo2_pct),
+          wrist_temp_f: asNumber(body.wrist_temp_f),
+          total_sleep_min: asInteger(body.total_sleep_min),
+          time_in_bed_min: asInteger(body.time_in_bed_min),
+          sleep_efficiency_pct: asNumber(body.sleep_efficiency_pct),
+          deep_sleep_min: asInteger(body.deep_sleep_min),
+          rem_sleep_min: asInteger(body.rem_sleep_min),
+          sleep_bank_min: asInteger(body.sleep_bank_min),
+          readiness_tier: body.readiness_tier || null,
+          notes: body.notes || null,
+          raw: body,
+        };
+        results.push({ recovery: (await supabase("recovery_sleep?on_conflict=profile_id,measured_date,source", {
+          method: "POST",
+          body: JSON.stringify([row]),
+        }))?.[0] || null });
+      } else if (type === "activity") {
+        const row = {
+          profile_id: profile.id,
+          activity_date: date,
+          source: cleanSource(body.source, "vision-activity"),
+          activity_type: body.activity_type || body.name || "Activity",
+          start_time: body.start_time || null,
+          duration_min: asNumber(body.duration_min),
+          distance_mi: asNumber(body.distance_mi),
+          avg_heart_rate_bpm: asNumber(body.avg_heart_rate_bpm || body.avg_hr_bpm),
+          peak_heart_rate_bpm: asNumber(body.peak_heart_rate_bpm || body.max_hr_bpm),
+          active_calories_kcal: asNumber(body.active_calories_kcal || body.calories_kcal),
+          effort_level: body.effort_level || null,
+          notes: body.notes || null,
+          raw: body,
+        };
+        results.push({ activity: (await supabase("activity_sessions?on_conflict=profile_id,activity_date,source,activity_type,start_time", {
+          method: "POST",
+          body: JSON.stringify([row]),
+        }))?.[0] || null });
+      } else if (type === "strength") {
+        const row = {
+          profile_id: profile.id,
+          session_date: date,
+          source: cleanSource(body.source, "vision-strength"),
+          session_name: body.session_name || body.name || "Strength Training",
+          session_type: body.session_type || "strength",
+          start_time: body.start_time || null,
+          duration_min: asNumber(body.duration_min),
+          total_volume_kg: asNumber(body.total_volume_kg || body.volume_kg),
+          total_reps: asInteger(body.total_reps),
+          avg_hr_bpm: asNumber(body.avg_hr_bpm || body.average_hr_bpm),
+          max_hr_bpm: asNumber(body.max_hr_bpm || body.peak_hr_bpm),
+          calories_kcal: asNumber(body.calories_kcal),
+          motra_url: body.motra_url || null,
+          coaching_note: body.coaching_note || body.notes || null,
+          raw: body,
+        };
+        const session = (await supabase("strength_sessions?on_conflict=profile_id,session_date,source,session_name", {
+          method: "POST",
+          body: JSON.stringify([row]),
+        }))?.[0] || null;
+        results.push({ strength: session });
+        if (session?.id && Array.isArray(body.exercises) && body.exercises.length) {
+          const exercises = body.exercises.map((exercise, index) => ({
+            strength_session_id: session.id,
+            exercise_order: asInteger(exercise.exercise_order) || index + 1,
+            name: exercise.name || "Exercise",
+            category: exercise.category || null,
+            notes: exercise.notes || null,
+            raw: exercise,
+          }));
+          const insertedExercises = await supabase("strength_exercises", {
+            method: "POST",
+            body: JSON.stringify(exercises),
+          });
+          results.push({ exercises: insertedExercises });
+        }
+      } else if (type === "doctor") {
+        const row = {
+          profile_id: profile.id,
+          note_date: date,
+          topic: body.topic || body.summary || "Medical note",
+          guidance: body.guidance || body.notes || null,
+          training_impact: body.training_impact || null,
+          raw: body,
+        };
+        results.push({ doctor_note: (await supabase("doctor_notes", {
           method: "POST",
           body: JSON.stringify([row]),
         }))?.[0] || null });
