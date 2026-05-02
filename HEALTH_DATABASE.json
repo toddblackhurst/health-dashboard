@@ -903,6 +903,37 @@
       "hume_avg_water_pct": null,
       "hume_body_fat_note": "BIA artifact — not used for coaching per DXA-only protocol",
       "notes": "Ocare3 (06:03 AM): weight 164.9 lbs (+0.7 lbs from Apr 30), BF% 17.1% (+0.4%), VF Lv 2.0 (stable), muscle% 78.3% (-0.4%), body water 56.3% (-0.7%), BMR 1774 kcal (+4), bone mass 7.5 lbs. Hume Pod: weight 165.7 lbs (+0.7 lbs), skeletal muscle 94.8 lbs (Standard, stable), health score 692 High, metabolic age 42 yrs Excellent. Segmental: arms symmetric (R 7.9 / L 7.9 lbs, stable), trunk 65.7 lbs Low (-0.1 lbs), legs R 25.2 / L 23.9 lbs (1.3 lb asymmetry, slight increase). Arm fat% asymmetry noted: R 9.0% vs L 10.8% (+1.8%). Body comp relatively stable day-over-day."
+    },
+    {
+      "date": "2026-05-03",
+      "source": "manual-screenshot-20260503-ocare-hume",
+      "weight_lbs": 166.4,
+      "body_fat_pct": 17.9,
+      "visceral_fat_level": 3.0,
+      "bmi": 22.1,
+      "body_water_pct": 55.9,
+      "bone_mass_lbs": 7.5,
+      "ocare_muscle_pct": 77.5,
+      "ocare_bmr_kcal": 1783,
+      "hume_weight_lbs": 167.2,
+      "hume_skeletal_muscle_lbs": 93.9,
+      "hume_body_fat_pct": 10.9,
+      "hume_metabolic_age_yrs": 42,
+      "hume_health_score": 692,
+      "segmental": {
+        "muscle_mass_right_arm_lbs": 8.1,
+        "muscle_mass_left_arm_lbs": 7.8,
+        "muscle_mass_trunk_lbs": 65.8,
+        "muscle_mass_right_leg_lbs": 25.3,
+        "muscle_mass_left_leg_lbs": 24.0,
+        "muscle_mass_trunk_rating": "Low",
+        "fat_pct_right_arm": 8.7,
+        "fat_pct_left_arm": 10.4,
+        "fat_pct_trunk": 7.4,
+        "fat_pct_right_leg": 4.3,
+        "fat_pct_left_leg": 5.0
+      },
+      "notes": "Weight up vs May 1 but within last week's Ocare range; body water down to 55.9%, so treat as fluctuation. Trunk muscle remains low and active priority."
     }
   ],
   "recovery_sleep": [
@@ -2193,6 +2224,62 @@
         "SpO2 96.3% (Bevel) / 98% (Oura) — both normal, respiratory health good",
         "Blood pressure 121/95 mmHg at 4:34 AM — systolic improved vs yesterday (126), diastolic elevated (95 > 80 threshold)"
       ]
+    },
+    {
+      "date": "2026-05-03",
+      "source": "manual-screenshot-20260503-bevel+oura",
+      "bevel": {
+        "recovery_pct": 25,
+        "sleep_quality_pct": 64,
+        "strain_pct": 0,
+        "rhr_bpm": 63.0,
+        "hrv_ms": 20.0,
+        "respiratory_rate_rpm": 14.6,
+        "spo2_pct": 95.3,
+        "wrist_temp_f": 97.9,
+        "time_asleep_min": 443,
+        "time_in_bed_min": 465,
+        "sleep_efficiency_pct": 95,
+        "deep_sleep_min": 36,
+        "rem_sleep_min": 119,
+        "hr_dip_pct": 14,
+        "sleep_bank_min": -213,
+        "sleep_start": "2026-05-02T20:49",
+        "wake_time": "2026-05-03T04:34"
+      },
+      "oura": {
+        "readiness_score": 89,
+        "readiness_label": "Above and beyond",
+        "sleep_score": 81,
+        "sleep_score_label": "Good",
+        "activity_score": 94,
+        "rhr_bpm_lowest": 56,
+        "rhr_bpm_avg": 63,
+        "hrv_avg_ms": 20,
+        "hrv_max_ms": 45,
+        "total_sleep_min": 428,
+        "time_in_bed_min": 547,
+        "sleep_efficiency_pct": 78,
+        "rem_sleep_min": 105,
+        "rem_sleep_pct": 25,
+        "light_sleep_min": 261,
+        "light_sleep_pct": 61,
+        "deep_sleep_min": 62,
+        "deep_sleep_pct": 14,
+        "awake_min": 120,
+        "latency_min": 33,
+        "spo2_avg_pct": 96,
+        "breathing_regularity": "Good",
+        "sleep_debt_min": 320,
+        "sleep_start": "2026-05-02T19:34",
+        "sleep_end": "2026-05-03T04:41"
+      },
+      "coaching_flags": [
+        "Mixed-source readiness: Bevel red due to HRV 20 ms, Oura green at readiness 89.",
+        "Sleep duration improved, but sleep debt remains high.",
+        "Treat Sunday as recovery-only; no added intensity."
+      ],
+      "notes": "May 3 screenshot repair. Good sleep quantity and BP improvement, but Bevel HRV collapse makes this a low-autonomic-reserve day."
     }
   ],
   "nutrition": [
@@ -5053,68 +5140,15 @@
       "notes": "Morning outdoor walk 5:02–5:38 AM, Beitun District. 2.11 mi in 32:50 workout / 35:53 elapsed. Avg HR 100 bpm (peak 111 bpm — within easy zone). Effort 3/Easy. Elevation 39 ft. Humidity 89%, temp 66°F. Light active recovery walk. HR well controlled throughout."
     },
     {
-      "date": "2026-05-01",
-      "source": "Bevel",
-      "activity_type": "Strength Training",
-      "start_time": "07:42",
-      "total_duration_min": 83.8,
-      "active_duration_min": 83.8,
-      "total_calories_kcal": 614,
-      "avg_heart_rate_bpm": 112,
-      "peak_heart_rate_bpm": 153,
-      "total_volume_lbs": 23313,
-      "total_reps": 431,
-      "activity_strain_pct": 66,
-      "cardio_load_before": 33,
-      "cardio_load_after": 45,
-      "cardio_load_delta": 12,
-      "cardio_status": "Productive",
-      "workout_breakdown": {
-        "muscular_pct": 61,
-        "cardio_pct": 39
-      },
-      "cardio_focus": {
-        "low_aerobic_pct": 100,
-        "high_aerobic_pct": 0,
-        "anaerobic_pct": 0
-      },
-      "hr_zones": {
-        "z0_0_98bpm_min": 18.87,
-        "z0_pct": 23,
-        "z1_98_117bpm_min": 27.75,
-        "z1_pct": 33,
-        "z2_117_137bpm_min": 32.5,
-        "z2_pct": 39,
-        "z3_137_156bpm_min": 4.75,
-        "z3_pct": 6,
-        "z4_156plus_bpm_min": 0,
-        "z4_pct": 0
-      },
-      "muscular_strain_breakdown": {
-        "lats_pct": 21,
-        "traps_pct": 12,
-        "glutes_pct": 11,
-        "quads_pct": 9,
-        "shoulder_pct": 9,
-        "obliques_pct": 8,
-        "abs_pct": 6,
-        "hamstrings_pct": 6,
-        "triceps_pct": 4,
-        "forearm_pct": 3,
-        "chest_pct": 2,
-        "biceps_pct": 2,
-        "abductors_pct": 2,
-        "upper_back_pct": 1,
-        "lower_back_pct": 1,
-        "adductors_pct": 1,
-        "hip_flexors_pct": 1,
-        "calves_pct": 0,
-        "rotator_cuff_pct": 0
-      },
-      "includes_stretching": true,
-      "includes_mobility": true,
-      "tracked_with": "Motra",
-      "notes": "Strength Training session 7:42 AM via Motra/Bevel. 83:50 duration. 614 kcal. Avg HR 112 bpm, peak 153 bpm. Volume 23,313 lbs / 431 reps. Activity strain 66%. Cardio load +12 (Productive, 33→45). 100% Low Aerobic. Dominant muscles: Lats 21%, Traps 12%, Glutes 11%. HR mostly Z1-Z2 (72%), minimal Z3 (6%), no Z4-Z5. Well-controlled session."
+      "date": "2026-05-03",
+      "source": "manual-screenshot-20260503-bevel-walk",
+      "activity_type": "Fasted Morning Walk",
+      "total_duration_min": 35.13,
+      "distance_mi": 2.05,
+      "cardio_load": 29,
+      "cardio_load_status": "Maintaining",
+      "hr_ceiling_bpm": 122,
+      "notes": "35:08 fasted morning walk, 2.05 mi, well under 122 bpm ceiling. Recovery-supportive Sunday work."
     }
   ],
   "strength_logs": [
@@ -11991,36 +12025,14 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-04-24",
-    "readiness_tier": "Green",
-    "call": "🟢 Green — full session. Bevel recovery 83% (+54% rebound from Tuesday's red), HRV 46.2 ms above norm (34.5 avg), RHR 59.1 trending down. Body has reset. Today is Week 2 Friday: Corrective / Unilateral, 60-min cap. Left side leads every anchor — that's the whole point of today.",
-    "sprint_gate": "N/A — sprints are Saturday-standalone; tomorrow's gate check: HRV ≥35ms = go.",
-    "goal_summary": {
-      "as_of": "2026-04-24",
-      "goal_weight_lbs": 159,
-      "goal_bf_pct": 13.0,
-      "goal_vat_g": 285,
-      "goal_date": "2026-08-01",
-      "weeks_remaining": 14.1,
-      "required_rate_lbs_per_week": 0.4,
-      "current_weight_lbs": 166.3,
-      "current_weight_lbs_source": "Hume Body Pod 2026-04-22 (latest weigh-in)",
-      "current_bf_pct_est": 17.5,
-      "current_vat_g_est": 447,
-      "fat_to_lose_lbs": 7.3,
-      "lean_to_gain_lbs": 2.0,
-      "calorie_target_kcal": 2150,
-      "protein_target_g": 150,
-      "carb_target_g": 210,
-      "fat_target_g": 70,
-      "tdee_estimate_kcal": 2380,
-      "daily_deficit_kcal": 200,
-      "rationale": "Week 2 close. Target 159 lbs / 13% BF / Aug 1. Need 0.4 lbs/week over 14 weeks. Calorie target 2,150 kcal/day (raised Apr 18 to support lean mass gain — trunk still rated LOW). Protein 150g non-negotiable. Recovery confirmed green after Tuesday's red day."
-    },
-    "progress_note": "Week 2 is on track: Mon Push + Landmine Power ✅, Wed Pull + Posterior Chain ✅. Friday completes the week. Recovery bounced from 29% → 83% in 24 hours — that's physiological resilience, not luck. 7-day HRV still trending (-4.3 ms) but 30-day trend is +8.6 ms — the long arc is right. Stay on 2,150 kcal / 150g protein. Carry Suitcase left on the way out the door.",
-    "encouragement": "You trained through Wednesday's red readiness day and your body rewarded you. That's what adaptation looks like — not perfect conditions, but a system that keeps showing up. The goal (159.3 lbs / 13% by Aug 1) doesn't need heroics. It needs exactly what you're doing: corrective Fridays, standalone sprints Saturday, 0.4 lbs/week. Keep pressing."
+    "date": "2026-05-03",
+    "readiness_tier": "Yellow",
+    "call": "Mixed Sunday: Oura readiness 89 is strong, but Bevel recovery 25% and HRV 20 ms say keep today recovery-only. BP improved to 114/84 and the 35:08 walk was enough.",
+    "sprint_gate": "N/A — Sunday recovery/rest day.",
+    "progress_note": "Weight is up to 166.4 lb Ocare / 167.2 lb Hume, but body water is down at 55.9%, so this looks more like fluctuation than fat gain. Stay steady: protein, hydration, and no panic calorie cut.",
+    "encouragement": "This is the boring-but-powerful part: you did the walk, caught the recovery signal, and protected tomorrow's training instead of forcing a fake win today."
   },
-  "last_updated": "2026-05-02T06:55:00+08:00",
+  "last_updated": "2026-05-03T07:52:26+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -13765,6 +13777,15 @@
       },
       "planned_session": "Pull + Glute Hinge — Week 3 Monday",
       "notes": "Post-sprint HRV crash expected (51.2 → 31.9ms). Sleep short again (woke 3:58 AM). Readiness 55% — train modified. Body comp trending right: BF% 16.9% (down from 17.1% avg last week), Muscle% 78.5% (up from 78.3%). Scale flat week-over-week (165.3 lbs)."
+    },
+    "2026-05-03": {
+      "readiness": "Mixed — Oura green, Bevel red HRV flag",
+      "summary": "Bevel recovery 25% / HRV 20 ms conflicts with Oura readiness 89. Sleep duration improved and BP improved to 114/84, but Sunday should stay recovery-only.",
+      "actions": [
+        "No added strength or sprints",
+        "Hydrate and hit protein",
+        "Protect 9 PM wind-down"
+      ]
     }
   },
   "blood_pressure": [
@@ -13787,34 +13808,13 @@
       "notes": "Morning BP reading 4:34 AM. 121/95 mmHg — systolic improved from 126 yesterday (approaching normal <120). Diastolic 95 remains elevated (Stage 1 hypertension range >90). HR 59 bpm normal. Early morning readings typically run higher due to morning surge."
     },
     {
-      "date": "2026-05-02",
-      "time": "04:51",
-      "systolic_mmhg": 122,
-      "diastolic_mmhg": 81,
-      "heart_rate_bpm": 64,
-      "source": "BP App",
-      "notes": "Morning BP reading ~4:51 AM (app screenshot). Average May 2 00:00-23:59. 122/81 mmHg — systolic slightly elevated (borderline), diastolic 81 improved significantly from 95 yesterday (back below Stage 1 threshold). HR 64 bpm normal. Pattern: diastolic trending down after 95 spike on May 1."
-    }
-  ],
-  "progress_photos": [
-    {
-      "date": "2026-05-02",
-      "time": "06:52",
-      "source": "Manual / Photo",
-      "photo_count": 23,
-      "views": [
-        "front_relaxed",
-        "front_flexed",
-        "front_double_bicep",
-        "side_left",
-        "side_right",
-        "back_relaxed",
-        "back_flexed",
-        "mirror_selfie_front",
-        "mirror_selfie_bicep",
-        "overhead_back_stretch"
-      ],
-      "notes": "Progress photo session — 4 batches of photos from multiple dates/hotels. Front, side, and back views in various poses. Cupping therapy marks visible on upper back and shoulders (batches 26-1 through 26-7). Photos span multiple bathroom settings suggesting multi-day accumulation. Logged May 2 as submission date."
+      "date": "2026-05-03",
+      "time": "04:45",
+      "systolic_mmhg": 114,
+      "diastolic_mmhg": 84,
+      "heart_rate_bpm": 69,
+      "source": "manual-screenshot-20260503-ocare-bp",
+      "notes": "Ocare3 BP screenshot. Improved vs May 1's 121/95; diastolic still above ideal but no longer 90+."
     }
   ]
 }
