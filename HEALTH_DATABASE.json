@@ -155,7 +155,7 @@
       "notes": "Targets set 2026-04-11. ~380 kcal/day deficit (between mild and moderate). Protein elevated for anabolic resistance at age 57. Fat raised for hormone support. Recalculate if weight changes ±3 kg or training frequency shifts."
     },
     "goal_weight_lbs": 159,
-    "goal_bf_pct": 13.0,
+    "goal_bf_pct": 13,
     "goal_date": "2026-08-01",
     "goal_vat_g": 285
   },
@@ -167,7 +167,7 @@
       "weight_lbs": 165.3,
       "bmi": 21.9,
       "body_fat_pct": 17.3,
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "bmr_kcal": 1776,
       "body_water_pct": 56.3,
       "bone_mass_lbs": 7.5,
@@ -181,7 +181,7 @@
       "hume_right_arm_lbs": 8.1,
       "hume_left_arm_lbs": 7.9,
       "hume_right_leg_lbs": 25.3,
-      "hume_left_leg_lbs": 24.0,
+      "hume_left_leg_lbs": 24,
       "notes": "Weight stable (last week avg 164.9). Lean body mass % +0.6 week over week. Visceral fat at top of ideal range (Lv 3.0, ideal 1.0-3.0) — primary training target. Trunk muscle flagged Low by Hume — consistent with structural correction priorities. Metabolic age 42 = 15 yrs below calendar age. Bioimpedance BF% (17.3% Ocare3 / 10.8% Hume) directional only — DXA Feb 23 authoritative at 18.5%."
     },
     {
@@ -427,7 +427,7 @@
       "date": "2026-04-15",
       "source": "Scale (user-reported)",
       "weight_lbs": 165.3,
-      "weight_kg": 75.0,
+      "weight_kg": 75,
       "notes": "User-reported weight. Scale source unspecified."
     },
     {
@@ -560,7 +560,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.6,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "visceral_fat_note": "BIA scale Lv 3.0 — directional only",
       "bmr_kcal": 1777,
       "body_water_pct": 57.2,
@@ -587,7 +587,7 @@
       "body_fat_pct": 16.6,
       "body_fat_pct_hume": 10.8,
       "body_fat_source": "BIA — unreliable. Primary reference: DXA Feb 23 = 18.5%",
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "visceral_fat_note": "BIA scale Lv 2.0 (down from 3.0) — directional only",
       "bmr_kcal": 1766,
       "body_water_pct": 56.8,
@@ -642,7 +642,7 @@
       "weight_lbs": 164.7,
       "bmi": 21.8,
       "body_fat_pct": 16.6,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmr_kcal": 1773,
       "body_water_pct": 57.3,
       "bone_mass_lbs": 7.7,
@@ -659,11 +659,11 @@
       "weight_lbs": 165.6,
       "bmi": 21.9,
       "body_fat_pct": 16.5,
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "bmr_kcal": 1777,
       "body_water_pct": 57.7,
       "bone_mass_lbs": 7.7,
-      "lean_body_mass_pct": 79.0,
+      "lean_body_mass_pct": 79,
       "weekly_avg_lbs": 164.8,
       "weekly_max_lbs": 165.6,
       "weekly_min_lbs": 163.1,
@@ -677,7 +677,7 @@
       "health_score": 683,
       "health_score_label": "High",
       "metabolic_age_yrs": 42,
-      "skeletal_muscle_mass_lbs": 95.0,
+      "skeletal_muscle_mass_lbs": 95,
       "body_fat_pct": 10.6,
       "body_fat_label": "Very low",
       "muscle_mass_by_segment": {
@@ -691,7 +691,7 @@
       "fat_pct_by_segment": {
         "right_arm_pct": 9.7,
         "left_arm_pct": 9.7,
-        "trunk_pct": 7.0,
+        "trunk_pct": 7,
         "trunk_label": "Very low",
         "right_leg_pct": 4.1,
         "left_leg_pct": 4.1
@@ -721,16 +721,16 @@
       "date": "2026-04-24",
       "source": "Ocare3 BIA Scale",
       "measurement_time": "05:23:46",
-      "weight_lbs": 166.0,
-      "bmi": 22.0,
+      "weight_lbs": 166,
+      "bmi": 22,
       "body_fat_pct": 16.4,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmr_kcal": 1780,
       "body_water_pct": 57.5,
       "bone_mass_lbs": 7.7,
-      "lean_body_mass_pct": 79.0,
+      "lean_body_mass_pct": 79,
       "last_week_avg_lbs": 164.9,
-      "last_week_max_lbs": 166.0,
+      "last_week_max_lbs": 166,
       "last_week_min_lbs": 163.1,
       "weight_status": "Normal"
     },
@@ -738,7 +738,7 @@
       "date": "2026-04-25",
       "source": "Ocare3 BIA Scale + Hume Pod BIA",
       "weight_kg": 75.3,
-      "weight_lbs": 166.0,
+      "weight_lbs": 166,
       "body_fat_pct": 17.8,
       "fat_mass_kg": null,
       "fat_mass_lbs": null,
@@ -747,8 +747,8 @@
       "subcutaneous_fat_kg": null,
       "subcutaneous_fat_lbs": null,
       "visceral_fat_g": null,
-      "visceral_fat_level": 3.0,
-      "bmi": 22.0,
+      "visceral_fat_level": 3,
+      "bmi": 22,
       "body_water_pct": 55.6,
       "bone_mass_kg": null,
       "segmental": null,
@@ -756,7 +756,7 @@
       "hume_lean_mass_lbs": 140.2,
       "hume_skeletal_muscle_lbs": 94.8,
       "hume_visceral_fat_index": 4,
-      "hume_body_water_pct": 44.0,
+      "hume_body_water_pct": 44,
       "hume_metabolic_age_yrs": 42,
       "hume_health_score": 683,
       "hume_bmi": 22,
@@ -774,7 +774,7 @@
       "hume_bone_mineral_content_lbs": 8.2,
       "hume_extracellular_water_lbs": 40.8,
       "hume_intracellular_water_lbs": 70.5,
-      "hume_mineral_mass_lbs": 2.0,
+      "hume_mineral_mass_lbs": 2,
       "hume_bmr_kcal": 1769,
       "hume_body_cell_mass_lbs": 100.3
     },
@@ -791,7 +791,7 @@
       "subcutaneous_fat_kg": null,
       "subcutaneous_fat_lbs": null,
       "visceral_fat_g": null,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmi": 21.8,
       "body_water_pct": 57.3,
       "bone_mass_kg": null,
@@ -800,7 +800,7 @@
         "muscle_mass_left_arm_lbs": 7.8,
         "muscle_mass_trunk_lbs": 65.8,
         "muscle_mass_right_leg_lbs": 25.3,
-        "muscle_mass_left_leg_lbs": 24.0,
+        "muscle_mass_left_leg_lbs": 24,
         "muscle_mass_trunk_rating": "Low",
         "fat_pct_right_arm": 9.6,
         "fat_pct_left_arm": 9.6,
@@ -816,7 +816,7 @@
       "hume_metabolic_age_yrs": 42,
       "hume_health_score": 692,
       "hume_bmi": null,
-      "ocare_muscle_pct": 79.0,
+      "ocare_muscle_pct": 79,
       "ocare_bmr_kcal": 1773,
       "ocare_bone_mass_lbs": 7.7,
       "hume_body_fat_note": "BIA artifact — not used for coaching per DXA-only protocol",
@@ -833,9 +833,9 @@
       "lean_mass_kg": null,
       "lean_mass_lbs": null,
       "visceral_fat_g": null,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmi": 21.8,
-      "body_water_pct": 57.0,
+      "body_water_pct": 57,
       "bone_mass_kg": null,
       "bone_mass_lbs": 7.5,
       "ocare_muscle_pct": 78.7,
@@ -844,7 +844,7 @@
         "muscle_mass_right_arm_lbs": 7.9,
         "muscle_mass_left_arm_lbs": 7.9,
         "muscle_mass_trunk_lbs": 65.8,
-        "muscle_mass_right_leg_lbs": 25.0,
+        "muscle_mass_right_leg_lbs": 25,
         "muscle_mass_left_leg_lbs": 24.1,
         "muscle_mass_trunk_rating": "Low",
         "fat_pct_right_arm": 9.2,
@@ -853,10 +853,10 @@
         "fat_pct_right_leg": 4.6,
         "fat_pct_left_leg": 4.6
       },
-      "hume_weight_lbs": 165.0,
+      "hume_weight_lbs": 165,
       "hume_skeletal_muscle_lbs": 94.8,
-      "hume_lean_mass_lbs": 140.0,
-      "hume_body_fat_mass_lbs": 18.0,
+      "hume_lean_mass_lbs": 140,
+      "hume_body_fat_mass_lbs": 18,
       "hume_metabolic_age_yrs": 42,
       "hume_health_score": 692,
       "hume_avg_water_pct": 39,
@@ -874,7 +874,7 @@
       "lean_mass_kg": null,
       "lean_mass_lbs": null,
       "visceral_fat_g": null,
-      "visceral_fat_level": 2.0,
+      "visceral_fat_level": 2,
       "bmi": 21.9,
       "body_water_pct": 56.3,
       "bone_mass_kg": null,
@@ -888,7 +888,7 @@
         "muscle_mass_right_leg_lbs": 25.2,
         "muscle_mass_left_leg_lbs": 23.9,
         "muscle_mass_trunk_rating": "Low",
-        "fat_pct_right_arm": 9.0,
+        "fat_pct_right_arm": 9,
         "fat_pct_left_arm": 10.8,
         "fat_pct_trunk": 7.4,
         "fat_pct_right_leg": 4.5,
@@ -909,7 +909,7 @@
       "source": "manual-screenshot-20260503-ocare-hume",
       "weight_lbs": 166.4,
       "body_fat_pct": 17.9,
-      "visceral_fat_level": 3.0,
+      "visceral_fat_level": 3,
       "bmi": 22.1,
       "body_water_pct": 55.9,
       "bone_mass_lbs": 7.5,
@@ -925,13 +925,13 @@
         "muscle_mass_left_arm_lbs": 7.8,
         "muscle_mass_trunk_lbs": 65.8,
         "muscle_mass_right_leg_lbs": 25.3,
-        "muscle_mass_left_leg_lbs": 24.0,
+        "muscle_mass_left_leg_lbs": 24,
         "muscle_mass_trunk_rating": "Low",
         "fat_pct_right_arm": 8.7,
         "fat_pct_left_arm": 10.4,
         "fat_pct_trunk": 7.4,
         "fat_pct_right_leg": 4.3,
-        "fat_pct_left_leg": 5.0
+        "fat_pct_left_leg": 5
       },
       "notes": "Weight up vs May 1 but within last week's Ocare range; body water down to 55.9%, so treat as fluctuation. Trunk muscle remains low and active priority."
     }
@@ -970,7 +970,7 @@
       "oura_hrv_max_ms": 138,
       "oura_rhr_lowest_bpm": 54,
       "oura_rhr_avg_bpm": 59,
-      "oura_spo2_pct": 95.0,
+      "oura_spo2_pct": 95,
       "oura_breathing": "Fair",
       "oura_sleep_debt_min": 130,
       "sleep_time": "21:09",
@@ -1541,7 +1541,7 @@
       "wake_time": "04:43",
       "sleep_time_hume_winddown": "21:56",
       "spo2_pct": 96.1,
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 97.1,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
@@ -1604,7 +1604,7 @@
       "spo2_pct": 96.5,
       "spo2_pct_oura_avg": 97,
       "respiratory_rate_rpm": 14.8,
-      "wrist_temp_f": 97.0,
+      "wrist_temp_f": 97,
       "hr_dip_pct": 18,
       "hr_dip_status": "Above normal",
       "breathing_regularity": "Optimal",
@@ -1748,7 +1748,7 @@
       "spo2_pct_hume": 95.9,
       "spo2_pct_oura_avg": 97,
       "spo2_status": "Normal (Hume) / Normal (Oura)",
-      "respiratory_rate_rpm": 14.0,
+      "respiratory_rate_rpm": 14,
       "wrist_temp_f": 96.9,
       "hr_dip_pct": 23,
       "hr_dip_status": "Above normal — 23% dip, strongest cardiovascular response in current block",
@@ -1863,7 +1863,7 @@
       "bevel_rhr_status": "Below normal",
       "bevel_respiratory_rate": 14.5,
       "bevel_spo2_pct": 95.4,
-      "bevel_wrist_temp_f": 97.0,
+      "bevel_wrist_temp_f": 97,
       "bevel_wrist_temp_status": "Normal",
       "bevel_sleep_duration_min": 451,
       "bevel_time_in_bed_min": 475,
@@ -1958,7 +1958,7 @@
       "hrv_ms": 39.9,
       "resting_hr_bpm": 61.1,
       "respiratory_rate_rpm": 14.7,
-      "spo2_pct": 96.0,
+      "spo2_pct": 96,
       "wrist_temp_c": null,
       "wrist_temp_f": 97.6,
       "wrist_temp_status": "above_normal",
@@ -1997,7 +1997,7 @@
         "recovery_pct": 55,
         "sleep_quality_pct": 61,
         "strain_pct": 0,
-        "rhr_bpm": 60.0,
+        "rhr_bpm": 60,
         "hrv_ms": 31.9,
         "respiratory_rate_rpm": 14.1,
         "spo2_pct": 95.8,
@@ -2111,7 +2111,7 @@
         "sleep_quality_pct": 65,
         "strain_pct": 0,
         "rhr_bpm": 59.4,
-        "hrv_ms": 38.0,
+        "hrv_ms": 38,
         "respiratory_rate_rpm": 14.1,
         "spo2_pct": 95.2,
         "wrist_temp_f": 97.1,
@@ -2232,8 +2232,8 @@
         "recovery_pct": 25,
         "sleep_quality_pct": 64,
         "strain_pct": 0,
-        "rhr_bpm": 63.0,
-        "hrv_ms": 20.0,
+        "rhr_bpm": 63,
+        "hrv_ms": 20,
         "respiratory_rate_rpm": 14.6,
         "spo2_pct": 95.3,
         "wrist_temp_f": 97.9,
@@ -4461,7 +4461,7 @@
       "start_time": "04:44",
       "end_time": "05:26",
       "location": "Beitun District, Taichung",
-      "workout_time_min": 40.0,
+      "workout_time_min": 40,
       "elapsed_time_min": 41.8,
       "distance_mi": 2.35,
       "active_calories": 175,
@@ -4693,7 +4693,7 @@
       "end_time": "06:32",
       "location": "Beitun District, Taichung",
       "workout_time_min": 45.58,
-      "elapsed_time_min": 46.0,
+      "elapsed_time_min": 46,
       "distance_mi": 2.68,
       "active_calories": 225,
       "total_calories": 298,
@@ -4735,7 +4735,7 @@
       "end_time": "08:27",
       "location": "Beitun District, Taichung",
       "workout_time_min": 31.17,
-      "elapsed_time_min": 32.0,
+      "elapsed_time_min": 32,
       "distance_mi": 1.26,
       "active_calories": 123,
       "total_calories": 172,
@@ -12027,12 +12027,12 @@
   "coaching_brief": {
     "date": "2026-05-03",
     "readiness_tier": "Yellow",
-    "call": "Mixed Sunday: Oura readiness 89 is strong, but Bevel recovery 25% and HRV 20 ms say keep today recovery-only. BP improved to 114/84 and the 35:08 walk was enough.",
-    "sprint_gate": "N/A — Sunday recovery/rest day.",
-    "progress_note": "Weight is up to 166.4 lb Ocare / 167.2 lb Hume, but body water is down at 55.9%, so this looks more like fluctuation than fat gain. Stay steady: protein, hydration, and no panic calorie cut.",
-    "encouragement": "This is the boring-but-powerful part: you did the walk, caught the recovery signal, and protected tomorrow's training instead of forcing a fake win today."
+    "call": "Schedule override: Monday May 4 and Tuesday May 5 are walk-only recovery days. Strength resumes Wednesday May 6 with high intent, but no make-up volume.",
+    "sprint_gate": "N/A for May 4-5 — walking only.",
+    "progress_note": "This is a deliberate short break after low autonomic reserve, not a setback. The win is arriving Wednesday fresher and sharper.",
+    "encouragement": "Good call listening to the body. Go hard on Wednesday means focused and powerful, not longer for the sake of longer."
   },
-  "last_updated": "2026-05-03T07:52:26+08:00",
+  "last_updated": "2026-05-03T07:57:11+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12095,122 +12095,65 @@
       "type": "move",
       "reason": null,
       "target_date": "2026-04-18"
+    },
+    {
+      "logged_date": "2026-05-03",
+      "timestamp": "2026-05-03T07:57:11+08:00",
+      "type": "walk_only_break",
+      "reason": "Todd says his body needs a short break before resuming hard training.",
+      "allowed_training": "walking_only",
+      "resume_training_date": "2026-05-06",
+      "resume_intent": "Go hard with high-quality intensity inside normal HR and duration guardrails; do not stack missed volume.",
+      "target_date": "2026-05-04",
+      "day": "Monday"
+    },
+    {
+      "logged_date": "2026-05-03",
+      "timestamp": "2026-05-03T07:57:11+08:00",
+      "type": "walk_only_break",
+      "reason": "Todd says his body needs a short break before resuming hard training.",
+      "allowed_training": "walking_only",
+      "resume_training_date": "2026-05-06",
+      "resume_intent": "Go hard with high-quality intensity inside normal HR and duration guardrails; do not stack missed volume.",
+      "target_date": "2026-05-05",
+      "day": "Tuesday"
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-04-24",
-    "day_label": "Friday Apr 24",
-    "session_type": "Corrective / Unilateral",
-    "week": 2,
-    "floor_plan": "Floor 3 → Floor 2 → Floor 3",
-    "time_cap_min": 60,
-    "gate_condition": null,
-    "why": "Week 2 close — corrective day. No landmine (different from Monday), no KB Sumo DL or Half-Kneeling Pull-Down (different from Wednesday). Every anchor is unilateral: DB Split Squat, Single-Arm Row, Pallof Press kneel, and left-hand Suitcase Carry to correct right-side dominance. Pull-Up goes early and fresh — expect 5s, not the 4/4/3 you hit pre-fatigued on Wednesday. Short cap (60 min) — end the week clean.",
+    "planned_date": "2026-05-04",
+    "day_label": "Monday May 4",
+    "session_type": "Walk-Only Recovery",
+    "week": null,
+    "floor_plan": "Outside / easy route",
+    "time_cap_min": 45,
+    "gate_condition": "Keep it walking only Monday May 4 and Tuesday May 5. No lifting, no sprint block, no make-up work.",
+    "why": "Todd requested a short two-day body break. Monday and Tuesday are walking-only recovery days. Strength resumes Wednesday May 6 with high intent, but still inside the 55-65 minute cap and about 122 bpm strength HR cap.",
     "blocks": [
       {
-        "id": "prep",
-        "label": "PREP — Activation",
-        "floor": "Floor 3",
-        "time_min": 10,
+        "id": "walk_only",
+        "label": "Walk-Only Recovery",
+        "floor": "Outside / treadmill if needed",
+        "time_min": 30,
         "exercises": [
           {
-            "name": "Wall Slides",
-            "prescription": "2×10",
-            "load": "BW",
-            "cues": "Scap priming — low traps engage, keep lower ribs down. Slow tempo."
-          },
-          {
-            "name": "Open Book Stretch",
-            "prescription": "2×8/side (left first)",
-            "load": "BW",
-            "cues": "Thoracic rotation + anterior chain opening. Pause at end range, exhale deeper."
-          },
-          {
-            "name": "Cable Hip Abduction",
-            "prescription": "2×12/side (left first)",
-            "load": "Light",
-            "cues": "Glute med activation — standing, keep pelvis level, drive the heel out, not the knee."
-          },
-          {
-            "name": "Scapular Pull-Up Hang",
-            "prescription": "2×6",
-            "load": "BW",
-            "cues": "Shoulders DOWN and back from ears — prime lats before Block B."
-          }
-        ]
-      },
-      {
-        "id": "a",
-        "label": "Block A — Unilateral Split (Anchor)",
-        "floor": "Floor 2",
-        "time_min": 18,
-        "pairing": "superset",
-        "exercises": [
-          {
-            "name": "Dumbbell Supported Split Squat",
-            "prescription": "3×10/side (left forward first)",
-            "load": "Start DB 12–14 kg each hand",
-            "cues": "Front heel drives the floor. Hand on rack for balance only. Knee tracks over toe, NOT over foot."
-          },
-          {
-            "name": "Single-Arm Dumbbell Row (bench)",
-            "prescription": "3×10/side (left first)",
-            "load": "Start 16–18 kg, progress if easy",
-            "cues": "Elbow to hip — NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
-          }
-        ]
-      },
-      {
-        "id": "b",
-        "label": "Block B — Pull-Up Anchor + Glute",
-        "floor": "Floor 2",
-        "time_min": 16,
-        "pairing": "superset",
-        "exercises": [
-          {
-            "name": "Pull-Up",
-            "prescription": "3×5",
-            "load": "BW",
-            "cues": "2-sec hold at top every rep. Chin over bar. Slow 3-count descent. Fresh = expect 5; don't cheat the hold."
-          },
-          {
-            "name": "Machine Hip Thrust",
-            "prescription": "3×12",
-            "load": "Match Week 1 load; +1 plate if all 12 clean",
-            "cues": "Heel-drive cue — feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
-          }
-        ]
-      },
-      {
-        "id": "c",
-        "label": "Block C — Unilateral Trunk + Scapular Close",
-        "floor": "Floor 3",
-        "time_min": 14,
-        "exercises": [
-          {
-            "name": "Half-Kneeling Pallof Press",
-            "prescription": "3×12/side (left knee up first, face cable)",
-            "load": "10.2 kg",
-            "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull — don't chase it. Unilateral kneel = hip stability bonus."
-          },
-          {
-            "name": "Cable Face Pull to W",
-            "prescription": "3×12",
-            "load": "Moderate — form over load",
-            "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W — hands out, shoulders packed. 1-sec hold at W."
-          },
-          {
-            "name": "Suitcase Carry — Left Hand",
-            "prescription": "3×25m",
-            "load": "24 kg KB, left hand only",
-            "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy — drop a step."
+            "name": "Easy Walk",
+            "prescription": "30-45 min",
+            "load": "Bodyweight",
+            "cues": "Keep it restorative. Stay conversational and under the usual recovery ceiling; stop if fatigue or BP symptoms show up."
           }
         ]
       }
     ],
-    "athlete_notes": "",
-    "created_date": "2026-04-24",
-    "coach_note": "🟢 Green day. Bevel rebounded to 83% recovery, HRV 46.2 ms (above norm). Go full intent. Three specific focuses: (1) Split Squat left-forward first — right side will want to take over, don't let it. (2) Pull-Up 2-sec hold at top on EVERY rep — the hold is the point. (3) Suitcase Carry left-hand-only — this is the most important 3 minutes of your week for right-dominance correction."
+    "next_strength_session": {
+      "planned_date": "2026-05-06",
+      "day_label": "Wednesday May 6",
+      "intent": "Go hard after the short break with strong anchors, focused execution, and a planned short finisher only if readiness supports it.",
+      "guardrails": [
+        "55-65 minute cap",
+        "about 122 bpm strength HR cap",
+        "no make-up volume from Monday"
+      ]
+    }
   },
   "coach_questions": [
     {
@@ -12414,9 +12357,9 @@
           "time": null,
           "source": "Cal AI",
           "kcal": 326,
-          "protein_g": 43.0,
-          "carbs_g": 12.0,
-          "fat_g": 11.0
+          "protein_g": 43,
+          "carbs_g": 12,
+          "fat_g": 11
         },
         {
           "meal_name": "Grilled Chicken Breast Pieces",
@@ -12433,8 +12376,8 @@
           "source": "Manual / Photo",
           "serving": "3/4 cup",
           "kcal": 154,
-          "protein_g": 3.0,
-          "carbs_g": 33.0,
+          "protein_g": 3,
+          "carbs_g": 33,
           "fat_g": 0.33
         }
       ],
@@ -12519,25 +12462,25 @@
           "kcal": 133.5,
           "protein_g": 1.5,
           "carbs_g": 6.75,
-          "fat_g": 12.0
+          "fat_g": 12
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129.0,
-          "protein_g": 6.0,
-          "carbs_g": 0.0,
-          "fat_g": 11.0
+          "kcal": 129,
+          "protein_g": 6,
+          "carbs_g": 0,
+          "fat_g": 11
         },
         {
           "meal_name": "Fried Egg",
           "time": "13:09",
           "source": "Cal AI",
-          "kcal": 129.0,
-          "protein_g": 6.0,
-          "carbs_g": 0.0,
-          "fat_g": 11.0
+          "kcal": 129,
+          "protein_g": 6,
+          "carbs_g": 0,
+          "fat_g": 11
         },
         {
           "meal_name": "Breakfast Sausage Patties with Chives",
@@ -12546,7 +12489,7 @@
           "kcal": 113.04,
           "protein_g": 11.5,
           "carbs_g": 0.01,
-          "fat_g": 7.0
+          "fat_g": 7
         },
         {
           "meal_name": "Tomato Vegetable Soup",
@@ -13736,7 +13679,7 @@
         "bevel_recovery_pct": 55,
         "bevel_sleep_pct": 61,
         "hrv_ms": 31.9,
-        "rhr_bpm": 60.0,
+        "rhr_bpm": 60,
         "spo2_pct": 95.8,
         "temp_f": 97.2,
         "sleep_hours_bevel": 5.9,
@@ -13760,7 +13703,7 @@
         "bf_pct_hume": 10.8,
         "muscle_pct": 78.5,
         "skeletal_muscle_mass_lbs": 94.8,
-        "visceral_fat_level": 3.0,
+        "visceral_fat_level": 3,
         "body_water_pct": 56.7,
         "bmr_kcal": 1777,
         "bmi": 21.9,
