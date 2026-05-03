@@ -27,7 +27,7 @@ function cleanSource(value, fallback) {
   return String(value || fallback || "mobile-intake").trim().slice(0, 120);
 }
 
-function text(value, status = 200) {
+function plainText(value, status = 200) {
   return new Response(String(value || ""), {
     status,
     headers: {
@@ -115,7 +115,7 @@ export default async function handler(req) {
       if (!body.motra_text) return json({ error: "motra_text is required." }, 400);
       const parsed = parseMotraText(body.motra_text);
       const debriefTemplate = buildMotraDebriefTemplate(parsed);
-      if (url.searchParams.get("format") === "text") return text(debriefTemplate);
+      if (url.searchParams.get("format") === "text") return plainText(debriefTemplate);
       return json({
         ok: true,
         action,
@@ -189,7 +189,7 @@ export default async function handler(req) {
         channel: body.channel || `api-${action}`,
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || `api-${action}`, { in_reply_to: text, decision });
-      if (url.searchParams.get("format") === "text") return text(decision.reply);
+      if (url.searchParams.get("format") === "text") return plainText(decision.reply);
       return json({ ok: true, action, reply: decision.reply, decision, stored });
     }
 
