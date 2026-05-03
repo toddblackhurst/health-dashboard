@@ -4,9 +4,12 @@ import assert from "node:assert/strict";
 import {
   DEFAULT_COACH_STATE,
   buildCoachDecision,
+  buildMotraDebriefTemplate,
   buildNutritionCall,
   buildWorkoutPlan,
+  determineWorkoutSequence,
   evaluateReadiness,
+  parseMotraText,
 } from "../netlify/functions/_coach-lib.mjs";
 
 function clone(value) {
@@ -118,4 +121,49 @@ test("build_workout intent returns structured workout plan and source context", 
   assert.equal(decision.source_context.nutrition_primary, "Bevel");
   assert.equal(decision.source_context.workout_primary, "Motra");
   assert.equal(decision.workout_plan.environment, "World Gym Taichung");
+  assert.equal(decision.workout_plan.sequence_context.programming_bias, "60% strength / 40% athletic-functional");
+});
+
+test("Motra text parses into exercise-level debrief template", () => {
+  const motra = parseMotraText(`
+My workout:
+
+20260410 Friday
+Apr 10, 2026 at 7:57 AM
+
+Duration: 1h 16m
+Volume: 6.8K kg
+Calories: 484 cal
+Exercises: 2
+
+Pull-Up
+1: 5 reps x BW
+2: 5 reps x BW
+
+Machine Hip Thrust (Glute Bridge)
+1: 12 reps x 47.7 kg
+
+Tracked with Motra.
+https://motra.com/share/workout/abc
+`);
+
+  assert.equal(motra.session_date, "2026-04-10");
+  assert.equal(motra.duration_min, 76);
+  assert.equal(motra.total_volume_kg, 6800);
+  assert.equal(motra.exercises.length, 2);
+  assert.equal(motra.exercises[0].name, "Pull-Up");
+  assert.match(buildMotraDebriefTemplate(motra), /Machine Hip Thrust/);
+});
+
+test("workout sequence uses recent Motra history", () => {
+  const sequence = determineWorkoutSequence({
+    strength_logs: [
+      { date: "2026-05-01", session_name: "Friday athletic lift" },
+      { date: "2026-05-03", session_name: "Sunday recovery lift" },
+    ],
+  });
+
+  assert.equal(sequence.programming_bias, "60% strength / 40% athletic-functional");
+  assert.ok(sequence.recent_strength_sessions.length >= 2);
+  assert.match(sequence.sequencing_call, /Last strength session/);
 });

@@ -4,6 +4,7 @@ import {
   getProfile,
   insertCoachMessage,
   json,
+  parseMotraText,
   preflight,
   requireCoachSecret,
   runCoach,
@@ -23,6 +24,63 @@ function asInteger(value) {
 
 function cleanSource(value, fallback) {
   return String(value || fallback || "mobile-intake").trim().slice(0, 120);
+}
+
+async function storeMotraDebrief(profileId, body = {}) {
+  if (!body.motra_text) return {};
+  const parsed = parseMotraText(body.motra_text);
+  const source = cleanSource(body.source, "motra-shortcut");
+  const sessionRow = {
+    profile_id: profileId,
+    session_date: body.date || parsed.session_date,
+    source,
+    session_name: parsed.session_name,
+    session_type: body.session_type || "strength",
+    duration_min: asNumber(body.completed_minutes) || parsed.duration_min,
+    total_volume_kg: parsed.total_volume_kg,
+    calories_kcal: parsed.calories_kcal,
+    motra_url: parsed.motra_url,
+    coaching_note: body.debrief_notes || body.notes || null,
+    raw: { ...parsed, shortcut_payload: body },
+  };
+  const session = (await supabase("strength_sessions?on_conflict=profile_id,session_date,source,session_name", {
+    method: "POST",
+    body: JSON.stringify([sessionRow]),
+  }))?.[0] || null;
+
+  let exercises = [];
+  if (session?.id && parsed.exercises.length) {
+    await supabase(`strength_exercises?strength_session_id=eq.${session.id}`, { method: "DELETE" });
+    exercises = await supabase("strength_exercises", {
+      method: "POST",
+      body: JSON.stringify(parsed.exercises.map((exercise, index) => ({
+        strength_session_id: session.id,
+        exercise_order: index + 1,
+        name: exercise.name,
+        notes: (body.exercise_feedback || []).find(item => item.name === exercise.name)?.note || null,
+        raw: exercise,
+      }))),
+    });
+  }
+
+  const feedback = (await supabase("session_feedback", {
+    method: "POST",
+    body: JSON.stringify([{
+      profile_id: profileId,
+      session_date: body.date || parsed.session_date,
+      rating_label: body.rating_label || null,
+      completed_minutes: asNumber(body.completed_minutes) || parsed.duration_min,
+      best_movement: body.best_movement || null,
+      worst_movement: body.worst_movement || null,
+      pain_notes: body.pain_notes || null,
+      difficulty: body.difficulty || null,
+      freeform_note: body.debrief_notes || body.notes || null,
+      source,
+      raw: { parsed_motra: parsed, exercise_feedback: body.exercise_feedback || [], payload: body },
+    }]),
+  }))?.[0] || null;
+
+  return { parsed_motra: parsed, strength_session: session, strength_exercises: exercises, feedback };
 }
 
 export default async function handler(req) {
@@ -82,6 +140,7 @@ export default async function handler(req) {
         "post-workout": "post_workout",
       };
       const text = String(body.text || body.summary || action).trim();
+      const stored = action === "post-workout" ? await storeMotraDebrief(profile.id, body) : {};
       await insertCoachMessage(profile.id, "user", text, body.channel || `api-${action}`, body.raw || body);
       const decision = await runCoach({
         profileId: profile.id,
@@ -92,7 +151,7 @@ export default async function handler(req) {
         channel: body.channel || `api-${action}`,
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || `api-${action}`, { in_reply_to: text, decision });
-      return json({ ok: true, action, reply: decision.reply, decision });
+      return json({ ok: true, action, reply: decision.reply, decision, stored });
     }
 
     if (req.method === "POST" && action === "feedback") {

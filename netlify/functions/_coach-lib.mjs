@@ -425,7 +425,128 @@ export function buildNutritionCall(dashboard = {}, state = DEFAULT_COACH_STATE) 
   };
 }
 
+function parseDurationToMinutes(value = "") {
+  const text = String(value || "");
+  const hourMatch = text.match(/(\d+(?:\.\d+)?)\s*h/);
+  const minuteMatch = text.match(/(\d+(?:\.\d+)?)\s*m/);
+  const hours = hourMatch ? Number(hourMatch[1]) : 0;
+  const minutes = minuteMatch ? Number(minuteMatch[1]) : 0;
+  return hours || minutes ? Math.round((hours * 60) + minutes) : null;
+}
+
+function parseCompactNumber(value = "") {
+  const text = String(value || "").trim().replace(/,/g, "");
+  const match = text.match(/(\d+(?:\.\d+)?)(K)?/i);
+  if (!match) return null;
+  const n = Number(match[1]);
+  return Number.isFinite(n) ? Math.round(n * (match[2] ? 1000 : 1)) : null;
+}
+
+export function parseMotraText(text = "") {
+  const raw = String(text || "").replace(/\r/g, "").trim();
+  const lines = raw.split("\n").map(line => line.trim()).filter(Boolean);
+  const dateLine = lines.find(line => /[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}/.test(line));
+  const isoDate = (() => {
+    if (!dateLine) return todayISO();
+    const cleaned = dateLine.replace(/\s+at\s+.*$/i, "");
+    const parsed = new Date(`${cleaned} 12:00:00`);
+    return Number.isNaN(parsed.getTime()) ? todayISO() : parsed.toISOString().slice(0, 10);
+  })();
+  const firstMetadataIndex = lines.findIndex(line => (
+    /^\d{8}\s+\w+/i.test(line)
+    || /[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}/.test(line)
+    || /^duration:/i.test(line)
+    || /^volume:/i.test(line)
+    || /^calories:/i.test(line)
+    || /^exercises:/i.test(line)
+  ));
+  const titleCandidate = lines
+    .slice(0, firstMetadataIndex === -1 ? lines.length : firstMetadataIndex)
+    .find(line => !/^my workout:?$/i.test(line));
+  const sessionName = titleCandidate || `Motra Workout ${isoDate}`;
+  const durationLine = lines.find(line => /^Duration:/i.test(line));
+  const volumeLine = lines.find(line => /^Volume:/i.test(line));
+  const caloriesLine = lines.find(line => /^Calories:/i.test(line));
+  const motraUrl = lines.find(line => /^https?:\/\/motra\.com/i.test(line)) || null;
+  const exercises = [];
+  let current = null;
+
+  for (const line of lines) {
+    if (
+      /^my workout:?$/i.test(line)
+      || /^duration:/i.test(line)
+      || /^volume:/i.test(line)
+      || /^calories:/i.test(line)
+      || /^exercises:/i.test(line)
+      || /^tracked with motra/i.test(line)
+      || /^https?:\/\//i.test(line)
+      || /[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}/.test(line)
+    ) continue;
+
+    const setMatch = line.match(/^(\d+):\s+(.+)$/);
+    if (setMatch && current) {
+      current.sets.push({ set_number: Number(setMatch[1]), prescription: setMatch[2] });
+      continue;
+    }
+
+    if (!/^\d/.test(line) && !line.includes(":")) {
+      current = { name: line, sets: [] };
+      exercises.push(current);
+    }
+  }
+
+  return {
+    source: "Motra",
+    raw_text: raw,
+    session_name: sessionName,
+    session_date: isoDate,
+    duration_min: parseDurationToMinutes(durationLine?.replace(/^Duration:\s*/i, "")),
+    total_volume_kg: parseCompactNumber(volumeLine?.replace(/^Volume:\s*/i, "")),
+    calories_kcal: parseCompactNumber(caloriesLine?.replace(/^Calories:\s*/i, "")),
+    motra_url: motraUrl,
+    exercises,
+  };
+}
+
+export function buildMotraDebriefTemplate(parsed = {}) {
+  const exercises = Array.isArray(parsed.exercises) ? parsed.exercises : [];
+  if (!exercises.length) return "Add overall notes, pain, best movement, worst movement, and anything coach should adjust.";
+  return exercises.map((exercise, index) => `${index + 1}. ${exercise.name}: `).join("\n");
+}
+
+export function determineWorkoutSequence(dashboard = {}, state = DEFAULT_COACH_STATE) {
+  const today = todayISO();
+  const recentSessions = latest(dashboard.strength_logs, 12).map(session => ({
+    date: session.date || session.session_date,
+    session_name: session.session_name || session.name || session.title || "Strength session",
+    session_type: session.session_type || session.type || null,
+  }))
+    .filter(session => session.date)
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+    .slice(0, 6);
+  const day = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Taipei" }).format(new Date(`${today}T12:00:00+08:00`)).toLowerCase();
+  const weeklyShape = state.training_model.weekly_shape || {};
+  const defaultFocus = weeklyShape[day] || "Adaptive strength/conditioning based on readiness and recent training.";
+  const daysSinceLastStrength = recentSessions[0]?.date
+    ? Math.max(0, Math.round((new Date(`${today}T12:00:00+08:00`) - new Date(`${recentSessions[0].date}T12:00:00+08:00`)) / 86400000))
+    : null;
+
+  return {
+    today,
+    day,
+    default_focus: defaultFocus,
+    days_since_last_strength: daysSinceLastStrength,
+    recent_strength_sessions: recentSessions,
+    goal_block: state.goals.ninety_day_win,
+    programming_bias: state.training_model.weekly_bias,
+    sequencing_call: daysSinceLastStrength === null
+      ? "No recent Motra strength session found in Supabase; use the weekly shape and readiness gates."
+      : `Last strength session was ${daysSinceLastStrength} day(s) ago; rotate stress from the recent Motra pattern instead of repeating it blindly.`,
+  };
+}
+
 export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, readiness = evaluateReadiness(dashboard, state)) {
+  const sequence = determineWorkoutSequence(dashboard, state);
   const travelMode = Boolean(state.gym_profile.travel_mode);
   if (travelMode) {
     return {
@@ -433,6 +554,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       requires_inventory: true,
       top_line: "Send the hotel gym inventory before I build the session.",
       reason: state.gym_profile.travel_rule,
+      sequence_context: sequence,
       questions: ["Is there a cable station?", "What dumbbells/kettlebells are available?", "Any bench, pull-up bar, treadmill, or bike?"],
       blocks: [],
     };
@@ -448,6 +570,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       : "World Gym plan: athletic Floor 3 primer, Floor 2 strength anchors, Floor 3 trunk/hybrid close.",
     session_type: "World Gym Strength + Athletic Functional",
     floor_plan: "Floor 3 primer -> Floor 2 anchors -> Floor 3 trunk/hybrid close",
+    sequence_context: sequence,
     target_minutes: state.training_model.default_session_target_min,
     time_range_min: state.training_model.session_range_min,
     guardrails: [
@@ -552,7 +675,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
 function topLineForIntent(intent, readiness, nutrition, workout) {
   if (intent === "build_workout" || intent === "workout") return workout.top_line;
   if (intent === "nutrition_check") return nutrition.call;
-  if (intent === "post_workout") return "Log what changed: duration, best movement, worst movement, pain, and RPE. That becomes the next-session adjustment.";
+  if (intent === "post_workout") return "Motra debrief received. Exercise-level comments become the next-session adjustment.";
   if (intent === "travel_mode") return workout.top_line;
   if (intent === "evaluate_data" || intent === "brief") return readiness.training_call;
   return readiness.tier === "Green" ? "Green enough to train with the planned World Gym structure." : readiness.training_call;
@@ -570,6 +693,12 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   if (normalizedIntent === "build_workout") {
     nextActions.push(workout.requires_inventory ? "Send hotel-gym inventory before lifting." : "Use the World Gym floor-aware workout plan below.");
   }
+  if (normalizedIntent === "post_workout") {
+    const parsedMotra = payload.motra_text ? parseMotraText(payload.motra_text) : null;
+    const exerciseCount = parsedMotra?.exercises?.length || payload.exercise_feedback?.length || 0;
+    if (exerciseCount) nextActions.push(`Use ${exerciseCount} exercise-level Motra note(s) to adjust the next workout.`);
+    nextActions.push("Flag pain, best movement, worst movement, and any exercise to repeat or retire.");
+  }
   if (normalizedIntent === "nutrition_check" || nutrition.protein_gap_g > 0 || nutrition.fat_over_g > 0) {
     nextActions.push(...nutrition.next_actions);
   }
@@ -582,6 +711,10 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     riskFlags.length ? `Watch: ${riskFlags.slice(0, 2).join(" ")}` : "No hard safety stop from the available data.",
     nutrition.call,
   ];
+  if (normalizedIntent === "post_workout" && payload.motra_text) {
+    const parsedMotra = parseMotraText(payload.motra_text);
+    replyParts.splice(1, 0, `Motra parsed: ${parsedMotra.exercises.length} exercises from ${parsedMotra.session_name}.`);
+  }
 
   return {
     ok: true,
@@ -596,6 +729,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     next_actions: nextActions.slice(0, 4),
     nutrition_call: nutrition,
     workout_plan: ["build_workout", "travel_mode"].includes(normalizedIntent) ? workout : null,
+    debrief_template: normalizedIntent === "post_workout" && payload.motra_text ? buildMotraDebriefTemplate(parseMotraText(payload.motra_text)) : null,
     source_context: {
       data_store: "supabase",
       default_gym: state.gym_profile.default_environment,
