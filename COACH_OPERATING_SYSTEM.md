@@ -16,6 +16,7 @@ This is the single active coaching specification for Todd's rebuilt personal coa
 - Priority order: VAT loss, muscle retention/gain, conditioning, mobility, aesthetics.
 - Training identity: consistent, direct, does not need motivation, wants clear calls.
 - Preferred training feel: athletic, varied, functional, strong, not repetitive.
+- Todd enjoys the strength part of training. The coach must preserve serious lifting as the anchor and use hybrid/functional work to make sessions interesting, challenging, and skillful.
 
 ## Live Data Hierarchy
 
@@ -42,6 +43,8 @@ Workout rules:
 - Functional conditioning is not bodybuilding accessories, not random AMRAP punishment, and not a machine-only finisher.
 - Creativity is a system, not randomness: rotate pattern family, tool, plane, carry, stance, or coordination constraint while keeping one familiar anchor and one measurable progression target.
 - Do not repeat the exact same functional-conditioning complex in back-to-back strength sessions unless Todd asks to retest it or the coach is intentionally progressing load, distance, density, or execution quality.
+- Use a 20-30% novelty budget: most of the session stays familiar enough to progress, while the primer, carry/trunk, or functional complex carries the creative challenge.
+- If the hybrid work feels like generic internet filler, redesign it around a clear challenge and progression target.
 - Every gym workout must include trunk, carry, chop/Pallof, or anti-rotation work.
 - Left side leads unilateral work.
 - Use exact Motra exercise names from `MOTRA_SETTINGS.md` when known.

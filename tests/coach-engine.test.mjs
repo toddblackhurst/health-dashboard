@@ -98,13 +98,17 @@ test("normal World Gym workout is floor-aware and Motra-ready", () => {
   assert.ok(workout.guardrails.some(rule => /Dumbbell \+ bench movements/i.test(rule)));
   assert.match(workout.athletic_functional_standard, /multi-plane movement/);
   assert.match(workout.functional_conditioning_standard, /loaded lift|loaded movement/i);
+  assert.match(workout.enjoyment_contract, /strength training/);
+  assert.match(workout.novelty_budget, /20-30%/);
   assert.ok(workout.novelty_policy.rules.some(rule => /back-to-back strength sessions/i.test(rule)));
+  assert.ok(workout.novelty_policy.creative_challenge_menu.length >= 3);
   assert.ok(workout.novelty_policy.selected_variant.id);
   const hybrid = workout.blocks.find(block => block.id === "HYBRID");
   assert.match(hybrid.label, /Functional Conditioning Complex/);
   assert.ok(hybrid.variant_id);
   assert.ok(hybrid.creative_constraint);
   assert.ok(hybrid.exercises.length >= 2);
+  assert.ok(hybrid.exercises.every(ex => ex.progression_target));
   assert.ok(workout.guardrails.includes("No cross-floor supersets."));
 });
 

@@ -27,6 +27,9 @@ export const DEFAULT_COACH_STATE = {
     default_session_target_min: 68,
     session_range_min: [60, 75],
     strength_hr_cap_bpm: 122,
+    enjoyment_contract: "Todd enjoys real strength training. Keep heavy/progressive strength as the anchor, then use athletic/functional work to make sessions interesting, challenging, and skillful. Do not make him go searching YouTube because the coach only knows boring templates.",
+    novelty_budget: "Keep 70-80% of each gym session familiar enough to progress; make 20-30% fresh through the primer, athletic complex, carry/trunk variation, stance, plane, tempo, or tool.",
+    workout_design_rule: "Every build must answer: what is the serious strength work, what is the interesting athletic challenge, and what is the progression target?",
     athletic_functional_definition: "Athletic/functional means coordinated, loaded, multi-plane movement that challenges power transfer, deceleration, trunk stiffness, unilateral control, carries, throws/slams, hinges, rotations, and footwork. It is not a token machine accessory or generic finisher.",
     complex_movement_rule: "Each green/yellow gym session should include at least one true complex or hybrid pairing: hinge-to-carry, landmine press-to-rotation, slam-to-lateral shuffle, step-up-to-knee-drive, cable chop-to-Pallof, or crawl/carry pattern. Keep it hip-safe and technically clean.",
     functional_conditioning_definition: "Functional conditioning for Todd is a challenging but coached athletic block: 8-14 minutes of quality rounds that combine a loaded lift or hinge, a carry or locomotion task, a rotational/anti-rotational trunk task, and a power/coordination element. It should feel like athletic training, not bodybuilding accessories and not a random AMRAP.",
@@ -42,6 +45,7 @@ export const DEFAULT_COACH_STATE = {
       "Repeat a movement pattern only when there is a progression target; otherwise rotate the tool, plane, carry, stance, or coordination constraint.",
       "Keep one familiar anchor so the session is trainable, then add one creative constraint that changes the challenge.",
       "Creativity must stay coachable: no circus tricks, no sloppy fatigue games, no movements that violate hip or asthma/BP guardrails.",
+      "If the functional block looks like something Todd could find in five seconds as generic YouTube filler, redesign it.",
     ],
     functional_pattern_families: [
       "Hinge + carry",
@@ -58,6 +62,13 @@ export const DEFAULT_COACH_STATE = {
       "Cable Chop High to Low + Pallof Hold + Step-to-Stick",
       "Step-Up to Knee Drive + Farmer Carry",
       "Bear Crawl / quadruped crawl pattern + Cable Row or Rope Pull if space allows",
+    ],
+    creative_challenge_menu: [
+      "Make the carry harder: suitcase, front-rack, offset, turnaround control, march, or left-side-led distance.",
+      "Make the trunk harder: chop-to-hold, Pallof march, split stance, half-kneeling, tall-kneeling, or anti-rotation after power.",
+      "Make coordination harder: slam-to-stick, shuffle reset, step-to-knee-drive, reach after row, or catch/stabilize.",
+      "Make power cleaner: dead-stop swing, rotational slam, landmine press, medicine-ball pass, or reset every rep.",
+      "Make density harder carefully: quality rounds with set rest, not AMRAP chaos.",
     ],
     weekly_shape: {
       monday: "Full-body strength + power",
@@ -659,18 +670,21 @@ function functionalVariantCatalog(state = DEFAULT_COACH_STATE) {
             green: "3 rounds: 8 swings @ 16-20 kg + 20 m front-rack carry/side, left first",
           },
           note: "Explosive hinge into braced locomotion. Stop if swing turns shoulder-y or carry posture collapses.",
+          progression_target: "Add distance or cleaner turnaround before adding swing load.",
         },
         {
           name: "Medicine Ball Rotational Slam + Lateral Shuffle Reset",
           motra_name: "Custom: Medicine Ball Rotational Slam; Custom: Lateral Shuffle Reset",
           prescription: { modified: "2x4/side, crisp resets", green: "3x5/side, crisp resets" },
           note: "Throw, decelerate, shuffle-reset, and re-stack. Athletic, not frantic.",
+          progression_target: "Make the catch/reset sharper before adding reps.",
         },
         {
           name: "Cable Chop High to Low + Pallof Hold",
           motra_name: `${state.gym_profile.motra_names.cable_chop_high_low}; ${state.gym_profile.motra_names.pallof_hold}`,
           prescription: { modified: "1-2 rounds: 5 chops + 10-sec hold/side", green: "2 rounds: 6 chops + 12-sec hold/side" },
           note: "Finish with trunk control after the power work. Left side leads.",
+          progression_target: "Longer hold or cleaner rib position, not more load first.",
         },
       ],
     },
@@ -686,18 +700,21 @@ function functionalVariantCatalog(state = DEFAULT_COACH_STATE) {
           motra_name: "Custom: Step-Up to Knee Drive; Kettlebell Suitcase Carry",
           prescription: { modified: "2 rounds: 5 step-ups/side + 15-20 m carry/side", green: "3 rounds: 6 step-ups/side + 20-30 m carry/side" },
           note: "Left side leads. Drive tall, own the top position, then carry without leaning.",
+          progression_target: "Increase carry load/distance only if the top position stays stable.",
         },
         {
           name: "Medicine Ball Slam + Lateral Step-to-Stick",
           motra_name: `${state.gym_profile.motra_names.med_ball_slam}; Custom: Lateral Step-to-Stick`,
           prescription: { modified: "2 rounds: 4 slams + 4 sticks/side", green: "3 rounds: 5 slams + 5 sticks/side" },
           note: "Slam hard, then prove you can decelerate quietly.",
+          progression_target: "Quieter sticks and sharper reset before adding reps.",
         },
         {
           name: "Cable Pallof Hold with March",
           motra_name: `${state.gym_profile.motra_names.pallof_hold}; Custom: Pallof March`,
           prescription: { modified: "2x15 sec/side", green: "2x20 sec/side" },
           note: "March without letting the cable turn you. Slow is harder.",
+          progression_target: "Add seconds or slower march tempo while staying square.",
         },
       ],
     },
@@ -713,18 +730,21 @@ function functionalVariantCatalog(state = DEFAULT_COACH_STATE) {
           motra_name: "Custom: Split-Stance Cable Row; Custom: Contralateral Reach",
           prescription: { modified: "2x6/side", green: "3x6/side" },
           note: "Row from a stable split stance, reach long, do not twist through the low back.",
+          progression_target: "Increase cable load only after stance and reach stay clean.",
         },
         {
           name: "Cable Chop High to Low + Step-to-Stick",
           motra_name: `${state.gym_profile.motra_names.cable_chop_high_low}; Custom: Step-to-Stick`,
           prescription: { modified: "2 rounds: 5 chops + 4 sticks/side", green: "3 rounds: 6 chops + 5 sticks/side" },
           note: "Diagonal power into deceleration. Left side leads.",
+          progression_target: "Better stick quality or one extra quality round before more load.",
         },
         {
           name: "Front-Rack Carry with Turnaround Control",
           motra_name: state.gym_profile.motra_names.front_rack_carry,
           prescription: { modified: "2x15-20 m/side", green: "3x20 m/side" },
           note: "The turn is the test. No rib flare, no hip pinch.",
+          progression_target: "Add load only if turnarounds stay tall and quiet.",
         },
       ],
     },
@@ -740,18 +760,21 @@ function functionalVariantCatalog(state = DEFAULT_COACH_STATE) {
           motra_name: "Custom: Bear Crawl; Custom: Tall-Kneeling Cable Press",
           prescription: { modified: "2 rounds: 5 m crawl + 6 presses/side", green: "3 rounds: 6-8 m crawl + 6 presses/side" },
           note: "Only if floor space is clear. Crawl quiet, press without rib flare.",
+          progression_target: "Longer crawl or slower press tempo before adding load.",
         },
         {
           name: "Kettlebell Dead-Stop Swing + March Carry",
           motra_name: `${state.gym_profile.motra_names.kettlebell_swing}; Custom: Kettlebell March Carry`,
           prescription: { modified: "2 rounds: 5 dead-stop swings + 20 marching steps", green: "3 rounds: 6 dead-stop swings + 30 marching steps" },
           note: "Dead-stop reset keeps it crisp and hip-safe.",
+          progression_target: "Cleaner dead-stop reset or more march steps before heavier bell.",
         },
         {
           name: "Medicine Ball Chest Pass to Catch/Stabilize",
           motra_name: "Custom: Medicine Ball Chest Pass; Custom: Catch Stabilize",
           prescription: { modified: "2x5", green: "3x5" },
           note: "Explosive pass, athletic catch, stable feet.",
+          progression_target: "Sharper catch/stabilize before more speed.",
         },
       ],
     },
@@ -801,9 +824,13 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
     athletic_functional_standard: state.training_model.athletic_functional_definition,
     functional_conditioning_standard: state.training_model.functional_conditioning_definition,
     functional_conditioning_rules: state.training_model.functional_conditioning_rules,
+    enjoyment_contract: state.training_model.enjoyment_contract,
+    novelty_budget: state.training_model.novelty_budget,
+    workout_design_rule: state.training_model.workout_design_rule,
     novelty_policy: {
       rules: state.training_model.novelty_rules,
       pattern_families: state.training_model.functional_pattern_families,
+      creative_challenge_menu: state.training_model.creative_challenge_menu,
       selected_variant: {
         id: functionalVariant.id,
         emphasis: functionalVariant.emphasis,
@@ -822,6 +849,8 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       "Dumbbell + bench movements, including chest-supported dumbbell rows, are Floor 2 unless deliberately light with <=10 kg dumbbells.",
       "Functional conditioning must be a true athletic complex: loaded movement + carry/locomotion + rotation/anti-rotation + coordination/power.",
       "Do not repeat the exact same functional complex in back-to-back strength sessions unless it is an intentional retest or progression.",
+      "Keep strength the anchor; use a 20-30% novelty budget to make the session interesting without randomizing the whole workout.",
+      "Every workout needs a clear interesting athletic challenge and a measurable progression target.",
       "If equipment location is uncertain, ask Todd to verify or provide a same-floor substitute.",
       "Skip or simplify the hybrid close if readiness is yellow/red, HR drifts, hip symptoms rise, or coordination degrades.",
     ],
@@ -909,6 +938,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         exercises: functionalAllowed ? functionalVariant.exercises.map(exercise => ({
           ...exercise,
           prescription: modified ? exercise.prescription.modified : exercise.prescription.green,
+          progression_target: exercise.progression_target || "Progress by cleaner execution first, then load/distance/density.",
         })) : [],
       },
     ],
@@ -939,6 +969,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
       nextActions.push("Functional conditioning standard: loaded athletic complex, not a token accessory or generic finisher.");
       nextActions.push("Routing: Floor 3 Matrix trainer preferred for pull-ups; dumbbell + bench work stays Floor 2 unless <=10 kg light work.");
       nextActions.push(`Novelty rule: today's complex theme is ${workout.novelty_policy?.selected_variant?.emphasis || "rotate the pattern, not randomize the workout"}.`);
+      nextActions.push("Keep strength satisfying; use novelty to make the athletic work interesting, not to replace the lifting.");
     }
   }
   if (normalizedIntent === "post_workout") {
@@ -962,6 +993,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   if ((normalizedIntent === "build_workout" || normalizedIntent === "workout") && !workout.requires_inventory) {
     replyParts.push("Functional conditioning standard: real athletic complex = loaded movement + carry/locomotion + rotation/anti-rotation + coordination under fatigue.");
     replyParts.push(`Creativity rule: rotate the pattern family and constraint; today's theme is ${workout.novelty_policy?.selected_variant?.emphasis || "fresh but coachable athletic work"}.`);
+    replyParts.push("Design rule: strength stays the anchor; the creative block must have a clear challenge and progression target.");
     replyParts.push("World Gym routing: pull-ups prefer Floor 3 Matrix trainer; dumbbell + bench rows/presses belong on Floor 2 unless Floor 3's <=10 kg dumbbells are intentionally enough.");
   }
   if (normalizedIntent === "post_workout" && payload.motra_text) {
@@ -1062,6 +1094,10 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
                     functional_conditioning_examples: state.training_model.functional_conditioning_examples,
                     novelty_rules: state.training_model.novelty_rules,
                     functional_pattern_families: state.training_model.functional_pattern_families,
+                    enjoyment_contract: state.training_model.enjoyment_contract,
+                    novelty_budget: state.training_model.novelty_budget,
+                    workout_design_rule: state.training_model.workout_design_rule,
+                    creative_challenge_menu: state.training_model.creative_challenge_menu,
                   },
                   gym_profile: {
                     default_environment: state.gym_profile.default_environment,
