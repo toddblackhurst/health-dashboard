@@ -146,19 +146,15 @@ Best workflow:
 2. Run `Coach Motra Debrief`.
 3. Choose the Motra file.
 4. The shortcut asks the API for an exercise-name debrief template from that file.
-5. Enter completed minutes, best movement, worst movement, pain notes, and exercise-by-exercise notes into the generated template.
+5. Enter pain notes plus exercise-by-exercise notes into the generated template. Put best/worst movement comments directly in the exercise list.
 6. The shortcut sends the Motra text plus your comments to coach.
 
-The backend parses the Motra file, stores the strength session, stores exercise-level notes where available, stores the debrief in `session_feedback`, and returns the coach reply.
+The backend parses the Motra file duration, stores the strength session, stores exercise-level notes where available, stores the debrief in `session_feedback`, and returns the coach reply.
 The shortcut uses plain-text API responses for the generated exercise template and final coach reply so the phone flow stays simple.
 
 Ask for:
 
-- Completed minutes
-- Best movement
-- Worst movement
 - Pain notes
-- Difficulty/RPE
 - Exercise-by-exercise notes
 
 Dictionary:
@@ -170,11 +166,7 @@ Dictionary:
   "channel": "iphone-shortcut",
   "source": "motra-shortcut",
   "motra_text": "[Motra file text]",
-  "completed_minutes": "[Minutes]",
-  "best_movement": "[Best]",
-  "worst_movement": "[Worst]",
   "pain_notes": "[Pain]",
-  "difficulty": "[Difficulty]",
   "debrief_notes": "[Exercise-by-exercise comments]"
 }
 ```
