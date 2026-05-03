@@ -40,6 +40,8 @@ Workout rules:
 - Every gym workout must include functional conditioning, not just a token functional exercise. For Todd, this means 8-14 minutes of coached athletic work that combines loaded movement, carry/locomotion, rotation or anti-rotation, coordination/power, and conditioning.
 - Use complexes, pairings, or quality rounds: KB swing + front-rack carry, med-ball rotational slam + lateral shuffle reset, landmine rotational press + suitcase carry, cable chop + Pallof hold + step-to-stick, step-up to knee drive + farmer carry.
 - Functional conditioning is not bodybuilding accessories, not random AMRAP punishment, and not a machine-only finisher.
+- Creativity is a system, not randomness: rotate pattern family, tool, plane, carry, stance, or coordination constraint while keeping one familiar anchor and one measurable progression target.
+- Do not repeat the exact same functional-conditioning complex in back-to-back strength sessions unless Todd asks to retest it or the coach is intentionally progressing load, distance, density, or execution quality.
 - Every gym workout must include trunk, carry, chop/Pallof, or anti-rotation work.
 - Left side leads unilateral work.
 - Use exact Motra exercise names from `MOTRA_SETTINGS.md` when known.
