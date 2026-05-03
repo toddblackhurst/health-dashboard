@@ -150,6 +150,7 @@ Best workflow:
 6. The shortcut sends the Motra text plus your comments to coach.
 
 The backend parses the Motra file, stores the strength session, stores exercise-level notes where available, stores the debrief in `session_feedback`, and returns the coach reply.
+The shortcut uses plain-text API responses for the generated exercise template and final coach reply so the phone flow stays simple.
 
 Ask for:
 

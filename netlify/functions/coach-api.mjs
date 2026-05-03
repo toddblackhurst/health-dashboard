@@ -27,6 +27,18 @@ function cleanSource(value, fallback) {
   return String(value || fallback || "mobile-intake").trim().slice(0, 120);
 }
 
+function text(value, status = 200) {
+  return new Response(String(value || ""), {
+    status,
+    headers: {
+      "content-type": "text/plain; charset=utf-8",
+      "access-control-allow-origin": "*",
+      "access-control-allow-methods": "GET,POST,OPTIONS",
+      "access-control-allow-headers": "content-type,x-coach-secret",
+    },
+  });
+}
+
 async function storeMotraDebrief(profileId, body = {}) {
   if (!body.motra_text) return {};
   const parsed = parseMotraText(body.motra_text);
@@ -102,10 +114,12 @@ export default async function handler(req) {
       const body = await req.json();
       if (!body.motra_text) return json({ error: "motra_text is required." }, 400);
       const parsed = parseMotraText(body.motra_text);
+      const debriefTemplate = buildMotraDebriefTemplate(parsed);
+      if (url.searchParams.get("format") === "text") return text(debriefTemplate);
       return json({
         ok: true,
         action,
-        debrief_template: buildMotraDebriefTemplate(parsed),
+        debrief_template: debriefTemplate,
         parsed_motra: {
           session_name: parsed.session_name,
           session_date: parsed.session_date,
@@ -175,6 +189,7 @@ export default async function handler(req) {
         channel: body.channel || `api-${action}`,
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || `api-${action}`, { in_reply_to: text, decision });
+      if (url.searchParams.get("format") === "text") return text(decision.reply);
       return json({ ok: true, action, reply: decision.reply, decision, stored });
     }
 
