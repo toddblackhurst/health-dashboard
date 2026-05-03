@@ -29,6 +29,22 @@ export const DEFAULT_COACH_STATE = {
     strength_hr_cap_bpm: 122,
     athletic_functional_definition: "Athletic/functional means coordinated, loaded, multi-plane movement that challenges power transfer, deceleration, trunk stiffness, unilateral control, carries, throws/slams, hinges, rotations, and footwork. It is not a token machine accessory or generic finisher.",
     complex_movement_rule: "Each green/yellow gym session should include at least one true complex or hybrid pairing: hinge-to-carry, landmine press-to-rotation, slam-to-lateral shuffle, step-up-to-knee-drive, cable chop-to-Pallof, or crawl/carry pattern. Keep it hip-safe and technically clean.",
+    functional_conditioning_definition: "Functional conditioning for Todd is a challenging but coached athletic block: 8-14 minutes of quality rounds that combine a loaded lift or hinge, a carry or locomotion task, a rotational/anti-rotational trunk task, and a power/coordination element. It should feel like athletic training, not bodybuilding accessories and not a random AMRAP.",
+    functional_conditioning_rules: [
+      "Use complexes, pairings, or quality rounds instead of isolated machine accessories.",
+      "Challenge multiple dimensions: level change, rotation, anti-rotation, unilateral stance, carry, deceleration, or lateral movement.",
+      "Keep hip-safe ranges and crisp technique; stop before sloppy reps.",
+      "Progress by load, distance, density, coordination, or cleaner movement, not by adding junk volume.",
+      "Motra can log the pieces as separate exercise entries when one complex name is not available.",
+    ],
+    functional_conditioning_examples: [
+      "Kettlebell Swing + Front-Rack Carry",
+      "Medicine Ball Rotational Slam + Lateral Shuffle Reset",
+      "Landmine Rotational Press + Suitcase Carry",
+      "Cable Chop High to Low + Pallof Hold + Step-to-Stick",
+      "Step-Up to Knee Drive + Farmer Carry",
+      "Bear Crawl / quadruped crawl pattern + Cable Row or Rope Pull if space allows",
+    ],
     weekly_shape: {
       monday: "Full-body strength + power",
       wednesday: "Posterior/pull + unilateral correction",
@@ -617,7 +633,8 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
     };
   }
 
-  const finisherAllowed = readiness.tier === "Green";
+  const functionalAllowed = readiness.tier !== "Red";
+  const functionalStatus = readiness.tier === "Green" ? "planned" : functionalAllowed ? "scaled_quality" : "conditional_skip";
   const modified = readiness.tier !== "Green";
   return {
     environment: "World Gym Taichung",
@@ -630,6 +647,8 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
     sequence_context: sequence,
     gym_map_status: gymMap,
     athletic_functional_standard: state.training_model.athletic_functional_definition,
+    functional_conditioning_standard: state.training_model.functional_conditioning_definition,
+    functional_conditioning_rules: state.training_model.functional_conditioning_rules,
     target_minutes: state.training_model.default_session_target_min,
     time_range_min: state.training_model.session_range_min,
     guardrails: [
@@ -639,7 +658,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       "No deep loaded hip flexion.",
       "Prefer Floor 3 Matrix trainer for pull-ups when available; Floor 2 pull-up station is the fallback.",
       "Dumbbell + bench movements, including chest-supported dumbbell rows, are Floor 2 unless deliberately light with <=10 kg dumbbells.",
-      "Athletic block must be a true complex, multi-dimensional challenge, not a token machine accessory.",
+      "Functional conditioning must be a true athletic complex: loaded movement + carry/locomotion + rotation/anti-rotation + coordination/power.",
       "If equipment location is uncertain, ask Todd to verify or provide a same-floor substitute.",
       "Skip or simplify the hybrid close if readiness is yellow/red, HR drifts, hip symptoms rise, or coordination degrades.",
     ],
@@ -712,22 +731,34 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       },
       {
         id: "HYBRID",
-        label: "Floor 3 - Athletic Complex",
+        label: "Floor 3 - Functional Conditioning Complex",
         floor: "Floor 3",
-        estimated_min: finisherAllowed ? 8 : 0,
-        status: finisherAllowed ? "planned" : "conditional_skip",
-        exercises: finisherAllowed ? [
+        estimated_min: functionalAllowed ? (modified ? 8 : 12) : 0,
+        status: functionalStatus,
+        intent: "Quality athletic conditioning: power transfer, trunk stiffness, carry/locomotion, and coordination under fatigue.",
+        format: modified
+          ? "2 quality rounds, generous rest, stop if movement gets sloppy."
+          : "3 quality rounds, 60-90 sec between rounds, RPE 7-8 without racing.",
+        exercises: functionalAllowed ? [
           {
             name: "Kettlebell Swing + Front-Rack Carry Complex",
             motra_name: `${state.gym_profile.motra_names.kettlebell_swing}; ${state.gym_profile.motra_names.front_rack_carry}`,
-            prescription: "3 rounds: 8 swings @ 16-20 kg + 20 m front-rack carry/side, left first",
+            prescription: modified
+              ? "2 rounds: 6 swings @ easy-moderate + 15-20 m front-rack carry/side, left first"
+              : "3 rounds: 8 swings @ 16-20 kg + 20 m front-rack carry/side, left first",
             note: "Explosive hinge into braced locomotion. Stop if swing turns shoulder-y or carry posture collapses.",
           },
           {
-            name: "Medicine Ball Rotational Slam",
-            motra_name: "Custom: Medicine Ball Rotational Slam",
-            prescription: "2x5/side, crisp resets",
-            note: "Rotate through the upper back and hips without chasing deep hip flexion.",
+            name: "Medicine Ball Rotational Slam + Lateral Shuffle Reset",
+            motra_name: "Custom: Medicine Ball Rotational Slam; Custom: Lateral Shuffle Reset",
+            prescription: modified ? "2x4/side, crisp resets" : "3x5/side, crisp resets",
+            note: "Throw, decelerate, shuffle-reset, and re-stack. Athletic, not frantic.",
+          },
+          {
+            name: "Cable Chop High to Low + Pallof Hold",
+            motra_name: `${state.gym_profile.motra_names.cable_chop_high_low}; ${state.gym_profile.motra_names.pallof_hold}`,
+            prescription: modified ? "1-2 rounds: 5 chops + 10-sec hold/side" : "2 rounds: 6 chops + 12-sec hold/side",
+            note: "Finish with trunk control after the power work. Left side leads.",
           },
         ] : [],
       },
@@ -755,6 +786,10 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
 
   if (normalizedIntent === "build_workout") {
     nextActions.push(workout.requires_inventory ? "Send hotel-gym inventory before lifting." : "Use the World Gym floor-aware workout plan below.");
+    if (!workout.requires_inventory) {
+      nextActions.push("Functional conditioning standard: loaded athletic complex, not a token accessory or generic finisher.");
+      nextActions.push("Routing: Floor 3 Matrix trainer preferred for pull-ups; dumbbell + bench work stays Floor 2 unless <=10 kg light work.");
+    }
   }
   if (normalizedIntent === "post_workout") {
     const parsedMotra = payload.motra_text ? parseMotraText(payload.motra_text) : null;
@@ -774,6 +809,10 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     riskFlags.length ? `Watch: ${riskFlags.slice(0, 2).join(" ")}` : "No hard safety stop from the available data.",
     nutrition.call,
   ];
+  if ((normalizedIntent === "build_workout" || normalizedIntent === "workout") && !workout.requires_inventory) {
+    replyParts.push("Functional conditioning standard: real athletic complex = loaded movement + carry/locomotion + rotation/anti-rotation + coordination under fatigue.");
+    replyParts.push("World Gym routing: pull-ups prefer Floor 3 Matrix trainer; dumbbell + bench rows/presses belong on Floor 2 unless Floor 3's <=10 kg dumbbells are intentionally enough.");
+  }
   if (normalizedIntent === "post_workout" && payload.motra_text) {
     const parsedMotra = parseMotraText(payload.motra_text);
     replyParts.splice(1, 0, `Motra parsed: ${parsedMotra.exercises.length} exercises from ${parsedMotra.session_name}.`);
@@ -867,6 +906,9 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
                   training_model: {
                     athletic_functional_definition: state.training_model.athletic_functional_definition,
                     complex_movement_rule: state.training_model.complex_movement_rule,
+                    functional_conditioning_definition: state.training_model.functional_conditioning_definition,
+                    functional_conditioning_rules: state.training_model.functional_conditioning_rules,
+                    functional_conditioning_examples: state.training_model.functional_conditioning_examples,
                   },
                   gym_profile: {
                     default_environment: state.gym_profile.default_environment,

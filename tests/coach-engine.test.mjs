@@ -97,6 +97,10 @@ test("normal World Gym workout is floor-aware and Motra-ready", () => {
   assert.ok(workout.guardrails.some(rule => /Floor 3 Matrix trainer for pull-ups/i.test(rule)));
   assert.ok(workout.guardrails.some(rule => /Dumbbell \+ bench movements/i.test(rule)));
   assert.match(workout.athletic_functional_standard, /multi-plane movement/);
+  assert.match(workout.functional_conditioning_standard, /loaded lift|loaded movement/i);
+  const hybrid = workout.blocks.find(block => block.id === "HYBRID");
+  assert.match(hybrid.label, /Functional Conditioning Complex/);
+  assert.ok(hybrid.exercises.some(ex => /Swing \+ Front-Rack Carry/.test(ex.name)));
   assert.ok(workout.guardrails.includes("No cross-floor supersets."));
 });
 

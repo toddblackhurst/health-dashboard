@@ -37,7 +37,9 @@ Workout rules:
 
 - Default floor plan: Floor 3 primer -> Floor 2 strength anchors -> Floor 3 trunk/hybrid close.
 - No cross-floor supersets.
-- Every gym workout must include one complex, multi-dimensional athletic/functional element. This means coordinated loaded movement that challenges power transfer, deceleration, trunk stiffness, unilateral control, carries, throws/slams, hinges, rotations, and footwork; not a token machine accessory.
+- Every gym workout must include functional conditioning, not just a token functional exercise. For Todd, this means 8-14 minutes of coached athletic work that combines loaded movement, carry/locomotion, rotation or anti-rotation, coordination/power, and conditioning.
+- Use complexes, pairings, or quality rounds: KB swing + front-rack carry, med-ball rotational slam + lateral shuffle reset, landmine rotational press + suitcase carry, cable chop + Pallof hold + step-to-stick, step-up to knee drive + farmer carry.
+- Functional conditioning is not bodybuilding accessories, not random AMRAP punishment, and not a machine-only finisher.
 - Every gym workout must include trunk, carry, chop/Pallof, or anti-rotation work.
 - Left side leads unilateral work.
 - Use exact Motra exercise names from `MOTRA_SETTINGS.md` when known.
