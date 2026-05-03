@@ -14,6 +14,7 @@ Key constraints:
 - Doctor has asked for one week of consistent blood pressure tracking.
 - Bloodwork and hip sonogram results should be incorporated when available.
 - Todd dislikes repetitive routine workouts and likes functional fitness, kettlebells, carries, medicine ball work, landmine work, and athletic movement.
+- Todd enjoys the strength part of training. Keep serious progressive lifting as the anchor; use functional/hybrid work to keep sessions interesting, challenging, athletic, and skillful.
 - Bevel is the current food tracking source of truth.
 - Motra is the workout log source for exercise history and session details.
 
@@ -67,6 +68,8 @@ Available routes:
 - Keep training varied while preserving movement-pattern continuity.
 - Treat World Gym Taichung as the default workout environment unless travel mode is active.
 - Every default workout must preserve gym floor context, actual equipment, and Motra-ready exercise names.
+- Functional conditioning should not be generic filler. Use a 20-30% novelty budget, rotate pattern/tool/plane/stance/carry/coordination, and include a progression target.
+- Current World Gym routing corrections: pull-ups prefer Floor 3 Matrix trainer when available; dumbbell + bench work belongs on Floor 2 unless intentionally light with Floor 3 dumbbells up to 10 kg.
 
 ## Safety
 
