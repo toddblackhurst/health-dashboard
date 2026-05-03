@@ -29,6 +29,8 @@ The active coach reads live data through Netlify Functions, stores durable rules
 - World Gym Taichung as default environment
 - Floor 3 functional floor preference
 - Floor 1/2/3 equipment and logistics
+- Floor 3 pull-up preference: use Matrix trainer if available; Floor 2 pull-up station is fallback
+- Floor 2 dumbbell/bench rule: chest-supported DB rows and real dumbbell bench work belong on Floor 2; Floor 3 dumbbells only go to 10 kg
 - No cross-floor supersets
 - exact Motra names when known
 - travel mode flag and hotel-gym inventory rule

@@ -94,6 +94,9 @@ test("normal World Gym workout is floor-aware and Motra-ready", () => {
   assert.ok(workout.blocks.some(block => block.floor === "Floor 3"));
   assert.ok(workout.blocks.some(block => block.floor === "Floor 2"));
   assert.ok(workout.blocks.flatMap(block => block.exercises).some(ex => ex.motra_name === "Pull-Up"));
+  assert.ok(workout.guardrails.some(rule => /Floor 3 Matrix trainer for pull-ups/i.test(rule)));
+  assert.ok(workout.guardrails.some(rule => /Dumbbell \+ bench movements/i.test(rule)));
+  assert.match(workout.athletic_functional_standard, /multi-plane movement/);
   assert.ok(workout.guardrails.includes("No cross-floor supersets."));
 });
 

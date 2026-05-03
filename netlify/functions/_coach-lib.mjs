@@ -8,7 +8,7 @@ const JSON_HEADERS = {
 export const COACH_RESPONSE_VERSION = "coach-brain-v1";
 
 export const DEFAULT_COACH_STATE = {
-  version: "2026-05-03-pro-coach-v1",
+  version: "2026-05-03-pro-coach-v2",
   goals: {
     priority_order: ["VAT loss", "muscle retention/gain", "conditioning", "mobility", "aesthetics"],
     ninety_day_win: "Belly/waist shrinks by 1-2 inches by about 2026-08-01.",
@@ -27,6 +27,8 @@ export const DEFAULT_COACH_STATE = {
     default_session_target_min: 68,
     session_range_min: [60, 75],
     strength_hr_cap_bpm: 122,
+    athletic_functional_definition: "Athletic/functional means coordinated, loaded, multi-plane movement that challenges power transfer, deceleration, trunk stiffness, unilateral control, carries, throws/slams, hinges, rotations, and footwork. It is not a token machine accessory or generic finisher.",
+    complex_movement_rule: "Each green/yellow gym session should include at least one true complex or hybrid pairing: hinge-to-carry, landmine press-to-rotation, slam-to-lateral shuffle, step-up-to-knee-drive, cable chop-to-Pallof, or crawl/carry pattern. Keep it hip-safe and technically clean.",
     weekly_shape: {
       monday: "Full-body strength + power",
       wednesday: "Posterior/pull + unilateral correction",
@@ -38,9 +40,10 @@ export const DEFAULT_COACH_STATE = {
       "Left side leads unilateral work.",
       "Hip-safe alternatives are pre-wired.",
       "No cross-floor supersets.",
-      "Every gym workout has an obvious athletic/functional element.",
+      "Every gym workout has an obvious complex, multi-dimensional athletic/functional element.",
       "Every gym workout includes trunk/carry or anti-rotation work.",
       "Use exact Motra exercise names when known.",
+      "If equipment location is uncertain or recently corrected by Todd, state uncertainty and ask/verify instead of pretending the floor map is authoritative.",
     ],
   },
   gym_profile: {
@@ -48,6 +51,7 @@ export const DEFAULT_COACH_STATE = {
     travel_mode: false,
     travel_rule: "When travel_mode is true, ask for hotel-gym inventory before building a strength session and ignore World Gym floor routing.",
     preferred_floor: "Floor 3 functional floor",
+    location_confidence_rule: "World Gym floor data is useful but not perfect. Treat Todd's newest correction as authoritative, surface uncertainty, and avoid precise routing for equipment whose location has not been recently verified.",
     floors: {
       "Floor 1": {
         role: "Machines + cardio / low-fatigue accessory and cool-down zone",
@@ -78,9 +82,21 @@ export const DEFAULT_COACH_STATE = {
           "soft plyo boxes",
           "BOSU",
           "TRX attachment with sliding-anchor caution",
+          "small dumbbell set up to 10 kg only",
         ],
       },
     },
+    routing_overrides: [
+      "Pull-Up / assisted pull-up: prefer the Floor 3 Matrix trainer if available; Floor 2 pull-up station is acceptable but not Todd's first choice.",
+      "Dumbbell Chest-Supported Row, dumbbell supported chest row, and any dumbbell + bench row belong on Floor 2 because the full dumbbells and adjustable benches are there.",
+      "Floor 3 dumbbells are a small set only up to 10 kg; do not program Floor 3 dumbbell rows/presses unless the intent is deliberately light technique/accessory work.",
+      "If a workout needs dumbbells heavier than 10 kg or a real adjustable bench, route that block to Floor 2.",
+    ],
+    correction_protocol: [
+      "When Todd says equipment is on a different floor or unavailable, log it as a gym map correction.",
+      "Future workouts should use the correction or ask for confirmation before routing that station.",
+      "Prefer same-floor substitutions over sending Todd across floors mid-block.",
+    ],
     avoid_items: [
       "TRX Row to T because the Floor 3 anchor slides under load; use Rope Cable Face Pull to W.",
       "KB Sumo Deadlift unless Todd explicitly requests it.",
@@ -202,6 +218,23 @@ export async function getCoachState(profileId) {
 
 function hydrateCoachState(row = {}) {
   const raw = row.raw && typeof row.raw === "object" ? row.raw : {};
+  const storedGymProfile = row.gym_profile || raw.gym_profile || {};
+  const mergedFloors = {
+    ...DEFAULT_COACH_STATE.gym_profile.floors,
+    ...(storedGymProfile.floors || {}),
+  };
+  for (const floor of Object.keys(DEFAULT_COACH_STATE.gym_profile.floors)) {
+    mergedFloors[floor] = {
+      ...DEFAULT_COACH_STATE.gym_profile.floors[floor],
+      ...(storedGymProfile.floors?.[floor] || {}),
+      equipment: [
+        ...new Set([
+          ...(DEFAULT_COACH_STATE.gym_profile.floors[floor].equipment || []),
+          ...(storedGymProfile.floors?.[floor]?.equipment || []),
+        ]),
+      ],
+    };
+  }
   return {
     ...DEFAULT_COACH_STATE,
     ...raw,
@@ -210,10 +243,18 @@ function hydrateCoachState(row = {}) {
     source_hierarchy: { ...DEFAULT_COACH_STATE.source_hierarchy, ...(row.source_hierarchy || raw.source_hierarchy || {}) },
     gym_profile: {
       ...DEFAULT_COACH_STATE.gym_profile,
-      ...(row.gym_profile || raw.gym_profile || {}),
+      ...storedGymProfile,
+      floors: mergedFloors,
+      routing_overrides: [
+        ...new Set([
+          ...(DEFAULT_COACH_STATE.gym_profile.routing_overrides || []),
+          ...(storedGymProfile.routing_overrides || []),
+        ]),
+      ],
       travel_mode: Boolean(row.travel_mode ?? row.gym_profile?.travel_mode ?? raw.gym_profile?.travel_mode ?? false),
     },
     active_medical: { ...DEFAULT_COACH_STATE.active_medical, ...(row.active_medical_loops || raw.active_medical || {}) },
+    training_model: { ...DEFAULT_COACH_STATE.training_model, ...(raw.training_model || {}) },
     db_row: row.id ? row : null,
   };
 }
@@ -545,8 +586,23 @@ export function determineWorkoutSequence(dashboard = {}, state = DEFAULT_COACH_S
   };
 }
 
+function extractGymMapNotes(dashboard = {}) {
+  const notes = latest(dashboard.coach_chat_notes, 25)
+    .filter(note => note?.role === "user")
+    .map(note => String(note.text || ""))
+    .filter(text => /\b(gym|world gym|floor|equipment|machine|rack|cable|landmine|kettlebell|med ball|trx|bench|where)\b/i.test(text))
+    .slice(-5);
+
+  return {
+    confidence: notes.length ? "recent_user_corrections_present" : "use_stored_map_with_uncertainty",
+    rule: "Todd's newest gym-location correction overrides stored floor assumptions. If a station location is uncertain, ask or give a same-floor substitute.",
+    recent_notes: notes,
+  };
+}
+
 export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, readiness = evaluateReadiness(dashboard, state)) {
   const sequence = determineWorkoutSequence(dashboard, state);
+  const gymMap = extractGymMapNotes(dashboard);
   const travelMode = Boolean(state.gym_profile.travel_mode);
   if (travelMode) {
     return {
@@ -555,6 +611,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       top_line: "Send the hotel gym inventory before I build the session.",
       reason: state.gym_profile.travel_rule,
       sequence_context: sequence,
+      gym_map_status: gymMap,
       questions: ["Is there a cable station?", "What dumbbells/kettlebells are available?", "Any bench, pull-up bar, treadmill, or bike?"],
       blocks: [],
     };
@@ -571,6 +628,8 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
     session_type: "World Gym Strength + Athletic Functional",
     floor_plan: "Floor 3 primer -> Floor 2 anchors -> Floor 3 trunk/hybrid close",
     sequence_context: sequence,
+    gym_map_status: gymMap,
+    athletic_functional_standard: state.training_model.athletic_functional_definition,
     target_minutes: state.training_model.default_session_target_min,
     time_range_min: state.training_model.session_range_min,
     guardrails: [
@@ -578,7 +637,11 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       "Left side leads unilateral work.",
       "Stay near the 122 bpm strength HR cap.",
       "No deep loaded hip flexion.",
-      "Skip the hybrid close if readiness is yellow/red, HR drifts, hip symptoms rise, or grip is cooked.",
+      "Prefer Floor 3 Matrix trainer for pull-ups when available; Floor 2 pull-up station is the fallback.",
+      "Dumbbell + bench movements, including chest-supported dumbbell rows, are Floor 2 unless deliberately light with <=10 kg dumbbells.",
+      "Athletic block must be a true complex, multi-dimensional challenge, not a token machine accessory.",
+      "If equipment location is uncertain, ask Todd to verify or provide a same-floor substitute.",
+      "Skip or simplify the hybrid close if readiness is yellow/red, HR drifts, hip symptoms rise, or coordination degrades.",
     ],
     blocks: [
       {
@@ -588,16 +651,16 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         estimated_min: 10,
         exercises: [
           {
-            name: "Lateral Step-to-Stick",
-            motra_name: "Custom: Lateral Step-to-Stick",
-            prescription: modified ? "1-2x5/side" : "2x5/side",
-            note: "Quiet landing, two-second freeze, control before speed.",
+            name: "Lateral Step-to-Stick + Medicine Ball Slam",
+            motra_name: "Custom: Lateral Step-to-Stick; Medicine Ball Slam",
+            prescription: modified ? "2 rounds: 4/side + 4 slams" : "3 rounds: 5/side + 5 slams",
+            note: "Stick the lateral landing, own the trunk, then slam hard. Multi-plane control before speed.",
           },
           {
-            name: "Cable Chop High to Low",
+            name: "Cable Chop High to Low + Pallof Hold",
             motra_name: state.gym_profile.motra_names.cable_chop_high_low,
-            prescription: "2x8/side",
-            note: "Strong diagonal brace; posture stays stacked.",
+            prescription: "2 rounds: 6 chops/side + 10-sec Pallof hold/side",
+            note: "Diagonal force, then resist rotation. Left side leads.",
           },
         ],
       },
@@ -611,7 +674,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
             name: "Pull-Up",
             motra_name: state.gym_profile.motra_names.pull_up,
             prescription: modified ? "3 sets, leave 2 reps in reserve" : "4 sets: 6 / 5 / 5 / 4",
-            note: "Settled hang, elbows down, one-beat top hold, controlled lower.",
+            note: "Preferred station is Floor 3 Matrix trainer if available; Floor 2 pull-up station is fine as fallback. Settled hang, one-beat top hold.",
           },
           {
             name: "Machine Hip Thrust (Glute Bridge)",
@@ -649,22 +712,22 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       },
       {
         id: "HYBRID",
-        label: "Floor 3 - Hybrid Close",
+        label: "Floor 3 - Athletic Complex",
         floor: "Floor 3",
-        estimated_min: finisherAllowed ? 6 : 0,
+        estimated_min: finisherAllowed ? 8 : 0,
         status: finisherAllowed ? "planned" : "conditional_skip",
         exercises: finisherAllowed ? [
           {
-            name: "Kettlebell Swing",
-            motra_name: state.gym_profile.motra_names.kettlebell_swing,
-            prescription: "2x10 @ 16-20 kg",
-            note: "Snap, float, park. Stop if it turns into a shoulder lift.",
+            name: "Kettlebell Swing + Front-Rack Carry Complex",
+            motra_name: `${state.gym_profile.motra_names.kettlebell_swing}; ${state.gym_profile.motra_names.front_rack_carry}`,
+            prescription: "3 rounds: 8 swings @ 16-20 kg + 20 m front-rack carry/side, left first",
+            note: "Explosive hinge into braced locomotion. Stop if swing turns shoulder-y or carry posture collapses.",
           },
           {
-            name: "Kettlebell Front-Rack Carry",
-            motra_name: state.gym_profile.motra_names.front_rack_carry,
-            prescription: "2x20 m/side, left first",
-            note: "Ribs down, walk tall, breathe behind the brace.",
+            name: "Medicine Ball Rotational Slam",
+            motra_name: "Custom: Medicine Ball Rotational Slam",
+            prescription: "2x5/side, crisp resets",
+            note: "Rotate through the upper back and hips without chasing deep hip flexion.",
           },
         ] : [],
       },
@@ -801,10 +864,16 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
                 latest_nutrition: latestNutritionValues(dashboard),
                 coach_state: {
                   goals: state.goals,
+                  training_model: {
+                    athletic_functional_definition: state.training_model.athletic_functional_definition,
+                    complex_movement_rule: state.training_model.complex_movement_rule,
+                  },
                   gym_profile: {
                     default_environment: state.gym_profile.default_environment,
                     travel_mode: state.gym_profile.travel_mode,
                     preferred_floor: state.gym_profile.preferred_floor,
+                    location_confidence_rule: state.gym_profile.location_confidence_rule,
+                    routing_overrides: state.gym_profile.routing_overrides,
                   },
                 },
               },

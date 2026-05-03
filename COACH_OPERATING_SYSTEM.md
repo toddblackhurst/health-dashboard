@@ -30,18 +30,21 @@ This is the single active coaching specification for Todd's rebuilt personal coa
 World Gym Taichung is the default workout environment unless travel mode is active.
 
 - Floor 1: machines + cardio; use for low-fatigue accessory, rehab-style work, or cool-down cardio.
-- Floor 2: primary strength floor; Hammer Strength, racks, Smith machine, landmine, glute trainer, full dumbbells, benches, pull-up station.
-- Floor 3: preferred functional floor; Matrix functional trainer, Hoist ROC-IT machines, kettlebells 4-24 kg, ViPR, medicine/slam balls, plyo boxes, BOSU, TRX attachment.
+- Floor 2: primary strength floor; Hammer Strength, racks, Smith machine, landmine, glute trainer, full dumbbells, adjustable benches, pull-up station.
+- Floor 3: preferred functional floor; Matrix functional trainer, Hoist ROC-IT machines, kettlebells 4-24 kg, ViPR, medicine/slam balls, plyo boxes, BOSU, TRX attachment, small dumbbell set up to 10 kg only.
 
 Workout rules:
 
 - Default floor plan: Floor 3 primer -> Floor 2 strength anchors -> Floor 3 trunk/hybrid close.
 - No cross-floor supersets.
-- Every gym workout must include one obvious athletic/functional element.
+- Every gym workout must include one complex, multi-dimensional athletic/functional element. This means coordinated loaded movement that challenges power transfer, deceleration, trunk stiffness, unilateral control, carries, throws/slams, hinges, rotations, and footwork; not a token machine accessory.
 - Every gym workout must include trunk, carry, chop/Pallof, or anti-rotation work.
 - Left side leads unilateral work.
 - Use exact Motra exercise names from `MOTRA_SETTINGS.md` when known.
 - Travel mode disables World Gym floor routing and requires hotel-gym inventory before a strength plan.
+- Pull-ups: prefer Floor 3 Matrix trainer if available; Floor 2 pull-up station is acceptable fallback.
+- Dumbbell chest-supported row / supported chest row / dumbbell + bench work: Floor 2 only unless deliberately light with Floor 3 dumbbells up to 10 kg.
+- If Todd corrects a location, his newest correction overrides the stored map. Ask or give a same-floor substitute when uncertain.
 
 Avoid:
 
