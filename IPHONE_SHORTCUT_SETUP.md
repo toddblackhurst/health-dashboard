@@ -145,8 +145,9 @@ Best workflow:
 1. Export/share the completed Motra workout as a `.txt` file.
 2. Run `Coach Motra Debrief`.
 3. Choose the Motra file.
-4. Enter completed minutes, best movement, worst movement, pain notes, and exercise-by-exercise notes.
-5. The shortcut sends the Motra text plus your comments to coach.
+4. The shortcut asks the API for an exercise-name debrief template from that file.
+5. Enter completed minutes, best movement, worst movement, pain notes, and exercise-by-exercise notes into the generated template.
+6. The shortcut sends the Motra text plus your comments to coach.
 
 The backend parses the Motra file, stores the strength session, stores exercise-level notes where available, stores the debrief in `session_feedback`, and returns the coach reply.
 

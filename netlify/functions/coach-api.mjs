@@ -4,6 +4,7 @@ import {
   getProfile,
   insertCoachMessage,
   json,
+  buildMotraDebriefTemplate,
   parseMotraText,
   preflight,
   requireCoachSecret,
@@ -94,8 +95,31 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "message", "feedback", "intake", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "message", "feedback", "intake", "brief", "workout", "nutrition-closeout", "post-workout", "motra-template"].includes(pathAction) ? pathAction : null)
       || "dashboard";
+
+    if (req.method === "POST" && action === "motra-template") {
+      const body = await req.json();
+      if (!body.motra_text) return json({ error: "motra_text is required." }, 400);
+      const parsed = parseMotraText(body.motra_text);
+      return json({
+        ok: true,
+        action,
+        debrief_template: buildMotraDebriefTemplate(parsed),
+        parsed_motra: {
+          session_name: parsed.session_name,
+          session_date: parsed.session_date,
+          duration_min: parsed.duration_min,
+          total_volume_kg: parsed.total_volume_kg,
+          calories_kcal: parsed.calories_kcal,
+          motra_url: parsed.motra_url,
+          exercises: parsed.exercises.map(exercise => ({
+            name: exercise.name,
+            set_count: exercise.sets.length,
+          })),
+        },
+      });
+    }
 
     if (req.method === "GET" && action === "dashboard") {
       const dashboard = await dashboardFromSupabase();
