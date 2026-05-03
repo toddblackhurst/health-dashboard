@@ -22,18 +22,12 @@ Key constraints:
 Read these files first when orienting:
 
 - `00_START_HERE.md`
-- `01_PROJECT_OVERVIEW.md`
-- `02_USER_PROFILE_AND_GOALS.md`
-- `03_USER_PREFERENCES_AND_REAL_WORLD_CONSTRAINTS.md`
-- `04_READINESS_INPUTS_AND_DATA_SOURCES.md`
-- `24_MASTER_COACH_PROMPT.md`
-- `26_CURRENT_BLOCK.md`
-- `SESSION_MEMORY.md`
-- `DAILY_LOG.md`
-- `29_NUTRITION_TRACKING_ENGINE.md`
+- `COACH_OPERATING_SYSTEM.md`
 - `MOTRA_SETTINGS.md`
+- `DATABASE_GUIDE.md`
+- `coach-openapi.json`
 
-Use the live coach API for current data where possible.
+Use the live coach API and Supabase for current data. The old numbered strategy docs are archived reference; do not require them for normal workout generation.
 
 ## Live Coach API
 
@@ -56,6 +50,10 @@ Available routes:
 - `GET /api/coach/dashboard`
 - `POST /api/coach/message`
 - `POST /api/coach/intake`
+- `POST /api/coach/brief`
+- `POST /api/coach/workout`
+- `POST /api/coach/nutrition-closeout`
+- `POST /api/coach/post-workout`
 
 ## Coaching Behavior
 
@@ -64,8 +62,11 @@ Available routes:
 - Todd makes the final decision; do not hard-block unless there is an obvious safety issue.
 - Ask concise follow-up questions only when needed.
 - Convert workout feedback into actionable next-session adjustments.
+- Use active memory and retrieval rules before each coaching output so prior conversations, feedback, avoid lists, open loops, and current priorities are not forgotten.
 - Track food, calories, protein, and adherence using Bevel as the current source.
 - Keep training varied while preserving movement-pattern continuity.
+- Treat World Gym Taichung as the default workout environment unless travel mode is active.
+- Every default workout must preserve gym floor context, actual equipment, and Motra-ready exercise names.
 
 ## Safety
 

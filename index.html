@@ -124,6 +124,28 @@ body {
   cursor: pointer; text-align: left; line-height: 1.35;
 }
 .coach-action-btn:active { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.coach-command {
+  background: var(--surface); border: 1px solid rgba(88,166,255,0.24);
+  border-radius: 8px; padding: 12px;
+}
+.coach-command-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin-bottom: 9px; }
+.coach-command-title { font-size: 12px; font-weight: 850; color: var(--text); letter-spacing: -0.01em; }
+.coach-command-mode { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; }
+.coach-command-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.coach-command-btn {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+  border-radius: 8px; padding: 9px 10px; font-size: 11px; font-weight: 800;
+  cursor: pointer; text-align: left; line-height: 1.25;
+}
+.coach-command-btn span { display: block; font-size: 9px; font-weight: 700; color: var(--text3); margin-top: 3px; line-height: 1.35; }
+.coach-command-btn:active { border-color: var(--accent); background: var(--accent-bg); }
+.coach-command-btn.wide { grid-column: 1 / -1; }
+.coach-command-output {
+  display: none; margin-top: 9px; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 9px 10px; font-size: 11.5px; line-height: 1.55; color: var(--text2);
+  white-space: pre-wrap;
+}
+.coach-command-output.open { display: block; }
 .coach-compose {
   display: flex; gap: 8px; align-items: flex-end;
   background: var(--surface); border: 1px solid var(--border);
@@ -808,6 +830,8 @@ function renderCoach(db) {
 
     ${warningHtml}
 
+    ${buildCoachCommandDashboard(db)}
+
     <div class="coach-chat">
       <div class="chat-row">
         <div class="chat-bubble coach">
@@ -851,6 +875,58 @@ function renderCoach(db) {
     ${buildWorkoutFeedbackPanel(feedbackDate, hasFeedback)}
   </div>`;
   restoreCoachFeedbackState(feedbackDate);
+}
+
+function buildCoachCommandDashboard(db) {
+  const state = db.coach_state || {};
+  const gym = state.gym_profile || {};
+  const travel = gym.travel_mode || state.travel_mode;
+  return `<div class="coach-command">
+    <div class="coach-command-head">
+      <div class="coach-command-title">Coach Command</div>
+      <div class="coach-command-mode">${travel ? 'Travel mode' : 'World Gym Taichung'}</div>
+    </div>
+    <div class="coach-command-grid">
+      <button class="coach-command-btn" onclick="coachCommandAction('brief','brief','Morning check-in from dashboard')">Brief<span>readiness + next call</span></button>
+      <button class="coach-command-btn" onclick="coachCommandAction('workout','build_workout','Build today\\'s workout from dashboard')">Workout<span>floor-aware plan</span></button>
+      <button class="coach-command-btn" onclick="coachCommandAction('nutrition-closeout','nutrition_check','Nutrition closeout from dashboard')">Nutrition<span>protein + fat correction</span></button>
+      <button class="coach-command-btn" onclick="coachCommandAction('post-workout','post_workout','Post-workout debrief from dashboard')">Debrief<span>session adjustment</span></button>
+      <button class="coach-command-btn wide" onclick="coachCommandAction('message','travel_mode','Travel mode check. If travel mode is active, ask for hotel gym inventory before planning.')">Travel / Hotel Gym<span>inventory first, no World Gym routing</span></button>
+    </div>
+    <div id="coach-command-output" class="coach-command-output">${escapeHtml(localStorage.getItem('coach_command_last') || '')}</div>
+  </div>`;
+}
+
+async function coachCommandAction(action, intent, text) {
+  const out = e('coach-command-output');
+  if (out) {
+    out.textContent = 'Running...';
+    out.classList.add('open');
+  }
+  if (!hasCoachApi()) {
+    if (out) out.textContent = 'Connect the Coach API in settings first.';
+    openTokenModal();
+    return;
+  }
+  try {
+    const payload = { text, intent, channel: 'dashboard-command' };
+    const res = await coachApi(action, payload);
+    const reply = res.reply || res.decision?.reply || 'Coach command completed.';
+    localStorage.setItem('coach_command_last', reply);
+    appendLocalCoachChat('user', text);
+    appendLocalCoachChat('coach', reply);
+    if (out) out.textContent = reply;
+    lastHash = '';
+    setTimeout(pollDb, 600);
+  } catch (err) {
+    if (out) out.textContent = 'Coach API failed: ' + err.message;
+  }
+}
+
+function appendLocalCoachChat(role, text) {
+  const msgs = JSON.parse(localStorage.getItem('coach_chat_local') || '[]');
+  msgs.push({ role, text, at: new Date().toISOString() });
+  localStorage.setItem('coach_chat_local', JSON.stringify(msgs.slice(-12)));
 }
 
 function getLatestNutritionEntry(db) {

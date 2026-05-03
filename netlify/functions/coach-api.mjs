@@ -1,5 +1,4 @@
 import {
-  coachReply,
   compactDashboard,
   dashboardFromSupabase,
   getProfile,
@@ -7,6 +6,7 @@ import {
   json,
   preflight,
   requireCoachSecret,
+  runCoach,
   supabase,
 } from "./_coach-lib.mjs";
 
@@ -36,7 +36,7 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "message", "feedback", "intake"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "message", "feedback", "intake", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
       || "dashboard";
 
     if (req.method === "GET" && action === "dashboard") {
@@ -58,9 +58,41 @@ export default async function handler(req) {
       if (!text) return json({ error: "Message text is required." }, 400);
       await insertCoachMessage(profile.id, "user", text, body.channel || "web", body.raw || {});
       const dashboard = await dashboardFromSupabase();
-      const reply = coachReply(text, dashboard || {});
-      await insertCoachMessage(profile.id, "coach", reply, body.channel || "web", { in_reply_to: text });
-      return json({ ok: true, reply });
+      const decision = await runCoach({
+        profileId: profile.id,
+        text,
+        intent: body.intent || "general",
+        dashboard: dashboard || {},
+        payload: body,
+        channel: body.channel || "web",
+      });
+      await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || "web", { in_reply_to: text, decision });
+      return json({ ok: true, reply: decision.reply, decision });
+    }
+
+    if (req.method === "POST" && ["brief", "workout", "nutrition-closeout", "post-workout"].includes(action)) {
+      const profile = await getProfile();
+      if (!profile) return json({ error: "No Supabase profile found." }, 404);
+      const body = await req.json().catch(() => ({}));
+      const dashboard = await dashboardFromSupabase();
+      const intentMap = {
+        brief: "brief",
+        workout: "build_workout",
+        "nutrition-closeout": "nutrition_check",
+        "post-workout": "post_workout",
+      };
+      const text = String(body.text || body.summary || action).trim();
+      await insertCoachMessage(profile.id, "user", text, body.channel || `api-${action}`, body.raw || body);
+      const decision = await runCoach({
+        profileId: profile.id,
+        text,
+        intent: body.intent || intentMap[action],
+        dashboard: dashboard || {},
+        payload: body,
+        channel: body.channel || `api-${action}`,
+      });
+      await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || `api-${action}`, { in_reply_to: text, decision });
+      return json({ ok: true, action, reply: decision.reply, decision });
     }
 
     if (req.method === "POST" && action === "feedback") {

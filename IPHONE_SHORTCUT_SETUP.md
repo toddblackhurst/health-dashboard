@@ -2,13 +2,35 @@
 
 Use this to send phone data directly into the connected coach.
 
+## Shortcut action research
+
+The shared iCloud Shortcut URL was unavailable when checked. The Reddit thread on hidden actions points to Apple's internal `WFActions.plist` as the source for hidden/built-in Shortcuts actions and warns that some hidden actions can be disruptive. For Todd's coach, use stable native actions only:
+
+- `Ask for Input`
+- `Choose from Menu`
+- `Dictionary`
+- `Get Contents of URL`
+- `Format Date`
+- `Show Result`
+- `Open URLs`
+- `Save File`
+- `Get File from Folder`
+- `Get Latest Photos`
+- `Share`
+- `Run Shortcut`
+- `Show Notification`
+
+Do not rely on hidden actions for the core coaching workflow. The coach should be boringly reliable from the iPhone.
+
 ## Screenshot inbox watcher
 
 The Mac now watches this screenshot folder:
 
 ```text
-/Users/toddsdesktop/Desktop/Codex Projects/Todd's Personal Coach/Todd's Personal Coach/screenshots
+/Users/toddsdesktop/Library/Mobile Documents/com~apple~CloudDocs/Coach Screenshots
 ```
+
+This is the only valid screenshot destination. Do not use the project folder under `Desktop/...` or the duplicate `Desktop/CoworkProjects/...` copy. LaunchAgents cannot reliably read Desktop folders without extra macOS privacy permissions, so the live watcher uses the iCloud Drive folder instead.
 
 Use your screenshot-upload Shortcut to save screenshots there. The Mac watcher checks the folder every minute, copies new image files into `~/.todd-coach/screenshots/inbox/`, reads the image with OpenAI vision when `OPENAI_API_KEY` is configured, categorizes the screenshot, extracts visible metrics, and logs structured coach intake rows through the live API.
 
@@ -23,10 +45,140 @@ Supported files:
 
 Important constraint: the watcher only extracts what is visible in the screenshot. If the screenshot is cropped, covered by a notification, blurred, or missing the date, the stored data will be limited to what can be seen.
 
+After a screenshot is processed, the original is moved into a dated `processed/` subfolder inside the iCloud Drive inbox.
+
 ## Installed shortcuts
 
 - `Coach Message`: installed and ready now. Use this from iPhone to send any note to coach.
 - `Coach Intake`: installed as the future structured intake version, but it needs the newer Netlify function deploy before use.
+
+## Recommended coach shortcuts
+
+All coach shortcuts use:
+
+```text
+Method: POST
+Header: x-coach-secret: your COACH_API_SECRET value
+Header: Content-Type: application/json
+Request Body: JSON
+```
+
+### Morning Check-In
+
+Endpoint:
+
+```text
+https://todd-personal-coach.netlify.app/api/coach/brief
+```
+
+Dictionary:
+
+```json
+{
+  "text": "Morning check-in from iPhone",
+  "channel": "iphone-shortcut"
+}
+```
+
+Show `reply` from the returned JSON. This should be a one-tap shortcut.
+
+### Build Today's Workout
+
+Endpoint:
+
+```text
+https://todd-personal-coach.netlify.app/api/coach/workout
+```
+
+Ask for optional input:
+
+```text
+Anything the coach should know before building?
+```
+
+Dictionary:
+
+```json
+{
+  "text": "Build today's workout. Optional note: [Shortcut Input]",
+  "channel": "iphone-shortcut"
+}
+```
+
+If travel mode is active, the coach will ask for hotel-gym inventory before programming and will stop using World Gym floor routing.
+
+### Nutrition Closeout
+
+Endpoint:
+
+```text
+https://todd-personal-coach.netlify.app/api/coach/nutrition-closeout
+```
+
+Dictionary:
+
+```json
+{
+  "text": "Nutrition closeout from Bevel",
+  "channel": "iphone-shortcut"
+}
+```
+
+This evaluates the latest Bevel totals. If the latest Bevel screenshot has not processed yet, use `Coach Intake` food logging or drop the screenshot into the iCloud watcher folder first.
+
+### Post-Workout Debrief
+
+Endpoint:
+
+```text
+https://todd-personal-coach.netlify.app/api/coach/post-workout
+```
+
+Ask for:
+
+- Completed minutes
+- Best movement
+- Worst movement
+- Pain notes
+- Difficulty/RPE
+
+Dictionary:
+
+```json
+{
+  "text": "Post-workout debrief",
+  "channel": "iphone-shortcut",
+  "completed_minutes": "[Minutes]",
+  "best_movement": "[Best]",
+  "worst_movement": "[Worst]",
+  "pain_notes": "[Pain]",
+  "difficulty": "[Difficulty]"
+}
+```
+
+### Fast Coach Note
+
+Endpoint:
+
+```text
+https://todd-personal-coach.netlify.app/api/coach/message
+```
+
+Ask for:
+
+```text
+Coach note
+```
+
+Dictionary:
+
+```json
+{
+  "text": "[Coach note]",
+  "intent": "general",
+  "channel": "iphone-shortcut"
+}
+```
 
 ## Use now: Coach Message
 
@@ -47,6 +199,7 @@ Payload shape:
 ```json
 {
   "text": "Your note from the iPhone prompt",
+  "intent": "general",
   "channel": "iphone-shortcut"
 }
 ```

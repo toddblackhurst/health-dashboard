@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Todd Personal Coach API",
-    "version": "1.0.0",
-    "description": "Private coaching API for Todd's personal health, training, nutrition, recovery, and workout feedback system."
+    "version": "2.0.0",
+    "description": "Private Supabase-backed coaching API for Todd's training, recovery, nutrition, workout planning, travel mode, and iPhone Shortcut actions."
   },
   "servers": [
     {
@@ -15,35 +15,26 @@
       "get": {
         "operationId": "getCoachDashboard",
         "summary": "Get current coaching dashboard and profile context",
-        "description": "Returns the current coaching dashboard from Supabase, including readiness, training, nutrition, body, and recent context where available.",
+        "description": "Returns the current coaching dashboard from Supabase, including coach_state, readiness, training, nutrition, body, gym, and recent context where available.",
+        "parameters": [
+          {
+            "name": "full",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["0", "1"]
+            },
+            "description": "Set to 1 for full Supabase context instead of the compact dashboard."
+          }
+        ],
         "responses": {
           "200": {
             "description": "Current coach dashboard",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "dashboard": {
-                      "type": "object",
-                      "additionalProperties": true
-                    },
-                    "profile": {
-                      "type": "object",
-                      "additionalProperties": true
-                    },
-                    "recent": {
-                      "type": "object",
-                      "additionalProperties": true
-                    },
-                    "source": {
-                      "type": "string"
-                    }
-                  },
-                  "additionalProperties": true
+                  "$ref": "#/components/schemas/DashboardResponse"
                 }
               }
             }
@@ -55,49 +46,140 @@
       "post": {
         "operationId": "sendCoachMessage",
         "summary": "Send a chat message to coach",
-        "description": "Logs a user message and returns a coach reply based on the current dashboard context.",
+        "description": "Logs a user message, runs deterministic readiness/nutrition/gym gates, optionally polishes the response with OpenAI, logs the coach decision, and returns a structured coaching response.",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": ["text"],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "description": "The user's message to coach."
-                  },
-                  "channel": {
-                    "type": "string",
-                    "default": "chatgpt-gpt"
-                  },
-                  "raw": {
-                    "type": "object",
-                    "description": "Optional source metadata.",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/CoachMessageRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Coach reply",
+            "description": "Coach reply and structured decision",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "reply": {
-                      "type": "string"
-                    }
-                  },
-                  "additionalProperties": true
+                  "$ref": "#/components/schemas/CoachDecisionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/brief": {
+      "post": {
+        "operationId": "getMorningCoachBrief",
+        "summary": "Build a morning coach brief",
+        "description": "Runs the coach engine with brief intent for iPhone Shortcut or Custom GPT morning check-ins.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectCoachActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Brief response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectCoachActionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/workout": {
+      "post": {
+        "operationId": "buildTodayWorkout",
+        "summary": "Build today's workout",
+        "description": "Builds a floor-aware World Gym Taichung workout unless coach_state.travel_mode is active, in which case the coach asks for hotel-gym inventory first.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectCoachActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workout response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectCoachActionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/nutrition-closeout": {
+      "post": {
+        "operationId": "nutritionCloseout",
+        "summary": "Evaluate today's nutrition",
+        "description": "Uses Bevel as nutrition source of truth and gives the next protein/fat correction.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectCoachActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Nutrition closeout response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectCoachActionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/post-workout": {
+      "post": {
+        "operationId": "postWorkoutDebrief",
+        "summary": "Submit or request a post-workout debrief",
+        "description": "Uses workout feedback to prepare the next-session adjustment and logs the coach decision.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectCoachActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post-workout response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectCoachActionResponse"
                 }
               }
             }
@@ -115,137 +197,10 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": ["type"],
-                "properties": {
-	                  "type": {
-	                    "type": "string",
-	                    "enum": ["bp", "food", "body", "recovery", "activity", "strength", "workout", "doctor", "note"]
-	                  },
-                  "date": {
-                    "type": "string",
-                    "format": "date"
-                  },
-                  "summary": {
-                    "type": "string"
-                  },
-                  "notes": {
-                    "type": "string"
-                  },
-                  "slot": {
-                    "type": "string",
-                    "description": "For BP readings, such as Morning or Evening."
-                  },
-                  "systolic": {
-                    "type": "number"
-                  },
-                  "diastolic": {
-                    "type": "number"
-                  },
-                  "heart_rate": {
-                    "type": "number"
-                  },
-                  "calories": {
-                    "type": "number"
-                  },
-                  "protein": {
-                    "type": "number"
-                  },
-                  "carbs": {
-                    "type": "number"
-                  },
-                  "fat": {
-                    "type": "number"
-                  },
-                  "fiber": {
-                    "type": "number"
-                  },
-                  "sodium": {
-                    "type": "number"
-                  },
-                  "weight_lbs": {
-                    "type": "number"
-                  },
-                  "body_fat_pct": {
-                    "type": "number"
-                  },
-                  "lean_mass_lbs": {
-                    "type": "number"
-                  },
-	                  "visceral_fat_level": {
-	                    "type": "number"
-	                  },
-	                  "recovery_score_pct": {
-	                    "type": "number"
-	                  },
-	                  "sleep_score_pct": {
-	                    "type": "number"
-	                  },
-	                  "hrv_ms": {
-	                    "type": "number"
-	                  },
-	                  "resting_hr_bpm": {
-	                    "type": "number"
-	                  },
-	                  "total_sleep_min": {
-	                    "type": "number"
-	                  },
-	                  "activity_type": {
-	                    "type": "string"
-	                  },
-	                  "duration_min": {
-	                    "type": "number"
-	                  },
-	                  "distance_mi": {
-	                    "type": "number"
-	                  },
-	                  "avg_heart_rate_bpm": {
-	                    "type": "number"
-	                  },
-	                  "peak_heart_rate_bpm": {
-	                    "type": "number"
-	                  },
-	                  "session_name": {
-	                    "type": "string"
-	                  },
-	                  "total_volume_kg": {
-	                    "type": "number"
-	                  },
-	                  "total_reps": {
-	                    "type": "number"
-	                  },
-	                  "topic": {
-	                    "type": "string"
-	                  },
-	                  "guidance": {
-	                    "type": "string"
-	                  },
-	                  "training_impact": {
-	                    "type": "string"
-	                  },
-	                  "rating_label": {
-	                    "type": "string"
-	                  },
-                  "completed_minutes": {
-                    "type": "number"
-                  },
-                  "best_movement": {
-                    "type": "string"
-                  },
-                  "worst_movement": {
-                    "type": "string"
-                  },
-                  "pain_notes": {
-                    "type": "string"
-                  },
-                    "difficulty": {
-                      "type": "string"
-                    }
-                  },
-                  "additionalProperties": true
-                }
+                "$ref": "#/components/schemas/CoachIntakeRequest"
               }
             }
+          }
         },
         "responses": {
           "200": {
@@ -253,23 +208,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "type": {
-                      "type": "string"
-                    },
-                    "results": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "additionalProperties": true
-                      }
-                    }
-                  },
-                  "additionalProperties": true
+                  "$ref": "#/components/schemas/IntakeResponse"
                 }
               }
             }
@@ -279,7 +218,315 @@
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "CoachIntent": {
+        "type": "string",
+        "enum": ["general", "brief", "build_workout", "evaluate_data", "nutrition_check", "post_workout", "travel_mode"]
+      },
+      "CoachMessageRequest": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The user's message to coach."
+          },
+          "intent": {
+            "$ref": "#/components/schemas/CoachIntent",
+            "default": "general"
+          },
+          "channel": {
+            "type": "string",
+            "default": "chatgpt-gpt"
+          },
+          "raw": {
+            "type": "object",
+            "description": "Optional source metadata.",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "DirectCoachActionRequest": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "intent": {
+            "$ref": "#/components/schemas/CoachIntent"
+          },
+          "channel": {
+            "type": "string",
+            "default": "iphone-shortcut"
+          },
+          "raw": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachDecision": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "intent": {
+            "$ref": "#/components/schemas/CoachIntent"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "top_line_call": {
+            "type": "string"
+          },
+          "readiness": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "risk_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "next_actions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nutrition_call": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "workout_plan": {
+            "type": ["object", "null"],
+            "additionalProperties": true
+          },
+          "source_context": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachDecisionResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "decision": {
+            "$ref": "#/components/schemas/CoachDecision"
+          }
+        },
+        "additionalProperties": true
+      },
+      "DirectCoachActionResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "decision": {
+            "$ref": "#/components/schemas/CoachDecision"
+          }
+        },
+        "additionalProperties": true
+      },
+      "DashboardResponse": {
+        "type": "object",
+        "properties": {
+          "dashboard": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "source": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachIntakeRequest": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["bp", "food", "body", "recovery", "activity", "strength", "workout", "doctor", "note"]
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "slot": {
+            "type": "string"
+          },
+          "systolic": {
+            "type": "number"
+          },
+          "diastolic": {
+            "type": "number"
+          },
+          "heart_rate": {
+            "type": "number"
+          },
+          "calories": {
+            "type": "number"
+          },
+          "protein": {
+            "type": "number"
+          },
+          "carbs": {
+            "type": "number"
+          },
+          "fat": {
+            "type": "number"
+          },
+          "fiber": {
+            "type": "number"
+          },
+          "sodium": {
+            "type": "number"
+          },
+          "weight_lbs": {
+            "type": "number"
+          },
+          "body_fat_pct": {
+            "type": "number"
+          },
+          "lean_mass_lbs": {
+            "type": "number"
+          },
+          "visceral_fat_level": {
+            "type": "number"
+          },
+          "recovery_score_pct": {
+            "type": "number"
+          },
+          "sleep_score_pct": {
+            "type": "number"
+          },
+          "hrv_ms": {
+            "type": "number"
+          },
+          "resting_hr_bpm": {
+            "type": "number"
+          },
+          "total_sleep_min": {
+            "type": "number"
+          },
+          "activity_type": {
+            "type": "string"
+          },
+          "duration_min": {
+            "type": "number"
+          },
+          "distance_mi": {
+            "type": "number"
+          },
+          "avg_heart_rate_bpm": {
+            "type": "number"
+          },
+          "peak_heart_rate_bpm": {
+            "type": "number"
+          },
+          "session_name": {
+            "type": "string"
+          },
+          "total_volume_kg": {
+            "type": "number"
+          },
+          "total_reps": {
+            "type": "number"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "guidance": {
+            "type": "string"
+          },
+          "training_impact": {
+            "type": "string"
+          },
+          "rating_label": {
+            "type": "string"
+          },
+          "completed_minutes": {
+            "type": "number"
+          },
+          "best_movement": {
+            "type": "string"
+          },
+          "worst_movement": {
+            "type": "string"
+          },
+          "pain_notes": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "IntakeResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
     "securitySchemes": {
       "CoachSecret": {
         "type": "apiKey",

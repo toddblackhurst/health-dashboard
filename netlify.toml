@@ -25,6 +25,26 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/brief"
+  to = "/api/coach?action=brief"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/workout"
+  to = "/api/coach?action=workout"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/nutrition-closeout"
+  to = "/api/coach?action=nutrition-closeout"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/post-workout"
+  to = "/api/coach?action=post-workout"
+  status = 200
+
+[[redirects]]
   from = "/api/coach/intake"
   to = "/api/coach?action=intake"
   status = 200

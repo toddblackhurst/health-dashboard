@@ -1,11 +1,11 @@
 import {
-  coachReply,
   dashboardFromSupabase,
   env,
   getProfile,
   insertCoachMessage,
   json,
   preflight,
+  runCoach,
 } from "./_coach-lib.mjs";
 
 async function sendWhatsAppText(to, body) {
@@ -83,9 +83,16 @@ export default async function handler(req) {
 
     for (const message of messages) {
       await insertCoachMessage(profile.id, "user", message.text, "whatsapp", message.raw);
-      const reply = coachReply(message.text, dashboard || {});
-      await insertCoachMessage(profile.id, "coach", reply, "whatsapp", { in_reply_to: message.id });
-      results.push({ from: message.from, reply, sent: await sendWhatsAppText(message.from, reply) });
+      const decision = await runCoach({
+        profileId: profile.id,
+        text: message.text,
+        intent: "general",
+        dashboard: dashboard || {},
+        payload: message.raw,
+        channel: "whatsapp",
+      });
+      await insertCoachMessage(profile.id, "coach", decision.reply, "whatsapp", { in_reply_to: message.id, decision });
+      results.push({ from: message.from, reply: decision.reply, decision, sent: await sendWhatsAppText(message.from, decision.reply) });
     }
 
     return json({ ok: true, processed: results.length, results });
