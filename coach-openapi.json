@@ -187,6 +187,35 @@
         }
       }
     },
+    "/api/coach/motra-template": {
+      "post": {
+        "operationId": "buildMotraDebriefTemplate",
+        "summary": "Build an exercise-level Motra debrief template",
+        "description": "Parses Motra exported workout text and returns an exercise-name template before the final post-workout debrief is submitted.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MotraTemplateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Motra debrief template",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MotraTemplateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/coach/intake": {
       "post": {
         "operationId": "submitCoachIntake",
@@ -264,6 +293,37 @@
             "default": "iphone-shortcut"
           },
           "raw": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "MotraTemplateRequest": {
+        "type": "object",
+        "required": ["motra_text"],
+        "properties": {
+          "motra_text": {
+            "type": "string",
+            "description": "Raw text exported from Motra."
+          }
+        },
+        "additionalProperties": true
+      },
+      "MotraTemplateResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string",
+            "const": "motra-template"
+          },
+          "debrief_template": {
+            "type": "string"
+          },
+          "parsed_motra": {
             "type": "object",
             "additionalProperties": true
           }

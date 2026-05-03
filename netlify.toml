@@ -45,6 +45,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/motra-template"
+  to = "/api/coach?action=motra-template"
+  status = 200
+
+[[redirects]]
   from = "/api/coach/intake"
   to = "/api/coach?action=intake"
   status = 200
