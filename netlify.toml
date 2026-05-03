@@ -15,19 +15,10 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
 [[redirects]]
-  from = "/api/coach/dashboard"
-  to = "/api/coach?action=dashboard"
+  from = "/api/coach/*"
+  to = "/api/coach?action=:splat"
   status = 200
 
-[[redirects]]
-  from = "/api/coach/message"
-  to = "/api/coach?action=message"
-  status = 200
-
-[[redirects]]
-  from = "/api/coach/intake"
-  to = "/api/coach?action=intake"
-  status = 200
 
 [[redirects]]
   from = "/api/coach"

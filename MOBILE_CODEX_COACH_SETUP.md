@@ -28,6 +28,26 @@ Do not expose secrets. If an API action needs authentication, use the configured
 Start by summarizing what you know about Todd, today's recovery/training context, and what information you need next.
 ```
 
+## Fastest ChatGPT Setup (Recommended)
+
+1. In ChatGPT, create a **private Custom GPT**.
+2. Under **Actions**, import this schema URL:
+
+   `https://todd-personal-coach.netlify.app/coach-openapi.json`
+
+3. Set authentication to:
+   - **API key**
+   - **Custom header**
+   - Header: `x-coach-secret`
+   - Value: your private `COACH_API_SECRET`
+4. Set Privacy Policy URL to:
+
+   `https://todd-personal-coach.netlify.app/privacy.html`
+
+5. Start chatting naturally (example: "How should I train Monday based on my hip and recovery?").
+
+The API supports direct ChatGPT Action routes (`/api/coach/dashboard`, `/api/coach/message`, `/api/coach/intake`) so you can chat without using shortcuts or manual query params.
+
 ## Custom GPT Option
 
 For a normal ChatGPT mobile chat experience, create a private custom GPT and add the coach API as an Action.
