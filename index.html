@@ -791,7 +791,8 @@ function renderCoach(db) {
   const proteinTarget = cb.goal_summary?.protein_target_g || db.profile?.nutrition_targets?.protein_g || 150;
   const recoveryPct = recoveryPctFrom(latestSleep, cb);
 
-  const savedChat = JSON.parse(localStorage.getItem('coach_chat_local') || '[]').slice(-6);
+  const serverChat = Array.isArray(db.coach_chat_notes) ? db.coach_chat_notes : [];
+  const savedChat = mergeCoachChatForDisplay(serverChat, JSON.parse(localStorage.getItem('coach_chat_local') || '[]')).slice(-8);
   const coachCall = compactCoachCall(cb.call || latestSleep.notes || 'No current coach call yet.');
   const feedbackDate = latestSession.date || today;
   const hasFeedback = (db.session_feedback || []).some(f => f.date === feedbackDate);
@@ -927,6 +928,24 @@ function appendLocalCoachChat(role, text) {
   const msgs = JSON.parse(localStorage.getItem('coach_chat_local') || '[]');
   msgs.push({ role, text, at: new Date().toISOString() });
   localStorage.setItem('coach_chat_local', JSON.stringify(msgs.slice(-12)));
+}
+
+function mergeCoachChatForDisplay(serverChat, localChat) {
+  const seen = new Set();
+  return [...(serverChat || []), ...(localChat || [])]
+    .map(m => ({
+      role: m.role === 'coach' || m.role === 'system' ? m.role : 'user',
+      text: m.text || m.body || '',
+      at: m.at || m.message_at || m.submitted_at || ''
+    }))
+    .filter(m => m.text)
+    .filter(m => {
+      const key = `${m.role}|${m.at}|${m.text.slice(0, 80)}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((a, b) => String(a.at).localeCompare(String(b.at)));
 }
 
 function getLatestNutritionEntry(db) {
