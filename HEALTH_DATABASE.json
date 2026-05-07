@@ -2280,6 +2280,67 @@
         "Treat Sunday as recovery-only; no added intensity."
       ],
       "notes": "May 3 screenshot repair. Good sleep quantity and BP improvement, but Bevel HRV collapse makes this a low-autonomic-reserve day."
+    },
+    {
+      "date": "2026-05-06",
+      "source": "manual-screenshot-20260506-bevel+oura+ocare",
+      "bevel": {
+        "recovery_pct": 84,
+        "sleep_quality_pct": 78,
+        "strain_pct": 0,
+        "rhr_bpm": 57.1,
+        "hrv_ms": 40.9,
+        "respiratory_rate_rpm": 14.2,
+        "spo2_pct": 95.9,
+        "wrist_temp_f": 97.7,
+        "time_asleep_min": 433,
+        "time_in_bed_min": 471,
+        "deep_sleep_min": 56,
+        "rem_sleep_min": 119,
+        "hr_dip_pct": 21,
+        "sleep_bank_min": -88,
+        "sleep_start": "2026-05-05T21:03",
+        "wake_time": "2026-05-06T04:54",
+        "notes": "Recovery Breakthrough after two walk-only/rest days. Recovery 84%, Sleep 78%, HRV 40.9 ms, RHR 57.1 bpm, RR 14.2 rpm, SpO2 95.9%, wrist temp normal. Deep sleep rebounded to 56-57 min and HR dip reached 21%."
+      },
+      "oura": {
+        "readiness_score": 88,
+        "readiness_label": "Optimal",
+        "sleep_score": 87,
+        "sleep_score_label": "Optimal",
+        "activity_score": 89,
+        "rhr_bpm_lowest": 50,
+        "rhr_bpm_avg": 57,
+        "hrv_avg_ms": 40,
+        "hrv_max_ms": 113,
+        "total_sleep_min": 418,
+        "time_in_bed_min": 484,
+        "sleep_efficiency_pct": 86,
+        "rem_sleep_min": 115,
+        "rem_sleep_pct": 27,
+        "light_sleep_min": 220,
+        "light_sleep_pct": 53,
+        "deep_sleep_min": 83,
+        "deep_sleep_pct": 20,
+        "awake_min": 66,
+        "latency_min": 11,
+        "spo2_avg_pct": 97,
+        "breathing_regularity": "Good",
+        "sleep_debt_min": 180,
+        "sleep_start": "2026-05-05T20:53",
+        "sleep_end": "2026-05-06T04:57",
+        "body_clock_note": "Sleep midpoint was 43 minutes ahead of chronotype."
+      },
+      "coaching_flags": [
+        "High green readiness: Bevel recovery 84% and Oura readiness 88 after the May 4-5 walking break.",
+        "Autonomic rebound: HRV returned to normal range (Bevel 40.9 ms / Oura 40 ms), RHR dropped to 57.1 bpm, and HR dip reached 21%.",
+        "Sleep quality improved: Bevel sleep 78%, Oura sleep 87, Oura deep sleep 1h23m, and REM 1h55m.",
+        "Sleep debt remains present: Bevel -1h28m and Oura about 3h moderate debt, so do not chase extra make-up volume.",
+        "Training green light: strength session is appropriate with high intent, normal time cap, normal BP/HR guardrails, and pull-up focus."
+      ],
+      "notes": "May 6 morning screenshot intake. Strong rebound from the planned two-day break. BP is also improved at 114/80 with HR 58, supporting a high-quality strength day rather than another recovery-only day.",
+      "readiness_tier_basis": "Green: Bevel recovery 100%, HRV 49.5 ms, 6h53 sleep, resting HR 52 bpm, and O2 97% support training.",
+      "recovery_trend": "HRV and recovery are above the strength gate; the only caution is keeping the session capped and hip-safe."
     }
   ],
   "nutrition": [
@@ -12025,14 +12086,21 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-03",
-    "readiness_tier": "Yellow",
-    "call": "Schedule override: Monday May 4 and Tuesday May 5 are walk-only recovery days. Strength resumes Wednesday May 6 with high intent, but no make-up volume.",
-    "sprint_gate": "N/A for May 4-5 — walking only.",
-    "progress_note": "This is a deliberate short break after low autonomic reserve, not a setback. The win is arriving Wednesday fresher and sharper.",
-    "encouragement": "Good call listening to the body. Go hard on Wednesday means focused and powerful, not longer for the sake of longer."
+    "date": "2026-05-08",
+    "readiness_tier": "Green",
+    "call": "Train at World Gym today. Bevel recovery is 100% with HRV 49.5 ms and sleep 6h53, so run the Friday push/chest, hip-safe quad, and med-ball plan inside 65 minutes.",
+    "sprint_gate": "N/A - sprints are Saturday-standalone.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 12.1 weeks.",
+    "encouragement": "This is the kind of day that builds the independence and active-family body you are after: crisp work, no sloppy extra volume.",
+    "goal_summary": {
+      "as_of": "2026-05-08",
+      "current_weight_lbs": 166.4,
+      "target_weight_lbs": 159.3,
+      "fat_to_lose_lbs": 7.1,
+      "weeks_remaining": 12.1
+    }
   },
-  "last_updated": "2026-05-03T07:57:11+08:00",
+  "last_updated": "2026-05-08T06:19:32+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12120,40 +12188,120 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-05-04",
-    "day_label": "Monday May 4",
-    "session_type": "Walk-Only Recovery",
-    "week": null,
-    "floor_plan": "Outside / easy route",
-    "time_cap_min": 45,
-    "gate_condition": "Keep it walking only Monday May 4 and Tuesday May 5. No lifting, no sprint block, no make-up work.",
-    "why": "Todd requested a short two-day body break. Monday and Tuesday are walking-only recovery days. Strength resumes Wednesday May 6 with high intent, but still inside the 55-65 minute cap and about 122 bpm strength HR cap.",
+    "planned_date": "2026-05-08",
+    "day_label": "Friday May 8",
+    "session_type": "Push / Chest Strength + Hip-Safe Quad + Med Ball Power",
+    "theme": "Chest and shoulder muscle, hip-safe leg strength, trunk stiffness, fun power.",
+    "intent": "Use heavier 6-8 rep anchors and a short med-ball power dose without turning the day into a circuit.",
+    "floor_plan": "Floor 3 prep -> Floor 2 strength anchors -> Floor 3 trunk / power close",
+    "time_cap_min": 65,
+    "hard_set_count": "about 16-18 depending on optional carry/close",
+    "guardrails": [
+      "about 122 bpm strength HR cap",
+      "2-3 min rests after Incline Press and V Squat",
+      "pain-free squat depth only",
+      "cut optional carry first if time runs tight"
+    ],
     "blocks": [
       {
-        "id": "walk_only",
-        "label": "Walk-Only Recovery",
-        "floor": "Outside / treadmill if needed",
-        "time_min": 30,
+        "id": "prep",
+        "label": "Floor 3 Prep + Power Primer",
+        "time_min": 10,
         "exercises": [
           {
-            "name": "Easy Walk",
-            "prescription": "30-45 min",
+            "name": "Wall Slide",
+            "prescription": "1-2x10",
             "load": "Bodyweight",
-            "cues": "Keep it restorative. Stay conversational and under the usual recovery ceiling; stop if fatigue or BP symptoms show up."
+            "cues": "Ribs down, no shrugging."
+          },
+          {
+            "name": "Half Kneeling Hip Flexor Stretch",
+            "prescription": "1-2x30 sec/side",
+            "load": "Bodyweight",
+            "cues": "Tall posture, no hip pinch."
+          },
+          {
+            "name": "Dead Bug",
+            "prescription": "2x6/side",
+            "load": "7 kg",
+            "cues": "Slow, quiet, no shifting."
+          },
+          {
+            "name": "Medicine Ball Slam",
+            "prescription": "2x5",
+            "load": "8 kg",
+            "cues": "Tall, brace, throw the floor away, reset."
+          }
+        ]
+      },
+      {
+        "id": "anchors",
+        "label": "Floor 2 Heavy Anchors",
+        "time_min": 34,
+        "exercises": [
+          {
+            "name": "Dumbbell Incline Bench Press",
+            "prescription": "3x6-8",
+            "load": "18 kg/hand, or 16 kg if path changes",
+            "cues": "Lower with control, press with intent, both sides even."
+          },
+          {
+            "name": "Machine V Squat",
+            "prescription": "3x6-8",
+            "load": "50 / 55 / 55 kg; 60 kg set 3 only if smooth",
+            "cues": "Smooth down, strong up, stop before hip pinch."
+          },
+          {
+            "name": "Landmine Half-Kneeling Press",
+            "prescription": "2x6/side, left first",
+            "load": "25 kg; 27.5 kg only if smooth",
+            "cues": "Tall from knee to head, press cleanly, refuse rotation."
+          }
+        ]
+      },
+      {
+        "id": "trunk",
+        "label": "Floor 3 Shape / Trunk Work",
+        "time_min": 12,
+        "exercises": [
+          {
+            "name": "Cross Cable Lateral Raise",
+            "prescription": "2x10/side",
+            "load": "5.7 kg or 3.4 kg if neck takes over",
+            "cues": "Long arm, quiet neck."
+          },
+          {
+            "name": "Cable Pallof Press",
+            "prescription": "2x8/side with 2-sec hold",
+            "load": "10.2-12.5 kg",
+            "cues": "Press, hold, return; stay square."
+          }
+        ]
+      },
+      {
+        "id": "optional_close",
+        "label": "Optional Carry / Med Ball Close",
+        "time_min": 6,
+        "exercises": [
+          {
+            "name": "Offset Farmer Carry",
+            "prescription": "Optional 2x40 ft",
+            "load": "Left 20-24 kg / right 12-16 kg",
+            "cues": "Mismatched load, no leaning."
+          },
+          {
+            "name": "Medicine Ball Slam",
+            "prescription": "Optional 1-2x5 if primer felt great",
+            "load": "8 kg",
+            "cues": "Fast singles, full reset."
           }
         ]
       }
     ],
-    "next_strength_session": {
-      "planned_date": "2026-05-06",
-      "day_label": "Wednesday May 6",
-      "intent": "Go hard after the short break with strong anchors, focused execution, and a planned short finisher only if readiness supports it.",
-      "guardrails": [
-        "55-65 minute cap",
-        "about 122 bpm strength HR cap",
-        "no make-up volume from Monday"
-      ]
-    }
+    "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md",
+    "status": "LIVE - daily brief refreshed",
+    "coach_note": "Use the planned Friday structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the 122 bpm cap, and keep loaded hip flexion pain-free. Skip the optional close if HR, hip, readiness, or grip says the main work was enough.",
+    "why": "Today matters because it gives the week its push/chest and hip-safe quad signal after the recovery reset. The goal is high-quality load and crisp power, not extra volume."
   },
   "coach_questions": [
     {
@@ -13023,397 +13171,471 @@
     }
   ],
   "weekly_session_plans": {
-    "week_start": "2026-04-20",
-    "week_label": "Week 2 — Apr 20–25, 2026",
-    "planned_on": "2026-04-19",
+    "week_start": "2026-05-04",
+    "week_label": "Week of May 4-8, 2026 — two-day heavy/hybrid return",
+    "planned_on": "2026-05-04",
     "sessions": {
       "1": {
-        "date": "2026-04-20",
-        "day": "Monday",
-        "session_type": "Push + Quad + Landmine Power",
-        "theme": "Landmine push power — functional pressing in multiple planes",
-        "floor_plan": "Floor 3 → Floor 2",
-        "time_cap_min": 65,
+        "planned_date": "2026-05-04",
+        "day_label": "Monday May 4",
+        "session_type": "Walk-Only Recovery",
+        "week": null,
+        "floor_plan": "Outside / easy route",
+        "time_cap_min": 45,
+        "gate_condition": "Keep it walking only Monday May 4 and Tuesday May 5. No lifting, no sprint block, no make-up work.",
+        "why": "Todd requested a short two-day body break. Monday and Tuesday are walking-only recovery days. Strength resumes Wednesday May 6 with high intent, but still inside the 55-65 minute cap and about 122 bpm strength HR cap.",
         "blocks": [
           {
-            "id": "prep",
-            "label": "PREP — Floor 3",
-            "time_min": 10,
+            "id": "walk_only",
+            "label": "Walk-Only Recovery",
+            "floor": "Outside / treadmill if needed",
+            "time_min": 30,
             "exercises": [
               {
-                "name": "Wall Slides",
-                "sets": 2,
-                "reps": 10,
-                "motra": "Wall Slides"
-              },
-              {
-                "name": "Hip Flexor Stretch",
-                "sets": 2,
-                "duration_sec": 30,
-                "motra": "Hip Flexor Stretch"
-              },
-              {
-                "name": "TRX Y-Raise",
-                "sets": 2,
-                "reps": 12,
-                "motra": "TRX Y Raise"
-              },
-              {
-                "name": "Dead Bug",
-                "sets": 2,
-                "reps": 8,
-                "motra": "Dead Bug",
-                "note": "3kg ball if available"
+                "name": "Easy Walk",
+                "prescription": "30-45 min",
+                "load": "Bodyweight",
+                "cues": "Keep it restorative. Stay conversational and under the usual recovery ceiling; stop if fatigue or BP symptoms show up."
               }
             ]
-          },
-          {
-            "id": "A",
-            "label": "Block A — Landmine Press (Floor 2)",
-            "exercises": [
-              {
-                "name": "Landmine Press",
-                "sets": 3,
-                "reps": 10,
-                "each_side": true,
-                "weight_kg": 25,
-                "motra": "Landmine Single-Arm Press",
-                "location": "📍 Floor 2, landmine"
-              },
-              {
-                "name": "Landmine Single-Arm Push Press",
-                "sets": 3,
-                "reps": 6,
-                "each_side": true,
-                "weight_kg": 25,
-                "motra": "Landmine Single-Arm Push Press",
-                "location": "📍 Floor 2, landmine",
-                "note": "NEW — leg drive into overhead press"
-              },
-              {
-                "name": "Incline DB Press",
-                "sets": 3,
-                "reps": 10,
-                "weight_kg": 16,
-                "motra": "Dumbbell Incline Bench Press",
-                "location": "📍 Floor 2, incline bench"
-              }
-            ],
-            "rest_sec": 75
-          },
-          {
-            "id": "B",
-            "label": "Block B — Quad + Hinge (Floor 2)",
-            "exercises": [
-              {
-                "name": "Hammer Strength V-Squat",
-                "sets": 3,
-                "reps": 12,
-                "weight_kg": "40/50/50",
-                "motra": "Machine V Squat",
-                "location": "📍 Floor 2, V-squat machine",
-                "note": "Limited depth — OA-safe"
-              },
-              {
-                "name": "Landmine Reverse Lunge",
-                "sets": 3,
-                "reps": 10,
-                "each_side": true,
-                "weight_kg": 25,
-                "motra": "Landmine Reverse Lunge",
-                "location": "📍 Floor 2, landmine",
-                "note": "NEW — left leg first"
-              }
-            ],
-            "rest_sec": 90
-          },
-          {
-            "id": "C",
-            "label": "Block C — Shoulder + Trunk Close (Floor 2)",
-            "exercises": [
-              {
-                "name": "Hammer Strength Lateral Raise",
-                "sets": 3,
-                "reps": 12,
-                "weight_kg": 5,
-                "motra": "Hammer Strength Lateral Raise",
-                "location": "📍 Floor 2"
-              },
-              {
-                "name": "Landmine Half-Kneeling Arc Press",
-                "sets": 3,
-                "reps": 12,
-                "each_side": true,
-                "weight_kg": "25→20",
-                "motra": "Landmine Half-Kneeling Arc Press",
-                "location": "📍 Floor 2, landmine",
-                "note": "NEW — arc motion, obliques + shoulder"
-              },
-              {
-                "name": "Landmine Rainbow",
-                "sets": 3,
-                "reps": 6,
-                "each_side": true,
-                "weight_kg": 20,
-                "motra": "Landmine Rainbow",
-                "location": "📍 Floor 2, landmine",
-                "note": "NEW — full arc anti-rotation"
-              },
-              {
-                "name": "Suitcase Carry",
-                "sets": 2,
-                "distance_m": 15,
-                "weight_kg": 16,
-                "hand": "left",
-                "motra": "Kettlebell Suitcase Carry",
-                "location": "📍 Floor 2"
-              }
-            ],
-            "rest_sec": 60
           }
         ],
-        "hr_rule": "Stay below 122 bpm during strength blocks",
-        "session_notes": "4 new landmine movements. No TRX Y-Raise progression — confirm 12 reps clean before adding load. Watch session time — cap is 65 min."
+        "next_strength_session": {
+          "planned_date": "2026-05-06",
+          "day_label": "Wednesday May 6",
+          "session_type": "Pull / Glute Strength + Athletic Carry Close",
+          "theme": "Fewer hard sets, heavier pull/glute anchors, trunk stiffness, and one clean athletic close.",
+          "intent": "Build muscle with high-quality load, not make-up volume. Main anchors use 3 hard sets; support work uses 2 useful sets.",
+          "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 trunk / close",
+          "time_cap_min": 65,
+          "hard_set_count": "about 17",
+          "guardrails": [
+            "about 122 bpm strength HR cap",
+            "2-3 min rests after Pull-Up and Hip Thrust",
+            "1-2 reps in reserve",
+            "skip hybrid close if recovery is red, HR drifts, grip is cooked, or hip symptoms appear"
+          ],
+          "blocks": [
+            {
+              "id": "prep",
+              "label": "Floor 3 Prep",
+              "time_min": 7,
+              "exercises": [
+                {
+                  "name": "Foot and Ankle Prep Circuit",
+                  "prescription": "4 min",
+                  "load": "Bodyweight",
+                  "cues": "Big toe, little toe, heel. Quiet control."
+                },
+                {
+                  "name": "Lateral Step-to-Stick",
+                  "prescription": "2x4/side",
+                  "load": "Bodyweight",
+                  "cues": "Step sideways, land softly, freeze for 2 seconds."
+                }
+              ]
+            },
+            {
+              "id": "anchors",
+              "label": "Floor 2 Heavy Anchors",
+              "time_min": 35,
+              "exercises": [
+                {
+                  "name": "Pull-Up",
+                  "prescription": "3 hard sets: 6 / 5 / 4-5",
+                  "load": "Bodyweight",
+                  "cues": "Settled hang, elbows down, one-beat hold, controlled lower."
+                },
+                {
+                  "name": "Machine Hip Thrust (Glute Bridge)",
+                  "prescription": "3x6-8",
+                  "load": "50 kg; set 3 can be 52.5-55 kg if excellent",
+                  "cues": "Heel drive, hard 1-sec lockout, no overarch."
+                },
+                {
+                  "name": "Dumbbell Chest-Supported Row",
+                  "prescription": "3x8",
+                  "load": "12-14 kg/hand",
+                  "cues": "Chest glued to pad, pull-pause-lower, no twisting."
+                }
+              ]
+            },
+            {
+              "id": "trunk",
+              "label": "Floor 3 Trunk / Posture",
+              "time_min": 12,
+              "exercises": [
+                {
+                  "name": "Cable Chop High to Low",
+                  "prescription": "2x8/side",
+                  "load": "12.5 kg or 10.2 kg if control slips",
+                  "cues": "Strong diagonal brace; body stays stacked."
+                },
+                {
+                  "name": "Rope Cable Face Pull to W",
+                  "prescription": "2x10",
+                  "load": "12.5 kg or 10.2 kg if neck takes over",
+                  "cues": "Pull to face height, open to W, pause, return slowly."
+                }
+              ]
+            },
+            {
+              "id": "hybrid_close",
+              "label": "Floor 3 Hybrid Close",
+              "time_min": 6,
+              "exercises": [
+                {
+                  "name": "Kettlebell Swing",
+                  "prescription": "2x8",
+                  "load": "20 kg; 24 kg only if crisp",
+                  "cues": "Snap, float, park."
+                },
+                {
+                  "name": "Kettlebell Front-Rack Carry",
+                  "prescription": "2x20 m/side, left first",
+                  "load": "16 kg, or 14 kg if posture collapses",
+                  "cues": "Bell close, elbow down, walk tall."
+                }
+              ]
+            }
+          ],
+          "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
+        },
+        "friday_strength_session": {
+          "planned_date": "2026-05-08",
+          "day_label": "Friday May 8",
+          "session_type": "Push / Chest Strength + Hip-Safe Quad + Med Ball Power",
+          "theme": "Chest and shoulder muscle, hip-safe leg strength, trunk stiffness, fun power.",
+          "intent": "Use heavier 6-8 rep anchors and a short med-ball power dose without turning the day into a circuit.",
+          "floor_plan": "Floor 3 prep -> Floor 2 strength anchors -> Floor 3 trunk / power close",
+          "time_cap_min": 65,
+          "hard_set_count": "about 16-18 depending on optional carry/close",
+          "guardrails": [
+            "about 122 bpm strength HR cap",
+            "2-3 min rests after Incline Press and V Squat",
+            "pain-free squat depth only",
+            "cut optional carry first if time runs tight"
+          ],
+          "blocks": [
+            {
+              "id": "prep",
+              "label": "Floor 3 Prep + Power Primer",
+              "time_min": 10,
+              "exercises": [
+                {
+                  "name": "Wall Slide",
+                  "prescription": "1-2x10",
+                  "load": "Bodyweight",
+                  "cues": "Ribs down, no shrugging."
+                },
+                {
+                  "name": "Half Kneeling Hip Flexor Stretch",
+                  "prescription": "1-2x30 sec/side",
+                  "load": "Bodyweight",
+                  "cues": "Tall posture, no hip pinch."
+                },
+                {
+                  "name": "Dead Bug",
+                  "prescription": "2x6/side",
+                  "load": "7 kg",
+                  "cues": "Slow, quiet, no shifting."
+                },
+                {
+                  "name": "Medicine Ball Slam",
+                  "prescription": "2x5",
+                  "load": "8 kg",
+                  "cues": "Tall, brace, throw the floor away, reset."
+                }
+              ]
+            },
+            {
+              "id": "anchors",
+              "label": "Floor 2 Heavy Anchors",
+              "time_min": 34,
+              "exercises": [
+                {
+                  "name": "Dumbbell Incline Bench Press",
+                  "prescription": "3x6-8",
+                  "load": "18 kg/hand, or 16 kg if path changes",
+                  "cues": "Lower with control, press with intent, both sides even."
+                },
+                {
+                  "name": "Machine V Squat",
+                  "prescription": "3x6-8",
+                  "load": "50 / 55 / 55 kg; 60 kg set 3 only if smooth",
+                  "cues": "Smooth down, strong up, stop before hip pinch."
+                },
+                {
+                  "name": "Landmine Half-Kneeling Press",
+                  "prescription": "2x6/side, left first",
+                  "load": "25 kg; 27.5 kg only if smooth",
+                  "cues": "Tall from knee to head, press cleanly, refuse rotation."
+                }
+              ]
+            },
+            {
+              "id": "trunk",
+              "label": "Floor 3 Shape / Trunk Work",
+              "time_min": 12,
+              "exercises": [
+                {
+                  "name": "Cross Cable Lateral Raise",
+                  "prescription": "2x10/side",
+                  "load": "5.7 kg or 3.4 kg if neck takes over",
+                  "cues": "Long arm, quiet neck."
+                },
+                {
+                  "name": "Cable Pallof Press",
+                  "prescription": "2x8/side with 2-sec hold",
+                  "load": "10.2-12.5 kg",
+                  "cues": "Press, hold, return; stay square."
+                }
+              ]
+            },
+            {
+              "id": "optional_close",
+              "label": "Optional Carry / Med Ball Close",
+              "time_min": 6,
+              "exercises": [
+                {
+                  "name": "Offset Farmer Carry",
+                  "prescription": "Optional 2x40 ft",
+                  "load": "Left 20-24 kg / right 12-16 kg",
+                  "cues": "Mismatched load, no leaning."
+                },
+                {
+                  "name": "Medicine Ball Slam",
+                  "prescription": "Optional 1-2x5 if primer felt great",
+                  "load": "8 kg",
+                  "cues": "Fast singles, full reset."
+                }
+              ]
+            }
+          ],
+          "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
+        },
+        "updated_reason": "May 4 rebuild: fewer sets, higher loads, stronger hypertrophy signal, short planned hybrid work."
+      },
+      "2": {
+        "date": "2026-05-05",
+        "day": "Tuesday",
+        "session_type": "Walk-Only Recovery",
+        "time_cap_min": 45,
+        "notes": "Walking only. No make-up lifting."
       },
       "3": {
-        "date": "2026-04-22",
-        "day": "Wednesday",
-        "session_type": "Pull + Posterior Chain: Athletic Movement",
-        "theme": "Movement integration — pull in varied positions, new posterior chain, dynamic core close",
-        "floor_plan": "Floor 3 (Prep + Block A) → Floor 2 (Blocks B + C)",
-        "time_cap_min": 60,
+        "planned_date": "2026-05-06",
+        "day_label": "Wednesday May 6",
+        "session_type": "Pull / Glute Strength + Athletic Carry Close",
+        "theme": "Fewer hard sets, heavier pull/glute anchors, trunk stiffness, and one clean athletic close.",
+        "intent": "Build muscle with high-quality load, not make-up volume. Main anchors use 3 hard sets; support work uses 2 useful sets.",
+        "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 trunk / close",
+        "time_cap_min": 65,
+        "hard_set_count": "about 17",
+        "guardrails": [
+          "about 122 bpm strength HR cap",
+          "2-3 min rests after Pull-Up and Hip Thrust",
+          "1-2 reps in reserve",
+          "skip hybrid close if recovery is red, HR drifts, grip is cooked, or hip symptoms appear"
+        ],
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP — Floor 3",
-            "time_min": 10,
+            "label": "Floor 3 Prep",
+            "time_min": 7,
             "exercises": [
               {
-                "name": "Open Book Stretch",
-                "sets": 2,
-                "reps": "8/side",
-                "motra": "Open Book Stretch",
-                "note": "Left side first. Thoracic rotation + anterior chain opening"
+                "name": "Foot and Ankle Prep Circuit",
+                "prescription": "4 min",
+                "load": "Bodyweight",
+                "cues": "Big toe, little toe, heel. Quiet control."
               },
               {
-                "name": "Quadruped Hip Extension + Glute Squeeze",
-                "sets": 2,
-                "reps": "12/side",
-                "note": "Left first. Posterior activation, hip-safe"
-              },
-              {
-                "name": "Dead Hang",
-                "sets": 2,
-                "duration_sec": 30,
-                "note": "Progress from 20→30 sec. Active shoulder depression: pull blades DOWN from ears"
-              },
-              {
-                "name": "Band Pull-Apart to External Rotation",
-                "sets": 2,
-                "reps": 15,
-                "motra": "Resistance Band Pull Apart",
-                "note": "Hold form through all 15. Fatigue = external rotators working — good"
+                "name": "Lateral Step-to-Stick",
+                "prescription": "2x4/side",
+                "load": "Bodyweight",
+                "cues": "Step sideways, land softly, freeze for 2 seconds."
               }
             ]
           },
           {
-            "id": "A",
-            "label": "Block A — Functional Pull: Two Positions (Floor 3)",
+            "id": "anchors",
+            "label": "Floor 2 Heavy Anchors",
+            "time_min": 35,
             "exercises": [
               {
-                "name": "Half-Kneeling Single-Arm Cable Pull-Down",
-                "sets": 3,
-                "reps": 10,
-                "each_side": true,
-                "weight_kg_start": 10,
-                "motra": "Half-Kneeling Single-Arm Cable Pull-Down",
-                "location": "📍 Floor 3, functional trainer",
-                "note": "Left knee down first. Right side cue: set scapula DOWN and IN before pulling — 'Elbow to pocket, not hand to hip.' Start at 10kg."
+                "name": "Pull-Up",
+                "prescription": "3 hard sets: 6 / 5 / 4-5",
+                "load": "Bodyweight",
+                "cues": "Settled hang, elbows down, one-beat hold, controlled lower."
+              },
+              {
+                "name": "Machine Hip Thrust (Glute Bridge)",
+                "prescription": "3x6-8",
+                "load": "50 kg; set 3 can be 52.5-55 kg if excellent",
+                "cues": "Heel drive, hard 1-sec lockout, no overarch."
+              },
+              {
+                "name": "Dumbbell Chest-Supported Row",
+                "prescription": "3x8",
+                "load": "12-14 kg/hand",
+                "cues": "Chest glued to pad, pull-pause-lower, no twisting."
+              }
+            ]
+          },
+          {
+            "id": "trunk",
+            "label": "Floor 3 Trunk / Posture",
+            "time_min": 12,
+            "exercises": [
+              {
+                "name": "Cable Chop High to Low",
+                "prescription": "2x8/side",
+                "load": "12.5 kg or 10.2 kg if control slips",
+                "cues": "Strong diagonal brace; body stays stacked."
               },
               {
                 "name": "Rope Cable Face Pull to W",
-                "sets": 3,
-                "reps": "10–12",
-                "motra": "Cable Face Pull",
-                "location": "📍 Floor 3, functional trainer (rope)",
-                "note": "Replaces TRX Row to T permanently. Rope at face height. Pull to forehead, elbows high → rotate to W, hold 1 sec, slow return."
+                "prescription": "2x10",
+                "load": "12.5 kg or 10.2 kg if neck takes over",
+                "cues": "Pull to face height, open to W, pause, return slowly."
               }
-            ],
-            "rest_sec": 75
+            ]
           },
           {
-            "id": "B",
-            "label": "Block B — Vertical Pull + Posterior Chain (Floor 2)",
+            "id": "hybrid_close",
+            "label": "Floor 3 Hybrid Close",
+            "time_min": 6,
             "exercises": [
               {
-                "name": "Pull-Up",
-                "sets": 3,
-                "reps": "4–5",
-                "motra": "Pull Up",
-                "location": "📍 Floor 2, pull-up bar",
-                "note": "Anchor lift. 2-sec hold at top each rep. 3-count slow descent. Pre-fatigued on pull day = 3–4 reps expected, not 5."
+                "name": "Kettlebell Swing",
+                "prescription": "2x8",
+                "load": "20 kg; 24 kg only if crisp",
+                "cues": "Snap, float, park."
               },
               {
-                "name": "KB Sumo Deadlift",
-                "sets": 3,
-                "reps": 10,
-                "weight_kg": 20,
-                "motra": "KB Sumo Deadlift",
-                "location": "📍 Floor 2 or Floor 3 KBs",
-                "note": "Progress from 16kg (too light). Target 20kg → 24kg. Sumo stance (OA-safe). Squeeze glutes hard at lockout, hold 1 sec."
+                "name": "Kettlebell Front-Rack Carry",
+                "prescription": "2x20 m/side, left first",
+                "load": "16 kg, or 14 kg if posture collapses",
+                "cues": "Bell close, elbow down, walk tall."
               }
-            ],
-            "rest_sec": 90
-          },
-          {
-            "id": "C",
-            "label": "Block C — Trunk + Athletic Close (Floor 2)",
-            "exercises": [
-              {
-                "name": "Half-Kneeling Cable High-to-Low Chop",
-                "sets": 3,
-                "reps": "10/side",
-                "weight_kg": 10.2,
-                "motra": "Cable Chop (High to Low)",
-                "location": "📍 Floor 2, cable",
-                "note": "Left knee up, facing machine. Slow tempo. Modified Pallof Press — anti-rotation diagonal. Stay at 10.2kg."
-              },
-              {
-                "name": "Hanging Leg Raise",
-                "sets": 3,
-                "reps": 10,
-                "motra": "Hanging Leg Raise",
-                "location": "📍 Floor 2, captain's chair with back pad",
-                "note": "Use back-support station to eliminate swing. Core exercise, not hip flexor."
-              },
-              {
-                "name": "Offset Farmer Carry",
-                "sets": 3,
-                "distance_m": 25,
-                "weight_kg_left": 24,
-                "weight_kg_right": 12,
-                "motra": "Offset Farmer Carry",
-                "location": "📍 Floor 3 KBs → plan as final exercise",
-                "note": "Left hand 24kg, right hand 12kg. Left hand ceiling on Floor 3 = 24kg. Next session: left to 28kg → use Floor 2 DBs."
-              }
-            ],
-            "rest_sec": 60
+            ]
           }
         ],
-        "hr_rule": "Stay below 122 bpm during strength blocks",
-        "session_notes": "0 repeated exercises from Week 1 pull day. 3 new movements. Full session executable Floor 3 + Floor 2 — no mid-session floor changes. Time cap 60 min."
+        "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
       },
       "5": {
-        "date": "2026-04-24",
-        "day": "Friday",
-        "session_type": "Corrective / Unilateral",
-        "theme": "Unilateral close — right-side correction, anti-rotation, pull-up anchor. Lower systemic fatigue than Mon/Wed — end the week clean, not grindy.",
-        "floor_plan": "Floor 3 → Floor 2 → Floor 3",
-        "time_cap_min": 60,
-        "status": "LIVE — active session for today",
+        "planned_date": "2026-05-08",
+        "day_label": "Friday May 8",
+        "session_type": "Push / Chest Strength + Hip-Safe Quad + Med Ball Power",
+        "theme": "Chest and shoulder muscle, hip-safe leg strength, trunk stiffness, fun power.",
+        "intent": "Use heavier 6-8 rep anchors and a short med-ball power dose without turning the day into a circuit.",
+        "floor_plan": "Floor 3 prep -> Floor 2 strength anchors -> Floor 3 trunk / power close",
+        "time_cap_min": 65,
+        "hard_set_count": "about 16-18 depending on optional carry/close",
+        "guardrails": [
+          "about 122 bpm strength HR cap",
+          "2-3 min rests after Incline Press and V Squat",
+          "pain-free squat depth only",
+          "cut optional carry first if time runs tight"
+        ],
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP — Activation",
-            "floor": "Floor 3",
+            "label": "Floor 3 Prep + Power Primer",
             "time_min": 10,
             "exercises": [
               {
-                "name": "Wall Slides",
-                "prescription": "2×10",
-                "load": "BW",
-                "cues": "Scap priming — low traps engage, keep lower ribs down. Slow tempo."
+                "name": "Wall Slide",
+                "prescription": "1-2x10",
+                "load": "Bodyweight",
+                "cues": "Ribs down, no shrugging."
               },
               {
-                "name": "Open Book Stretch",
-                "prescription": "2×8/side (left first)",
-                "load": "BW",
-                "cues": "Thoracic rotation + anterior chain opening. Pause at end range, exhale deeper."
+                "name": "Half Kneeling Hip Flexor Stretch",
+                "prescription": "1-2x30 sec/side",
+                "load": "Bodyweight",
+                "cues": "Tall posture, no hip pinch."
               },
               {
-                "name": "Cable Hip Abduction",
-                "prescription": "2×12/side (left first)",
-                "load": "Light",
-                "cues": "Glute med activation — standing, keep pelvis level, drive the heel out, not the knee."
+                "name": "Dead Bug",
+                "prescription": "2x6/side",
+                "load": "7 kg",
+                "cues": "Slow, quiet, no shifting."
               },
               {
-                "name": "Scapular Pull-Up Hang",
-                "prescription": "2×6",
-                "load": "BW",
-                "cues": "Shoulders DOWN and back from ears — prime lats before Block B."
+                "name": "Medicine Ball Slam",
+                "prescription": "2x5",
+                "load": "8 kg",
+                "cues": "Tall, brace, throw the floor away, reset."
               }
             ]
           },
           {
-            "id": "a",
-            "label": "Block A — Unilateral Split (Anchor)",
-            "floor": "Floor 2",
-            "time_min": 18,
-            "pairing": "superset",
+            "id": "anchors",
+            "label": "Floor 2 Heavy Anchors",
+            "time_min": 34,
             "exercises": [
               {
-                "name": "Dumbbell Supported Split Squat",
-                "prescription": "3×10/side (left forward first)",
-                "load": "Start DB 12–14 kg each hand",
-                "cues": "Front heel drives the floor. Hand on rack for balance only. Knee tracks over toe, NOT over foot."
+                "name": "Dumbbell Incline Bench Press",
+                "prescription": "3x6-8",
+                "load": "18 kg/hand, or 16 kg if path changes",
+                "cues": "Lower with control, press with intent, both sides even."
               },
               {
-                "name": "Single-Arm Dumbbell Row (bench)",
-                "prescription": "3×10/side (left first)",
-                "load": "Start 16–18 kg, progress if easy",
-                "cues": "Elbow to hip — NOT hand to ribs. Pause 1 sec at top. Neutral spine; no trunk rotation."
+                "name": "Machine V Squat",
+                "prescription": "3x6-8",
+                "load": "50 / 55 / 55 kg; 60 kg set 3 only if smooth",
+                "cues": "Smooth down, strong up, stop before hip pinch."
+              },
+              {
+                "name": "Landmine Half-Kneeling Press",
+                "prescription": "2x6/side, left first",
+                "load": "25 kg; 27.5 kg only if smooth",
+                "cues": "Tall from knee to head, press cleanly, refuse rotation."
               }
             ]
           },
           {
-            "id": "b",
-            "label": "Block B — Pull-Up Anchor + Glute",
-            "floor": "Floor 2",
-            "time_min": 16,
-            "pairing": "superset",
+            "id": "trunk",
+            "label": "Floor 3 Shape / Trunk Work",
+            "time_min": 12,
             "exercises": [
               {
-                "name": "Pull-Up",
-                "prescription": "3×5",
-                "load": "BW",
-                "cues": "2-sec hold at top every rep. Chin over bar. Slow 3-count descent. Fresh = expect 5; don't cheat the hold."
+                "name": "Cross Cable Lateral Raise",
+                "prescription": "2x10/side",
+                "load": "5.7 kg or 3.4 kg if neck takes over",
+                "cues": "Long arm, quiet neck."
               },
               {
-                "name": "Machine Hip Thrust",
-                "prescription": "3×12",
-                "load": "Match Week 1 load; +1 plate if all 12 clean",
-                "cues": "Heel-drive cue — feet flat, push through the heels. Squeeze HARD at top, 1-sec hold. Don't overextend lumbar."
+                "name": "Cable Pallof Press",
+                "prescription": "2x8/side with 2-sec hold",
+                "load": "10.2-12.5 kg",
+                "cues": "Press, hold, return; stay square."
               }
             ]
           },
           {
-            "id": "c",
-            "label": "Block C — Unilateral Trunk + Scapular Close",
-            "floor": "Floor 3",
-            "time_min": 14,
+            "id": "optional_close",
+            "label": "Optional Carry / Med Ball Close",
+            "time_min": 6,
             "exercises": [
               {
-                "name": "Half-Kneeling Pallof Press",
-                "prescription": "3×12/side (left knee up first, face cable)",
-                "load": "10.2 kg",
-                "cues": "Press away slow, pause 2 sec, slow return. Anti-rotation means resist the pull — don't chase it. Unilateral kneel = hip stability bonus."
+                "name": "Offset Farmer Carry",
+                "prescription": "Optional 2x40 ft",
+                "load": "Left 20-24 kg / right 12-16 kg",
+                "cues": "Mismatched load, no leaning."
               },
               {
-                "name": "Cable Face Pull to W",
-                "prescription": "3×12",
-                "load": "Moderate — form over load",
-                "cues": "Rope at face height. Pull to forehead, elbows HIGH. Then flare to W — hands out, shoulders packed. 1-sec hold at W."
-              },
-              {
-                "name": "Suitcase Carry — Left Hand",
-                "prescription": "3×25m",
-                "load": "24 kg KB, left hand only",
-                "cues": "Right-dominance corrective. Walk tall, ribs stacked over pelvis. If shoulder hikes, load is too heavy — drop a step."
+                "name": "Medicine Ball Slam",
+                "prescription": "Optional 1-2x5 if primer felt great",
+                "load": "8 kg",
+                "cues": "Fast singles, full reset."
               }
             ]
           }
         ],
-        "session_notes": "Week 2 close. No repeats from Mon (landmine-heavy push) or Wed (pull + posterior chain). Zero landmine movements today — deliberate variation. Pull-up is fresh (pre-pull), so target 5 reps per set with the 2-sec hold. Left-side leads every unilateral. Suitcase Carry left-hand-only is the right-dominance corrective — non-negotiable, last thing you do."
+        "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
       }
     }
   },
@@ -13758,6 +13980,15 @@
       "heart_rate_bpm": 69,
       "source": "manual-screenshot-20260503-ocare-bp",
       "notes": "Ocare3 BP screenshot. Improved vs May 1's 121/95; diastolic still above ideal but no longer 90+."
+    },
+    {
+      "date": "2026-05-06",
+      "time": "05:03",
+      "systolic_mmhg": 114,
+      "diastolic_mmhg": 80,
+      "heart_rate_bpm": 58,
+      "source": "manual-screenshot-20260506-ocare-bp",
+      "notes": "Ocare3 BP screenshot from Wed 05/06 at 05:03. 114/80 mmHg with HR 58 bpm. Best recent BP pattern: systolic normal and diastolic improved from 84 on May 3 and 95 on May 1."
     }
   ]
 }
