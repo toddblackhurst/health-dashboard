@@ -2339,8 +2339,8 @@
         "Training green light: strength session is appropriate with high intent, normal time cap, normal BP/HR guardrails, and pull-up focus."
       ],
       "notes": "May 6 morning screenshot intake. Strong rebound from the planned two-day break. BP is also improved at 114/80 with HR 58, supporting a high-quality strength day rather than another recovery-only day.",
-      "readiness_tier_basis": "Green: Bevel recovery 100%, HRV 49.5 ms, 6h53 sleep, resting HR 52 bpm, and O2 97% support training.",
-      "recovery_trend": "HRV and recovery are above the strength gate; the only caution is keeping the session capped and hip-safe."
+      "readiness_tier_basis": "Green: recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm.",
+      "recovery_trend": "Use the latest recovery entry as the limiter until fresher sleep data arrives."
     }
   ],
   "nutrition": [
@@ -12086,21 +12086,21 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-08",
+    "date": "2026-05-09",
     "readiness_tier": "Green",
-    "call": "Train at World Gym today. Bevel recovery is 100% with HRV 49.5 ms and sleep 6h53, so run the Friday push/chest, hip-safe quad, and med-ball plan inside 65 minutes.",
-    "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 12.1 weeks.",
+    "call": "Recover today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
+    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 12.0 weeks.",
     "encouragement": "This is the kind of day that builds the independence and active-family body you are after: crisp work, no sloppy extra volume.",
     "goal_summary": {
-      "as_of": "2026-05-08",
+      "as_of": "2026-05-09",
       "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 12.1
+      "weeks_remaining": 12.0
     }
   },
-  "last_updated": "2026-05-08T06:19:32+08:00",
+  "last_updated": "2026-05-09T06:05:03+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12188,120 +12188,14 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-05-08",
-    "day_label": "Friday May 8",
-    "session_type": "Push / Chest Strength + Hip-Safe Quad + Med Ball Power",
-    "theme": "Chest and shoulder muscle, hip-safe leg strength, trunk stiffness, fun power.",
-    "intent": "Use heavier 6-8 rep anchors and a short med-ball power dose without turning the day into a circuit.",
-    "floor_plan": "Floor 3 prep -> Floor 2 strength anchors -> Floor 3 trunk / power close",
-    "time_cap_min": 65,
-    "hard_set_count": "about 16-18 depending on optional carry/close",
-    "guardrails": [
-      "about 122 bpm strength HR cap",
-      "2-3 min rests after Incline Press and V Squat",
-      "pain-free squat depth only",
-      "cut optional carry first if time runs tight"
-    ],
-    "blocks": [
-      {
-        "id": "prep",
-        "label": "Floor 3 Prep + Power Primer",
-        "time_min": 10,
-        "exercises": [
-          {
-            "name": "Wall Slide",
-            "prescription": "1-2x10",
-            "load": "Bodyweight",
-            "cues": "Ribs down, no shrugging."
-          },
-          {
-            "name": "Half Kneeling Hip Flexor Stretch",
-            "prescription": "1-2x30 sec/side",
-            "load": "Bodyweight",
-            "cues": "Tall posture, no hip pinch."
-          },
-          {
-            "name": "Dead Bug",
-            "prescription": "2x6/side",
-            "load": "7 kg",
-            "cues": "Slow, quiet, no shifting."
-          },
-          {
-            "name": "Medicine Ball Slam",
-            "prescription": "2x5",
-            "load": "8 kg",
-            "cues": "Tall, brace, throw the floor away, reset."
-          }
-        ]
-      },
-      {
-        "id": "anchors",
-        "label": "Floor 2 Heavy Anchors",
-        "time_min": 34,
-        "exercises": [
-          {
-            "name": "Dumbbell Incline Bench Press",
-            "prescription": "3x6-8",
-            "load": "18 kg/hand, or 16 kg if path changes",
-            "cues": "Lower with control, press with intent, both sides even."
-          },
-          {
-            "name": "Machine V Squat",
-            "prescription": "3x6-8",
-            "load": "50 / 55 / 55 kg; 60 kg set 3 only if smooth",
-            "cues": "Smooth down, strong up, stop before hip pinch."
-          },
-          {
-            "name": "Landmine Half-Kneeling Press",
-            "prescription": "2x6/side, left first",
-            "load": "25 kg; 27.5 kg only if smooth",
-            "cues": "Tall from knee to head, press cleanly, refuse rotation."
-          }
-        ]
-      },
-      {
-        "id": "trunk",
-        "label": "Floor 3 Shape / Trunk Work",
-        "time_min": 12,
-        "exercises": [
-          {
-            "name": "Cross Cable Lateral Raise",
-            "prescription": "2x10/side",
-            "load": "5.7 kg or 3.4 kg if neck takes over",
-            "cues": "Long arm, quiet neck."
-          },
-          {
-            "name": "Cable Pallof Press",
-            "prescription": "2x8/side with 2-sec hold",
-            "load": "10.2-12.5 kg",
-            "cues": "Press, hold, return; stay square."
-          }
-        ]
-      },
-      {
-        "id": "optional_close",
-        "label": "Optional Carry / Med Ball Close",
-        "time_min": 6,
-        "exercises": [
-          {
-            "name": "Offset Farmer Carry",
-            "prescription": "Optional 2x40 ft",
-            "load": "Left 20-24 kg / right 12-16 kg",
-            "cues": "Mismatched load, no leaning."
-          },
-          {
-            "name": "Medicine Ball Slam",
-            "prescription": "Optional 1-2x5 if primer felt great",
-            "load": "8 kg",
-            "cues": "Fast singles, full reset."
-          }
-        ]
-      }
-    ],
-    "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md",
-    "status": "LIVE - daily brief refreshed",
-    "coach_note": "Use the planned Friday structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the 122 bpm cap, and keep loaded hip flexion pain-free. Skip the optional close if HR, hip, readiness, or grip says the main work was enough.",
-    "why": "Today matters because it gives the week its push/chest and hip-safe quad signal after the recovery reset. The goal is high-quality load and crisp power, not extra volume."
+    "planned_date": "2026-05-09",
+    "day_label": "Saturday May 9",
+    "session_type": "Recovery / non-lifting day",
+    "floor_plan": "Walk or easy cardio only",
+    "time_cap_min": 45,
+    "blocks": [],
+    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
+    "why": "Recovery days preserve the quality of the next anchor session."
   },
   "coach_questions": [
     {
