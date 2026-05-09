@@ -12086,21 +12086,21 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-09",
+    "date": "2026-05-10",
     "readiness_tier": "Green",
     "call": "Recover today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
-    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 12.0 weeks.",
+    "sprint_gate": "N/A - sprints are Saturday-standalone.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 11.9 weeks.",
     "encouragement": "This is the kind of day that builds the independence and active-family body you are after: crisp work, no sloppy extra volume.",
     "goal_summary": {
-      "as_of": "2026-05-09",
+      "as_of": "2026-05-10",
       "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 12.0
+      "weeks_remaining": 11.9
     }
   },
-  "last_updated": "2026-05-09T06:05:03+08:00",
+  "last_updated": "2026-05-10T06:05:04+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12188,8 +12188,8 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-05-09",
-    "day_label": "Saturday May 9",
+    "planned_date": "2026-05-10",
+    "day_label": "Sunday May 10",
     "session_type": "Recovery / non-lifting day",
     "floor_plan": "Walk or easy cardio only",
     "time_cap_min": 45,
