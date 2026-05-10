@@ -12100,7 +12100,7 @@
       "weeks_remaining": 11.9
     }
   },
-  "last_updated": "2026-05-10T06:05:04+08:00",
+  "last_updated": "2026-05-10T20:03:44+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -13065,471 +13065,285 @@
     }
   ],
   "weekly_session_plans": {
-    "week_start": "2026-05-04",
-    "week_label": "Week of May 4-8, 2026 — two-day heavy/hybrid return",
-    "planned_on": "2026-05-04",
+    "week_start": "2026-05-11",
+    "week_label": "Week of May 11–May 16, 2026",
+    "planned_on": "2026-05-10",
     "sessions": {
       "1": {
-        "planned_date": "2026-05-04",
-        "day_label": "Monday May 4",
-        "session_type": "Walk-Only Recovery",
-        "week": null,
-        "floor_plan": "Outside / easy route",
-        "time_cap_min": 45,
-        "gate_condition": "Keep it walking only Monday May 4 and Tuesday May 5. No lifting, no sprint block, no make-up work.",
-        "why": "Todd requested a short two-day body break. Monday and Tuesday are walking-only recovery days. Strength resumes Wednesday May 6 with high intent, but still inside the 55-65 minute cap and about 122 bpm strength HR cap.",
-        "blocks": [
-          {
-            "id": "walk_only",
-            "label": "Walk-Only Recovery",
-            "floor": "Outside / treadmill if needed",
-            "time_min": 30,
-            "exercises": [
-              {
-                "name": "Easy Walk",
-                "prescription": "30-45 min",
-                "load": "Bodyweight",
-                "cues": "Keep it restorative. Stay conversational and under the usual recovery ceiling; stop if fatigue or BP symptoms show up."
-              }
-            ]
-          }
-        ],
-        "next_strength_session": {
-          "planned_date": "2026-05-06",
-          "day_label": "Wednesday May 6",
-          "session_type": "Pull / Glute Strength + Athletic Carry Close",
-          "theme": "Fewer hard sets, heavier pull/glute anchors, trunk stiffness, and one clean athletic close.",
-          "intent": "Build muscle with high-quality load, not make-up volume. Main anchors use 3 hard sets; support work uses 2 useful sets.",
-          "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 trunk / close",
-          "time_cap_min": 65,
-          "hard_set_count": "about 17",
-          "guardrails": [
-            "about 122 bpm strength HR cap",
-            "2-3 min rests after Pull-Up and Hip Thrust",
-            "1-2 reps in reserve",
-            "skip hybrid close if recovery is red, HR drifts, grip is cooked, or hip symptoms appear"
-          ],
-          "blocks": [
-            {
-              "id": "prep",
-              "label": "Floor 3 Prep",
-              "time_min": 7,
-              "exercises": [
-                {
-                  "name": "Foot and Ankle Prep Circuit",
-                  "prescription": "4 min",
-                  "load": "Bodyweight",
-                  "cues": "Big toe, little toe, heel. Quiet control."
-                },
-                {
-                  "name": "Lateral Step-to-Stick",
-                  "prescription": "2x4/side",
-                  "load": "Bodyweight",
-                  "cues": "Step sideways, land softly, freeze for 2 seconds."
-                }
-              ]
-            },
-            {
-              "id": "anchors",
-              "label": "Floor 2 Heavy Anchors",
-              "time_min": 35,
-              "exercises": [
-                {
-                  "name": "Pull-Up",
-                  "prescription": "3 hard sets: 6 / 5 / 4-5",
-                  "load": "Bodyweight",
-                  "cues": "Settled hang, elbows down, one-beat hold, controlled lower."
-                },
-                {
-                  "name": "Machine Hip Thrust (Glute Bridge)",
-                  "prescription": "3x6-8",
-                  "load": "50 kg; set 3 can be 52.5-55 kg if excellent",
-                  "cues": "Heel drive, hard 1-sec lockout, no overarch."
-                },
-                {
-                  "name": "Dumbbell Chest-Supported Row",
-                  "prescription": "3x8",
-                  "load": "12-14 kg/hand",
-                  "cues": "Chest glued to pad, pull-pause-lower, no twisting."
-                }
-              ]
-            },
-            {
-              "id": "trunk",
-              "label": "Floor 3 Trunk / Posture",
-              "time_min": 12,
-              "exercises": [
-                {
-                  "name": "Cable Chop High to Low",
-                  "prescription": "2x8/side",
-                  "load": "12.5 kg or 10.2 kg if control slips",
-                  "cues": "Strong diagonal brace; body stays stacked."
-                },
-                {
-                  "name": "Rope Cable Face Pull to W",
-                  "prescription": "2x10",
-                  "load": "12.5 kg or 10.2 kg if neck takes over",
-                  "cues": "Pull to face height, open to W, pause, return slowly."
-                }
-              ]
-            },
-            {
-              "id": "hybrid_close",
-              "label": "Floor 3 Hybrid Close",
-              "time_min": 6,
-              "exercises": [
-                {
-                  "name": "Kettlebell Swing",
-                  "prescription": "2x8",
-                  "load": "20 kg; 24 kg only if crisp",
-                  "cues": "Snap, float, park."
-                },
-                {
-                  "name": "Kettlebell Front-Rack Carry",
-                  "prescription": "2x20 m/side, left first",
-                  "load": "16 kg, or 14 kg if posture collapses",
-                  "cues": "Bell close, elbow down, walk tall."
-                }
-              ]
-            }
-          ],
-          "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
-        },
-        "friday_strength_session": {
-          "planned_date": "2026-05-08",
-          "day_label": "Friday May 8",
-          "session_type": "Push / Chest Strength + Hip-Safe Quad + Med Ball Power",
-          "theme": "Chest and shoulder muscle, hip-safe leg strength, trunk stiffness, fun power.",
-          "intent": "Use heavier 6-8 rep anchors and a short med-ball power dose without turning the day into a circuit.",
-          "floor_plan": "Floor 3 prep -> Floor 2 strength anchors -> Floor 3 trunk / power close",
-          "time_cap_min": 65,
-          "hard_set_count": "about 16-18 depending on optional carry/close",
-          "guardrails": [
-            "about 122 bpm strength HR cap",
-            "2-3 min rests after Incline Press and V Squat",
-            "pain-free squat depth only",
-            "cut optional carry first if time runs tight"
-          ],
-          "blocks": [
-            {
-              "id": "prep",
-              "label": "Floor 3 Prep + Power Primer",
-              "time_min": 10,
-              "exercises": [
-                {
-                  "name": "Wall Slide",
-                  "prescription": "1-2x10",
-                  "load": "Bodyweight",
-                  "cues": "Ribs down, no shrugging."
-                },
-                {
-                  "name": "Half Kneeling Hip Flexor Stretch",
-                  "prescription": "1-2x30 sec/side",
-                  "load": "Bodyweight",
-                  "cues": "Tall posture, no hip pinch."
-                },
-                {
-                  "name": "Dead Bug",
-                  "prescription": "2x6/side",
-                  "load": "7 kg",
-                  "cues": "Slow, quiet, no shifting."
-                },
-                {
-                  "name": "Medicine Ball Slam",
-                  "prescription": "2x5",
-                  "load": "8 kg",
-                  "cues": "Tall, brace, throw the floor away, reset."
-                }
-              ]
-            },
-            {
-              "id": "anchors",
-              "label": "Floor 2 Heavy Anchors",
-              "time_min": 34,
-              "exercises": [
-                {
-                  "name": "Dumbbell Incline Bench Press",
-                  "prescription": "3x6-8",
-                  "load": "18 kg/hand, or 16 kg if path changes",
-                  "cues": "Lower with control, press with intent, both sides even."
-                },
-                {
-                  "name": "Machine V Squat",
-                  "prescription": "3x6-8",
-                  "load": "50 / 55 / 55 kg; 60 kg set 3 only if smooth",
-                  "cues": "Smooth down, strong up, stop before hip pinch."
-                },
-                {
-                  "name": "Landmine Half-Kneeling Press",
-                  "prescription": "2x6/side, left first",
-                  "load": "25 kg; 27.5 kg only if smooth",
-                  "cues": "Tall from knee to head, press cleanly, refuse rotation."
-                }
-              ]
-            },
-            {
-              "id": "trunk",
-              "label": "Floor 3 Shape / Trunk Work",
-              "time_min": 12,
-              "exercises": [
-                {
-                  "name": "Cross Cable Lateral Raise",
-                  "prescription": "2x10/side",
-                  "load": "5.7 kg or 3.4 kg if neck takes over",
-                  "cues": "Long arm, quiet neck."
-                },
-                {
-                  "name": "Cable Pallof Press",
-                  "prescription": "2x8/side with 2-sec hold",
-                  "load": "10.2-12.5 kg",
-                  "cues": "Press, hold, return; stay square."
-                }
-              ]
-            },
-            {
-              "id": "optional_close",
-              "label": "Optional Carry / Med Ball Close",
-              "time_min": 6,
-              "exercises": [
-                {
-                  "name": "Offset Farmer Carry",
-                  "prescription": "Optional 2x40 ft",
-                  "load": "Left 20-24 kg / right 12-16 kg",
-                  "cues": "Mismatched load, no leaning."
-                },
-                {
-                  "name": "Medicine Ball Slam",
-                  "prescription": "Optional 1-2x5 if primer felt great",
-                  "load": "8 kg",
-                  "cues": "Fast singles, full reset."
-                }
-              ]
-            }
-          ],
-          "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
-        },
-        "updated_reason": "May 4 rebuild: fewer sets, higher loads, stronger hypertrophy signal, short planned hybrid work."
-      },
-      "2": {
-        "date": "2026-05-05",
-        "day": "Tuesday",
-        "session_type": "Walk-Only Recovery",
-        "time_cap_min": 45,
-        "notes": "Walking only. No make-up lifting."
-      },
-      "3": {
-        "planned_date": "2026-05-06",
-        "day_label": "Wednesday May 6",
-        "session_type": "Pull / Glute Strength + Athletic Carry Close",
-        "theme": "Fewer hard sets, heavier pull/glute anchors, trunk stiffness, and one clean athletic close.",
-        "intent": "Build muscle with high-quality load, not make-up volume. Main anchors use 3 hard sets; support work uses 2 useful sets.",
-        "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 trunk / close",
-        "time_cap_min": 65,
-        "hard_set_count": "about 17",
-        "guardrails": [
-          "about 122 bpm strength HR cap",
-          "2-3 min rests after Pull-Up and Hip Thrust",
-          "1-2 reps in reserve",
-          "skip hybrid close if recovery is red, HR drifts, grip is cooked, or hip symptoms appear"
-        ],
+        "date": "2026-05-11",
+        "day": "Monday",
+        "session_type": "Push-Dominant Upper / Rotational Power",
+        "theme": "Chest-focused pressing leads the week while the support work stays trunk-smart and athletic.",
+        "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 trunk close",
+        "time_cap_min": 60,
+        "status": "LIVE — Week 19 planned",
         "blocks": [
           {
             "id": "prep",
-            "label": "Floor 3 Prep",
-            "time_min": 7,
-            "exercises": [
-              {
-                "name": "Foot and Ankle Prep Circuit",
-                "prescription": "4 min",
-                "load": "Bodyweight",
-                "cues": "Big toe, little toe, heel. Quiet control."
-              },
-              {
-                "name": "Lateral Step-to-Stick",
-                "prescription": "2x4/side",
-                "load": "Bodyweight",
-                "cues": "Step sideways, land softly, freeze for 2 seconds."
-              }
-            ]
-          },
-          {
-            "id": "anchors",
-            "label": "Floor 2 Heavy Anchors",
-            "time_min": 35,
-            "exercises": [
-              {
-                "name": "Pull-Up",
-                "prescription": "3 hard sets: 6 / 5 / 4-5",
-                "load": "Bodyweight",
-                "cues": "Settled hang, elbows down, one-beat hold, controlled lower."
-              },
-              {
-                "name": "Machine Hip Thrust (Glute Bridge)",
-                "prescription": "3x6-8",
-                "load": "50 kg; set 3 can be 52.5-55 kg if excellent",
-                "cues": "Heel drive, hard 1-sec lockout, no overarch."
-              },
-              {
-                "name": "Dumbbell Chest-Supported Row",
-                "prescription": "3x8",
-                "load": "12-14 kg/hand",
-                "cues": "Chest glued to pad, pull-pause-lower, no twisting."
-              }
-            ]
-          },
-          {
-            "id": "trunk",
-            "label": "Floor 3 Trunk / Posture",
-            "time_min": 12,
-            "exercises": [
-              {
-                "name": "Cable Chop High to Low",
-                "prescription": "2x8/side",
-                "load": "12.5 kg or 10.2 kg if control slips",
-                "cues": "Strong diagonal brace; body stays stacked."
-              },
-              {
-                "name": "Rope Cable Face Pull to W",
-                "prescription": "2x10",
-                "load": "12.5 kg or 10.2 kg if neck takes over",
-                "cues": "Pull to face height, open to W, pause, return slowly."
-              }
-            ]
-          },
-          {
-            "id": "hybrid_close",
-            "label": "Floor 3 Hybrid Close",
-            "time_min": 6,
-            "exercises": [
-              {
-                "name": "Kettlebell Swing",
-                "prescription": "2x8",
-                "load": "20 kg; 24 kg only if crisp",
-                "cues": "Snap, float, park."
-              },
-              {
-                "name": "Kettlebell Front-Rack Carry",
-                "prescription": "2x20 m/side, left first",
-                "load": "16 kg, or 14 kg if posture collapses",
-                "cues": "Bell close, elbow down, walk tall."
-              }
-            ]
-          }
-        ],
-        "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
-      },
-      "5": {
-        "planned_date": "2026-05-08",
-        "day_label": "Friday May 8",
-        "session_type": "Push / Chest Strength + Hip-Safe Quad + Med Ball Power",
-        "theme": "Chest and shoulder muscle, hip-safe leg strength, trunk stiffness, fun power.",
-        "intent": "Use heavier 6-8 rep anchors and a short med-ball power dose without turning the day into a circuit.",
-        "floor_plan": "Floor 3 prep -> Floor 2 strength anchors -> Floor 3 trunk / power close",
-        "time_cap_min": 65,
-        "hard_set_count": "about 16-18 depending on optional carry/close",
-        "guardrails": [
-          "about 122 bpm strength HR cap",
-          "2-3 min rests after Incline Press and V Squat",
-          "pain-free squat depth only",
-          "cut optional carry first if time runs tight"
-        ],
-        "blocks": [
-          {
-            "id": "prep",
-            "label": "Floor 3 Prep + Power Primer",
+            "label": "Floor 3 Hip Prehab + Stack Prep",
+            "floor": "Floor 3",
             "time_min": 10,
             "exercises": [
               {
-                "name": "Wall Slide",
-                "prescription": "1-2x10",
-                "load": "Bodyweight",
-                "cues": "Ribs down, no shrugging."
+                "name": "Chin Tuck",
+                "prescription": "2x6 breaths",
+                "load": "BW",
+                "cues": "Keep the back of the neck long and stack the head over the ribs. Do not poke the chin forward between breaths."
               },
               {
-                "name": "Half Kneeling Hip Flexor Stretch",
-                "prescription": "1-2x30 sec/side",
-                "load": "Bodyweight",
-                "cues": "Tall posture, no hip pinch."
+                "name": "Glute Bridge Iso",
+                "prescription": "2x20 sec",
+                "load": "BW",
+                "cues": "Drive through the heels and squeeze at lockout. Keep the ribs down so the low back does not arch."
               },
               {
-                "name": "Dead Bug",
-                "prescription": "2x6/side",
-                "load": "7 kg",
-                "cues": "Slow, quiet, no shifting."
-              },
-              {
-                "name": "Medicine Ball Slam",
-                "prescription": "2x5",
-                "load": "8 kg",
-                "cues": "Tall, brace, throw the floor away, reset."
+                "name": "Standing Cable Hip Abduction",
+                "prescription": "2x10/side",
+                "load": "5.7 kg",
+                "cues": "Stay tall and keep the pelvis level. Small clean range only; stop before any front-hip pinch."
               }
             ]
           },
           {
-            "id": "anchors",
-            "label": "Floor 2 Heavy Anchors",
-            "time_min": 34,
+            "id": "a",
+            "label": "Block A — Chest Anchor",
+            "floor": "Floor 2",
+            "time_min": 20,
             "exercises": [
               {
-                "name": "Dumbbell Incline Bench Press",
-                "prescription": "3x6-8",
-                "load": "18 kg/hand, or 16 kg if path changes",
-                "cues": "Lower with control, press with intent, both sides even."
-              },
-              {
-                "name": "Machine V Squat",
-                "prescription": "3x6-8",
-                "load": "50 / 55 / 55 kg; 60 kg set 3 only if smooth",
-                "cues": "Smooth down, strong up, stop before hip pinch."
-              },
-              {
-                "name": "Landmine Half-Kneeling Press",
-                "prescription": "2x6/side, left first",
-                "load": "25 kg; 27.5 kg only if smooth",
-                "cues": "Tall from knee to head, press cleanly, refuse rotation."
+                "name": "Machine Seated Chest Press",
+                "prescription": "3x8",
+                "load": "31.5 kg",
+                "cues": "Press evenly from both hands and keep the ribcage down. Stop the set if the shoulders start shrugging or the press path gets crooked."
               }
             ]
           },
           {
-            "id": "trunk",
-            "label": "Floor 3 Shape / Trunk Work",
+            "id": "b",
+            "label": "Block B — Athletic Press Support",
+            "floor": "Floor 2",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Landmine Rotational Press",
+                "prescription": "3x5/side",
+                "load": "20 kg",
+                "cues": "Let the hips start it, then guide the bar without losing the stack. Crisp reps only; no leaning or late-session grind."
+              },
+              {
+                "name": "Machine Rear Delt Fly",
+                "prescription": "2x12",
+                "load": "18 kg",
+                "cues": "Reach wide through the back of the shoulders and keep the neck quiet. Pause briefly when the shoulder blades finish the rep."
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "label": "Block C — Trunk and Power Close",
+            "floor": "Floor 3",
             "time_min": 12,
             "exercises": [
               {
-                "name": "Cross Cable Lateral Raise",
-                "prescription": "2x10/side",
-                "load": "5.7 kg or 3.4 kg if neck takes over",
-                "cues": "Long arm, quiet neck."
-              },
-              {
-                "name": "Cable Pallof Press",
-                "prescription": "2x8/side with 2-sec hold",
-                "load": "10.2-12.5 kg",
-                "cues": "Press, hold, return; stay square."
-              }
-            ]
-          },
-          {
-            "id": "optional_close",
-            "label": "Optional Carry / Med Ball Close",
-            "time_min": 6,
-            "exercises": [
-              {
-                "name": "Offset Farmer Carry",
-                "prescription": "Optional 2x40 ft",
-                "load": "Left 20-24 kg / right 12-16 kg",
-                "cues": "Mismatched load, no leaning."
+                "name": "Bird Dog",
+                "prescription": "2x6/side",
+                "load": "BW",
+                "cues": "Long line from heel to hand, with the ribs and pelvis staying quiet. Reach, pause, and own the stillness before switching sides."
               },
               {
                 "name": "Medicine Ball Slam",
-                "prescription": "Optional 1-2x5 if primer felt great",
+                "prescription": "3x5",
                 "load": "8 kg",
-                "cues": "Fast singles, full reset."
+                "cues": "Stand tall, brace hard, and throw the floor away. Reset fully between reps so it stays power work, not sloppy conditioning."
               }
             ]
           }
         ],
-        "file_reference": "MOTRA_WORKOUTS_MAY6_MAY8_2026.md"
+        "session_notes": "This push day keeps the weekly chest exposure without falling back to the overused incline press pattern. The prep block covers head stacking, posterior activation, and lateral-hip control so the press work starts from a better position. Landmine rotational pressing keeps the week fun and athletic while still respecting the HR cap and hip constraints. Bird dog plus slams give the first lower-ab and trunk-stiffness exposure without extending the session."
+      },
+      "3": {
+        "date": "2026-05-13",
+        "day": "Wednesday",
+        "session_type": "Pull-Dominant Upper / Glute Support + Carry",
+        "theme": "Pull-up strength stays in the plan once this week, then the rest of the session builds width, posture, and loaded correction.",
+        "floor_plan": "Floor 3 prep -> Floor 3 anchor -> Floor 2 support and carry close",
+        "time_cap_min": 58,
+        "status": "LIVE — Week 19 planned",
+        "blocks": [
+          {
+            "id": "prep",
+            "label": "Floor 3 Hip Prehab + Trunk Prep",
+            "floor": "Floor 3",
+            "time_min": 10,
+            "exercises": [
+              {
+                "name": "Prone Glute Set",
+                "prescription": "2x8 with 2-sec squeeze",
+                "load": "BW",
+                "cues": "Make the glute do the work, not the low back. Hold each squeeze cleanly instead of rushing the reps."
+              },
+              {
+                "name": "Band Side Step",
+                "prescription": "2x10/side",
+                "load": "Mini band",
+                "cues": "Stay shallow and quiet through the hips. Keep tension on the band without drifting into the right side."
+              },
+              {
+                "name": "Side Plank from Knees",
+                "prescription": "2x20 sec/side",
+                "load": "BW",
+                "cues": "Lift the underside waist and keep the body straight. Do not let the ribcage roll open."
+              }
+            ]
+          },
+          {
+            "id": "a",
+            "label": "Block A — Pull Anchor",
+            "floor": "Floor 3",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Pull-Up",
+                "prescription": "3 sets: 6 / 5 / 4",
+                "load": "BW",
+                "cues": "Hold the top for 2 seconds on quality reps, then lower on a slow 3-count. Chin clears the bar because you stayed tight, not because you craned the neck."
+              },
+              {
+                "name": "Half-Kneeling Single-Arm Cable Pull-Down",
+                "prescription": "2x10/side",
+                "load": "10.2 kg",
+                "cues": "Set the shoulder down first, especially on the right, then drive the elbow to the hip pocket. Think elbow to pocket, not hand to hip."
+              }
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Block B — Posterior Support",
+            "floor": "Floor 2",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Machine Hip Thrust (Glute Bridge)",
+                "prescription": "3x8",
+                "load": "50 / 55 / 55 kg",
+                "cues": "Drive through the heels and own a 1-second squeeze at the top. No overarch and no chasing extra range."
+              },
+              {
+                "name": "Chest-Supported Dumbbell Rear Delt Raise",
+                "prescription": "2x12",
+                "load": "5 kg/hand",
+                "cues": "Keep the chest glued to the pad and move from the back of the shoulders. Smooth reps only; do not turn it into a shrug."
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "label": "Block C — Loaded Correction Close",
+            "floor": "Floor 2",
+            "time_min": 12,
+            "exercises": [
+              {
+                "name": "Offset Farmer Carry",
+                "prescription": "2x20 m",
+                "load": "Left 20 kg / right 12 kg",
+                "cues": "Walk tall and let posture, not grip collapse, decide the set. The goal is no lean and no right-side drift."
+              }
+            ]
+          }
+        ],
+        "session_notes": "This is the only pull-up slot of the week so it satisfies Todd's explicit preference without breaking the rotation rule everywhere else. The cable pull-down keeps the right-side setup cue alive while the hip thrust covers posterior work that has not been touched recently. Rear-delt work replaces the unstable or disliked face-pull options. The carry closes the session with the exact left-led trunk correction Todd has reported as hard in the right way."
+      },
+      "5": {
+        "date": "2026-05-15",
+        "day": "Friday",
+        "session_type": "Mixed Athletic / Unilateral Correction",
+        "theme": "The third day shifts away from another straight press-pull split and uses athletic rows, controlled lower support, and rotation work.",
+        "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 rotational close",
+        "time_cap_min": 58,
+        "status": "LIVE — Week 19 planned",
+        "blocks": [
+          {
+            "id": "prep",
+            "label": "Floor 3 Hip Prehab + Athletic Primer",
+            "floor": "Floor 3",
+            "time_min": 10,
+            "exercises": [
+              {
+                "name": "Lateral Step-to-Stick",
+                "prescription": "2x4/side",
+                "load": "BW",
+                "cues": "Step sideways, land quietly, and freeze for 2 seconds. Tall finish every rep; control comes before speed."
+              },
+              {
+                "name": "Standing Cable Hip Extension to Neutral",
+                "prescription": "2x10/side",
+                "load": "5.7 kg",
+                "cues": "Squeeze the glute and stop at neutral, not behind you. No lumbar swing and no front-hip irritation."
+              },
+              {
+                "name": "Quadruped Hip Extension + Glute Squeeze",
+                "prescription": "2x8/side",
+                "load": "BW",
+                "cues": "Move slowly and finish each rep with a clean squeeze. Keep the torso square instead of twisting for range."
+              }
+            ]
+          },
+          {
+            "id": "a",
+            "label": "Block A — Athletic Row Anchor",
+            "floor": "Floor 2",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Barbell Single-Arm Landmine Row",
+                "prescription": "3x8/side",
+                "load": "20 / 25 / 25 kg",
+                "cues": "Brace first and row toward the hip without twisting the torso. Own the top for a beat instead of yanking it."
+              }
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Block B — Width and Quad Support",
+            "floor": "Floor 2",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Wide-Grip Lat Pull Down",
+                "prescription": "3x8",
+                "load": "36 kg",
+                "cues": "Keep the chest tall and pull the elbows down, not back. Stop before the neck reaches forward to finish the rep."
+              },
+              {
+                "name": "Leg Extension",
+                "prescription": "2x10",
+                "load": "25 kg",
+                "cues": "Smooth lift, brief squeeze, controlled lower. This is quad support for the hip track, not a momentum set."
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "label": "Block C — Rotation and Lower-Ab Close",
+            "floor": "Floor 3",
+            "time_min": 12,
+            "exercises": [
+              {
+                "name": "Half-Kneeling Cable Lift (Low to High)",
+                "prescription": "2x8/side",
+                "load": "3.4 kg",
+                "cues": "Stay stacked and let the trunk guide the diagonal path. Keep it smooth enough that left and right look the same."
+              },
+              {
+                "name": "Medicine Ball Rotational Slam",
+                "prescription": "2x5/side",
+                "load": "6 kg",
+                "cues": "Rotate through the trunk, then slam with a hard brace and full reset. Fast intent is the point; stop before mechanics blur."
+              }
+            ]
+          }
+        ],
+        "session_notes": "Friday varies the third day as a mixed athletic session instead of another standard corrective-only menu. The landmine row gives a fresh fun anchor that still respects the hip filter, while the pulldown preserves back-width work without repeating pull-ups. Leg extension covers the weekly quad-support requirement from the prehab engine with no deep hip flexion. The cable lift and rotational slam finish the week with power transfer, lower-ab control, and side-waist work."
       }
     }
   },
