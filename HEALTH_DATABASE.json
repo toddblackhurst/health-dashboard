@@ -11976,6 +11976,39 @@
         }
       ],
       "notes": "Full landmine push/shoulder/core session. Heavy structural correction emphasis: thoracic rotation, anti-rotation, rear delt, Turkish sit-up, suitcase carry. 81-min session, 9.1K kg volume."
+    },
+    {
+      "date": "2026-05-11",
+      "source": "Motra/Apple screenshots + Codex chat feedback",
+      "session_name": "20260511 Monday Green",
+      "session_type": "Green Strength / Pull + Chest + Hip Prehab",
+      "duration_min": 80,
+      "active_exercise_minutes": 59,
+      "calories_kcal": 638,
+      "avg_hr_bpm": 114,
+      "total_weight_lbs": 7236,
+      "total_reps": 194,
+      "muscular_load_pct": 55,
+      "hr_recovery_bpm": -42,
+      "coaching_note": "Strong Green session. Whole-session clock was 1h20m, but Todd timed actual exercise work right under 1 hour, so cap was acceptable. Keep Pallof/chops/carries/slams. Regress right-side cable hip extension due to balance compensation.",
+      "exercises_visible": [
+        "Wall Slide",
+        "Dead Hang",
+        "Bodyweight Glute Bridge",
+        "Standing Cable Hip Abduction",
+        "Machine Leg Extension",
+        "Cable Pallof Hold",
+        "Pull-Up 5/5/4 BW",
+        "Machine Seated Chest Press",
+        "Machine Mid Row",
+        "Cable Hip Extension to Neutral",
+        "Cable Chop High to Low",
+        "Dumbbell Incline Bench Press",
+        "Dumbbell Rear Delt Reverse Fly",
+        "Kettlebell Suitcase Carry",
+        "Medicine Ball Slam",
+        "BOSU Single-Leg Balance add-on"
+      ]
     }
   ],
   "glucose": [
@@ -12086,21 +12119,21 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-11",
+    "date": "2026-05-12",
     "readiness_tier": "Green",
-    "call": "Train today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
+    "call": "Recover today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 11.7 weeks.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 11.6 weeks.",
     "encouragement": "This is the kind of day that builds the independence and active-family body you are after: crisp work, no sloppy extra volume.",
     "goal_summary": {
-      "as_of": "2026-05-11",
+      "as_of": "2026-05-12",
       "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 11.7
+      "weeks_remaining": 11.6
     }
   },
-  "last_updated": "2026-05-11T06:05:04+08:00",
+  "last_updated": "2026-05-12T06:05:03+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12188,100 +12221,14 @@
     }
   ],
   "upcoming_session": {
-    "date": "2026-05-11",
-    "day": "Monday",
-    "session_type": "Push-Dominant Upper / Rotational Power",
-    "theme": "Chest-focused pressing leads the week while the support work stays trunk-smart and athletic.",
-    "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 trunk close",
-    "time_cap_min": 60,
-    "status": "LIVE - daily brief refreshed",
-    "blocks": [
-      {
-        "id": "prep",
-        "label": "Floor 3 Hip Prehab + Stack Prep",
-        "floor": "Floor 3",
-        "time_min": 10,
-        "exercises": [
-          {
-            "name": "Chin Tuck",
-            "prescription": "2x6 breaths",
-            "load": "BW",
-            "cues": "Keep the back of the neck long and stack the head over the ribs. Do not poke the chin forward between breaths."
-          },
-          {
-            "name": "Glute Bridge Iso",
-            "prescription": "2x20 sec",
-            "load": "BW",
-            "cues": "Drive through the heels and squeeze at lockout. Keep the ribs down so the low back does not arch."
-          },
-          {
-            "name": "Standing Cable Hip Abduction",
-            "prescription": "2x10/side",
-            "load": "5.7 kg",
-            "cues": "Stay tall and keep the pelvis level. Small clean range only; stop before any front-hip pinch."
-          }
-        ]
-      },
-      {
-        "id": "a",
-        "label": "Block A — Chest Anchor",
-        "floor": "Floor 2",
-        "time_min": 20,
-        "exercises": [
-          {
-            "name": "Machine Seated Chest Press",
-            "prescription": "3x8",
-            "load": "31.5 kg",
-            "cues": "Press evenly from both hands and keep the ribcage down. Stop the set if the shoulders start shrugging or the press path gets crooked."
-          }
-        ]
-      },
-      {
-        "id": "b",
-        "label": "Block B — Athletic Press Support",
-        "floor": "Floor 2",
-        "time_min": 18,
-        "exercises": [
-          {
-            "name": "Landmine Rotational Press",
-            "prescription": "3x5/side",
-            "load": "20 kg",
-            "cues": "Let the hips start it, then guide the bar without losing the stack. Crisp reps only; no leaning or late-session grind."
-          },
-          {
-            "name": "Machine Rear Delt Fly",
-            "prescription": "2x12",
-            "load": "18 kg",
-            "cues": "Reach wide through the back of the shoulders and keep the neck quiet. Pause briefly when the shoulder blades finish the rep."
-          }
-        ]
-      },
-      {
-        "id": "c",
-        "label": "Block C — Trunk and Power Close",
-        "floor": "Floor 3",
-        "time_min": 12,
-        "exercises": [
-          {
-            "name": "Bird Dog",
-            "prescription": "2x6/side",
-            "load": "BW",
-            "cues": "Long line from heel to hand, with the ribs and pelvis staying quiet. Reach, pause, and own the stillness before switching sides."
-          },
-          {
-            "name": "Medicine Ball Slam",
-            "prescription": "3x5",
-            "load": "8 kg",
-            "cues": "Stand tall, brace hard, and throw the floor away. Reset fully between reps so it stays power work, not sloppy conditioning."
-          }
-        ]
-      }
-    ],
-    "session_notes": "This push day keeps the weekly chest exposure without falling back to the overused incline press pattern. The prep block covers head stacking, posterior activation, and lateral-hip control so the press work starts from a better position. Landmine rotational pressing keeps the week fun and athletic while still respecting the HR cap and hip constraints. Bird dog plus slams give the first lower-ab and trunk-stiffness exposure without extending the session.",
-    "planned_date": "2026-05-11",
-    "day_label": "Monday May 11",
-    "coach_note": "Use the planned Friday structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the 122 bpm cap, and keep loaded hip flexion pain-free. Skip the optional close if HR, hip, readiness, or grip says the main work was enough.",
-    "why": "Today matters because it gives the week its push/chest and hip-safe quad signal after the recovery reset. The goal is high-quality load and crisp power, not extra volume."
+    "planned_date": "2026-05-12",
+    "day_label": "Tuesday May 12",
+    "session_type": "Recovery / non-lifting day",
+    "floor_plan": "Walk or easy cardio only",
+    "time_cap_min": 45,
+    "blocks": [],
+    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
+    "why": "Recovery days preserve the quality of the next anchor session."
   },
   "coach_questions": [
     {
@@ -13783,6 +13730,86 @@
       "heart_rate_bpm": 58,
       "source": "manual-screenshot-20260506-ocare-bp",
       "notes": "Ocare3 BP screenshot from Wed 05/06 at 05:03. 114/80 mmHg with HR 58 bpm. Best recent BP pattern: systolic normal and diastolic improved from 84 on May 3 and 95 on May 1."
+    }
+  ],
+  "session_feedback": [
+    {
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T10:44:35+08:00",
+      "rating_label": "right",
+      "completed_minutes": 59,
+      "best_movement": "Pallof holds, cable chops, suitcase carries, medicine ball slams",
+      "worst_movement": "Cable hip extension to neutral on right side",
+      "pain_notes": null,
+      "difficulty": "Productive Green session; hard strength anchors, no stated hip pinch",
+      "note": "Monday Green post-session feedback from Codex chat. Actual exercise work was right under 1 hour even though Motra/Apple counted a longer whole-session duration. Wall slides were harder. Dead hang was okay and easier on taller bars; coaching helped. Stability ball unavailable, so bodyweight glute bridges were used. Cable hip abduction was a good addition and clearly worked. Leg extension was good. Pallof hold and cable chop were fun. Pull-ups were 5/5/4 BW; first two sets full reps, last set hard with the fourth rep short. Chest press, mid row, and incline bench were pushed hard; incline final set almost to failure. Reverse fly was not overly hard. Suitcase carry felt much more stable, evidence trunk/carry work is paying off. Medicine ball slams remain high-enjoyment. Important flag: cable hip extension felt stable/tall on the left side, but the right side caused off-balance compensation and body shifting. Next time regress right-side cable hip extension with lighter load, rack support, shorter neutral-only range, slower reps, and stop before compensation; swap to supported glute bridge iso or supported kickback if balance steals the effect. Added BOSU single-leg balance after session: 2 sets of about 30-40 sec per leg.",
+      "source": "codex-chat-feedback",
+      "exercises": [
+        {
+          "name": "Wall Slide",
+          "feedback": "Harder than usual this morning."
+        },
+        {
+          "name": "Dead Hang",
+          "feedback": "Okay; taller bars made it easier and coaching helped."
+        },
+        {
+          "name": "Bodyweight Glute Bridge",
+          "feedback": "Used as substitute because stability ball was unavailable."
+        },
+        {
+          "name": "Standing Cable Hip Abduction",
+          "feedback": "Good addition; clearly felt productive."
+        },
+        {
+          "name": "Machine Leg Extension",
+          "feedback": "Good."
+        },
+        {
+          "name": "Cable Pallof Hold",
+          "feedback": "Fun; enjoys this work."
+        },
+        {
+          "name": "Pull-Up",
+          "feedback": "5/5/4 BW; first two sets full, final set hard with fourth rep short."
+        },
+        {
+          "name": "Chest Press",
+          "feedback": "Pushed load upward."
+        },
+        {
+          "name": "Mid Row",
+          "feedback": "Pushed load upward."
+        },
+        {
+          "name": "Cable Hip Extension to Neutral",
+          "feedback": "Left stable/tall; right side off balance with body shifting. Regress/support next time."
+        },
+        {
+          "name": "Cable Chop High to Low",
+          "feedback": "Fun; loves it."
+        },
+        {
+          "name": "Dumbbell Incline Bench Press",
+          "feedback": "Pushed hard; final set almost to failure."
+        },
+        {
+          "name": "Dumbbell Rear Delt Reverse Fly",
+          "feedback": "Not overly hard."
+        },
+        {
+          "name": "Kettlebell Suitcase Carry",
+          "feedback": "Much more stable; trunk/carry work is paying off."
+        },
+        {
+          "name": "Medicine Ball Slam",
+          "feedback": "Always fun."
+        },
+        {
+          "name": "BOSU Single-Leg Balance",
+          "feedback": "Added after session, 2 sets of about 30-40 sec each leg."
+        }
+      ]
     }
   ]
 }
