@@ -8,7 +8,7 @@ const JSON_HEADERS = {
 export const COACH_RESPONSE_VERSION = "coach-brain-v1";
 
 export const DEFAULT_COACH_STATE = {
-  version: "2026-05-03-pro-coach-v2",
+  version: "2026-05-12-pro-coach-v2",
   goals: {
     priority_order: ["VAT loss", "muscle retention/gain", "conditioning", "mobility", "aesthetics"],
     ninety_day_win: "Belly/waist shrinks by 1-2 inches by about 2026-08-01.",
@@ -27,49 +27,6 @@ export const DEFAULT_COACH_STATE = {
     default_session_target_min: 68,
     session_range_min: [60, 75],
     strength_hr_cap_bpm: 122,
-    enjoyment_contract: "Todd enjoys real strength training. Keep heavy/progressive strength as the anchor, then use athletic/functional work to make sessions interesting, challenging, and skillful. Do not make him go searching YouTube because the coach only knows boring templates.",
-    novelty_budget: "Keep 70-80% of each gym session familiar enough to progress; make 20-30% fresh through the primer, athletic complex, carry/trunk variation, stance, plane, tempo, or tool.",
-    workout_design_rule: "Every build must answer: what is the serious strength work, what is the interesting athletic challenge, and what is the progression target?",
-    athletic_functional_definition: "Athletic/functional means coordinated, loaded, multi-plane movement that challenges power transfer, deceleration, trunk stiffness, unilateral control, carries, throws/slams, hinges, rotations, and footwork. It is not a token machine accessory or generic finisher.",
-    complex_movement_rule: "Each green/yellow gym session should include at least one true complex or hybrid pairing: hinge-to-carry, landmine press-to-rotation, slam-to-lateral shuffle, step-up-to-knee-drive, cable chop-to-Pallof, or crawl/carry pattern. Keep it hip-safe and technically clean.",
-    functional_conditioning_definition: "Functional conditioning for Todd is a challenging but coached athletic block: 8-14 minutes of quality rounds that combine a loaded lift or hinge, a carry or locomotion task, a rotational/anti-rotational trunk task, and a power/coordination element. It should feel like athletic training, not bodybuilding accessories and not a random AMRAP.",
-    functional_conditioning_rules: [
-      "Use complexes, pairings, or quality rounds instead of isolated machine accessories.",
-      "Challenge multiple dimensions: level change, rotation, anti-rotation, unilateral stance, carry, deceleration, or lateral movement.",
-      "Keep hip-safe ranges and crisp technique; stop before sloppy reps.",
-      "Progress by load, distance, density, coordination, or cleaner movement, not by adding junk volume.",
-      "Motra can log the pieces as separate exercise entries when one complex name is not available.",
-    ],
-    novelty_rules: [
-      "Do not repeat the exact same functional-conditioning complex in back-to-back strength sessions unless Todd specifically asks to retest it.",
-      "Repeat a movement pattern only when there is a progression target; otherwise rotate the tool, plane, carry, stance, or coordination constraint.",
-      "Keep one familiar anchor so the session is trainable, then add one creative constraint that changes the challenge.",
-      "Creativity must stay coachable: no circus tricks, no sloppy fatigue games, no movements that violate hip or asthma/BP guardrails.",
-      "If the functional block looks like something Todd could find in five seconds as generic YouTube filler, redesign it.",
-    ],
-    functional_pattern_families: [
-      "Hinge + carry",
-      "Throw/slam + deceleration",
-      "Rotation + anti-rotation",
-      "Unilateral step/stance + locomotion",
-      "Landmine/cable force transfer",
-      "Crawl/ground-to-standing control when space and readiness support it",
-    ],
-    functional_conditioning_examples: [
-      "Kettlebell Swing + Front-Rack Carry",
-      "Medicine Ball Rotational Slam + Lateral Shuffle Reset",
-      "Landmine Rotational Press + Suitcase Carry",
-      "Cable Chop High to Low + Pallof Hold + Step-to-Stick",
-      "Step-Up to Knee Drive + Farmer Carry",
-      "Bear Crawl / quadruped crawl pattern + Cable Row or Rope Pull if space allows",
-    ],
-    creative_challenge_menu: [
-      "Make the carry harder: suitcase, front-rack, offset, turnaround control, march, or left-side-led distance.",
-      "Make the trunk harder: chop-to-hold, Pallof march, split stance, half-kneeling, tall-kneeling, or anti-rotation after power.",
-      "Make coordination harder: slam-to-stick, shuffle reset, step-to-knee-drive, reach after row, or catch/stabilize.",
-      "Make power cleaner: dead-stop swing, rotational slam, landmine press, medicine-ball pass, or reset every rep.",
-      "Make density harder carefully: quality rounds with set rest, not AMRAP chaos.",
-    ],
     weekly_shape: {
       monday: "Full-body strength + power",
       wednesday: "Posterior/pull + unilateral correction",
@@ -81,10 +38,9 @@ export const DEFAULT_COACH_STATE = {
       "Left side leads unilateral work.",
       "Hip-safe alternatives are pre-wired.",
       "No cross-floor supersets.",
-      "Every gym workout has an obvious complex, multi-dimensional athletic/functional element.",
+      "Every gym workout has an obvious athletic/functional element.",
       "Every gym workout includes trunk/carry or anti-rotation work.",
       "Use exact Motra exercise names when known.",
-      "If equipment location is uncertain or recently corrected by Todd, state uncertainty and ask/verify instead of pretending the floor map is authoritative.",
     ],
   },
   gym_profile: {
@@ -92,7 +48,6 @@ export const DEFAULT_COACH_STATE = {
     travel_mode: false,
     travel_rule: "When travel_mode is true, ask for hotel-gym inventory before building a strength session and ignore World Gym floor routing.",
     preferred_floor: "Floor 3 functional floor",
-    location_confidence_rule: "World Gym floor data is useful but not perfect. Treat Todd's newest correction as authoritative, surface uncertainty, and avoid precise routing for equipment whose location has not been recently verified.",
     floors: {
       "Floor 1": {
         role: "Machines + cardio / low-fatigue accessory and cool-down zone",
@@ -123,21 +78,9 @@ export const DEFAULT_COACH_STATE = {
           "soft plyo boxes",
           "BOSU",
           "TRX attachment with sliding-anchor caution",
-          "small dumbbell set up to 10 kg only",
         ],
       },
     },
-    routing_overrides: [
-      "Pull-Up / assisted pull-up: prefer the Floor 3 Matrix trainer if available; Floor 2 pull-up station is acceptable but not Todd's first choice.",
-      "Dumbbell Chest-Supported Row, dumbbell supported chest row, and any dumbbell + bench row belong on Floor 2 because the full dumbbells and adjustable benches are there.",
-      "Floor 3 dumbbells are a small set only up to 10 kg; do not program Floor 3 dumbbell rows/presses unless the intent is deliberately light technique/accessory work.",
-      "If a workout needs dumbbells heavier than 10 kg or a real adjustable bench, route that block to Floor 2.",
-    ],
-    correction_protocol: [
-      "When Todd says equipment is on a different floor or unavailable, log it as a gym map correction.",
-      "Future workouts should use the correction or ask for confirmation before routing that station.",
-      "Prefer same-floor substitutions over sending Todd across floors mid-block.",
-    ],
     avoid_items: [
       "TRX Row to T because the Floor 3 anchor slides under load; use Rope Cable Face Pull to W.",
       "KB Sumo Deadlift unless Todd explicitly requests it.",
@@ -160,7 +103,7 @@ export const DEFAULT_COACH_STATE = {
     },
   },
   active_medical: {
-    hip: "Mild hip OA. Pain 1-2/10 currently; avoid deep loaded hip flexion.",
+    hip: "Right hip impingement / possible labral involvement pending imaging. Avoid deep loaded hip flexion and anterior hip pinching.",
     bp: "Doctor requested 7 days of home BP; currently stable enough to keep training unless readings or symptoms worsen.",
     asthma: "No recent flare; Relvar daily and rescue inhaler access matter before intensity.",
     migraine: "Migraine day is rest or major downgrade.",
@@ -168,6 +111,15 @@ export const DEFAULT_COACH_STATE = {
   coaching_style: {
     voice: "Direct, practical, warm, no filler motivation.",
     correction_rule: "Correct once with the fix attached, then move on.",
+  },
+  adaptations: {
+    updated_at: null,
+    preferred_session_cap_min: 60,
+    active_rules: [
+      "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
+      "Cut optional accessories or the finisher before cutting prehab.",
+    ],
+    exercise_adjustments: {},
   },
 };
 
@@ -221,6 +173,96 @@ async function safeSupabase(path, options = {}, fallback = null) {
   }
 }
 
+function cloneJson(value, fallback = null) {
+  if (value === undefined || value === null) return fallback;
+  return JSON.parse(JSON.stringify(value));
+}
+
+function mergeObjects(base = {}, patch = {}) {
+  if (Array.isArray(base) || Array.isArray(patch)) return cloneJson(patch, patch);
+  const out = { ...(base || {}) };
+  for (const [key, value] of Object.entries(patch || {})) {
+    if (value === undefined) continue;
+    if (
+      value
+      && typeof value === "object"
+      && !Array.isArray(value)
+      && out[key]
+      && typeof out[key] === "object"
+      && !Array.isArray(out[key])
+    ) {
+      out[key] = mergeObjects(out[key], value);
+    } else {
+      out[key] = cloneJson(value, value);
+    }
+  }
+  return out;
+}
+
+function normalizeSourceFamily(source = "", fallback = "unknown") {
+  const cleaned = String(source || fallback).trim().toLowerCase();
+  if (!cleaned) return fallback;
+  return cleaned
+    .replace(/-[0-9a-f]{8,}$/i, "")
+    .replace(/-\d{6,}$/i, "")
+    .replace(/-(morning|evening|reading|daily)$/i, "");
+}
+
+function valueScore(value) {
+  if (value === undefined || value === null || value === "") return 0;
+  if (Array.isArray(value)) return value.length ? 2 : 0;
+  if (typeof value === "object") return Object.keys(value).length ? 2 : 0;
+  if (typeof value === "string") return value.trim() ? 1 : 0;
+  return 1;
+}
+
+function rowCompleteness(row = {}) {
+  return Object.values(row).reduce((score, value) => score + valueScore(value), 0);
+}
+
+function mergePreferDefined(base = {}, patch = {}) {
+  const merged = { ...(base || {}) };
+  for (const [key, value] of Object.entries(patch || {})) {
+    if (value === undefined || value === null || value === "") continue;
+    if (Array.isArray(value)) {
+      merged[key] = value.length ? value : merged[key];
+      continue;
+    }
+    if (
+      value
+      && typeof value === "object"
+      && merged[key]
+      && typeof merged[key] === "object"
+      && !Array.isArray(merged[key])
+    ) {
+      merged[key] = mergePreferDefined(merged[key], value);
+      continue;
+    }
+    merged[key] = value;
+  }
+  return merged;
+}
+
+function normalizeExerciseKey(name = "") {
+  return String(name || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function sentenceList(value) {
+  if (Array.isArray(value)) return value.filter(Boolean).map(v => String(v).trim()).filter(Boolean);
+  return String(value || "")
+    .split(/[\n;]+/)
+    .map(part => part.trim())
+    .filter(Boolean);
+}
+
+function nextPlannedSession(base = {}, today = todayISO(base.profile?.timezone || "Asia/Taipei")) {
+  const sessions = Array.isArray(base.planned_sessions) ? base.planned_sessions : [];
+  return sessions.find(session => String(session.planned_date || "") >= today) || sessions[sessions.length - 1] || null;
+}
+
 export async function getProfile() {
   const rows = await supabase("profiles?select=*&order=created_at.asc&limit=1");
   return rows?.[0] || null;
@@ -259,45 +301,144 @@ export async function getCoachState(profileId) {
 
 function hydrateCoachState(row = {}) {
   const raw = row.raw && typeof row.raw === "object" ? row.raw : {};
-  const storedGymProfile = row.gym_profile || raw.gym_profile || {};
-  const mergedFloors = {
-    ...DEFAULT_COACH_STATE.gym_profile.floors,
-    ...(storedGymProfile.floors || {}),
-  };
-  for (const floor of Object.keys(DEFAULT_COACH_STATE.gym_profile.floors)) {
-    mergedFloors[floor] = {
-      ...DEFAULT_COACH_STATE.gym_profile.floors[floor],
-      ...(storedGymProfile.floors?.[floor] || {}),
-      equipment: [
-        ...new Set([
-          ...(DEFAULT_COACH_STATE.gym_profile.floors[floor].equipment || []),
-          ...(storedGymProfile.floors?.[floor]?.equipment || []),
-        ]),
-      ],
-    };
-  }
+  const constraints = row.constraints || raw.constraints || {};
   return {
     ...DEFAULT_COACH_STATE,
     ...raw,
     version: row.version || raw.version || DEFAULT_COACH_STATE.version,
     goals: { ...DEFAULT_COACH_STATE.goals, ...(row.goals || raw.goals || {}) },
     source_hierarchy: { ...DEFAULT_COACH_STATE.source_hierarchy, ...(row.source_hierarchy || raw.source_hierarchy || {}) },
+    training_model: { ...DEFAULT_COACH_STATE.training_model, ...(constraints.training_model || raw.training_model || {}) },
     gym_profile: {
       ...DEFAULT_COACH_STATE.gym_profile,
-      ...storedGymProfile,
-      floors: mergedFloors,
-      routing_overrides: [
-        ...new Set([
-          ...(DEFAULT_COACH_STATE.gym_profile.routing_overrides || []),
-          ...(storedGymProfile.routing_overrides || []),
-        ]),
-      ],
+      ...(row.gym_profile || raw.gym_profile || {}),
       travel_mode: Boolean(row.travel_mode ?? row.gym_profile?.travel_mode ?? raw.gym_profile?.travel_mode ?? false),
     },
     active_medical: { ...DEFAULT_COACH_STATE.active_medical, ...(row.active_medical_loops || raw.active_medical || {}) },
-    training_model: { ...DEFAULT_COACH_STATE.training_model, ...(raw.training_model || {}) },
+    adaptations: mergeObjects(DEFAULT_COACH_STATE.adaptations, raw.adaptations || {}),
     db_row: row.id ? row : null,
   };
+}
+
+export async function saveCoachState(profileId, state) {
+  const current = await getCoachState(profileId);
+  const { db_row: _currentDbRow, ...currentClean } = current;
+  const { db_row: _stateDbRow, ...stateClean } = state;
+  const row = {
+    profile_id: profileId,
+    version: state.version || current.version || DEFAULT_COACH_STATE.version,
+    goals: state.goals || current.goals || DEFAULT_COACH_STATE.goals,
+    constraints: {
+      active_medical: state.active_medical || current.active_medical || DEFAULT_COACH_STATE.active_medical,
+      training_model: state.training_model || current.training_model || DEFAULT_COACH_STATE.training_model,
+    },
+    gym_profile: state.gym_profile || current.gym_profile || DEFAULT_COACH_STATE.gym_profile,
+    source_hierarchy: state.source_hierarchy || current.source_hierarchy || DEFAULT_COACH_STATE.source_hierarchy,
+    avoid_list: state.gym_profile?.avoid_items || current.gym_profile?.avoid_items || DEFAULT_COACH_STATE.gym_profile.avoid_items,
+    travel_mode: Boolean(state.gym_profile?.travel_mode ?? current.gym_profile?.travel_mode ?? false),
+    active_medical_loops: state.active_medical || current.active_medical || DEFAULT_COACH_STATE.active_medical,
+    raw: {
+      ...currentClean,
+      ...stateClean,
+      active_medical: state.active_medical || current.active_medical || DEFAULT_COACH_STATE.active_medical,
+      training_model: state.training_model || current.training_model || DEFAULT_COACH_STATE.training_model,
+      adaptations: mergeObjects(current.adaptations || DEFAULT_COACH_STATE.adaptations, state.adaptations || {}),
+    },
+  };
+  const inserted = await supabase("coach_state?on_conflict=profile_id", {
+    method: "POST",
+    body: JSON.stringify([row]),
+  });
+  return hydrateCoachState(inserted?.[0] || row);
+}
+
+function buildFeedbackAdaptations(feedback = {}, state = DEFAULT_COACH_STATE) {
+  const current = mergeObjects(DEFAULT_COACH_STATE.adaptations, state.adaptations || {});
+  const next = mergeObjects({}, current);
+  next.updated_at = feedback.created_at || feedback.timestamp || new Date().toISOString();
+  next.last_feedback_date = feedback.session_date || feedback.date || current.last_feedback_date || null;
+
+  const completedMinutes = Number(feedback.completed_minutes);
+  if (Number.isFinite(completedMinutes) && completedMinutes >= 35 && completedMinutes <= 80) {
+    next.preferred_session_cap_min = Math.round(completedMinutes);
+  }
+
+  const rules = new Set(current.active_rules || []);
+  const noteText = [
+    feedback.best_movement,
+    feedback.worst_movement,
+    feedback.pain_notes,
+    feedback.freeform_note,
+    feedback.raw?.transcript,
+    feedback.raw?.extracted?.summary,
+    ...(feedback.raw?.extracted?.next_adjustments || []),
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const lower = noteText.toLowerCase();
+
+  if (lower.includes("right side") || lower.includes("body shift") || lower.includes("balance")) {
+    rules.add("Right-side balance issues need supported, slower unilateral lower-body work before load progression.");
+  }
+  if (lower.includes("hip")) {
+    rules.add("If the hip pinches or the body has to shift to finish the rep, regress immediately.");
+  }
+  if (feedback.rating_label === "repeat") {
+    rules.add("When a session is marked repeat, keep the structure and progress load only if mechanics stay clean.");
+  }
+  if (feedback.rating_label === "retire") {
+    rules.add("Retire movements that repeatedly feel wrong or force compensation even when the day is otherwise green.");
+  }
+
+  const adjustments = mergeObjects({}, current.exercise_adjustments || {});
+  const exerciseFeedback = Array.isArray(feedback.raw?.extracted?.exercise_feedback)
+    ? feedback.raw.extracted.exercise_feedback
+    : [];
+  for (const item of exerciseFeedback) {
+    const key = normalizeExerciseKey(item.exercise);
+    if (!key) continue;
+    adjustments[key] = {
+      exercise: item.exercise,
+      action: item.action || "watch",
+      sentiment: item.sentiment || "neutral",
+      note: item.note || null,
+      updated_at: next.updated_at,
+      source_date: next.last_feedback_date,
+    };
+  }
+  if (feedback.worst_movement) {
+    const key = normalizeExerciseKey(feedback.worst_movement);
+    adjustments[key] = {
+      exercise: feedback.worst_movement,
+      action: /retire/i.test(feedback.rating_label || "") ? "replace" : "modify",
+      sentiment: "negative",
+      note: feedback.pain_notes || feedback.freeform_note || null,
+      updated_at: next.updated_at,
+      source_date: next.last_feedback_date,
+    };
+  }
+  if (feedback.best_movement) {
+    const key = normalizeExerciseKey(feedback.best_movement);
+    adjustments[key] = {
+      exercise: feedback.best_movement,
+      action: /easy/i.test(feedback.rating_label || "") ? "progress" : "keep",
+      sentiment: "positive",
+      note: feedback.freeform_note || null,
+      updated_at: next.updated_at,
+      source_date: next.last_feedback_date,
+    };
+  }
+
+  next.active_rules = [...rules].slice(-8);
+  next.exercise_adjustments = adjustments;
+  next.next_adjustments = sentenceList(feedback.raw?.extracted?.next_adjustments || []);
+  return next;
+}
+
+export async function updateCoachStateFromFeedback(profileId, feedback = {}) {
+  const state = await getCoachState(profileId);
+  const adaptations = buildFeedbackAdaptations(feedback, state);
+  return saveCoachState(profileId, { ...state, adaptations });
 }
 
 export async function insertCoachDecision(profileId, decision) {
@@ -318,15 +459,87 @@ export async function insertCoachDecision(profileId, decision) {
   return inserted?.[0] || null;
 }
 
-export function todayISO(timeZone = "Asia/Taipei") {
+export function todayISO(timeZone = "Asia/Taipei", now = new Date()) {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  }).formatToParts(new Date());
+  }).formatToParts(now);
   const byType = Object.fromEntries(parts.map(p => [p.type, p.value]));
   return `${byType.year}-${byType.month}-${byType.day}`;
+}
+
+export function todaySchedule(timeZone = "Asia/Taipei", now = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    weekday: "long",
+  }).formatToParts(now);
+  const weekday = parts.find(p => p.type === "weekday")?.value || "";
+  const strengthDays = ["Monday", "Wednesday", "Friday"];
+  const index = strengthDays.indexOf(weekday);
+  const nextStrengthDay = index >= 0 ? weekday : strengthDays.find(day => {
+    const order = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return order.indexOf(day) > order.indexOf(weekday);
+  }) || "Monday";
+
+  if (strengthDays.includes(weekday)) {
+    return {
+      weekday,
+      day_type: "strength",
+      strength_planned: true,
+      daily_walk_planned: true,
+      label: `${weekday} strength day`,
+      next_strength_day: weekday,
+      non_lift_call: null,
+    };
+  }
+
+  if (weekday === "Tuesday") {
+    return {
+      weekday,
+      day_type: "goal_support",
+      strength_planned: false,
+      daily_walk_planned: true,
+      label: "Tuesday coach-planned goal-support day",
+      next_strength_day: nextStrengthDay,
+      non_lift_call: `No strength today. Tuesday is coach-planned goal support: daily walk plus Zone 2 conditioning and mobility/core so fat loss, conditioning, and recovery move forward without stealing from ${nextStrengthDay} strength.`,
+    };
+  }
+
+  if (weekday === "Thursday") {
+    return {
+      weekday,
+      day_type: "goal_support",
+      strength_planned: false,
+      daily_walk_planned: true,
+      label: "Thursday coach-planned goal-support day",
+      next_strength_day: nextStrengthDay,
+      non_lift_call: `No strength today. Thursday is coach-planned goal support: daily walk plus easy Zone 2 and mobility/prehab so you arrive fresh for ${nextStrengthDay} strength.`,
+    };
+  }
+
+  if (weekday === "Saturday") {
+    return {
+      weekday,
+      day_type: "weekend_rest",
+      strength_planned: false,
+      daily_walk_planned: true,
+      label: "Saturday rest option",
+      next_strength_day: nextStrengthDay,
+      non_lift_call: "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it.",
+    };
+  }
+
+  return {
+    weekday,
+    day_type: "weekend_rest",
+    strength_planned: false,
+    daily_walk_planned: true,
+    label: "Sunday formal training off",
+    next_strength_day: nextStrengthDay,
+    non_lift_call: `No strength today. ${weekday || "Today"} is a rest option; keep the daily walk easy and reset for ${nextStrengthDay}.`,
+  };
 }
 
 function first(...values) {
@@ -339,9 +552,38 @@ function latest(items, count = 1) {
   return count === 1 ? slice[0] : slice;
 }
 
+function rowDate(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  return first(row.date, row.measured_date, row.log_date, row.session_date, row.created_at?.slice?.(0, 10)) || null;
+}
+
+function hasExerciseDetail(row = {}) {
+  return Array.isArray(row.exercises) && row.exercises.length > 0;
+}
+
 function pick(obj, keys) {
   if (!obj || typeof obj !== "object") return null;
   return Object.fromEntries(keys.filter(k => obj[k] !== undefined && obj[k] !== null && obj[k] !== "").map(k => [k, obj[k]]));
+}
+
+function truncate(value, max = 220) {
+  if (value === undefined || value === null) return null;
+  const text = String(value).replace(/\s+/g, " ").trim();
+  if (!text) return null;
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text;
+}
+
+export function compactCoachHistory(dashboard = {}, limit = 12) {
+  const notes = Array.isArray(dashboard.coach_chat_notes) ? dashboard.coach_chat_notes : [];
+  return notes
+    .slice(-Math.max(1, limit))
+    .map(note => ({
+      role: ["coach", "user", "system"].includes(note.role) ? note.role : "user",
+      channel: truncate(note.channel || "unknown", 40),
+      at: note.at || note.message_at || note.submitted_at || null,
+      text: truncate(note.text || note.body || note.summary || "", 420),
+    }))
+    .filter(note => note.text);
 }
 
 function asNumber(value) {
@@ -411,10 +653,224 @@ function latestBpValues(dashboard = {}) {
   };
 }
 
+function compactRecoveryRow(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  const bevel = row.bevel || {};
+  const oura = row.oura || {};
+  return {
+    date: row.date || row.measured_date || null,
+    source: row.source || null,
+    readiness_tier: row.readiness_tier || null,
+    recovery_score_pct: asNumber(first(row.recovery_score_pct, bevel.recovery_pct, oura.readiness_score)),
+    sleep_score_pct: asNumber(first(row.sleep_score_pct, bevel.sleep_quality_pct, oura.sleep_score)),
+    hrv_ms: asNumber(first(row.hrv_ms, bevel.hrv_ms, oura.hrv_avg_ms)),
+    resting_hr_bpm: asNumber(first(row.resting_hr_bpm, bevel.rhr_bpm, oura.rhr_bpm_avg, oura.rhr_bpm_lowest)),
+    respiratory_rate_rpm: asNumber(first(row.respiratory_rate_rpm, bevel.respiratory_rate_rpm)),
+    spo2_pct: asNumber(first(row.spo2_pct, bevel.spo2_pct, oura.spo2_avg_pct)),
+    wrist_temp_f: asNumber(first(row.wrist_temp_f, bevel.wrist_temp_f)),
+    total_sleep_min: asNumber(first(row.total_sleep_min, bevel.time_asleep_min, oura.total_sleep_min)),
+    time_in_bed_min: asNumber(first(row.time_in_bed_min, bevel.time_in_bed_min, oura.time_in_bed_min)),
+    sleep_efficiency_pct: asNumber(first(row.sleep_efficiency_pct, bevel.sleep_efficiency_pct, oura.sleep_efficiency_pct)),
+    deep_sleep_min: asNumber(first(row.deep_sleep_min, bevel.deep_sleep_min, oura.deep_sleep_min)),
+    rem_sleep_min: asNumber(first(row.rem_sleep_min, bevel.rem_sleep_min, oura.rem_sleep_min)),
+    awake_min: asNumber(first(row.awake_min, oura.awake_min)),
+    sleep_bank_min: asNumber(first(row.sleep_bank_min, bevel.sleep_bank_min, oura.sleep_debt_min)),
+    notes: truncate(first(row.summary, row.notes, bevel.notes, oura.notes), 260),
+  };
+}
+
+function compactBpRow(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  return {
+    date: row.date || row.measured_date || null,
+    systolic_mmhg: asNumber(row.systolic_mmhg),
+    diastolic_mmhg: asNumber(row.diastolic_mmhg),
+    heart_rate_bpm: asNumber(row.heart_rate_bpm),
+    notes: truncate(row.notes, 180),
+  };
+}
+
+function compactBodyRow(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  return {
+    date: row.date || row.measured_date || null,
+    weight_lbs: asNumber(row.weight_lbs),
+    body_fat_pct: asNumber(row.body_fat_pct),
+    lean_mass_lbs: asNumber(row.lean_mass_lbs),
+    skeletal_muscle_lbs: asNumber(first(row.skeletal_muscle_lbs, row.hume_skeletal_muscle_lbs)),
+    visceral_fat_level: asNumber(row.visceral_fat_level),
+    body_water_pct: asNumber(row.body_water_pct),
+    notes: truncate(row.notes, 200),
+  };
+}
+
+function compactNutritionRow(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  const totals = row.totals || {};
+  return {
+    date: row.date || row.log_date || null,
+    source: row.source || null,
+    kcal: asNumber(first(totals.kcal, row.calories_kcal)),
+    protein_g: asNumber(first(totals.protein_g, row.protein_g)),
+    carbs_g: asNumber(first(totals.carbs_g, row.carbs_g)),
+    fat_g: asNumber(first(totals.fat_g, row.fat_g)),
+    notes: truncate(row.notes, 160),
+  };
+}
+
+function compactStrengthRow(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  const exercises = Array.isArray(row.exercises)
+    ? row.exercises.slice(0, 8).map(ex => ex?.name).filter(Boolean)
+    : [];
+  return {
+    date: row.date || row.session_date || null,
+    title: row.title || row.name || row.session_name || row.workout_name || row.session_type || "Strength session",
+    duration_min: asNumber(first(row.duration_min, row.duration_minutes, row.completed_minutes)),
+    volume_kg: asNumber(first(row.volume_kg, row.total_volume_kg)),
+    avg_hr_bpm: asNumber(row.avg_hr_bpm),
+    exercise_count: Array.isArray(row.exercises) ? row.exercises.length : null,
+    exercises: exercises.length ? exercises : null,
+    notes: truncate(first(row.notes, row.summary, row.coaching_note), 220),
+  };
+}
+
+function dedupeRows(rows = [], domain = "generic") {
+  const groups = new Map();
+  for (const row of rows || []) {
+    const dateKey = rowDate(row) || "unknown-date";
+    const sourceKey = normalizeSourceFamily(row.source || row.raw?.source || domain, domain);
+    const groupKey = `${dateKey}|${sourceKey}`;
+    const current = groups.get(groupKey);
+    if (!current) {
+      groups.set(groupKey, cloneJson(row, row));
+      continue;
+    }
+    const candidate = rowCompleteness(row) >= rowCompleteness(current)
+      ? mergePreferDefined(current, row)
+      : mergePreferDefined(row, current);
+    groups.set(groupKey, candidate);
+  }
+  return [...groups.values()].sort((a, b) => String(rowDate(a)).localeCompare(String(rowDate(b))));
+}
+
+function compactCoachState(state = {}) {
+  const source = state?.db_row || state || {};
+  return {
+    version: state.version || source.version || DEFAULT_COACH_STATE.version,
+    travel_mode: Boolean(state.gym_profile?.travel_mode ?? source.travel_mode ?? false),
+    goals: {
+      priority_order: state.goals?.priority_order || DEFAULT_COACH_STATE.goals.priority_order,
+      protein_floor_g: state.goals?.protein_floor_g || DEFAULT_COACH_STATE.goals.protein_floor_g,
+      fat_budget_g: state.goals?.fat_budget_g || DEFAULT_COACH_STATE.goals.fat_budget_g,
+    },
+    guardrails: {
+      strength_hr_cap_bpm: state.training_model?.strength_hr_cap_bpm || DEFAULT_COACH_STATE.training_model.strength_hr_cap_bpm,
+      session_range_min: state.training_model?.session_range_min || DEFAULT_COACH_STATE.training_model.session_range_min,
+      gym: state.gym_profile?.default_environment || DEFAULT_COACH_STATE.gym_profile.default_environment,
+      hip: "Avoid deep loaded hip flexion and anterior hip pinching.",
+      bp: "Doctor requested one week of home BP readings; train unless readings/symptoms worsen.",
+    },
+    adaptations: {
+      preferred_session_cap_min: state.adaptations?.preferred_session_cap_min || DEFAULT_COACH_STATE.adaptations.preferred_session_cap_min,
+      active_rules: (state.adaptations?.active_rules || []).slice(0, 4),
+    },
+  };
+}
+
+function buildDataCompleteness(base = {}) {
+  const timezone = base.profile?.timezone || "Asia/Taipei";
+  const now = base.now || new Date();
+  const today = todayISO(timezone, now);
+  const schedule = todaySchedule(timezone, now);
+  const latestSleep = latest(base.recovery_sleep);
+  const latestBp = latest(base.blood_pressure);
+  const latestBody = latest(base.body_composition);
+  const latestNutrition = latest(base.nutrition_log);
+  const latestStrength = latest(base.strength_logs);
+  const detailedStrengthLogs = Array.isArray(base.strength_logs) ? base.strength_logs.filter(hasExerciseDetail) : [];
+  const latestDetailedStrength = latest(detailedStrengthLogs);
+  const feedbackToday = Array.isArray(base.session_feedback)
+    ? base.session_feedback.find(row => rowDate(row) === today)
+    : null;
+
+  const bodyAgeDays = latestBody?.date || latestBody?.measured_date
+    ? Math.round((Date.parse(`${today}T00:00:00Z`) - Date.parse(`${rowDate(latestBody)}T00:00:00Z`)) / 86400000)
+    : null;
+  const strengthToday = rowDate(latestStrength) === today;
+  const detailedStrengthToday = rowDate(latestDetailedStrength) === today;
+
+  const checks = [
+    {
+      id: "sleep_recovery",
+      label: "Sleep/recovery",
+      status: rowDate(latestSleep) === today ? "current" : "missing",
+      required: true,
+      latest_date: rowDate(latestSleep),
+    },
+    {
+      id: "blood_pressure",
+      label: "Blood pressure",
+      status: rowDate(latestBp) === today ? "current" : "missing",
+      required: true,
+      latest_date: rowDate(latestBp),
+    },
+    {
+      id: "nutrition",
+      label: "Bevel nutrition",
+      status: rowDate(latestNutrition) === today ? "current" : "missing",
+      required: true,
+      latest_date: rowDate(latestNutrition),
+    },
+    {
+      id: "body_composition",
+      label: "Body composition",
+      status: bodyAgeDays !== null && bodyAgeDays <= 14 ? "current" : "stale",
+      required: false,
+      latest_date: rowDate(latestBody),
+    },
+    {
+      id: "strength_session",
+      label: "Motra strength session",
+      status: schedule.strength_planned ? (strengthToday ? "current" : "pending") : "not_expected",
+      required: Boolean(schedule.strength_planned),
+      latest_date: rowDate(latestStrength),
+    },
+    {
+      id: "strength_exercises",
+      label: "Motra exercise detail",
+      status: schedule.strength_planned ? (detailedStrengthToday ? "current" : "pending") : "not_expected",
+      required: Boolean(schedule.strength_planned),
+      latest_date: rowDate(latestDetailedStrength),
+    },
+    {
+      id: "workout_feedback",
+      label: "Workout feedback",
+      status: strengthToday ? (feedbackToday ? "current" : "missing_after_training") : "not_expected",
+      required: Boolean(strengthToday),
+      latest_date: feedbackToday ? rowDate(feedbackToday) : rowDate(latest(base.session_feedback)),
+    },
+  ];
+
+  const requiredChecks = checks.filter(check => check.required);
+  const missingRequired = requiredChecks
+    .filter(check => !["current", "not_expected"].includes(check.status))
+    .map(check => check.id);
+  const currentRequired = requiredChecks.length - missingRequired.length;
+
+  return {
+    date: today,
+    schedule,
+    score_pct: requiredChecks.length ? Math.round((currentRequired / requiredChecks.length) * 100) : 100,
+    missing_required: missingRequired,
+    checks,
+  };
+}
+
 function parseSubjective(text = "", payload = {}) {
   const t = String(text || `${payload.notes || ""} ${payload.summary || ""}`).toLowerCase();
-  const hipMatch = t.match(/hip[^0-9]*(\d+(?:\.\d+)?)/);
-  const painMatch = t.match(/pain[^0-9]*(\d+(?:\.\d+)?)/);
+  const hipMatch = t.match(/\bhip(?:\s+(?:pain|score|rating|level|feels|felt|is|was)){0,3}\s*[:=]?\s*(\d(?:\.\d+)?)(?:\s*\/\s*10)?\b/);
+  const painMatch = t.match(/\bpain(?:\s+(?:score|rating|level|is|was)){0,3}\s*[:=]?\s*(\d(?:\.\d+)?)(?:\s*\/\s*10)?\b/);
   return {
     hip_pain: asNumber(payload.hip_pain ?? payload.hip_pain_score ?? hipMatch?.[1]),
     pain: asNumber(payload.pain ?? payload.pain_score ?? painMatch?.[1]),
@@ -428,6 +884,7 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   const sleep = latestSleepValues(dashboard);
   const bp = latestBpValues(dashboard);
   const subjective = parseSubjective(context.text, context.payload || {});
+  const schedule = todaySchedule(dashboard.profile?.timezone || "Asia/Taipei", context.now || new Date());
   const hrvBaseline = asNumber(dashboard.profile?.oura_biology_baselines?.hrv_baseline_ms) || 32.5;
   const primaryHrv = asNumber(first(sleep.oura_hrv, sleep.bevel_hrv));
   const risks = [];
@@ -437,6 +894,7 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
 
   if (sleep.date) evidence.push(`Readiness data ${sleep.date}: Oura HRV ${sleep.oura_hrv ?? "unknown"}ms, Bevel recovery ${sleep.bevel_recovery ?? "unknown"}%.`);
   if (bp.date) evidence.push(`Latest BP ${bp.date}: ${bp.systolic ?? "?"}/${bp.diastolic ?? "?"}.`);
+  evidence.push(`Schedule gate: ${schedule.label}.`);
 
   if (subjective.migraine) risks.push({ code: "migraine", severity: "red", text: "Migraine reported. Training is rest or major downgrade." });
   if (subjective.asthma_flare) risks.push({ code: "asthma", severity: "red", text: "Asthma flare reported. No intensity until breathing is settled." });
@@ -458,10 +916,14 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
     tier = "Yellow";
     trainingCall = "Train modified. Keep the plan, reduce density, and skip the hybrid close if HR or symptoms drift.";
   }
+  if (!schedule.strength_planned) {
+    trainingCall = schedule.non_lift_call;
+  }
 
   return {
     tier,
     training_call: trainingCall,
+    schedule,
     hrv_ms: primaryHrv,
     hrv_baseline_ms: hrvBaseline,
     oura_readiness: sleep.oura_readiness,
@@ -507,310 +969,106 @@ export function buildNutritionCall(dashboard = {}, state = DEFAULT_COACH_STATE) 
   };
 }
 
-function parseDurationToMinutes(value = "") {
-  const text = String(value || "");
-  const hourMatch = text.match(/(\d+(?:\.\d+)?)\s*h/);
-  const minuteMatch = text.match(/(\d+(?:\.\d+)?)\s*m/);
-  const hours = hourMatch ? Number(hourMatch[1]) : 0;
-  const minutes = minuteMatch ? Number(minuteMatch[1]) : 0;
-  return hours || minutes ? Math.round((hours * 60) + minutes) : null;
+function buildPrehabBlock(state, modified) {
+  const activeHipModel = state.active_medical?.hip || DEFAULT_COACH_STATE.active_medical.hip;
+  return {
+    id: "PREHAB",
+    label: "Floor 3 - Hip-Safe Prehab",
+    floor: "Floor 3",
+    estimated_min: modified ? 12 : 10,
+    exercises: [
+      {
+        name: "Bodyweight Glute Bridge",
+        motra_name: "Bodyweight Glute Bridge",
+        prescription: modified ? "2x8 with 2-second hold" : "2x10 with 2-second hold",
+        note: "Posterior tilt first, stop before the front of the hip grabs.",
+      },
+      {
+        name: "Cable Pallof Hold",
+        motra_name: state.gym_profile.motra_names.pallof_hold,
+        prescription: "2x20-30 sec/side",
+        note: "Quiet ribs, no rotation leak, breathe behind the brace.",
+      },
+      {
+        name: "Cable Hip Abduction",
+        motra_name: "Cable Hip Abduction",
+        prescription: "2x8-10/side, left first",
+        note: `Stack pelvis and own the range. ${activeHipModel}`,
+      },
+    ],
+  };
 }
 
-function parseCompactNumber(value = "") {
-  const text = String(value || "").trim().replace(/,/g, "");
-  const match = text.match(/(\d+(?:\.\d+)?)(K)?/i);
-  if (!match) return null;
-  const n = Number(match[1]);
-  return Number.isFinite(n) ? Math.round(n * (match[2] ? 1000 : 1)) : null;
-}
-
-export function parseMotraText(text = "") {
-  const raw = String(text || "").replace(/\r/g, "").trim();
-  const lines = raw.split("\n").map(line => line.trim()).filter(Boolean);
-  const dateLine = lines.find(line => /[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}/.test(line));
-  const isoDate = (() => {
-    if (!dateLine) return todayISO();
-    const cleaned = dateLine.replace(/\s+at\s+.*$/i, "");
-    const parsed = new Date(`${cleaned} 12:00:00`);
-    return Number.isNaN(parsed.getTime()) ? todayISO() : parsed.toISOString().slice(0, 10);
-  })();
-  const firstMetadataIndex = lines.findIndex(line => (
-    /^\d{8}\s+\w+/i.test(line)
-    || /[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}/.test(line)
-    || /^duration:/i.test(line)
-    || /^volume:/i.test(line)
-    || /^calories:/i.test(line)
-    || /^exercises:/i.test(line)
-  ));
-  const titleCandidate = lines
-    .slice(0, firstMetadataIndex === -1 ? lines.length : firstMetadataIndex)
-    .find(line => !/^my workout:?$/i.test(line));
-  const sessionName = titleCandidate || `Motra Workout ${isoDate}`;
-  const durationLine = lines.find(line => /^Duration:/i.test(line));
-  const volumeLine = lines.find(line => /^Volume:/i.test(line));
-  const caloriesLine = lines.find(line => /^Calories:/i.test(line));
-  const motraUrl = lines.find(line => /^https?:\/\/motra\.com/i.test(line)) || null;
-  const exercises = [];
-  let current = null;
-
-  for (const line of lines) {
-    if (
-      /^my workout:?$/i.test(line)
-      || /^duration:/i.test(line)
-      || /^volume:/i.test(line)
-      || /^calories:/i.test(line)
-      || /^exercises:/i.test(line)
-      || /^tracked with motra/i.test(line)
-      || /^https?:\/\//i.test(line)
-      || /[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}/.test(line)
-    ) continue;
-
-    const setMatch = line.match(/^(\d+):\s+(.+)$/);
-    if (setMatch && current) {
-      current.sets.push({ set_number: Number(setMatch[1]), prescription: setMatch[2] });
-      continue;
-    }
-
-    if (!/^\d/.test(line) && !line.includes(":")) {
-      current = { name: line, sets: [] };
-      exercises.push(current);
-    }
+function activeAdjustmentNotes(state = DEFAULT_COACH_STATE) {
+  const adaptations = mergeObjects(DEFAULT_COACH_STATE.adaptations, state.adaptations || {});
+  const notes = [...(adaptations.active_rules || [])];
+  for (const value of Object.values(adaptations.exercise_adjustments || {})) {
+    if (!value?.exercise || !value?.action) continue;
+    notes.push(`${value.exercise}: ${value.action}${value.note ? ` - ${value.note}` : ""}`);
   }
-
-  return {
-    source: "Motra",
-    raw_text: raw,
-    session_name: sessionName,
-    session_date: isoDate,
-    duration_min: parseDurationToMinutes(durationLine?.replace(/^Duration:\s*/i, "")),
-    total_volume_kg: parseCompactNumber(volumeLine?.replace(/^Volume:\s*/i, "")),
-    calories_kcal: parseCompactNumber(caloriesLine?.replace(/^Calories:\s*/i, "")),
-    motra_url: motraUrl,
-    exercises,
-  };
-}
-
-export function buildMotraDebriefTemplate(parsed = {}) {
-  const exercises = Array.isArray(parsed.exercises) ? parsed.exercises : [];
-  if (!exercises.length) return "Add overall notes, pain, best movement, worst movement, and anything coach should adjust.";
-  return exercises.map((exercise, index) => `${index + 1}. ${exercise.name}: `).join("\n");
-}
-
-export function determineWorkoutSequence(dashboard = {}, state = DEFAULT_COACH_STATE) {
-  const today = todayISO();
-  const recentSessions = latest(dashboard.strength_logs, 12).map(session => ({
-    date: session.date || session.session_date,
-    session_name: session.session_name || session.name || session.title || "Strength session",
-    session_type: session.session_type || session.type || null,
-  }))
-    .filter(session => session.date)
-    .sort((a, b) => String(b.date).localeCompare(String(a.date)))
-    .slice(0, 6);
-  const day = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Taipei" }).format(new Date(`${today}T12:00:00+08:00`)).toLowerCase();
-  const weeklyShape = state.training_model.weekly_shape || {};
-  const defaultFocus = weeklyShape[day] || "Adaptive strength/conditioning based on readiness and recent training.";
-  const daysSinceLastStrength = recentSessions[0]?.date
-    ? Math.max(0, Math.round((new Date(`${today}T12:00:00+08:00`) - new Date(`${recentSessions[0].date}T12:00:00+08:00`)) / 86400000))
-    : null;
-
-  return {
-    today,
-    day,
-    default_focus: defaultFocus,
-    days_since_last_strength: daysSinceLastStrength,
-    recent_strength_sessions: recentSessions,
-    goal_block: state.goals.ninety_day_win,
-    programming_bias: state.training_model.weekly_bias,
-    sequencing_call: daysSinceLastStrength === null
-      ? "No recent Motra strength session found in Supabase; use the weekly shape and readiness gates."
-      : `Last strength session was ${daysSinceLastStrength} day(s) ago; rotate stress from the recent Motra pattern instead of repeating it blindly.`,
-  };
-}
-
-function extractGymMapNotes(dashboard = {}) {
-  const notes = latest(dashboard.coach_chat_notes, 25)
-    .filter(note => note?.role === "user")
-    .map(note => String(note.text || ""))
-    .filter(text => /\b(gym|world gym|floor|equipment|machine|rack|cable|landmine|kettlebell|med ball|trx|bench|where)\b/i.test(text))
-    .slice(-5);
-
-  return {
-    confidence: notes.length ? "recent_user_corrections_present" : "use_stored_map_with_uncertainty",
-    rule: "Todd's newest gym-location correction overrides stored floor assumptions. If a station location is uncertain, ask or give a same-floor substitute.",
-    recent_notes: notes,
-  };
-}
-
-function recentTrainingText(dashboard = {}) {
-  return latest(dashboard.strength_logs, 8)
-    .map(session => JSON.stringify({
-      name: session.session_name || session.name || session.title,
-      raw: session.raw,
-      exercises: session.exercises,
-      note: session.coaching_note || session.notes,
-    }))
-    .join(" ")
-    .toLowerCase();
-}
-
-function functionalVariantCatalog(state = DEFAULT_COACH_STATE) {
-  return [
-    {
-      id: "hinge_carry_rotation",
-      floor: "Floor 3",
-      emphasis: "Hinge power into braced locomotion, then rotation control.",
-      creative_constraint: "Power has to settle into posture: hinge fast, carry tall, rotate clean.",
-      pattern_family: ["Hinge + carry", "Rotation + anti-rotation"],
-      exercises: [
-        {
-          name: "Kettlebell Swing + Front-Rack Carry Complex",
-          motra_name: `${state.gym_profile.motra_names.kettlebell_swing}; ${state.gym_profile.motra_names.front_rack_carry}`,
-          prescription: {
-            modified: "2 rounds: 6 swings @ easy-moderate + 15-20 m front-rack carry/side, left first",
-            green: "3 rounds: 8 swings @ 16-20 kg + 20 m front-rack carry/side, left first",
-          },
-          note: "Explosive hinge into braced locomotion. Stop if swing turns shoulder-y or carry posture collapses.",
-          progression_target: "Add distance or cleaner turnaround before adding swing load.",
-        },
-        {
-          name: "Medicine Ball Rotational Slam + Lateral Shuffle Reset",
-          motra_name: "Custom: Medicine Ball Rotational Slam; Custom: Lateral Shuffle Reset",
-          prescription: { modified: "2x4/side, crisp resets", green: "3x5/side, crisp resets" },
-          note: "Throw, decelerate, shuffle-reset, and re-stack. Athletic, not frantic.",
-          progression_target: "Make the catch/reset sharper before adding reps.",
-        },
-        {
-          name: "Cable Chop High to Low + Pallof Hold",
-          motra_name: `${state.gym_profile.motra_names.cable_chop_high_low}; ${state.gym_profile.motra_names.pallof_hold}`,
-          prescription: { modified: "1-2 rounds: 5 chops + 10-sec hold/side", green: "2 rounds: 6 chops + 12-sec hold/side" },
-          note: "Finish with trunk control after the power work. Left side leads.",
-          progression_target: "Longer hold or cleaner rib position, not more load first.",
-        },
-      ],
-    },
-    {
-      id: "deceleration_lateral_carry",
-      floor: "Floor 3",
-      emphasis: "Lateral deceleration, unilateral control, and loaded carry posture.",
-      creative_constraint: "Every rep finishes with a clean stick or tall walk before the next rep starts.",
-      pattern_family: ["Throw/slam + deceleration", "Unilateral step/stance + locomotion"],
-      exercises: [
-        {
-          name: "Step-Up to Knee Drive + Suitcase Carry",
-          motra_name: "Custom: Step-Up to Knee Drive; Kettlebell Suitcase Carry",
-          prescription: { modified: "2 rounds: 5 step-ups/side + 15-20 m carry/side", green: "3 rounds: 6 step-ups/side + 20-30 m carry/side" },
-          note: "Left side leads. Drive tall, own the top position, then carry without leaning.",
-          progression_target: "Increase carry load/distance only if the top position stays stable.",
-        },
-        {
-          name: "Medicine Ball Slam + Lateral Step-to-Stick",
-          motra_name: `${state.gym_profile.motra_names.med_ball_slam}; Custom: Lateral Step-to-Stick`,
-          prescription: { modified: "2 rounds: 4 slams + 4 sticks/side", green: "3 rounds: 5 slams + 5 sticks/side" },
-          note: "Slam hard, then prove you can decelerate quietly.",
-          progression_target: "Quieter sticks and sharper reset before adding reps.",
-        },
-        {
-          name: "Cable Pallof Hold with March",
-          motra_name: `${state.gym_profile.motra_names.pallof_hold}; Custom: Pallof March`,
-          prescription: { modified: "2x15 sec/side", green: "2x20 sec/side" },
-          note: "March without letting the cable turn you. Slow is harder.",
-          progression_target: "Add seconds or slower march tempo while staying square.",
-        },
-      ],
-    },
-    {
-      id: "cable_force_transfer",
-      floor: "Floor 3",
-      emphasis: "Cable force transfer, split stance control, and carry finish.",
-      creative_constraint: "Own the stance before adding speed; trunk stays stacked while force changes direction.",
-      pattern_family: ["Landmine/cable force transfer", "Rotation + anti-rotation"],
-      exercises: [
-        {
-          name: "Split-Stance Cable Row + Contralateral Reach",
-          motra_name: "Custom: Split-Stance Cable Row; Custom: Contralateral Reach",
-          prescription: { modified: "2x6/side", green: "3x6/side" },
-          note: "Row from a stable split stance, reach long, do not twist through the low back.",
-          progression_target: "Increase cable load only after stance and reach stay clean.",
-        },
-        {
-          name: "Cable Chop High to Low + Step-to-Stick",
-          motra_name: `${state.gym_profile.motra_names.cable_chop_high_low}; Custom: Step-to-Stick`,
-          prescription: { modified: "2 rounds: 5 chops + 4 sticks/side", green: "3 rounds: 6 chops + 5 sticks/side" },
-          note: "Diagonal power into deceleration. Left side leads.",
-          progression_target: "Better stick quality or one extra quality round before more load.",
-        },
-        {
-          name: "Front-Rack Carry with Turnaround Control",
-          motra_name: state.gym_profile.motra_names.front_rack_carry,
-          prescription: { modified: "2x15-20 m/side", green: "3x20 m/side" },
-          note: "The turn is the test. No rib flare, no hip pinch.",
-          progression_target: "Add load only if turnarounds stay tall and quiet.",
-        },
-      ],
-    },
-    {
-      id: "ground_to_tall_control",
-      floor: "Floor 3",
-      emphasis: "Ground-to-tall coordination, trunk stiffness, and low-impact conditioning.",
-      creative_constraint: "Change levels without rushing and without deep loaded hip flexion.",
-      pattern_family: ["Crawl/ground-to-standing control", "Unilateral step/stance + locomotion"],
-      exercises: [
-        {
-          name: "Bear Crawl Forward/Back + Tall-Kneeling Cable Press",
-          motra_name: "Custom: Bear Crawl; Custom: Tall-Kneeling Cable Press",
-          prescription: { modified: "2 rounds: 5 m crawl + 6 presses/side", green: "3 rounds: 6-8 m crawl + 6 presses/side" },
-          note: "Only if floor space is clear. Crawl quiet, press without rib flare.",
-          progression_target: "Longer crawl or slower press tempo before adding load.",
-        },
-        {
-          name: "Kettlebell Dead-Stop Swing + March Carry",
-          motra_name: `${state.gym_profile.motra_names.kettlebell_swing}; Custom: Kettlebell March Carry`,
-          prescription: { modified: "2 rounds: 5 dead-stop swings + 20 marching steps", green: "3 rounds: 6 dead-stop swings + 30 marching steps" },
-          note: "Dead-stop reset keeps it crisp and hip-safe.",
-          progression_target: "Cleaner dead-stop reset or more march steps before heavier bell.",
-        },
-        {
-          name: "Medicine Ball Chest Pass to Catch/Stabilize",
-          motra_name: "Custom: Medicine Ball Chest Pass; Custom: Catch Stabilize",
-          prescription: { modified: "2x5", green: "3x5" },
-          note: "Explosive pass, athletic catch, stable feet.",
-          progression_target: "Sharper catch/stabilize before more speed.",
-        },
-      ],
-    },
-  ];
-}
-
-function selectFunctionalConditioningVariant({ dashboard = {}, state = DEFAULT_COACH_STATE, sequence = {} } = {}) {
-  const catalog = functionalVariantCatalog(state);
-  const recent = recentTrainingText(dashboard);
-  const fresh = catalog.filter(variant => !recent.includes(variant.id) && !recent.includes(variant.exercises[0].name.toLowerCase()));
-  const pool = fresh.length ? fresh : catalog;
-  const daySeed = String(sequence.today || todayISO()).split("-").reduce((sum, part) => sum + Number(part || 0), 0);
-  return pool[daySeed % pool.length];
+  return notes.slice(0, 6);
 }
 
 export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, readiness = evaluateReadiness(dashboard, state)) {
-  const sequence = determineWorkoutSequence(dashboard, state);
-  const gymMap = extractGymMapNotes(dashboard);
-  const functionalVariant = selectFunctionalConditioningVariant({ dashboard, state, sequence });
   const travelMode = Boolean(state.gym_profile.travel_mode);
+  if (!readiness.schedule?.strength_planned) {
+    const weekday = readiness.schedule?.weekday;
+    const isGoalSupport = readiness.schedule?.day_type === "goal_support";
+    const isThursday = weekday === "Thursday";
+    return {
+      environment: isGoalSupport ? "Coach-planned goal support day" : "Weekend rest / daily walk",
+      requires_inventory: false,
+      top_line: readiness.schedule?.non_lift_call || "No strength today. Follow the non-lift schedule.",
+      session_type: isGoalSupport ? "Daily Walk + Zone 2 + Mobility" : "Daily Walk / Rest / Mobility",
+      floor_plan: "No World Gym strength floor routing today.",
+      target_minutes: isGoalSupport ? (isThursday ? 40 : 50) : 25,
+      time_range_min: isGoalSupport ? (isThursday ? [30, 50] : [40, 60]) : [20, 45],
+      guardrails: [
+        "Do not convert a non-lift day into a modified strength session unless Todd explicitly overrides the schedule.",
+        isGoalSupport ? "Conditioning should support VAT loss and aerobic base without creating leg fatigue for strength." : "Rest days are allowed to stay very easy after the daily walk.",
+        "Use today to protect the next planned strength day.",
+      ],
+      blocks: isGoalSupport
+        ? [
+            {
+              name: "Daily walk",
+              target: "20-35 minutes easy, nasal-breathing pace if available.",
+            },
+            {
+              name: isThursday ? "Easy Zone 2" : "Zone 2 conditioning",
+              target: isThursday ? "15-25 minutes easy bike, incline walk, or row." : "25-35 minutes bike, incline walk, or row.",
+            },
+            {
+              name: isThursday ? "Mobility and prehab" : "Mobility and core",
+              target: isThursday ? "10-15 minutes hips, T-spine, neck stacking, and breathing." : "8-12 minutes dead bug, Pallof, hip mobility, and T-spine work.",
+            },
+          ]
+        : [
+            {
+              name: "Daily walk",
+              target: "20-45 minutes easy; shorter is fine if you need a true rest day.",
+            },
+          ],
+    };
+  }
   if (travelMode) {
     return {
       environment: "Travel / hotel gym",
       requires_inventory: true,
       top_line: "Send the hotel gym inventory before I build the session.",
       reason: state.gym_profile.travel_rule,
-      sequence_context: sequence,
-      gym_map_status: gymMap,
       questions: ["Is there a cable station?", "What dumbbells/kettlebells are available?", "Any bench, pull-up bar, treadmill, or bike?"],
       blocks: [],
     };
   }
 
-  const functionalAllowed = readiness.tier !== "Red";
-  const functionalStatus = readiness.tier === "Green" ? "planned" : functionalAllowed ? "scaled_quality" : "conditional_skip";
+  const finisherAllowed = readiness.tier === "Green";
   const modified = readiness.tier !== "Green";
+  const preferredCap = Number(state.adaptations?.preferred_session_cap_min);
+  const targetMinutes = Number.isFinite(preferredCap)
+    ? Math.max(60, Math.min(72, preferredCap + 6))
+    : state.training_model.default_session_target_min;
+  const coachLearning = activeAdjustmentNotes(state);
   return {
     environment: "World Gym Taichung",
     requires_inventory: false,
@@ -818,43 +1076,20 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       ? "World Gym plan, modified: anchors stay, density drops, hybrid close is conditional."
       : "World Gym plan: athletic Floor 3 primer, Floor 2 strength anchors, Floor 3 trunk/hybrid close.",
     session_type: "World Gym Strength + Athletic Functional",
-    floor_plan: "Floor 3 primer -> Floor 2 anchors -> Floor 3 trunk/hybrid close",
-    sequence_context: sequence,
-    gym_map_status: gymMap,
-    athletic_functional_standard: state.training_model.athletic_functional_definition,
-    functional_conditioning_standard: state.training_model.functional_conditioning_definition,
-    functional_conditioning_rules: state.training_model.functional_conditioning_rules,
-    enjoyment_contract: state.training_model.enjoyment_contract,
-    novelty_budget: state.training_model.novelty_budget,
-    workout_design_rule: state.training_model.workout_design_rule,
-    novelty_policy: {
-      rules: state.training_model.novelty_rules,
-      pattern_families: state.training_model.functional_pattern_families,
-      creative_challenge_menu: state.training_model.creative_challenge_menu,
-      selected_variant: {
-        id: functionalVariant.id,
-        emphasis: functionalVariant.emphasis,
-        creative_constraint: functionalVariant.creative_constraint,
-        pattern_family: functionalVariant.pattern_family,
-      },
-    },
-    target_minutes: state.training_model.default_session_target_min,
+    floor_plan: "Floor 3 prehab/primer -> Floor 2 anchors -> Floor 3 trunk/hybrid close",
+    target_minutes: targetMinutes,
     time_range_min: state.training_model.session_range_min,
     guardrails: [
       "No cross-floor supersets.",
       "Left side leads unilateral work.",
       "Stay near the 122 bpm strength HR cap.",
       "No deep loaded hip flexion.",
-      "Prefer Floor 3 Matrix trainer for pull-ups when available; Floor 2 pull-up station is the fallback.",
-      "Dumbbell + bench movements, including chest-supported dumbbell rows, are Floor 2 unless deliberately light with <=10 kg dumbbells.",
-      "Functional conditioning must be a true athletic complex: loaded movement + carry/locomotion + rotation/anti-rotation + coordination/power.",
-      "Do not repeat the exact same functional complex in back-to-back strength sessions unless it is an intentional retest or progression.",
-      "Keep strength the anchor; use a 20-30% novelty budget to make the session interesting without randomizing the whole workout.",
-      "Every workout needs a clear interesting athletic challenge and a measurable progression target.",
-      "If equipment location is uncertain, ask Todd to verify or provide a same-floor substitute.",
-      "Skip or simplify the hybrid close if readiness is yellow/red, HR drifts, hip symptoms rise, or coordination degrades.",
+      "Prehab stays in unless safety or time pressure forces a cut elsewhere first.",
+      "Skip the hybrid close if readiness is yellow/red, HR drifts, hip symptoms rise, or grip is cooked.",
     ],
+    coach_learning: coachLearning,
     blocks: [
+      buildPrehabBlock(state, modified),
       {
         id: "PREP",
         label: "Floor 3 - Functional Primer",
@@ -862,16 +1097,16 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         estimated_min: 10,
         exercises: [
           {
-            name: "Lateral Step-to-Stick + Medicine Ball Slam",
-            motra_name: "Custom: Lateral Step-to-Stick; Medicine Ball Slam",
-            prescription: modified ? "2 rounds: 4/side + 4 slams" : "3 rounds: 5/side + 5 slams",
-            note: "Stick the lateral landing, own the trunk, then slam hard. Multi-plane control before speed.",
+            name: "Lateral Step-to-Stick",
+            motra_name: "Custom: Lateral Step-to-Stick",
+            prescription: modified ? "1-2x5/side" : "2x5/side",
+            note: "Quiet landing, two-second freeze, control before speed.",
           },
           {
-            name: "Cable Chop High to Low + Pallof Hold",
+            name: "Cable Chop High to Low",
             motra_name: state.gym_profile.motra_names.cable_chop_high_low,
-            prescription: "2 rounds: 6 chops/side + 10-sec Pallof hold/side",
-            note: "Diagonal force, then resist rotation. Left side leads.",
+            prescription: "2x8/side",
+            note: "Strong diagonal brace; posture stays stacked.",
           },
         ],
       },
@@ -885,7 +1120,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
             name: "Pull-Up",
             motra_name: state.gym_profile.motra_names.pull_up,
             prescription: modified ? "3 sets, leave 2 reps in reserve" : "4 sets: 6 / 5 / 5 / 4",
-            note: "Preferred station is Floor 3 Matrix trainer if available; Floor 2 pull-up station is fine as fallback. Settled hang, one-beat top hold.",
+            note: "Settled hang, elbows down, one-beat top hold, controlled lower.",
           },
           {
             name: "Machine Hip Thrust (Glute Bridge)",
@@ -923,23 +1158,24 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       },
       {
         id: "HYBRID",
-        label: "Floor 3 - Functional Conditioning Complex",
-        floor: functionalVariant.floor,
-        estimated_min: functionalAllowed ? (modified ? 8 : 12) : 0,
-        status: functionalStatus,
-        intent: "Quality athletic conditioning: power transfer, trunk stiffness, carry/locomotion, and coordination under fatigue.",
-        variant_id: functionalVariant.id,
-        emphasis: functionalVariant.emphasis,
-        creative_constraint: functionalVariant.creative_constraint,
-        pattern_family: functionalVariant.pattern_family,
-        format: modified
-          ? "2 quality rounds, generous rest, stop if movement gets sloppy."
-          : "3 quality rounds, 60-90 sec between rounds, RPE 7-8 without racing.",
-        exercises: functionalAllowed ? functionalVariant.exercises.map(exercise => ({
-          ...exercise,
-          prescription: modified ? exercise.prescription.modified : exercise.prescription.green,
-          progression_target: exercise.progression_target || "Progress by cleaner execution first, then load/distance/density.",
-        })) : [],
+        label: "Floor 3 - Hybrid Close",
+        floor: "Floor 3",
+        estimated_min: finisherAllowed ? 6 : 0,
+        status: finisherAllowed ? "planned" : "conditional_skip",
+        exercises: finisherAllowed ? [
+          {
+            name: "Kettlebell Swing",
+            motra_name: state.gym_profile.motra_names.kettlebell_swing,
+            prescription: "2x10 @ 16-20 kg",
+            note: "Snap, float, park. Stop if it turns into a shoulder lift.",
+          },
+          {
+            name: "Kettlebell Front-Rack Carry",
+            motra_name: state.gym_profile.motra_names.front_rack_carry,
+            prescription: "2x20 m/side, left first",
+            note: "Ribs down, walk tall, breathe behind the brace.",
+          },
+        ] : [],
       },
     ],
   };
@@ -948,7 +1184,7 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
 function topLineForIntent(intent, readiness, nutrition, workout) {
   if (intent === "build_workout" || intent === "workout") return workout.top_line;
   if (intent === "nutrition_check") return nutrition.call;
-  if (intent === "post_workout") return "Motra debrief received. Exercise-level comments become the next-session adjustment.";
+  if (intent === "post_workout") return "Log what changed: duration, best movement, worst movement, pain, and RPE. That becomes the next-session adjustment.";
   if (intent === "travel_mode") return workout.top_line;
   if (intent === "evaluate_data" || intent === "brief") return readiness.training_call;
   return readiness.tier === "Green" ? "Green enough to train with the planned World Gym structure." : readiness.training_call;
@@ -956,27 +1192,17 @@ function topLineForIntent(intent, readiness, nutrition, workout) {
 
 export function buildCoachDecision({ text = "", intent = "general", dashboard = {}, state = DEFAULT_COACH_STATE, payload = {} } = {}) {
   const normalizedIntent = normalizeIntent(intent, text);
-  const readiness = evaluateReadiness(dashboard, state, { text, payload });
+  const now = payload?.now ? new Date(payload.now) : undefined;
+  const readiness = evaluateReadiness(dashboard, state, { text, payload, now });
   const nutrition = buildNutritionCall(dashboard, state);
   const workout = buildWorkoutPlan(dashboard, state, readiness);
   const topLine = topLineForIntent(normalizedIntent, readiness, nutrition, workout);
   const riskFlags = readiness.risk_flags.map(r => r.text);
+  const recentConversation = compactCoachHistory(dashboard);
   const nextActions = [];
 
   if (normalizedIntent === "build_workout") {
     nextActions.push(workout.requires_inventory ? "Send hotel-gym inventory before lifting." : "Use the World Gym floor-aware workout plan below.");
-    if (!workout.requires_inventory) {
-      nextActions.push("Functional conditioning standard: loaded athletic complex, not a token accessory or generic finisher.");
-      nextActions.push("Routing: Floor 3 Matrix trainer preferred for pull-ups; dumbbell + bench work stays Floor 2 unless <=10 kg light work.");
-      nextActions.push(`Novelty rule: today's complex theme is ${workout.novelty_policy?.selected_variant?.emphasis || "rotate the pattern, not randomize the workout"}.`);
-      nextActions.push("Keep strength satisfying; use novelty to make the athletic work interesting, not to replace the lifting.");
-    }
-  }
-  if (normalizedIntent === "post_workout") {
-    const parsedMotra = payload.motra_text ? parseMotraText(payload.motra_text) : null;
-    const exerciseCount = parsedMotra?.exercises?.length || payload.exercise_feedback?.length || 0;
-    if (exerciseCount) nextActions.push(`Use ${exerciseCount} exercise-level Motra note(s) to adjust the next workout.`);
-    nextActions.push("Flag pain, best movement, worst movement, and any exercise to repeat or retire.");
   }
   if (normalizedIntent === "nutrition_check" || nutrition.protein_gap_g > 0 || nutrition.fat_over_g > 0) {
     nextActions.push(...nutrition.next_actions);
@@ -990,21 +1216,11 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     riskFlags.length ? `Watch: ${riskFlags.slice(0, 2).join(" ")}` : "No hard safety stop from the available data.",
     nutrition.call,
   ];
-  if ((normalizedIntent === "build_workout" || normalizedIntent === "workout") && !workout.requires_inventory) {
-    replyParts.push("Functional conditioning standard: real athletic complex = loaded movement + carry/locomotion + rotation/anti-rotation + coordination under fatigue.");
-    replyParts.push(`Creativity rule: rotate the pattern family and constraint; today's theme is ${workout.novelty_policy?.selected_variant?.emphasis || "fresh but coachable athletic work"}.`);
-    replyParts.push("Design rule: strength stays the anchor; the creative block must have a clear challenge and progression target.");
-    replyParts.push("World Gym routing: pull-ups prefer Floor 3 Matrix trainer; dumbbell + bench rows/presses belong on Floor 2 unless Floor 3's <=10 kg dumbbells are intentionally enough.");
-  }
-  if (normalizedIntent === "post_workout" && payload.motra_text) {
-    const parsedMotra = parseMotraText(payload.motra_text);
-    replyParts.splice(1, 0, `Motra parsed: ${parsedMotra.exercises.length} exercises from ${parsedMotra.session_name}.`);
-  }
 
   return {
     ok: true,
     version: COACH_RESPONSE_VERSION,
-    date: todayISO(),
+    date: todayISO(dashboard.profile?.timezone || "Asia/Taipei", now || new Date()),
     intent: normalizedIntent,
     top_line_call: topLine,
     reply: replyParts.join("\n"),
@@ -1014,14 +1230,15 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     next_actions: nextActions.slice(0, 4),
     nutrition_call: nutrition,
     workout_plan: ["build_workout", "travel_mode"].includes(normalizedIntent) ? workout : null,
-    debrief_template: normalizedIntent === "post_workout" && payload.motra_text ? buildMotraDebriefTemplate(parseMotraText(payload.motra_text)) : null,
     source_context: {
       data_store: "supabase",
       default_gym: state.gym_profile.default_environment,
       travel_mode: Boolean(state.gym_profile.travel_mode),
+      active_adjustments: activeAdjustmentNotes(state),
       readiness_primary: "Oura",
       nutrition_primary: "Bevel",
       workout_primary: "Motra",
+      recent_conversation: recentConversation,
     },
     generated_by: COACH_RESPONSE_VERSION,
   };
@@ -1050,6 +1267,8 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
   const prompt = [
     "You are Todd Blackhurst's pro personal coach. Preserve the deterministic decision, safety gates, and workout plan.",
     "Rewrite only the user-facing text fields. Be direct, warm, practical, concise. No generic motivation.",
+    "Use recent_conversation for continuity across phone, dashboard, Shortcuts, WhatsApp, and Custom GPT chats.",
+    "If the user asks a follow-up, infer only from the supplied recent_conversation and compact_context.",
     "World Gym Taichung is the default workout environment unless travel_mode is true.",
     "Return JSON that matches the schema exactly.",
   ].join("\n");
@@ -1086,27 +1305,13 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
                 latest_nutrition: latestNutritionValues(dashboard),
                 coach_state: {
                   goals: state.goals,
-                  training_model: {
-                    athletic_functional_definition: state.training_model.athletic_functional_definition,
-                    complex_movement_rule: state.training_model.complex_movement_rule,
-                    functional_conditioning_definition: state.training_model.functional_conditioning_definition,
-                    functional_conditioning_rules: state.training_model.functional_conditioning_rules,
-                    functional_conditioning_examples: state.training_model.functional_conditioning_examples,
-                    novelty_rules: state.training_model.novelty_rules,
-                    functional_pattern_families: state.training_model.functional_pattern_families,
-                    enjoyment_contract: state.training_model.enjoyment_contract,
-                    novelty_budget: state.training_model.novelty_budget,
-                    workout_design_rule: state.training_model.workout_design_rule,
-                    creative_challenge_menu: state.training_model.creative_challenge_menu,
-                  },
                   gym_profile: {
                     default_environment: state.gym_profile.default_environment,
                     travel_mode: state.gym_profile.travel_mode,
                     preferred_floor: state.gym_profile.preferred_floor,
-                    location_confidence_rule: state.gym_profile.location_confidence_rule,
-                    routing_overrides: state.gym_profile.routing_overrides,
                   },
                 },
+                recent_conversation: compactCoachHistory(dashboard),
               },
             }),
           },
@@ -1150,18 +1355,25 @@ export function coachReply(text, dashboard = {}) {
 }
 
 export function buildBrief(base) {
-  const readiness = evaluateReadiness(base, DEFAULT_COACH_STATE);
-  const nutrition = buildNutritionCall(base, DEFAULT_COACH_STATE);
+  const state = base.coach_state || DEFAULT_COACH_STATE;
+  const readiness = evaluateReadiness(base, state);
+  const nutrition = buildNutritionCall(base, state);
+  const schedule = readiness.schedule || todaySchedule(base.profile?.timezone || "Asia/Taipei");
+  const upcoming = base.upcoming_session || nextPlannedSession(base);
   return {
     readiness_tier: readiness.tier,
     recovery_pct: readiness.bevel_recovery || null,
     call: readiness.training_call,
-    session_type: readiness.tier === "Red" ? "Recovery / Walk / Mobility" : "World Gym strength + athletic-functional",
+    session_type: upcoming?.session_type || (!schedule.strength_planned || readiness.tier === "Red"
+      ? (schedule.day_type === "goal_support" ? "Daily Walk + Zone 2 + Mobility" : "Daily Walk / Rest / Mobility")
+      : "World Gym strength + athletic-functional"),
     time_cap_min: DEFAULT_COACH_STATE.training_model.default_session_target_min,
     goal_summary: {
       protein_target_g: nutrition.protein_target_g,
       fat_budget_g: nutrition.fat_budget_g,
     },
+    active_adjustments: activeAdjustmentNotes(state),
+    data_completeness: buildDataCompleteness(base),
     source_hierarchy: DEFAULT_COACH_STATE.source_hierarchy,
   };
 }
@@ -1169,79 +1381,58 @@ export function buildBrief(base) {
 export function compactDashboard(base) {
   const profile = base.profile || {};
   const latestBp = latest(base.blood_pressure);
-  const recentBp = latest(base.blood_pressure, 7).map(bp => pick(bp, [
-    "date",
-    "measured_at",
-    "systolic_mmhg",
-    "diastolic_mmhg",
-    "heart_rate_bpm",
-    "notes",
-  ]));
   const latestSleep = latest(base.recovery_sleep);
   const latestBody = latest(base.body_composition);
   const latestNutrition = latest(base.nutrition_log);
-  const recentNutrition = latest(base.nutrition_log, 5).map(day => ({
-    date: day.date,
-    source: day.source,
-    totals: day.totals || null,
-    notes: day.notes || null,
+  const latestStrength = latest(base.strength_logs);
+  const detailedStrengthLogs = Array.isArray(base.strength_logs) ? base.strength_logs.filter(hasExerciseDetail) : [];
+  const latestStrengthWithExercises = latest(detailedStrengthLogs);
+  const recentRecovery = latest(base.recovery_sleep, 5).map(compactRecoveryRow).filter(Boolean);
+  const recentBp = latest(base.blood_pressure, 5).map(compactBpRow).filter(Boolean);
+  const recentNutrition = latest(base.nutrition_log, 3).map(compactNutritionRow).filter(Boolean);
+  const recentStrength = latest(base.strength_logs, 3).map(compactStrengthRow).filter(Boolean);
+  const recentStrengthWithExercises = latest(detailedStrengthLogs, 3).map(compactStrengthRow).filter(Boolean);
+  const recentCoachMessages = compactCoachHistory(base, 10);
+  const recentFeedback = latest(base.session_feedback, 3).map(f => ({
+    date: f.date || f.session_date || null,
+    rating_label: f.rating_label || null,
+    completed_minutes: asNumber(f.completed_minutes),
+    note: truncate(first(f.note, f.freeform_note, f.pain_notes), 180),
   }));
-  const recentStrength = latest(base.strength_logs, 6).map(session => ({
-    date: session.date || session.session_date,
-    title: session.title || session.name || session.session_name || session.workout_name || "Strength session",
-    duration_min: session.duration_min || session.duration_minutes || session.completed_minutes || null,
-    volume: session.volume || session.total_volume || session.total_volume_kg || null,
-    notes: session.notes || session.summary || null,
-  }));
-  const recentFeedback = latest(base.session_feedback, 6).map(f => pick(f, [
-    "date",
-    "rating_label",
-    "completed_minutes",
-    "best_movement",
-    "worst_movement",
-    "pain_notes",
-    "difficulty",
-    "note",
-  ]));
-  const recentCoachNotes = latest(base.coach_chat_notes, 10).map(m => ({
-    role: m.role,
-    text: String(m.text || "").slice(0, 500),
-    at: m.at,
-    channel: m.channel,
-  }));
+  const dataCompleteness = buildDataCompleteness(base);
 
   return {
     last_updated: base.last_updated,
+    payload: "compact-v2",
     coaching_brief: base.coaching_brief || buildBrief(base),
-    coach_state: base.coach_state || DEFAULT_COACH_STATE,
+    coach_state: compactCoachState(base.coach_state || DEFAULT_COACH_STATE),
+    coach_chat_notes: recentCoachMessages,
     profile: pick(profile, ["name", "age", "sex", "location", "timezone", "training_gym", "primary_goals", "gym"]),
     constraints: {
-      schedule: "Walk most mornings; strength training usually Mon/Wed/Fri mornings; cycling on off days; weekends off formal training.",
+      schedule: "Strength M/W/F; walk every day; Tue/Thu are coach-planned goal-support days; Saturday and/or Sunday are rest options.",
       gym: "World Gym Taichung unless travel mode is active.",
-      hip: "Hip OA/deep hip positions require caution; avoid forced deep loaded flexion.",
+      hip: "Right hip impingement / labral-risk pattern requires caution; avoid forced deep loaded flexion.",
       asthma: "Controlled with daily Relvar and emergency inhaler.",
       bp: "Doctor requested one week of consistent BP readings before determining concern.",
       nutrition_source: "Bevel food tracking",
       workout_source: "Motra workout logs",
     },
     current: {
-      blood_pressure: latestBp ? pick(latestBp, ["date", "measured_at", "systolic_mmhg", "diastolic_mmhg", "heart_rate_bpm", "notes"]) : null,
-      recovery_sleep: latestSleep ? pick(latestSleep, ["date", "recovery_score_pct", "hrv_ms", "resting_hr_bpm", "sleep_score_pct", "sleep_duration_min", "bevel", "oura"]) : null,
-      body_composition: latestBody ? pick(latestBody, ["date", "weight_lbs", "body_fat_pct", "lean_mass_lbs", "visceral_fat_level", "notes"]) : null,
-      nutrition: latestNutrition ? {
-        date: latestNutrition.date,
-        source: latestNutrition.source,
-        totals: latestNutrition.totals || null,
-        notes: latestNutrition.notes || null,
-      } : null,
+      blood_pressure: compactBpRow(latestBp),
+      recovery_sleep: compactRecoveryRow(latestSleep),
+      body_composition: compactBodyRow(latestBody),
+      nutrition: compactNutritionRow(latestNutrition),
+      strength_session: compactStrengthRow(latestStrength),
+      strength_session_with_exercises: compactStrengthRow(latestStrengthWithExercises),
+      data_completeness: dataCompleteness,
     },
     recent: {
+      recovery_sleep: recentRecovery,
       blood_pressure: recentBp,
       nutrition: recentNutrition,
       strength_sessions: recentStrength,
+      strength_sessions_with_exercises: recentStrengthWithExercises,
       workout_feedback: recentFeedback,
-      coach_notes: recentCoachNotes,
-      coach_decisions: base.coach_decisions || [],
     },
   };
 }
@@ -1250,33 +1441,109 @@ export async function dashboardFromSupabase() {
   const profile = await getProfile();
   if (!profile) return null;
   const profileId = profile.id;
-  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages] = await Promise.all([
+  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions] = await Promise.all([
     supabase(`raw_imports?profile_id=eq.${profileId}&select=payload,imported_at&order=imported_at.desc&limit=1`),
     supabase(`recovery_sleep?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
     supabase(`blood_pressure_readings?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
     supabase(`body_comp_measurements?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
     supabase(`nutrition_days?profile_id=eq.${profileId}&select=*&order=log_date.asc`),
-    supabase(`strength_sessions?profile_id=eq.${profileId}&select=*&order=session_date.asc`),
+    supabase(`strength_sessions?profile_id=eq.${profileId}&select=*,strength_exercises(*,strength_sets(*))&order=session_date.asc`),
     supabase(`session_feedback?profile_id=eq.${profileId}&select=*&order=created_at.asc`),
     supabase(`coach_messages?profile_id=eq.${profileId}&select=*&order=message_at.desc&limit=30`),
+    safeSupabase(`weekly_plans?profile_id=eq.${profileId}&select=*&order=week_start.desc&limit=3`, {}, []),
+    safeSupabase(`planned_sessions?select=*,weekly_plans!inner(profile_id,week_start,label,status)&weekly_plans.profile_id=eq.${profileId}&order=planned_date.asc`, {}, []),
   ]);
 
   const base = rawImports?.[0]?.payload || {};
   base.profile = { ...(base.profile || {}), ...profile };
-  base.recovery_sleep = recovery.map(r => ({ ...(r.raw || {}), ...r, date: r.measured_date }));
-  base.blood_pressure = bp.map(r => ({ ...(r.raw || {}), ...r, date: r.measured_date }));
-  base.body_composition = body.map(r => ({ ...(r.raw || {}), ...r, date: r.measured_date }));
-  base.nutrition_log = nutrition.map(r => ({
+  base.recovery_sleep = dedupeRows(recovery.map(r => ({ ...(r.raw || {}), ...r, date: r.measured_date })), "recovery_sleep");
+  base.blood_pressure = dedupeRows(bp.map(r => ({ ...(r.raw || {}), ...r, date: r.measured_date })), "blood_pressure");
+  base.body_composition = dedupeRows(body.map(r => ({ ...(r.raw || {}), ...r, date: r.measured_date })), "body_comp");
+  base.nutrition_log = dedupeRows(nutrition.map(r => ({
     ...(r.raw || {}),
     date: r.log_date,
     source: r.source,
     totals: { kcal: r.calories_kcal, protein_g: r.protein_g, carbs_g: r.carbs_g, fat_g: r.fat_g },
     notes: r.notes,
-  }));
-  base.strength_logs = strength.map(r => ({ ...(r.raw || {}), ...r, date: r.session_date }));
-  base.session_feedback = feedback.map(r => ({ ...r, date: r.session_date, timestamp: r.created_at, note: r.freeform_note }));
+  })), "nutrition");
+  base.strength_logs = dedupeRows(strength.map(r => {
+    const exercises = [...(r.strength_exercises || [])]
+      .sort((a, b) => (a.exercise_order || 0) - (b.exercise_order || 0))
+      .map(ex => ({
+        name: ex.name,
+        exercise_order: ex.exercise_order,
+        category: ex.category,
+        notes: ex.notes,
+        sets: [...(ex.strength_sets || [])]
+          .sort((a, b) => (a.set_number || 0) - (b.set_number || 0))
+          .map(set => ({
+            set_number: set.set_number,
+            reps: set.reps,
+            load_kg: set.load_kg,
+            duration_sec: set.duration_sec,
+            distance_ft: set.distance_ft,
+          })),
+      }));
+    return { ...(r.raw || {}), ...r, exercises, date: r.session_date };
+  }), "strength");
+  base.session_feedback = dedupeRows(feedback.map(r => ({ ...r, date: r.session_date, timestamp: r.created_at, note: r.freeform_note })), "feedback");
   base.coach_chat_notes = messages.reverse().map(m => ({ role: m.role, text: m.body, at: m.message_at, channel: m.channel }));
   base.coach_state = await getCoachState(profileId);
+  base.weekly_plans = weeklyPlans;
+  base.planned_sessions = (plannedSessions || []).map(row => ({
+    ...row,
+    week_start: row.weekly_plans?.week_start || null,
+    week_label: row.weekly_plans?.label || null,
+    week_status: row.weekly_plans?.status || null,
+  }));
+  if (!base.weekly_session_plans && base.planned_sessions.length) {
+    const latestPlan = weeklyPlans?.[0];
+    const sessions = {};
+    for (const planned of base.planned_sessions) {
+      const dateText = String(planned.planned_date || "");
+      const dayIdx = planned.day_index || (dateText ? new Date(`${dateText}T12:00:00`).getDay() : null);
+      const key = String(dayIdx === 0 ? 7 : dayIdx || "");
+      if (!key) continue;
+      sessions[key] = {
+        date: planned.planned_date,
+        day: dateText ? new Date(`${dateText}T12:00:00`).toLocaleDateString("en-US", { weekday: "long", timeZone: profile.timezone || "Asia/Taipei" }) : null,
+        session_type: planned.session_type,
+        theme: planned.session_goal,
+        floor_plan: planned.floor_plan,
+        time_cap_min: planned.time_cap_min,
+        status: planned.status,
+        blocks: planned.blocks || [],
+        session_notes: planned.raw?.session_notes || null,
+      };
+    }
+    base.weekly_session_plans = {
+      week_start: latestPlan?.week_start || null,
+      week_label: latestPlan?.label || null,
+      planned_on: latestPlan?.planned_at?.slice?.(0, 10) || null,
+      sessions,
+    };
+  }
+  const upcomingFromPlan = nextPlannedSession(base);
+  if (upcomingFromPlan) {
+    base.upcoming_session = {
+      planned_date: upcomingFromPlan.planned_date,
+      day_label: upcomingFromPlan.planned_date
+        ? new Date(`${upcomingFromPlan.planned_date}T12:00:00`).toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "short",
+            day: "numeric",
+            timeZone: profile.timezone || "Asia/Taipei",
+          })
+        : null,
+      session_type: upcomingFromPlan.session_type,
+      floor_plan: upcomingFromPlan.floor_plan,
+      time_cap_min: upcomingFromPlan.time_cap_min,
+      blocks: upcomingFromPlan.blocks || [],
+      coach_note: upcomingFromPlan.raw?.coach_note || null,
+      why: upcomingFromPlan.raw?.why || null,
+      status: upcomingFromPlan.status,
+    };
+  }
   base.coach_decisions = await safeSupabase(`coach_decisions?profile_id=eq.${profileId}&select=*&order=created_at.desc&limit=10`, {}, []);
   base.coaching_brief = buildBrief(base);
   base.last_updated = new Date().toISOString();

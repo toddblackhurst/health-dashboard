@@ -4,12 +4,11 @@ import {
   getProfile,
   insertCoachMessage,
   json,
-  buildMotraDebriefTemplate,
-  parseMotraText,
   preflight,
   requireCoachSecret,
   runCoach,
   supabase,
+  updateCoachStateFromFeedback,
 } from "./_coach-lib.mjs";
 
 function asNumber(value) {
@@ -27,73 +26,88 @@ function cleanSource(value, fallback) {
   return String(value || fallback || "mobile-intake").trim().slice(0, 120);
 }
 
-function plainText(value, status = 200) {
-  return new Response(String(value || ""), {
-    status,
-    headers: {
-      "content-type": "text/plain; charset=utf-8",
-      "access-control-allow-origin": "*",
-      "access-control-allow-methods": "GET,POST,OPTIONS",
-      "access-control-allow-headers": "content-type,x-coach-secret",
-    },
-  });
+function normalizeSourceFamily(source = "", fallback = "unknown") {
+  const cleaned = String(source || fallback).trim().toLowerCase();
+  if (!cleaned) return fallback;
+  return cleaned
+    .replace(/-[0-9a-f]{8,}$/i, "")
+    .replace(/-\d{6,}$/i, "")
+    .replace(/-(morning|evening|reading|daily)$/i, "");
 }
 
-async function storeMotraDebrief(profileId, body = {}) {
-  if (!body.motra_text) return {};
-  const parsed = parseMotraText(body.motra_text);
-  const source = cleanSource(body.source, "motra-shortcut");
-  const sessionRow = {
-    profile_id: profileId,
-    session_date: body.date || parsed.session_date,
-    source,
-    session_name: parsed.session_name,
-    session_type: body.session_type || "strength",
-    duration_min: asNumber(body.completed_minutes) || parsed.duration_min,
-    total_volume_kg: parsed.total_volume_kg,
-    calories_kcal: parsed.calories_kcal,
-    motra_url: parsed.motra_url,
-    coaching_note: body.debrief_notes || body.notes || null,
-    raw: { ...parsed, shortcut_payload: body },
-  };
-  const session = (await supabase("strength_sessions?on_conflict=profile_id,session_date,source,session_name", {
-    method: "POST",
-    body: JSON.stringify([sessionRow]),
-  }))?.[0] || null;
+function canonicalSource(type, source, fallback) {
+  const cleaned = cleanSource(source, fallback);
+  if (!cleaned.startsWith("vision-")) return cleaned;
+  return `${normalizeSourceFamily(cleaned, fallback)}-daily`;
+}
 
-  let exercises = [];
-  if (session?.id && parsed.exercises.length) {
-    await supabase(`strength_exercises?strength_session_id=eq.${session.id}`, { method: "DELETE" });
-    exercises = await supabase("strength_exercises", {
-      method: "POST",
-      body: JSON.stringify(parsed.exercises.map((exercise, index) => ({
-        strength_session_id: session.id,
-        exercise_order: index + 1,
-        name: exercise.name,
-        notes: (body.exercise_feedback || []).find(item => item.name === exercise.name)?.note || null,
-        raw: exercise,
-      }))),
-    });
+function sanitizeMetric(value, { allowNegative = false } = {}) {
+  const n = asNumber(value);
+  if (n === null) return null;
+  if (!allowNegative && n < 0) return null;
+  return n;
+}
+
+function sanitizeBodyWeightLbs(value) {
+  const n = sanitizeMetric(value);
+  if (n === null) return null;
+  return n < 100 || n > 400 ? null : n;
+}
+
+function sanitizeBodyFatPct(value) {
+  const n = sanitizeMetric(value);
+  if (n === null) return null;
+  return n < 2 || n > 60 ? null : n;
+}
+
+function normalizeNutritionTotals(row) {
+  const protein = sanitizeMetric(row.protein_g);
+  const carbs = sanitizeMetric(row.carbs_g);
+  const fat = sanitizeMetric(row.fat_g);
+  const minCalories = (protein || 0) * 4 + (carbs || 0) * 4 + (fat || 0) * 9;
+  let calories = sanitizeMetric(row.calories_kcal);
+  let notes = row.notes || null;
+  if (calories !== null && minCalories > 0 && calories + 50 < minCalories) {
+    calories = null;
+    notes = `${notes || ""} Calories cleared because the parsed total was lower than the visible macro calories.`.trim();
   }
+  return { ...row, calories_kcal: calories, protein_g: protein, carbs_g: carbs, fat_g: fat, notes };
+}
 
-  const feedback = (await supabase("session_feedback", {
-    method: "POST",
-    body: JSON.stringify([{
-      profile_id: profileId,
-      session_date: body.date || parsed.session_date,
-      rating_label: body.rating_label || null,
-      completed_minutes: asNumber(body.completed_minutes) || parsed.duration_min,
-      best_movement: body.best_movement || null,
-      worst_movement: body.worst_movement || null,
-      pain_notes: body.pain_notes || null,
-      difficulty: body.difficulty || null,
-      freeform_note: body.debrief_notes || body.notes || null,
-      source,
-      raw: { parsed_motra: parsed, exercise_feedback: body.exercise_feedback || [], payload: body },
-    }]),
-  }))?.[0] || null;
+function mergeRows(existing = {}, incoming = {}) {
+  const merged = { ...existing };
+  for (const [key, value] of Object.entries(incoming)) {
+    if (value === undefined || value === null || value === "") continue;
+    if (
+      value
+      && typeof value === "object"
+      && !Array.isArray(value)
+      && merged[key]
+      && typeof merged[key] === "object"
+      && !Array.isArray(merged[key])
+    ) {
+      merged[key] = mergeRows(merged[key], value);
+    } else {
+      merged[key] = value;
+    }
+  }
+  return merged;
+}
 
-  return { parsed_motra: parsed, strength_session: session, strength_exercises: exercises, feedback };
+function queryValue(value) {
+  return encodeURIComponent(String(value));
+}
+
+async function fetchExisting(table, selectFields, filters = {}) {
+  const query = Object.entries(filters)
+    .map(([key, value]) => `${key}=eq.${queryValue(value)}`)
+    .join("&");
+  try {
+    const rows = await supabase(`${table}?select=${selectFields}&${query}&limit=1`);
+    return rows?.[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export default async function handler(req) {
@@ -107,33 +121,8 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "message", "feedback", "intake", "brief", "workout", "nutrition-closeout", "post-workout", "motra-template"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "message", "feedback", "intake", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
       || "dashboard";
-
-    if (req.method === "POST" && action === "motra-template") {
-      const body = await req.json();
-      if (!body.motra_text) return json({ error: "motra_text is required." }, 400);
-      const parsed = parseMotraText(body.motra_text);
-      const debriefTemplate = buildMotraDebriefTemplate(parsed);
-      if (url.searchParams.get("format") === "text") return plainText(debriefTemplate);
-      return json({
-        ok: true,
-        action,
-        debrief_template: debriefTemplate,
-        parsed_motra: {
-          session_name: parsed.session_name,
-          session_date: parsed.session_date,
-          duration_min: parsed.duration_min,
-          total_volume_kg: parsed.total_volume_kg,
-          calories_kcal: parsed.calories_kcal,
-          motra_url: parsed.motra_url,
-          exercises: parsed.exercises.map(exercise => ({
-            name: exercise.name,
-            set_count: exercise.sets.length,
-          })),
-        },
-      });
-    }
 
     if (req.method === "GET" && action === "dashboard") {
       const dashboard = await dashboardFromSupabase();
@@ -178,7 +167,6 @@ export default async function handler(req) {
         "post-workout": "post_workout",
       };
       const text = String(body.text || body.summary || action).trim();
-      const stored = action === "post-workout" ? await storeMotraDebrief(profile.id, body) : {};
       await insertCoachMessage(profile.id, "user", text, body.channel || `api-${action}`, body.raw || body);
       const decision = await runCoach({
         profileId: profile.id,
@@ -189,8 +177,7 @@ export default async function handler(req) {
         channel: body.channel || `api-${action}`,
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || `api-${action}`, { in_reply_to: text, decision });
-      if (url.searchParams.get("format") === "text") return plainText(decision.reply);
-      return json({ ok: true, action, reply: decision.reply, decision, stored });
+      return json({ ok: true, action, reply: decision.reply, decision });
     }
 
     if (req.method === "POST" && action === "feedback") {
@@ -201,7 +188,7 @@ export default async function handler(req) {
         profile_id: profile.id,
         session_date: body.date,
         rating_label: body.rating_label || body.rating || null,
-        completed_minutes: body.completed_minutes || body.minutes || null,
+        completed_minutes: asNumber(body.completed_minutes || body.minutes),
         best_movement: body.best_movement || null,
         worst_movement: body.worst_movement || null,
         pain_notes: body.pain_notes || null,
@@ -215,6 +202,9 @@ export default async function handler(req) {
         method: "POST",
         body: JSON.stringify([row]),
       });
+      if (inserted?.[0]) {
+        await updateCoachStateFromFeedback(profile.id, inserted[0]);
+      }
       return json({ ok: true, feedback: inserted?.[0] || null });
     }
 
@@ -231,8 +221,6 @@ export default async function handler(req) {
         const systolic = Number(body.systolic);
         const diastolic = Number(body.diastolic);
         if (!systolic || !diastolic) return json({ error: "BP requires systolic and diastolic." }, 400);
-        const slot = String(body.slot || "reading").toLowerCase().replace(/[^a-z0-9]+/g, "-");
-        const suffix = now.toISOString().slice(11, 19).replace(/:/g, "");
         const row = {
           profile_id: profile.id,
           measured_date: date,
@@ -240,7 +228,7 @@ export default async function handler(req) {
           systolic_mmhg: Math.round(systolic),
           diastolic_mmhg: Math.round(diastolic),
           heart_rate_bpm: asInteger(body.heart_rate),
-          source: cleanSource(body.source, `mobile-intake-${slot}-${suffix}`),
+          source: canonicalSource(type, body.source, "daily-bp"),
           doctor_review_flag: true,
           notes: body.notes || null,
           raw: body,
@@ -250,23 +238,37 @@ export default async function handler(req) {
           body: JSON.stringify([row]),
         }))?.[0] || null });
       } else if (type === "food") {
-        const row = {
+        const source = canonicalSource(type, body.source, "bevel-daily");
+        const calories = sanitizeMetric(body.calories);
+        const protein = sanitizeMetric(body.protein);
+        const carbs = sanitizeMetric(body.carbs);
+        const fat = sanitizeMetric(body.fat);
+        let row = {
           profile_id: profile.id,
           log_date: date,
-          source: cleanSource(body.source, "bevel-mobile"),
+          source,
           completeness: body.completeness || "partial",
-          calories_kcal: asNumber(body.calories),
-          protein_g: asNumber(body.protein),
-          carbs_g: asNumber(body.carbs),
-          fat_g: asNumber(body.fat),
-          fiber_g: asNumber(body.fiber),
-          sodium_mg: asNumber(body.sodium),
-          notes: body.notes || null,
+          calories_kcal: calories,
+          protein_g: protein,
+          carbs_g: carbs,
+          fat_g: fat,
+          fiber_g: sanitizeMetric(body.fiber),
+          sodium_mg: sanitizeMetric(body.sodium),
+          notes: calories === null && Number(body.calories) < 0
+            ? `${body.notes || ""} Negative calorie intake was treated as invalid and cleared.`.trim()
+            : body.notes || null,
           raw: body,
         };
+        row = normalizeNutritionTotals(row);
+        const existing = await fetchExisting("nutrition_days", "*", {
+          profile_id: profile.id,
+          log_date: date,
+          source,
+        });
+        const mergedRow = mergeRows(existing || {}, row);
         const nutrition = (await supabase("nutrition_days?on_conflict=profile_id,log_date,source", {
           method: "POST",
-          body: JSON.stringify([row]),
+          body: JSON.stringify([mergedRow]),
         }))?.[0] || null;
         results.push({ nutrition });
         if (nutrition?.id && Array.isArray(body.meals) && body.meals.length) {
@@ -288,27 +290,34 @@ export default async function handler(req) {
           }) });
         }
       } else if (type === "body") {
+        const source = canonicalSource(type, body.source, body.method || "body-comp");
         const row = {
           profile_id: profile.id,
           measured_date: date,
           measured_time: body.measured_time || null,
-          source: cleanSource(body.source, "bevel-mobile"),
+          source,
           method: body.method || "bevel",
           confidence_tier: body.confidence_tier ? Math.round(Number(body.confidence_tier)) : 2,
-          weight_lbs: asNumber(body.weight_lbs),
-          body_fat_pct: asNumber(body.body_fat_pct),
-          lean_mass_lbs: asNumber(body.lean_mass_lbs),
-          visceral_fat_g: asNumber(body.visceral_fat_g),
-          visceral_fat_level: asNumber(body.visceral_fat_level),
-          skeletal_muscle_lbs: asNumber(body.skeletal_muscle_lbs),
-          trunk_muscle_lbs: asNumber(body.trunk_muscle_lbs),
-          body_water_pct: asNumber(body.body_water_pct),
+          weight_lbs: sanitizeBodyWeightLbs(body.weight_lbs),
+          body_fat_pct: sanitizeBodyFatPct(body.body_fat_pct),
+          lean_mass_lbs: sanitizeMetric(body.lean_mass_lbs),
+          visceral_fat_g: sanitizeMetric(body.visceral_fat_g),
+          visceral_fat_level: sanitizeMetric(body.visceral_fat_level),
+          skeletal_muscle_lbs: sanitizeMetric(body.skeletal_muscle_lbs),
+          trunk_muscle_lbs: sanitizeMetric(body.trunk_muscle_lbs),
+          body_water_pct: sanitizeMetric(body.body_water_pct),
           notes: body.notes || null,
           raw: body,
         };
+        const existing = await fetchExisting("body_comp_measurements", "*", {
+          profile_id: profile.id,
+          measured_date: date,
+          source,
+        });
+        const mergedRow = mergeRows(existing || {}, row);
         results.push({ body: (await supabase("body_comp_measurements?on_conflict=profile_id,measured_date,source", {
           method: "POST",
-          body: JSON.stringify([row]),
+          body: JSON.stringify([mergedRow]),
         }))?.[0] || null });
       } else if (type === "workout") {
         const row = {
@@ -324,25 +333,30 @@ export default async function handler(req) {
           source: cleanSource(body.source, "mobile-intake"),
           raw: body,
         };
-        results.push({ feedback: (await supabase("session_feedback", {
+        const feedback = (await supabase("session_feedback", {
           method: "POST",
           body: JSON.stringify([row]),
-        }))?.[0] || null });
+        }))?.[0] || null;
+        if (feedback) {
+          await updateCoachStateFromFeedback(profile.id, feedback);
+        }
+        results.push({ feedback });
       } else if (type === "recovery") {
+        const source = canonicalSource(type, body.source, "vision-recovery");
         const row = {
           profile_id: profile.id,
           measured_date: date,
-          source: cleanSource(body.source, "vision-recovery"),
-          recovery_score_pct: asNumber(body.recovery_score_pct),
-          sleep_score_pct: asNumber(body.sleep_score_pct),
-          hrv_ms: asNumber(body.hrv_ms),
-          resting_hr_bpm: asNumber(body.resting_hr_bpm),
-          respiratory_rate_rpm: asNumber(body.respiratory_rate_rpm),
-          spo2_pct: asNumber(body.spo2_pct),
-          wrist_temp_f: asNumber(body.wrist_temp_f),
+          source,
+          recovery_score_pct: sanitizeMetric(body.recovery_score_pct),
+          sleep_score_pct: sanitizeMetric(body.sleep_score_pct),
+          hrv_ms: sanitizeMetric(body.hrv_ms),
+          resting_hr_bpm: sanitizeMetric(body.resting_hr_bpm),
+          respiratory_rate_rpm: sanitizeMetric(body.respiratory_rate_rpm),
+          spo2_pct: sanitizeMetric(body.spo2_pct),
+          wrist_temp_f: sanitizeMetric(body.wrist_temp_f),
           total_sleep_min: asInteger(body.total_sleep_min),
           time_in_bed_min: asInteger(body.time_in_bed_min),
-          sleep_efficiency_pct: asNumber(body.sleep_efficiency_pct),
+          sleep_efficiency_pct: sanitizeMetric(body.sleep_efficiency_pct),
           deep_sleep_min: asInteger(body.deep_sleep_min),
           rem_sleep_min: asInteger(body.rem_sleep_min),
           sleep_bank_min: asInteger(body.sleep_bank_min),
@@ -350,22 +364,28 @@ export default async function handler(req) {
           notes: body.notes || null,
           raw: body,
         };
+        const existing = await fetchExisting("recovery_sleep", "*", {
+          profile_id: profile.id,
+          measured_date: date,
+          source,
+        });
+        const mergedRow = mergeRows(existing || {}, row);
         results.push({ recovery: (await supabase("recovery_sleep?on_conflict=profile_id,measured_date,source", {
           method: "POST",
-          body: JSON.stringify([row]),
+          body: JSON.stringify([mergedRow]),
         }))?.[0] || null });
       } else if (type === "activity") {
         const row = {
           profile_id: profile.id,
           activity_date: date,
-          source: cleanSource(body.source, "vision-activity"),
+          source: canonicalSource(type, body.source, "vision-activity"),
           activity_type: body.activity_type || body.name || "Activity",
           start_time: body.start_time || null,
-          duration_min: asNumber(body.duration_min),
-          distance_mi: asNumber(body.distance_mi),
-          avg_heart_rate_bpm: asNumber(body.avg_heart_rate_bpm || body.avg_hr_bpm),
-          peak_heart_rate_bpm: asNumber(body.peak_heart_rate_bpm || body.max_hr_bpm),
-          active_calories_kcal: asNumber(body.active_calories_kcal || body.calories_kcal),
+          duration_min: sanitizeMetric(body.duration_min),
+          distance_mi: sanitizeMetric(body.distance_mi),
+          avg_heart_rate_bpm: sanitizeMetric(body.avg_heart_rate_bpm || body.avg_hr_bpm),
+          peak_heart_rate_bpm: sanitizeMetric(body.peak_heart_rate_bpm || body.max_hr_bpm),
+          active_calories_kcal: sanitizeMetric(body.active_calories_kcal || body.calories_kcal),
           effort_level: body.effort_level || null,
           notes: body.notes || null,
           raw: body,
@@ -375,26 +395,34 @@ export default async function handler(req) {
           body: JSON.stringify([row]),
         }))?.[0] || null });
       } else if (type === "strength") {
+        const source = canonicalSource(type, body.source, "vision-strength");
         const row = {
           profile_id: profile.id,
           session_date: date,
-          source: cleanSource(body.source, "vision-strength"),
+          source,
           session_name: body.session_name || body.name || "Strength Training",
           session_type: body.session_type || "strength",
           start_time: body.start_time || null,
-          duration_min: asNumber(body.duration_min),
-          total_volume_kg: asNumber(body.total_volume_kg || body.volume_kg),
+          duration_min: sanitizeMetric(body.duration_min),
+          total_volume_kg: sanitizeMetric(body.total_volume_kg || body.volume_kg),
           total_reps: asInteger(body.total_reps),
-          avg_hr_bpm: asNumber(body.avg_hr_bpm || body.average_hr_bpm),
-          max_hr_bpm: asNumber(body.max_hr_bpm || body.peak_hr_bpm),
-          calories_kcal: asNumber(body.calories_kcal),
+          avg_hr_bpm: sanitizeMetric(body.avg_hr_bpm || body.average_hr_bpm),
+          max_hr_bpm: sanitizeMetric(body.max_hr_bpm || body.peak_hr_bpm),
+          calories_kcal: sanitizeMetric(body.calories_kcal),
           motra_url: body.motra_url || null,
           coaching_note: body.coaching_note || body.notes || null,
           raw: body,
         };
+        const existing = await fetchExisting("strength_sessions", "*", {
+          profile_id: profile.id,
+          session_date: date,
+          source,
+          session_name: row.session_name,
+        });
+        const mergedRow = mergeRows(existing || {}, row);
         const session = (await supabase("strength_sessions?on_conflict=profile_id,session_date,source,session_name", {
           method: "POST",
-          body: JSON.stringify([row]),
+          body: JSON.stringify([mergedRow]),
         }))?.[0] || null;
         results.push({ strength: session });
         if (session?.id && Array.isArray(body.exercises) && body.exercises.length) {
