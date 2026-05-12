@@ -1004,7 +1004,11 @@ function activeAdjustmentNotes(state = DEFAULT_COACH_STATE) {
   const notes = [...(adaptations.active_rules || [])];
   for (const value of Object.values(adaptations.exercise_adjustments || {})) {
     if (!value?.exercise || !value?.action) continue;
-    notes.push(`${value.exercise}: ${value.action}${value.note ? ` - ${value.note}` : ""}`);
+    const rawNote = String(value.note || "").trim();
+    const compactNote = rawNote && !/transcript|structured extraction/i.test(rawNote)
+      ? truncate(rawNote, 120)
+      : null;
+    notes.push(`${value.exercise}: ${value.action}${compactNote ? ` - ${compactNote}` : ""}`);
   }
   return notes.slice(0, 6);
 }
