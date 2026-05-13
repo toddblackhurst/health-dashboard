@@ -19,7 +19,8 @@
       "distance": "km",
       "duration": "minutes",
       "temperature": "celsius"
-    }
+    },
+    "last_local_feedback_update": "2026-05-13T03:02:08.634Z"
   },
   "profile": {
     "name": "Todd Blackhurst",
@@ -12009,6 +12010,291 @@
         "Medicine Ball Slam",
         "BOSU Single-Leg Balance add-on"
       ]
+    },
+    {
+      "date": "2026-05-13",
+      "source": "Motra + Codex chat feedback",
+      "session_name": "20260513 Wednesday",
+      "session_type": "Pull / Landmine / Trunk + BOSU Add-On",
+      "duration_min": 75,
+      "total_volume_kg": 7200,
+      "calories_kcal": 542,
+      "exercise_count": 13,
+      "motra_share_url": "https://motra.com/share/workout/fa6549ff15",
+      "coaching_note": "Strong pull/trunk session. Bodyweight pulldown milestone at 75 kg for 3x8, farmer carries improving, landmine/Pallof work high-value. Hip mildly tender from likely overwalking/sitting; avoid extra hip volume and retire pull-through as default.",
+      "exercises": [
+        {
+          "name": "Wall Slide",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Dead Hang",
+          "sets": [
+            {
+              "set": 1,
+              "duration_s": 38,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "duration_s": 32,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Bodyweight Glute Bridge",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 8,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "reps": 8,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 3,
+              "reps": 8,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Scapular Pull Up",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 8,
+              "weight_kg": "BW"
+            },
+            {
+              "set": 2,
+              "reps": 8,
+              "weight_kg": "BW"
+            }
+          ]
+        },
+        {
+          "name": "Machine Front Pull Down",
+          "sets": [
+            {
+              "set": "Warm Up",
+              "reps": 8,
+              "weight_kg": 47.5
+            },
+            {
+              "set": 1,
+              "reps": 8,
+              "weight_kg": 75
+            },
+            {
+              "set": 2,
+              "reps": 8,
+              "weight_kg": 75
+            },
+            {
+              "set": 3,
+              "reps": 8,
+              "weight_kg": 75
+            }
+          ]
+        },
+        {
+          "name": "Landmine Half Kneeling Single Arm Press",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 6,
+              "weight_kg": 30
+            },
+            {
+              "set": 2,
+              "reps": 8,
+              "weight_kg": 30
+            },
+            {
+              "set": 3,
+              "reps": 7,
+              "weight_kg": 30
+            }
+          ]
+        },
+        {
+          "name": "Landmine Anti-Rotation Twist",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 6,
+              "weight_kg": 25
+            },
+            {
+              "set": 2,
+              "reps": 6,
+              "weight_kg": 25
+            },
+            {
+              "set": 3,
+              "reps": 6,
+              "weight_kg": 25
+            }
+          ]
+        },
+        {
+          "name": "Cable Single-Arm Row",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": 18
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": 18
+            },
+            {
+              "set": 3,
+              "reps": 10,
+              "weight_kg": 18
+            }
+          ]
+        },
+        {
+          "name": "Cable Pallof Hold",
+          "sets": [
+            {
+              "set": 1,
+              "duration_s": 39,
+              "weight_kg": 9
+            },
+            {
+              "set": 2,
+              "duration_s": 35,
+              "weight_kg": 11.3
+            }
+          ]
+        },
+        {
+          "name": "Cable Pull Through",
+          "sets": [
+            {
+              "set": "Warm Up",
+              "reps": 10,
+              "weight_kg": 16.3
+            },
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": 29.3
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": 29.3
+            }
+          ]
+        },
+        {
+          "name": "Cable Hip Extension to Neutral",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": 3.4
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": 3.4
+            }
+          ]
+        },
+        {
+          "name": "Offset Farmer Carry",
+          "sets": [
+            {
+              "set": 1,
+              "distance_ft": 50,
+              "weight_kg": 24
+            },
+            {
+              "set": 2,
+              "distance_ft": 50,
+              "weight_kg": 24
+            },
+            {
+              "set": 3,
+              "distance_ft": 50,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "Kettlebell Swing",
+          "sets": [
+            {
+              "set": 1,
+              "reps": 10,
+              "weight_kg": 24
+            },
+            {
+              "set": 2,
+              "reps": 10,
+              "weight_kg": 20
+            },
+            {
+              "set": 3,
+              "reps": 12,
+              "weight_kg": 20
+            }
+          ]
+        },
+        {
+          "name": "BOSU Deadbug Ball Pass",
+          "sets": [
+            {
+              "set": "add-on",
+              "weight_kg": "light small weighted ball"
+            }
+          ]
+        },
+        {
+          "name": "Medicine Ball Slam",
+          "sets": [
+            {
+              "set": "add-on",
+              "sets_completed": 3
+            }
+          ]
+        },
+        {
+          "name": "BOSU Single-Leg Balance",
+          "sets": [
+            {
+              "set": 1,
+              "duration_s": "30-45 each leg"
+            },
+            {
+              "set": 2,
+              "duration_s": "30-45 each leg"
+            }
+          ]
+        }
+      ]
     }
   ],
   "glucose": [
@@ -12119,21 +12405,21 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-13",
+    "date": "2026-05-14",
     "readiness_tier": "Green",
-    "call": "Train today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
+    "call": "Recover today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 11.4 weeks.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 11.3 weeks.",
     "encouragement": "This is the kind of day that builds the independence and active-family body you are after: crisp work, no sloppy extra volume.",
     "goal_summary": {
-      "as_of": "2026-05-13",
+      "as_of": "2026-05-14",
       "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 11.4
+      "weeks_remaining": 11.3
     }
   },
-  "last_updated": "2026-05-13T06:05:03+08:00",
+  "last_updated": "2026-05-14T06:05:05+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12221,100 +12507,14 @@
     }
   ],
   "upcoming_session": {
-    "date": "2026-05-13",
-    "day": "Wednesday",
-    "session_type": "Pull-Dominant Upper / Glute Support + Carry",
-    "theme": "Pull-up strength stays in the plan once this week, then the rest of the session builds width, posture, and loaded correction.",
-    "floor_plan": "Floor 3 prep -> Floor 3 anchor -> Floor 2 support and carry close",
-    "time_cap_min": 58,
-    "status": "LIVE - daily brief refreshed",
-    "blocks": [
-      {
-        "id": "prep",
-        "label": "Floor 3 Hip Prehab + Trunk Prep",
-        "floor": "Floor 3",
-        "time_min": 10,
-        "exercises": [
-          {
-            "name": "Prone Glute Set",
-            "prescription": "2x8 with 2-sec squeeze",
-            "load": "BW",
-            "cues": "Make the glute do the work, not the low back. Hold each squeeze cleanly instead of rushing the reps."
-          },
-          {
-            "name": "Band Side Step",
-            "prescription": "2x10/side",
-            "load": "Mini band",
-            "cues": "Stay shallow and quiet through the hips. Keep tension on the band without drifting into the right side."
-          },
-          {
-            "name": "Side Plank from Knees",
-            "prescription": "2x20 sec/side",
-            "load": "BW",
-            "cues": "Lift the underside waist and keep the body straight. Do not let the ribcage roll open."
-          }
-        ]
-      },
-      {
-        "id": "a",
-        "label": "Block A — Pull Anchor",
-        "floor": "Floor 3",
-        "time_min": 18,
-        "exercises": [
-          {
-            "name": "Pull-Up",
-            "prescription": "3 sets: 6 / 5 / 4",
-            "load": "BW",
-            "cues": "Hold the top for 2 seconds on quality reps, then lower on a slow 3-count. Chin clears the bar because you stayed tight, not because you craned the neck."
-          },
-          {
-            "name": "Half-Kneeling Single-Arm Cable Pull-Down",
-            "prescription": "2x10/side",
-            "load": "10.2 kg",
-            "cues": "Set the shoulder down first, especially on the right, then drive the elbow to the hip pocket. Think elbow to pocket, not hand to hip."
-          }
-        ]
-      },
-      {
-        "id": "b",
-        "label": "Block B — Posterior Support",
-        "floor": "Floor 2",
-        "time_min": 18,
-        "exercises": [
-          {
-            "name": "Machine Hip Thrust (Glute Bridge)",
-            "prescription": "3x8",
-            "load": "50 / 55 / 55 kg",
-            "cues": "Drive through the heels and own a 1-second squeeze at the top. No overarch and no chasing extra range."
-          },
-          {
-            "name": "Chest-Supported Dumbbell Rear Delt Raise",
-            "prescription": "2x12",
-            "load": "5 kg/hand",
-            "cues": "Keep the chest glued to the pad and move from the back of the shoulders. Smooth reps only; do not turn it into a shrug."
-          }
-        ]
-      },
-      {
-        "id": "c",
-        "label": "Block C — Loaded Correction Close",
-        "floor": "Floor 2",
-        "time_min": 12,
-        "exercises": [
-          {
-            "name": "Offset Farmer Carry",
-            "prescription": "2x20 m",
-            "load": "Left 20 kg / right 12 kg",
-            "cues": "Walk tall and let posture, not grip collapse, decide the set. The goal is no lean and no right-side drift."
-          }
-        ]
-      }
-    ],
-    "session_notes": "This is the only pull-up slot of the week so it satisfies Todd's explicit preference without breaking the rotation rule everywhere else. The cable pull-down keeps the right-side setup cue alive while the hip thrust covers posterior work that has not been touched recently. Rear-delt work replaces the unstable or disliked face-pull options. The carry closes the session with the exact left-led trunk correction Todd has reported as hard in the right way.",
-    "planned_date": "2026-05-13",
-    "day_label": "Wednesday May 13",
-    "coach_note": "Use the planned Friday structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the 122 bpm cap, and keep loaded hip flexion pain-free. Skip the optional close if HR, hip, readiness, or grip says the main work was enough.",
-    "why": "Today matters because it gives the week its push/chest and hip-safe quad signal after the recovery reset. The goal is high-quality load and crisp power, not extra volume."
+    "planned_date": "2026-05-14",
+    "day_label": "Thursday May 14",
+    "session_type": "Recovery / non-lifting day",
+    "floor_plan": "Walk or easy cardio only",
+    "time_cap_min": 45,
+    "blocks": [],
+    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
+    "why": "Recovery days preserve the quality of the next anchor session."
   },
   "coach_questions": [
     {
@@ -13894,6 +14094,84 @@
         {
           "name": "BOSU Single-Leg Balance",
           "feedback": "Added after session, 2 sets of about 30-40 sec each leg."
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "timestamp": "2026-05-13T03:02:08.634Z",
+      "rating_label": "productive-with-hip-caution",
+      "completed_minutes": 75,
+      "best_movement": "BOSU deadbug ball pass, machine front pull-down at bodyweight, anti-rotation/Pallof work, farmer carries, medicine ball slams, BOSU single-leg balance",
+      "worst_movement": "Cable Pull Through",
+      "pain_notes": "Hip tender in back upper side and front/top of leg; likely overwalking yesterday plus sitting too much last night. Right-leg hip extension required extra effort to stay straight; left side easier.",
+      "difficulty": "Strong productive Wednesday session with main work hard but controlled; use hip caution for the next 24-48 hours.",
+      "note": "Motra 1h15m, 7.2K kg, 542 cal, 13 exercises. Wall slides easier, dead hang easy, glute bridge no problem, scap pull-up good. Pulldown reached bodyweight: 3x8 @ 75 kg. Landmine press 30 kg was hard but controlled; anti-rotation was fun and hard. Single-arm row difficult; Pallof hold fun. Pull-through disliked and should be retired as default. Cable hip extension: right leg control hard, left easier, slow tempo good. Farmer carry continues to get easier; kettlebell swings okay. Add-ons: BOSU deadbug ball pass was hardest and most enjoyable; 3 sets med-ball slams; BOSU single-leg balance 2x30-45s each leg improved vs first attempt.",
+      "source": "codex-chat-feedback",
+      "exercises": [
+        {
+          "name": "Wall Slide",
+          "feedback": "Easier today."
+        },
+        {
+          "name": "Dead Hang",
+          "feedback": "Easy today; 38s and 32s bodyweight."
+        },
+        {
+          "name": "Bodyweight Glute Bridge",
+          "feedback": "No problem."
+        },
+        {
+          "name": "Scapular Pull Up",
+          "feedback": "Good."
+        },
+        {
+          "name": "Machine Front Pull Down",
+          "feedback": "Pulled bodyweight: 3x8 at 75 kg after warm-up."
+        },
+        {
+          "name": "Landmine Half Kneeling Single Arm Press",
+          "feedback": "Hard but controlled at 30 kg."
+        },
+        {
+          "name": "Landmine Anti-Rotation Twist",
+          "feedback": "Fun and hard."
+        },
+        {
+          "name": "Cable Single-Arm Row",
+          "feedback": "Difficult."
+        },
+        {
+          "name": "Cable Pallof Hold",
+          "feedback": "Fun."
+        },
+        {
+          "name": "Cable Pull Through",
+          "feedback": "Disliked; retire as default."
+        },
+        {
+          "name": "Cable Hip Extension to Neutral",
+          "feedback": "Right leg required extra effort to stay straight; left easier; slow tempo helped."
+        },
+        {
+          "name": "Offset Farmer Carry",
+          "feedback": "Continues to get easier."
+        },
+        {
+          "name": "Kettlebell Swing",
+          "feedback": "Okay."
+        },
+        {
+          "name": "BOSU Deadbug Ball Pass",
+          "feedback": "Most enjoyable add-on; very hard balance challenge with light small weighted ball."
+        },
+        {
+          "name": "Medicine Ball Slam",
+          "feedback": "Added 3 sets; remains a good close."
+        },
+        {
+          "name": "BOSU Single-Leg Balance",
+          "feedback": "2x30-45s each leg; useful ankle/foot work and improved stability."
         }
       ]
     }
