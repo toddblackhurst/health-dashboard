@@ -12405,21 +12405,21 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-14",
+    "date": "2026-05-15",
     "readiness_tier": "Green",
-    "call": "Recover today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
+    "call": "Train today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 11.3 weeks.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 11.1 weeks.",
     "encouragement": "This is the kind of day that builds the independence and active-family body you are after: crisp work, no sloppy extra volume.",
     "goal_summary": {
-      "as_of": "2026-05-14",
+      "as_of": "2026-05-15",
       "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 11.3
+      "weeks_remaining": 11.1
     }
   },
-  "last_updated": "2026-05-14T06:05:05+08:00",
+  "last_updated": "2026-05-15T06:05:03+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12507,14 +12507,100 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-05-14",
-    "day_label": "Thursday May 14",
-    "session_type": "Recovery / non-lifting day",
-    "floor_plan": "Walk or easy cardio only",
-    "time_cap_min": 45,
-    "blocks": [],
-    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
-    "why": "Recovery days preserve the quality of the next anchor session."
+    "date": "2026-05-15",
+    "day": "Friday",
+    "session_type": "Mixed Athletic / Unilateral Correction",
+    "theme": "The third day shifts away from another straight press-pull split and uses athletic rows, controlled lower support, and rotation work.",
+    "floor_plan": "Floor 3 prep -> Floor 2 anchors -> Floor 3 rotational close",
+    "time_cap_min": 58,
+    "status": "LIVE - daily brief refreshed",
+    "blocks": [
+      {
+        "id": "prep",
+        "label": "Floor 3 Hip Prehab + Athletic Primer",
+        "floor": "Floor 3",
+        "time_min": 10,
+        "exercises": [
+          {
+            "name": "Lateral Step-to-Stick",
+            "prescription": "2x4/side",
+            "load": "BW",
+            "cues": "Step sideways, land quietly, and freeze for 2 seconds. Tall finish every rep; control comes before speed."
+          },
+          {
+            "name": "Standing Cable Hip Extension to Neutral",
+            "prescription": "2x10/side",
+            "load": "5.7 kg",
+            "cues": "Squeeze the glute and stop at neutral, not behind you. No lumbar swing and no front-hip irritation."
+          },
+          {
+            "name": "Quadruped Hip Extension + Glute Squeeze",
+            "prescription": "2x8/side",
+            "load": "BW",
+            "cues": "Move slowly and finish each rep with a clean squeeze. Keep the torso square instead of twisting for range."
+          }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Block A — Athletic Row Anchor",
+        "floor": "Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Barbell Single-Arm Landmine Row",
+            "prescription": "3x8/side",
+            "load": "20 / 25 / 25 kg",
+            "cues": "Brace first and row toward the hip without twisting the torso. Own the top for a beat instead of yanking it."
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Block B — Width and Quad Support",
+        "floor": "Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Wide-Grip Lat Pull Down",
+            "prescription": "3x8",
+            "load": "36 kg",
+            "cues": "Keep the chest tall and pull the elbows down, not back. Stop before the neck reaches forward to finish the rep."
+          },
+          {
+            "name": "Leg Extension",
+            "prescription": "2x10",
+            "load": "25 kg",
+            "cues": "Smooth lift, brief squeeze, controlled lower. This is quad support for the hip track, not a momentum set."
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Block C — Rotation and Lower-Ab Close",
+        "floor": "Floor 3",
+        "time_min": 12,
+        "exercises": [
+          {
+            "name": "Half-Kneeling Cable Lift (Low to High)",
+            "prescription": "2x8/side",
+            "load": "3.4 kg",
+            "cues": "Stay stacked and let the trunk guide the diagonal path. Keep it smooth enough that left and right look the same."
+          },
+          {
+            "name": "Medicine Ball Rotational Slam",
+            "prescription": "2x5/side",
+            "load": "6 kg",
+            "cues": "Rotate through the trunk, then slam with a hard brace and full reset. Fast intent is the point; stop before mechanics blur."
+          }
+        ]
+      }
+    ],
+    "session_notes": "Friday varies the third day as a mixed athletic session instead of another standard corrective-only menu. The landmine row gives a fresh fun anchor that still respects the hip filter, while the pulldown preserves back-width work without repeating pull-ups. Leg extension covers the weekly quad-support requirement from the prehab engine with no deep hip flexion. The cable lift and rotational slam finish the week with power transfer, lower-ab control, and side-waist work.",
+    "planned_date": "2026-05-15",
+    "day_label": "Friday May 15",
+    "coach_note": "Use the planned Friday structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the 122 bpm cap, and keep loaded hip flexion pain-free. Skip the optional close if HR, hip, readiness, or grip says the main work was enough.",
+    "why": "Today matters because it gives the week its push/chest and hip-safe quad signal after the recovery reset. The goal is high-quality load and crisp power, not extra volume."
   },
   "coach_questions": [
     {
