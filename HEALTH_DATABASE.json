@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "created": "2026-04-11",
-    "last_updated": "2026-04-27T04:40:00+08:00",
+    "last_updated": "2026-05-22T15:10:45+08:00",
     "description": "Personal health and training database — Todd Blackhurst AI coaching system",
     "data_sources": [
       "Oura",
@@ -11,7 +11,9 @@
       "Apple Fitness",
       "Motra",
       "Hume Body Pod",
-      "Manual Entry"
+      "Manual Entry",
+      "China Medical University Hospital",
+      "Ocare3 BP App"
     ],
     "unit_conventions": {
       "weight": "kg (convert lbs ÷ 2.2046)",
@@ -12405,21 +12407,106 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-19",
+    "date": "2026-05-23",
     "readiness_tier": "Green",
-    "call": "Recover today based on recovery 84%, HRV 40.9 ms, sleep 7h13, RHR 57.1 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
-    "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 10.6 weeks.",
-    "encouragement": "This is the kind of day that builds the independence and active-family body you are after: crisp work, no sloppy extra volume.",
+    "call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it.",
+    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
+    "progress_note": "Current scale anchor is 169.1 lb; weight is up 2.7 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.8 lb over 10.0 weeks.",
+    "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-05-19",
-      "current_weight_lbs": 166.4,
+      "as_of": "2026-05-23",
+      "current_weight_lbs": 169.0945550958011,
       "target_weight_lbs": 159.3,
-      "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 10.6
-    }
+      "fat_to_lose_lbs": 9.8,
+      "weeks_remaining": 10.0
+    },
+    "active_adjustments": [
+      "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
+      "Cut optional accessories or the finisher before cutting prehab.",
+      "Right-side balance issues need supported, slower unilateral lower-body work before load progression.",
+      "If the hip pinches or the body has to shift to finish the rep, regress immediately.",
+      "power off press: modify",
+      "rotational press: keep"
+    ],
+    "data_completeness": {
+      "date": "2026-05-23",
+      "schedule": {
+        "weekday": "Saturday",
+        "day_type": "weekend_rest",
+        "strength_planned": false,
+        "daily_walk_planned": true,
+        "label": "Saturday rest option",
+        "next_strength_day": "Monday",
+        "non_lift_call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it."
+      },
+      "score_pct": 67,
+      "missing_required": [],
+      "partial_required": [
+        "sleep_recovery",
+        "nutrition"
+      ],
+      "checks": [
+        {
+          "id": "sleep_recovery",
+          "label": "Sleep/recovery",
+          "status": "partial",
+          "required": true,
+          "latest_date": "2026-05-23",
+          "detail": "Sleep timing/duration landed, but readiness-grade recovery signals are still missing."
+        },
+        {
+          "id": "blood_pressure",
+          "label": "Blood pressure",
+          "status": "current",
+          "required": true,
+          "latest_date": "2026-05-23",
+          "detail": "BP is current, but pulse did not come through with the reading."
+        },
+        {
+          "id": "nutrition",
+          "label": "Bevel nutrition",
+          "status": "partial",
+          "required": true,
+          "latest_date": "2026-05-23",
+          "detail": "Hydration/context landed, but usable calories/macros did not."
+        },
+        {
+          "id": "body_composition",
+          "label": "Body composition",
+          "status": "current",
+          "required": false,
+          "latest_date": "2026-05-22",
+          "detail": "Body row is current, but lean mass, skeletal muscle are still missing."
+        },
+        {
+          "id": "strength_session",
+          "label": "Garmin strength activity",
+          "status": "not_expected",
+          "required": false,
+          "latest_date": "2026-05-22",
+          "detail": "No strength session expected today."
+        },
+        {
+          "id": "strength_exercises",
+          "label": "Garmin exercise/set detail",
+          "status": "not_expected",
+          "required": false,
+          "latest_date": "2026-05-20",
+          "detail": "No detailed strength log expected today."
+        },
+        {
+          "id": "workout_feedback",
+          "label": "Workout feedback",
+          "status": "not_expected",
+          "required": false,
+          "latest_date": "2026-05-15",
+          "detail": "No workout feedback expected yet."
+        }
+      ]
+    },
+    "source": "supabase-dashboard"
   },
-  "last_updated": "2026-05-19T06:05:04+08:00",
+  "last_updated": "2026-05-23T06:05:11+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12507,8 +12594,8 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-05-19",
-    "day_label": "Tuesday May 19",
+    "planned_date": "2026-05-23",
+    "day_label": "Saturday May 23",
     "session_type": "Recovery / non-lifting day",
     "floor_plan": "Walk or easy cardio only",
     "time_cap_min": 45,
@@ -14156,6 +14243,172 @@
           "feedback": "2x30-45s each leg; useful ankle/foot work and improved stability."
         }
       ]
+    }
+  ],
+  "medical_labs": [
+    {
+      "date": "2026-05-07",
+      "source": "China Medical University Hospital lab reports",
+      "logged_at": "2026-05-22T15:10:45+08:00",
+      "source_images": [
+        "medical_records/2026-05-07-china-medical-labs/2-Photo-2.jpg",
+        "medical_records/2026-05-07-china-medical-labs/3-Photo-3.jpg",
+        "medical_records/2026-05-07-china-medical-labs/4-Photo-4.jpg",
+        "medical_records/2026-05-07-china-medical-labs/5-Photo-5.jpg",
+        "medical_records/2026-05-07-china-medical-labs/6-Photo-6.jpg",
+        "medical_records/2026-05-07-china-medical-labs/7-Photo-7.jpg"
+      ],
+      "notes": "Manual extraction from lab-report photos. ROC date 1150507 corresponds to 2026-05-07. Values should be confirmed against original PDF/portal if used for medical decisions.",
+      "results": {
+        "HbA1c_pct": {
+          "value": 5.2,
+          "unit": "%",
+          "reference_range": "4.0-5.6",
+          "status": "normal"
+        },
+        "fasting_glucose_mg_dl": {
+          "value": 92,
+          "unit": "mg/dL",
+          "reference_range": "70-100",
+          "status": "normal"
+        },
+        "TSH_uIU_ml": {
+          "value": 2.047,
+          "unit": "uIU/mL",
+          "reference_range": "0.34-5.60",
+          "status": "normal"
+        },
+        "free_T4_ng_dl": {
+          "value": 0.81,
+          "unit": "ng/dL",
+          "reference_range": "0.54-1.40",
+          "status": "normal"
+        },
+        "ApoA1_mg_dl": {
+          "value": 150.0,
+          "unit": "mg/dL",
+          "reference_range": "male 104-202",
+          "status": "normal"
+        },
+        "ApoB_mg_dl": {
+          "value": 48.0,
+          "unit": "mg/dL",
+          "reference_range": "male 66-144",
+          "status": "below_lab_range_low_atherogenic_particle_burden"
+        },
+        "AST_SGOT_U_L": {
+          "value": 35,
+          "unit": "U/L",
+          "reference_range": "5-34",
+          "status": "borderline_high"
+        },
+        "ALT_SGPT_U_L": {
+          "value": 37,
+          "unit": "U/L",
+          "reference_range": "5-40",
+          "status": "normal"
+        },
+        "BUN_mg_dl": {
+          "value": 15,
+          "unit": "mg/dL",
+          "reference_range": "5-26",
+          "status": "normal"
+        },
+        "creatinine_mg_dl": {
+          "value": 1.17,
+          "unit": "mg/dL",
+          "reference_range": "male 0.6-1.3",
+          "status": "normal"
+        },
+        "eGFR_ml_min_1_73m2": {
+          "value": 72.26,
+          "unit": "mL/min/1.73m2",
+          "reference_range": ">=60",
+          "status": "G2_range_without_CKD_diagnosis_by_itself"
+        },
+        "uric_acid_mg_dl": {
+          "value": 4.2,
+          "unit": "mg/dL",
+          "reference_range": "male 4.4-7.6",
+          "status": "slightly_low"
+        },
+        "CPK_U_L": {
+          "value": 331,
+          "unit": "U/L",
+          "reference_range": "male 26-245",
+          "status": "high"
+        },
+        "albumin_g_dl": {
+          "value": 4.4,
+          "unit": "g/dL",
+          "reference_range": "3.8-5.3",
+          "status": "normal"
+        },
+        "total_cholesterol_mg_dl": {
+          "value": 120,
+          "unit": "mg/dL",
+          "reference_range": "130-200",
+          "status": "below_lab_range"
+        },
+        "triglycerides_mg_dl": {
+          "value": 41,
+          "unit": "mg/dL",
+          "reference_range": "<150",
+          "status": "excellent_low"
+        },
+        "sodium_mmol_L": {
+          "value": 141,
+          "unit": "mmol/L",
+          "reference_range": "135-147",
+          "status": "normal"
+        },
+        "potassium_mmol_L": {
+          "value": 4.5,
+          "unit": "mmol/L",
+          "reference_range": "3.5-4.9",
+          "status": "normal"
+        },
+        "HDL_C_mg_dl": {
+          "value": 63.0,
+          "unit": "mg/dL",
+          "reference_range": "male >40",
+          "status": "good"
+        },
+        "LDL_C_mg_dl": {
+          "value": 50.4,
+          "unit": "mg/dL",
+          "reference_range": "<130",
+          "status": "low_on_therapy"
+        },
+        "cholesterol_hdl_ratio": {
+          "value": 1.9,
+          "unit": "ratio",
+          "reference_range": "<5.0",
+          "status": "excellent"
+        }
+      },
+      "coach_interpretation": {
+        "metabolic": "HbA1c 5.2% and fasting glucose 92 mg/dL are normal and improved/steady versus prior A1c 5.3%.",
+        "lipids": "LDL-C 50.4 and ApoB 48 show very low atherogenic particle burden while on pitavastatin; this resolves the prior high-LDL concern in the favorable direction, pending doctor review of whether targets are appropriate.",
+        "kidney": "Creatinine 1.17 and eGFR 72.26 are improved versus the prior eGFR 66.1. Continue hydration and trend monitoring; eGFR >60 alone does not diagnose CKD without persistent abnormality or kidney-damage markers.",
+        "muscle_liver": "CPK 331 and AST 35 are mild flags. Because Todd strength trains and is on a statin, interpret with training/soreness context and ask physician if muscle pain, weakness, dark urine, or persistent elevation appears.",
+        "thyroid": "TSH and Free T4 are within the lab ranges; no obvious thyroid limiter in this panel."
+      }
+    }
+  ],
+  "blood_pressure_summaries": [
+    {
+      "period_start": "2026-05-01",
+      "period_end_displayed": "2026-05-31",
+      "captured_at": "2026-05-22T15:04:00+08:00",
+      "source": "Ocare3 BP App month-view screenshot",
+      "source_images": [
+        "medical_records/2026-05-07-china-medical-labs/1-Photo-1.jpg"
+      ],
+      "average_systolic_mmhg": 123,
+      "average_diastolic_mmhg": 87,
+      "average_heart_rate_bpm": 63,
+      "notes": "Monthly view screenshot displays Average: May 1-May 31 = 123/87 mmHg and 63 bpm. Because the screenshot was captured on 2026-05-22, treat as month-to-date/visible May data unless Ocare recalculates with later readings. Not entered as a single BP reading."
     }
   ]
 }
