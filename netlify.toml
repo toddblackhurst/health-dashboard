@@ -60,6 +60,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/whatsapp-send"
+  to = "/.netlify/functions/whatsapp-send"
+  status = 200
+
+[[redirects]]
   from = "/api/whatsapp"
   to = "/.netlify/functions/whatsapp-webhook"
   status = 200
