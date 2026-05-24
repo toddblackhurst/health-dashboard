@@ -12407,108 +12407,101 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-24",
-    "readiness_tier": "Green",
-    "call": "No strength today. Sunday is a rest option; keep the daily walk easy and reset for Monday.",
+    "date": "2026-05-25",
+    "readiness_tier": "Yellow",
+    "call": "Train modified. Keep the plan, reduce density, and skip the hybrid close if HR or symptoms drift.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 9.9 weeks.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 9.7 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-05-24",
+      "as_of": "2026-05-25",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 9.9
+      "weeks_remaining": 9.7
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
       "Cut optional accessories or the finisher before cutting prehab.",
-      "Right-side balance issues need supported, slower unilateral lower-body work before load progression.",
-      "If the hip pinches or the body has to shift to finish the rep, regress immediately.",
+      "Send Morning Brief, Evening Update, and requested coaching-aspect reports through the WhatsApp connector, even when the report is long; favor precision and completeness over brevity.",
       "power off press: modify",
-      "rotational press: keep"
+      "rotational press: keep",
+      "Cable Pull Through: modify - Hip tender today in the back upper side and front top of leg; Todd suspects overwalking yesterday plus too much sitting…"
     ],
     "data_completeness": {
-      "date": "2026-05-24",
+      "date": "2026-05-25",
       "schedule": {
-        "weekday": "Sunday",
-        "date": "2026-05-24",
-        "day_type": "weekend_rest",
-        "strength_planned": false,
+        "weekday": "Monday",
+        "day_type": "strength",
+        "strength_planned": true,
         "daily_walk_planned": true,
-        "label": "Sunday formal training off",
+        "label": "Monday strength day",
         "next_strength_day": "Monday",
-        "non_lift_call": "No strength today. Sunday is a rest option; keep the daily walk easy and reset for Monday."
+        "non_lift_call": null
       },
       "score_pct": 0,
       "missing_required": [
         "sleep_recovery",
         "blood_pressure",
-        "nutrition"
+        "nutrition",
+        "strength_session",
+        "strength_exercises"
       ],
-      "partial_required": [],
       "checks": [
         {
           "id": "sleep_recovery",
           "label": "Sleep/recovery",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-05-23",
-          "detail": "No current recovery row."
+          "latest_date": "2026-05-24"
         },
         {
           "id": "blood_pressure",
           "label": "Blood pressure",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-05-23",
-          "detail": "No current BP row."
+          "latest_date": "2026-05-24"
         },
         {
           "id": "nutrition",
           "label": "Bevel nutrition",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-05-23",
-          "detail": "No current nutrition row."
+          "latest_date": "2026-05-24"
         },
         {
           "id": "body_composition",
           "label": "Body composition",
           "status": "current",
           "required": false,
-          "latest_date": "2026-05-23",
-          "detail": "Body row is current, but lean mass, skeletal muscle are still missing."
+          "latest_date": "2026-05-23"
         },
         {
           "id": "strength_session",
-          "label": "Garmin strength activity",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-05-22",
-          "detail": "No strength session expected today."
+          "label": "Motra strength session",
+          "status": "pending",
+          "required": true,
+          "latest_date": "2026-05-22"
         },
         {
           "id": "strength_exercises",
-          "label": "Garmin exercise/set detail",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-05-20",
-          "detail": "No detailed strength log expected today."
+          "label": "Motra exercise detail",
+          "status": "pending",
+          "required": true,
+          "latest_date": "2026-05-20"
         },
         {
           "id": "workout_feedback",
           "label": "Workout feedback",
           "status": "not_expected",
           "required": false,
-          "latest_date": "2026-05-15",
-          "detail": "No workout feedback expected yet."
+          "latest_date": "2026-05-15"
         }
       ]
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-05-24T20:09:07+08:00",
+  "last_updated": "2026-05-25T06:05:14+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12596,14 +12589,106 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-05-24",
-    "day_label": "Sunday May 24",
-    "session_type": "Recovery / non-lifting day",
-    "floor_plan": "Walk or easy cardio only",
-    "time_cap_min": 45,
-    "blocks": [],
-    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
-    "why": "Recovery days preserve the quality of the next anchor session."
+    "date": "2026-05-25",
+    "day": "Monday",
+    "session_type": "Push-Dominant Upper / Trunk-First Hypertrophy",
+    "theme": "Open the week with the clearest chest anchor, enough rowing to protect posture, and a trunk-first hybrid close that does not spike HR.",
+    "floor_plan": "Floor 3 prep -> Floor 2 strength floor",
+    "time_cap_min": 62,
+    "status": "LIVE - daily brief refreshed",
+    "blocks": [
+      {
+        "id": "prep",
+        "label": "PREP - Scap / Hip Positioning",
+        "floor": "WorldGym Floor 3",
+        "time_min": 10,
+        "exercises": [
+          {
+            "name": "Side-Lying Thoracic Rotation",
+            "prescription": "2x8/side",
+            "load": "BW",
+            "cues": "Left side first. Let the rib cage lead so the shoulder opens without forcing the lower back."
+          },
+          {
+            "name": "TRX Y Raise",
+            "prescription": "2x10",
+            "load": "BW",
+            "cues": "Reach long and keep the neck quiet. Stop before the traps take over."
+          },
+          {
+            "name": "Standing Cable Hip Abduction",
+            "prescription": "2x10/side",
+            "load": "3.4 kg",
+            "cues": "Left first. Small clean range and a level pelvis only; no sway to steal the rep."
+          }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Block A - Press Anchor + Unilateral Row",
+        "floor": "WorldGym Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Hammer Strength Incline Press",
+            "prescription": "3x6-8",
+            "load": "110 kg total",
+            "cues": "Controlled lower, hard chest drive, shoulders stay down. Leave 1-2 good reps in reserve."
+          },
+          {
+            "name": "Single-Arm Cable Row",
+            "prescription": "3x10/side",
+            "load": "18 kg",
+            "cues": "Chest tall. Drive the elbow back without twisting and own the pause."
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Block B - Athletic Support + Left-Led Lower",
+        "floor": "WorldGym Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Low Step-Up",
+            "prescription": "2x8/side",
+            "load": "6 kg DB",
+            "cues": "Left side leads. Drive through the whole foot and do not push off the trailing leg."
+          },
+          {
+            "name": "Hammer Strength Plate-Loaded Lateral Raise",
+            "prescription": "2x10-12",
+            "load": "5 kg/side",
+            "cues": "Lift to clean shoulder height only. If traps grab it, the set is done."
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Block C - Hybrid Trunk Close",
+        "floor": "WorldGym Floor 2",
+        "time_min": 14,
+        "exercises": [
+          {
+            "name": "Landmine Turkish Sit-Up",
+            "prescription": "2x5/side",
+            "load": "20 kg",
+            "cues": "Roll to the elbow first, keep ribs down, and make every rep unhurried. This is trunk control, not speed."
+          },
+          {
+            "name": "Chest-Supported Dumbbell Rear-Delt Raise",
+            "prescription": "2x12",
+            "load": "6 kg each",
+            "cues": "Lift wide without shrugging and lower slower than you raise."
+          }
+        ]
+      }
+    ],
+    "session_notes": "Monday solves chest firmness early in the week with the clearest press anchor while keeping enough pulling to protect posture. The lower-body slot stays hip-safe and unilateral so the right-dominance correction still gets work without deep hip flexion. The landmine Turkish sit-up gives the week its first trunk-first hybrid close and matches the current photo priorities. Exercise count stays tight so Todd has less room to drift past the cap.",
+    "planned_date": "2026-05-25",
+    "day_label": "Monday May 25",
+    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
+    "why": "The point today is high-quality load and clean positions, not extra volume."
   },
   "coach_questions": [
     {
