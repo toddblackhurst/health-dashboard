@@ -12508,7 +12508,7 @@
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-05-24T06:05:20+08:00",
+  "last_updated": "2026-05-24T20:09:07+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -13474,456 +13474,408 @@
   ],
   "weekly_session_plans": {
     "week_start": "2026-05-25",
-    "week_label": "Kuala Lumpur travel week plus WorldGym return - May 25-29, 2026",
-    "planned_on": "2026-05-23",
-    "source_artifact": "GARMIN_WORKOUTS_WEEK_20260525_KUALA_LUMPUR.md",
-    "location": "JW Marriott Hotel Kuala Lumpur / WorldGym Taichung",
+    "week_label": "Week of May 25–May 30, 2026",
+    "planned_on": "2026-05-24",
+    "source_artifact": "Week of May 25–May 30, 2026 weekly planning refresh",
+    "location": "WorldGym Taichung / outdoor walking",
     "sessions": {
       "1": {
         "date": "2026-05-25",
         "day": "Monday",
-        "session_type": "Travel Day / Arrival Reset",
-        "theme": "Keep travel from stealing Tuesday: easy movement, hip reset, hydration, and no bonus strength.",
-        "floor_plan": "Hotel / airport / outdoor walk as available",
-        "time_cap_min": 35,
-        "status": "LIVE - Kuala Lumpur travel week planned",
+        "session_type": "Push-Dominant Upper / Trunk-First Hypertrophy",
+        "theme": "Open the week with the clearest chest anchor, enough rowing to protect posture, and a trunk-first hybrid close that does not spike HR.",
+        "floor_plan": "Floor 3 prep -> Floor 2 strength floor",
+        "time_cap_min": 62,
+        "status": "LIVE — Week 21 planned",
         "blocks": [
           {
-            "id": "walk",
-            "label": "Easy Travel Walk",
-            "floor": "Any",
-            "time_min": 20,
+            "id": "prep",
+            "label": "PREP - Scap / Hip Positioning",
+            "floor": "WorldGym Floor 3",
+            "time_min": 10,
             "exercises": [
               {
-                "name": "Easy Walk",
-                "prescription": "15-25 min",
+                "name": "Side-Lying Thoracic Rotation",
+                "prescription": "2x8/side",
                 "load": "BW",
-                "cues": "Keep this easy. The goal is circulation after sitting, not training stress."
+                "cues": "Left side first. Let the rib cage lead so the shoulder opens without forcing the lower back."
+              },
+              {
+                "name": "TRX Y Raise",
+                "prescription": "2x10",
+                "load": "BW",
+                "cues": "Reach long and keep the neck quiet. Stop before the traps take over."
+              },
+              {
+                "name": "Standing Cable Hip Abduction",
+                "prescription": "2x10/side",
+                "load": "3.4 kg",
+                "cues": "Left first. Small clean range and a level pelvis only; no sway to steal the rep."
+              }
+            ]
+          },
+          {
+            "id": "a",
+            "label": "Block A - Press Anchor + Unilateral Row",
+            "floor": "WorldGym Floor 2",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Hammer Strength Incline Press",
+                "prescription": "3x6-8",
+                "load": "110 kg total",
+                "cues": "Controlled lower, hard chest drive, shoulders stay down. Leave 1-2 good reps in reserve."
+              },
+              {
+                "name": "Single-Arm Cable Row",
+                "prescription": "3x10/side",
+                "load": "18 kg",
+                "cues": "Chest tall. Drive the elbow back without twisting and own the pause."
+              }
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Block B - Athletic Support + Left-Led Lower",
+            "floor": "WorldGym Floor 2",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Low Step-Up",
+                "prescription": "2x8/side",
+                "load": "6 kg DB",
+                "cues": "Left side leads. Drive through the whole foot and do not push off the trailing leg."
+              },
+              {
+                "name": "Hammer Strength Plate-Loaded Lateral Raise",
+                "prescription": "2x10-12",
+                "load": "5 kg/side",
+                "cues": "Lift to clean shoulder height only. If traps grab it, the set is done."
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "label": "Block C - Hybrid Trunk Close",
+            "floor": "WorldGym Floor 2",
+            "time_min": 14,
+            "exercises": [
+              {
+                "name": "Landmine Turkish Sit-Up",
+                "prescription": "2x5/side",
+                "load": "20 kg",
+                "cues": "Roll to the elbow first, keep ribs down, and make every rep unhurried. This is trunk control, not speed."
+              },
+              {
+                "name": "Chest-Supported Dumbbell Rear-Delt Raise",
+                "prescription": "2x12",
+                "load": "6 kg each",
+                "cues": "Lift wide without shrugging and lower slower than you raise."
+              }
+            ]
+          }
+        ],
+        "session_notes": "Monday solves chest firmness early in the week with the clearest press anchor while keeping enough pulling to protect posture. The lower-body slot stays hip-safe and unilateral so the right-dominance correction still gets work without deep hip flexion. The landmine Turkish sit-up gives the week its first trunk-first hybrid close and matches the current photo priorities. Exercise count stays tight so Todd has less room to drift past the cap."
+      },
+      "2": {
+        "date": "2026-05-26",
+        "day": "Tuesday",
+        "session_type": "Goal Support - Zone 2 + Hip-Calm Reset",
+        "theme": "Use easy aerobic work and a short reset to support recovery, appetite control, and hip calm between lift days.",
+        "floor_plan": "Outdoor walk or WorldGym Floor 1 cardio",
+        "time_cap_min": 40,
+        "status": "LIVE — Week 21 planned",
+        "blocks": [
+          {
+            "id": "zone2",
+            "label": "Easy Aerobic",
+            "floor": "Any",
+            "time_min": 28,
+            "exercises": [
+              {
+                "name": "Walk or Upright Bike",
+                "prescription": "25-35 min",
+                "load": "Easy Zone 2",
+                "cues": "Keep this conversational. The point is support work, not another training hit."
               }
             ]
           },
           {
             "id": "reset",
-            "label": "Hip Reset",
-            "floor": "Hotel room",
+            "label": "Reset",
+            "floor": "Home or open floor space",
             "time_min": 8,
             "exercises": [
               {
-                "name": "Glute Bridge Iso",
-                "prescription": "2x25 sec",
+                "name": "Prone Glute Set",
+                "prescription": "2x10 with 2-sec hold",
                 "load": "BW",
-                "cues": "Heels heavy, ribs down, no front-hip pinch."
-              },
-              {
-                "name": "Side Plank From Knees",
-                "prescription": "2x20 sec/side",
-                "load": "BW",
-                "cues": "Lift the underside waist without rolling open."
-              },
-              {
-                "name": "Standing Calf Raise",
-                "prescription": "2x12",
-                "load": "BW",
-                "cues": "Tall pause at the top, slow lower."
-              }
-            ]
-          }
-        ],
-        "session_notes": "Monday is not a lift. Arrive with the hip quiet and sleep protected so Tuesday can be productive."
-      },
-      "2": {
-        "date": "2026-05-26",
-        "day": "Tuesday",
-        "session_type": "KL Travel Growth A - Lat / Chest / Hamstring / Trunk",
-        "theme": "Use the JW Marriott machines and dumbbells to preserve the hypertrophy block while avoiding deep hip flexion after travel.",
-        "floor_plan": "JW Marriott KL FLYPROJECT gym - cable / machine / dumbbell zone",
-        "time_cap_min": 62,
-        "status": "LIVE - Kuala Lumpur travel week planned",
-        "blocks": [
-          {
-            "id": "warmup",
-            "label": "Warm Up",
-            "floor": "Cardio area",
-            "time_min": 5,
-            "exercises": [
-              {
-                "name": "Bike or Treadmill",
-                "prescription": "5:00 easy",
-                "load": "Easy",
-                "cues": "Warm, not tired. HR should stay boring."
-              }
-            ]
-          },
-          {
-            "id": "prehab",
-            "label": "Hip Surgery Prehab",
-            "floor": "Cable / bench area",
-            "time_min": 9,
-            "exercises": [
-              {
-                "name": "Dumbbell Glute Bridge Iso",
-                "prescription": "2x25 sec",
-                "load": "16-22 kg DB or BW",
-                "cues": "Heels heavy, ribs down, no front-hip pinch."
-              },
-              {
-                "name": "Standing Cable Hip Abduction",
-                "prescription": "2x10/side",
-                "load": "Very light",
-                "cues": "Left first. Small clean range; pelvis level."
-              },
-              {
-                "name": "Cable Pallof Press",
-                "prescription": "2x8/side",
-                "load": "Light-moderate",
-                "cues": "Hands move, body stays stacked."
-              }
-            ]
-          },
-          {
-            "id": "main",
-            "label": "Main Growth Anchors",
-            "floor": "Machine / DB area",
-            "time_min": 32,
-            "exercises": [
-              {
-                "name": "Lat Pulldown",
-                "prescription": "3x6-8",
-                "load": "RPE 7-8",
-                "cues": "Pull to upper chest, own the stretch, no torso yank."
-              },
-              {
-                "name": "Dumbbell Incline Press",
-                "prescription": "3x6-8",
-                "load": "16-20 kg each; 22 kg only if clean",
-                "cues": "Low incline if possible. Chest works, shoulders quiet."
-              },
-              {
-                "name": "Low Row Machine",
-                "prescription": "3x8-10",
-                "load": "RPE 7-8",
-                "cues": "Chest tall, pause hard, slow return."
-              },
-              {
-                "name": "Technogym Leg Curl",
-                "prescription": "2-3x10-15",
-                "load": "Moderate",
-                "cues": "Hamstrings work; hips do not shift."
-              }
-            ]
-          },
-          {
-            "id": "accessory",
-            "label": "Delt / Trunk Close",
-            "floor": "DB / open space",
-            "time_min": 12,
-            "exercises": [
-              {
-                "name": "Dumbbell Lateral Raise",
-                "prescription": "2x10-15",
-                "load": "4-8 kg each",
-                "cues": "Stop before traps take over."
-              },
-              {
-                "name": "Dumbbell Suitcase Hold or Short Carry",
-                "prescription": "2x25-30 sec/side",
-                "load": "20-22 kg if clean",
-                "cues": "Left first. If space is tight, hold tall in place."
-              },
-              {
-                "name": "Optional Cable Chop High to Low",
-                "prescription": "2x8/side",
-                "load": "Light-moderate",
-                "cues": "Only if green and under time. Dynamic Pallof, not twisty speed reps."
-              }
-            ]
-          }
-        ],
-        "session_notes": "Cut optional cable chop first, then the third leg-curl set, then the second lateral-raise set. Do not cut prehab or the pulldown / press / row anchors."
-      },
-      "3": {
-        "date": "2026-05-27",
-        "day": "Wednesday",
-        "session_type": "Travel Goal Support - Zone 2 + Micro-Prehab",
-        "theme": "Keep the aerobic base and hip calm between the two travel lifts without creating leg fatigue.",
-        "floor_plan": "Hotel cardio area or outdoor walk",
-        "time_cap_min": 45,
-        "status": "LIVE - Kuala Lumpur travel week planned",
-        "blocks": [
-          {
-            "id": "zone2",
-            "label": "Easy Zone 2",
-            "floor": "Cardio area / outside",
-            "time_min": 35,
-            "exercises": [
-              {
-                "name": "Walk or Upright Bike",
-                "prescription": "25-45 min",
-                "load": "Easy Zone 2",
-                "cues": "Hip decides walk vs bike. Do not chase pace."
-              }
-            ]
-          },
-          {
-            "id": "micro",
-            "label": "Micro-Prehab",
-            "floor": "Hotel room",
-            "time_min": 8,
-            "exercises": [
-              {
-                "name": "Glute Bridge Iso",
-                "prescription": "2x25 sec",
-                "load": "BW",
-                "cues": "Quiet hip, no pinch."
+                "cues": "Squeeze without arching and stop before the front of the hip talks back."
               },
               {
                 "name": "Bird Dog",
                 "prescription": "2x6/side",
                 "load": "BW",
-                "cues": "Slow enough that pelvis stays level."
-              },
-              {
-                "name": "Side Plank From Knees",
-                "prescription": "2x20 sec/side",
-                "load": "BW",
-                "cues": "Lift the underside waist."
-              }
-            ]
-          }
-        ],
-        "session_notes": "Wednesday supports Thursday. Keep it easy even if the hotel gym is tempting."
-      },
-      "4": {
-        "date": "2026-05-28",
-        "day": "Thursday",
-        "session_type": "KL Travel Growth B - Chest / Shoulder / Row / Glute-Control",
-        "theme": "Repeat the useful hotel-gym machines with a different stress, slightly less draining than Tuesday because Thursday is still a travel day.",
-        "floor_plan": "JW Marriott KL FLYPROJECT gym - dumbbells / machines / cable station",
-        "time_cap_min": 60,
-        "status": "LIVE - Kuala Lumpur travel week planned",
-        "blocks": [
-          {
-            "id": "warmup",
-            "label": "Warm Up",
-            "floor": "Cardio area",
-            "time_min": 5,
-            "exercises": [
-              {
-                "name": "Bike or Treadmill",
-                "prescription": "5:00 easy",
-                "load": "Easy",
-                "cues": "Bike preferred if hips feel stiff from sitting."
-              }
-            ]
-          },
-          {
-            "id": "prehab",
-            "label": "Hip Surgery Prehab",
-            "floor": "Bench / floor space",
-            "time_min": 8,
-            "exercises": [
-              {
-                "name": "Bodyweight Glute Bridge",
-                "prescription": "2x10 with 2-sec hold",
-                "load": "BW or light DB",
-                "cues": "Smooth reps, no anterior pinch."
+                "cues": "Move slowly enough that the pelvis stays level the whole rep."
               },
               {
                 "name": "Standing Calf Raise",
                 "prescription": "2x12",
-                "load": "BW or light DBs",
-                "cues": "Tall rise, pause, slow lower."
-              },
-              {
-                "name": "Side Plank From Knees",
-                "prescription": "2x20 sec/side",
                 "load": "BW",
-                "cues": "Underside waist lifts; ribs do not roll open."
-              }
-            ]
-          },
-          {
-            "id": "main",
-            "label": "Upper Growth Anchors",
-            "floor": "DB / machine area",
-            "time_min": 33,
-            "exercises": [
-              {
-                "name": "Dumbbell Flat or Low-Incline Press",
-                "prescription": "3x8-10",
-                "load": "16-20 kg each; 22 kg only if smooth",
-                "cues": "More pump than max load. No shoulder shrug."
-              },
-              {
-                "name": "Low Row Machine",
-                "prescription": "3x6-8",
-                "load": "Slightly heavier than Tuesday if clean",
-                "cues": "Pull through elbows. Stop before neck joins."
-              },
-              {
-                "name": "Shoulder Press Machine",
-                "prescription": "2-3x6-8",
-                "load": "RPE 7",
-                "cues": "No grinding. Ribs stay stacked."
-              },
-              {
-                "name": "Lat Pulldown",
-                "prescription": "2x8-10",
-                "load": "Moderate",
-                "cues": "Use a grip different from Tuesday if available; controlled stretch."
-              }
-            ]
-          },
-          {
-            "id": "control",
-            "label": "Hip / Rear Delt / Trunk Control",
-            "floor": "Cable station",
-            "time_min": 12,
-            "exercises": [
-              {
-                "name": "Cable Hip Extension to Neutral",
-                "prescription": "2x8-10/side",
-                "load": "Very light",
-                "cues": "Support yourself. Stop before shifting or arching."
-              },
-              {
-                "name": "Cable Rear Delt Fly",
-                "prescription": "2x12-15",
-                "load": "Light",
-                "cues": "Rear shoulder, no shrug, slow return."
-              },
-              {
-                "name": "Cable Pallof Hold",
-                "prescription": "2x20 sec/side",
-                "load": "Light-moderate",
-                "cues": "Quiet pelvis, quiet ribs."
-              },
-              {
-                "name": "Optional Dumbbell Farmer Carry",
-                "prescription": "2x20-30 sec",
-                "load": "18-22 kg each",
-                "cues": "Skip if space is crowded or grip is cooked."
+                "cues": "Tall pause at the top, slow lower, and no bouncing."
               }
             ]
           }
         ],
-        "session_notes": "Cut optional farmer carry first, then the third shoulder-press set, then the second pulldown set. Do not turn Thursday into a leg-press day."
+        "session_notes": "Tuesday exists to protect the three lift days, not compete with them. The easy aerobic work supports body-composition pressure and breaks up sitting without adding strength fatigue. The reset work reinforces gait, calf, and glute support with almost no recovery cost. Keep it boring on purpose."
       },
-      "5": {
-        "date": "2026-05-29",
-        "day": "Friday",
-        "session_type": "Return Growth C - Floor 2 Heavy Chest / Pulldown / Glute",
-        "theme": "Resume the hypertrophy block at WorldGym after travel without treating Friday as a makeup workout.",
-        "floor_plan": "WorldGym Taichung - Floor 2 only",
-        "time_cap_min": 64,
-        "status": "LIVE - WorldGym return planned",
+      "3": {
+        "date": "2026-05-27",
+        "day": "Wednesday",
+        "session_type": "Pull-Dominant Upper / Carry Correction",
+        "theme": "Use fresh vertical pulling, a cleaner left-led hinge, and the week's main carry exposure without letting grip or HR take over.",
+        "floor_plan": "Floor 3 prep -> Floor 2 strength floor",
+        "time_cap_min": 63,
+        "status": "LIVE — Week 21 planned",
         "blocks": [
           {
-            "id": "warmup",
-            "label": "Warm Up",
-            "floor": "Floor 2 cardio / arrival area",
-            "time_min": 5,
-            "exercises": [
-              {
-                "name": "Bike or Treadmill",
-                "prescription": "5:00 easy",
-                "load": "Easy",
-                "cues": "Let the body arrive before loading. HR should stay boring."
-              }
-            ]
-          },
-          {
-            "id": "prehab",
-            "label": "Hip Surgery Prehab",
-            "floor": "WorldGym Floor 2",
+            "id": "prep",
+            "label": "PREP - Pull Pattern Setup",
+            "floor": "WorldGym Floor 3",
             "time_min": 10,
             "exercises": [
               {
+                "name": "Open Book Stretch",
+                "prescription": "2x8/side",
+                "load": "BW",
+                "cues": "Breathe out as you open. Let the upper back move instead of yanking the shoulder."
+              },
+              {
+                "name": "Scapular Pull Up",
+                "prescription": "2x6",
+                "load": "BW",
+                "cues": "Pull the shoulders down away from the ears and reset each rep. Keep this crisp, not grindy."
+              },
+              {
                 "name": "Supported Low-Range Hip Thrust Iso",
                 "prescription": "2x20 sec",
-                "load": "BW or empty Matrix glute trainer",
-                "cues": "Low range, ribs down, no front-hip pinch."
-              },
-              {
-                "name": "Floor 2 Hip Abduction Machine",
-                "prescription": "2x10/side",
-                "load": "Light",
-                "cues": "Left first. Small clean range; pelvis level."
-              },
-              {
-                "name": "Side Plank From Knees",
-                "prescription": "2x20 sec/side",
                 "load": "BW",
-                "cues": "Quiet ribs and pelvis. Stop before twisting."
+                "cues": "Short range only. Heels heavy, ribs down, and no front-hip pinch."
               }
             ]
           },
           {
-            "id": "main",
-            "label": "Main Growth Anchors",
-            "floor": "WorldGym Floor 2 Hammer Strength / Matrix zone",
-            "time_min": 35,
+            "id": "a",
+            "label": "Block A - Fresh Pull Anchor",
+            "floor": "WorldGym Floor 2",
+            "time_min": 18,
             "exercises": [
               {
-                "name": "Hammer Strength Wide Chest Press",
-                "prescription": "3x6-8",
-                "load": "RPE 7-8; start one notch under May 22 if travel sleep was poor",
-                "cues": "Controlled lower, strong press, no shoulder shrug. Same-floor fallback: Hammer Strength Incline Press."
-              },
-              {
-                "name": "Hammer Strength Front Lat Pulldown",
-                "prescription": "3x8-10",
-                "load": "RPE 7-8; 70-75 kg only if warmups feel clean",
-                "cues": "Parallel/neutral grip if available. Pull through elbows, own the stretch. Same-floor fallback: Hammer Strength Wide Pulldown."
+                "name": "Pull-Up",
+                "prescription": "3x5",
+                "load": "BW",
+                "cues": "Hold the top for 2 seconds on every clean rep and own a 3-count descent. Stop the set before the chin chase starts."
               },
               {
                 "name": "Hammer Strength D.Y. Row",
-                "prescription": "2x8-10",
-                "load": "Moderate-heavy, clean pause",
-                "cues": "Chest tall, neck quiet, slow return. Same-floor fallback: chest-supported dumbbell row."
-              },
-              {
-                "name": "Matrix Glute Trainer",
-                "prescription": "2x8-10",
-                "load": "60-67.5 kg if hip is quiet; reduce if any pinch",
-                "cues": "Shorten range before forcing depth. Glutes work, hip stays quiet."
+                "prescription": "3x8",
+                "load": "50 kg total",
+                "cues": "Chest stays proud, neck stays quiet, and the return is slower than the pull."
               }
             ]
           },
           {
-            "id": "support",
-            "label": "Hamstring / Delt / Trunk Close",
+            "id": "b",
+            "label": "Block B - Width + Unilateral Hinge",
+            "floor": "WorldGym Floor 2",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Hammer Strength Front Lat Pulldown",
+                "prescription": "2x8",
+                "load": "75 kg",
+                "cues": "Repeat the bodyweight milestone cleanly. Pull through the elbows and own the stretch instead of yanking with the hands."
+              },
+              {
+                "name": "Supported Single-Leg RDL",
+                "prescription": "2x8/side",
+                "load": "10 kg DB",
+                "cues": "Left side first. Keep both hip bones square and stop the rep before balance steals the hinge."
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "label": "Block C - Anti-Rotation + Carry Close",
             "floor": "WorldGym Floor 2",
             "time_min": 14,
             "exercises": [
               {
-                "name": "Hammer Strength Kneeling Leg Curl",
-                "prescription": "2x10-15",
-                "load": "Moderate",
-                "cues": "Smooth squeeze; hips do not shift."
-              },
-              {
-                "name": "Hammer Strength Plate-Loaded Lateral Raise",
-                "prescription": "2x10-15",
-                "load": "5-7.5 kg/side if clean",
-                "cues": "Stop before traps take over."
-              },
-              {
-                "name": "Dead Bug",
-                "prescription": "2x8/side",
-                "load": "BW",
-                "cues": "Slow exhale, low back quiet."
-              },
-              {
-                "name": "Optional Landmine Anti-Rotation Press",
+                "name": "Landmine Anti-Rotation Twist",
                 "prescription": "2x6/side",
-                "load": "5-10 kg plate",
-                "cues": "Only if green and under time. Precision, not speed."
+                "load": "25 kg",
+                "cues": "Hips start it, hands guide it, and ribs stay stacked. If the shoulders take over, reduce the speed before the load."
+              },
+              {
+                "name": "Offset Farmer Carry",
+                "prescription": "2x20 m",
+                "load": "24 kg left / 12 kg right",
+                "cues": "Walk tall and let posture, not grip panic, be the limiter. Left hand leads the correction."
               }
             ]
           }
         ],
-        "session_notes": "Cut optional landmine press first, then the second leg-curl set, then the second lateral-raise set. Do not cut prehab or the chest press / pulldown / row anchors."
+        "session_notes": "Wednesday keeps the explicit pull-up preference in the week and lets Todd repeat the recent pulldown milestone without turning it into junk volume. The hinge stays unilateral and supported so the hip gets useful work without deep flexion or chaos. Landmine anti-rotation plus the left-heavy carry cover the side-waist and loaded-posture priorities directly. This is the most correction-heavy lift of the week, but it should still feel like training, not rehab."
+      },
+      "4": {
+        "date": "2026-05-28",
+        "day": "Thursday",
+        "session_type": "Goal Support - Walk + Low-Fatigue Prehab",
+        "theme": "Keep circulation, gait support, and trunk position moving without creating Friday fatigue.",
+        "floor_plan": "Outdoor walk or WorldGym Floor 1 cardio",
+        "time_cap_min": 40,
+        "status": "LIVE — Week 21 planned",
+        "blocks": [
+          {
+            "id": "zone2",
+            "label": "Easy Aerobic",
+            "floor": "Any",
+            "time_min": 28,
+            "exercises": [
+              {
+                "name": "Walk or Upright Bike",
+                "prescription": "25-35 min",
+                "load": "Easy Zone 2",
+                "cues": "If the hip feels stiff from sitting, choose the bike. Keep the effort quiet."
+              }
+            ]
+          },
+          {
+            "id": "reset",
+            "label": "Reset",
+            "floor": "Open floor space or Floor 1 selectorized zone",
+            "time_min": 8,
+            "exercises": [
+              {
+                "name": "Thoracic Rotation",
+                "prescription": "2x8/side",
+                "load": "BW",
+                "cues": "Move from the upper back and keep the hips still. Left side first."
+              },
+              {
+                "name": "Prestige Leg Extension",
+                "prescription": "2x12",
+                "load": "20 kg",
+                "cues": "Smooth lockout, no slam, and stop short of any hip pinch."
+              },
+              {
+                "name": "Side Plank From Knees",
+                "prescription": "2x20 sec/side",
+                "load": "BW",
+                "cues": "Lift the underside waist without rolling open. Keep the breath calm."
+              }
+            ]
+          }
+        ],
+        "session_notes": "Thursday is there to make Friday better, not harder. The easy aerobic block keeps the week from collapsing into chair time and helps appetite, recovery, and blood-pressure management. The reset work gives one more low-cost quad and trunk touch without stealing from the mixed athletic day. Finish feeling fresher than when you started."
+      },
+      "5": {
+        "date": "2026-05-29",
+        "day": "Friday",
+        "session_type": "Mixed Athletic / Corrective",
+        "theme": "Finish the week with a lighter-feeling athletic session that still hits pull, press, posterior chain, and lower-ab control.",
+        "floor_plan": "WorldGym Floor 3 only",
+        "time_cap_min": 58,
+        "status": "LIVE — Week 21 planned",
+        "blocks": [
+          {
+            "id": "prep",
+            "label": "PREP - Athletic Positioning",
+            "floor": "WorldGym Floor 3",
+            "time_min": 10,
+            "exercises": [
+              {
+                "name": "Quadruped T-Spine Rotation",
+                "prescription": "2x8/side",
+                "load": "BW",
+                "cues": "Let the rib cage lead and the eyes follow. Keep the hips quiet."
+              },
+              {
+                "name": "BOSU Single-Leg Balance",
+                "prescription": "2x30 sec/side",
+                "load": "BW",
+                "cues": "Stand tall over the whole foot and earn the position instead of waving the arms around."
+              },
+              {
+                "name": "Chin Tuck",
+                "prescription": "2x8 with 3-sec hold",
+                "load": "BW",
+                "cues": "Lengthen the back of the neck and keep the jaw relaxed."
+              }
+            ]
+          },
+          {
+            "id": "a",
+            "label": "Block A - Pull / Press Pair",
+            "floor": "WorldGym Floor 3",
+            "time_min": 18,
+            "exercises": [
+              {
+                "name": "Half-Kneeling Single-Arm Cable Pull-Down",
+                "prescription": "3x10/side",
+                "load": "12.5 kg",
+                "cues": "Set the shoulder blade down first, then drive the elbow to the hip pocket. Elbow to pocket, not hand to hip."
+              },
+              {
+                "name": "Hoist ROC-IT Shoulder Press",
+                "prescription": "3x8",
+                "load": "32 kg",
+                "cues": "Stack ribs over pelvis and press smoothly. No grinding and no shrug to finish the rep."
+              }
+            ]
+          },
+          {
+            "id": "b",
+            "label": "Block B - Unilateral Control",
+            "floor": "WorldGym Floor 3",
+            "time_min": 16,
+            "exercises": [
+              {
+                "name": "Controlled Low Step-Down",
+                "prescription": "2x8/side",
+                "load": "BW",
+                "cues": "Left side first. Control the lowering and keep the knee tracking over the middle of the foot."
+              },
+              {
+                "name": "Cable Y Raise",
+                "prescription": "2x10/side",
+                "load": "3.4 kg",
+                "cues": "Reach long into the Y without arching or shrugging. Stop before the left side loses the line."
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "label": "Block C - Kettlebell / Lower-Ab Hybrid Close",
+            "floor": "WorldGym Floor 3",
+            "time_min": 12,
+            "exercises": [
+              {
+                "name": "Kettlebell Swing",
+                "prescription": "2x10",
+                "load": "20 kg",
+                "cues": "Snap the hips, float the bell, and park it cleanly. If the swing turns into a squat, stop the set."
+              },
+              {
+                "name": "BOSU Deadbug Ball Pass",
+                "prescription": "2x6/side",
+                "load": "2 kg ball",
+                "cues": "Slow exhale, low back quiet, and earn each pass without losing the pelvis."
+              }
+            ]
+          }
+        ],
+        "session_notes": "Friday deliberately varies the third day away from a pure corrective grind and keeps the athletic mandate obvious. The cable pull-down and ROC-IT press give new angles without repeating the week's main anchors, while the step-down and BOSU work keep unilateral control alive. The kettlebell swing gives the weekly kettlebell exposure without deep loaded hip flexion, and the BOSU pass is the clearest lower-ab anti-extension slot of the week. Fatigue should stay lower than a heavy Floor 2 day, which is the point."
       }
     }
   },
