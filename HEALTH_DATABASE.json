@@ -12426,18 +12426,18 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-29",
-    "readiness_tier": "Red",
-    "call": "Downshift. Recovery, walk, mobility, or a heavily modified session only.",
-    "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 9.1 weeks.",
+    "date": "2026-05-30",
+    "readiness_tier": "Yellow",
+    "call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it.",
+    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 9.0 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-05-29",
+      "as_of": "2026-05-30",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 9.1
+      "weeks_remaining": 9.0
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
@@ -12448,23 +12448,21 @@
       "rotational press: keep"
     ],
     "data_completeness": {
-      "date": "2026-05-29",
+      "date": "2026-05-30",
       "schedule": {
-        "weekday": "Friday",
-        "day_type": "strength",
-        "strength_planned": true,
+        "weekday": "Saturday",
+        "day_type": "weekend_rest",
+        "strength_planned": false,
         "daily_walk_planned": true,
-        "label": "Friday strength day",
-        "next_strength_day": "Friday",
-        "non_lift_call": null
+        "label": "Saturday rest option",
+        "next_strength_day": "Monday",
+        "non_lift_call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it."
       },
       "score_pct": 0,
       "missing_required": [
         "sleep_recovery",
         "blood_pressure",
-        "nutrition",
-        "strength_session",
-        "strength_exercises"
+        "nutrition"
       ],
       "checks": [
         {
@@ -12472,7 +12470,7 @@
           "label": "Sleep/recovery",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-05-28"
+          "latest_date": "2026-05-29"
         },
         {
           "id": "blood_pressure",
@@ -12498,15 +12496,15 @@
         {
           "id": "strength_session",
           "label": "Motra strength session",
-          "status": "pending",
-          "required": true,
+          "status": "not_expected",
+          "required": false,
           "latest_date": "2026-05-26"
         },
         {
           "id": "strength_exercises",
           "label": "Motra exercise detail",
-          "status": "pending",
-          "required": true,
+          "status": "not_expected",
+          "required": false,
           "latest_date": "2026-05-26"
         },
         {
@@ -12520,7 +12518,7 @@
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-05-29T06:05:10+08:00",
+  "last_updated": "2026-05-30T06:05:07+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12608,124 +12606,14 @@
     }
   ],
   "upcoming_session": {
-    "date": "2026-05-29",
-    "day": "Friday",
-    "session_type": "Return Growth C - Floor 2 Heavy Chest / Pulldown / Glute",
-    "theme": null,
-    "floor_plan": "WorldGym Taichung - Floor 2 only",
-    "time_cap_min": 60,
-    "status": "LIVE - daily brief refreshed",
-    "blocks": [
-      {
-        "id": "warmup",
-        "floor": "Floor 2 cardio / arrival area",
-        "label": "Warm Up",
-        "time_min": 5,
-        "exercises": [
-          {
-            "cues": "Let the body arrive before loading. HR should stay boring.",
-            "load": "Easy",
-            "name": "Bike or Treadmill",
-            "prescription": "5:00 easy"
-          }
-        ]
-      },
-      {
-        "id": "prehab",
-        "floor": "WorldGym Floor 2",
-        "label": "Hip Surgery Prehab",
-        "time_min": 10,
-        "exercises": [
-          {
-            "cues": "Low range, ribs down, no front-hip pinch.",
-            "load": "BW or empty Matrix glute trainer",
-            "name": "Supported Low-Range Hip Thrust Iso",
-            "prescription": "2x20 sec"
-          },
-          {
-            "cues": "Left first. Small clean range; pelvis level.",
-            "load": "Light",
-            "name": "Floor 2 Hip Abduction Machine",
-            "prescription": "2x10/side"
-          },
-          {
-            "cues": "Quiet ribs and pelvis. Stop before twisting.",
-            "load": "BW",
-            "name": "Side Plank From Knees",
-            "prescription": "2x20 sec/side"
-          }
-        ]
-      },
-      {
-        "id": "main",
-        "floor": "WorldGym Floor 2 Hammer Strength / Matrix zone",
-        "label": "Main Growth Anchors",
-        "time_min": 34,
-        "exercises": [
-          {
-            "cues": "Controlled lower, strong press, no shoulder shrug. Same-floor fallback: Hammer Strength Incline Press.",
-            "load": "RPE 7-8; start one notch under May 22 if travel sleep was poor",
-            "name": "Hammer Strength Wide Chest Press",
-            "prescription": "3x6-8"
-          },
-          {
-            "cues": "Parallel/neutral grip if available. Pull through elbows, own the stretch. No PR chase after travel.",
-            "load": "RPE 7-8; use 65-70 kg unless warmups and HR are unusually quiet",
-            "name": "Hammer Strength Front Lat Pulldown",
-            "prescription": "3x8-10"
-          },
-          {
-            "cues": "Chest tall, neck quiet, slow return. Same-floor fallback: chest-supported dumbbell row.",
-            "load": "Moderate-heavy, clean pause",
-            "name": "Hammer Strength D.Y. Row",
-            "prescription": "2x8-10"
-          },
-          {
-            "cues": "Shorten range before forcing depth. Glutes work, hip stays quiet.",
-            "load": "60-67.5 kg if hip is quiet; reduce if any pinch",
-            "name": "Matrix Glute Trainer",
-            "prescription": "2x8-10"
-          }
-        ]
-      },
-      {
-        "id": "support",
-        "floor": "WorldGym Floor 2",
-        "label": "Hamstring / Delt / Trunk Close",
-        "time_min": 11,
-        "exercises": [
-          {
-            "cues": "Smooth squeeze; hips do not shift.",
-            "load": "Moderate",
-            "name": "Hammer Strength Kneeling Leg Curl",
-            "prescription": "2x10-15"
-          },
-          {
-            "cues": "Stop before traps take over.",
-            "load": "5-7.5 kg/side if clean",
-            "name": "Hammer Strength Plate-Loaded Lateral Raise",
-            "prescription": "2x10-15"
-          },
-          {
-            "cues": "Slow exhale, low back quiet.",
-            "load": "BW",
-            "name": "Dead Bug",
-            "prescription": "2x8/side"
-          },
-          {
-            "cues": "Only if green and under time. Cut first if HR drifts. Precision, not speed.",
-            "load": "5-10 kg plate",
-            "name": "Optional Landmine Anti-Rotation Press",
-            "prescription": "1x6/side"
-          }
-        ]
-      }
-    ],
-    "session_notes": null,
-    "planned_date": "2026-05-29",
-    "day_label": "Friday May 29",
-    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
-    "why": "The point today is high-quality load and clean positions, not extra volume."
+    "planned_date": "2026-05-30",
+    "day_label": "Saturday May 30",
+    "session_type": "Recovery / non-lifting day",
+    "floor_plan": "Walk or easy cardio only",
+    "time_cap_min": 45,
+    "blocks": [],
+    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
+    "why": "Recovery days preserve the quality of the next anchor session."
   },
   "coach_questions": [
     {
