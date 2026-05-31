@@ -12426,18 +12426,18 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-05-31",
+    "date": "2026-06-01",
     "readiness_tier": "Green",
-    "call": "No strength today. Sunday is a rest option; keep the daily walk easy and reset for Monday.",
+    "call": "Train. Use the planned strength/athletic session.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.9 weeks.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.7 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-05-31",
+      "as_of": "2026-06-01",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 8.9
+      "weeks_remaining": 8.7
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
@@ -12448,86 +12448,79 @@
       "rotational press: keep"
     ],
     "data_completeness": {
-      "date": "2026-05-31",
+      "date": "2026-06-01",
       "schedule": {
-        "weekday": "Sunday",
-        "date": "2026-05-31",
-        "day_type": "weekend_rest",
-        "strength_planned": false,
+        "weekday": "Monday",
+        "day_type": "strength",
+        "strength_planned": true,
         "daily_walk_planned": true,
-        "label": "Sunday formal training off",
+        "label": "Monday strength day",
         "next_strength_day": "Monday",
-        "non_lift_call": "No strength today. Sunday is a rest option; keep the daily walk easy and reset for Monday."
+        "non_lift_call": null
       },
       "score_pct": 0,
       "missing_required": [
         "sleep_recovery",
         "blood_pressure",
-        "nutrition"
+        "nutrition",
+        "strength_session",
+        "strength_exercises"
       ],
-      "partial_required": [],
       "checks": [
         {
           "id": "sleep_recovery",
           "label": "Sleep/recovery",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-05-30",
-          "detail": "No current recovery row."
+          "latest_date": "2026-05-31"
         },
         {
           "id": "blood_pressure",
           "label": "Blood pressure",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-05-30",
-          "detail": "No current BP row."
+          "latest_date": "2026-05-30"
         },
         {
           "id": "nutrition",
           "label": "Bevel nutrition",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-05-30",
-          "detail": "No current nutrition row."
+          "latest_date": "2026-05-30"
         },
         {
           "id": "body_composition",
           "label": "Body composition",
           "status": "current",
           "required": false,
-          "latest_date": "2026-05-23",
-          "detail": "Body row is current, but lean mass, skeletal muscle are still missing."
+          "latest_date": "2026-05-23"
         },
         {
           "id": "strength_session",
-          "label": "Garmin strength activity",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-05-29",
-          "detail": "No strength session expected today."
+          "label": "Motra strength session",
+          "status": "pending",
+          "required": true,
+          "latest_date": "2026-05-29"
         },
         {
           "id": "strength_exercises",
-          "label": "Garmin exercise/set detail",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-05-26",
-          "detail": "No detailed strength log expected today."
+          "label": "Motra exercise detail",
+          "status": "pending",
+          "required": true,
+          "latest_date": "2026-05-26"
         },
         {
           "id": "workout_feedback",
           "label": "Workout feedback",
           "status": "not_expected",
           "required": false,
-          "latest_date": "2026-05-15",
-          "detail": "No workout feedback expected yet."
+          "latest_date": "2026-05-15"
         }
       ]
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-05-31T20:08:31+08:00",
+  "last_updated": "2026-06-01T06:05:12+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12615,14 +12608,106 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-05-31",
-    "day_label": "Sunday May 31",
-    "session_type": "Recovery / non-lifting day",
-    "floor_plan": "Walk or easy cardio only",
-    "time_cap_min": 45,
-    "blocks": [],
-    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
-    "why": "Recovery days preserve the quality of the next anchor session."
+    "date": "2026-06-01",
+    "day": "Monday",
+    "session_type": "Push-dominant growth",
+    "theme": "Heavy chest first, then glutes and trunk so the week opens with visible hypertrophy without chasing fatigue.",
+    "floor_plan": "Floor 3 prep -> Floor 2 for Blocks A-C",
+    "time_cap_min": 60,
+    "status": "LIVE - daily brief refreshed",
+    "blocks": [
+      {
+        "id": "prep",
+        "label": "PREP — Hip Surgery Prehab",
+        "floor": "Floor 3",
+        "time_min": 10,
+        "exercises": [
+          {
+            "name": "Quadruped T-Spine Rotation",
+            "prescription": "2×6/side",
+            "load": "BW",
+            "cues": "Rotate from mid-back, not the low back. Left side leads and nothing should feel rushed."
+          },
+          {
+            "name": "Standing Cable Hip Abduction",
+            "prescription": "2×10/side",
+            "load": "3.4 kg",
+            "cues": "Small clean range. Keep the pelvis level and stop before the hip starts hiking."
+          },
+          {
+            "name": "Side Plank From Knees",
+            "prescription": "2×20 sec/side",
+            "load": "BW",
+            "cues": "Lift the underside waist and keep the ribs stacked. This is trunk stiffness, not a long grind."
+          }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Block A — Chest Anchor",
+        "floor": "Floor 2",
+        "time_min": 20,
+        "exercises": [
+          {
+            "name": "Hammer Strength Wide Chest Press",
+            "prescription": "3×8",
+            "load": "25 kg/side",
+            "cues": "Controlled lower, hard press, no shoulder shrug. Chest works while the neck stays quiet."
+          },
+          {
+            "name": "Hammer Strength D.Y. Row",
+            "prescription": "3×10",
+            "load": "30 kg/side",
+            "cues": "Chest stays tall on the pad. Pull through the elbows and pause without yanking."
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Block B — Glute And Rear-Shoulder Support",
+        "floor": "Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Matrix Glute Trainer",
+            "prescription": "3×8",
+            "load": "67.5 kg",
+            "cues": "Shorten the range before forcing depth. Glutes finish the rep and the right hip stays quiet."
+          },
+          {
+            "name": "Barbell Bench Rear Delt Raise",
+            "prescription": "2×12",
+            "load": "6 kg/side",
+            "cues": "Move from the back of the shoulder, not the traps. Slow the return so posture work actually lands."
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Block C — Trunk / Carry Close",
+        "floor": "Floor 2",
+        "time_min": 12,
+        "exercises": [
+          {
+            "name": "Landmine Turkish Sit-Up",
+            "prescription": "2×5/side",
+            "load": "10 kg",
+            "cues": "Ribs stay down as you sit tall. Move smoothly and stop before the hip tries to help."
+          },
+          {
+            "name": "Dumbbell Suitcase Carry",
+            "prescription": "2×20 m/side, left first",
+            "load": "20 kg",
+            "cues": "Walk tall and let posture, not grip collapse, end the set. Keep the body from leaning into the bell."
+          }
+        ]
+      }
+    ],
+    "session_notes": "This opens the week with the clearest hypertrophy signal: chest, upper-back support, and the glute machine Todd asked to keep in rotation. I rotated away from wall slides, dead hangs, Pallof holds, cable hip extension, and med-ball slams because they were recently overused. The landmine Turkish sit-up plus left-led suitcase carry handles lower-ab, side-waist, and loaded-posture work without adding junk fatigue. After the Floor 3 prep block, everything stays on Floor 2 to protect the cap and HR.",
+    "planned_date": "2026-06-01",
+    "day_label": "Monday Jun 1",
+    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
+    "why": "The point today is high-quality load and clean positions, not extra volume."
   },
   "coach_questions": [
     {
