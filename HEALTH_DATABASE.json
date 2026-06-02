@@ -12426,18 +12426,18 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-02",
-    "readiness_tier": "Red",
-    "call": "No strength today. Tuesday is coach-planned goal support: daily walk plus Zone 2 conditioning and mobility/core so fat loss, conditioning, and recovery move forward without stealing from Wednesday strength.",
+    "date": "2026-06-03",
+    "readiness_tier": "Green",
+    "call": "Train. Use the planned strength/athletic session.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.6 weeks.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.4 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-02",
+      "as_of": "2026-06-03",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 8.6
+      "weeks_remaining": 8.4
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
@@ -12448,77 +12448,88 @@
       "rotational press: keep"
     ],
     "data_completeness": {
-      "date": "2026-06-02",
+      "date": "2026-06-03",
       "schedule": {
-        "weekday": "Tuesday",
-        "day_type": "goal_support",
-        "strength_planned": false,
+        "weekday": "Wednesday",
+        "date": "2026-06-03",
+        "day_type": "strength",
+        "strength_planned": true,
         "daily_walk_planned": true,
-        "label": "Tuesday coach-planned goal-support day",
+        "label": "Wednesday strength day",
         "next_strength_day": "Wednesday",
-        "non_lift_call": "No strength today. Tuesday is coach-planned goal support: daily walk plus Zone 2 conditioning and mobility/core so fat loss, conditioning, and recovery move forward without stealing from Wednesday strength."
+        "non_lift_call": null
       },
-      "score_pct": 0,
+      "score_pct": 40,
       "missing_required": [
+        "strength_session",
+        "strength_exercises"
+      ],
+      "partial_required": [
         "sleep_recovery",
-        "blood_pressure",
         "nutrition"
       ],
       "checks": [
         {
           "id": "sleep_recovery",
           "label": "Sleep/recovery",
-          "status": "missing",
+          "status": "partial",
           "required": true,
-          "latest_date": "2026-06-01"
+          "latest_date": "2026-06-03",
+          "detail": "Sleep timing/duration landed, but readiness-grade recovery signals are still missing."
         },
         {
           "id": "blood_pressure",
           "label": "Blood pressure",
-          "status": "missing",
+          "status": "current",
           "required": true,
-          "latest_date": "2026-05-30"
+          "latest_date": "2026-06-03",
+          "detail": "BP is current, but pulse did not come through with the reading."
         },
         {
           "id": "nutrition",
           "label": "Bevel nutrition",
-          "status": "missing",
+          "status": "partial",
           "required": true,
-          "latest_date": "2026-05-30"
+          "latest_date": "2026-06-03",
+          "detail": "Hydration/context landed, but usable calories/macros did not."
         },
         {
           "id": "body_composition",
           "label": "Body composition",
           "status": "current",
           "required": false,
-          "latest_date": "2026-05-23"
+          "latest_date": "2026-05-23",
+          "detail": "Body row is current, but lean mass, skeletal muscle are still missing."
         },
         {
           "id": "strength_session",
-          "label": "Motra strength session",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-05-29"
+          "label": "Garmin strength activity",
+          "status": "pending",
+          "required": true,
+          "latest_date": "2026-05-29",
+          "detail": "Today is a lift day, but no session has landed yet."
         },
         {
           "id": "strength_exercises",
-          "label": "Motra exercise detail",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-05-26"
+          "label": "Garmin exercise/set detail",
+          "status": "pending",
+          "required": true,
+          "latest_date": "2026-05-26",
+          "detail": "No detailed strength execution has landed yet today."
         },
         {
           "id": "workout_feedback",
           "label": "Workout feedback",
           "status": "not_expected",
           "required": false,
-          "latest_date": "2026-05-15"
+          "latest_date": "2026-05-15",
+          "detail": "No workout feedback expected yet."
         }
       ]
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-06-02T06:05:15+08:00",
+  "last_updated": "2026-06-03T06:05:13+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12606,14 +12617,106 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-06-02",
-    "day_label": "Tuesday Jun 2",
-    "session_type": "Recovery / non-lifting day",
-    "floor_plan": "Walk or easy cardio only",
-    "time_cap_min": 45,
-    "blocks": [],
-    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
-    "why": "Recovery days preserve the quality of the next anchor session."
+    "date": "2026-06-03",
+    "day": "Wednesday",
+    "session_type": "Pull-dominant growth",
+    "theme": "Pull-ups stay in, then width work and a kettlebell close build the back without turning the day into conditioning.",
+    "floor_plan": "Floor 3 prep -> Floor 2 for Blocks A-C",
+    "time_cap_min": 58,
+    "status": "LIVE - daily brief refreshed",
+    "blocks": [
+      {
+        "id": "prep",
+        "label": "PREP — Hip Surgery Prehab",
+        "floor": "Floor 3",
+        "time_min": 10,
+        "exercises": [
+          {
+            "name": "Open Book Stretch",
+            "prescription": "2×6/side",
+            "load": "BW",
+            "cues": "Open from the rib cage and keep the hips quiet. Smooth breaths only."
+          },
+          {
+            "name": "Prone Glute Set",
+            "prescription": "2×8 with 3-sec squeeze",
+            "load": "BW",
+            "cues": "Squeeze the glute without arching the low back. This is a wake-up drill, not range-chasing."
+          },
+          {
+            "name": "Cable Y Raise",
+            "prescription": "2×10",
+            "load": "2.3 kg/side",
+            "cues": "Reach up without shrugging. Let the lower traps do the work."
+          }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Block A — Pull-Up Anchor",
+        "floor": "Floor 2",
+        "time_min": 20,
+        "exercises": [
+          {
+            "name": "Pull-Up",
+            "prescription": "4×4",
+            "load": "BW",
+            "cues": "Start each rep long, then pull the chest up with a clean top position. Stop before the rib cage starts kicking."
+          },
+          {
+            "name": "Hammer Strength Incline Press",
+            "prescription": "3×8",
+            "load": "25 kg/side",
+            "cues": "Keep the shoulders quiet and drive through the chest. No sloppy grinder reps."
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Block B — Width And Hamstring Support",
+        "floor": "Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Hammer Strength Front Lat Pulldown",
+            "prescription": "3×8",
+            "load": "75 kg",
+            "cues": "Own the stretch, then pull to the upper chest without torso swing. This is width work, not momentum."
+          },
+          {
+            "name": "Hammer Strength Kneeling Leg Curl",
+            "prescription": "3×10",
+            "load": "73 kg",
+            "cues": "Squeeze hard and keep the hips from shifting. Smooth hamstrings, quiet lower back."
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Block C — Kettlebell Hybrid Close",
+        "floor": "Floor 2",
+        "time_min": 10,
+        "exercises": [
+          {
+            "name": "Kettlebell Swing",
+            "prescription": "2×10",
+            "load": "20 kg",
+            "cues": "Snap the hips and park the bell cleanly. If speed drops or HR drifts, stop there."
+          },
+          {
+            "name": "Kettlebell Front-Rack Carry",
+            "prescription": "2×20 m/side, left first",
+            "load": "16 kg",
+            "cues": "Walk stacked and let the trunk resist the bell. No leaning back and no rushed steps."
+          }
+        ]
+      }
+    ],
+    "session_notes": "Pull-up exposure stays in the week because it is a real preference and the trend is still moving up. The main width work stays productive with the 75 kg front pulldown, but I kept the rest of the day simple so the session does not become junk pulling volume. The kettlebell close gives the week its fun mandate while training loaded posture and power transfer. Overused May patterns like dead hangs, bodyweight glute bridge, and medicine-ball slams stay out.",
+    "planned_date": "2026-06-03",
+    "day_label": "Wednesday Jun 3",
+    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
+    "why": "The point today is high-quality load and clean positions, not extra volume."
   },
   "coach_questions": [
     {
