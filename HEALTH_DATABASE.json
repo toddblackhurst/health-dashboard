@@ -12426,18 +12426,18 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-03",
+    "date": "2026-06-05",
     "readiness_tier": "Green",
     "call": "Train. Use the planned strength/athletic session.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.4 weeks.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.1 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-03",
+      "as_of": "2026-06-05",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 8.4
+      "weeks_remaining": 8.1
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
@@ -12448,50 +12448,50 @@
       "rotational press: keep"
     ],
     "data_completeness": {
-      "date": "2026-06-03",
+      "date": "2026-06-05",
       "schedule": {
-        "weekday": "Wednesday",
-        "date": "2026-06-03",
+        "weekday": "Friday",
+        "date": "2026-06-05",
         "day_type": "strength",
         "strength_planned": true,
         "daily_walk_planned": true,
-        "label": "Wednesday strength day",
-        "next_strength_day": "Wednesday",
+        "label": "Friday strength day",
+        "next_strength_day": "Friday",
         "non_lift_call": null
       },
-      "score_pct": 40,
+      "score_pct": 0,
       "missing_required": [
+        "sleep_recovery",
+        "blood_pressure",
+        "nutrition",
         "strength_session",
         "strength_exercises"
       ],
-      "partial_required": [
-        "sleep_recovery",
-        "nutrition"
-      ],
+      "partial_required": [],
       "checks": [
         {
           "id": "sleep_recovery",
           "label": "Sleep/recovery",
-          "status": "partial",
+          "status": "missing",
           "required": true,
-          "latest_date": "2026-06-03",
-          "detail": "Sleep timing/duration landed, but readiness-grade recovery signals are still missing."
+          "latest_date": "2026-06-04",
+          "detail": "No current recovery row."
         },
         {
           "id": "blood_pressure",
           "label": "Blood pressure",
-          "status": "current",
+          "status": "missing",
           "required": true,
-          "latest_date": "2026-06-03",
-          "detail": "BP is current, but pulse did not come through with the reading."
+          "latest_date": "2026-06-04",
+          "detail": "No current BP row."
         },
         {
           "id": "nutrition",
           "label": "Bevel nutrition",
-          "status": "partial",
+          "status": "missing",
           "required": true,
-          "latest_date": "2026-06-03",
-          "detail": "Hydration/context landed, but usable calories/macros did not."
+          "latest_date": "2026-06-04",
+          "detail": "No current nutrition row."
         },
         {
           "id": "body_composition",
@@ -12506,7 +12506,7 @@
           "label": "Garmin strength activity",
           "status": "pending",
           "required": true,
-          "latest_date": "2026-05-29",
+          "latest_date": "2026-06-03",
           "detail": "Today is a lift day, but no session has landed yet."
         },
         {
@@ -12514,7 +12514,7 @@
           "label": "Garmin exercise/set detail",
           "status": "pending",
           "required": true,
-          "latest_date": "2026-05-26",
+          "latest_date": "2026-06-03",
           "detail": "No detailed strength execution has landed yet today."
         },
         {
@@ -12529,7 +12529,7 @@
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-06-03T06:05:13+08:00",
+  "last_updated": "2026-06-05T06:05:13+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12617,11 +12617,11 @@
     }
   ],
   "upcoming_session": {
-    "date": "2026-06-03",
-    "day": "Wednesday",
-    "session_type": "Pull-dominant growth",
-    "theme": "Pull-ups stay in, then width work and a kettlebell close build the back without turning the day into conditioning.",
-    "floor_plan": "Floor 3 prep -> Floor 2 for Blocks A-C",
+    "date": "2026-06-05",
+    "day": "Friday",
+    "session_type": "Mixed athletic corrective",
+    "theme": "Floor 3 stays intentionally athletic: one press, one pull, a supported unilateral hinge, and trunk stiffness without deep hip flexion.",
+    "floor_plan": "Floor 3 only",
     "time_cap_min": 58,
     "status": "LIVE - daily brief refreshed",
     "blocks": [
@@ -12632,89 +12632,89 @@
         "time_min": 10,
         "exercises": [
           {
-            "name": "Open Book Stretch",
+            "name": "Side-Lying Thoracic Rotation Stretch",
             "prescription": "2×6/side",
             "load": "BW",
-            "cues": "Open from the rib cage and keep the hips quiet. Smooth breaths only."
+            "cues": "Open the chest while the knees stay stacked. No forcing the low back."
           },
           {
-            "name": "Prone Glute Set",
-            "prescription": "2×8 with 3-sec squeeze",
+            "name": "Hoist ROC-IT Outer Thigh",
+            "prescription": "2×12",
+            "load": "25 kg",
+            "cues": "Small clean reps and no torso sway. Feel the side hip, not the front of the joint."
+          },
+          {
+            "name": "Bird Dog",
+            "prescription": "2×6/side",
             "load": "BW",
-            "cues": "Squeeze the glute without arching the low back. This is a wake-up drill, not range-chasing."
-          },
-          {
-            "name": "Cable Y Raise",
-            "prescription": "2×10",
-            "load": "2.3 kg/side",
-            "cues": "Reach up without shrugging. Let the lower traps do the work."
+            "cues": "Reach long and keep the pelvis quiet. The goal is trunk control, not height."
           }
         ]
       },
       {
         "id": "a",
-        "label": "Block A — Pull-Up Anchor",
-        "floor": "Floor 2",
+        "label": "Block A — Athletic Push / Pull",
+        "floor": "Floor 3",
         "time_min": 20,
         "exercises": [
           {
-            "name": "Pull-Up",
-            "prescription": "4×4",
-            "load": "BW",
-            "cues": "Start each rep long, then pull the chest up with a clean top position. Stop before the rib cage starts kicking."
+            "name": "Hoist ROC-IT Chest Press",
+            "prescription": "3×10",
+            "load": "35 kg",
+            "cues": "Drive the handles smoothly and keep the chest open. Stop before shoulders roll forward."
           },
           {
-            "name": "Hammer Strength Incline Press",
-            "prescription": "3×8",
-            "load": "25 kg/side",
-            "cues": "Keep the shoulders quiet and drive through the chest. No sloppy grinder reps."
+            "name": "Half-Kneeling Single-Arm Cable Pull-Down",
+            "prescription": "3×10/side",
+            "load": "10.2 kg",
+            "cues": "Pull the elbow to the hip and stay tall through the trunk. Left knee down first."
           }
         ]
       },
       {
         "id": "b",
-        "label": "Block B — Width And Hamstring Support",
-        "floor": "Floor 2",
-        "time_min": 18,
+        "label": "Block B — Unilateral Hinge / Rear-Shoulder Control",
+        "floor": "Floor 3",
+        "time_min": 16,
         "exercises": [
           {
-            "name": "Hammer Strength Front Lat Pulldown",
-            "prescription": "3×8",
-            "load": "75 kg",
-            "cues": "Own the stretch, then pull to the upper chest without torso swing. This is width work, not momentum."
+            "name": "Supported Single-Leg RDL",
+            "prescription": "3×8/side",
+            "load": "10 kg DB",
+            "cues": "Use rack or bench support so balance does not steal the set. Keep both hip bones square."
           },
           {
-            "name": "Hammer Strength Kneeling Leg Curl",
-            "prescription": "3×10",
-            "load": "73 kg",
-            "cues": "Squeeze hard and keep the hips from shifting. Smooth hamstrings, quiet lower back."
+            "name": "Cable Rear Delt Fly",
+            "prescription": "2×12",
+            "load": "4.5 kg/side",
+            "cues": "Back of the shoulder moves the weight. No shrug and no torso swing."
           }
         ]
       },
       {
         "id": "c",
-        "label": "Block C — Kettlebell Hybrid Close",
-        "floor": "Floor 2",
-        "time_min": 10,
+        "label": "Block C — Trunk Stiffness Close",
+        "floor": "Floor 3",
+        "time_min": 12,
         "exercises": [
           {
-            "name": "Kettlebell Swing",
-            "prescription": "2×10",
-            "load": "20 kg",
-            "cues": "Snap the hips and park the bell cleanly. If speed drops or HR drifts, stop there."
+            "name": "Cable Lift Low to High",
+            "prescription": "2×8/side",
+            "load": "7.9 kg",
+            "cues": "Move through the trunk without losing the ribs-down brace. Smooth power, not yanky speed."
           },
           {
-            "name": "Kettlebell Front-Rack Carry",
-            "prescription": "2×20 m/side, left first",
-            "load": "16 kg",
-            "cues": "Walk stacked and let the trunk resist the bell. No leaning back and no rushed steps."
+            "name": "Bear Hold",
+            "prescription": "2×20 sec",
+            "load": "BW",
+            "cues": "Knees hover low, ribs stay stacked, and the low back stays quiet. This is the lower-ab anti-extension slot for the week."
           }
         ]
       }
     ],
-    "session_notes": "Pull-up exposure stays in the week because it is a real preference and the trend is still moving up. The main width work stays productive with the 75 kg front pulldown, but I kept the rest of the day simple so the session does not become junk pulling volume. The kettlebell close gives the week its fun mandate while training loaded posture and power transfer. Overused May patterns like dead hangs, bodyweight glute bridge, and medicine-ball slams stay out.",
-    "planned_date": "2026-06-03",
-    "day_label": "Wednesday Jun 3",
+    "session_notes": "Friday varies the third-day pattern on purpose: it is a mixed athletic corrective day instead of another straight hypertrophy slot. Everything stays on Floor 3 so the session feels different and smoother logistically after two Floor 2 days. The supported single-leg RDL respects the earlier feedback that unsupported balance-heavy hinges steal the training effect. The close finishes the week with trunk stiffness and power transfer instead of more random volume.",
+    "planned_date": "2026-06-05",
+    "day_label": "Friday Jun 5",
     "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
     "why": "The point today is high-quality load and clean positions, not extra volume."
   },
