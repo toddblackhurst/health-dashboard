@@ -12426,18 +12426,18 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-05",
+    "date": "2026-06-06",
     "readiness_tier": "Green",
-    "call": "Train. Use the planned strength/athletic session.",
-    "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.1 weeks.",
+    "call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it.",
+    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.0 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-05",
+      "as_of": "2026-06-06",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 8.1
+      "weeks_remaining": 8.0
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
@@ -12448,24 +12448,22 @@
       "rotational press: keep"
     ],
     "data_completeness": {
-      "date": "2026-06-05",
+      "date": "2026-06-06",
       "schedule": {
-        "weekday": "Friday",
-        "date": "2026-06-05",
-        "day_type": "strength",
-        "strength_planned": true,
+        "weekday": "Saturday",
+        "date": "2026-06-06",
+        "day_type": "weekend_rest",
+        "strength_planned": false,
         "daily_walk_planned": true,
-        "label": "Friday strength day",
-        "next_strength_day": "Friday",
-        "non_lift_call": null
+        "label": "Saturday rest option",
+        "next_strength_day": "Monday",
+        "non_lift_call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it."
       },
       "score_pct": 0,
       "missing_required": [
         "sleep_recovery",
         "blood_pressure",
-        "nutrition",
-        "strength_session",
-        "strength_exercises"
+        "nutrition"
       ],
       "partial_required": [],
       "checks": [
@@ -12474,7 +12472,7 @@
           "label": "Sleep/recovery",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-06-04",
+          "latest_date": "2026-06-05",
           "detail": "No current recovery row."
         },
         {
@@ -12482,7 +12480,7 @@
           "label": "Blood pressure",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-06-04",
+          "latest_date": "2026-06-05",
           "detail": "No current BP row."
         },
         {
@@ -12490,7 +12488,7 @@
           "label": "Bevel nutrition",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-06-04",
+          "latest_date": "2026-06-05",
           "detail": "No current nutrition row."
         },
         {
@@ -12504,18 +12502,18 @@
         {
           "id": "strength_session",
           "label": "Garmin strength activity",
-          "status": "pending",
-          "required": true,
-          "latest_date": "2026-06-03",
-          "detail": "Today is a lift day, but no session has landed yet."
+          "status": "not_expected",
+          "required": false,
+          "latest_date": "2026-06-05",
+          "detail": "No strength session expected today."
         },
         {
           "id": "strength_exercises",
           "label": "Garmin exercise/set detail",
-          "status": "pending",
-          "required": true,
+          "status": "not_expected",
+          "required": false,
           "latest_date": "2026-06-03",
-          "detail": "No detailed strength execution has landed yet today."
+          "detail": "No detailed strength log expected today."
         },
         {
           "id": "workout_feedback",
@@ -12529,7 +12527,7 @@
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-06-05T06:05:13+08:00",
+  "last_updated": "2026-06-06T06:05:13+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12617,106 +12615,14 @@
     }
   ],
   "upcoming_session": {
-    "date": "2026-06-05",
-    "day": "Friday",
-    "session_type": "Mixed athletic corrective",
-    "theme": "Floor 3 stays intentionally athletic: one press, one pull, a supported unilateral hinge, and trunk stiffness without deep hip flexion.",
-    "floor_plan": "Floor 3 only",
-    "time_cap_min": 58,
-    "status": "LIVE - daily brief refreshed",
-    "blocks": [
-      {
-        "id": "prep",
-        "label": "PREP — Hip Surgery Prehab",
-        "floor": "Floor 3",
-        "time_min": 10,
-        "exercises": [
-          {
-            "name": "Side-Lying Thoracic Rotation Stretch",
-            "prescription": "2×6/side",
-            "load": "BW",
-            "cues": "Open the chest while the knees stay stacked. No forcing the low back."
-          },
-          {
-            "name": "Hoist ROC-IT Outer Thigh",
-            "prescription": "2×12",
-            "load": "25 kg",
-            "cues": "Small clean reps and no torso sway. Feel the side hip, not the front of the joint."
-          },
-          {
-            "name": "Bird Dog",
-            "prescription": "2×6/side",
-            "load": "BW",
-            "cues": "Reach long and keep the pelvis quiet. The goal is trunk control, not height."
-          }
-        ]
-      },
-      {
-        "id": "a",
-        "label": "Block A — Athletic Push / Pull",
-        "floor": "Floor 3",
-        "time_min": 20,
-        "exercises": [
-          {
-            "name": "Hoist ROC-IT Chest Press",
-            "prescription": "3×10",
-            "load": "35 kg",
-            "cues": "Drive the handles smoothly and keep the chest open. Stop before shoulders roll forward."
-          },
-          {
-            "name": "Half-Kneeling Single-Arm Cable Pull-Down",
-            "prescription": "3×10/side",
-            "load": "10.2 kg",
-            "cues": "Pull the elbow to the hip and stay tall through the trunk. Left knee down first."
-          }
-        ]
-      },
-      {
-        "id": "b",
-        "label": "Block B — Unilateral Hinge / Rear-Shoulder Control",
-        "floor": "Floor 3",
-        "time_min": 16,
-        "exercises": [
-          {
-            "name": "Supported Single-Leg RDL",
-            "prescription": "3×8/side",
-            "load": "10 kg DB",
-            "cues": "Use rack or bench support so balance does not steal the set. Keep both hip bones square."
-          },
-          {
-            "name": "Cable Rear Delt Fly",
-            "prescription": "2×12",
-            "load": "4.5 kg/side",
-            "cues": "Back of the shoulder moves the weight. No shrug and no torso swing."
-          }
-        ]
-      },
-      {
-        "id": "c",
-        "label": "Block C — Trunk Stiffness Close",
-        "floor": "Floor 3",
-        "time_min": 12,
-        "exercises": [
-          {
-            "name": "Cable Lift Low to High",
-            "prescription": "2×8/side",
-            "load": "7.9 kg",
-            "cues": "Move through the trunk without losing the ribs-down brace. Smooth power, not yanky speed."
-          },
-          {
-            "name": "Bear Hold",
-            "prescription": "2×20 sec",
-            "load": "BW",
-            "cues": "Knees hover low, ribs stay stacked, and the low back stays quiet. This is the lower-ab anti-extension slot for the week."
-          }
-        ]
-      }
-    ],
-    "session_notes": "Friday varies the third-day pattern on purpose: it is a mixed athletic corrective day instead of another straight hypertrophy slot. Everything stays on Floor 3 so the session feels different and smoother logistically after two Floor 2 days. The supported single-leg RDL respects the earlier feedback that unsupported balance-heavy hinges steal the training effect. The close finishes the week with trunk stiffness and power transfer instead of more random volume.",
-    "planned_date": "2026-06-05",
-    "day_label": "Friday Jun 5",
-    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
-    "why": "The point today is high-quality load and clean positions, not extra volume."
+    "planned_date": "2026-06-06",
+    "day_label": "Saturday Jun 6",
+    "session_type": "Recovery / non-lifting day",
+    "floor_plan": "Walk or easy cardio only",
+    "time_cap_min": 45,
+    "blocks": [],
+    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
+    "why": "Recovery days preserve the quality of the next anchor session."
   },
   "coach_questions": [
     {
