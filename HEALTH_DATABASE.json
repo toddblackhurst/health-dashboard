@@ -12426,18 +12426,18 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-06",
+    "date": "2026-06-07",
     "readiness_tier": "Green",
-    "call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it.",
-    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 8.0 weeks.",
+    "call": "No strength today. Sunday is a rest option; keep the daily walk easy and reset for Monday.",
+    "sprint_gate": "N/A - sprints are Saturday-standalone.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 7.9 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-06",
+      "as_of": "2026-06-07",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 8.0
+      "weeks_remaining": 7.9
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
@@ -12448,16 +12448,16 @@
       "rotational press: keep"
     ],
     "data_completeness": {
-      "date": "2026-06-06",
+      "date": "2026-06-07",
       "schedule": {
-        "weekday": "Saturday",
-        "date": "2026-06-06",
+        "weekday": "Sunday",
+        "date": "2026-06-07",
         "day_type": "weekend_rest",
         "strength_planned": false,
         "daily_walk_planned": true,
-        "label": "Saturday rest option",
+        "label": "Sunday formal training off",
         "next_strength_day": "Monday",
-        "non_lift_call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it."
+        "non_lift_call": "No strength today. Sunday is a rest option; keep the daily walk easy and reset for Monday."
       },
       "score_pct": 0,
       "missing_required": [
@@ -12472,7 +12472,7 @@
           "label": "Sleep/recovery",
           "status": "missing",
           "required": true,
-          "latest_date": "2026-06-05",
+          "latest_date": "2026-06-06",
           "detail": "No current recovery row."
         },
         {
@@ -12494,10 +12494,10 @@
         {
           "id": "body_composition",
           "label": "Body composition",
-          "status": "current",
+          "status": "stale",
           "required": false,
           "latest_date": "2026-05-23",
-          "detail": "Body row is current, but lean mass, skeletal muscle are still missing."
+          "detail": "No recent body-comp row within 14 days."
         },
         {
           "id": "strength_session",
@@ -12527,7 +12527,7 @@
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-06-06T06:05:13+08:00",
+  "last_updated": "2026-06-07T06:05:11+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12615,8 +12615,8 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-06-06",
-    "day_label": "Saturday Jun 6",
+    "planned_date": "2026-06-07",
+    "day_label": "Sunday Jun 7",
     "session_type": "Recovery / non-lifting day",
     "floor_plan": "Walk or easy cardio only",
     "time_cap_min": 45,
