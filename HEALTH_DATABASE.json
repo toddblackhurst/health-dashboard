@@ -12517,7 +12517,7 @@
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-06-07T08:39:07+08:00",
+  "last_updated": "2026-06-07T20:01:44+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -13482,24 +13482,24 @@
     }
   ],
   "weekly_session_plans": {
-    "week_start": "2026-06-01",
-    "week_label": "Week of Jun 1–Jun 6, 2026",
-    "planned_on": "2026-05-31",
-    "source_artifact": "Weekly plan generated from ACTIVE_COACH_MEMORY.md, SESSION_MEMORY.md, and HEALTH_DATABASE.json on 2026-05-31",
+    "week_start": "2026-06-08",
+    "week_label": "Week of Jun 8–Jun 13, 2026",
+    "planned_on": "2026-06-07",
+    "source_artifact": "Weekly plan generated from ACTIVE_COACH_MEMORY.md, SESSION_MEMORY.md, and HEALTH_DATABASE.json on 2026-06-07",
     "location": "WorldGym Taichung",
     "sessions": {
       "1": {
-        "date": "2026-06-01",
+        "date": "2026-06-08",
         "day": "Monday",
-        "session_type": "Push-dominant growth",
-        "theme": "Heavy chest first, then glutes and trunk so the week opens with visible hypertrophy without chasing fatigue.",
+        "session_type": "Push-dominant modified upper",
+        "theme": "Chest and upper-back anchors stay heavy while the hamstring gets a quiet week and the trunk still gets real work.",
         "floor_plan": "Floor 3 prep -> Floor 2 for Blocks A-C",
-        "time_cap_min": 60,
-        "status": "LIVE — Week 22 planned",
+        "time_cap_min": 58,
+        "status": "LIVE — Week 23 planned",
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP — Hip Surgery Prehab",
+            "label": "PREP — Floor 3 reset",
             "floor": "Floor 3",
             "time_min": 10,
             "exercises": [
@@ -13507,97 +13507,97 @@
                 "name": "Quadruped T-Spine Rotation",
                 "prescription": "2×6/side",
                 "load": "BW",
-                "cues": "Rotate from mid-back, not the low back. Left side leads and nothing should feel rushed."
+                "cues": "Rotate from the mid-back and keep the low back quiet. Left side leads and nothing gets forced."
               },
               {
                 "name": "Standing Cable Hip Abduction",
                 "prescription": "2×10/side",
                 "load": "3.4 kg",
-                "cues": "Small clean range. Keep the pelvis level and stop before the hip starts hiking."
+                "cues": "Small clean range only. Keep the pelvis level and stop before the right side starts hiking or grabbing."
               },
               {
-                "name": "Side Plank From Knees",
-                "prescription": "2×20 sec/side",
+                "name": "Dead Bug Heel Tap",
+                "prescription": "2×6/side",
                 "load": "BW",
-                "cues": "Lift the underside waist and keep the ribs stacked. This is trunk stiffness, not a long grind."
+                "cues": "Ribs stay down and the heel only drops as far as the low back stays flat. This is lower-ab control, not speed."
               }
             ]
           },
           {
             "id": "a",
-            "label": "Block A — Chest Anchor",
+            "label": "Block A — Chest anchor",
             "floor": "Floor 2",
-            "time_min": 20,
+            "time_min": 18,
             "exercises": [
               {
                 "name": "Hammer Strength Wide Chest Press",
                 "prescription": "3×8",
                 "load": "25 kg/side",
-                "cues": "Controlled lower, hard press, no shoulder shrug. Chest works while the neck stays quiet."
+                "cues": "Controlled lower, hard press, and no shrug. Let the chest do the work without turning it into a grinder."
               },
               {
                 "name": "Hammer Strength D.Y. Row",
-                "prescription": "3×10",
+                "prescription": "3×8",
                 "load": "30 kg/side",
-                "cues": "Chest stays tall on the pad. Pull through the elbows and pause without yanking."
+                "cues": "Chest stays tall on the pad. Drive the elbows back and pause without yanking."
               }
             ]
           },
           {
             "id": "b",
-            "label": "Block B — Glute And Rear-Shoulder Support",
+            "label": "Block B — Quad and rear-shoulder support",
             "floor": "Floor 2",
-            "time_min": 18,
+            "time_min": 16,
             "exercises": [
               {
-                "name": "Matrix Glute Trainer",
-                "prescription": "3×8",
-                "load": "67.5 kg",
-                "cues": "Shorten the range before forcing depth. Glutes finish the rep and the right hip stays quiet."
+                "name": "Hammer Strength Leg Extension",
+                "prescription": "2×10",
+                "load": "45 kg",
+                "cues": "Smooth squeeze at the top and controlled lower. No swinging or chasing lockout speed."
               },
               {
-                "name": "Barbell Bench Rear Delt Raise",
+                "name": "Chest-Supported Dumbbell Rear Delt Raise",
                 "prescription": "2×12",
                 "load": "6 kg/side",
-                "cues": "Move from the back of the shoulder, not the traps. Slow the return so posture work actually lands."
+                "cues": "Move from the back of the shoulder, not the traps. Slow the return so the posture work actually lands."
               }
             ]
           },
           {
             "id": "c",
-            "label": "Block C — Trunk / Carry Close",
+            "label": "Block C — Trunk and carry close",
             "floor": "Floor 2",
             "time_min": 12,
             "exercises": [
               {
-                "name": "Landmine Turkish Sit-Up",
-                "prescription": "2×5/side",
-                "load": "10 kg",
-                "cues": "Ribs stay down as you sit tall. Move smoothly and stop before the hip tries to help."
+                "name": "Unilateral Pallof Press",
+                "prescription": "2×10/side",
+                "load": "7.9 kg",
+                "cues": "Press straight out and keep the body quiet. No twist, no rush, and no rib flare."
               },
               {
                 "name": "Dumbbell Suitcase Carry",
                 "prescription": "2×20 m/side, left first",
                 "load": "20 kg",
-                "cues": "Walk tall and let posture, not grip collapse, end the set. Keep the body from leaning into the bell."
+                "cues": "Walk tall and keep the torso from leaning into the bell. Let posture, not grip collapse, end the set."
               }
             ]
           }
         ],
-        "session_notes": "This opens the week with the clearest hypertrophy signal: chest, upper-back support, and the glute machine Todd asked to keep in rotation. I rotated away from wall slides, dead hangs, Pallof holds, cable hip extension, and med-ball slams because they were recently overused. The landmine Turkish sit-up plus left-led suitcase carry handles lower-ab, side-waist, and loaded-posture work without adding junk fatigue. After the Floor 3 prep block, everything stays on Floor 2 to protect the cap and HR."
+        "session_notes": "Monday opens the week with the safest high-return pattern: heavy chest and upper-back work, gentle quad support, and no loaded hamstring lengthening. I kept static trunk work instead of loaded rotation because the current active issue is the likely proximal right hamstring strain from Friday. The carry and dead-bug slot still hit side-waist and lower-ab priorities without violating the current guardrails. Recent overused patterns from the local logs stay out: wall slides, dead hangs, bodyweight glute bridges, cable hip extension to neutral, cable Pallof holds, and medicine-ball slams."
       },
       "3": {
-        "date": "2026-06-03",
+        "date": "2026-06-10",
         "day": "Wednesday",
-        "session_type": "Pull-dominant growth",
-        "theme": "Pull-ups stay in, then width work and a kettlebell close build the back without turning the day into conditioning.",
+        "session_type": "Pull-dominant modified upper",
+        "theme": "Pull-ups stay in, width work stays heavy, and the close builds posture without any hamstring gamble.",
         "floor_plan": "Floor 3 prep -> Floor 2 for Blocks A-C",
-        "time_cap_min": 58,
-        "status": "LIVE — Week 22 planned",
+        "time_cap_min": 57,
+        "status": "LIVE — Week 23 planned",
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP — Hip Surgery Prehab",
+            "label": "PREP — Floor 3 reset",
             "floor": "Floor 3",
             "time_min": 10,
             "exercises": [
@@ -13611,91 +13611,91 @@
                 "name": "Prone Glute Set",
                 "prescription": "2×8 with 3-sec squeeze",
                 "load": "BW",
-                "cues": "Squeeze the glute without arching the low back. This is a wake-up drill, not range-chasing."
+                "cues": "Wake the glute up without arching the low back. This is tension, not range-chasing."
               },
               {
                 "name": "Cable Y Raise",
                 "prescription": "2×10",
                 "load": "2.3 kg/side",
-                "cues": "Reach up without shrugging. Let the lower traps do the work."
+                "cues": "Reach up without shrugging. Keep the neck quiet and let the lower traps start the lift."
               }
             ]
           },
           {
             "id": "a",
-            "label": "Block A — Pull-Up Anchor",
+            "label": "Block A — Pull-up anchor",
             "floor": "Floor 2",
-            "time_min": 20,
+            "time_min": 18,
             "exercises": [
               {
                 "name": "Pull-Up",
                 "prescription": "4×4",
                 "load": "BW",
-                "cues": "Start each rep long, then pull the chest up with a clean top position. Stop before the rib cage starts kicking."
+                "cues": "Start long, then pull the chest up cleanly. Stop before the ribs kick or the rep turns ugly."
               },
               {
                 "name": "Hammer Strength Incline Press",
                 "prescription": "3×8",
                 "load": "25 kg/side",
-                "cues": "Keep the shoulders quiet and drive through the chest. No sloppy grinder reps."
+                "cues": "Drive through the chest and keep the shoulders quiet. No sloppy grinder reps."
               }
             ]
           },
           {
             "id": "b",
-            "label": "Block B — Width And Hamstring Support",
+            "label": "Block B — Width and calf support",
             "floor": "Floor 2",
-            "time_min": 18,
+            "time_min": 17,
             "exercises": [
               {
                 "name": "Hammer Strength Front Lat Pulldown",
                 "prescription": "3×8",
                 "load": "75 kg",
-                "cues": "Own the stretch, then pull to the upper chest without torso swing. This is width work, not momentum."
+                "cues": "Own the stretch and pull to the upper chest without torso swing. This is width work, not momentum."
               },
               {
-                "name": "Hammer Strength Kneeling Leg Curl",
-                "prescription": "3×10",
-                "load": "73 kg",
-                "cues": "Squeeze hard and keep the hips from shifting. Smooth hamstrings, quiet lower back."
+                "name": "Smith Standing Calf Raise",
+                "prescription": "2×12",
+                "load": "40 kg",
+                "cues": "Full controlled rise, slow lower, and no bouncing. Keep it smooth so the calf work stays supportive, not sloppy."
               }
             ]
           },
           {
             "id": "c",
-            "label": "Block C — Kettlebell Hybrid Close",
+            "label": "Block C — Posture close",
             "floor": "Floor 2",
-            "time_min": 10,
+            "time_min": 12,
             "exercises": [
-              {
-                "name": "Kettlebell Swing",
-                "prescription": "2×10",
-                "load": "20 kg",
-                "cues": "Snap the hips and park the bell cleanly. If speed drops or HR drifts, stop there."
-              },
               {
                 "name": "Kettlebell Front-Rack Carry",
                 "prescription": "2×20 m/side, left first",
                 "load": "16 kg",
                 "cues": "Walk stacked and let the trunk resist the bell. No leaning back and no rushed steps."
+              },
+              {
+                "name": "Side Plank From Knees",
+                "prescription": "2×20 sec/side",
+                "load": "BW",
+                "cues": "Lift the underside waist and keep the ribs stacked. Short, crisp holds beat long shaky ones."
               }
             ]
           }
         ],
-        "session_notes": "Pull-up exposure stays in the week because it is a real preference and the trend is still moving up. The main width work stays productive with the 75 kg front pulldown, but I kept the rest of the day simple so the session does not become junk pulling volume. The kettlebell close gives the week its fun mandate while training loaded posture and power transfer. Overused May patterns like dead hangs, bodyweight glute bridge, and medicine-ball slams stay out."
+        "session_notes": "Wednesday keeps Pull-Up in the week because that preference is explicit and the last logged archive still shows it as a real anchor worth progressing. I preserved the 75 kg front pulldown milestone rather than adding random extra pulling volume, then closed with a kettlebell posture carry because this week still needs a fun implement without using swings. The calf slot gives lower-leg support while the hamstring strain is under protection. Everything stays hamstring-safe: no leg curl, no hinge, no ballistic hip snap, and no loaded rotation."
       },
       "5": {
-        "date": "2026-06-05",
+        "date": "2026-06-12",
         "day": "Friday",
-        "session_type": "Mixed athletic corrective",
-        "theme": "Floor 3 stays intentionally athletic: one press, one pull, a supported unilateral hinge, and trunk stiffness without deep hip flexion.",
+        "session_type": "Mixed corrective unilateral",
+        "theme": "Friday stays varied but conservative: a different floor, different machines, and a left-led carry close without any strain-risk lower-body loading.",
         "floor_plan": "Floor 3 only",
-        "time_cap_min": 58,
-        "status": "LIVE — Week 22 planned",
+        "time_cap_min": 56,
+        "status": "LIVE — Week 23 planned",
         "blocks": [
           {
             "id": "prep",
-            "label": "PREP — Hip Surgery Prehab",
+            "label": "PREP — Floor 3 reset",
             "floor": "Floor 3",
             "time_min": 10,
             "exercises": [
@@ -13715,72 +13715,72 @@
                 "name": "Bird Dog",
                 "prescription": "2×6/side",
                 "load": "BW",
-                "cues": "Reach long and keep the pelvis quiet. The goal is trunk control, not height."
+                "cues": "Reach long and keep the pelvis quiet. This is trunk control, not height."
               }
             ]
           },
           {
             "id": "a",
-            "label": "Block A — Athletic Push / Pull",
+            "label": "Block A — Mixed push and pull",
             "floor": "Floor 3",
-            "time_min": 20,
+            "time_min": 18,
             "exercises": [
               {
                 "name": "Hoist ROC-IT Chest Press",
                 "prescription": "3×10",
                 "load": "35 kg",
-                "cues": "Drive the handles smoothly and keep the chest open. Stop before shoulders roll forward."
+                "cues": "Drive the handles smoothly and keep the chest open. Stop before the shoulders roll forward."
               },
               {
-                "name": "Half-Kneeling Single-Arm Cable Pull-Down",
-                "prescription": "3×10/side",
-                "load": "10.2 kg",
-                "cues": "Pull the elbow to the hip and stay tall through the trunk. Left knee down first."
+                "name": "Hoist ROC-IT Mid Row",
+                "prescription": "3×10",
+                "load": "40 kg",
+                "cues": "Start the pull with the shoulder blade, then finish with the elbow. Stay tall and do not yank."
               }
             ]
           },
           {
             "id": "b",
-            "label": "Block B — Unilateral Hinge / Rear-Shoulder Control",
+            "label": "Block B — Unilateral support without hamstring strain",
             "floor": "Floor 3",
             "time_min": 16,
             "exercises": [
               {
-                "name": "Supported Single-Leg RDL",
-                "prescription": "3×8/side",
-                "load": "10 kg DB",
-                "cues": "Use rack or bench support so balance does not steal the set. Keep both hip bones square."
+                "name": "Hoist ROC-IT Leg Extension",
+                "prescription": "2×12",
+                "load": "40 kg",
+                "cues": "Smooth squeeze and controlled lower. Keep it clean and stop before the knee snap gets sloppy."
               },
               {
-                "name": "Cable Rear Delt Fly",
-                "prescription": "2×12",
-                "load": "4.5 kg/side",
-                "cues": "Back of the shoulder moves the weight. No shrug and no torso swing."
+                "name": "Cable Lateral Raise",
+                "prescription": "2×12/side",
+                "load": "4.5 kg",
+                "cues": "Lift with quiet shoulders and no torso sway. Think smooth arc, not throw."
               }
             ]
           },
           {
             "id": "c",
-            "label": "Block C — Trunk Stiffness Close",
+            "label": "Block C — Trunk and corrective carry close",
             "floor": "Floor 3",
             "time_min": 12,
             "exercises": [
               {
-                "name": "Cable Lift Low to High",
-                "prescription": "2×8/side",
-                "load": "7.9 kg",
-                "cues": "Move through the trunk without losing the ribs-down brace. Smooth power, not yanky speed."
-              },
-              {
                 "name": "Bear Hold",
                 "prescription": "2×20 sec",
                 "load": "BW",
-                "cues": "Knees hover low, ribs stay stacked, and the low back stays quiet. This is the lower-ab anti-extension slot for the week."
+                "cues": "Knees hover low, ribs stay stacked, and the low back stays quiet. This is the lower-ab anti-extension slot, not a conditioning test."
+              },
+              {
+                "name": "Offset Farmer Carry",
+                "prescription": "2×20 m, left 24 kg / right 12 kg",
+                "load": "24 kg left / 12 kg right",
+                "cues": "Left side leads and posture stays tall. Do not let the torso drift or the right side cave toward the load."
               }
             ]
           }
         ],
-        "session_notes": "Friday varies the third-day pattern on purpose: it is a mixed athletic corrective day instead of another straight hypertrophy slot. Everything stays on Floor 3 so the session feels different and smoother logistically after two Floor 2 days. The supported single-leg RDL respects the earlier feedback that unsupported balance-heavy hinges steal the training effect. The close finishes the week with trunk stiffness and power transfer instead of more random volume."
+        "session_notes": "Friday changes the feel of the week without breaking the current injury guardrails: Floor 3 only, ROC-IT machines, and a left-led corrective carry instead of another straight hypertrophy slot. The mixed push-pull anchor keeps the session athletic enough to stay interesting, but I stripped out anything that looks like loaded rotation, swings, RDLs, lunges, deep step-ups, or hamstring-focused work. Bear hold plus offset carry gives the week a second lower-ab and side-waist exposure. This session also keeps the weekly no-repeat rule clean by using entirely different exercises than Monday and Wednesday."
       }
     }
   },
