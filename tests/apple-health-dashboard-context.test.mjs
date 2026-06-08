@@ -81,15 +81,26 @@ function coachGet(action) {
   });
 }
 
+function todayInTaipei() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
 test.afterEach(() => {
   restoreEnv();
 });
 
 test("dashboard, sync-status, and coach-today expose Apple Health supporting evidence from Supabase", async () => {
+  const today = todayInTaipei();
+
   installMockDashboardSupabase({
     appleHealthRows: [{
       profile_id: "profile-1",
-      summary_date: "2026-06-08",
+      summary_date: today,
       source_app: "Apple Health",
       source_device: "Todd iPhone",
       timezone: "Asia/Taipei",
@@ -129,10 +140,12 @@ test("dashboard, sync-status, and coach-today expose Apple Health supporting evi
   assert.equal(dashboardBody.dashboard.current.apple_health_daily_summary.steps, 8421);
   assert.equal(dashboardBody.dashboard.current.apple_health_daily_summary.role, "supporting cross-check");
   assert.equal(syncRes.status, 200);
-  assert.equal(syncBody.apple_health.latest_summary_date, "2026-06-08");
+  assert.equal(syncBody.apple_health.status, "current");
+  assert.equal(syncBody.apple_health.latest_summary_date, today);
   assert.equal(syncBody.apple_health.latest_sync.days_written, 7);
   assert.equal(syncBody.apple_health.role, "supporting cross-check");
   assert.equal(coachTodayRes.status, 200);
+  assert.equal(coachTodayBody.supporting_evidence.apple_health.status, "current");
   assert.equal(coachTodayBody.supporting_evidence.apple_health.source, "Apple Health / HealthKit daily summary");
   assert.match(coachTodayBody.source_context.apple_health_workout_counts, /not completed strength-log authority/);
 });

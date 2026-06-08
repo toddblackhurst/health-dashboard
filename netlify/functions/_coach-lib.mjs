@@ -822,7 +822,7 @@ export function buildAppleHealthSupport(base = {}) {
     : isPartial
       ? "partial"
       : ageDays !== null && ageDays <= 1
-        ? "fresh"
+        ? "current"
         : "stale";
   const warnings = [];
   if (!latestSummary) warnings.push("No Apple Health daily summaries are available. This is a diagnostic gap only.");
@@ -978,7 +978,7 @@ function buildDataCompleteness(base = {}) {
     {
       id: "apple_health_daily_summary",
       label: "Apple Health daily summary",
-      status: appleHealth.status === "fresh" ? "current" : appleHealth.status,
+      status: appleHealth.status,
       required: false,
       latest_date: appleHealth.latest_summary_date,
       source: appleHealth.source,

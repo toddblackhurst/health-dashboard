@@ -202,9 +202,10 @@ test("Apple Health summaries appear as supporting diagnostics when present", () 
   assert.equal(compact.current.apple_health_daily_summary.role, "supporting cross-check");
   assert.equal(compact.current.apple_health_daily_summary.steps, 8421);
   assert.equal(compact.recent.apple_health_daily_summaries.length, 7);
-  assert.equal(syncStatus.apple_health.status, "fresh");
+  assert.equal(syncStatus.apple_health.status, "current");
   assert.equal(syncStatus.apple_health.days_available_last_7, 7);
   assert.equal(syncStatus.apple_health.latest_summary_date, "2026-06-08");
+  assert.equal(coachToday.supporting_evidence.apple_health.status, "current");
   assert.equal(coachToday.supporting_evidence.apple_health.role, "supporting cross-check");
   assert.match(coachToday.source_context.apple_health_workout_counts, /not completed strength-log authority/);
 });
