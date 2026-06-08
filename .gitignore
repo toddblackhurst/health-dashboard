@@ -2,3 +2,8 @@
 node_modules/
 .env
 .env.*
+.DS_Store
+**/.DS_Store
+**/xcuserdata/
+*.xcuserstate
+supabase/.temp/
