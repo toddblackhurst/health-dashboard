@@ -4,6 +4,8 @@ State target: staged until the branch is committed, live Supabase migration 006 
 
 Do not paste secrets into chat, terminal output, screenshots, docs, or commits. Enter `COACH_API_SECRET` only in trusted account/app surfaces.
 
+Phase 3 note: the supporting-evidence read path does not add a migration, deploy step, secret, HealthKit permission, or `HEALTH_DATABASE.json` change. Use this runbook for the original phone-to-live-API verification or for approved production readback only; do not treat it as authorization to run migrations or deployments.
+
 ## 1. Confirm Local Commit State
 
 Before live work, confirm the Apple Health sync work is committed on a feature branch:
@@ -132,3 +134,5 @@ Expected:
 ## 7. Stop Line
 
 Stop after the first physical-device sync is verified. Do not start PR 3 and do not connect Apple Health summaries to readiness scoring until Todd confirms the phone-to-live-API path is verified.
+
+For Phase 3 readback verification after a separately approved production deployment, confirm only that Apple Health appears as optional supporting evidence in `sync-status`, `coach-today`, and dashboard diagnostics. Do not apply migrations, add secrets, or change readiness/workout authority while doing that readback.

@@ -554,7 +554,15 @@ function latest(items, count = 1) {
 
 function rowDate(row = {}) {
   if (!row || typeof row !== "object") return null;
-  return first(row.date, row.measured_date, row.log_date, row.session_date, row.created_at?.slice?.(0, 10)) || null;
+  return first(row.date, row.summary_date, row.measured_date, row.log_date, row.session_date, row.created_at?.slice?.(0, 10)) || null;
+}
+
+function dateAgeDays(dateText, todayText) {
+  if (!dateText || !todayText) return null;
+  const [y1, m1, d1] = String(dateText).split("-").map(Number);
+  const [y2, m2, d2] = String(todayText).split("-").map(Number);
+  if (![y1, m1, d1, y2, m2, d2].every(Number.isFinite)) return null;
+  return Math.round((Date.UTC(y2, m2 - 1, d2) - Date.UTC(y1, m1 - 1, d1)) / 86400000);
 }
 
 function hasExerciseDetail(row = {}) {
@@ -735,6 +743,122 @@ function compactStrengthRow(row = {}) {
   };
 }
 
+function compactAppleHealthSummary(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  return {
+    date: row.summary_date || row.date || null,
+    source: "Apple Health / HealthKit daily summary",
+    role: "supporting cross-check",
+    source_app: row.source_app || "Apple Health",
+    source_device: row.source_device || null,
+    timezone: row.timezone || null,
+    steps: asNumber(row.steps),
+    exercise_minutes: asNumber(row.exercise_minutes),
+    active_energy_kcal: asNumber(row.active_energy_kcal),
+    workout_count: asNumber(row.workout_count),
+    strength_workout_count: asNumber(row.strength_workout_count),
+    cardio_workout_count: asNumber(row.cardio_workout_count),
+    sleep_minutes: asNumber(row.sleep_minutes),
+    resting_hr_bpm: asNumber(row.resting_hr_bpm),
+    hrv_sdnn_ms: asNumber(row.hrv_sdnn_ms),
+    hrv_sample_count: asNumber(row.hrv_sample_count),
+    duplicate_policy_flags: row.duplicate_policy_flags || {},
+    metric_quality: row.metric_quality || {},
+    updated_at: row.updated_at || null,
+  };
+}
+
+function compactAppleHealthSyncRun(row = {}) {
+  if (!row || typeof row !== "object") return null;
+  return {
+    status: row.status || null,
+    days_requested: asNumber(row.days_requested),
+    days_written: asNumber(row.days_written),
+    timezone: row.timezone || null,
+    started_at: row.started_at || null,
+    completed_at: row.completed_at || null,
+    errors: Array.isArray(row.errors) ? row.errors : [],
+  };
+}
+
+function sumAppleHealthMetric(rows = [], field) {
+  return rows.reduce((total, row) => total + (asNumber(row?.[field]) || 0), 0);
+}
+
+function hasAppleHealthDuplicateFlag(row = {}) {
+  const flags = row.duplicate_policy_flags || row.raw_summary?.duplicate_policy_flags || {};
+  return Object.values(flags).some(value => value === true || String(value).toLowerCase() === "true");
+}
+
+export function buildAppleHealthSupport(base = {}) {
+  const timezone = base.profile?.timezone || "Asia/Taipei";
+  const now = base.now || new Date();
+  const today = todayISO(timezone, now);
+  const summaries = Array.isArray(base.apple_health_daily_summaries)
+    ? base.apple_health_daily_summaries
+    : Array.isArray(base.recent?.apple_health_daily_summaries)
+      ? base.recent.apple_health_daily_summaries
+      : base.current?.apple_health_daily_summary
+        ? [base.current.apple_health_daily_summary]
+        : [];
+  const syncRuns = Array.isArray(base.apple_health_sync_runs) ? base.apple_health_sync_runs : [];
+  const latestSummary = latest(summaries);
+  const latestSync = latest(syncRuns);
+  const latestDate = rowDate(latestSummary);
+  const ageDays = dateAgeDays(latestDate, today);
+  const recentRows = summaries.filter(row => {
+    const age = dateAgeDays(rowDate(row), today);
+    return age !== null && age >= 0 && age <= 6;
+  });
+  const compactLatest = compactAppleHealthSummary(latestSummary);
+  const sync = compactAppleHealthSyncRun(latestSync);
+  const isPartial = Boolean(sync) && (
+    sync.status === "partial"
+    || Boolean(sync.errors?.length)
+    || (sync.days_requested !== null && sync.days_written !== null && sync.days_written < sync.days_requested)
+  );
+  const freshness = !latestSummary
+    ? "missing"
+    : isPartial
+      ? "partial"
+      : ageDays !== null && ageDays <= 1
+        ? "current"
+        : "stale";
+  const warnings = [];
+  if (!latestSummary) warnings.push("No Apple Health daily summaries are available. This is a diagnostic gap only.");
+  if (latestSummary && freshness === "stale") warnings.push("Latest Apple Health summary is older than yesterday in Asia/Taipei.");
+  if (isPartial) warnings.push("Latest Apple Health sync is partial; unrelated coach sources remain usable.");
+  if (latestSummary && (asNumber(latestSummary.workout_count) || asNumber(latestSummary.strength_workout_count))) {
+    warnings.push("Apple Health workout counts are detected activity context only and are not added to Garmin/Rack/Motra completed strength totals.");
+  }
+
+  return {
+    source: "Apple Health / HealthKit daily summary",
+    role: "supporting cross-check",
+    status: freshness,
+    latest_summary_date: latestDate,
+    latest_sync_date: sync?.completed_at?.slice?.(0, 10) || sync?.started_at?.slice?.(0, 10) || null,
+    timezone: compactLatest?.timezone || sync?.timezone || timezone,
+    days_available_last_7: recentRows.length,
+    latest_summary: compactLatest,
+    latest_sync: sync,
+    last_7_days: {
+      count: recentRows.length,
+      steps: sumAppleHealthMetric(recentRows, "steps"),
+      exercise_minutes: sumAppleHealthMetric(recentRows, "exercise_minutes"),
+      active_energy_kcal: sumAppleHealthMetric(recentRows, "active_energy_kcal"),
+      workout_count: sumAppleHealthMetric(recentRows, "workout_count"),
+      strength_workout_count: sumAppleHealthMetric(recentRows, "strength_workout_count"),
+      cardio_workout_count: sumAppleHealthMetric(recentRows, "cardio_workout_count"),
+    },
+    duplicate_policy: {
+      garmin_mirror_possible: summaries.some(hasAppleHealthDuplicateFlag),
+      warning: "Do not count Apple Health workout_count as completed Garmin/Rack/Motra strength history.",
+    },
+    warnings,
+  };
+}
+
 function dedupeRows(rows = [], domain = "generic") {
   const groups = new Map();
   for (const row of rows || []) {
@@ -788,6 +912,7 @@ function buildDataCompleteness(base = {}) {
   const latestBody = latest(base.body_composition);
   const latestNutrition = latest(base.nutrition_log);
   const latestStrength = latest(base.strength_logs);
+  const appleHealth = buildAppleHealthSupport(base);
   const detailedStrengthLogs = Array.isArray(base.strength_logs) ? base.strength_logs.filter(hasExerciseDetail) : [];
   const latestDetailedStrength = latest(detailedStrengthLogs);
   const feedbackToday = Array.isArray(base.session_feedback)
@@ -850,6 +975,17 @@ function buildDataCompleteness(base = {}) {
       required: Boolean(strengthToday),
       latest_date: feedbackToday ? rowDate(feedbackToday) : rowDate(latest(base.session_feedback)),
     },
+    {
+      id: "apple_health_daily_summary",
+      label: "Apple Health daily summary",
+      status: appleHealth.status,
+      required: false,
+      latest_date: appleHealth.latest_summary_date,
+      source: appleHealth.source,
+      role: appleHealth.role,
+      days_available_last_7: appleHealth.days_available_last_7,
+      warning: appleHealth.warnings[0] || null,
+    },
   ];
 
   const requiredChecks = checks.filter(check => check.required);
@@ -864,6 +1000,9 @@ function buildDataCompleteness(base = {}) {
     score_pct: requiredChecks.length ? Math.round((currentRequired / requiredChecks.length) * 100) : 100,
     missing_required: missingRequired,
     checks,
+    supporting_evidence: {
+      apple_health: appleHealth,
+    },
   };
 }
 
@@ -1203,6 +1342,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   const topLine = topLineForIntent(normalizedIntent, readiness, nutrition, workout);
   const riskFlags = readiness.risk_flags.map(r => r.text);
   const recentConversation = compactCoachHistory(dashboard);
+  const appleHealth = buildAppleHealthSupport(dashboard);
   const nextActions = [];
 
   if (normalizedIntent === "build_workout") {
@@ -1242,6 +1382,9 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
       readiness_primary: "Oura",
       nutrition_primary: "Garmin Connect+ Nutrition",
       workout_primary: "Garmin Connect Strength for set-level execution and physiology",
+      supporting_evidence: {
+        apple_health: appleHealth,
+      },
       recent_conversation: recentConversation,
     },
     generated_by: COACH_RESPONSE_VERSION,
@@ -1307,6 +1450,9 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
                 latest_sleep: latestSleepValues(dashboard),
                 latest_bp: latestBpValues(dashboard),
                 latest_nutrition: latestNutritionValues(dashboard),
+                supporting_evidence: {
+                  apple_health: buildAppleHealthSupport(dashboard),
+                },
                 coach_state: {
                   goals: state.goals,
                   gym_profile: {
@@ -1362,6 +1508,7 @@ export function buildBrief(base) {
   const state = base.coach_state || DEFAULT_COACH_STATE;
   const readiness = evaluateReadiness(base, state);
   const nutrition = buildNutritionCall(base, state);
+  const appleHealth = buildAppleHealthSupport(base);
   const schedule = readiness.schedule || todaySchedule(base.profile?.timezone || "Asia/Taipei");
   const upcoming = base.upcoming_session || nextPlannedSession(base);
   return {
@@ -1378,6 +1525,9 @@ export function buildBrief(base) {
     },
     active_adjustments: activeAdjustmentNotes(state),
     data_completeness: buildDataCompleteness(base),
+    supporting_evidence: {
+      apple_health: appleHealth,
+    },
     source_hierarchy: DEFAULT_COACH_STATE.source_hierarchy,
   };
 }
@@ -1389,6 +1539,7 @@ export function compactDashboard(base) {
   const latestBody = latest(base.body_composition);
   const latestNutrition = latest(base.nutrition_log);
   const latestStrength = latest(base.strength_logs);
+  const latestAppleHealth = latest(base.apple_health_daily_summaries);
   const detailedStrengthLogs = Array.isArray(base.strength_logs) ? base.strength_logs.filter(hasExerciseDetail) : [];
   const latestStrengthWithExercises = latest(detailedStrengthLogs);
   const recentRecovery = latest(base.recovery_sleep, 5).map(compactRecoveryRow).filter(Boolean);
@@ -1396,6 +1547,7 @@ export function compactDashboard(base) {
   const recentNutrition = latest(base.nutrition_log, 3).map(compactNutritionRow).filter(Boolean);
   const recentStrength = latest(base.strength_logs, 3).map(compactStrengthRow).filter(Boolean);
   const recentStrengthWithExercises = latest(detailedStrengthLogs, 3).map(compactStrengthRow).filter(Boolean);
+  const recentAppleHealth = latest(base.apple_health_daily_summaries, 7).map(compactAppleHealthSummary).filter(Boolean);
   const recentCoachMessages = compactCoachHistory(base, 10);
   const recentFeedback = latest(base.session_feedback, 3).map(f => ({
     date: f.date || f.session_date || null,
@@ -1428,6 +1580,7 @@ export function compactDashboard(base) {
       nutrition: compactNutritionRow(latestNutrition),
       strength_session: compactStrengthRow(latestStrength),
       strength_session_with_exercises: compactStrengthRow(latestStrengthWithExercises),
+      apple_health_daily_summary: compactAppleHealthSummary(latestAppleHealth),
       data_completeness: dataCompleteness,
     },
     recent: {
@@ -1436,7 +1589,47 @@ export function compactDashboard(base) {
       nutrition: recentNutrition,
       strength_sessions: recentStrength,
       strength_sessions_with_exercises: recentStrengthWithExercises,
+      apple_health_daily_summaries: recentAppleHealth,
       workout_feedback: recentFeedback,
+    },
+    supporting_evidence: {
+      apple_health: buildAppleHealthSupport(base),
+    },
+  };
+}
+
+export function buildSyncStatus(base = {}) {
+  const dataCompleteness = buildDataCompleteness(base);
+  return {
+    ok: true,
+    date: dataCompleteness.date,
+    schedule: dataCompleteness.schedule,
+    score_pct: dataCompleteness.score_pct,
+    missing_required: dataCompleteness.missing_required,
+    checks: dataCompleteness.checks,
+    apple_health: dataCompleteness.supporting_evidence.apple_health,
+    source_policy: {
+      apple_health_role: "supporting cross-check",
+      does_not_override: ["Oura readiness/recovery", "subjective symptoms", "medical safety flags", "Garmin workout physiology", "Rack/Motra strength history"],
+    },
+  };
+}
+
+export function buildCoachToday(base = {}) {
+  const compact = compactDashboard(base);
+  return {
+    ok: true,
+    date: compact.coaching_brief?.data_completeness?.date || todayISO(base.profile?.timezone || "Asia/Taipei", base.now || new Date()),
+    brief: compact.coaching_brief,
+    current: compact.current,
+    recent: compact.recent,
+    supporting_evidence: compact.supporting_evidence,
+    source_context: {
+      readiness_primary: "Oura",
+      nutrition_primary: "Garmin Connect+ Nutrition",
+      workout_primary: "Garmin Connect Strength for set-level execution and physiology",
+      apple_health_role: "supporting cross-check",
+      apple_health_workout_counts: "detected activity context only; not completed strength-log authority",
     },
   };
 }
@@ -1445,7 +1638,7 @@ export async function dashboardFromSupabase() {
   const profile = await getProfile();
   if (!profile) return null;
   const profileId = profile.id;
-  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions] = await Promise.all([
+  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions, appleHealthSummaries, appleHealthSyncRuns] = await Promise.all([
     supabase(`raw_imports?profile_id=eq.${profileId}&select=payload,imported_at&order=imported_at.desc&limit=1`),
     supabase(`recovery_sleep?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
     supabase(`blood_pressure_readings?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
@@ -1456,6 +1649,8 @@ export async function dashboardFromSupabase() {
     supabase(`coach_messages?profile_id=eq.${profileId}&select=*&order=message_at.desc&limit=30`),
     safeSupabase(`weekly_plans?profile_id=eq.${profileId}&select=*&order=week_start.desc&limit=3`, {}, []),
     safeSupabase(`planned_sessions?select=*,weekly_plans!inner(profile_id,week_start,label,status)&weekly_plans.profile_id=eq.${profileId}&order=planned_date.asc`, {}, []),
+    safeSupabase(`apple_health_daily_summaries?profile_id=eq.${profileId}&select=*&order=summary_date.desc&limit=30`, {}, []),
+    safeSupabase(`apple_health_sync_runs?profile_id=eq.${profileId}&select=*&order=started_at.desc&limit=10`, {}, []),
   ]);
 
   const base = rawImports?.[0]?.payload || {};
@@ -1491,6 +1686,13 @@ export async function dashboardFromSupabase() {
     return { ...(r.raw || {}), ...r, exercises, date: r.session_date };
   }), "strength");
   base.session_feedback = dedupeRows(feedback.map(r => ({ ...r, date: r.session_date, timestamp: r.created_at, note: r.freeform_note })), "feedback");
+  base.apple_health_daily_summaries = dedupeRows((appleHealthSummaries || []).map(r => ({
+    ...r,
+    date: r.summary_date,
+    source: r.source_app || "Apple Health",
+  })), "apple_health");
+  base.apple_health_sync_runs = [...(appleHealthSyncRuns || [])]
+    .sort((a, b) => String(a.started_at || "").localeCompare(String(b.started_at || "")));
   base.coach_chat_notes = messages.reverse().map(m => ({ role: m.role, text: m.body, at: m.message_at, channel: m.channel }));
   base.coach_state = await getCoachState(profileId);
   base.weekly_plans = weeklyPlans;

@@ -8,6 +8,8 @@ This app is intentionally small for PR 2. It requests read-only HealthKit access
 
 It does not write HealthKit data, store permanent secrets in source code, replace Garmin/Oura/Rack hierarchy, or change the coach backend.
 
+Phase 3 keeps that boundary. The coach backend may read previously synced Apple Health daily summaries for `sync-status`, `coach-today`, dashboard diagnostics, and brief context, but those rows are supporting evidence only. Apple Health summaries must not override Oura readiness, Garmin workout physiology, Garmin Nutrition, Rack/Motra completed history, medical flags, or subjective safety feedback.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -29,3 +31,5 @@ The API secret is stored in the iOS Keychain. The app posts to:
 ## Payload Notes
 
 Daily summaries use `source_app = Apple Health` and `source_device = <device name>`. The app includes duplicate policy and provenance fields so these rows can complement, not overwrite, canonical Garmin, Oura, Rack/Motra, nutrition, recovery sleep, or strength-session data.
+
+Phase 3 readback should use the existing `apple_health_sync_runs` and `apple_health_daily_summaries` tables. It does not require a new secret, migration, deployment instruction, HealthKit permission, or `HEALTH_DATABASE.json` change.
