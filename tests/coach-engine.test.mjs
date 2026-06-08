@@ -93,7 +93,7 @@ test("nutrition closeout catches fat over budget and protein short", () => {
     ],
   });
 
-  assert.equal(nutrition.source, "Bevel");
+  assert.equal(nutrition.source, "Garmin Connect+ Nutrition");
   assert.equal(nutrition.protein_gap_g, 49);
   assert.equal(nutrition.fat_over_g, 24);
   assert.match(nutrition.call, /^Fat is the constraint/);

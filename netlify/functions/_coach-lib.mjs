@@ -1080,12 +1080,13 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
 
 export function buildNutritionCall(dashboard = {}, state = DEFAULT_COACH_STATE) {
   const n = latestNutritionValues(dashboard);
+  const nutritionSource = state.source_hierarchy?.nutrition || DEFAULT_COACH_STATE.source_hierarchy.nutrition;
   const proteinTarget = state.goals.protein_floor_g || n.protein_target_g || 150;
   const fatTarget = state.goals.fat_budget_g || n.fat_target_g || 70;
   const proteinGap = n.protein_g === null ? null : Math.max(0, Math.round(proteinTarget - n.protein_g));
   const fatOver = n.fat_g === null ? null : Math.max(0, Math.round(n.fat_g - fatTarget));
-  let call = "No complete Bevel nutrition total yet. Log Bevel totals, then close protein first and fat second.";
-  const actions = ["Use Bevel as the source of truth.", "Close the day with lean protein if totals are incomplete."];
+  let call = `No complete ${nutritionSource} total yet. Log Garmin Nutrition totals, then close protein first and fat second.`;
+  const actions = [`Use ${nutritionSource} as primary when daily totals are usable.`, "Close the day with lean protein if totals are incomplete."];
 
   if (proteinGap !== null && fatOver !== null) {
     if (fatOver > 0) {
@@ -1102,7 +1103,7 @@ export function buildNutritionCall(dashboard = {}, state = DEFAULT_COACH_STATE) 
 
   return {
     date: n.date,
-    source: "Bevel",
+    source: nutritionSource,
     protein_target_g: proteinTarget,
     fat_budget_g: fatTarget,
     current: { kcal: n.kcal, protein_g: n.protein_g, fat_g: n.fat_g, carbs_g: n.carbs_g },

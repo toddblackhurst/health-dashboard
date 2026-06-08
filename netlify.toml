@@ -20,6 +20,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/coach-today"
+  to = "/api/coach?action=coach-today"
+  status = 200
+
+[[redirects]]
   from = "/api/coach/message"
   to = "/api/coach?action=message"
   status = 200

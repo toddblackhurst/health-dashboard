@@ -59,7 +59,7 @@ Use the Action intents:
 - `brief` for morning check-in
 - `build_workout` for today's workout
 - `evaluate_data` for recovery/body/BP/app-conflict review
-- `nutrition_check` for Bevel closeout
+- `nutrition_check` for Garmin Nutrition closeout
 - `post_workout` for debrief
 - `travel_mode` when away from World Gym
 
