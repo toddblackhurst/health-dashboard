@@ -1,4 +1,8 @@
 import {
+  AppleHealthDailyValidationError,
+  ingestAppleHealthDaily,
+} from "./apple-health-daily.mjs";
+import {
   compactDashboard,
   dashboardFromSupabase,
   getProfile,
@@ -121,7 +125,7 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "message", "feedback", "intake", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
       || "dashboard";
 
     if (req.method === "GET" && action === "dashboard") {
@@ -206,6 +210,25 @@ export default async function handler(req) {
         await updateCoachStateFromFeedback(profile.id, inserted[0]);
       }
       return json({ ok: true, feedback: inserted?.[0] || null });
+    }
+
+    if (req.method === "POST" && action === "apple-health-daily") {
+      const profile = await getProfile();
+      if (!profile) return json({ error: "No Supabase profile found." }, 404);
+      const body = await req.json().catch(() => ({}));
+      try {
+        return json(await ingestAppleHealthDaily(profile, body));
+      } catch (err) {
+        if (err instanceof AppleHealthDailyValidationError) {
+          return json({
+            ok: false,
+            sync_run_id: err.syncRunId || null,
+            error: err.message,
+            errors: err.errors || [],
+          }, 400);
+        }
+        throw err;
+      }
     }
 
     if (req.method === "POST" && action === "intake") {

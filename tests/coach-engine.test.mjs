@@ -130,8 +130,8 @@ test("build_workout intent returns structured workout plan and source context", 
 
   assert.equal(decision.intent, "build_workout");
   assert.equal(decision.source_context.default_gym, "World Gym Taichung");
-  assert.equal(decision.source_context.nutrition_primary, "Bevel");
-  assert.equal(decision.source_context.workout_primary, "Motra");
+  assert.equal(decision.source_context.nutrition_primary, "Garmin Connect+ Nutrition");
+  assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
   assert.equal(decision.workout_plan.environment, "World Gym Taichung");
 });
 

@@ -55,6 +55,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/apple-health-daily"
+  to = "/api/coach?action=apple-health-daily"
+  status = 200
+
+[[redirects]]
   from = "/api/coach"
   to = "/.netlify/functions/coach-api"
   status = 200
