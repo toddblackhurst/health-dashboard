@@ -24,9 +24,9 @@ Read only this active set first:
 - Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions, especially `POST /api/coach/workout`.
 - The public dashboard posture has been retired; the Netlify site is now primarily a private coach backend and internal tool surface.
 - V2 architecture is defined in `ARCHITECTURE_V2.md` and should guide future Codex work.
-- Apple Health / HealthKit is the first-class V2 ingestion path because much of Todd's device data is already available there.
-- Rack/Motra remains the workout execution and logging target for now; direct Rack automation is not a V2 blocker.
-- Garmin, Oura, Hume, and Rack direct integrations are future optimizations after HealthKit sync is stable.
+- Apple Health / HealthKit daily sync is live as supporting evidence for activity context, freshness, and diagnostics.
+- Garmin Connect Strength is the active workout execution/physiology surface; Rack/Motra are supporting or explicitly requested handoff/history tools.
+- Garmin Nutrition, Oura, Hume, and future direct integrations should preserve the source hierarchy in `COACH_OPERATING_SYSTEM.md`.
 - Workout planning preserves World Gym Taichung routing:
   - Pull-ups: prefer Floor 3 Matrix trainer if available; Floor 2 pull-up station is fallback.
   - Dumbbell + bench work, including chest-supported rows, belongs on Floor 2 unless intentionally light with Floor 3 dumbbells up to 10 kg.

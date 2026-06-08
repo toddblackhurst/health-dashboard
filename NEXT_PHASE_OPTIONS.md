@@ -1,16 +1,16 @@
 # Next Phase Options
 
-This plan starts after the verified Apple Health Phase 3 production milestone from 2026-06-08. It is planning-only and does not start implementation.
+This plan started after the verified Apple Health Phase 3 production milestone from 2026-06-08.
 
 ## Recommendation
 
-Recommended next phase: Daily coach UX polish.
+Daily coach UX polish has been implemented locally in the `daily-coach-ux-polish` branch. After review, the recommended next phase is the weekly review engine.
 
-Why: the codebase already exposes `coach-today`, `sync-status`, compact dashboard context, and Apple Health supporting evidence. Polishing the daily coach surface is the lowest-risk next step because it can mostly reshape existing readback and response structure without new migrations, new sync behavior, or changes to readiness/workout authority. The weekly review engine is the next-highest value phase, but it should follow once the daily surface is easy to read and stable.
+Why: the codebase already exposes `coach-today`, `sync-status`, compact dashboard context, and Apple Health supporting evidence. Polishing the daily coach surface was the lowest-risk next step because it reshapes existing readback and response structure without new migrations, new sync behavior, or changes to readiness/workout authority. The weekly review engine is the next-highest value phase once the daily surface is reviewed.
 
 Recommended order:
 
-1. Daily coach UX polish.
+1. Review Daily coach UX polish.
 2. Weekly review engine.
 3. Coach observations learning loop.
 4. Rack/Motra workout handoff improvement.
@@ -19,6 +19,8 @@ Recommended order:
 ## Option 1: Daily Coach UX Polish
 
 Goal: make the daily coach output easier to read and act on.
+
+Status: implemented locally; pending push approval, deployment approval, and production verification.
 
 Possible scope:
 

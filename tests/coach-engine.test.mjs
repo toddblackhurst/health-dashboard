@@ -137,6 +137,12 @@ test("build_workout intent returns structured workout plan and source context", 
   assert.equal(decision.source_context.nutrition_primary, "Garmin Connect+ Nutrition");
   assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
   assert.equal(decision.workout_plan.environment, "World Gym Taichung");
+  assert.equal(decision.daily_summary.daily_call.color, "Green");
+  assert.match(decision.daily_summary.todays_plan.primary_action, /World Gym plan/);
+  assert.equal(decision.daily_summary.rack_motra_handoff.generated, true);
+  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Garmin Connect Strength is primary/);
+  assert.ok(decision.daily_summary.rack_motra_handoff.copy_friendly_order.some(block =>
+    block.exercises.some(ex => ex.name === "Pull-Up" && ex.rack_motra_name === "Pull-Up")));
 });
 
 test("coach decisions include compact Supabase conversation history for phone continuity", () => {
@@ -208,9 +214,20 @@ test("Apple Health summaries appear as supporting diagnostics when present", () 
   assert.equal(coachToday.supporting_evidence.apple_health.status, "current");
   assert.equal(coachToday.supporting_evidence.apple_health.role, "supporting cross-check");
   assert.match(coachToday.source_context.apple_health_workout_counts, /not completed strength-log authority/);
+  assert.equal(coachToday.daily_call.color, "Green");
+  assert.match(coachToday.daily_call.decision, /Train|strength|No strength/);
+  assert.ok(coachToday.why.length >= 3);
+  assert.ok(coachToday.why.some(item => /Apple Health supporting context/.test(item)));
+  assert.ok(coachToday.why.some(item => /Plan context/.test(item)));
+  assert.ok(coachToday.safety_guardrails.some(item => /Pain >=4\/10/.test(item)));
+  assert.ok(coachToday.what_to_track_today.some(item => /Garmin Nutrition closeout/.test(item)));
+  assert.equal(coachToday.rack_motra_handoff.generated, false);
+  assert.match(coachToday.confidence_data_quality.source_policy, /Apple Health is supporting evidence only/);
+  assert.equal(coachToday.brief.daily_call.color, coachToday.daily_call.color);
+  assert.equal(coachToday.current.data_completeness.supporting_evidence.apple_health.role, "supporting cross-check");
 });
 
-test("missing Apple Health summaries do not break dashboard or sync status", () => {
+test("missing Apple Health summaries do not break daily coach output", () => {
   const dashboard = {
     now: new Date("2026-06-08T02:00:00.000Z"),
     profile: { timezone: "Asia/Taipei" },
@@ -223,6 +240,12 @@ test("missing Apple Health summaries do not break dashboard or sync status", () 
   assert.equal(syncStatus.apple_health.status, "missing");
   assert.equal(syncStatus.apple_health.days_available_last_7, 0);
   assert.ok(syncStatus.checks.some(check => check.id === "apple_health_daily_summary" && check.required === false));
+  const coachToday = buildCoachToday(dashboard);
+  assert.equal(coachToday.supporting_evidence.apple_health.status, "missing");
+  assert.ok(coachToday.daily_call.decision);
+  assert.ok(coachToday.why.some(item => /Apple Health: missing supporting context only/.test(item)));
+  assert.ok(coachToday.confidence_data_quality.missing_or_stale.some(item => /Apple Health daily summary: missing/.test(item)));
+  assert.ok(coachToday.what_to_track_today.some(item => /Apple Health sync freshness/.test(item)));
 });
 
 test("stale Apple Health summaries are marked stale without readiness penalty", () => {
@@ -292,6 +315,9 @@ test("Apple Health does not override Oura readiness or double-count workout hist
   assert.equal(compact.recent.strength_sessions.length, 1);
   assert.equal(compact.supporting_evidence.apple_health.last_7_days.strength_workout_count, 4);
   assert.match(compact.supporting_evidence.apple_health.duplicate_policy.warning, /Do not count Apple Health workout_count/);
+  assert.equal(decision.daily_summary.daily_call.color, "Red");
+  assert.match(decision.daily_summary.confidence_data_quality.source_policy, /does not override readiness/);
+  assert.ok(decision.daily_summary.why.some(item => /Apple Health supporting context/.test(item)));
   assert.equal(decision.source_context.readiness_primary, "Oura");
   assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
   assert.equal(decision.source_context.supporting_evidence.apple_health.role, "supporting cross-check");

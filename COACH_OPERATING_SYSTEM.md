@@ -122,6 +122,14 @@ Dashboard rule:
 - Todd-facing updates should arrive as concise coach messages that stand alone: call, reason, next action.
 - A dashboard link or status page is appropriate only when the issue is a data-chain repair, a missing source, or a deliberate `status` request.
 
+Daily coach output contract:
+
+- `coach-today` must lead with `daily_call`: Green/Yellow/Orange/Red-style color, readiness tier, and one direct decision sentence.
+- Follow the call with 3-6 `why` bullets covering readiness/recovery, pain or safety, Apple Health supporting activity context, and the planned strength/cardio schedule.
+- Include `todays_plan`, `safety_guardrails`, `what_to_track_today`, and `confidence_data_quality` so the response is actionable without reading the full dashboard payload.
+- When a workout is generated, include a Rack/Motra handoff that is copy-friendly for exercise order, names, prescriptions, and notes, while keeping Garmin Connect Strength as the primary execution surface.
+- Apple Health must remain labeled as supporting evidence only in daily output. It can explain sync freshness and activity context, but cannot override readiness, safety gates, Garmin workout physiology, or Rack/Motra history.
+
 Shortcut actions to support:
 
 - Morning Check-In: BP, pain, asthma, sleep feel.
