@@ -53,23 +53,6 @@ create table if not exists apple_health_daily_summaries (
   unique(profile_id, summary_date, source_app, source_device)
 );
 
-create table if not exists coach_observations (
-  id uuid primary key default gen_random_uuid(),
-  profile_id uuid references profiles(id) on delete cascade,
-  observation_date date not null,
-  category text not null,
-  observation_type text not null,
-  source text not null,
-  severity text not null default 'info' check (severity in ('info', 'watch', 'warning', 'critical')),
-  title text not null,
-  detail text,
-  evidence jsonb not null default '[]'::jsonb,
-  linked_table text,
-  linked_id uuid,
-  raw jsonb not null default '{}'::jsonb,
-  created_at timestamptz not null default now()
-);
-
 create index if not exists apple_health_sync_runs_profile_started_idx
   on apple_health_sync_runs(profile_id, started_at desc);
 
@@ -79,21 +62,11 @@ create index if not exists apple_health_sync_runs_profile_status_idx
 create index if not exists apple_health_daily_summaries_profile_date_idx
   on apple_health_daily_summaries(profile_id, summary_date desc);
 
-create index if not exists coach_observations_profile_date_idx
-  on coach_observations(profile_id, observation_date desc, created_at desc);
-
-create index if not exists coach_observations_profile_category_idx
-  on coach_observations(profile_id, category, observation_date desc);
-
 alter table apple_health_sync_runs enable row level security;
 alter table apple_health_daily_summaries enable row level security;
-alter table coach_observations enable row level security;
 
 revoke all on table apple_health_sync_runs from anon, authenticated;
 revoke all on table apple_health_daily_summaries from anon, authenticated;
-revoke all on table coach_observations from anon, authenticated;
 
 grant select, insert, update, delete on table apple_health_sync_runs to service_role;
 grant select, insert, update, delete on table apple_health_daily_summaries to service_role;
-grant select, insert, update, delete on table coach_observations to service_role;
-grant usage, select on all sequences in schema public to service_role;

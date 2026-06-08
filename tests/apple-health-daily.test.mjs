@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 import handler from "../netlify/functions/coach-api.mjs";
 import {
@@ -29,7 +30,7 @@ function restoreEnv() {
   global.fetch = ORIGINAL_FETCH;
 }
 
-function installMockSupabase({ failSummaryDate = "" } = {}) {
+function installMockSupabase({ failSummaryDate = "", failObservationInsert = false } = {}) {
   installEnv();
   let id = 1;
   const db = {
@@ -44,6 +45,21 @@ function installMockSupabase({ failSummaryDate = "" } = {}) {
     coach_observations: [],
     coach_messages: [],
   };
+  const coachObservationColumns = new Set([
+    "profile_id",
+    "observation_date",
+    "category",
+    "observation",
+    "evidence",
+    "confidence",
+    "action_taken",
+    "review_date",
+    "status",
+    "source",
+    "raw",
+    "created_at",
+    "updated_at",
+  ]);
 
   function nextId(table) {
     return `${table}-${id++}`;
@@ -51,6 +67,13 @@ function installMockSupabase({ failSummaryDate = "" } = {}) {
 
   function insertRows(table, rows) {
     return rows.map(row => {
+      if (table === "coach_observations") {
+        for (const column of Object.keys(row)) {
+          if (!coachObservationColumns.has(column)) {
+            throw new Error(`coach_observations column ${column} is not in migration 005 schema`);
+          }
+        }
+      }
       const inserted = {
         id: row.id || nextId(table),
         created_at: row.created_at || "2026-06-08T00:00:00Z",
@@ -103,7 +126,17 @@ function installMockSupabase({ failSummaryDate = "" } = {}) {
       }
     }
 
-    if (method === "POST") return jsonResponse(insertRows(table, body || []));
+    if (method === "POST" && table === "coach_observations" && failObservationInsert) {
+      return jsonResponse({ error: "simulated coach observation write failure" }, 500);
+    }
+
+    if (method === "POST") {
+      try {
+        return jsonResponse(insertRows(table, body || []));
+      } catch (err) {
+        return jsonResponse({ error: err.message }, 500);
+      }
+    }
 
     if (method === "PATCH" && table === "apple_health_sync_runs") {
       const filter = parsed.searchParams.get("id") || "";
@@ -189,6 +222,13 @@ test("valid Apple Health daily payload writes summaries", async () => {
   assert.equal(db.apple_health_daily_summaries[0].steps, 8421);
   assert.equal(db.apple_health_sync_runs[0].status, "success");
   assert.equal(db.coach_observations.length, 1);
+  assert.match(db.coach_observations[0].observation, /Apple Health daily sync success/);
+  assert.equal(db.coach_observations[0].source, "apple-health-daily");
+  assert.equal(db.coach_observations[0].raw.observation_type, "apple_health_daily_summary");
+  assert.equal(db.coach_observations[0].raw.linked_table, "apple_health_sync_runs");
+  assert.equal(db.coach_observations[0].observation_type, undefined);
+  assert.equal(db.coach_observations[0].title, undefined);
+  assert.equal(db.coach_observations[0].linked_id, undefined);
   assert.equal(db.coach_messages[0].channel, "apple-health-daily");
 });
 
@@ -210,7 +250,7 @@ test("empty Apple Health summaries are accepted but logged", async () => {
   assert.equal(body.days_written, 0);
   assert.equal(db.apple_health_daily_summaries.length, 0);
   assert.equal(db.apple_health_sync_runs[0].status, "success");
-  assert.match(db.coach_observations[0].title, /no summaries/i);
+  assert.match(db.coach_observations[0].observation, /no summaries/i);
 });
 
 test("malformed Apple Health summary dates are rejected and mark the sync run failed", async () => {
@@ -282,6 +322,31 @@ test("Apple Health sync run status is partial when one summary write fails", asy
   assert.equal(body.errors.length, 1);
   assert.equal(db.apple_health_sync_runs[0].status, "partial");
   assert.equal(db.apple_health_daily_summaries.length, 1);
+});
+
+test("Apple Health sync succeeds when optional coach observation insert fails", async () => {
+  const db = installMockSupabase({ failObservationInsert: true });
+
+  const res = await handler(coachRequest(applePayload()));
+  const body = await res.json();
+
+  assert.equal(res.status, 200);
+  assert.equal(body.ok, true);
+  assert.equal(body.days_written, 1);
+  assert.equal(db.apple_health_daily_summaries.length, 1);
+  assert.equal(db.apple_health_sync_runs[0].status, "success");
+  assert.equal(db.coach_observations.length, 0);
+  assert.equal(db.coach_messages[0].raw.observation_id, null);
+});
+
+test("migration 006 does not redefine or grant shared coach_observations", () => {
+  const migration = readFileSync(new URL("../supabase/migrations/006_apple_health_daily_summaries.sql", import.meta.url), "utf8");
+
+  assert.doesNotMatch(migration, /create table if not exists coach_observations/i);
+  assert.doesNotMatch(migration, /observation_type text/i);
+  assert.doesNotMatch(migration, /linked_id uuid/i);
+  assert.doesNotMatch(migration, /revoke all on table coach_observations/i);
+  assert.doesNotMatch(migration, /grant .* on table coach_observations/i);
 });
 
 test("Apple Health summaries do not override Oura/Garmin/Rack hierarchy", () => {

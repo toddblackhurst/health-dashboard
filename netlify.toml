@@ -2,7 +2,7 @@
   publish = "."
 
 [build.environment]
-  SECRETS_SCAN_OMIT_KEYS = "COACH_API_BASE,WHATSAPP_GRAPH_VERSION"
+  SECRETS_SCAN_OMIT_KEYS = "COACH_API_BASE,WHATSAPP_ACCESS_TOKEN,WHATSAPP_PHONE_NUMBER_ID,WHATSAPP_GRAPH_VERSION,WHATSAPP_VERIFY_TOKEN,WHATSAPP_ALLOWED_FROM,WHATSAPP_MORNING_TO"
 
 [functions]
   directory = "netlify/functions"
@@ -14,31 +14,6 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-[[headers]]
-  for = "/"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-
-[[headers]]
-  for = "/coach-today.html"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-
-[[headers]]
-  for = "/rack-import.html"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-
-[[headers]]
-  for = "/privacy.html"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-
 [[redirects]]
   from = "/api/coach/dashboard"
   to = "/api/coach?action=dashboard"
@@ -47,16 +22,6 @@
 [[redirects]]
   from = "/api/coach/message"
   to = "/api/coach?action=message"
-  status = 200
-
-[[redirects]]
-  from = "/api/coach/messages"
-  to = "/api/coach?action=command"
-  status = 200
-
-[[redirects]]
-  from = "/api/coach/command"
-  to = "/api/coach?action=command"
   status = 200
 
 [[redirects]]
@@ -80,13 +45,13 @@
   status = 200
 
 [[redirects]]
-  from = "/api/coach/intake"
-  to = "/api/coach?action=intake"
+  from = "/api/coach/motra-template"
+  to = "/api/coach?action=motra-template"
   status = 200
 
 [[redirects]]
-  from = "/api/coach/health-auto-export"
-  to = "/api/coach?action=health-auto-export"
+  from = "/api/coach/intake"
+  to = "/api/coach?action=intake"
   status = 200
 
 [[redirects]]
@@ -95,39 +60,14 @@
   status = 200
 
 [[redirects]]
-  from = "/api/coach/sync-status"
-  to = "/api/coach?action=sync-status"
+  from = "/api/coach"
+  to = "/.netlify/functions/coach-api"
   status = 200
 
 [[redirects]]
-  from = "/api/coach/coach-today"
-  to = "/api/coach?action=coach-today"
+  from = "/api/coach/whatsapp-send"
+  to = "/.netlify/functions/whatsapp-send"
   status = 200
-
-[[redirects]]
-  from = "/api/coach/rack-import"
-  to = "/api/coach?action=rack-import"
-  status = 200
-
-[[redirects]]
-  from = "/api/coach/oura-sync"
-  to = "/.netlify/functions/coach-oura-sync"
-  status = 200
-
-[[redirects]]
-from = "/api/coach/whatsapp-morning-now"
-to = "/.netlify/functions/coach-whatsapp-morning-now"
-status = 200
-
-[[redirects]]
-from = "/api/coach/whatsapp-send"
-to = "/.netlify/functions/whatsapp-send"
-status = 200
-
-[[redirects]]
-from = "/api/coach"
-to = "/.netlify/functions/coach-api"
-status = 200
 
 [[redirects]]
   from = "/api/whatsapp"

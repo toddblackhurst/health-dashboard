@@ -194,29 +194,30 @@ async function insertObservation(profile, normalized, syncRun, status, errors = 
   const title = normalized.summaries.length
     ? `Apple Health daily sync ${status}: ${normalized.summaries.length} day${normalized.summaries.length === 1 ? "" : "s"} received`
     : "Apple Health daily sync received no summaries";
+  const detail = errors.length
+    ? `${errors.length} Apple Health daily sync error${errors.length === 1 ? "" : "s"} occurred.`
+    : "Native Apple Health daily summaries were stored as cross-check data only.";
   const rows = await supabase("coach_observations", {
     method: "POST",
     body: JSON.stringify([{
       profile_id: profile.id,
       observation_date: date,
       category: "data_sync",
-      observation_type: "apple_health_daily_summary",
+      observation: `${title}. ${detail}`,
       source: "apple-health-daily",
-      severity: errors.length ? "warning" : "info",
-      title,
-      detail: errors.length
-        ? `${errors.length} Apple Health daily sync error${errors.length === 1 ? "" : "s"} occurred.`
-        : "Native Apple Health daily summaries were stored as cross-check data only.",
+      confidence: errors.length ? "medium" : "high",
+      status: "active",
       evidence: [{
         sync_run_id: syncRun?.id || null,
         days_requested: normalized.days_requested,
         days_written: normalized.summaries.length - errors.length,
       }],
-      linked_table: "apple_health_sync_runs",
-      linked_id: syncRun?.id || null,
       raw: {
         status,
         errors,
+        observation_type: "apple_health_daily_summary",
+        linked_table: "apple_health_sync_runs",
+        linked_id: syncRun?.id || null,
         source_policy: {
           role: "cross-check",
           does_not_override: ["Oura readiness", "Garmin workout physiology", "Garmin Nutrition", "Rack/Motra history"],
@@ -292,7 +293,12 @@ export async function ingestAppleHealthDaily(profile, body = {}) {
     },
   });
 
-  const observation = await insertObservation(profile, normalized, updatedSyncRun || syncRun, status, errors);
+  let observation = null;
+  try {
+    observation = await insertObservation(profile, normalized, updatedSyncRun || syncRun, status, errors);
+  } catch {
+    observation = null;
+  }
   await insertCoachMessage(
     profile.id,
     "system",
