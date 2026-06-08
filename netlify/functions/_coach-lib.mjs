@@ -17,9 +17,9 @@ export const DEFAULT_COACH_STATE = {
     fat_budget_g: 70,
   },
   source_hierarchy: {
-    readiness: ["Oura overnight physiology", "subjective pain/fatigue", "Bevel Apple-derived recovery", "Apple Fitness workload"],
-    nutrition: "Bevel",
-    workout_history: "Motra",
+    readiness: ["Oura overnight sleep and physiology", "Garmin HRV Status / Training Readiness / Body Battery trends", "subjective pain/fatigue", "Apple Health summary cross-checks only"],
+    nutrition: "Garmin Connect+ Nutrition",
+    workout_history: "Garmin Connect Strength for set-level execution and physiology",
     body_composition: "Hume/Ocare trend only; do not overreact to one-day BIA body-fat swings.",
   },
   training_model: {
@@ -1240,8 +1240,8 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
       travel_mode: Boolean(state.gym_profile.travel_mode),
       active_adjustments: activeAdjustmentNotes(state),
       readiness_primary: "Oura",
-      nutrition_primary: "Bevel",
-      workout_primary: "Motra",
+      nutrition_primary: "Garmin Connect+ Nutrition",
+      workout_primary: "Garmin Connect Strength for set-level execution and physiology",
       recent_conversation: recentConversation,
     },
     generated_by: COACH_RESPONSE_VERSION,

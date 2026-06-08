@@ -1,0 +1,92 @@
+{
+  "client_version": "1.0.0 (1)",
+  "device_name": "Todd iPhone",
+  "timezone": "Asia/Taipei",
+  "days_requested": 2,
+  "summaries": [
+    {
+      "summary_date": "2026-06-07",
+      "source_app": "Apple Health",
+      "source_device": "Todd iPhone",
+      "steps": 8421,
+      "distance_mi": 3.2,
+      "flights_climbed": 8,
+      "active_energy_kcal": 610,
+      "basal_energy_kcal": 1650,
+      "exercise_minutes": 42,
+      "stand_minutes": 720,
+      "resting_hr_bpm": 57,
+      "avg_hr_bpm": 88,
+      "min_hr_bpm": 49,
+      "max_hr_bpm": 132,
+      "hrv_sdnn_ms": 41,
+      "hrv_sample_count": 3,
+      "sleep_minutes": 450,
+      "sleep_in_bed_minutes": 480,
+      "workout_count": 1,
+      "strength_workout_count": 0,
+      "cardio_workout_count": 1,
+      "duplicate_policy_flags": {
+        "apple_health_role": "cross_check",
+        "garmin_mirror_possible": "true"
+      },
+      "metric_quality": {
+        "summary_grain": "daily",
+        "hrv": "direct_sdnn_samples"
+      },
+      "provenance": {
+        "steps": "HKQuantityTypeIdentifierStepCount",
+        "distance_mi": "HKQuantityTypeIdentifierDistanceWalkingRunning",
+        "heart_rate": "HKQuantityTypeIdentifierHeartRate",
+        "workouts": "HKWorkout"
+      },
+      "raw_summary": {
+        "source_contract": "apple-health-daily-summary-v1"
+      }
+    },
+    {
+      "summary_date": "2026-06-08",
+      "source_app": "Apple Health",
+      "source_device": "Todd iPhone",
+      "steps": 6120,
+      "distance_mi": 2.37,
+      "flights_climbed": 5,
+      "active_energy_kcal": 430,
+      "basal_energy_kcal": 1642,
+      "exercise_minutes": 28,
+      "stand_minutes": 650,
+      "resting_hr_bpm": 59,
+      "avg_hr_bpm": 82,
+      "min_hr_bpm": 50,
+      "max_hr_bpm": 121,
+      "hrv_sdnn_ms": 39.5,
+      "hrv_sample_count": 2,
+      "sleep_minutes": 405,
+      "sleep_in_bed_minutes": 455,
+      "workout_count": 0,
+      "strength_workout_count": 0,
+      "cardio_workout_count": 0,
+      "duplicate_policy_flags": {
+        "apple_health_role": "cross_check",
+        "garmin_mirror_possible": "true"
+      },
+      "metric_quality": {
+        "summary_grain": "daily",
+        "hrv": "direct_sdnn_samples"
+      },
+      "provenance": {
+        "steps": "HKQuantityTypeIdentifierStepCount",
+        "distance_mi": "HKQuantityTypeIdentifierDistanceWalkingRunning",
+        "heart_rate": "HKQuantityTypeIdentifierHeartRate",
+        "workouts": "HKWorkout"
+      },
+      "raw_summary": {
+        "source_contract": "apple-health-daily-summary-v1"
+      }
+    }
+  ],
+  "raw": {
+    "sync_trigger": "manual",
+    "summary_grain": "daily"
+  }
+}
