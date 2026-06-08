@@ -3,10 +3,14 @@ import assert from "node:assert/strict";
 
 import {
   DEFAULT_COACH_STATE,
+  buildAppleHealthSupport,
   buildCoachDecision,
+  buildCoachToday,
   buildNutritionCall,
+  buildSyncStatus,
   buildWorkoutPlan,
   compactCoachHistory,
+  compactDashboard,
   evaluateReadiness,
 } from "../netlify/functions/_coach-lib.mjs";
 
@@ -149,4 +153,145 @@ test("coach decisions include compact Supabase conversation history for phone co
   assert.equal(history.length, 2);
   assert.match(history[0].text, /left hip is tight/);
   assert.deepEqual(decision.source_context.recent_conversation, history);
+});
+
+test("Apple Health summaries appear as supporting diagnostics when present", () => {
+  const dashboard = {
+    now: new Date("2026-06-08T02:00:00.000Z"),
+    profile: { timezone: "Asia/Taipei" },
+    apple_health_sync_runs: [{
+      status: "success",
+      days_requested: 7,
+      days_written: 7,
+      timezone: "Asia/Taipei",
+      started_at: "2026-06-08T00:00:00.000Z",
+      completed_at: "2026-06-08T00:01:00.000Z",
+      errors: [],
+    }],
+    apple_health_daily_summaries: [
+      { summary_date: "2026-06-02", timezone: "Asia/Taipei", steps: 6000, exercise_minutes: 20, active_energy_kcal: 320 },
+      { summary_date: "2026-06-03", timezone: "Asia/Taipei", steps: 7000, exercise_minutes: 25, active_energy_kcal: 350 },
+      { summary_date: "2026-06-04", timezone: "Asia/Taipei", steps: 8000, exercise_minutes: 30, active_energy_kcal: 410 },
+      { summary_date: "2026-06-05", timezone: "Asia/Taipei", steps: 9000, exercise_minutes: 35, active_energy_kcal: 460 },
+      { summary_date: "2026-06-06", timezone: "Asia/Taipei", steps: 10000, exercise_minutes: 40, active_energy_kcal: 500 },
+      { summary_date: "2026-06-07", timezone: "Asia/Taipei", steps: 11000, exercise_minutes: 45, active_energy_kcal: 540 },
+      {
+        summary_date: "2026-06-08",
+        timezone: "Asia/Taipei",
+        source_app: "Apple Health",
+        source_device: "Todd iPhone",
+        steps: 8421,
+        exercise_minutes: 42,
+        active_energy_kcal: 610,
+        workout_count: 1,
+        strength_workout_count: 0,
+        cardio_workout_count: 1,
+        sleep_minutes: 450,
+        resting_hr_bpm: 57,
+        hrv_sdnn_ms: 41,
+        duplicate_policy_flags: { garmin_mirror_possible: true },
+      },
+    ],
+  };
+
+  const compact = compactDashboard(dashboard);
+  const syncStatus = buildSyncStatus(dashboard);
+  const coachToday = buildCoachToday(dashboard);
+
+  assert.equal(compact.current.apple_health_daily_summary.source, "Apple Health / HealthKit daily summary");
+  assert.equal(compact.current.apple_health_daily_summary.role, "supporting cross-check");
+  assert.equal(compact.current.apple_health_daily_summary.steps, 8421);
+  assert.equal(compact.recent.apple_health_daily_summaries.length, 7);
+  assert.equal(syncStatus.apple_health.status, "fresh");
+  assert.equal(syncStatus.apple_health.days_available_last_7, 7);
+  assert.equal(syncStatus.apple_health.latest_summary_date, "2026-06-08");
+  assert.equal(coachToday.supporting_evidence.apple_health.role, "supporting cross-check");
+  assert.match(coachToday.source_context.apple_health_workout_counts, /not completed strength-log authority/);
+});
+
+test("missing Apple Health summaries do not break dashboard or sync status", () => {
+  const dashboard = {
+    now: new Date("2026-06-08T02:00:00.000Z"),
+    profile: { timezone: "Asia/Taipei" },
+  };
+
+  const compact = compactDashboard(dashboard);
+  const syncStatus = buildSyncStatus(dashboard);
+
+  assert.equal(compact.current.apple_health_daily_summary, null);
+  assert.equal(syncStatus.apple_health.status, "missing");
+  assert.equal(syncStatus.apple_health.days_available_last_7, 0);
+  assert.ok(syncStatus.checks.some(check => check.id === "apple_health_daily_summary" && check.required === false));
+});
+
+test("stale Apple Health summaries are marked stale without readiness penalty", () => {
+  const dashboard = {
+    now: new Date("2026-06-08T02:00:00.000Z"),
+    profile: { timezone: "Asia/Taipei" },
+    recovery_sleep: [
+      {
+        date: "2026-06-08",
+        oura: { readiness_score: 91, hrv_avg_ms: 39 },
+        bevel: { recovery_pct: 82 },
+      },
+    ],
+    apple_health_daily_summaries: [
+      { summary_date: "2026-06-05", timezone: "Asia/Taipei", steps: 12000, hrv_sdnn_ms: 10 },
+    ],
+  };
+
+  const support = buildAppleHealthSupport(dashboard);
+  const readiness = evaluateReadiness(dashboard, DEFAULT_COACH_STATE, { now: new Date("2026-06-08T02:00:00.000Z") });
+
+  assert.equal(support.status, "stale");
+  assert.equal(readiness.tier, "Green");
+  assert.equal(readiness.source_order.at(-1), "Apple Health summary cross-checks only");
+});
+
+test("Apple Health does not override Oura readiness or double-count workout history", () => {
+  const dashboard = {
+    now: new Date("2026-06-08T02:00:00.000Z"),
+    profile: { timezone: "Asia/Taipei", oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [
+      {
+        measured_date: "2026-06-08",
+        oura_readiness_score: 89,
+        hrv_ms: 20,
+        recovery_score_pct: 25,
+      },
+    ],
+    strength_logs: [
+      {
+        date: "2026-06-08",
+        session_name: "Garmin Strength",
+        exercises: [{ name: "Pull-Up", sets: [{ reps: 5 }] }],
+      },
+    ],
+    apple_health_daily_summaries: [
+      {
+        summary_date: "2026-06-08",
+        hrv_sdnn_ms: 90,
+        workout_count: 4,
+        strength_workout_count: 4,
+      },
+    ],
+  };
+
+  const readiness = evaluateReadiness(dashboard, DEFAULT_COACH_STATE, { now: new Date("2026-06-08T02:00:00.000Z") });
+  const compact = compactDashboard(dashboard);
+  const decision = buildCoachDecision({
+    text: "Build today's workout",
+    intent: "build_workout",
+    dashboard,
+    payload: { now: "2026-06-08T02:00:00.000Z" },
+  });
+
+  assert.equal(readiness.tier, "Red");
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "low_hrv"));
+  assert.equal(compact.recent.strength_sessions.length, 1);
+  assert.equal(compact.supporting_evidence.apple_health.last_7_days.strength_workout_count, 4);
+  assert.match(compact.supporting_evidence.apple_health.duplicate_policy.warning, /Do not count Apple Health workout_count/);
+  assert.equal(decision.source_context.readiness_primary, "Oura");
+  assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
+  assert.equal(decision.source_context.supporting_evidence.apple_health.role, "supporting cross-check");
 });

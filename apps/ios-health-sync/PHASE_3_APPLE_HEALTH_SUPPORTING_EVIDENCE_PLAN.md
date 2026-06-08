@@ -1,6 +1,6 @@
 # Phase 3 Apple Health Supporting Evidence Plan
 
-State target: planning only. Do not implement Phase 3 from this document until Todd explicitly approves execution.
+State target: implementation/review in progress. Phase 3 is a read-path and presentation-layer change only: Apple Health may appear in diagnostics, `sync-status`, `coach-today`, and dashboard/brief context as supporting evidence, but it must not change database schema, HealthKit permissions, ingest semantics, readiness scoring, workout prescription, deployment state, or migration state.
 
 ## Goal
 
@@ -108,6 +108,24 @@ Scoring:
 - Missing/stale Apple Health should not lower the core required-source score.
 - The dashboard can expose a separate `supporting_evidence_missing` list if useful.
 
+## Implementation Scope
+
+Allowed implementation scope:
+
+- Read existing persisted `apple_health_sync_runs` and `apple_health_daily_summaries` rows.
+- Compact Apple Health summaries into explicitly labeled supporting-evidence objects.
+- Add optional freshness diagnostics that do not lower required-source completeness.
+- Add source-policy language proving Apple Health does not override Oura/Garmin/Rack/Motra authority.
+- Add tests for current, stale, missing, partial, and duplicate/mirrored-workout states.
+
+Security and data boundaries:
+
+- Do not add or document new secrets.
+- Do not print, paste, snapshot, or commit `x-coach-secret`, service-role keys, tokens, database URLs, or environment values.
+- Do not touch `HEALTH_DATABASE.json`.
+- Do not add, edit, run, or require migrations for Phase 3.
+- Do not add, run, or require deployment steps for Phase 3.
+
 ## Likely Files To Change During Implementation
 
 - `netlify/functions/_coach-lib.mjs`
@@ -133,9 +151,9 @@ Scoring:
   - Consider `tests/apple-health-dashboard-context.test.mjs` if dashboard context coverage becomes large enough to separate from coach engine tests.
 
 - Docs
-  - Update `apps/ios-health-sync/README.md` after implementation to explain the Phase 3 read path.
-  - Update `apps/ios-health-sync/LIVE_VERIFICATION_RUNBOOK.md` if live verification adds dashboard or `coach-today` readback steps.
-  - Add production verification notes only after implementation and live verification.
+  - Update `apps/ios-health-sync/README.md` to explain the Phase 3 read path and supporting-evidence boundary.
+  - Update `apps/ios-health-sync/LIVE_VERIFICATION_RUNBOOK.md` only to clarify optional readback checks; do not add new migration or deployment instructions.
+  - Add production verification notes only after an approved deployment and live verification.
 
 Do not change:
 
@@ -199,7 +217,7 @@ Local verification:
 - Confirm `HEALTH_DATABASE.json` has no diff.
 - Confirm dashboard/brief outputs include Apple Health only in supporting-evidence fields.
 
-Live verification after deployment:
+Live verification after a separately approved deployment:
 
 - Verify the production `sync-status` response includes Apple Health freshness after a real iPhone sync.
 - Verify `coach-today` includes Apple Health context without changing readiness tier or workout prescription.
@@ -208,4 +226,4 @@ Live verification after deployment:
 
 ## Stop Line
 
-Stop at this plan until Todd approves Phase 3 implementation. This planning pass does not change backend behavior, tests, database schema, iOS app behavior, or production routes.
+Stop Phase 3 at local code/tests/docs unless Todd separately approves production release work. This phase does not require a new migration, new secret, new HealthKit permission, `HEALTH_DATABASE.json` edit, or live deployment instruction.

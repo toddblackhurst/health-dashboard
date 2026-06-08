@@ -3,6 +3,8 @@ import {
   ingestAppleHealthDaily,
 } from "./apple-health-daily.mjs";
 import {
+  buildCoachToday,
+  buildSyncStatus,
   compactDashboard,
   dashboardFromSupabase,
   getProfile,
@@ -125,12 +127,14 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "sync-status", "coach-today", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
       || "dashboard";
 
-    if (req.method === "GET" && action === "dashboard") {
+    if (req.method === "GET" && ["dashboard", "sync-status", "coach-today"].includes(action)) {
       const dashboard = await dashboardFromSupabase();
       if (!dashboard) return json({ error: "No Supabase profile found. Run the importer first." }, 404);
+      if (action === "sync-status") return json(buildSyncStatus(dashboard));
+      if (action === "coach-today") return json(buildCoachToday(dashboard));
       const isFull = url.searchParams.get("full") === "1";
       return json({
         dashboard: isFull ? dashboard : compactDashboard(dashboard),
