@@ -53,6 +53,7 @@ function installMockDashboardSupabase({ appleHealthRows = [], appleHealthSyncRun
     coach_messages: [],
     weekly_plans: [],
     planned_sessions: [],
+    doctor_notes: [],
     coach_state: [{
       profile_id: profile.id,
       version: DEFAULT_COACH_STATE.version,
@@ -152,6 +153,12 @@ test("dashboard, sync-status, and coach-today expose Apple Health supporting evi
   assert.ok(coachTodayBody.what_to_track_today.some(item => /Garmin Nutrition closeout/.test(item)));
   assert.equal(coachTodayBody.supporting_evidence.apple_health.status, "current");
   assert.equal(coachTodayBody.supporting_evidence.apple_health.source, "Apple Health / HealthKit daily summary");
+  assert.equal(coachTodayBody.source_context.readiness_primary, "Garmin Fenix 8 / Garmin training-recovery stack");
+  assert.equal(coachTodayBody.source_context.workout_primary, "Garmin Connect / Fenix 8");
+  assert.equal(coachTodayBody.source_context.strength_log_primary, "Rack/Motra");
+  assert.equal(coachTodayBody.source_context.apple_health_role, "supporting cross-check/data bus");
+  assert.match(coachTodayBody.source_context.oura_role, /fallback/);
+  assert.match(coachTodayBody.source_context.soundcore_role, /not recovery authority/);
   assert.match(coachTodayBody.source_context.apple_health_workout_counts, /not completed strength-log authority/);
   assert.match(coachTodayBody.confidence_data_quality.source_policy, /supporting evidence only/);
 });

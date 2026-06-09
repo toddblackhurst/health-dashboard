@@ -20,6 +20,7 @@ function clone(value) {
 }
 
 const MONDAY_TAIPEI = "2026-05-11T02:00:00.000Z";
+const TUESDAY_TAIPEI = "2026-06-09T02:00:00.000Z";
 const MONDAY_SCHEDULE = {
   weekday: "Monday",
   day_type: "strength",
@@ -62,6 +63,24 @@ test("subjective asthma, migraine, and hip pain override app scores", () => {
   assert.ok(readiness.risk_flags.some(flag => flag.code === "migraine"));
   assert.ok(readiness.risk_flags.some(flag => flag.code === "asthma"));
   assert.ok(readiness.risk_flags.some(flag => flag.code === "pain"));
+});
+
+test("sharp radiating or worsening pain overrides device data", () => {
+  const readiness = evaluateReadiness({
+    recovery_sleep: [
+      {
+        date: "2026-05-03",
+        oura: { readiness_score: 91, hrv_avg_ms: 39 },
+        bevel: { recovery_pct: 82 },
+      },
+    ],
+  }, DEFAULT_COACH_STATE, {
+    text: "Garmin looks good, but I have sharp radiating pain today.",
+    now: new Date(MONDAY_TAIPEI),
+  });
+
+  assert.equal(readiness.tier, "Red");
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "danger_pain"));
 });
 
 test("OpenAI polish cannot override deterministic safety decision", async () => {
@@ -136,6 +155,75 @@ test("May 3 mixed readiness treats Oura and Bevel conflict conservatively", () =
   assert.ok(readiness.risk_flags.some(flag => flag.code === "app_conflict"));
 });
 
+test("Garmin recovery row is primary over stale fallback app signals", () => {
+  const readiness = evaluateReadiness({
+    profile: { oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [
+      {
+        measured_date: "2026-06-09",
+        source: "Garmin Connect",
+        hrv_ms: 43,
+        recovery_score_pct: 86,
+        oura: { readiness_score: 29, hrv_avg_ms: 19 },
+      },
+    ],
+  }, DEFAULT_COACH_STATE, { now: new Date(TUESDAY_TAIPEI) });
+
+  assert.equal(readiness.tier, "Yellow");
+  assert.equal(readiness.hrv_ms, 43);
+  assert.equal(readiness.hrv_source, "Garmin");
+  assert.equal(readiness.garmin_readiness, 86);
+  assert.equal(readiness.recovery_source, "Garmin");
+  assert.ok(!readiness.risk_flags.some(flag => flag.code === "low_recovery"));
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "app_conflict"));
+  assert.ok(!readiness.risk_flags.some(flag => flag.code === "low_hrv"));
+  assert.ok(readiness.evidence.some(item => /Garmin HRV 43ms/.test(item)));
+});
+
+test("stale Garmin recovery row falls back instead of staying primary", () => {
+  const readiness = evaluateReadiness({
+    profile: { oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [
+      {
+        measured_date: "2026-06-05",
+        source: "Garmin Connect",
+        hrv_ms: 43,
+        recovery_score_pct: 86,
+        oura: { readiness_score: 72, hrv_avg_ms: 34 },
+      },
+    ],
+  }, DEFAULT_COACH_STATE, { now: new Date(TUESDAY_TAIPEI) });
+
+  assert.equal(readiness.hrv_ms, 34);
+  assert.equal(readiness.hrv_source, "Oura fallback");
+  assert.equal(readiness.recovery_source, "Oura fallback");
+  assert.equal(readiness.garmin_readiness, null);
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "stale_garmin_readiness"));
+});
+
+test("fresh Garmin recovery row with unreliable wear quality falls back", () => {
+  const readiness = evaluateReadiness({
+    profile: { oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [
+      {
+        measured_date: "2026-06-09",
+        source: "Garmin Connect",
+        hrv_ms: 44,
+        recovery_score_pct: 88,
+        watch_worn_overnight: false,
+        training_readiness_status: "insufficient baseline",
+        oura: { readiness_score: 74, hrv_avg_ms: 35 },
+      },
+    ],
+  }, DEFAULT_COACH_STATE, { now: new Date(TUESDAY_TAIPEI) });
+
+  assert.equal(readiness.hrv_ms, 35);
+  assert.equal(readiness.hrv_source, "Oura fallback");
+  assert.equal(readiness.recovery_source, "Oura fallback");
+  assert.equal(readiness.garmin_readiness, null);
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "unreliable_garmin_wear"));
+});
+
 test("nutrition closeout catches fat over budget and protein short", () => {
   const nutrition = buildNutritionCall({
     nutrition_log: [
@@ -188,15 +276,178 @@ test("build_workout intent returns structured workout plan and source context", 
 
   assert.equal(decision.intent, "build_workout");
   assert.equal(decision.source_context.default_gym, "World Gym Taichung");
+  assert.match(decision.source_context.safety_override, /doctor guidance/);
+  assert.equal(decision.source_context.readiness_primary, "Garmin Fenix 8 / Garmin training-recovery stack");
+  assert.match(decision.source_context.readiness_condition, /overnight and during training/);
+  assert.match(decision.source_context.readiness_fallback, /Oura sleep\/recovery/);
   assert.equal(decision.source_context.nutrition_primary, "Garmin Connect+ Nutrition");
-  assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
+  assert.equal(decision.source_context.workout_physiology_primary, "Garmin Connect / Fenix 8");
+  assert.equal(decision.source_context.workout_primary, "Garmin Connect / Fenix 8");
+  assert.equal(decision.source_context.strength_log_primary, "Rack/Motra");
+  assert.equal(decision.source_context.apple_health_role, "supporting cross-check/data bus");
+  assert.equal(decision.source_context.oura_role, "secondary sleep/recovery fallback");
+  assert.match(decision.source_context.soundcore_role, /not recovery authority/);
   assert.equal(decision.workout_plan.environment, "World Gym Taichung");
   assert.equal(decision.daily_summary.daily_call.color, "Green");
   assert.match(decision.daily_summary.todays_plan.primary_action, /World Gym plan/);
   assert.equal(decision.daily_summary.rack_motra_handoff.generated, true);
-  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Garmin Connect Strength is primary/);
+  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Rack\/Motra are the strength-log authority/);
   assert.ok(decision.daily_summary.rack_motra_handoff.copy_friendly_order.some(block =>
     block.exercises.some(ex => ex.name === "Pull-Up" && ex.rack_motra_name === "Pull-Up")));
+});
+
+test("source authority context preserves Garmin, Rack/Motra, Oura, Apple Health, and Soundcore roles", () => {
+  const dashboard = {
+    now: new Date("2026-06-08T02:00:00.000Z"),
+    profile: { timezone: "Asia/Taipei" },
+    apple_health_daily_summaries: [{
+      summary_date: "2026-06-08",
+      source_app: "Apple Health",
+      steps: 8421,
+      workout_count: 2,
+      strength_workout_count: 1,
+      hrv_sdnn_ms: 82,
+    }],
+  };
+
+  const decision = buildCoachDecision({
+    text: "Build today's workout",
+    intent: "build_workout",
+    dashboard,
+    payload: { now: "2026-06-08T02:00:00.000Z" },
+  });
+  const coachToday = buildCoachToday(dashboard);
+  const syncStatus = buildSyncStatus(dashboard);
+
+  assert.equal(decision.source_context.readiness_primary, "Garmin Fenix 8 / Garmin training-recovery stack");
+  assert.equal(coachToday.source_context.readiness_primary, "Garmin Fenix 8 / Garmin training-recovery stack");
+  assert.equal(decision.source_context.workout_physiology_primary, "Garmin Connect / Fenix 8");
+  assert.equal(coachToday.source_context.workout_physiology_primary, "Garmin Connect / Fenix 8");
+  assert.equal(decision.source_context.workout_primary, "Garmin Connect / Fenix 8");
+  assert.equal(decision.source_context.strength_log_primary, "Rack/Motra");
+  assert.equal(coachToday.source_context.strength_log_primary, "Rack/Motra");
+  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Rack\/Motra are the strength-log authority/);
+  assert.equal(decision.source_context.apple_health_role, "supporting cross-check/data bus");
+  assert.equal(coachToday.source_context.apple_health_role, "supporting cross-check/data bus");
+  assert.equal(decision.source_context.supporting_evidence.apple_health.role, "supporting cross-check");
+  assert.match(coachToday.source_context.apple_health_workout_counts, /not completed strength-log authority/);
+  assert.match(decision.source_context.readiness_fallback, /Oura sleep\/recovery/);
+  assert.equal(decision.source_context.oura_role, "secondary sleep/recovery fallback");
+  assert.equal(coachToday.source_context.oura_role, "secondary sleep/recovery fallback");
+  assert.match(DEFAULT_COACH_STATE.source_hierarchy.readiness.join(" "), /Oura sleep\/recovery fallback/);
+  assert.match(decision.source_context.soundcore_role, /not recovery authority/);
+  assert.match(DEFAULT_COACH_STATE.source_hierarchy.sleep_environment, /not recovery authority/);
+  assert.deepEqual(syncStatus.source_policy.does_not_override, [
+    "Garmin readiness/recovery",
+    "subjective symptoms",
+    "medical safety flags",
+    "Garmin workout physiology",
+    "Rack/Motra strength history",
+  ]);
+});
+
+test("medical and safety flags override optimistic device data across workout decisions", () => {
+  const dashboard = {
+    now: new Date(MONDAY_TAIPEI),
+    profile: { timezone: "Asia/Taipei", oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [{
+      measured_date: "2026-05-11",
+      oura_readiness_score: 95,
+      hrv_ms: 52,
+      recovery_score_pct: 96,
+    }],
+    blood_pressure: [{
+      date: "2026-05-11",
+      systolic_mmhg: 165,
+      diastolic_mmhg: 101,
+    }],
+    apple_health_daily_summaries: [{
+      summary_date: "2026-05-11",
+      steps: 12000,
+      exercise_minutes: 90,
+      hrv_sdnn_ms: 95,
+      workout_count: 3,
+      strength_workout_count: 2,
+    }],
+  };
+
+  const text = "Garmin says I am ready, but migraine and asthma flare today.";
+  const readiness = evaluateReadiness(dashboard, DEFAULT_COACH_STATE, { text, now: new Date(MONDAY_TAIPEI) });
+  const decision = buildCoachDecision({
+    text,
+    intent: "build_workout",
+    dashboard,
+    payload: { now: MONDAY_TAIPEI },
+  });
+
+  assert.equal(readiness.tier, "Red");
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "migraine"));
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "asthma"));
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "bp_red"));
+  assert.match(readiness.training_call, /Downshift/);
+  assert.equal(decision.readiness.tier, "Red");
+  assert.equal(decision.daily_summary.daily_call.color, "Red");
+  assert.match(decision.source_context.safety_override, /override all device data/);
+  assert.match(decision.daily_summary.confidence_data_quality.source_policy, /does not override Garmin readiness/);
+  assert.ok(decision.daily_summary.safety_guardrails.some(item => /Apple Health activity counts never override/.test(item)));
+  assert.ok(decision.daily_summary.why.some(item => /Apple Health supporting context/.test(item)));
+});
+
+test("doctor guidance overrides optimistic device data", () => {
+  const dashboard = {
+    now: new Date(MONDAY_TAIPEI),
+    profile: { timezone: "Asia/Taipei", oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [{
+      measured_date: "2026-05-11",
+      source: "Garmin Connect",
+      hrv_ms: 52,
+      recovery_score_pct: 96,
+    }],
+    doctor_notes: [{
+      note_date: "2026-05-11",
+      topic: "BP follow-up",
+      guidance: "Hold hard training this week.",
+      training_impact: "No hard training until doctor clears intensity.",
+    }],
+  };
+
+  const decision = buildCoachDecision({
+    text: "Garmin says I am ready. Build today's workout.",
+    intent: "build_workout",
+    dashboard,
+    payload: { now: MONDAY_TAIPEI },
+  });
+
+  assert.equal(decision.readiness.tier, "Red");
+  assert.ok(decision.readiness.risk_flags.some(flag => flag.code === "doctor_guidance"));
+  assert.match(decision.top_line_call, /Downshift/);
+  assert.ok(decision.readiness.evidence.some(item => /Doctor guidance/.test(item)));
+});
+
+test("red safety gates are not overwritten by Tuesday goal-support schedule", () => {
+  const dashboard = {
+    now: new Date(TUESDAY_TAIPEI),
+    profile: { timezone: "Asia/Taipei" },
+    blood_pressure: [{
+      date: "2026-06-09",
+      systolic_mmhg: 165,
+      diastolic_mmhg: 101,
+    }],
+  };
+
+  const decision = buildCoachDecision({
+    text: "Build today's workout",
+    intent: "build_workout",
+    dashboard,
+    payload: { now: TUESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.readiness.tier, "Red");
+  assert.match(decision.top_line_call, /Downshift/);
+  assert.match(decision.workout_plan.top_line, /Downshift/);
+  assert.match(decision.workout_plan.floor_plan, /No strength, Zone 2, or conditioning/);
+  assert.ok(!decision.workout_plan.blocks.some(block => /Zone 2|conditioning/i.test(`${block.name} ${block.target}`)));
+  assert.ok(decision.next_actions.some(action => /recovery-only/.test(action)));
 });
 
 test("coach decisions include compact Supabase conversation history for phone continuity", () => {
@@ -323,10 +574,10 @@ test("stale Apple Health summaries are marked stale without readiness penalty", 
 
   assert.equal(support.status, "stale");
   assert.equal(readiness.tier, "Green");
-  assert.equal(readiness.source_order.at(-1), "Apple Health summary cross-checks only");
+  assert.equal(readiness.source_order.at(-1), "Apple Health summary cross-checks/data bus only");
 });
 
-test("Apple Health does not override Oura readiness or double-count workout history", () => {
+test("Apple Health does not override Garmin readiness or double-count workout history", () => {
   const dashboard = {
     now: new Date("2026-06-08T02:00:00.000Z"),
     profile: { timezone: "Asia/Taipei", oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
@@ -370,9 +621,12 @@ test("Apple Health does not override Oura readiness or double-count workout hist
   assert.equal(compact.supporting_evidence.apple_health.last_7_days.strength_workout_count, 4);
   assert.match(compact.supporting_evidence.apple_health.duplicate_policy.warning, /Do not count Apple Health workout_count/);
   assert.equal(decision.daily_summary.daily_call.color, "Red");
-  assert.match(decision.daily_summary.confidence_data_quality.source_policy, /does not override readiness/);
+  assert.match(decision.daily_summary.confidence_data_quality.source_policy, /does not override Garmin readiness/);
   assert.ok(decision.daily_summary.why.some(item => /Apple Health supporting context/.test(item)));
-  assert.equal(decision.source_context.readiness_primary, "Oura");
-  assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
+  assert.equal(decision.source_context.readiness_primary, "Garmin Fenix 8 / Garmin training-recovery stack");
+  assert.equal(decision.source_context.workout_primary, "Garmin Connect / Fenix 8");
+  assert.equal(decision.source_context.strength_log_primary, "Rack/Motra");
+  assert.match(decision.source_context.readiness_fallback, /Oura/);
+  assert.match(decision.source_context.soundcore_role, /not recovery authority/);
   assert.equal(decision.source_context.supporting_evidence.apple_health.role, "supporting cross-check");
 });

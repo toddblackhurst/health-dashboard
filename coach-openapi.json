@@ -171,7 +171,7 @@
       "post": {
         "operationId": "nutritionCloseout",
         "summary": "Evaluate today's nutrition",
-        "description": "Uses Bevel as nutrition source of truth and gives the next protein/fat correction.",
+        "description": "Uses Garmin Connect+ Nutrition as the primary nutrition source when complete daily totals are available, with manual Coach closeout fallback.",
         "requestBody": {
           "required": false,
           "content": {
@@ -258,7 +258,7 @@
       "post": {
         "operationId": "submitCoachIntake",
         "summary": "Submit structured coach intake",
-        "description": "Stores structured health and coaching data such as BP readings, Bevel food summaries, body metrics, recovery, activities, strength sessions, workout feedback, doctor notes, or coach notes.",
+        "description": "Stores structured health and coaching data such as BP readings, Garmin Nutrition or manual food summaries, body metrics, recovery, activities, strength sessions, workout feedback, doctor notes, or coach notes.",
         "requestBody": {
           "required": true,
           "content": {

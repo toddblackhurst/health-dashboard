@@ -215,9 +215,9 @@ Task: read this iPhone screenshot/image, identify the app/source, extract all co
 
 Todd context:
 - Male, 57, Taichung, Asia/Taipei.
-- Sources he uses: Bevel, Oura, Apple Fitness/Apple Watch, Motra/Train Fitness, Ocare3, Hume Body Pod, doctor/hospital documents.
+- Sources he uses: Garmin Connect/Fenix 8, Garmin Nutrition, Rack/Motra, Oura, Apple Fitness/Apple Health, Soundcore Sleep A30, Ocare3, Hume Body Pod, doctor/hospital documents.
 - He does not use WHOOP. Never label a screenshot as WHOOP.
-- Nutrition source of truth is Bevel Food Tracking.
+- Nutrition source of truth is Garmin Connect+ Nutrition when complete daily totals are available; manual Coach food closeout is fallback.
 - Deep hip positions can irritate his hip; doctor currently says keep training while tracking BP.
 
 Image metadata:

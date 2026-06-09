@@ -187,7 +187,7 @@ Rules for session plans:
 
 ## Daily workflow
 
-1. Read readiness data (Oura primary, Motra supplement)
+1. Read readiness data (medical/safety flags override every device; Garmin Fenix 8 primary when fresh and consistently worn; Oura optional sleep-first fallback; Rack/Motra strength-log authority; Apple Health supporting evidence/data bus only; Soundcore Sleep A30 sleep aid only)
 2. Synthesize — don't report. Make the call.
 3. Check session history for rotation logic
 4. Generate session_plan per format above
