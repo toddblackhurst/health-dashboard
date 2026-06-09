@@ -4,13 +4,13 @@ This plan started after the verified Apple Health Phase 3 production milestone f
 
 ## Recommendation
 
-Daily coach UX polish has been implemented locally in the `daily-coach-ux-polish` branch. After review, the recommended next phase is the weekly review engine.
+Daily coach UX polish is live and production-verified. The current prerequisite before Weekly Review Engine is this Garmin source-hierarchy update: Garmin Fenix 8 primary for integrated training/recovery and workout physiology, Rack/Motra primary for strength logs, Apple Health supporting-only, Oura secondary/fallback, Soundcore sleep aid only, and medical/safety flags above every device.
 
-Why: the codebase already exposes `coach-today`, `sync-status`, compact dashboard context, and Apple Health supporting evidence. Polishing the daily coach surface was the lowest-risk next step because it reshapes existing readback and response structure without new migrations, new sync behavior, or changes to readiness/workout authority. The weekly review engine is the next-highest value phase once the daily surface is reviewed.
+Why: the codebase already exposes `coach-today`, `sync-status`, compact dashboard context, and Apple Health supporting evidence. Weekly Review Engine should not aggregate a week of training, recovery, and activity until the source hierarchy is explicit and test-covered.
 
 Recommended order:
 
-1. Review Daily coach UX polish.
+1. Review and merge Garmin source hierarchy update.
 2. Weekly review engine.
 3. Coach observations learning loop.
 4. Rack/Motra workout handoff improvement.
@@ -20,13 +20,13 @@ Recommended order:
 
 Goal: make the daily coach output easier to read and act on.
 
-Status: implemented locally; pending push approval, deployment approval, and production verification.
+Status: live and production-verified.
 
 Possible scope:
 
 - Make `coach-today` easier to scan.
 - Improve the morning check-in flow.
-- Make workout output more Rack/Motra-friendly while preserving Garmin and current source hierarchy rules.
+- Make workout output more Rack/Motra-friendly while preserving Garmin workout physiology and Rack/Motra strength-log authority.
 - Keep Apple Health clearly labeled as supporting cross-check evidence.
 - Preserve deterministic safety/readiness gates.
 
@@ -47,7 +47,7 @@ Suggested acceptance criteria:
 
 - `coach-today` leads with the call, why it matters, and the next action.
 - Morning check-in fields are clear and short.
-- Workout output uses names and structure that are practical for Rack/Motra/Garmin entry.
+- Workout output uses names and structure that are practical for Rack/Motra strength logging and Garmin physiology/training-load context.
 - Apple Health remains supporting evidence only.
 - Existing tests pass, with focused additions for response structure if needed.
 
@@ -60,8 +60,10 @@ Possible scope:
 - Summarize training, recovery, Apple Health activity, pain, and nutrition.
 - Identify what changed during the week.
 - Recommend what next week should do.
-- Compare planned sessions with completed workout evidence.
+- Compare planned sessions with Rack/Motra strength-log evidence and Garmin workout physiology/recovery evidence.
 - Keep Apple Health as activity/context cross-check, not completed strength authority.
+- Keep Oura as secondary sleep/recovery fallback when Garmin overnight data is stale or missing.
+- Keep Soundcore Sleep A30 out of recovery authority.
 
 Pros:
 
@@ -78,9 +80,10 @@ Cons:
 
 Suggested acceptance criteria:
 
-- Weekly review has clear sections for training, recovery, Apple Health activity, pain, nutrition, and next-week changes.
+- Weekly review has clear sections for Rack/Motra strength-log evidence, Garmin recovery/physiology, Apple Health activity context, pain/safety, nutrition, and next-week changes.
 - Review distinguishes source data, missing data, and coaching interpretation.
 - Apple Health cannot count as completed set-level strength work.
+- Medical/safety flags override all device data.
 - Next-week recommendations cite the evidence that drove the change.
 - No behavior changes occur without tests.
 
@@ -122,7 +125,7 @@ Possible scope:
 
 - Produce cleaner Rack/Motra-friendly exercise names, blocks, sets, loads, reps, rests, and notes.
 - Add copy-friendly workout export formats.
-- Preserve Garmin-first execution when that is the active source hierarchy.
+- Preserve Rack/Motra as strength-log authority and Garmin as workout physiology/training-load authority.
 - Avoid direct automation unless the target surface and safety are verified.
 
 Pros:

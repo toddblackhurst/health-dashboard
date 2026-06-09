@@ -83,9 +83,9 @@ def one_profile(db: dict) -> dict:
         "source_hierarchy": {
             "medical": "doctor guidance",
             "body_composition": "DXA authoritative; BIA trend-only",
-            "training": "Motra actuals override planned sessions",
-            "recovery": "Oura + Bevel; symptoms override app readiness",
-            "nutrition": "Cal AI/Bevel when day is complete enough to judge",
+            "training": "Rack/Motra strength logs plus Garmin workout physiology override planned sessions",
+            "recovery": "Garmin Fenix 8 primary when fresh and consistently worn; Oura fallback; symptoms override app readiness",
+            "nutrition": "Garmin Connect+ Nutrition when complete; manual Coach closeout fallback",
         },
     }
 

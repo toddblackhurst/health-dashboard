@@ -33,9 +33,9 @@ The best next version is a cleaner, more durable coaching platform built around 
 - Medical overrides beat app scores.
 - Subjective pain/fatigue beats optimistic device scores.
 - The coach must preserve serious strength training while adding athletic-functional work.
-- Rack/Motra remains the workout execution/logging target for now; do not automate Rack entry until the core system is stable.
-- Apple Health becomes the first-class automated ingestion path because much of Todd's device data is already there.
-- Garmin, Oura, Rack, and Hume direct integrations are later optimizations, not V2 blockers.
+- Rack/Motra remains the strength-log authority for completed sets, reps, loads, exercise names, and progression; do not automate Rack entry until the core system is stable.
+- Apple Health remains the first-class automated data-bus/supporting ingestion path because much of Todd's device data is already there, but it does not override Garmin readiness, Garmin workout physiology, Rack/Motra strength history, or safety flags.
+- Garmin Fenix 8 is the primary integrated training/recovery and workout-physiology source when fresh and consistently worn; Oura fallback, Rack/Motra logs, and Hume/Ocare trend integrations can be improved later without blocking V2.
 
 ## Target Repository Structure
 
@@ -99,7 +99,7 @@ Add these as non-destructive migrations:
 
 #### `health_daily_summaries`
 
-One row per profile/date/source. This is the primary Apple Health coaching input.
+One row per profile/date/source. This is the main Apple Health supporting-evidence input, not a replacement for Garmin readiness, Garmin workout physiology, Rack/Motra strength history, or safety flags.
 
 Recommended columns:
 
@@ -133,7 +133,7 @@ Recommended columns:
 
 #### `health_workouts`
 
-One row per Apple Health workout. Use this to compare Apple Fitness/Garmin/Oura activity with Motra/Rack strength logs.
+One row per Apple Health workout. Use this as supporting activity context to compare Apple Fitness/Garmin/Oura activity with Rack/Motra strength logs; do not treat it as completed set-level strength authority.
 
 Recommended columns:
 

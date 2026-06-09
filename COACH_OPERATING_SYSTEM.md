@@ -19,24 +19,27 @@ This is the single active coaching specification for Todd's Coach v3 system.
 
 ## Live Data Hierarchy
 
-- Readiness: Oura overnight physiology first, Garmin HRV Status / Training Readiness / Body Battery trends second, subjective pain/fatigue third, Apple Health summaries as cross-check only.
+- Safety override: doctor guidance/medical notes, BP red/yellow thresholds, migraine, asthma flare, sharp/radiating/worsening pain, and subjective pain/fatigue override every device score.
+- Readiness: Garmin Fenix 8 / Garmin training-recovery stack is primary when Todd is consistently wearing the watch overnight and during training. Use Garmin HRV Status, Training Readiness, Body Battery, resting HR, sleep/recovery trends, stress, training load, and recovery context together.
+- Readiness fallback: Oura is the secondary sleep/recovery fallback when Garmin sleep/recovery data is stale, missing, or unreliable. Apple Health summaries remain supporting cross-check/data-bus evidence only.
 - Nutrition: Garmin Connect+ Nutrition is source of truth when the daily closeout includes usable calories and macros. Manual Coach macro closeouts are the fallback when Garmin totals are not visible.
 - Workout physiology: Garmin Connect / Fenix 8 is the source of truth for duration, HR, zones, training effect, exercise load, recovery time, calories, stress/load context, and workout summary data. Health Auto Export can mirror summaries but should not be counted as a second workout source.
-- Workout execution: Garmin Connect Strength is the active build/execution/set-level surface unless Todd explicitly asks for a Rack trial/build. Build/schedule structured Garmin Strength workouts first, using closest Garmin exercise names plus detailed notes for exact WorldGym machine/floor/fallback/load intent. Do not ask Todd to maintain Apple Notes, Rack, or Motra as parallel workout records.
+- Strength log: Rack/Motra is the authority for completed sets, reps, loads, exercise names, performance history, and strength progression. Garmin workout detail can support physiology/cost context and obvious execution evidence, but it does not replace the Rack/Motra strength log role.
 - Rack clarification from Noah at Rack, 2026-06-04: Rack's file importer is for completed workout history only. It does not create reusable routines or planned/to-do workouts. Use Rack's routine builder for AI-planned upcoming sessions because it preserves rep ranges, target loads, timed carries, and notes. Use Rack import only for Motra/history migration.
-- Motra remains legacy workout-history evidence. When converting Motra history to Rack, use one row per set with exact headers: `Date, Workout Name, Exercise, Set Number, Weight, Reps, Set Type, Duration, Notes`; use actual completed reps, not ranges; leave `Duration` blank and put timed carries such as `30 sec hold` in `Notes`; duplicate detection is Date + Workout Name; exercise names auto-create with no automatic cleanup, so spelling/naming consistency matters.
+- Motra provides strength-history continuity inside the Rack/Motra strength-log lane. When converting Motra history to Rack, use one row per set with exact headers: `Date, Workout Name, Exercise, Set Number, Weight, Reps, Set Type, Duration, Notes`; use actual completed reps, not ranges; leave `Duration` blank and put timed carries such as `30 sec hold` in `Notes`; duplicate detection is Date + Workout Name; exercise names auto-create with no automatic cleanup, so spelling/naming consistency matters.
+- Soundcore Sleep A30 is a sleep-improvement/noise/snore-masking tool only. It is not a recovery authority.
 - Body composition: Hume/Ocare are useful for trends only; do not overreact to one-day BIA body-fat swings.
-- Medical and safety: doctor guidance, BP, asthma, migraine, and pain override app scores.
 
 Device-stack rule:
 
-- Oura is the highest-confidence overnight sleep/readiness source for Coach, but sleep stages are still trend data, not clinical diagnosis.
-- Garmin is the highest-confidence source for training load, workout execution, strength activity records, and Garmin-only recovery/training metrics while the Fenix 8 is active.
+- Garmin Fenix 8 is the primary integrated training/recovery system while Todd is wearing it consistently overnight and during training.
+- Oura is optional/secondary and sleep-first. Use it as comfort fallback if Garmin sleep data is unreliable or the watch is not worn overnight.
 - Garmin Connect+ Nutrition is the highest-value food logging layer while the Garmin subscription is active.
 - Apple Health is a data bus and BP cross-check, not a competing coach brain.
 - Native HealthKit daily summaries land in `apple_health_daily_summaries` through `POST /api/coach?action=apple-health-daily`. They summarize by day before upload and are used for trend/cross-check context only.
 - Avoid overlap by not double-counting Garmin workouts, calories, or nutrition mirrored through Apple Health.
-- If app scores conflict, Coach should resolve by source fit: Oura for sleep physiology, Garmin for training load/workout cost and nutrition completeness, symptoms/medical flags as the override.
+- Medical/safety flags override every device, app score, and training/recovery metric.
+- If app scores conflict, Coach should resolve by source fit: Garmin for integrated training/recovery and workout cost when fresh, Rack/Motra for strength performance history, Oura as sleep/recovery fallback, Apple Health as supporting data bus, and symptoms/medical flags as the override.
 
 ## World Gym Taichung Default
 
@@ -54,7 +57,7 @@ Workout rules:
 - Every gym workout must include one obvious athletic/functional element.
 - Every gym workout must include trunk, carry, chop/Pallof, or anti-rotation work.
 - Left side leads unilateral work.
-- While the Fenix 8 is the active workout watch, build workouts in Garmin Connect first unless Todd explicitly directs a Rack routine build/trial. Use Garmin's exact sets/reps/rests/weights and concise step notes; put WorldGym-specific machine names, floors, fallbacks, and cues into the step notes when Garmin's exercise library is too generic. Use Rack's routine builder, not Rack import, for planned Rack sessions. Use Motra names only when pulling legacy history or if Todd explicitly asks for a Motra build.
+- While the Fenix 8 is the active workout watch, keep workouts Garmin Connect-ready for physiology and training-load context. Keep Rack/Motra-friendly names, sets, reps, loads, and notes as the strength-log layer. Use Rack's routine builder, not Rack import, for planned Rack sessions. Use Motra names for legacy history and strength-log continuity.
 - Travel mode disables World Gym floor routing and requires hotel-gym inventory before a strength plan.
 
 Avoid:
@@ -101,9 +104,9 @@ Every workout includes:
 ## Readiness And Safety Gates
 
 - Red/downshift: migraine, asthma flare, pain >=4/10, BP >=160 systolic or >=100 diastolic, HRV materially below baseline.
-- Yellow/modified: BP >=140 systolic or >=90 diastolic, HRV below baseline, subjective high fatigue, or Oura/Garmin conflict.
+- Yellow/modified: BP >=140 systolic or >=90 diastolic, HRV below baseline, subjective high fatigue, stale/missing Garmin readiness data, or Oura/Garmin conflict.
 - Green: no hard safety flags and physiology supports normal training.
-- If Oura is green but Garmin HRV/training readiness or subjective symptoms are poor, downshift anyway.
+- If Garmin looks green but medical/symptom flags are poor, downshift anyway. If Garmin sleep/recovery is stale or missing, use Oura as the sleep/recovery fallback and Apple Health only as supporting evidence without overriding safety.
 
 ## iPhone Workflow
 
@@ -127,7 +130,7 @@ Daily coach output contract:
 - `coach-today` must lead with `daily_call`: Green/Yellow/Orange/Red-style color, readiness tier, and one direct decision sentence.
 - Follow the call with 3-6 `why` bullets covering readiness/recovery, pain or safety, Apple Health supporting activity context, and the planned strength/cardio schedule.
 - Include `todays_plan`, `safety_guardrails`, `what_to_track_today`, and `confidence_data_quality` so the response is actionable without reading the full dashboard payload.
-- When a workout is generated, include a Rack/Motra handoff that is copy-friendly for exercise order, names, prescriptions, and notes, while keeping Garmin Connect Strength as the primary execution surface.
+- When a workout is generated, include a Rack/Motra handoff that is copy-friendly for exercise order, names, prescriptions, and notes, while keeping Garmin/Fenix as the workout physiology and training-load context.
 - Apple Health must remain labeled as supporting evidence only in daily output. It can explain sync freshness and activity context, but cannot override readiness, safety gates, Garmin workout physiology, or Rack/Motra history.
 
 Shortcut actions to support:
@@ -136,7 +139,7 @@ Shortcut actions to support:
 - Build Today's Workout: calls `/api/coach/workout`.
 - Nutrition Closeout: Garmin Nutrition totals to `/api/coach/nutrition-closeout`.
 - Post-Workout Debrief: duration, best/worst movement, pain, RPE.
-- Garmin Workout Build: create/update the scheduled Garmin Connect Strength workout with closest Garmin exercise names, exact rests/reps/weights, and WorldGym details in notes; after the workout, use Garmin's completed Strength activity as the set-level layer and Todd's chat feedback only for subjective notes or obvious detection corrections.
+- Garmin Workout Build: create/update the scheduled Garmin Connect Strength workout with closest Garmin exercise names, exact rests/reps/weights, and WorldGym details in notes when that remains Todd's active gym execution surface; after the workout, use Garmin's completed activity for physiology/training-load context and Rack/Motra for strength-log authority.
 - Apple Health Daily Summary: native HealthKit clients may upload one summarized row per day to `/api/coach/apple-health-daily` using `x-coach-secret`; do not upload raw HealthKit samples or promote Apple Health summaries over Oura/Garmin/Rack evidence.
 - Fast Coach Note: simple message intake.
 - Screenshot Save: saves screenshots to the iCloud Coach Screenshots inbox.

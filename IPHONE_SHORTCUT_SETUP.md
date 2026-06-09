@@ -119,12 +119,12 @@ Dictionary:
 
 ```json
 {
-  "text": "Nutrition closeout from Bevel",
+  "text": "Nutrition closeout from Garmin Nutrition",
   "channel": "iphone-shortcut"
 }
 ```
 
-This evaluates the latest Bevel totals. If the latest Bevel screenshot has not processed yet, use `Coach Intake` food logging or drop the screenshot into the iCloud watcher folder first.
+This evaluates the latest Garmin Connect+ Nutrition totals when complete. If Garmin totals are not available, use `Coach Intake` food logging as the manual fallback.
 
 ### Post-Workout Debrief
 
@@ -223,7 +223,7 @@ Use it for:
 
 - workout feedback
 - BP notes
-- food notes from Bevel
+- food notes from Garmin Nutrition or manual closeout
 - recovery/travel updates
 - anything coach should remember
 
@@ -275,7 +275,7 @@ Add these actions:
 
 ### 3. Food menu branch
 
-Use Bevel as source of truth.
+Use Garmin Connect+ Nutrition as source of truth when complete daily totals are available.
 
 Ask for:
 
@@ -294,7 +294,7 @@ Dictionary:
 - `carbs`: Carbs input
 - `fat`: Fat input
 - `notes`: Notes input
-- `summary`: `Bevel food log from Shortcut`
+- `summary`: `Garmin Nutrition food log from Shortcut`
 
 ### 4. Body menu branch
 
@@ -315,7 +315,7 @@ Dictionary:
 - `lean_mass_lbs`: Lean mass input
 - `visceral_fat_level`: Visceral fat input
 - `notes`: Notes input
-- `summary`: `Bevel body log from Shortcut`
+- `summary`: `Hume/Ocare body trend log from Shortcut`
 
 ### 5. Workout menu branch
 

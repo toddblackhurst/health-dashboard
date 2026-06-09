@@ -7,6 +7,21 @@ const JSON_HEADERS = {
 
 export const COACH_RESPONSE_VERSION = "coach-brain-v1";
 
+const SOURCE_CONTEXT = {
+  safety_override: "doctor guidance, BP thresholds, migraine, asthma flare, sharp/radiating/worsening pain, and subjective fatigue override all device data",
+  readiness_primary: "Garmin Fenix 8 / Garmin training-recovery stack",
+  readiness_condition: "primary when Todd is consistently wearing the Fenix 8 overnight and during training",
+  readiness_fallback: "Oura sleep/recovery when Garmin data is stale, missing, or unreliable",
+  readiness_supporting: "Apple Health supporting cross-check/data bus only",
+  workout_physiology_primary: "Garmin Connect / Fenix 8",
+  strength_log_primary: "Rack/Motra",
+  apple_health_role: "supporting cross-check/data bus",
+  oura_role: "secondary sleep/recovery fallback",
+  soundcore_role: "sleep aid/noise/snore masking only; not recovery authority",
+  nutrition_primary: "Garmin Connect+ Nutrition",
+  body_composition_trend: "Hume/Ocare trend only",
+};
+
 export const DEFAULT_COACH_STATE = {
   version: "2026-05-12-pro-coach-v2",
   goals: {
@@ -17,9 +32,24 @@ export const DEFAULT_COACH_STATE = {
     fat_budget_g: 70,
   },
   source_hierarchy: {
-    readiness: ["Oura overnight sleep and physiology", "Garmin HRV Status / Training Readiness / Body Battery trends", "subjective pain/fatigue", "Apple Health summary cross-checks only"],
+    safety_override: [
+      "Doctor guidance / medical notes",
+      "BP red/yellow thresholds",
+      "Migraine",
+      "Asthma flare",
+      "Sharp/radiating/worsening pain",
+      "Subjective pain/fatigue",
+    ],
+    readiness: [
+      "Garmin Fenix 8 integrated recovery when fresh and consistently worn overnight and during training",
+      "Oura sleep/recovery fallback when Garmin data is stale, missing, or unreliable",
+      "Subjective pain/fatigue and medical flags override devices",
+      "Apple Health summary cross-checks/data bus only",
+    ],
     nutrition: "Garmin Connect+ Nutrition",
-    workout_history: "Garmin Connect Strength for set-level execution and physiology",
+    workout_physiology: "Garmin Connect / Fenix 8 for training load, recovery time, HR, zones, Body Battery, and workout cost",
+    workout_history: "Rack/Motra strength log for completed sets, exercise loads, performance history, and exercise names; Garmin supplies physiology/cost context.",
+    sleep_environment: "Soundcore Sleep A30 supports sleep quality through noise/snore masking only; it is not recovery authority.",
     body_composition: "Hume/Ocare trend only; do not overreact to one-day BIA body-fat swings.",
   },
   training_model: {
@@ -620,16 +650,36 @@ function latestSleepValues(dashboard = {}) {
   const sleep = latest(dashboard.recovery_sleep) || dashboard.current?.recovery_sleep || {};
   const bevel = sleep.bevel || {};
   const oura = sleep.oura || {};
+  const garmin = sleep.garmin || {};
+  const sourceLabel = String(first(sleep.source, garmin.source, "")).toLowerCase();
+  const sourceIsGarmin = Boolean(
+    sourceLabel.includes("garmin") ||
+    sleep.garmin ||
+    sleep.garmin_hrv_ms ||
+    sleep.hrv_status_ms ||
+    sleep.training_readiness_score ||
+    sleep.body_battery_score ||
+    sleep.recovery_time_hours ||
+    garmin.hrv_ms ||
+    garmin.hrv_status_ms ||
+    garmin.training_readiness_score ||
+    garmin.body_battery_score
+  );
   return {
     row: sleep,
     date: sleep.date || sleep.measured_date || null,
+    source: sleep.source || null,
+    garmin_readiness: asNumber(first(garmin.training_readiness_score, garmin.readiness_score, sleep.training_readiness_score, sleep.garmin_readiness_score, sourceIsGarmin ? sleep.recovery_score_pct : null)),
+    garmin_hrv: asNumber(first(garmin.hrv_status_ms, garmin.hrv_ms, sleep.garmin_hrv_ms, sleep.hrv_status_ms, sourceIsGarmin ? sleep.hrv_ms : null)),
+    garmin_rhr: asNumber(first(garmin.resting_hr_bpm, garmin.rhr_bpm, sleep.garmin_resting_hr_bpm, sourceIsGarmin ? sleep.resting_hr_bpm : null)),
+    garmin_sleep_min: asNumber(first(garmin.total_sleep_min, sleep.garmin_total_sleep_min, sourceIsGarmin ? sleep.total_sleep_min : null)),
     oura_readiness: asNumber(first(oura.readiness_score, sleep.oura_readiness_score)),
-    oura_hrv: asNumber(first(oura.hrv_avg_ms, sleep.oura_hrv_ms, sleep.hrv_ms)),
-    oura_rhr: asNumber(first(oura.rhr_bpm_avg, sleep.resting_hr_bpm)),
-    oura_sleep_min: asNumber(first(oura.total_sleep_min, sleep.total_sleep_min)),
-    bevel_recovery: asNumber(first(bevel.recovery_pct, sleep.recovery_score_pct)),
-    bevel_hrv: asNumber(first(bevel.hrv_ms, sleep.hrv_ms)),
-    sleep_min: asNumber(first(bevel.time_asleep_min, oura.total_sleep_min, sleep.total_sleep_min)),
+    oura_hrv: asNumber(first(oura.hrv_avg_ms, sleep.oura_hrv_ms, sourceIsGarmin ? null : sleep.hrv_ms)),
+    oura_rhr: asNumber(first(oura.rhr_bpm_avg, sourceIsGarmin ? null : sleep.resting_hr_bpm)),
+    oura_sleep_min: asNumber(first(oura.total_sleep_min, sourceIsGarmin ? null : sleep.total_sleep_min)),
+    bevel_recovery: asNumber(first(bevel.recovery_pct, sourceIsGarmin ? null : sleep.recovery_score_pct)),
+    bevel_hrv: asNumber(first(bevel.hrv_ms, sourceIsGarmin ? null : sleep.hrv_ms)),
+    sleep_min: asNumber(first(garmin.total_sleep_min, sleep.garmin_total_sleep_min, sourceIsGarmin ? sleep.total_sleep_min : null, bevel.time_asleep_min, oura.total_sleep_min, sleep.total_sleep_min)),
   };
 }
 
@@ -860,6 +910,10 @@ export function buildAppleHealthSupport(base = {}) {
       garmin_mirror_possible: summaries.some(hasAppleHealthDuplicateFlag),
       warning: "Do not count Apple Health workout_count as completed Garmin/Rack/Motra strength history.",
     },
+    policy: {
+      role: SOURCE_CONTEXT.apple_health_role,
+      does_not_override: ["Garmin readiness/recovery", "subjective symptoms", "medical safety flags", "Garmin workout physiology", "Rack/Motra strength history"],
+    },
     warnings,
   };
 }
@@ -1015,9 +1069,17 @@ function parseSubjective(text = "", payload = {}) {
   const t = String(text || `${payload.notes || ""} ${payload.summary || ""}`).toLowerCase();
   const hipMatch = t.match(/\bhip(?:\s+(?:pain|score|rating|level|feels|felt|is|was)){0,3}\s*[:=]?\s*(\d(?:\.\d+)?)(?:\s*\/\s*10)?\b/);
   const painMatch = t.match(/\bpain(?:\s+(?:score|rating|level|is|was)){0,3}\s*[:=]?\s*(\d(?:\.\d+)?)(?:\s*\/\s*10)?\b/);
+  const dangerPain = Boolean(
+    payload.sharp_pain ||
+    payload.radiating_pain ||
+    payload.worsening_pain ||
+    /\b(sharp|radiating|worsening)\s+pain\b/.test(t) ||
+    /\bpain\s+(?:is\s+)?(?:sharp|radiating|worsening)\b/.test(t)
+  );
   return {
     hip_pain: asNumber(payload.hip_pain ?? payload.hip_pain_score ?? hipMatch?.[1]),
     pain: asNumber(payload.pain ?? payload.pain_score ?? painMatch?.[1]),
+    danger_pain: dangerPain,
     asthma_flare: Boolean(payload.asthma_flare || t.includes("asthma flare") || t.includes("wheezing")),
     migraine: Boolean(payload.migraine || t.includes("migraine")),
     fatigue_high: Boolean(payload.fatigue_high || t.includes("exhausted") || t.includes("wiped out")),
@@ -1030,25 +1092,39 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   const subjective = parseSubjective(context.text, context.payload || {});
   const schedule = todaySchedule(dashboard.profile?.timezone || "Asia/Taipei", context.now || new Date());
   const hrvBaseline = asNumber(dashboard.profile?.oura_biology_baselines?.hrv_baseline_ms) || 32.5;
-  const primaryHrv = asNumber(first(sleep.oura_hrv, sleep.bevel_hrv));
+  const primaryHrv = asNumber(first(sleep.garmin_hrv, sleep.oura_hrv, sleep.bevel_hrv));
+  const primaryHrvSource = sleep.garmin_hrv !== null ? "Garmin" : sleep.oura_hrv !== null ? "Oura fallback" : sleep.bevel_hrv !== null ? "legacy Bevel fallback" : null;
+  const primaryRecovery = asNumber(first(sleep.garmin_readiness, sleep.oura_readiness, sleep.bevel_recovery));
+  const primaryRecoverySource = sleep.garmin_readiness !== null ? "Garmin" : sleep.oura_readiness !== null ? "Oura fallback" : sleep.bevel_recovery !== null ? "legacy Bevel fallback" : null;
+  const fallbackRecovery = sleep.garmin_readiness !== null
+    ? asNumber(first(sleep.oura_readiness, sleep.bevel_recovery))
+    : sleep.oura_readiness !== null
+      ? sleep.bevel_recovery
+      : null;
   const risks = [];
   const evidence = [];
   let tier = "Green";
   let trainingCall = "Train. Use the planned strength/athletic session.";
 
-  if (sleep.date) evidence.push(`Readiness data ${sleep.date}: Oura HRV ${sleep.oura_hrv ?? "unknown"}ms, Bevel recovery ${sleep.bevel_recovery ?? "unknown"}%.`);
+  if (sleep.date) {
+    evidence.push(`Readiness data ${sleep.date}: ${primaryHrvSource || "no primary"} HRV ${primaryHrv ?? "unknown"}ms, ${primaryRecoverySource || "no primary"} recovery/readiness ${primaryRecovery ?? "unknown"}.`);
+  }
   if (bp.date) evidence.push(`Latest BP ${bp.date}: ${bp.systolic ?? "?"}/${bp.diastolic ?? "?"}.`);
   evidence.push(`Schedule gate: ${schedule.label}.`);
 
   if (subjective.migraine) risks.push({ code: "migraine", severity: "red", text: "Migraine reported. Training is rest or major downgrade." });
   if (subjective.asthma_flare) risks.push({ code: "asthma", severity: "red", text: "Asthma flare reported. No intensity until breathing is settled." });
+  if (subjective.danger_pain) risks.push({ code: "danger_pain", severity: "red", text: "Sharp, radiating, or worsening pain reported. Devices do not clear training." });
   if ((subjective.hip_pain ?? subjective.pain ?? 0) >= 4) risks.push({ code: "pain", severity: "red", text: "Pain is above the training threshold. Remove aggravating loaded patterns." });
   if (bp.diastolic >= 100 || bp.systolic >= 160) risks.push({ code: "bp_red", severity: "red", text: `BP ${bp.systolic}/${bp.diastolic} is a hard downshift signal.` });
   if (bp.diastolic >= 90 || bp.systolic >= 140) risks.push({ code: "bp_watch", severity: "yellow", text: `BP ${bp.systolic}/${bp.diastolic} stays on the watchlist.` });
   if (primaryHrv !== null && primaryHrv < Math.min(25, hrvBaseline * 0.8)) risks.push({ code: "low_hrv", severity: "red", text: `HRV ${primaryHrv}ms is materially below baseline ${hrvBaseline}ms.` });
-  if (sleep.bevel_recovery !== null && sleep.bevel_recovery < 35) risks.push({ code: "low_recovery", severity: "red", text: `Bevel recovery ${sleep.bevel_recovery}% is low-autonomic-reserve territory.` });
-  if (sleep.oura_readiness >= 80 && sleep.bevel_recovery !== null && sleep.bevel_recovery < 40) {
-    risks.push({ code: "app_conflict", severity: "yellow", text: "Oura looks green while Bevel/HRV is red. Treat physiology conflict conservatively." });
+  if (primaryRecovery !== null && primaryRecovery < 35) risks.push({ code: "low_recovery", severity: "red", text: `${primaryRecoverySource || "Recovery"} ${primaryRecovery}% is low-autonomic-reserve territory.` });
+  if (sleep.garmin_readiness === null && fallbackRecovery !== null && fallbackRecovery < 35) {
+    risks.push({ code: "low_recovery", severity: "red", text: `Fallback recovery ${fallbackRecovery}% is low-autonomic-reserve territory.` });
+  }
+  if (primaryRecovery >= 80 && fallbackRecovery !== null && fallbackRecovery < 40) {
+    risks.push({ code: "app_conflict", severity: "yellow", text: "Primary recovery looks green while fallback physiology is red. Treat physiology conflict conservatively." });
   }
 
   const red = risks.some(r => r.severity === "red");
@@ -1070,6 +1146,9 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
     schedule,
     hrv_ms: primaryHrv,
     hrv_baseline_ms: hrvBaseline,
+    hrv_source: primaryHrvSource,
+    recovery_source: primaryRecoverySource,
+    garmin_readiness: sleep.garmin_readiness,
     oura_readiness: sleep.oura_readiness,
     bevel_recovery: sleep.bevel_recovery,
     risk_flags: risks,
@@ -1394,7 +1473,7 @@ function buildWorkoutHandoff(workout = null) {
 
   return {
     generated: true,
-    execution_policy: "Garmin Connect Strength is primary. Use Rack routine builder only if Todd chooses Rack; Motra names are legacy/history labels.",
+    execution_policy: "Rack/Motra are the strength-log authority for completed sets, exercise loads, and exercise history. Garmin Connect/Fenix remains primary for workout physiology, training load, and recovery time.",
     copy_friendly_order: blocks,
   };
 }
@@ -1456,7 +1535,7 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
       "Pain >=4/10, migraine, asthma flare, or BP >=160/100 means downshift to recovery or stop.",
       "BP >=140/90, low HRV, or high fatigue means modified density and no forced finisher.",
       "Avoid deep loaded hip flexion and stop any movement that creates anterior hip pinching.",
-      "Apple Health activity counts never override Oura/Garmin readiness or medical/symptom gates.",
+      "Apple Health activity counts never override Garmin readiness, medical/symptom gates, or Rack/Motra strength history.",
     ],
     what_to_track_today: track.slice(0, 5),
     rack_motra_handoff: includeWorkout ? buildWorkoutHandoff(resolvedWorkout) : {
@@ -1467,7 +1546,7 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
       confidence: missingRequired.length ? "low" : sourceWarnings.length ? "medium" : "high",
       missing_or_stale: sourceWarnings,
       data_completeness_score_pct: dataCompleteness.score_pct,
-      source_policy: "Apple Health is supporting evidence only; it does not override readiness, safety, Garmin workout physiology, or Rack/Motra history.",
+      source_policy: "Apple Health is supporting evidence only; it does not override Garmin readiness, safety, Garmin workout physiology, or Rack/Motra strength history.",
     },
   };
 
@@ -1531,9 +1610,18 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
       default_gym: state.gym_profile.default_environment,
       travel_mode: Boolean(state.gym_profile.travel_mode),
       active_adjustments: activeAdjustmentNotes(state),
-      readiness_primary: "Oura",
-      nutrition_primary: "Garmin Connect+ Nutrition",
-      workout_primary: "Garmin Connect Strength for set-level execution and physiology",
+      safety_override: SOURCE_CONTEXT.safety_override,
+      readiness_primary: SOURCE_CONTEXT.readiness_primary,
+      readiness_condition: SOURCE_CONTEXT.readiness_condition,
+      readiness_fallback: SOURCE_CONTEXT.readiness_fallback,
+      readiness_supporting: SOURCE_CONTEXT.readiness_supporting,
+      nutrition_primary: SOURCE_CONTEXT.nutrition_primary,
+      workout_physiology_primary: SOURCE_CONTEXT.workout_physiology_primary,
+      workout_primary: SOURCE_CONTEXT.workout_physiology_primary,
+      strength_log_primary: SOURCE_CONTEXT.strength_log_primary,
+      apple_health_role: SOURCE_CONTEXT.apple_health_role,
+      oura_role: SOURCE_CONTEXT.oura_role,
+      soundcore_role: SOURCE_CONTEXT.soundcore_role,
       supporting_evidence: {
         apple_health: appleHealth,
       },
@@ -1728,7 +1816,8 @@ export function compactDashboard(base) {
       asthma: "Controlled with daily Relvar and emergency inhaler.",
       bp: "Doctor requested one week of consistent BP readings before determining concern.",
       nutrition_source: "Garmin Connect+ Nutrition when daily totals are usable; manual Coach macro closeouts are fallback.",
-      workout_source: "Garmin Connect Strength for execution and physiology; Rack/Motra are not primary completed-workout authority unless explicitly selected for a task.",
+      readiness_source: "Garmin Fenix 8 / Garmin training-recovery stack is primary when fresh and consistently worn; Oura is fallback.",
+      workout_source: "Garmin Connect / Fenix 8 is primary for workout physiology and recovery cost; Rack/Motra are primary for strength logs and completed set/load history.",
     },
     current: {
       blood_pressure: compactBpRow(latestBp),
@@ -1766,8 +1855,8 @@ export function buildSyncStatus(base = {}) {
     checks: dataCompleteness.checks,
     apple_health: dataCompleteness.supporting_evidence.apple_health,
     source_policy: {
-      apple_health_role: "supporting cross-check",
-      does_not_override: ["Oura readiness/recovery", "subjective symptoms", "medical safety flags", "Garmin workout physiology", "Rack/Motra strength history"],
+      apple_health_role: SOURCE_CONTEXT.apple_health_role,
+      does_not_override: ["Garmin readiness/recovery", "subjective symptoms", "medical safety flags", "Garmin workout physiology", "Rack/Motra strength history"],
     },
   };
 }
@@ -1795,10 +1884,18 @@ export function buildCoachToday(base = {}) {
     recent: compact.recent,
     supporting_evidence: compact.supporting_evidence,
     source_context: {
-      readiness_primary: "Oura",
-      nutrition_primary: "Garmin Connect+ Nutrition",
-      workout_primary: "Garmin Connect Strength for set-level execution and physiology",
-      apple_health_role: "supporting cross-check",
+      safety_override: SOURCE_CONTEXT.safety_override,
+      readiness_primary: SOURCE_CONTEXT.readiness_primary,
+      readiness_condition: SOURCE_CONTEXT.readiness_condition,
+      readiness_fallback: SOURCE_CONTEXT.readiness_fallback,
+      readiness_supporting: SOURCE_CONTEXT.readiness_supporting,
+      nutrition_primary: SOURCE_CONTEXT.nutrition_primary,
+      workout_physiology_primary: SOURCE_CONTEXT.workout_physiology_primary,
+      workout_primary: SOURCE_CONTEXT.workout_physiology_primary,
+      strength_log_primary: SOURCE_CONTEXT.strength_log_primary,
+      apple_health_role: SOURCE_CONTEXT.apple_health_role,
+      oura_role: SOURCE_CONTEXT.oura_role,
+      soundcore_role: SOURCE_CONTEXT.soundcore_role,
       apple_health_workout_counts: "detected activity context only; not completed strength-log authority",
     },
   };

@@ -19,7 +19,7 @@ The active coach reads live data through Netlify Functions, stores durable rules
 | `blood_pressure_readings` | Home BP tracking and doctor-review loop |
 | `nutrition_days` / `meals` | Garmin Nutrition totals and meal detail |
 | `body_comp_measurements` | Hume/Ocare body-composition trend inputs |
-| `strength_sessions` / `strength_exercises` | Garmin Connect Strength activity detail; Motra/Rack only as legacy imports |
+| `strength_sessions` / `strength_exercises` | Rack/Motra strength-log history and Garmin-imported workout detail when available |
 | `apple_health_sync_runs` | Native HealthKit daily-summary sync attempts and status |
 | `apple_health_daily_summaries` | One summarized Apple Health / HealthKit row per day for cross-check context |
 | `session_feedback` | Post-workout ratings, pain notes, best/worst movements |
@@ -37,8 +37,9 @@ The active coach reads live data through Netlify Functions, stores durable rules
 - travel mode flag and hotel-gym inventory rule
 - 60% strength / 40% athletic-functional default bias
 - 150g protein floor and fat budget
-- Oura > Garmin > subjective/medical > Apple hierarchy for readiness
+- safety flags first, then Garmin Fenix 8 integrated readiness, Oura fallback, and Apple Health supporting cross-check
 - Garmin Nutrition as nutrition source of truth
+- Rack/Motra as strength-log authority; Garmin as workout physiology/training-load authority
 - Hume/Ocare as trend inputs, not one-day body-fat truth
 
 ## HEALTH_DATABASE.json Archive
@@ -56,12 +57,13 @@ Historically, it was a single structured JSON file that accumulated Todd's healt
 
 | App | What It Tracks |
 |---|---|
-| **Oura** | Recovery score, HRV, resting HR, sleep stages, SpO2, respiratory rate, wrist temp, activity strain, cardio load, glucose integration |
+| **Garmin Connect / Fenix 8** | Primary integrated training/recovery system: Training Readiness, HRV Status, Body Battery, resting HR, sleep/recovery trends, workout physiology, training load, recovery time, and workout cost |
+| **Oura** | Optional/secondary sleep-first fallback for recovery score, HRV, resting HR, sleep stages, SpO2, respiratory rate, wrist temp, and sleep context when Garmin sleep/recovery data is stale, missing, or unreliable |
 | **Garmin Nutrition** | Nutrition source of truth for calories, macros, meals, and daily targets |
 | **Stelo / RightTest** | Not currently active. If reactivated, CGM readings, variability, and meal response |
 | **Apple Health / Fitness** | Data bus for BP, body metrics, steps, activity, mirrored workout summaries, and native daily HealthKit summaries |
-| **Garmin Connect / Fenix 8** | Active strength workout build/execution/set-level detail plus workout physiology |
-| **Motra** | Legacy workout history only — older exercise names, patterns, and working weights |
+| **Rack/Motra** | Strength-log authority for completed sets, reps, loads, exercise names, performance history, and progression |
+| **Soundcore Sleep A30** | Sleep aid for noise/snore masking and sleep-environment improvement only; not recovery authority |
 | **Hume Body Pod** | Air-displacement body composition — BF%, lean mass, body water, BMI, segmental muscle and fat distribution |
 | **Ocare3** | Blood pressure and trend inputs from screenshots; body-composition BIA remains trend-only |
 
@@ -74,11 +76,11 @@ Historically, it was a single structured JSON file that accumulated Todd's healt
 | Section | Source Apps | What It Tracks |
 |---|---|---|
 | `body_composition` | Hume Body Pod, Ocare3 | Weight, BF%, lean mass, fat mass, VAT level, BMI, body water, segmental muscle and fat |
-| `recovery_sleep` | Oura | HRV, resting HR, recovery score, sleep duration/stages/efficiency, SpO2, respiratory rate, wrist temp, HR dip, sleep debt, cardio load |
+| `recovery_sleep` | Garmin primary; Oura fallback | HRV, resting HR, recovery score/readiness context, sleep duration/stages/efficiency, SpO2, respiratory rate, wrist temp, HR dip, sleep debt, cardio load |
 | `nutrition` | Garmin Nutrition / direct Coach nutrition fallback | Meal-by-meal food items with calories and macros, daily totals vs. targets |
 | `glucose` | Stelo / RightTest only if reactivated | Real-time glucose readings, daily variability, waking glucose, average glucose, time in range |
 | `activity_sessions` | Health Auto Export, Garmin, Apple Health | Cardio and workout summaries — duration, HR, calories, distance, zones when available |
-| `strength_logs` | Garmin Connect Strength; Motra/Rack legacy imports | Exercise-level workout logs — exercise name, sets, reps, load, rest, and corrected feedback |
+| `strength_logs` | Rack/Motra primary; Garmin workout detail when available | Exercise-level workout logs — exercise name, sets, reps, load, rest, and corrected feedback |
 | `apple_health_daily_summaries` | Native HealthKit app | Pre-summarized daily steps, energy, rings, HR, direct Apple HRV, sleep-duration, workout counts, provenance, and duplicate-policy flags |
 | `posture_assessment` | Crosspoint / WorldGym AI | Posture scores, hip offset, spine deviation, head deviation, flagged muscles |
 
@@ -99,25 +101,25 @@ Historically, it was a single structured JSON file that accumulated Todd's healt
 
 ## How to Add New Data
 
-### From Garmin Connect Strength (after each workout)
+### From Garmin Connect / Fenix 8 (after each workout)
 
-Completed Garmin Connect Strength activities are the active source for exercise-level training data. Retrieve the completed activity detail from Garmin Connect when possible and write it to Supabase `strength_sessions` / `strength_exercises`.
+Completed Garmin activities are the primary source for workout physiology, training load, recovery time, HR, zones, calories, and workout cost. Retrieve completed activity detail from Garmin Connect when possible and write the available activity context to Supabase `strength_sessions` / `strength_exercises`.
 
 Required fields per log:
 - `date` (YYYY-MM-DD)
 - `session_name`, `location`, `start_time`, `duration_min`, `volume_kg`, `calories_kcal`, `exercise_count`
-- `exercises[]` with sets (reps × weight or duration)
+- `exercises[]` with sets (reps × weight or duration) when Garmin detail is available, treated as supporting execution evidence for the Rack/Motra strength log
 - activity physiology when available: average/max HR, HR zones, training effect, exercise load, recovery time, sweat loss, and Garmin notes.
 
 Use Todd's chat debrief for subjective notes, pain/hip status, substitutions, and obvious exercise-label corrections.
 
-### From Motra or Rack legacy imports
+### From Rack/Motra strength logs
 
-Use Motra/Rack only for historical import or an explicit Todd-requested trial. Do not ask Todd to maintain Motra, Rack, or Apple Notes as a parallel active workout log while Garmin Connect Strength is active.
+Use Rack/Motra as the authority for completed sets, reps, loads, exercise names, performance history, and strength progression. Rack import remains completed-history only; do not use completed-history imports to create future planned sessions.
 
 ### From Oura (daily or weekly)
 
-Drop a screenshot of your Recovery, Sleep, or Activity screen. Claude will extract:
+Use Oura as optional/secondary sleep-first fallback when Garmin sleep/recovery data is stale, missing, or unreliable. Drop a screenshot of your Recovery, Sleep, or Activity screen. Claude will extract:
 - Recovery score, HRV, resting HR, respiratory rate, SpO2, wrist temp → `recovery_sleep`
 - Activity sessions → `activity_sessions`
 - Glucose readings → `glucose`
@@ -222,11 +224,11 @@ Just tell Claude the numbers and the date. Claude will add them with `"source": 
 Claude reads this file at the start of each session (via `SESSION.md` instructions) to:
 
 - Check recent recovery trends before generating a workout
-- Monitor HRV baseline (32.5 ms) — readings below this signal recovery deficit
+- Monitor Garmin/Oura HRV baseline (32.5 ms) — readings below this signal recovery deficit
 - Track progression in key lifts (Pull-Up reps, Hip Thrust load, Face Pull weight)
-- Monitor body composition changes over time (Bevel weekly, Hume monthly)
+- Monitor body composition changes over time (Hume/Ocare trend only)
 - Spot drift signals (rising resting HR, falling HRV, declining sleep scores)
-- Adjust weekly planning based on Oura cardio load status (Productive vs. Detraining vs. Overreaching)
+- Adjust weekly planning based on Garmin training load/recovery context, with Oura as fallback when Garmin sleep/recovery is stale or missing
 - Monitor glucose trends for metabolic health and training fueling decisions
 
 ---
@@ -336,7 +338,7 @@ Each entry in the `nutrition` array uses this structure:
 
 **Valid meal types:** `breakfast`, `lunch`, `dinner`, `snack`, `pre_workout`, `post_workout`, `supplement`
 
-**Source values:** `"Garmin Nutrition"`, `"Label"` (from nutrition label), `"Estimate"` (AI-estimated), `"App"` (from Oura/Cronometer), `"Manual Entry"`
+**Source values:** `"Garmin Nutrition"`, `"Label"` (from nutrition label), `"Estimate"` (AI-estimated), `"App"` (from a non-primary nutrition app screenshot), `"Manual Entry"`
 
 ---
 

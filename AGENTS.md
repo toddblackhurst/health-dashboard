@@ -15,8 +15,12 @@ Key constraints:
 - Bloodwork and hip sonogram results should be incorporated when available.
 - Todd dislikes repetitive routine workouts and likes functional fitness, kettlebells, carries, medicine ball work, landmine work, and athletic movement.
 - Todd enjoys the strength part of training. Keep serious progressive lifting as the anchor; use functional/hybrid work to keep sessions interesting, challenging, athletic, and skillful.
-- Bevel is the current food tracking source of truth.
-- Motra is the workout log source for exercise history and session details.
+- Garmin Connect+ Nutrition is the current food tracking source of truth when complete daily totals are available.
+- Garmin Fenix 8 is the primary integrated training/recovery system when worn overnight and during training.
+- Rack/Motra is the strength-log authority for exercise history, completed sets, reps, loads, and session details.
+- Apple Health is supporting cross-check/data-bus evidence only.
+- Oura is secondary sleep/recovery fallback when Garmin sleep/recovery data is stale, missing, or unreliable.
+- Soundcore Sleep A30 is sleep aid/noise/snore support only, not recovery authority.
 
 ## Source Of Truth
 
@@ -64,7 +68,7 @@ Available routes:
 - Ask concise follow-up questions only when needed.
 - Convert workout feedback into actionable next-session adjustments.
 - Use active memory and retrieval rules before each coaching output so prior conversations, feedback, avoid lists, open loops, and current priorities are not forgotten.
-- Track food, calories, protein, and adherence using Bevel as the current source.
+- Track food, calories, protein, and adherence using Garmin Connect+ Nutrition as the current source when daily totals are complete.
 - Keep training varied while preserving movement-pattern continuity.
 - Treat World Gym Taichung as the default workout environment unless travel mode is active.
 - Every default workout must preserve gym floor context, actual equipment, and Motra-ready exercise names.

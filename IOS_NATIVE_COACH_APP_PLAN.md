@@ -66,8 +66,11 @@ Coach backend:
 Coach behavior that must carry into the app:
 
 - Garmin Nutrition is food/calorie/macro support, not the final workout programmer.
-- Motra is workout-history source of truth.
-- Oura overnight physiology leads readiness when available.
+- Garmin Fenix 8 is the primary integrated training/recovery system when worn overnight and during training.
+- Rack/Motra is strength-log source of truth for completed sets, reps, loads, exercise history, and session details.
+- Oura is optional/secondary sleep-recovery fallback when Garmin sleep/recovery data is stale, missing, or unreliable.
+- Apple Health is supporting cross-check/data-bus evidence only.
+- Soundcore Sleep A30 is sleep aid/noise/snore support only, not recovery authority.
 - Medical/safety overrides beat app scores.
 - Current training shape is Monday/Wednesday/Friday strength, Tuesday/Thursday goal-support, daily walk, Sunday formal training off.
 - Strength work respects the right-hip impingement / labral-risk layer, HR cap, anti-session-creep rules, and World Gym floor constraints.
@@ -78,7 +81,7 @@ Apple platform guidance checked:
 - App Intents expose app actions to Siri, Shortcuts, Spotlight, widgets, and system surfaces.
 - Widgets and Live Activities can use App Intents for direct button/toggle actions without opening the app.
 - HealthKit requires user permission and should be treated as an optional, privacy-gated integration.
-- HKWorkoutBuilder can write workouts later, but this should not be phase-one because Motra remains the real strength-workout source.
+- HKWorkoutBuilder can write workouts later, but this should not be phase-one because Rack/Motra remains the real strength-log source and Apple Health is supporting evidence only.
 
 Reference links:
 
@@ -367,7 +370,7 @@ rows to `/api/coach/apple-health-daily` with `x-coach-secret`.
 
 Reason:
 
-- Bevel, Oura, Motra, Hume, Ocare3, and doctor notes already have source-specific meaning in the coach system.
+- Garmin, Rack/Motra, Oura, Apple Health, Soundcore, Hume, Ocare3, and doctor notes already have source-specific meaning in the coach system.
 - HealthKit can supply useful Apple Watch activity and body samples, but it can also blur source meaning if we import too much too soon.
 - HealthKit permissions, privacy strings, and data review deserve a separate, careful pass.
 - The backend stores daily summaries in `apple_health_daily_summaries` and sync attempts in `apple_health_sync_runs`; it does not upload raw HealthKit samples or overwrite Oura/Garmin/Rack lanes.

@@ -349,7 +349,7 @@ test("migration 006 does not redefine or grant shared coach_observations", () =>
   assert.doesNotMatch(migration, /grant .* on table coach_observations/i);
 });
 
-test("Apple Health summaries do not override Oura/Garmin/Rack hierarchy", () => {
+test("Apple Health summaries do not override Garmin/Rack/Oura hierarchy", () => {
   const decision = buildCoachDecision({
     text: "Build today's workout",
     intent: "build_workout",
@@ -366,8 +366,12 @@ test("Apple Health summaries do not override Oura/Garmin/Rack hierarchy", () => 
     payload: { now: "2026-06-08T02:00:00.000Z" },
   });
 
-  assert.match(DEFAULT_COACH_STATE.source_hierarchy.readiness.join(" "), /Apple Health summary cross-checks only/);
-  assert.equal(decision.source_context.readiness_primary, "Oura");
+  assert.match(DEFAULT_COACH_STATE.source_hierarchy.readiness.join(" "), /Apple Health summary cross-checks\/data bus only/);
+  assert.equal(decision.source_context.readiness_primary, "Garmin Fenix 8 / Garmin training-recovery stack");
+  assert.match(decision.source_context.readiness_fallback, /Oura sleep\/recovery/);
   assert.equal(decision.source_context.nutrition_primary, "Garmin Connect+ Nutrition");
-  assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
+  assert.equal(decision.source_context.workout_primary, "Garmin Connect / Fenix 8");
+  assert.equal(decision.source_context.strength_log_primary, "Rack/Motra");
+  assert.equal(decision.source_context.apple_health_role, "supporting cross-check/data bus");
+  assert.match(decision.source_context.soundcore_role, /not recovery authority/);
 });
