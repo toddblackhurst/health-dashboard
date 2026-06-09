@@ -244,9 +244,9 @@ struct CoachTodaySummary {
 
         return CoachTodaySummary(
             date: root.stringValue("date"),
-            dailyCall: root.stringValue("daily_call"),
+            dailyCall: root.dailyCallValue("daily_call"),
             why: root.stringArray("why"),
-            todaysPlan: root.stringArray("todays_plan"),
+            todaysPlan: root.todayPlanLines("todays_plan"),
             safetyGuardrails: root.stringArray("safety_guardrails"),
             whatToTrackToday: root.stringArray("what_to_track_today")
         )
@@ -299,5 +299,64 @@ private extension Dictionary where Key == String, Value == Any {
             return [string]
         }
         return []
+    }
+
+    func dailyCallValue(_ key: String) -> String? {
+        if let string = stringValue(key) {
+            return string
+        }
+        guard let dictionary = self[key] as? [String: Any] else {
+            return nil
+        }
+
+        let decision = dictionary.stringValue("decision")
+        let tier = dictionary.stringValue("readiness_tier") ?? dictionary.stringValue("color")
+        switch (tier, decision) {
+        case let (tier?, decision?) where !decision.localizedCaseInsensitiveContains(tier):
+            return "\(tier): \(decision)"
+        case let (_, decision?):
+            return decision
+        case let (tier?, nil):
+            return tier
+        default:
+            return nil
+        }
+    }
+
+    func todayPlanLines(_ key: String) -> [String] {
+        let array = stringArray(key)
+        if !array.isEmpty {
+            return array
+        }
+        guard let dictionary = self[key] as? [String: Any] else {
+            return []
+        }
+
+        let primary = dictionary.stringValue("primary_action")
+            ?? dictionary.stringValue("recommendation")
+            ?? dictionary.stringValue("type")
+        guard let primary else {
+            return []
+        }
+
+        var details: [String] = []
+        if let recommendation = dictionary.stringValue("recommendation"),
+           recommendation != primary {
+            details.append(recommendation)
+        }
+        if let intensity = dictionary.stringValue("intensity") {
+            details.append("intensity: \(intensity)")
+        }
+        if let minutes = dictionary.intValue("time_cap_min") {
+            details.append("\(minutes) min cap")
+        }
+        if let nutrition = dictionary.stringValue("nutrition_focus") {
+            details.append("nutrition: \(nutrition)")
+        }
+
+        if details.isEmpty {
+            return [primary]
+        }
+        return ["\(primary) (\(details.joined(separator: "; ")))"]
     }
 }
