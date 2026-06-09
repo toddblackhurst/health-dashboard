@@ -201,6 +201,29 @@ test("stale Garmin recovery row falls back instead of staying primary", () => {
   assert.ok(readiness.risk_flags.some(flag => flag.code === "stale_garmin_readiness"));
 });
 
+test("fresh Garmin recovery row with unreliable wear quality falls back", () => {
+  const readiness = evaluateReadiness({
+    profile: { oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [
+      {
+        measured_date: "2026-06-09",
+        source: "Garmin Connect",
+        hrv_ms: 44,
+        recovery_score_pct: 88,
+        watch_worn_overnight: false,
+        training_readiness_status: "insufficient baseline",
+        oura: { readiness_score: 74, hrv_avg_ms: 35 },
+      },
+    ],
+  }, DEFAULT_COACH_STATE, { now: new Date(TUESDAY_TAIPEI) });
+
+  assert.equal(readiness.hrv_ms, 35);
+  assert.equal(readiness.hrv_source, "Oura fallback");
+  assert.equal(readiness.recovery_source, "Oura fallback");
+  assert.equal(readiness.garmin_readiness, null);
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "unreliable_garmin_wear"));
+});
+
 test("nutrition closeout catches fat over budget and protein short", () => {
   const nutrition = buildNutritionCall({
     nutrition_log: [
@@ -368,6 +391,63 @@ test("medical and safety flags override optimistic device data across workout de
   assert.match(decision.daily_summary.confidence_data_quality.source_policy, /does not override Garmin readiness/);
   assert.ok(decision.daily_summary.safety_guardrails.some(item => /Apple Health activity counts never override/.test(item)));
   assert.ok(decision.daily_summary.why.some(item => /Apple Health supporting context/.test(item)));
+});
+
+test("doctor guidance overrides optimistic device data", () => {
+  const dashboard = {
+    now: new Date(MONDAY_TAIPEI),
+    profile: { timezone: "Asia/Taipei", oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [{
+      measured_date: "2026-05-11",
+      source: "Garmin Connect",
+      hrv_ms: 52,
+      recovery_score_pct: 96,
+    }],
+    doctor_notes: [{
+      note_date: "2026-05-11",
+      topic: "BP follow-up",
+      guidance: "Hold hard training this week.",
+      training_impact: "No hard training until doctor clears intensity.",
+    }],
+  };
+
+  const decision = buildCoachDecision({
+    text: "Garmin says I am ready. Build today's workout.",
+    intent: "build_workout",
+    dashboard,
+    payload: { now: MONDAY_TAIPEI },
+  });
+
+  assert.equal(decision.readiness.tier, "Red");
+  assert.ok(decision.readiness.risk_flags.some(flag => flag.code === "doctor_guidance"));
+  assert.match(decision.top_line_call, /Downshift/);
+  assert.ok(decision.readiness.evidence.some(item => /Doctor guidance/.test(item)));
+});
+
+test("red safety gates are not overwritten by Tuesday goal-support schedule", () => {
+  const dashboard = {
+    now: new Date(TUESDAY_TAIPEI),
+    profile: { timezone: "Asia/Taipei" },
+    blood_pressure: [{
+      date: "2026-06-09",
+      systolic_mmhg: 165,
+      diastolic_mmhg: 101,
+    }],
+  };
+
+  const decision = buildCoachDecision({
+    text: "Build today's workout",
+    intent: "build_workout",
+    dashboard,
+    payload: { now: TUESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.readiness.tier, "Red");
+  assert.match(decision.top_line_call, /Downshift/);
+  assert.match(decision.workout_plan.top_line, /Downshift/);
+  assert.match(decision.workout_plan.floor_plan, /No strength, Zone 2, or conditioning/);
+  assert.ok(!decision.workout_plan.blocks.some(block => /Zone 2|conditioning/i.test(`${block.name} ${block.target}`)));
+  assert.ok(decision.next_actions.some(action => /recovery-only/.test(action)));
 });
 
 test("coach decisions include compact Supabase conversation history for phone continuity", () => {

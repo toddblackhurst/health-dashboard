@@ -53,6 +53,7 @@ function installMockDashboardSupabase({ appleHealthRows = [], appleHealthSyncRun
     coach_messages: [],
     weekly_plans: [],
     planned_sessions: [],
+    doctor_notes: [],
     coach_state: [{
       profile_id: profile.id,
       version: DEFAULT_COACH_STATE.version,

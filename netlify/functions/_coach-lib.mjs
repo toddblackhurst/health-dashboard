@@ -680,7 +680,62 @@ function latestSleepValues(dashboard = {}) {
     bevel_recovery: asNumber(first(bevel.recovery_pct, sourceIsGarmin ? null : sleep.recovery_score_pct)),
     bevel_hrv: asNumber(first(bevel.hrv_ms, sourceIsGarmin ? null : sleep.hrv_ms)),
     sleep_min: asNumber(first(garmin.total_sleep_min, sleep.garmin_total_sleep_min, sourceIsGarmin ? sleep.total_sleep_min : null, bevel.time_asleep_min, oura.total_sleep_min, sleep.total_sleep_min)),
+    garmin_wear_reliable: garminWearReliable(sleep, garmin),
   };
+}
+
+function boolFromValue(value) {
+  if (value === true || value === false) return value;
+  if (typeof value === "number") return value > 0;
+  if (typeof value !== "string") return null;
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) return null;
+  if (["true", "yes", "y", "worn", "reliable", "stable", "good", "complete", "consistent", "sufficient"].includes(normalized)) return true;
+  if (["false", "no", "n", "not worn", "unreliable", "unstable", "poor", "incomplete", "inconsistent", "insufficient"].includes(normalized)) return false;
+  return null;
+}
+
+function garminWearReliable(sleep = {}, garmin = {}) {
+  const qualityText = [
+    sleep.garmin_data_quality,
+    sleep.data_quality,
+    sleep.wear_quality,
+    sleep.device_wear,
+    sleep.hrv_status,
+    sleep.training_readiness_status,
+    garmin.data_quality,
+    garmin.wear_quality,
+    garmin.device_wear,
+    garmin.hrv_status,
+    garmin.training_readiness_status,
+  ].filter(Boolean).join(" ").toLowerCase();
+
+  if (/\b(not worn|not enough data|insufficient|inconsistent|unreliable|no baseline|reset period|baseline building|poor wear)\b/.test(qualityText)) return false;
+  if (/\b(consistent|reliable|stable baseline|worn overnight|complete)\b/.test(qualityText)) return true;
+
+  const explicitFlags = [
+    sleep.garmin_consistently_worn,
+    sleep.consistently_worn,
+    sleep.watch_worn,
+    sleep.watch_worn_overnight,
+    sleep.overnight_worn,
+    sleep.worn_overnight,
+    sleep.worn_during_training,
+    sleep.garmin_worn_during_training,
+    sleep.garmin_baseline_stable,
+    sleep.baseline_stable,
+    garmin.consistently_worn,
+    garmin.watch_worn,
+    garmin.watch_worn_overnight,
+    garmin.overnight_worn,
+    garmin.worn_overnight,
+    garmin.worn_during_training,
+    garmin.baseline_stable,
+  ].map(boolFromValue).filter(value => value !== null);
+
+  if (explicitFlags.some(value => value === false)) return false;
+  if (explicitFlags.some(value => value === true)) return true;
+  return null;
 }
 
 function latestNutritionValues(dashboard = {}) {
@@ -708,6 +763,31 @@ function latestBpValues(dashboard = {}) {
     systolic: asNumber(bp.systolic_mmhg),
     diastolic: asNumber(bp.diastolic_mmhg),
     heart_rate: asNumber(bp.heart_rate_bpm),
+  };
+}
+
+function latestDoctorGuidance(dashboard = {}) {
+  const notes = Array.isArray(dashboard.doctor_notes) ? dashboard.doctor_notes : [];
+  const note = latest(notes) || dashboard.current?.doctor_note || null;
+  if (!note || typeof note !== "object") return null;
+  const text = [
+    note.topic,
+    note.guidance,
+    note.training_impact,
+    note.notes,
+    note.summary,
+  ].filter(Boolean).join(" ");
+  const lower = text.toLowerCase();
+  const blocksTraining = /\b(no|avoid|hold|stop|pause|skip)\s+(?:hard\s+)?(?:training|exercise|workouts?|lifting|conditioning|intensity)\b/.test(lower)
+    || /\b(rest|medical hold|do not train|no intensity|no hard training)\b/.test(lower);
+  const modifiesTraining = /\b(modify|modified|downshift|light only|easy only|caution|limit|reduced intensity|no heavy)\b/.test(lower);
+  return {
+    row: note,
+    date: note.date || note.note_date || note.created_at || null,
+    topic: note.topic || note.summary || "Doctor guidance",
+    guidance: note.guidance || note.notes || note.training_impact || null,
+    training_impact: note.training_impact || null,
+    severity: blocksTraining ? "red" : modifiesTraining ? "yellow" : null,
   };
 }
 
@@ -1015,14 +1095,14 @@ function buildDataCompleteness(base = {}) {
     },
     {
       id: "strength_session",
-      label: "Garmin strength session",
+      label: "Rack/Motra strength session",
       status: schedule.strength_planned ? (strengthToday ? "current" : "pending") : "not_expected",
       required: Boolean(schedule.strength_planned),
       latest_date: rowDate(latestStrength),
     },
     {
       id: "strength_exercises",
-      label: "Garmin strength exercise detail",
+      label: "Rack/Motra strength exercise detail",
       status: schedule.strength_planned ? (detailedStrengthToday ? "current" : "pending") : "not_expected",
       required: Boolean(schedule.strength_planned),
       latest_date: rowDate(latestDetailedStrength),
@@ -1089,6 +1169,7 @@ function parseSubjective(text = "", payload = {}) {
 export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, context = {}) {
   const sleep = latestSleepValues(dashboard);
   const bp = latestBpValues(dashboard);
+  const doctorGuidance = latestDoctorGuidance(dashboard);
   const subjective = parseSubjective(context.text, context.payload || {});
   const timezone = dashboard.profile?.timezone || "Asia/Taipei";
   const now = context.now || new Date();
@@ -1102,10 +1183,13 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
     sleep.garmin_rhr,
     sleep.garmin_sleep_min,
   ].some(value => value !== null);
+  const garminWearReliableFlag = sleep.garmin_wear_reliable;
   const garminFresh = garminHasRecoveryData && sleepAgeDays !== null && sleepAgeDays >= 0 && sleepAgeDays <= 1;
+  const garminUsable = garminFresh && garminWearReliableFlag !== false;
   const garminStale = garminHasRecoveryData && !garminFresh;
-  const garminHrv = garminFresh ? sleep.garmin_hrv : null;
-  const garminRecovery = garminFresh ? sleep.garmin_readiness : null;
+  const garminWearUnreliable = garminHasRecoveryData && garminFresh && garminWearReliableFlag === false;
+  const garminHrv = garminUsable ? sleep.garmin_hrv : null;
+  const garminRecovery = garminUsable ? sleep.garmin_readiness : null;
   const primaryHrv = asNumber(first(garminHrv, sleep.oura_hrv, sleep.bevel_hrv));
   const primaryHrvSource = garminHrv !== null ? "Garmin" : sleep.oura_hrv !== null ? "Oura fallback" : sleep.bevel_hrv !== null ? "legacy Bevel fallback" : null;
   const primaryRecovery = asNumber(first(garminRecovery, sleep.oura_readiness, sleep.bevel_recovery));
@@ -1123,9 +1207,14 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   if (sleep.date) {
     evidence.push(`Readiness data ${sleep.date}: ${primaryHrvSource || "no primary"} HRV ${primaryHrv ?? "unknown"}ms, ${primaryRecoverySource || "no primary"} recovery/readiness ${primaryRecovery ?? "unknown"}.`);
   }
+  if (doctorGuidance?.date || doctorGuidance?.guidance) {
+    evidence.push(`Doctor guidance${doctorGuidance.date ? ` ${doctorGuidance.date}` : ""}: ${doctorGuidance.training_impact || doctorGuidance.guidance || doctorGuidance.topic}.`);
+  }
   if (bp.date) evidence.push(`Latest BP ${bp.date}: ${bp.systolic ?? "?"}/${bp.diastolic ?? "?"}.`);
   evidence.push(`Schedule gate: ${schedule.label}.`);
 
+  if (doctorGuidance?.severity === "red") risks.push({ code: "doctor_guidance", severity: "red", text: "Doctor guidance currently blocks or holds training. Devices do not clear training." });
+  if (doctorGuidance?.severity === "yellow") risks.push({ code: "doctor_guidance", severity: "yellow", text: "Doctor guidance calls for modified or limited training." });
   if (subjective.migraine) risks.push({ code: "migraine", severity: "red", text: "Migraine reported. Training is rest or major downgrade." });
   if (subjective.asthma_flare) risks.push({ code: "asthma", severity: "red", text: "Asthma flare reported. No intensity until breathing is settled." });
   if (subjective.danger_pain) risks.push({ code: "danger_pain", severity: "red", text: "Sharp, radiating, or worsening pain reported. Devices do not clear training." });
@@ -1133,6 +1222,7 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   if (bp.diastolic >= 100 || bp.systolic >= 160) risks.push({ code: "bp_red", severity: "red", text: `BP ${bp.systolic}/${bp.diastolic} is a hard downshift signal.` });
   if (bp.diastolic >= 90 || bp.systolic >= 140) risks.push({ code: "bp_watch", severity: "yellow", text: `BP ${bp.systolic}/${bp.diastolic} stays on the watchlist.` });
   if (garminStale) risks.push({ code: "stale_garmin_readiness", severity: "yellow", text: "Latest Garmin readiness/recovery data is stale. Use Oura or legacy recovery fallback if available." });
+  if (garminWearUnreliable) risks.push({ code: "unreliable_garmin_wear", severity: "yellow", text: "Garmin readiness/recovery data is fresh but wear quality or baseline reliability is not sufficient. Use Oura or legacy recovery fallback if available." });
   if (primaryHrv !== null && primaryHrv < Math.min(25, hrvBaseline * 0.8)) risks.push({ code: "low_hrv", severity: "red", text: `HRV ${primaryHrv}ms is materially below baseline ${hrvBaseline}ms.` });
   if (primaryRecovery !== null && primaryRecovery < 35) risks.push({ code: "low_recovery", severity: "red", text: `${primaryRecoverySource || "Recovery"} ${primaryRecovery}% is low-autonomic-reserve territory.` });
   if (garminRecovery === null && fallbackRecovery !== null && fallbackRecovery < 35) {
@@ -1151,7 +1241,7 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
     tier = "Yellow";
     trainingCall = "Train modified. Keep the plan, reduce density, and skip the hybrid close if HR or symptoms drift.";
   }
-  if (!schedule.strength_planned) {
+  if (!schedule.strength_planned && !red && !yellow) {
     trainingCall = schedule.non_lift_call;
   }
 
@@ -1166,6 +1256,7 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
     garmin_readiness: garminRecovery,
     oura_readiness: sleep.oura_readiness,
     bevel_recovery: sleep.bevel_recovery,
+    doctor_guidance: doctorGuidance,
     risk_flags: risks,
     evidence,
     source_order: state.source_hierarchy.readiness,
@@ -1254,10 +1345,62 @@ function activeAdjustmentNotes(state = DEFAULT_COACH_STATE) {
 
 export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, readiness = evaluateReadiness(dashboard, state)) {
   const travelMode = Boolean(state.gym_profile.travel_mode);
+  if (readiness.tier === "Red") {
+    return {
+      environment: "Safety-first recovery day",
+      requires_inventory: false,
+      top_line: readiness.training_call,
+      session_type: "Recovery / Medical caution",
+      floor_plan: "No strength, Zone 2, or conditioning prescription while red safety flags are active.",
+      target_minutes: 15,
+      time_range_min: [10, 30],
+      guardrails: [
+        "Doctor guidance, BP, migraine, asthma, sharp/radiating/worsening pain, and high pain signals stay above device readiness.",
+        "Skip strength, Zone 2, and conditioning until the red safety flag clears.",
+        "Gentle walking or mobility is optional only if symptoms allow.",
+      ],
+      blocks: [
+        {
+          name: "Safety check",
+          target: "Follow doctor guidance and re-check BP/symptoms before any training decision.",
+        },
+        {
+          name: "Optional easy movement",
+          target: "10-20 minutes gentle walk or breathing mobility only if symptoms are calm.",
+        },
+      ],
+    };
+  }
   if (!readiness.schedule?.strength_planned) {
     const weekday = readiness.schedule?.weekday;
     const isGoalSupport = readiness.schedule?.day_type === "goal_support";
     const isThursday = weekday === "Thursday";
+    if (readiness.tier === "Yellow") {
+      return {
+        environment: "Safety-modified non-lift day",
+        requires_inventory: false,
+        top_line: readiness.training_call,
+        session_type: "Easy Walk + Mobility",
+        floor_plan: "No World Gym strength floor routing today.",
+        target_minutes: isGoalSupport ? 30 : 25,
+        time_range_min: [20, 40],
+        guardrails: [
+          "Keep effort easy and symptom-led while yellow safety flags are active.",
+          "Skip conditioning if BP, HRV, pain, asthma, migraine, or fatigue is trending the wrong direction.",
+          "Protect the next planned strength day.",
+        ],
+        blocks: [
+          {
+            name: "Easy walk",
+            target: "15-30 minutes conversational pace; shorten if symptoms drift.",
+          },
+          {
+            name: "Mobility and breathing",
+            target: "8-12 minutes hips, T-spine, neck stacking, and easy breathing.",
+          },
+        ],
+      };
+    }
     return {
       environment: isGoalSupport ? "Coach-planned goal support day" : "Weekend rest / daily walk",
       requires_inventory: false,
@@ -1591,7 +1734,15 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   const nextActions = [];
 
   if (normalizedIntent === "build_workout") {
-    nextActions.push(workout.requires_inventory ? "Send hotel-gym inventory before lifting." : "Use the World Gym floor-aware workout plan below.");
+    if (readiness.tier === "Red") {
+      nextActions.push("Keep today recovery-only unless symptoms and doctor guidance clear training.");
+    } else if (workout.requires_inventory) {
+      nextActions.push("Send hotel-gym inventory before lifting.");
+    } else if (!readiness.schedule?.strength_planned) {
+      nextActions.push("Use the non-lift day guardrails below and keep the next strength day protected.");
+    } else {
+      nextActions.push("Use the World Gym floor-aware workout plan below.");
+    }
   }
   if (normalizedIntent === "nutrition_check" || nutrition.protein_gap_g > 0 || nutrition.fat_over_g > 0) {
     nextActions.push(...nutrition.next_actions);
@@ -1920,7 +2071,7 @@ export async function dashboardFromSupabase() {
   const profile = await getProfile();
   if (!profile) return null;
   const profileId = profile.id;
-  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions, appleHealthSummaries, appleHealthSyncRuns] = await Promise.all([
+  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions, appleHealthSummaries, appleHealthSyncRuns, doctorNotes] = await Promise.all([
     supabase(`raw_imports?profile_id=eq.${profileId}&select=payload,imported_at&order=imported_at.desc&limit=1`),
     supabase(`recovery_sleep?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
     supabase(`blood_pressure_readings?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
@@ -1933,6 +2084,7 @@ export async function dashboardFromSupabase() {
     safeSupabase(`planned_sessions?select=*,weekly_plans!inner(profile_id,week_start,label,status)&weekly_plans.profile_id=eq.${profileId}&order=planned_date.asc`, {}, []),
     safeSupabase(`apple_health_daily_summaries?profile_id=eq.${profileId}&select=*&order=summary_date.desc&limit=30`, {}, []),
     safeSupabase(`apple_health_sync_runs?profile_id=eq.${profileId}&select=*&order=started_at.desc&limit=10`, {}, []),
+    safeSupabase(`doctor_notes?profile_id=eq.${profileId}&select=*&order=note_date.desc&limit=10`, {}, []),
   ]);
 
   const base = rawImports?.[0]?.payload || {};
@@ -1975,6 +2127,7 @@ export async function dashboardFromSupabase() {
   })), "apple_health");
   base.apple_health_sync_runs = [...(appleHealthSyncRuns || [])]
     .sort((a, b) => String(a.started_at || "").localeCompare(String(b.started_at || "")));
+  base.doctor_notes = dedupeRows((doctorNotes || []).map(r => ({ ...r, date: r.note_date })), "doctor_notes");
   base.coach_chat_notes = messages.reverse().map(m => ({ role: m.role, text: m.body, at: m.message_at, channel: m.channel }));
   base.coach_state = await getCoachState(profileId);
   base.weekly_plans = weeklyPlans;
