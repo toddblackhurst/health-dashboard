@@ -1090,13 +1090,27 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   const sleep = latestSleepValues(dashboard);
   const bp = latestBpValues(dashboard);
   const subjective = parseSubjective(context.text, context.payload || {});
-  const schedule = todaySchedule(dashboard.profile?.timezone || "Asia/Taipei", context.now || new Date());
+  const timezone = dashboard.profile?.timezone || "Asia/Taipei";
+  const now = context.now || new Date();
+  const today = todayISO(timezone, now);
+  const schedule = todaySchedule(timezone, now);
   const hrvBaseline = asNumber(dashboard.profile?.oura_biology_baselines?.hrv_baseline_ms) || 32.5;
-  const primaryHrv = asNumber(first(sleep.garmin_hrv, sleep.oura_hrv, sleep.bevel_hrv));
-  const primaryHrvSource = sleep.garmin_hrv !== null ? "Garmin" : sleep.oura_hrv !== null ? "Oura fallback" : sleep.bevel_hrv !== null ? "legacy Bevel fallback" : null;
-  const primaryRecovery = asNumber(first(sleep.garmin_readiness, sleep.oura_readiness, sleep.bevel_recovery));
-  const primaryRecoverySource = sleep.garmin_readiness !== null ? "Garmin" : sleep.oura_readiness !== null ? "Oura fallback" : sleep.bevel_recovery !== null ? "legacy Bevel fallback" : null;
-  const fallbackRecovery = sleep.garmin_readiness !== null
+  const sleepAgeDays = dateAgeDays(sleep.date, today);
+  const garminHasRecoveryData = [
+    sleep.garmin_readiness,
+    sleep.garmin_hrv,
+    sleep.garmin_rhr,
+    sleep.garmin_sleep_min,
+  ].some(value => value !== null);
+  const garminFresh = garminHasRecoveryData && sleepAgeDays !== null && sleepAgeDays >= 0 && sleepAgeDays <= 1;
+  const garminStale = garminHasRecoveryData && !garminFresh;
+  const garminHrv = garminFresh ? sleep.garmin_hrv : null;
+  const garminRecovery = garminFresh ? sleep.garmin_readiness : null;
+  const primaryHrv = asNumber(first(garminHrv, sleep.oura_hrv, sleep.bevel_hrv));
+  const primaryHrvSource = garminHrv !== null ? "Garmin" : sleep.oura_hrv !== null ? "Oura fallback" : sleep.bevel_hrv !== null ? "legacy Bevel fallback" : null;
+  const primaryRecovery = asNumber(first(garminRecovery, sleep.oura_readiness, sleep.bevel_recovery));
+  const primaryRecoverySource = garminRecovery !== null ? "Garmin" : sleep.oura_readiness !== null ? "Oura fallback" : sleep.bevel_recovery !== null ? "legacy Bevel fallback" : null;
+  const fallbackRecovery = garminRecovery !== null
     ? asNumber(first(sleep.oura_readiness, sleep.bevel_recovery))
     : sleep.oura_readiness !== null
       ? sleep.bevel_recovery
@@ -1118,9 +1132,10 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   if ((subjective.hip_pain ?? subjective.pain ?? 0) >= 4) risks.push({ code: "pain", severity: "red", text: "Pain is above the training threshold. Remove aggravating loaded patterns." });
   if (bp.diastolic >= 100 || bp.systolic >= 160) risks.push({ code: "bp_red", severity: "red", text: `BP ${bp.systolic}/${bp.diastolic} is a hard downshift signal.` });
   if (bp.diastolic >= 90 || bp.systolic >= 140) risks.push({ code: "bp_watch", severity: "yellow", text: `BP ${bp.systolic}/${bp.diastolic} stays on the watchlist.` });
+  if (garminStale) risks.push({ code: "stale_garmin_readiness", severity: "yellow", text: "Latest Garmin readiness/recovery data is stale. Use Oura or legacy recovery fallback if available." });
   if (primaryHrv !== null && primaryHrv < Math.min(25, hrvBaseline * 0.8)) risks.push({ code: "low_hrv", severity: "red", text: `HRV ${primaryHrv}ms is materially below baseline ${hrvBaseline}ms.` });
   if (primaryRecovery !== null && primaryRecovery < 35) risks.push({ code: "low_recovery", severity: "red", text: `${primaryRecoverySource || "Recovery"} ${primaryRecovery}% is low-autonomic-reserve territory.` });
-  if (sleep.garmin_readiness === null && fallbackRecovery !== null && fallbackRecovery < 35) {
+  if (garminRecovery === null && fallbackRecovery !== null && fallbackRecovery < 35) {
     risks.push({ code: "low_recovery", severity: "red", text: `Fallback recovery ${fallbackRecovery}% is low-autonomic-reserve territory.` });
   }
   if (primaryRecovery >= 80 && fallbackRecovery !== null && fallbackRecovery < 40) {
@@ -1148,7 +1163,7 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
     hrv_baseline_ms: hrvBaseline,
     hrv_source: primaryHrvSource,
     recovery_source: primaryRecoverySource,
-    garmin_readiness: sleep.garmin_readiness,
+    garmin_readiness: garminRecovery,
     oura_readiness: sleep.oura_readiness,
     bevel_recovery: sleep.bevel_recovery,
     risk_flags: risks,

@@ -20,6 +20,7 @@ function clone(value) {
 }
 
 const MONDAY_TAIPEI = "2026-05-11T02:00:00.000Z";
+const TUESDAY_TAIPEI = "2026-06-09T02:00:00.000Z";
 const MONDAY_SCHEDULE = {
   weekday: "Monday",
   day_type: "strength",
@@ -166,7 +167,7 @@ test("Garmin recovery row is primary over stale fallback app signals", () => {
         oura: { readiness_score: 29, hrv_avg_ms: 19 },
       },
     ],
-  }, DEFAULT_COACH_STATE, { now: new Date(MONDAY_TAIPEI) });
+  }, DEFAULT_COACH_STATE, { now: new Date(TUESDAY_TAIPEI) });
 
   assert.equal(readiness.tier, "Yellow");
   assert.equal(readiness.hrv_ms, 43);
@@ -177,6 +178,27 @@ test("Garmin recovery row is primary over stale fallback app signals", () => {
   assert.ok(readiness.risk_flags.some(flag => flag.code === "app_conflict"));
   assert.ok(!readiness.risk_flags.some(flag => flag.code === "low_hrv"));
   assert.ok(readiness.evidence.some(item => /Garmin HRV 43ms/.test(item)));
+});
+
+test("stale Garmin recovery row falls back instead of staying primary", () => {
+  const readiness = evaluateReadiness({
+    profile: { oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [
+      {
+        measured_date: "2026-06-05",
+        source: "Garmin Connect",
+        hrv_ms: 43,
+        recovery_score_pct: 86,
+        oura: { readiness_score: 72, hrv_avg_ms: 34 },
+      },
+    ],
+  }, DEFAULT_COACH_STATE, { now: new Date(TUESDAY_TAIPEI) });
+
+  assert.equal(readiness.hrv_ms, 34);
+  assert.equal(readiness.hrv_source, "Oura fallback");
+  assert.equal(readiness.recovery_source, "Oura fallback");
+  assert.equal(readiness.garmin_readiness, null);
+  assert.ok(readiness.risk_flags.some(flag => flag.code === "stale_garmin_readiness"));
 });
 
 test("nutrition closeout catches fat over budget and protein short", () => {
