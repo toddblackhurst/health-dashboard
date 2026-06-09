@@ -25,6 +25,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/sync-status"
+  to = "/api/coach?action=sync-status"
+  status = 200
+
+[[redirects]]
   from = "/api/coach/message"
   to = "/api/coach?action=message"
   status = 200
