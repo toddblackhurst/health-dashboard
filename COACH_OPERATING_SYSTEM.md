@@ -137,10 +137,18 @@ Daily coach output contract:
 - Exercise coaching must be plain language: how to start, how to move, what it should feel like, what to avoid, and when to stop or reduce load. Do not make anatomy jargon the main coaching language.
 - Apple Health must remain labeled as supporting evidence only in daily output. It can explain sync freshness and activity context, but cannot override readiness, safety gates, Garmin workout physiology, or Rack/Motra history.
 
+Workout action contract:
+
+- Use `coach-today` for passive checks like "what should I do today?" Use `/api/coach/workout` when Todd explicitly asks Coach to build a workout.
+- Schedule guides the default recommendation but does not block action: a generic workout request on Tuesday/Thursday/weekend returns the planned goal-support/rest session.
+- If Todd explicitly asks for strength on a non-strength day, build a controlled modified strength option only when Red safety gates are absent, and label the schedule override.
+- Red safety gates return a recovery/safety session, not hard training. Yellow builds a modified session.
+- Workout responses include `workout_request`, `requested_session_type`, `schedule_override_applied`, `what_to_track`, and a post-workout debrief prompt.
+
 Shortcut actions to support:
 
 - Morning Check-In: BP, pain, asthma, sleep feel.
-- Build Today's Workout: calls `/api/coach/workout`.
+- Build Today's Workout: calls `/api/coach/workout` for explicit workout-building requests.
 - Nutrition Closeout: Garmin Nutrition totals to `/api/coach/nutrition-closeout`.
 - Post-Workout Debrief: duration, best/worst movement, pain, RPE.
 - Garmin Workout Build: create/update the scheduled Garmin Connect Strength workout with closest Garmin exercise names, exact rests/reps/weights, and WorldGym details in notes when that remains Todd's active gym execution surface; after the workout, use Garmin's completed activity for physiology/training-load context and Rack/Motra for strength-log authority.

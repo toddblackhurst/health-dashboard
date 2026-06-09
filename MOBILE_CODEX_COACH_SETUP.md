@@ -57,7 +57,7 @@ Use the Action intents:
 
 - `general` for ordinary questions
 - `brief` for morning check-in
-- `build_workout` for today's workout
+- `build_workout` for explicit workout-building requests; schedule guides the default session, explicit strength can override non-strength days when safe, and Red safety returns recovery/safety work
 - `evaluate_data` for recovery/body/BP/app-conflict review
 - `nutrition_check` for Garmin Nutrition closeout
 - `post_workout` for debrief

@@ -596,7 +596,7 @@ function nextWeekdayDate(targetWeekday, timeZone = "Asia/Taipei", now = new Date
 
 function requestedWorkoutTarget({ text = "", dashboard = {}, payload = {}, intent = "general" } = {}) {
   const normalizedIntent = normalizeIntent(intent, text);
-  const timeZone = dashboard.profile?.timezone || "Asia/Taipei";
+  const timeZone = payload?.timezone || dashboard.profile?.timezone || "Asia/Taipei";
   const baseNow = payload?.now ? new Date(payload.now) : dashboard.now ? new Date(dashboard.now) : new Date();
   if (normalizedIntent !== "build_workout") {
     return { now: baseNow, is_future_request: false };
@@ -606,7 +606,17 @@ function requestedWorkoutTarget({ text = "", dashboard = {}, payload = {}, inten
   let targetNow = baseNow;
   let basis = "today";
 
-  if (/\btomorrow(?:'s)?\b/.test(lower)) {
+  const requestedTargetDate = String(payload?.target_date || payload?.date || "").trim();
+  const requestedTargetDay = String(payload?.target_day || payload?.target_weekday || "").trim();
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(requestedTargetDate)) {
+    targetNow = new Date(`${requestedTargetDate}T00:00:00.000Z`);
+    basis = "requested date";
+  } else if (requestedTargetDay) {
+    const normalizedDay = requestedTargetDay.slice(0, 1).toUpperCase() + requestedTargetDay.slice(1).toLowerCase();
+    targetNow = nextWeekdayDate(normalizedDay, timeZone, baseNow);
+    basis = "requested weekday";
+  } else if (/\btomorrow(?:'s)?\b/.test(lower)) {
     targetNow = addDays(baseNow, 1);
     basis = "tomorrow";
   } else if (/\bnext\s+strength\s+day\b/.test(lower)) {
@@ -642,6 +652,58 @@ function requestedWorkoutTarget({ text = "", dashboard = {}, payload = {}, inten
     planning_basis: isFutureRequest
       ? `Based on the ${basis} ${targetWeekday} plan for ${targetDate}, not today's schedule.`
       : `Based on today's ${targetWeekday} plan for ${targetDate}.`,
+  };
+}
+
+function normalizeRequestedSessionType(value, text = "") {
+  const raw = String(value || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "_");
+  if (["strength", "lift", "lifting", "gym_strength"].includes(raw)) return "strength";
+  if (["recovery", "safety", "mobility", "walk", "easy"].includes(raw)) return "recovery";
+  if (["goal_support", "zone_2", "cardio", "conditioning"].includes(raw)) return "goal_support";
+
+  const lower = String(text || "").toLowerCase();
+  if (/\b(recovery|safety|mobility|easy)\s+(workout|session|plan)\b/.test(lower)) return "recovery";
+  if (
+    /\b(strength|lifting|lift)\s+(workout|session|plan)\b/.test(lower)
+    || /\b(build|make|give me|create|need|want)\b.*\b(strength|lifting)\b/.test(lower)
+    || /\b(strength|lifting)\b.*\b(today|now|workout|session|plan)\b/.test(lower)
+  ) {
+    return "strength";
+  }
+  if (/\b(zone\s*2|conditioning|goal[- ]support|cardio)\s+(workout|session|plan)\b/.test(lower)) return "goal_support";
+  return "workout";
+}
+
+function classifyWorkoutRequest({ text = "", payload = {}, intent = "general" } = {}) {
+  const normalizedIntent = normalizeIntent(intent, text);
+  if (normalizedIntent !== "build_workout") {
+    return {
+      request_intent: "passive_today_check",
+      requested_session_type: null,
+      schedule_override: false,
+      explicit_workout_request: false,
+    };
+  }
+
+  const lower = String(text || "").toLowerCase();
+  const requestedSessionType = normalizeRequestedSessionType(payload?.requested_session_type || payload?.session_type, text);
+  const explicitOverride = boolFromValue(payload?.schedule_override) === true
+    || /\b(override|ignore|skip|set aside)\s+(the\s+)?schedule\b/.test(lower)
+    || /\b(even though|despite)\b.*\b(non[- ]?lift|off day|rest day|schedule)\b/.test(lower)
+    || /\b(lift|train strength|do strength)\s+anyway\b/.test(lower);
+  const explicitRecovery = requestedSessionType === "recovery";
+  const explicitStrength = requestedSessionType === "strength";
+
+  let requestIntent = "build_workout";
+  if (explicitRecovery) requestIntent = "recovery_workout";
+  else if (explicitOverride) requestIntent = "override_schedule";
+  else if (explicitStrength) requestIntent = "build_strength";
+
+  return {
+    request_intent: requestIntent,
+    requested_session_type: requestedSessionType,
+    schedule_override: explicitOverride,
+    explicit_workout_request: true,
   };
 }
 
@@ -1522,14 +1584,21 @@ function activeAdjustmentNotes(state = DEFAULT_COACH_STATE) {
   return notes.slice(0, 6);
 }
 
-export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, readiness = evaluateReadiness(dashboard, state)) {
+export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, readiness = evaluateReadiness(dashboard, state), requestContext = {}) {
   const travelMode = Boolean(state.gym_profile.travel_mode);
+  const wantsStrength = requestContext.requested_session_type === "strength" || requestContext.schedule_override === true;
+  const scheduleOverrideApplied = Boolean(wantsStrength && !readiness.schedule?.strength_planned && readiness.tier !== "Red");
+  const wantsRecovery = requestContext.requested_session_type === "recovery";
   if (readiness.tier === "Red") {
     return {
       environment: "Safety-first recovery day",
       requires_inventory: false,
       top_line: readiness.training_call,
       session_type: "Recovery / Medical caution",
+      request_intent: requestContext.request_intent || "build_workout",
+      requested_session_type: "recovery",
+      schedule_override: Boolean(requestContext.schedule_override),
+      schedule_override_applied: false,
       floor_plan: "No strength, Zone 2, or conditioning prescription while red safety flags are active.",
       target_minutes: 15,
       time_range_min: [10, 30],
@@ -1550,7 +1619,37 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       ],
     };
   }
-  if (!readiness.schedule?.strength_planned) {
+  if (wantsRecovery) {
+    return {
+      environment: "Safety-first recovery day",
+      requires_inventory: false,
+      top_line: "Recovery workout: keep it easy enough to improve the day without borrowing from the next strength session.",
+      session_type: "Recovery / Mobility / Easy Walk",
+      request_intent: requestContext.request_intent || "recovery_workout",
+      requested_session_type: "recovery",
+      schedule_override: Boolean(requestContext.schedule_override),
+      schedule_override_applied: false,
+      floor_plan: "No World Gym strength floor routing for this recovery request.",
+      target_minutes: 25,
+      time_range_min: [15, 35],
+      guardrails: [
+        "Keep breathing conversational.",
+        "Stop if pain, asthma, migraine, or BP symptoms appear.",
+        "Do not add strength work unless a separate explicit request and safety check supports it.",
+      ],
+      blocks: [
+        {
+          name: "Easy walk",
+          target: "10-25 minutes relaxed pace; shorten if symptoms drift.",
+        },
+        {
+          name: "Mobility and breathing",
+          target: "8-12 minutes hips, T-spine, neck stacking, and nasal breathing.",
+        },
+      ],
+    };
+  }
+  if (!readiness.schedule?.strength_planned && !scheduleOverrideApplied) {
     const weekday = readiness.schedule?.weekday;
     const isGoalSupport = readiness.schedule?.day_type === "goal_support";
     const isThursday = weekday === "Thursday";
@@ -1560,6 +1659,10 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         requires_inventory: false,
         top_line: readiness.training_call,
         session_type: "Easy Walk + Mobility",
+        request_intent: requestContext.request_intent || "build_workout",
+        requested_session_type: requestContext.requested_session_type || "workout",
+        schedule_override: Boolean(requestContext.schedule_override),
+        schedule_override_applied: false,
         floor_plan: "No World Gym strength floor routing today.",
         target_minutes: isGoalSupport ? 30 : 25,
         time_range_min: [20, 40],
@@ -1585,6 +1688,10 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       requires_inventory: false,
       top_line: readiness.schedule?.non_lift_call || "No strength today. Follow the non-lift schedule.",
       session_type: isGoalSupport ? "Daily Walk + Zone 2 + Mobility" : "Daily Walk / Rest / Mobility",
+      request_intent: requestContext.request_intent || "build_workout",
+      requested_session_type: requestContext.requested_session_type || "workout",
+      schedule_override: Boolean(requestContext.schedule_override),
+      schedule_override_applied: false,
       floor_plan: "No World Gym strength floor routing today.",
       target_minutes: isGoalSupport ? (isThursday ? 40 : 50) : 25,
       time_range_min: isGoalSupport ? (isThursday ? [30, 50] : [40, 60]) : [20, 45],
@@ -1621,16 +1728,22 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
       environment: "Travel / hotel gym",
       requires_inventory: true,
       top_line: "Send the hotel gym inventory before I build the session.",
+      request_intent: requestContext.request_intent || "build_workout",
+      requested_session_type: requestContext.requested_session_type || "strength",
+      schedule_override: Boolean(requestContext.schedule_override),
+      schedule_override_applied: false,
       reason: state.gym_profile.travel_rule,
       questions: ["Is there a cable station?", "What dumbbells/kettlebells are available?", "Any bench, pull-up bar, treadmill, or bike?"],
       blocks: [],
     };
   }
 
-  const finisherAllowed = readiness.tier === "Green";
-  const modified = readiness.tier !== "Green";
+  const finisherAllowed = readiness.tier === "Green" && !scheduleOverrideApplied;
+  const modified = readiness.tier !== "Green" || scheduleOverrideApplied;
   const preferredCap = Number(state.adaptations?.preferred_session_cap_min);
-  const targetMinutes = Number.isFinite(preferredCap)
+  const targetMinutes = scheduleOverrideApplied
+    ? 55
+    : Number.isFinite(preferredCap)
     ? Math.max(60, Math.min(72, preferredCap + 6))
     : state.training_model.default_session_target_min;
   const coachLearning = activeAdjustmentNotes(state);
@@ -1638,13 +1751,20 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
     environment: "World Gym Taichung",
     requires_inventory: false,
     top_line: modified
-      ? "World Gym plan, modified: anchors stay, density drops, hybrid close is conditional."
+      ? scheduleOverrideApplied
+        ? "Schedule override: controlled strength option today; anchors stay, density drops, and the hybrid close is out."
+        : "World Gym plan, modified: anchors stay, density drops, hybrid close is conditional."
       : "World Gym plan: athletic Floor 3 primer, Floor 2 strength anchors, Floor 3 trunk/hybrid close.",
-    session_type: "World Gym Strength + Athletic Functional",
+    session_type: scheduleOverrideApplied ? "Modified World Gym Strength (Schedule Override)" : "World Gym Strength + Athletic Functional",
+    request_intent: requestContext.request_intent || "build_workout",
+    requested_session_type: "strength",
+    schedule_override: Boolean(requestContext.schedule_override),
+    schedule_override_applied: scheduleOverrideApplied,
     floor_plan: "Floor 3 prehab/primer -> Floor 2 anchors -> Floor 3 trunk/hybrid close",
     target_minutes: targetMinutes,
-    time_range_min: state.training_model.session_range_min,
+    time_range_min: scheduleOverrideApplied ? [40, 60] : state.training_model.session_range_min,
     guardrails: [
+      ...(scheduleOverrideApplied ? [`This overrides the default ${readiness.schedule?.label || "non-strength day"}; keep it controlled and protect ${readiness.schedule?.next_strength_day || "the next strength day"}.`] : []),
       "No cross-floor supersets.",
       "Left side leads unilateral work.",
       "Stay near the 122 bpm strength HR cap.",
@@ -1933,6 +2053,8 @@ function topLineForIntent(intent, readiness, nutrition, workout) {
 
 function planTypeForSchedule(schedule = {}, workout = {}) {
   if (workout.requires_inventory) return "travel day";
+  if (workout.schedule_override_applied) return "strength override";
+  if (/strength/i.test(String(workout.session_type || ""))) return "strength day";
   if (schedule.strength_planned) return "strength day";
   if (schedule.day_type === "goal_support") return "goal-support day";
   if (schedule.day_type === "weekend_rest") return "recovery day";
@@ -2016,6 +2138,42 @@ function buildWorkoutHandoff(workout = null) {
   };
 }
 
+function enrichWorkoutPlan(workout = {}, readiness = {}, requestContext = {}, workoutTarget = {}) {
+  if (!workout || typeof workout !== "object") return workout;
+  const requestedSessionType = workout.requested_session_type
+    || requestContext.requested_session_type
+    || (/strength/i.test(String(workout.session_type || "")) ? "strength" : "workout");
+  const scheduleOverrideApplied = Boolean(workout.schedule_override_applied);
+  const schedule = readiness.schedule || {};
+  const why = [
+    workoutTarget.planning_basis,
+    scheduleOverrideApplied
+      ? `Todd explicitly requested strength on ${schedule.label || "a non-strength day"}, so Coach built the safest controlled option instead of stopping at the schedule.`
+      : null,
+    readiness.training_call,
+    ...(readiness.evidence || []).slice(0, 2),
+  ].filter(Boolean).slice(0, 5);
+  const isStrength = requestedSessionType === "strength" || /strength/i.test(String(workout.session_type || ""));
+  const whatToTrack = [
+    "BP reading and any migraine/asthma symptoms before training.",
+    "Pain score before, during, and after the session.",
+    isStrength ? "Completed Rack sets/reps/loads and Garmin Connect workout completion." : "Walk, Zone 2, mobility, and symptom response.",
+    "Garmin Nutrition closeout: calories, protein, carbs, fat.",
+    "Post-workout RPE plus best movement, worst movement, and any adjustment needed next time.",
+  ];
+
+  return {
+    ...workout,
+    request_intent: workout.request_intent || requestContext.request_intent || "build_workout",
+    requested_session_type: requestedSessionType,
+    schedule_override: Boolean(workout.schedule_override || requestContext.schedule_override),
+    schedule_override_applied: scheduleOverrideApplied,
+    why_this_workout: why,
+    what_to_track: whatToTrack,
+    post_workout_debrief_prompt: "After the session, send duration, completed blocks, RPE, best movement, worst movement, pain score, and any Garmin/Rack notes.",
+  };
+}
+
 function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readiness, nutrition, workout = null, includeWorkout = false } = {}) {
   const resolvedReadiness = readiness || evaluateReadiness(base, state);
   const resolvedNutrition = nutrition || buildNutritionCall(base, state);
@@ -2045,10 +2203,11 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
     `Plan context: ${schedule.label || "today's schedule"}${schedule.next_strength_day ? `; next strength day ${schedule.next_strength_day}` : ""}.`,
   ].filter(Boolean).slice(0, 6);
 
+  const isStrengthWorkout = resolvedWorkout.requested_session_type === "strength" || /strength/i.test(String(resolvedWorkout.session_type || ""));
   const track = [
     "BP reading and any migraine/asthma symptoms.",
     "Pain score, especially right hip response.",
-    schedule.strength_planned ? "Workout completion in Garmin Connect Strength, plus any post-workout pain/RPE note." : "Daily walk/conditioning completion and any symptom drift.",
+    isStrengthWorkout ? "Workout completion in Garmin Connect Strength, plus any post-workout pain/RPE note." : "Daily walk/conditioning completion and any symptom drift.",
     "Garmin Nutrition closeout: calories, protein, carbs, fat.",
   ];
   if (appleHealth.status !== "current") track.push("Apple Health sync freshness if the iPhone summary remains missing or stale.");
@@ -2094,12 +2253,15 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
 export function buildCoachDecision({ text = "", intent = "general", dashboard = {}, state = DEFAULT_COACH_STATE, payload = {} } = {}) {
   const normalizedIntent = normalizeIntent(intent, text);
   const workoutTarget = requestedWorkoutTarget({ text, dashboard, payload, intent: normalizedIntent });
+  const workoutRequest = normalizedIntent === "build_workout"
+    ? { ...workoutTarget, ...classifyWorkoutRequest({ text, payload, intent: normalizedIntent }) }
+    : null;
   const now = workoutTarget.now;
   const decisionDashboard = now ? { ...dashboard, now } : dashboard;
   const readiness = evaluateReadiness(decisionDashboard, state, { text, payload, now });
   const nutrition = buildNutritionCall(decisionDashboard, state);
-  const baseWorkout = buildWorkoutPlan(decisionDashboard, state, readiness);
-  const workout = normalizedIntent === "build_workout" && workoutTarget.requested_for_date
+  const baseWorkout = buildWorkoutPlan(decisionDashboard, state, readiness, workoutRequest || {});
+  const workoutWithTarget = normalizedIntent === "build_workout" && workoutTarget.requested_for_date
     ? {
         ...baseWorkout,
         requested_for_date: workoutTarget.requested_for_date,
@@ -2107,6 +2269,9 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
         planning_basis: workoutTarget.planning_basis,
       }
     : baseWorkout;
+  const workout = normalizedIntent === "build_workout"
+    ? enrichWorkoutPlan(workoutWithTarget, readiness, workoutRequest || {}, workoutTarget)
+    : workoutWithTarget;
   const topLine = topLineForIntent(normalizedIntent, readiness, nutrition, workout);
   const riskFlags = readiness.risk_flags.map(r => r.text);
   const recentConversation = compactCoachHistory(decisionDashboard);
@@ -2131,6 +2296,8 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
       nextActions.push("Keep today recovery-only unless symptoms and doctor guidance clear training.");
     } else if (workout.requires_inventory) {
       nextActions.push("Send hotel-gym inventory before lifting.");
+    } else if (workout.schedule_override_applied) {
+      nextActions.push("Use the controlled strength override below; keep volume and density capped.");
     } else if (!readiness.schedule?.strength_planned) {
       nextActions.push("Use the non-lift day guardrails below and keep the next strength day protected.");
     } else {
@@ -2164,7 +2331,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     daily_summary: dailySummary,
     nutrition_call: nutrition,
     workout_plan: includeWorkout ? workout : null,
-    workout_request: normalizedIntent === "build_workout" ? workoutTarget : null,
+    workout_request: workoutRequest,
     source_context: {
       data_store: "supabase",
       default_gym: state.gym_profile.default_environment,

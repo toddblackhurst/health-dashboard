@@ -21,6 +21,7 @@ function clone(value) {
 
 const MONDAY_TAIPEI = "2026-05-11T02:00:00.000Z";
 const TUESDAY_TAIPEI = "2026-06-09T02:00:00.000Z";
+const WEDNESDAY_TAIPEI = "2026-06-10T02:00:00.000Z";
 const MONDAY_SCHEDULE = {
   weekday: "Monday",
   day_type: "strength",
@@ -542,7 +543,7 @@ test("doctor guidance overrides optimistic device data", () => {
   assert.ok(decision.readiness.evidence.some(item => /Doctor guidance/.test(item)));
 });
 
-test("red safety gates are not overwritten by Tuesday goal-support schedule", () => {
+test("red safety gates are not overwritten by explicit Tuesday strength request", () => {
   const dashboard = {
     now: new Date(TUESDAY_TAIPEI),
     profile: { timezone: "Asia/Taipei" },
@@ -554,16 +555,19 @@ test("red safety gates are not overwritten by Tuesday goal-support schedule", ()
   };
 
   const decision = buildCoachDecision({
-    text: "Build today's workout",
+    text: "Override the schedule and build today's strength workout.",
     intent: "build_workout",
     dashboard,
     payload: { now: TUESDAY_TAIPEI },
   });
 
   assert.equal(decision.readiness.tier, "Red");
+  assert.equal(decision.workout_request.request_intent, "override_schedule");
   assert.match(decision.top_line_call, /Downshift/);
+  assert.equal(decision.workout_plan.session_type, "Recovery / Medical caution");
   assert.match(decision.workout_plan.top_line, /Downshift/);
   assert.match(decision.workout_plan.floor_plan, /No strength, Zone 2, or conditioning/);
+  assert.equal(workoutExercises(decision.workout_plan).length, 0);
   assert.ok(!decision.workout_plan.blocks.some(block => /Zone 2|conditioning/i.test(`${block.name} ${block.target}`)));
   assert.ok(decision.next_actions.some(action => /recovery-only/.test(action)));
 });
@@ -606,7 +610,22 @@ test("next strength day request resolves without forcing today's non-lift day", 
   assert.equal(decision.workout_plan.session_type, "World Gym Strength + Athletic Functional");
 });
 
-test("Tuesday goal-support day does not force strength without explicit future override", () => {
+test("passive Tuesday check remains goal-support and does not generate a workout handoff", () => {
+  const decision = buildCoachDecision({
+    text: "What should I do today?",
+    intent: "general",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: TUESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.workout_plan, null);
+  assert.equal(decision.daily_summary.todays_plan.type, "goal-support day");
+  assert.equal(decision.daily_summary.todays_plan.recommendation, "Daily Walk + Zone 2 + Mobility");
+  assert.match(decision.daily_summary.todays_plan.primary_action, /No strength today/);
+  assert.equal(decision.daily_summary.rack_motra_handoff.generated, false);
+});
+
+test("explicit build workout Tuesday returns goal-support workout", () => {
   const decision = buildCoachDecision({
     text: "Build today's workout",
     intent: "build_workout",
@@ -615,13 +634,115 @@ test("Tuesday goal-support day does not force strength without explicit future o
   });
 
   assert.equal(decision.date, "2026-06-09");
+  assert.equal(decision.intent, "build_workout");
   assert.equal(decision.readiness.schedule.weekday, "Tuesday");
   assert.equal(decision.readiness.schedule.strength_planned, false);
   assert.equal(decision.workout_request.is_future_request, false);
+  assert.equal(decision.workout_request.request_intent, "build_workout");
   assert.equal(decision.workout_plan.session_type, "Daily Walk + Zone 2 + Mobility");
   assert.equal(decision.workout_plan.floor_plan, "No World Gym strength floor routing today.");
+  assert.deepEqual(decision.workout_plan.blocks.map(block => block.name), ["Daily walk", "Zone 2 conditioning", "Mobility and core"]);
+  assert.equal(workoutExercises(decision.workout_plan).length, 0);
   assert.ok(decision.workout_plan.guardrails.some(item => /Do not convert a non-lift day/.test(item)));
   assert.ok(decision.next_actions.some(action => /non-lift day guardrails/.test(action)));
+});
+
+test("explicit strength request Tuesday returns controlled modified strength when safe", () => {
+  const decision = buildCoachDecision({
+    text: "I explicitly want a safe modified strength workout today. Hip clear and breathing clear.",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: TUESDAY_TAIPEI },
+  });
+  const exercises = workoutExercises(decision.workout_plan);
+
+  assert.equal(decision.date, "2026-06-09");
+  assert.equal(decision.readiness.tier, "Green");
+  assert.equal(decision.workout_request.request_intent, "build_strength");
+  assert.equal(decision.workout_request.requested_session_type, "strength");
+  assert.equal(decision.workout_plan.schedule_override_applied, true);
+  assert.equal(decision.workout_plan.session_type, "Modified World Gym Strength (Schedule Override)");
+  assert.match(decision.workout_plan.top_line, /Schedule override: controlled strength option/);
+  assert.ok(decision.workout_plan.guardrails.some(item => /overrides the default Tuesday/.test(item)));
+  assert.ok(decision.next_actions.some(action => /controlled strength override/.test(action)));
+  assert.ok(exercises.length > 0);
+  for (const exercise of exercises) assertPlannedExerciseShape(exercise);
+  assert.ok(decision.workout_plan.what_to_track.some(item => /Rack sets\/reps\/loads/.test(item)));
+  assert.match(decision.workout_plan.post_workout_debrief_prompt, /duration, completed blocks, RPE/);
+});
+
+test("explicit override schedule Tuesday returns controlled strength metadata", () => {
+  const decision = buildCoachDecision({
+    text: "Override the schedule and build strength today.",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: TUESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.workout_request.request_intent, "override_schedule");
+  assert.equal(decision.workout_request.schedule_override, true);
+  assert.equal(decision.workout_plan.schedule_override, true);
+  assert.equal(decision.workout_plan.schedule_override_applied, true);
+  assert.equal(decision.daily_summary.todays_plan.type, "strength override");
+  assert.match(decision.daily_summary.todays_plan.primary_action, /Schedule override/);
+});
+
+test("yellow strength day returns modified workout", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's strength workout.",
+    intent: "build_workout",
+    dashboard: {
+      profile: { timezone: "Asia/Taipei" },
+      blood_pressure: [{
+        date: "2026-05-11",
+        systolic_mmhg: 145,
+        diastolic_mmhg: 92,
+      }],
+    },
+    payload: { now: MONDAY_TAIPEI },
+  });
+
+  assert.equal(decision.readiness.tier, "Yellow");
+  assert.equal(decision.workout_plan.session_type, "World Gym Strength + Athletic Functional");
+  assert.match(decision.workout_plan.top_line, /modified/);
+  assert.ok(decision.workout_plan.guardrails.some(item => /Skip the hybrid close/.test(item)));
+  for (const exercise of workoutExercises(decision.workout_plan)) assertPlannedExerciseShape(exercise);
+});
+
+test("Wednesday current-day strength request builds strength workout", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's strength workout.",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: WEDNESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.date, "2026-06-10");
+  assert.equal(decision.readiness.schedule.weekday, "Wednesday");
+  assert.equal(decision.readiness.schedule.strength_planned, true);
+  assert.equal(decision.workout_plan.session_type, "World Gym Strength + Athletic Functional");
+  assert.equal(decision.daily_summary.rack_motra_handoff.generated, true);
+});
+
+test("workout output includes tracking and post-workout debrief prompts", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's strength workout.",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: WEDNESDAY_TAIPEI },
+  });
+  const postWorkout = buildCoachDecision({
+    text: "Finished workout.",
+    intent: "post_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: WEDNESDAY_TAIPEI },
+  });
+
+  assert.ok(decision.daily_summary.what_to_track_today.some(item => /Garmin Connect Strength/.test(item)));
+  assert.ok(decision.daily_summary.what_to_track_today.some(item => /Garmin Nutrition closeout/.test(item)));
+  assert.ok(decision.workout_plan.what_to_track.some(item => /Post-workout RPE/.test(item)));
+  assert.match(decision.workout_plan.post_workout_debrief_prompt, /best movement, worst movement, pain score/);
+  assert.match(postWorkout.top_line_call, /duration, best movement, worst movement, pain, and RPE/);
 });
 
 test("coach decisions include compact Supabase conversation history for phone continuity", () => {
