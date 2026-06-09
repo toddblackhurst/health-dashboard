@@ -4,17 +4,19 @@ This plan started after the verified Apple Health Phase 3 production milestone f
 
 ## Recommendation
 
-Daily coach UX polish is live and production-verified. The current prerequisite before Weekly Review Engine is this Garmin source-hierarchy update: Garmin Fenix 8 primary for integrated training/recovery and workout physiology, Rack/Motra primary for strength logs, Apple Health supporting-only, Oura secondary/fallback, Soundcore sleep aid only, and medical/safety flags above every device.
+Daily coach UX polish is live and production-verified. The Garmin source-hierarchy update is merged and production-verified: Garmin Fenix 8 is primary for integrated training/recovery and workout physiology when fresh/reliable, Rack/Motra is primary for strength logs, Apple Health is supporting-only, Oura is secondary/fallback, Soundcore is sleep aid only, and medical/safety flags are above every device.
 
-Why: the codebase already exposes `coach-today`, `sync-status`, compact dashboard context, and Apple Health supporting evidence. Weekly Review Engine should not aggregate a week of training, recovery, and activity until the source hierarchy is explicit and test-covered.
+Morning Coach automation v1 is the current iPhone workflow bridge. It should give Todd one tap or one Shortcut that syncs Apple Health, checks source freshness, calls `coach-today`, and warns on stale/missing source data without relying on background HealthKit.
+
+Why: the codebase already exposes `coach-today`, `sync-status`, compact dashboard context, and Apple Health supporting evidence. Weekly Review Engine should not aggregate a week of training, recovery, and activity until the daily iPhone workflow and source hierarchy are explicit and test-covered.
 
 Recommended order:
 
-1. Review and merge Garmin source hierarchy update.
+1. Complete Morning Coach automation v1 local/iPhone verification.
 2. Weekly review engine.
 3. Coach observations learning loop.
 4. Rack/Motra workout handoff improvement.
-5. Automated Apple Health sync improvements.
+5. Background/reminder Apple Health sync improvements.
 
 ## Option 1: Daily Coach UX Polish
 
@@ -176,3 +178,18 @@ Suggested acceptance criteria:
 - Missing-day repair is idempotent.
 - Background/reminder behavior is visible and controllable.
 - Apple Health remains supporting cross-check evidence only.
+
+## Current Candidate: Morning Coach Automation v1
+
+Goal: make the daily iPhone path lowest friction without turning background HealthKit into the reliable path.
+
+Scope:
+
+- One in-app `Morning Coach` button.
+- App Intents for `Morning Coach`, `Sync Apple Health`, `Check Coach Sync Status`, and `Open Coach Today`.
+- Shortcuts/personal automation setup docs.
+- Last successful Apple Health sync and coach readback timestamps stored locally.
+- Manual `Sync Now` remains visible.
+- Background HealthKit deferred as best-effort future work.
+
+Next likely phase after local and iPhone verification: Weekly Review Engine.

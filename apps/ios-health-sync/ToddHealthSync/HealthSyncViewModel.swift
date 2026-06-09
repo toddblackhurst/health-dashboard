@@ -13,22 +13,33 @@ final class HealthSyncViewModel: ObservableObject {
     @Published var isWorking = false
     @Published var statusText = "Ready to connect Apple Health."
     @Published var lastSyncText = "No sync yet."
+    @Published var lastCoachReadbackText = "No coach readback yet."
+    @Published var morningCoachText = "Morning Coach has not run yet."
+    @Published var backgroundHealthKitText = "Background HealthKit sync is not enabled."
 
     private let healthKitManager: HealthKitManager
-    private let apiClient: CoachAPIClient
     private let keychainStore: KeychainStore
+    private let store: MorningCoachStore
+    private let workflow: MorningCoachWorkflow
 
     init(
         healthKitManager: HealthKitManager = HealthKitManager(),
         apiClient: CoachAPIClient = CoachAPIClient(),
-        keychainStore: KeychainStore = KeychainStore()
+        keychainStore: KeychainStore = KeychainStore(),
+        store: MorningCoachStore = MorningCoachStore()
     ) {
         self.healthKitManager = healthKitManager
-        self.apiClient = apiClient
         self.keychainStore = keychainStore
-        self.apiBase = UserDefaults.standard.string(forKey: UserDefaultsKeys.apiBase)
-            ?? "https://todd-personal-coach.netlify.app"
+        self.store = store
+        self.workflow = MorningCoachWorkflow(
+            healthKitManager: healthKitManager,
+            apiClient: apiClient,
+            keychainStore: keychainStore,
+            store: store
+        )
+        self.apiBase = store.apiBase
         self.apiSecret = (try? keychainStore.loadSecret()) ?? ""
+        refreshStoredStatus()
     }
 
     func saveSecret() {
@@ -61,50 +72,63 @@ final class HealthSyncViewModel: ObservableObject {
         defer { isWorking = false }
 
         do {
-            try keychainStore.saveSecret(apiSecret.trimmingCharacters(in: .whitespacesAndNewlines))
-            let summaries = try await healthKitManager.dailySummaries(days: selectedDays)
-            statusText = "Uploading \(summaries.count) day summaries..."
-
-            let payload = AppleHealthDailyPayload(
-                clientVersion: appVersion,
-                deviceName: UIDevice.current.name,
-                timezone: TimeZone.current.identifier,
-                daysRequested: selectedDays,
-                summaries: summaries,
-                raw: [
-                    "sync_trigger": "manual",
-                    "summary_grain": "daily"
-                ]
-            )
-
-            let response = try await apiClient.postAppleHealthDaily(
-                payload: payload,
-                apiBase: apiBase,
-                apiSecret: apiSecret
-            )
-
-            let written = response.daysWritten ?? summaries.count
-            statusText = "Sync succeeded. Wrote \(written) of \(summaries.count) days."
-            lastSyncText = "Last sync: \(Self.statusDateFormatter.string(from: Date()))"
+            try persistConnectionForWork()
+            let result = try await workflow.syncAppleHealth(days: selectedDays, trigger: "manual")
+            statusText = result.detail
+            refreshStoredStatus()
         } catch {
             statusText = error.localizedDescription
         }
     }
 
-    private var appVersion: String {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0"
-        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "1"
-        return "\(version) (\(build))"
+    func runMorningCoach() async {
+        guard !isWorking else { return }
+        isWorking = true
+        statusText = "Running Morning Coach..."
+        defer { isWorking = false }
+
+        do {
+            try persistConnectionForWork()
+            let result = try await workflow.runMorningCoach()
+            statusText = result.title
+            morningCoachText = result.detail
+            refreshStoredStatus()
+        } catch {
+            statusText = error.localizedDescription
+            refreshStoredStatus()
+        }
     }
 
-    private static let statusDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }()
-}
+    func checkCoachSyncStatus() async {
+        guard !isWorking else { return }
+        isWorking = true
+        statusText = "Checking coach sync status..."
+        defer { isWorking = false }
 
-private enum UserDefaultsKeys {
-    static let apiBase = "coach_api_base"
+        do {
+            try persistConnectionForWork()
+            let result = try await workflow.checkCoachSyncStatus()
+            statusText = result.title
+            lastCoachReadbackText = result.detail
+            refreshStoredStatus()
+        } catch {
+            statusText = error.localizedDescription
+            refreshStoredStatus()
+        }
+    }
+
+    private func persistConnectionForWork() throws {
+        store.apiBase = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedSecret = apiSecret.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedSecret.isEmpty {
+            try keychainStore.saveSecret(trimmedSecret)
+        }
+    }
+
+    private func refreshStoredStatus() {
+        lastSyncText = store.lastAppleHealthSyncText
+        lastCoachReadbackText = store.lastCoachReadbackText
+        morningCoachText = store.lastMorningCoachResult
+        backgroundHealthKitText = store.lastBackgroundHealthKitText
+    }
 }

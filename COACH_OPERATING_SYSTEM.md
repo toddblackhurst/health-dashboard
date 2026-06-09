@@ -135,6 +135,7 @@ Daily coach output contract:
 
 Shortcut actions to support:
 
+- Morning Coach: sync Apple Health for the last 7 days, check `sync-status`, call `coach-today`, show the daily call, and warn on stale/missing source data. This is the lowest-friction daily iPhone workflow; it must keep Apple Health supporting-only and keep manual `Sync Now` available.
 - Morning Check-In: BP, pain, asthma, sleep feel.
 - Build Today's Workout: calls `/api/coach/workout`.
 - Nutrition Closeout: Garmin Nutrition totals to `/api/coach/nutrition-closeout`.

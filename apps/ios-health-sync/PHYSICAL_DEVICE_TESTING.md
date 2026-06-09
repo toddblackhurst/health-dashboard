@@ -71,6 +71,40 @@ If the permission sheet does not appear, check iPhone `Settings > Privacy & Secu
 
 The exact written count may be lower only if the API reports a partial write. Treat anything other than a success message as blocked until the API response and logs are checked.
 
+## Morning Coach Shortcut Test
+
+After the first manual sync succeeds:
+
+1. Tap `Morning Coach` in the app.
+2. Expected app behavior:
+   - Apple Health sync runs for the last 7 days.
+   - The app checks coach sync status.
+   - The app calls coach-today.
+   - The Morning Coach section shows the daily call, why, today line, warnings, next action, and the Apple Health supporting-only reminder.
+3. Confirm the Status section shows:
+   - Last Apple Health sync timestamp.
+   - Last coach readback timestamp.
+   - Background HealthKit is not enabled.
+
+Then verify Shortcuts:
+
+1. Open iPhone `Shortcuts`.
+2. Confirm the Todd Health Sync actions appear:
+   - `Morning Coach`
+   - `Sync Apple Health`
+   - `Check Coach Sync Status`
+   - `Open Coach Today`
+3. Create a Shortcut named `Morning Coach`.
+4. Add the Todd Health Sync `Morning Coach` action.
+5. Run the Shortcut once manually.
+6. Confirm the Shortcut result text matches the app's latest Morning Coach result.
+7. Create a personal automation by time of day.
+8. Choose the `Morning Coach` Shortcut.
+9. Use `Run Immediately` if iOS offers it.
+10. If iOS requires confirmation, leave the notification/reminder as the fallback and keep manual `Sync Now` available.
+
+Treat missing Shortcuts actions as an app installation/build issue, not a coach backend issue.
+
 ## Check Netlify Logs
 
 Check the live Netlify function logs for the coach API around the sync time.
@@ -134,6 +168,9 @@ After the first sync, collect:
 - Supabase `apple_health_daily_summaries` rows for the written dates.
 - Supabase `coach_messages` row for `channel = 'apple-health-daily'`, if present.
 - Any Health permission screen if a category had to be manually enabled.
+- App screenshot showing the Morning Coach result after a successful run.
+- Shortcuts screenshot showing the Todd Health Sync actions.
+- Personal Automation screenshot showing the `Morning Coach` Shortcut schedule and `Run Immediately` state if available.
 
 ## Troubleshooting
 
@@ -170,4 +207,4 @@ Netlify succeeds but Supabase rows are missing:
 
 ## Stop Line
 
-Stop after collecting the first physical-device sync evidence. Do not wire Apple Health into readiness scoring, coach recommendations, or PR 3 until this checklist has verified the phone-to-live-API path.
+Stop after collecting the first physical-device sync and Morning Coach Shortcut evidence. Do not wire Apple Health into readiness scoring, start Weekly Review Engine, deploy, or change source hierarchy from this checklist.
