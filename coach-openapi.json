@@ -625,6 +625,10 @@
           "block": {
             "type": ["string", "null"]
           },
+          "exercise_name": {
+            "type": "string",
+            "description": "Human-readable exercise name from the deterministic workout plan."
+          },
           "rack_motra_entry_name": {
             "type": "string",
             "description": "Rack/Motra entry name to use when logging the exercise."

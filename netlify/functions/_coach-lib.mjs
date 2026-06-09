@@ -2173,6 +2173,7 @@ function buildExerciseCoachingReadout(workout = null) {
       return {
         order: order++,
         block: block.label || block.name || block.id || null,
+        exercise_name: exercise.name || entryName,
         rack_motra_entry_name: entryName,
         tracking_app: exercise.tracking_app || "Rack",
         floor: exercise.floor || block.floor || "Unknown",

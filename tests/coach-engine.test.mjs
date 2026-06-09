@@ -49,6 +49,7 @@ function assertPlannedExerciseShape(exercise) {
 
 function assertExerciseCoachingReadoutShape(exercise) {
   const requiredFields = [
+    "exercise_name",
     "rack_motra_entry_name",
     "tracking_app",
     "floor",
@@ -67,6 +68,7 @@ function assertExerciseCoachingReadoutShape(exercise) {
     assert.ok(exercise[field], `${exercise.rack_motra_entry_name || "exercise"} missing ${field}`);
   }
   assert.equal(exercise.tracking_app, "Rack");
+  assert.ok(exercise.exercise_name);
   assert.match(exercise.progression_target, /pain stays below 4\/10/);
   assert.match(exercise.logging_note, /Log in Rack/);
 }
