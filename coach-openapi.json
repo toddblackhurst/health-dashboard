@@ -61,6 +61,25 @@
         }
       }
     },
+    "/api/coach/sync-status": {
+      "get": {
+        "operationId": "getSyncStatus",
+        "summary": "Check coach source sync status",
+        "description": "Returns source freshness and sync status for coach data, including Apple Health as supporting evidence only.",
+        "responses": {
+          "200": {
+            "description": "Coach source sync status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/coach/message": {
       "post": {
         "operationId": "sendCoachMessage",
@@ -443,6 +462,20 @@
             "additionalProperties": true
           }
         ]
+      },
+      "SyncStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "apple_health": {
+            "type": "object",
+            "description": "Apple Health freshness and upload status as supporting evidence only.",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
       },
       "CoachDecision": {
         "type": "object",
