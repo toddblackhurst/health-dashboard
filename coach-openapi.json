@@ -42,6 +42,25 @@
         }
       }
     },
+    "/api/coach/coach-today": {
+      "get": {
+        "operationId": "getCoachToday",
+        "summary": "Get today's coach decision brief",
+        "description": "Returns the daily call, evidence, plan, safety guardrails, tracking list, data quality warnings, and supporting dashboard context. Apple Health is supporting evidence only.",
+        "responses": {
+          "200": {
+            "description": "Daily coach decision brief",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoachTodayResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/coach/message": {
       "post": {
         "operationId": "sendCoachMessage",
@@ -330,6 +349,101 @@
         },
         "additionalProperties": true
       },
+      "DailyCoachSummary": {
+        "type": "object",
+        "properties": {
+          "daily_call": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string",
+                "enum": ["Green", "Yellow", "Orange", "Red"]
+              },
+              "readiness_tier": {
+                "type": "string"
+              },
+              "decision": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          },
+          "why": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "todays_plan": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "safety_guardrails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "what_to_track_today": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rack_motra_handoff": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "confidence_data_quality": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachTodayResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DailyCoachSummary"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean"
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "daily_summary": {
+                "$ref": "#/components/schemas/DailyCoachSummary"
+              },
+              "brief": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "current": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "recent": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "supporting_evidence": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "source_context": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": true
+          }
+        ]
+      },
       "CoachDecision": {
         "type": "object",
         "properties": {
@@ -373,6 +487,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "daily_summary": {
+            "$ref": "#/components/schemas/DailyCoachSummary"
           },
           "nutrition_call": {
             "type": "object",

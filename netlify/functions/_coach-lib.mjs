@@ -785,6 +785,11 @@ function sumAppleHealthMetric(rows = [], field) {
   return rows.reduce((total, row) => total + (asNumber(row?.[field]) || 0), 0);
 }
 
+function formatMetric(value, suffix = "") {
+  const n = asNumber(value);
+  return n === null ? "unknown" : `${Math.round(n)}${suffix}`;
+}
+
 function hasAppleHealthDuplicateFlag(row = {}) {
   const flags = row.duplicate_policy_flags || row.raw_summary?.duplicate_policy_flags || {};
   return Object.values(flags).some(value => value === true || String(value).toLowerCase() === "true");
@@ -942,7 +947,7 @@ function buildDataCompleteness(base = {}) {
     },
     {
       id: "nutrition",
-      label: "Bevel nutrition",
+      label: "Garmin Nutrition",
       status: rowDate(latestNutrition) === today ? "current" : "missing",
       required: true,
       latest_date: rowDate(latestNutrition),
@@ -956,14 +961,14 @@ function buildDataCompleteness(base = {}) {
     },
     {
       id: "strength_session",
-      label: "Motra strength session",
+      label: "Garmin strength session",
       status: schedule.strength_planned ? (strengthToday ? "current" : "pending") : "not_expected",
       required: Boolean(schedule.strength_planned),
       latest_date: rowDate(latestStrength),
     },
     {
       id: "strength_exercises",
-      label: "Motra exercise detail",
+      label: "Garmin strength exercise detail",
       status: schedule.strength_planned ? (detailedStrengthToday ? "current" : "pending") : "not_expected",
       required: Boolean(schedule.strength_planned),
       latest_date: rowDate(latestDetailedStrength),
@@ -1075,12 +1080,13 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
 
 export function buildNutritionCall(dashboard = {}, state = DEFAULT_COACH_STATE) {
   const n = latestNutritionValues(dashboard);
+  const nutritionSource = state.source_hierarchy?.nutrition || DEFAULT_COACH_STATE.source_hierarchy.nutrition;
   const proteinTarget = state.goals.protein_floor_g || n.protein_target_g || 150;
   const fatTarget = state.goals.fat_budget_g || n.fat_target_g || 70;
   const proteinGap = n.protein_g === null ? null : Math.max(0, Math.round(proteinTarget - n.protein_g));
   const fatOver = n.fat_g === null ? null : Math.max(0, Math.round(n.fat_g - fatTarget));
-  let call = "No complete Bevel nutrition total yet. Log Bevel totals, then close protein first and fat second.";
-  const actions = ["Use Bevel as the source of truth.", "Close the day with lean protein if totals are incomplete."];
+  let call = `No complete ${nutritionSource} total yet. Log Garmin Nutrition totals, then close protein first and fat second.`;
+  const actions = [`Use ${nutritionSource} as primary when daily totals are usable.`, "Close the day with lean protein if totals are incomplete."];
 
   if (proteinGap !== null && fatOver !== null) {
     if (fatOver > 0) {
@@ -1097,7 +1103,7 @@ export function buildNutritionCall(dashboard = {}, state = DEFAULT_COACH_STATE) 
 
   return {
     date: n.date,
-    source: "Bevel",
+    source: nutritionSource,
     protein_target_g: proteinTarget,
     fat_budget_g: fatTarget,
     current: { kcal: n.kcal, protein_g: n.protein_g, fat_g: n.fat_g, carbs_g: n.carbs_g },
@@ -1333,6 +1339,141 @@ function topLineForIntent(intent, readiness, nutrition, workout) {
   return readiness.tier === "Green" ? "Green enough to train with the planned World Gym structure." : readiness.training_call;
 }
 
+function planTypeForSchedule(schedule = {}, workout = {}) {
+  if (workout.requires_inventory) return "travel day";
+  if (schedule.strength_planned) return "strength day";
+  if (schedule.day_type === "goal_support") return "goal-support day";
+  if (schedule.day_type === "weekend_rest") return "recovery day";
+  return "off day";
+}
+
+function intensityRuleForTier(tier) {
+  if (tier === "Red") return "Recovery-only or heavily modified; symptoms and hard safety flags decide.";
+  if (tier === "Yellow") return "Modified effort; reduce density and skip the hybrid close if HR or symptoms drift.";
+  return "Normal planned effort with the usual HR, hip, and pain caps.";
+}
+
+function buildAppleHealthEvidenceText(appleHealth = {}) {
+  const latest = appleHealth.latest_summary;
+  if (!latest) return `Apple Health: ${appleHealth.status || "missing"} supporting context only; it does not change readiness authority.`;
+  return [
+    `Apple Health supporting context ${latest.date || appleHealth.latest_summary_date || "latest"}:`,
+    `${formatMetric(latest.steps)} steps`,
+    `${formatMetric(latest.exercise_minutes, " min")} exercise`,
+    `${formatMetric(latest.active_energy_kcal, " kcal")} active energy`,
+    `status ${appleHealth.status || "unknown"}.`,
+  ].join(" ");
+}
+
+function buildWorkoutHandoff(workout = null) {
+  if (!workout || !Array.isArray(workout.blocks) || !workout.blocks.length) {
+    return {
+      generated: false,
+      note: "No strength workout generated in this response.",
+    };
+  }
+
+  let order = 1;
+  const blocks = workout.blocks.map(block => ({
+    id: block.id || null,
+    label: block.label || block.name || null,
+    floor: block.floor || null,
+    estimated_min: asNumber(block.estimated_min),
+    status: block.status || "planned",
+    exercises: Array.isArray(block.exercises)
+      ? block.exercises.map(exercise => ({
+          order: order++,
+          name: exercise.name || null,
+          rack_motra_name: exercise.motra_name || exercise.name || null,
+          prescription: exercise.prescription || null,
+          rest: exercise.rest || null,
+          note: exercise.note || null,
+        }))
+      : [],
+  }));
+
+  return {
+    generated: true,
+    execution_policy: "Garmin Connect Strength is primary. Use Rack routine builder only if Todd chooses Rack; Motra names are legacy/history labels.",
+    copy_friendly_order: blocks,
+  };
+}
+
+function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readiness, nutrition, workout = null, includeWorkout = false } = {}) {
+  const resolvedReadiness = readiness || evaluateReadiness(base, state);
+  const resolvedNutrition = nutrition || buildNutritionCall(base, state);
+  const resolvedWorkout = workout || buildWorkoutPlan(base, state, resolvedReadiness);
+  const dataCompleteness = buildDataCompleteness(base);
+  const appleHealth = buildAppleHealthSupport(base);
+  const schedule = resolvedReadiness.schedule || dataCompleteness.schedule || todaySchedule(base.profile?.timezone || "Asia/Taipei", base.now || new Date());
+  const risks = Array.isArray(resolvedReadiness.risk_flags) ? resolvedReadiness.risk_flags : [];
+  const missingRequired = dataCompleteness.checks
+    .filter(check => check.required && !["current", "not_expected"].includes(check.status))
+    .map(check => `${check.label}: ${check.status}`);
+  const staleOptional = dataCompleteness.checks
+    .filter(check => !check.required && ["missing", "stale", "partial"].includes(check.status))
+    .map(check => `${check.label}: ${check.status}`);
+  const sourceWarnings = [
+    ...missingRequired.slice(0, 4),
+    ...staleOptional,
+    ...(appleHealth.warnings || []),
+  ].slice(0, 8);
+
+  const why = [
+    ...(resolvedReadiness.evidence || []).slice(0, 2),
+    risks.length
+      ? `Safety flags: ${risks.slice(0, 2).map(flag => flag.text).join(" ")}`
+      : "Safety: no hard stop from pain, migraine, asthma, or BP in the available data.",
+    buildAppleHealthEvidenceText(appleHealth),
+    `Plan context: ${schedule.label || "today's schedule"}${schedule.next_strength_day ? `; next strength day ${schedule.next_strength_day}` : ""}.`,
+  ].filter(Boolean).slice(0, 6);
+
+  const track = [
+    "BP reading and any migraine/asthma symptoms.",
+    "Pain score, especially right hip response.",
+    schedule.strength_planned ? "Workout completion in Garmin Connect Strength, plus any post-workout pain/RPE note." : "Daily walk/conditioning completion and any symptom drift.",
+    "Garmin Nutrition closeout: calories, protein, carbs, fat.",
+  ];
+  if (appleHealth.status !== "current") track.push("Apple Health sync freshness if the iPhone summary remains missing or stale.");
+
+  const planType = planTypeForSchedule(schedule, resolvedWorkout);
+  const dailySummary = {
+    daily_call: {
+      color: resolvedReadiness.tier,
+      readiness_tier: resolvedReadiness.tier,
+      decision: resolvedReadiness.training_call,
+    },
+    why,
+    todays_plan: {
+      type: planType,
+      primary_action: resolvedWorkout.top_line || resolvedReadiness.training_call,
+      recommendation: resolvedWorkout.session_type || schedule.label || null,
+      time_cap_min: asNumber(resolvedWorkout.target_minutes) || DEFAULT_COACH_STATE.training_model.default_session_target_min,
+      intensity: intensityRuleForTier(resolvedReadiness.tier),
+      nutrition_focus: resolvedNutrition.call,
+    },
+    safety_guardrails: [
+      "Pain >=4/10, migraine, asthma flare, or BP >=160/100 means downshift to recovery or stop.",
+      "BP >=140/90, low HRV, or high fatigue means modified density and no forced finisher.",
+      "Avoid deep loaded hip flexion and stop any movement that creates anterior hip pinching.",
+      "Apple Health activity counts never override Oura/Garmin readiness or medical/symptom gates.",
+    ],
+    what_to_track_today: track.slice(0, 5),
+    rack_motra_handoff: includeWorkout ? buildWorkoutHandoff(resolvedWorkout) : {
+      generated: false,
+      note: "Call the workout action to generate copy-friendly exercise order, sets, reps, rests, and notes.",
+    },
+    confidence_data_quality: {
+      confidence: missingRequired.length ? "low" : sourceWarnings.length ? "medium" : "high",
+      missing_or_stale: sourceWarnings,
+      data_completeness_score_pct: dataCompleteness.score_pct,
+      source_policy: "Apple Health is supporting evidence only; it does not override readiness, safety, Garmin workout physiology, or Rack/Motra history.",
+    },
+  };
+
+  return dailySummary;
+}
+
 export function buildCoachDecision({ text = "", intent = "general", dashboard = {}, state = DEFAULT_COACH_STATE, payload = {} } = {}) {
   const normalizedIntent = normalizeIntent(intent, text);
   const now = payload?.now ? new Date(payload.now) : undefined;
@@ -1342,7 +1483,17 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   const topLine = topLineForIntent(normalizedIntent, readiness, nutrition, workout);
   const riskFlags = readiness.risk_flags.map(r => r.text);
   const recentConversation = compactCoachHistory(dashboard);
-  const appleHealth = buildAppleHealthSupport(dashboard);
+  const includeWorkout = ["build_workout", "travel_mode"].includes(normalizedIntent);
+  const summaryBase = now ? { ...dashboard, now } : dashboard;
+  const appleHealth = buildAppleHealthSupport(summaryBase);
+  const dailySummary = buildDailyCoachSummary({
+    base: summaryBase,
+    state,
+    readiness,
+    nutrition,
+    workout,
+    includeWorkout,
+  });
   const nextActions = [];
 
   if (normalizedIntent === "build_workout") {
@@ -1372,8 +1523,9 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     risk_flags: riskFlags,
     evidence: readiness.evidence,
     next_actions: nextActions.slice(0, 4),
+    daily_summary: dailySummary,
     nutrition_call: nutrition,
-    workout_plan: ["build_workout", "travel_mode"].includes(normalizedIntent) ? workout : null,
+    workout_plan: includeWorkout ? workout : null,
     source_context: {
       data_store: "supabase",
       default_gym: state.gym_profile.default_environment,
@@ -1475,11 +1627,8 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
     if (!polished) return decision;
     return {
       ...decision,
-      ...polished,
-      risk_flags: polished.risk_flags?.length ? polished.risk_flags : decision.risk_flags,
-      evidence: polished.evidence?.length ? polished.evidence : decision.evidence,
-      next_actions: polished.next_actions?.length ? polished.next_actions : decision.next_actions,
-      generated_by: `${COACH_RESPONSE_VERSION}+${model}`,
+      ai_polish_available: Boolean(polished.reply),
+      generated_by: `${COACH_RESPONSE_VERSION}+${model}-guarded`,
     };
   } catch (err) {
     console.warn(`OpenAI coach polish skipped: ${err.message}`);
@@ -1508,6 +1657,8 @@ export function buildBrief(base) {
   const state = base.coach_state || DEFAULT_COACH_STATE;
   const readiness = evaluateReadiness(base, state);
   const nutrition = buildNutritionCall(base, state);
+  const workout = buildWorkoutPlan(base, state, readiness);
+  const dailySummary = buildDailyCoachSummary({ base, state, readiness, nutrition, workout });
   const appleHealth = buildAppleHealthSupport(base);
   const schedule = readiness.schedule || todaySchedule(base.profile?.timezone || "Asia/Taipei");
   const upcoming = base.upcoming_session || nextPlannedSession(base);
@@ -1515,6 +1666,12 @@ export function buildBrief(base) {
     readiness_tier: readiness.tier,
     recovery_pct: readiness.bevel_recovery || null,
     call: readiness.training_call,
+    daily_call: dailySummary.daily_call,
+    why: dailySummary.why,
+    todays_plan: dailySummary.todays_plan,
+    safety_guardrails: dailySummary.safety_guardrails,
+    what_to_track_today: dailySummary.what_to_track_today,
+    confidence_data_quality: dailySummary.confidence_data_quality,
     session_type: upcoming?.session_type || (!schedule.strength_planned || readiness.tier === "Red"
       ? (schedule.day_type === "goal_support" ? "Daily Walk + Zone 2 + Mobility" : "Daily Walk / Rest / Mobility")
       : "World Gym strength + athletic-functional"),
@@ -1570,8 +1727,8 @@ export function compactDashboard(base) {
       hip: "Right hip impingement / labral-risk pattern requires caution; avoid forced deep loaded flexion.",
       asthma: "Controlled with daily Relvar and emergency inhaler.",
       bp: "Doctor requested one week of consistent BP readings before determining concern.",
-      nutrition_source: "Bevel food tracking",
-      workout_source: "Motra workout logs",
+      nutrition_source: "Garmin Connect+ Nutrition when daily totals are usable; manual Coach macro closeouts are fallback.",
+      workout_source: "Garmin Connect Strength for execution and physiology; Rack/Motra are not primary completed-workout authority unless explicitly selected for a task.",
     },
     current: {
       blood_pressure: compactBpRow(latestBp),
@@ -1617,9 +1774,22 @@ export function buildSyncStatus(base = {}) {
 
 export function buildCoachToday(base = {}) {
   const compact = compactDashboard(base);
+  const state = base.coach_state || DEFAULT_COACH_STATE;
+  const readiness = evaluateReadiness(base, state);
+  const nutrition = buildNutritionCall(base, state);
+  const workout = buildWorkoutPlan(base, state, readiness);
+  const dailySummary = buildDailyCoachSummary({ base, state, readiness, nutrition, workout });
   return {
     ok: true,
     date: compact.coaching_brief?.data_completeness?.date || todayISO(base.profile?.timezone || "Asia/Taipei", base.now || new Date()),
+    daily_call: dailySummary.daily_call,
+    why: dailySummary.why,
+    todays_plan: dailySummary.todays_plan,
+    safety_guardrails: dailySummary.safety_guardrails,
+    what_to_track_today: dailySummary.what_to_track_today,
+    rack_motra_handoff: dailySummary.rack_motra_handoff,
+    confidence_data_quality: dailySummary.confidence_data_quality,
+    daily_summary: dailySummary,
     brief: compact.coaching_brief,
     current: compact.current,
     recent: compact.recent,

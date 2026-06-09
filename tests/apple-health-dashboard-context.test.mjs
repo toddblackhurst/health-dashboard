@@ -145,9 +145,15 @@ test("dashboard, sync-status, and coach-today expose Apple Health supporting evi
   assert.equal(syncBody.apple_health.latest_sync.days_written, 7);
   assert.equal(syncBody.apple_health.role, "supporting cross-check");
   assert.equal(coachTodayRes.status, 200);
+  assert.equal(coachTodayBody.daily_call.color, "Green");
+  assert.match(coachTodayBody.daily_call.decision, /Train|strength|No strength/);
+  assert.ok(coachTodayBody.why.some(item => /Apple Health supporting context/.test(item)));
+  assert.ok(coachTodayBody.safety_guardrails.some(item => /Apple Health activity counts never override/.test(item)));
+  assert.ok(coachTodayBody.what_to_track_today.some(item => /Garmin Nutrition closeout/.test(item)));
   assert.equal(coachTodayBody.supporting_evidence.apple_health.status, "current");
   assert.equal(coachTodayBody.supporting_evidence.apple_health.source, "Apple Health / HealthKit daily summary");
   assert.match(coachTodayBody.source_context.apple_health_workout_counts, /not completed strength-log authority/);
+  assert.match(coachTodayBody.confidence_data_quality.source_policy, /supporting evidence only/);
 });
 
 test("sync-status and coach-today tolerate missing Apple Health rows", async () => {
@@ -164,4 +170,7 @@ test("sync-status and coach-today tolerate missing Apple Health rows", async () 
   assert.equal(coachTodayRes.status, 200);
   assert.equal(coachTodayBody.current.apple_health_daily_summary, null);
   assert.equal(coachTodayBody.supporting_evidence.apple_health.status, "missing");
+  assert.ok(coachTodayBody.daily_call.decision);
+  assert.ok(coachTodayBody.why.some(item => /Apple Health: missing supporting context only/.test(item)));
+  assert.ok(coachTodayBody.confidence_data_quality.missing_or_stale.some(item => /Apple Health daily summary: missing/.test(item)));
 });

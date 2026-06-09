@@ -12,6 +12,7 @@ import {
   compactCoachHistory,
   compactDashboard,
   evaluateReadiness,
+  polishCoachDecision,
 } from "../netlify/functions/_coach-lib.mjs";
 
 function clone(value) {
@@ -63,6 +64,59 @@ test("subjective asthma, migraine, and hip pain override app scores", () => {
   assert.ok(readiness.risk_flags.some(flag => flag.code === "pain"));
 });
 
+test("OpenAI polish cannot override deterministic safety decision", async () => {
+  const originalFetch = globalThis.fetch;
+  const originalKey = process.env.OPENAI_API_KEY;
+  const originalDisabled = process.env.COACH_AI_DISABLED;
+  process.env.OPENAI_API_KEY = "test-key";
+  delete process.env.COACH_AI_DISABLED;
+  globalThis.fetch = async () => ({
+    ok: true,
+    async json() {
+      return {
+        output_text: JSON.stringify({
+          reply: "Green light. Push intensity hard today.",
+          top_line_call: "Green enough for normal training.",
+          risk_flags: ["No safety concerns."],
+          evidence: ["Model says readiness is fine."],
+          next_actions: ["Do the full finisher."],
+        }),
+      };
+    },
+  });
+
+  try {
+    const deterministic = buildCoachDecision({
+      text: "Migraine this morning, asthma flare, hip pain 5/10.",
+      intent: "build_workout",
+      dashboard: {},
+      payload: { now: MONDAY_TAIPEI },
+    });
+    const polished = await polishCoachDecision(deterministic, { text: "Can I train hard today?" });
+
+    assert.equal(polished.readiness.tier, "Red");
+    assert.equal(polished.reply, deterministic.reply);
+    assert.equal(polished.top_line_call, deterministic.top_line_call);
+    assert.deepEqual(polished.risk_flags, deterministic.risk_flags);
+    assert.deepEqual(polished.evidence, deterministic.evidence);
+    assert.deepEqual(polished.next_actions, deterministic.next_actions);
+    assert.equal(polished.ai_polish_available, true);
+    assert.match(polished.generated_by, /\+gpt-5\.5-guarded$/);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined) {
+      delete process.env.OPENAI_API_KEY;
+    } else {
+      process.env.OPENAI_API_KEY = originalKey;
+    }
+    if (originalDisabled === undefined) {
+      delete process.env.COACH_AI_DISABLED;
+    } else {
+      process.env.COACH_AI_DISABLED = originalDisabled;
+    }
+  }
+});
+
 test("May 3 mixed readiness treats Oura and Bevel conflict conservatively", () => {
   const readiness = evaluateReadiness({
     profile: { oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
@@ -93,7 +147,7 @@ test("nutrition closeout catches fat over budget and protein short", () => {
     ],
   });
 
-  assert.equal(nutrition.source, "Bevel");
+  assert.equal(nutrition.source, "Garmin Connect+ Nutrition");
   assert.equal(nutrition.protein_gap_g, 49);
   assert.equal(nutrition.fat_over_g, 24);
   assert.match(nutrition.call, /^Fat is the constraint/);
@@ -137,6 +191,12 @@ test("build_workout intent returns structured workout plan and source context", 
   assert.equal(decision.source_context.nutrition_primary, "Garmin Connect+ Nutrition");
   assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
   assert.equal(decision.workout_plan.environment, "World Gym Taichung");
+  assert.equal(decision.daily_summary.daily_call.color, "Green");
+  assert.match(decision.daily_summary.todays_plan.primary_action, /World Gym plan/);
+  assert.equal(decision.daily_summary.rack_motra_handoff.generated, true);
+  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Garmin Connect Strength is primary/);
+  assert.ok(decision.daily_summary.rack_motra_handoff.copy_friendly_order.some(block =>
+    block.exercises.some(ex => ex.name === "Pull-Up" && ex.rack_motra_name === "Pull-Up")));
 });
 
 test("coach decisions include compact Supabase conversation history for phone continuity", () => {
@@ -208,9 +268,20 @@ test("Apple Health summaries appear as supporting diagnostics when present", () 
   assert.equal(coachToday.supporting_evidence.apple_health.status, "current");
   assert.equal(coachToday.supporting_evidence.apple_health.role, "supporting cross-check");
   assert.match(coachToday.source_context.apple_health_workout_counts, /not completed strength-log authority/);
+  assert.equal(coachToday.daily_call.color, "Green");
+  assert.match(coachToday.daily_call.decision, /Train|strength|No strength/);
+  assert.ok(coachToday.why.length >= 3);
+  assert.ok(coachToday.why.some(item => /Apple Health supporting context/.test(item)));
+  assert.ok(coachToday.why.some(item => /Plan context/.test(item)));
+  assert.ok(coachToday.safety_guardrails.some(item => /Pain >=4\/10/.test(item)));
+  assert.ok(coachToday.what_to_track_today.some(item => /Garmin Nutrition closeout/.test(item)));
+  assert.equal(coachToday.rack_motra_handoff.generated, false);
+  assert.match(coachToday.confidence_data_quality.source_policy, /Apple Health is supporting evidence only/);
+  assert.equal(coachToday.brief.daily_call.color, coachToday.daily_call.color);
+  assert.equal(coachToday.current.data_completeness.supporting_evidence.apple_health.role, "supporting cross-check");
 });
 
-test("missing Apple Health summaries do not break dashboard or sync status", () => {
+test("missing Apple Health summaries do not break daily coach output", () => {
   const dashboard = {
     now: new Date("2026-06-08T02:00:00.000Z"),
     profile: { timezone: "Asia/Taipei" },
@@ -223,6 +294,12 @@ test("missing Apple Health summaries do not break dashboard or sync status", () 
   assert.equal(syncStatus.apple_health.status, "missing");
   assert.equal(syncStatus.apple_health.days_available_last_7, 0);
   assert.ok(syncStatus.checks.some(check => check.id === "apple_health_daily_summary" && check.required === false));
+  const coachToday = buildCoachToday(dashboard);
+  assert.equal(coachToday.supporting_evidence.apple_health.status, "missing");
+  assert.ok(coachToday.daily_call.decision);
+  assert.ok(coachToday.why.some(item => /Apple Health: missing supporting context only/.test(item)));
+  assert.ok(coachToday.confidence_data_quality.missing_or_stale.some(item => /Apple Health daily summary: missing/.test(item)));
+  assert.ok(coachToday.what_to_track_today.some(item => /Apple Health sync freshness/.test(item)));
 });
 
 test("stale Apple Health summaries are marked stale without readiness penalty", () => {
@@ -292,6 +369,9 @@ test("Apple Health does not override Oura readiness or double-count workout hist
   assert.equal(compact.recent.strength_sessions.length, 1);
   assert.equal(compact.supporting_evidence.apple_health.last_7_days.strength_workout_count, 4);
   assert.match(compact.supporting_evidence.apple_health.duplicate_policy.warning, /Do not count Apple Health workout_count/);
+  assert.equal(decision.daily_summary.daily_call.color, "Red");
+  assert.match(decision.daily_summary.confidence_data_quality.source_policy, /does not override readiness/);
+  assert.ok(decision.daily_summary.why.some(item => /Apple Health supporting context/.test(item)));
   assert.equal(decision.source_context.readiness_primary, "Oura");
   assert.equal(decision.source_context.workout_primary, "Garmin Connect Strength for set-level execution and physiology");
   assert.equal(decision.source_context.supporting_evidence.apple_health.role, "supporting cross-check");
