@@ -123,8 +123,10 @@ Goal: make coach-generated workouts easier to enter into Rack/Motra or adjacent 
 
 Possible scope:
 
-- Produce cleaner Rack/Motra-friendly exercise names, blocks, sets, loads, reps, rests, and notes.
+- Produce cleaner Rack-first exercise names, blocks, sets, loads, reps, rests, and notes while preserving Motra names for legacy/history continuity.
 - Add copy-friendly workout export formats.
+- Include World Gym floor/equipment names and plain-language coaching fields on each generated exercise.
+- Keep deterministic workout output available even when optional OpenAI polish times out or fails.
 - Preserve Rack/Motra as strength-log authority and Garmin as workout physiology/training-load authority.
 - Avoid direct automation unless the target surface and safety are verified.
 
@@ -143,7 +145,10 @@ Cons:
 Suggested acceptance criteria:
 
 - Workout output is entry-ready with exact names, order, sets, reps, loads, rests, and notes.
+- Rack handoff includes `Exercise | Equipment | Sets x Reps x Load`, with coaching notes kept separate from the entry line.
+- Every generated strength exercise includes pro-level plain-language coaching, what Todd should feel, what to avoid, and a safety/pain modification.
 - Planned workouts are not pushed through completed-history import paths.
+- Deterministic workout structure does not depend on OpenAI/model polish and cannot be overwritten by it.
 - Direct automation is skipped unless explicitly approved and verified safe.
 - No duplicate workout records are created.
 

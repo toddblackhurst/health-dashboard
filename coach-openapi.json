@@ -141,8 +141,8 @@
     "/api/coach/workout": {
       "post": {
         "operationId": "buildTodayWorkout",
-        "summary": "Build today's workout",
-        "description": "Builds a floor-aware World Gym Taichung workout unless coach_state.travel_mode is active, in which case the coach asks for hotel-gym inventory first.",
+        "summary": "Build today's or an upcoming workout",
+        "description": "Builds a deterministic, floor-aware World Gym Taichung workout for today, tomorrow, a named weekday, or the next strength day unless coach_state.travel_mode is active, in which case the coach asks for hotel-gym inventory first. Exercise objects are Rack-first and include Rack/app entry names, Motra legacy aliases when useful, equipment, floor, prescription, plain-language coaching, feel targets, avoid notes, and safety modifications.",
         "requestBody": {
           "required": false,
           "content": {
@@ -411,6 +411,7 @@
           },
           "rack_motra_handoff": {
             "type": "object",
+            "description": "Copy-friendly Rack-first handoff. Generated workouts include Exercise | Equipment | Sets x Reps x Load entry lines plus separate coaching and safety notes. Motra names may appear as legacy aliases.",
             "additionalProperties": true
           },
           "confidence_data_quality": {
@@ -530,6 +531,7 @@
           },
           "workout_plan": {
             "type": ["object", "null"],
+            "description": "Deterministic workout plan. Generated exercise objects may include name, rack_name, app_entry_name, tracking_app, motra_name, equipment, floor, prescription, prescription_text, sets, reps, load, rest, pro_coaching, feel, avoid, and safety_modification.",
             "additionalProperties": true
           },
           "source_context": {

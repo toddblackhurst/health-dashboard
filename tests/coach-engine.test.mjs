@@ -31,6 +31,21 @@ const MONDAY_SCHEDULE = {
   non_lift_call: null,
 };
 
+function workoutExercises(workout) {
+  return (workout.blocks || []).flatMap(block => block.exercises || []);
+}
+
+function assertPlannedExerciseShape(exercise) {
+  assert.ok(exercise.name, "exercise name is required");
+  assert.equal(exercise.tracking_app, "Rack", `${exercise.name} should be Rack-first`);
+  assert.ok(exercise.rack_name || exercise.app_entry_name, `${exercise.name} needs a Rack entry name`);
+  assert.ok(exercise.equipment || exercise.floor, `${exercise.name} needs equipment or floor`);
+  assert.ok(exercise.prescription || (exercise.sets && exercise.reps && exercise.load), `${exercise.name} needs prescription`);
+  assert.ok(Array.isArray(exercise.pro_coaching) && exercise.pro_coaching.length >= 2, `${exercise.name} needs coaching`);
+  assert.ok(Array.isArray(exercise.feel) && exercise.feel.length >= 1, `${exercise.name} needs feel target`);
+  assert.ok(exercise.safety_modification || (Array.isArray(exercise.avoid) && exercise.avoid.length), `${exercise.name} needs safety notes`);
+}
+
 test("BP red gate downshifts training", () => {
   const readiness = evaluateReadiness({
     blood_pressure: [
@@ -119,8 +134,77 @@ test("OpenAI polish cannot override deterministic safety decision", async () => 
     assert.deepEqual(polished.risk_flags, deterministic.risk_flags);
     assert.deepEqual(polished.evidence, deterministic.evidence);
     assert.deepEqual(polished.next_actions, deterministic.next_actions);
+    assert.deepEqual(polished.workout_plan, deterministic.workout_plan);
+    assert.deepEqual(polished.daily_summary.safety_guardrails, deterministic.daily_summary.safety_guardrails);
     assert.equal(polished.ai_polish_available, true);
     assert.match(polished.generated_by, /\+gpt-5\.5-guarded$/);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined) {
+      delete process.env.OPENAI_API_KEY;
+    } else {
+      process.env.OPENAI_API_KEY = originalKey;
+    }
+    if (originalDisabled === undefined) {
+      delete process.env.COACH_AI_DISABLED;
+    } else {
+      process.env.COACH_AI_DISABLED = originalDisabled;
+    }
+  }
+});
+
+test("workout build returns deterministic output without requiring OpenAI polish", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's workout",
+    intent: "build_workout",
+    dashboard: {},
+    payload: { now: MONDAY_TAIPEI },
+  });
+
+  assert.equal(decision.intent, "build_workout");
+  assert.equal(decision.generated_by, "coach-brain-v1");
+  assert.equal(decision.readiness.schedule.weekday, "Monday");
+  assert.equal(decision.workout_plan.session_type, "World Gym Strength + Athletic Functional");
+  assert.equal(decision.daily_summary.daily_call.color, "Green");
+  assert.equal(decision.daily_summary.rack_motra_handoff.generated, true);
+  assert.ok(decision.daily_summary.safety_guardrails.some(item => /Pain >=4\/10/.test(item)));
+});
+
+test("OpenAI polish timeout still returns valid deterministic workout response", async () => {
+  const originalFetch = globalThis.fetch;
+  const originalKey = process.env.OPENAI_API_KEY;
+  const originalDisabled = process.env.COACH_AI_DISABLED;
+  process.env.OPENAI_API_KEY = "test-key";
+  delete process.env.COACH_AI_DISABLED;
+  let aborted = false;
+  globalThis.fetch = (_url, options = {}) => new Promise(() => {
+    options.signal?.addEventListener("abort", () => {
+      aborted = true;
+    });
+  });
+
+  try {
+    const deterministic = buildCoachDecision({
+      text: "Build today's workout",
+      intent: "build_workout",
+      dashboard: {},
+      payload: { now: MONDAY_TAIPEI },
+    });
+    const started = Date.now();
+    const polished = await polishCoachDecision(deterministic, {
+      text: "Build today's workout",
+      timeoutMs: 20,
+    });
+    const elapsedMs = Date.now() - started;
+
+    assert.ok(elapsedMs < 500, `polish timeout took ${elapsedMs}ms`);
+    assert.equal(aborted, true);
+    assert.equal(polished.readiness.tier, deterministic.readiness.tier);
+    assert.equal(polished.top_line_call, deterministic.top_line_call);
+    assert.deepEqual(polished.workout_plan, deterministic.workout_plan);
+    assert.deepEqual(polished.daily_summary.rack_motra_handoff, deterministic.daily_summary.rack_motra_handoff);
+    assert.match(polished.ai_warning, /timed out/);
+    assert.match(polished.generated_by, /\+deterministic-fallback$/);
   } finally {
     globalThis.fetch = originalFetch;
     if (originalKey === undefined) {
@@ -243,6 +327,7 @@ test("nutrition closeout catches fat over budget and protein short", () => {
 
 test("normal World Gym workout is floor-aware and Motra-ready", () => {
   const workout = buildWorkoutPlan({}, DEFAULT_COACH_STATE, { tier: "Green", schedule: MONDAY_SCHEDULE });
+  const exercises = workoutExercises(workout);
 
   assert.equal(workout.environment, "World Gym Taichung");
   assert.equal(workout.requires_inventory, false);
@@ -250,8 +335,41 @@ test("normal World Gym workout is floor-aware and Motra-ready", () => {
   assert.equal(workout.blocks[0].id, "PREHAB");
   assert.ok(workout.blocks.some(block => block.floor === "Floor 3"));
   assert.ok(workout.blocks.some(block => block.floor === "Floor 2"));
-  assert.ok(workout.blocks.flatMap(block => block.exercises).some(ex => ex.motra_name === "Pull-Up"));
+  assert.ok(exercises.some(ex => ex.motra_name === "Pull-Up"));
   assert.ok(workout.guardrails.includes("No cross-floor supersets."));
+  for (const exercise of exercises) assertPlannedExerciseShape(exercise);
+});
+
+test("workout exercise coaching stays plain-language and anatomy-light", () => {
+  const workout = buildWorkoutPlan({}, DEFAULT_COACH_STATE, { tier: "Green", schedule: MONDAY_SCHEDULE });
+  const coreText = workoutExercises(workout)
+    .flatMap(exercise => [...(exercise.pro_coaching || []), ...(exercise.feel || [])])
+    .join(" ");
+
+  assert.doesNotMatch(coreText, /\b(latissimus|scapula|scapular|humerus|posterior chain|glute medius|posterior tilt|externally rotate|eccentrically load|activate the)\b/i);
+  assert.match(coreText, /Start|Pull|Walk|Stand|Lift|Press/);
+});
+
+test("Rack/Motra handoff includes equipment and entry-ready prescription lines", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's workout",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: MONDAY_TAIPEI },
+  });
+  const handoff = decision.daily_summary.rack_motra_handoff;
+  const handoffExercises = handoff.copy_friendly_order.flatMap(block => block.exercises);
+  const pullUp = handoffExercises.find(exercise => exercise.rack_motra_name === "Pull-Up");
+
+  assert.equal(handoff.generated, true);
+  assert.equal(handoff.rack_entry_format, "Exercise | Equipment | Sets x Reps x Load");
+  assert.ok(pullUp);
+  assert.equal(pullUp.tracking_app, "Rack");
+  assert.equal(pullUp.rack_name, "Pull-Up");
+  assert.match(pullUp.rack_entry_line, /^Pull-Up \| Floor 2 pull-up station/);
+  assert.match(pullUp.rack_entry_line, /4 x 6 \/ 5 \/ 5 \/ 4 x bodyweight/);
+  assert.ok(Array.isArray(pullUp.pro_coaching) && pullUp.pro_coaching.some(note => /lowering/.test(note)));
+  assert.ok(handoff.rack_entry_lines.some(line => /Dumbbell Incline Bench Press \| Floor 2 dumbbells/.test(line)));
 });
 
 test("Kuala Lumpur travel mode asks for inventory and disables World Gym routing", () => {
@@ -291,7 +409,7 @@ test("build_workout intent returns structured workout plan and source context", 
   assert.equal(decision.daily_summary.daily_call.color, "Green");
   assert.match(decision.daily_summary.todays_plan.primary_action, /World Gym plan/);
   assert.equal(decision.daily_summary.rack_motra_handoff.generated, true);
-  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Rack\/Motra are the strength-log authority/);
+  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Rack is the current strength-log app/);
   assert.ok(decision.daily_summary.rack_motra_handoff.copy_friendly_order.some(block =>
     block.exercises.some(ex => ex.name === "Pull-Up" && ex.rack_motra_name === "Pull-Up")));
 });
@@ -326,7 +444,7 @@ test("source authority context preserves Garmin, Rack/Motra, Oura, Apple Health,
   assert.equal(decision.source_context.workout_primary, "Garmin Connect / Fenix 8");
   assert.equal(decision.source_context.strength_log_primary, "Rack/Motra");
   assert.equal(coachToday.source_context.strength_log_primary, "Rack/Motra");
-  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Rack\/Motra are the strength-log authority/);
+  assert.match(decision.daily_summary.rack_motra_handoff.execution_policy, /Rack is the current strength-log app/);
   assert.equal(decision.source_context.apple_health_role, "supporting cross-check/data bus");
   assert.equal(coachToday.source_context.apple_health_role, "supporting cross-check/data bus");
   assert.equal(decision.source_context.supporting_evidence.apple_health.role, "supporting cross-check");
@@ -448,6 +566,62 @@ test("red safety gates are not overwritten by Tuesday goal-support schedule", ()
   assert.match(decision.workout_plan.floor_plan, /No strength, Zone 2, or conditioning/);
   assert.ok(!decision.workout_plan.blocks.some(block => /Zone 2|conditioning/i.test(`${block.name} ${block.target}`)));
   assert.ok(decision.next_actions.some(action => /recovery-only/.test(action)));
+});
+
+test("tomorrow Wednesday workout request builds the upcoming strength plan", () => {
+  const started = Date.now();
+  const decision = buildCoachDecision({
+    text: "Build tomorrow's Wednesday strength workout. Hip clear. Feeling good. Going to sleep soon.",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: TUESDAY_TAIPEI },
+  });
+  const elapsedMs = Date.now() - started;
+
+  assert.ok(elapsedMs < 250, `deterministic workout took ${elapsedMs}ms`);
+  assert.equal(decision.date, "2026-06-10");
+  assert.equal(decision.readiness.schedule.weekday, "Wednesday");
+  assert.equal(decision.readiness.schedule.strength_planned, true);
+  assert.equal(decision.workout_request.requested_for_weekday, "Wednesday");
+  assert.match(decision.workout_request.planning_basis, /not today's schedule/);
+  assert.equal(decision.workout_plan.requested_for_date, "2026-06-10");
+  assert.equal(decision.workout_plan.session_type, "World Gym Strength + Athletic Functional");
+  assert.equal(decision.daily_summary.rack_motra_handoff.generated, true);
+  assert.match(decision.next_actions[0], /Wednesday plan/);
+});
+
+test("next strength day request resolves without forcing today's non-lift day", () => {
+  const decision = buildCoachDecision({
+    text: "Build my next strength day workout",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: TUESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.date, "2026-06-10");
+  assert.equal(decision.readiness.schedule.weekday, "Wednesday");
+  assert.equal(decision.readiness.schedule.strength_planned, true);
+  assert.equal(decision.workout_request.requested_for_weekday, "Wednesday");
+  assert.match(decision.workout_request.planning_basis, /next strength day Wednesday plan/);
+  assert.equal(decision.workout_plan.session_type, "World Gym Strength + Athletic Functional");
+});
+
+test("Tuesday goal-support day does not force strength without explicit future override", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's workout",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: TUESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.date, "2026-06-09");
+  assert.equal(decision.readiness.schedule.weekday, "Tuesday");
+  assert.equal(decision.readiness.schedule.strength_planned, false);
+  assert.equal(decision.workout_request.is_future_request, false);
+  assert.equal(decision.workout_plan.session_type, "Daily Walk + Zone 2 + Mobility");
+  assert.equal(decision.workout_plan.floor_plan, "No World Gym strength floor routing today.");
+  assert.ok(decision.workout_plan.guardrails.some(item => /Do not convert a non-lift day/.test(item)));
+  assert.ok(decision.next_actions.some(action => /non-lift day guardrails/.test(action)));
 });
 
 test("coach decisions include compact Supabase conversation history for phone continuity", () => {
