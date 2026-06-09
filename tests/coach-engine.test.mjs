@@ -47,6 +47,30 @@ function assertPlannedExerciseShape(exercise) {
   assert.ok(exercise.safety_modification || (Array.isArray(exercise.avoid) && exercise.avoid.length), `${exercise.name} needs safety notes`);
 }
 
+function assertExerciseCoachingReadoutShape(exercise) {
+  const requiredFields = [
+    "rack_motra_entry_name",
+    "tracking_app",
+    "floor",
+    "equipment",
+    "prescription",
+    "purpose",
+    "setup_cue",
+    "execution_cue",
+    "feel_cue",
+    "safety_modification",
+    "progression_target",
+    "logging_note",
+  ];
+
+  for (const field of requiredFields) {
+    assert.ok(exercise[field], `${exercise.rack_motra_entry_name || "exercise"} missing ${field}`);
+  }
+  assert.equal(exercise.tracking_app, "Rack");
+  assert.match(exercise.progression_target, /pain stays below 4\/10/);
+  assert.match(exercise.logging_note, /Log in Rack/);
+}
+
 test("BP red gate downshifts training", () => {
   const readiness = evaluateReadiness({
     blood_pressure: [
@@ -371,6 +395,31 @@ test("Rack/Motra handoff includes equipment and entry-ready prescription lines",
   assert.match(pullUp.rack_entry_line, /4 x 6 \/ 5 \/ 5 \/ 4 x bodyweight/);
   assert.ok(Array.isArray(pullUp.pro_coaching) && pullUp.pro_coaching.some(note => /lowering/.test(note)));
   assert.ok(handoff.rack_entry_lines.some(line => /Dumbbell Incline Bench Press \| Floor 2 dumbbells/.test(line)));
+});
+
+test("workout response exposes full exercise coaching readout for GPT Actions", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's strength workout.",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: WEDNESDAY_TAIPEI },
+  });
+  const plannedExercises = workoutExercises(decision.workout_plan);
+  const readout = decision.exercise_coaching_readout;
+  const nestedReadout = decision.workout_plan.exercise_coaching_readout;
+  const pullUp = readout.find(exercise => exercise.rack_motra_entry_name === "Pull-Up");
+
+  assert.equal(readout.length, plannedExercises.length);
+  assert.deepEqual(readout, nestedReadout);
+  for (const exercise of readout) assertExerciseCoachingReadoutShape(exercise);
+  assert.ok(pullUp);
+  assert.equal(pullUp.floor, "Floor 2");
+  assert.match(pullUp.equipment, /pull-up station/);
+  assert.match(pullUp.prescription, /bodyweight/);
+  assert.match(pullUp.setup_cue, /still hang/);
+  assert.match(pullUp.execution_cue, /Pull yourself up/);
+  assert.match(pullUp.feel_cue, /controlled pull/);
+  assert.match(pullUp.safety_modification, /assistance/);
 });
 
 test("Kuala Lumpur travel mode asks for inventory and disables World Gym routing", () => {
