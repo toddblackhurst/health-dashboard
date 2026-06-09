@@ -58,6 +58,8 @@ Recommended setup:
 
 Manual `Sync Now` remains available and should stay the fallback whenever Shortcut/background behavior is uncertain.
 
+Physical iPhone verification on 2026-06-09 confirmed the core Morning Coach flow, all four Shortcuts actions, manual `Morning Coach` Shortcut creation, manual Shortcut run, and authenticated production readback. The existing Shortcuts Automation screen showed `At 10:00 AM, daily -> Morning Coach Sync`, but `Run Immediately` and new Personal Automation setup were not verified because the iOS 26 Shortcuts UI in Mirroring did not allow that setup path. Todd can confirm or adjust the automation later directly on the phone.
+
 Background HealthKit delivery is not implemented in v1. It should remain best-effort only in a future phase and must never replace the manual button or Morning Coach Shortcut.
 
 ## Payload Notes

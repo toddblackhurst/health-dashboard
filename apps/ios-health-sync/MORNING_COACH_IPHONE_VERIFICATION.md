@@ -1,8 +1,38 @@
 # Morning Coach iPhone Verification
 
-State target: staged until Todd's physical iPhone proves the app button, Shortcuts actions, manual Shortcut run, and Personal Automation setup. Do not push, deploy, apply migrations, edit `HEALTH_DATABASE.json`, start Weekly Review Engine, or treat background HealthKit as reliable from this checklist.
+State target: verified for the core Morning Coach app flow, App Intents visibility, manual Shortcut run, and authenticated production readback. Personal Automation `Run Immediately` remains unverified because the iOS 26 Shortcuts UI in Mirroring did not allow creating or modifying a new Personal Automation. Do not deploy, apply migrations, edit `HEALTH_DATABASE.json`, start Weekly Review Engine, or treat background HealthKit as reliable from this checklist.
 
 Secrets rule: do not paste `COACH_API_SECRET` into chat, docs, screenshots, terminal output, or source. If the app needs the secret, paste it directly into the app's `Coach API secret` field and save it there.
+
+## Verified Readback - 2026-06-09
+
+Core Morning Coach behavior was physically verified on Todd's iPhone:
+
+- Built, installed, and launched Todd Health Sync on the iPhone.
+- Production API base URL was verified.
+- Coach API secret was stored in the app/Keychain, not source.
+- Apple Health connected.
+- Manual `Sync Now` wrote 7 of 7 Apple Health summaries.
+- In-app `Morning Coach` worked and showed daily call/date, why, warnings, next action, Apple Health supporting-only language, and sync detail.
+- Created and saved a `Morning Coach` Shortcut.
+- Ran the Shortcut manually; it returned `Morning Coach complete`.
+- Shortcuts showed all four Todd Health Sync actions:
+  - `Sync Apple Health`
+  - `Morning Coach`
+  - `Check Coach Sync Status`
+  - `Open Coach Today`
+- Authenticated production readback returned:
+  - `sync-status` 200.
+  - `coach-today` 200.
+  - Apple Health current for 2026-06-09.
+
+Automation caveat:
+
+- The existing Automation screen showed `At 10:00 AM, daily -> Morning Coach Sync`.
+- `Run Immediately` for that automation was not verified.
+- Creating or modifying a new Personal Automation was not verified because the iOS 26 Shortcuts UI in Mirroring did not complete that setup path.
+- Todd can manually confirm or adjust this later in Shortcuts directly on the phone.
+- Manual in-app `Morning Coach`, manual `Sync Now`, and the manual `Morning Coach` Shortcut remain reliable fallbacks.
 
 ## Physical iPhone Steps
 
@@ -39,11 +69,13 @@ Secrets rule: do not paste `COACH_API_SECRET` into chat, docs, screenshots, term
     - Run `Morning Coach`.
     - Use `Run Immediately` if available.
     - Otherwise use notify or ask-before-run.
+    - If the iOS Mirroring UI blocks setup or editing, confirm directly on the iPhone later.
 16. Confirm Coach GPT `sync-status` shows fresh Apple Health after the run.
 17. Capture evidence:
     - App Morning Coach success screenshot.
     - Shortcut actions visible screenshot.
     - Shortcut run success screenshot.
+    - Existing automation schedule screenshot if visible.
     - Supabase latest `apple_health_sync_runs` row if checked.
     - `coach-today` or `sync-status` readback if checked.
 

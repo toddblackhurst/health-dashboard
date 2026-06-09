@@ -1,6 +1,6 @@
 # Morning Coach Automation Plan
 
-State target: drafted/staged for local implementation. Morning Coach automation v1 improves the existing iOS Health Sync app and Shortcuts surface. It does not authorize deploys, migrations, new secrets, backend rewrites, or Weekly Review Engine work.
+State target: implemented and physically verified for the core app flow, App Intents visibility, manual Shortcut run, and authenticated production readback. Personal Automation `Run Immediately` remains a user-controlled Shortcuts setup item because the iOS 26 Shortcuts UI in Mirroring did not allow creating or modifying a new Personal Automation. This plan does not authorize deploys, migrations, new secrets, backend rewrites, or Weekly Review Engine work.
 
 ## Goal
 
@@ -83,6 +83,17 @@ Recommended Personal Automation:
 8. If iOS requires confirmation, use a notification/reminder fallback to open the Shortcut.
 
 The automation should not assume background execution is guaranteed.
+
+2026-06-09 verification note:
+
+- Core Morning Coach app flow passed on Todd's physical iPhone.
+- App Intents were visible in Shortcuts.
+- A manual `Morning Coach` Shortcut was created, saved, and run successfully.
+- The existing Automation screen showed `At 10:00 AM, daily -> Morning Coach Sync`.
+- `Run Immediately` for the existing automation was not verified.
+- Creating or modifying a new Personal Automation was not verified because the iOS 26 Shortcuts UI in Mirroring did not complete that setup path.
+- Todd can manually confirm or adjust the automation later in Shortcuts directly on the phone.
+- Manual in-app `Morning Coach`, manual `Sync Now`, and the manual `Morning Coach` Shortcut remain reliable fallbacks.
 
 ## D. Background HealthKit
 
