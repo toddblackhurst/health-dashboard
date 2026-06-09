@@ -145,10 +145,19 @@ Structure:
         {
           "id": "prep_1",
           "name": "Exercise Name",
+          "rack_name": "Rack entry name",
+          "motra_name": "Legacy Motra alias when known",
+          "equipment": "World Gym floor/station or generic fallback",
+          "floor": "Floor 3",
           "sets": "1",
           "reps": "10",
+          "load": "bodyweight / kg / machine target / assistance target",
           "rest_sec": 0,
-          "note": "Coaching cue. Why this exercise matters today.",
+          "note": "Plain-language coaching cue. Why this exercise matters today.",
+          "pro_coaching": ["How to start.", "How to move.", "When to stop or reduce load."],
+          "feel": ["What Todd should feel during good reps."],
+          "avoid": ["What should not happen."],
+          "safety_modification": "Pain/symptom/load change rule.",
           "alternatives": ["Alt 1", "Alt 2", "Alt 3"]
         }
       ]
@@ -181,6 +190,8 @@ Rules for session plans:
 - No supersets across floors
 - 3–4 alternatives per exercise, drawn from the same movement pattern category
 - Alternatives must respect hip OA and HR constraints
+- Exercise entries are Rack-first. Preserve Motra names only as legacy/history aliases.
+- Coaching language should be plain gym language about start, movement, feel, avoid, and stop rules, not anatomy-heavy cue stacks.
 - Time budget: PREP 10–12 min + A 15–18 min + B 15–18 min + C 12–15 min = ≤65 min total
 
 ---

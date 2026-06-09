@@ -7,6 +7,7 @@ This is the single active coaching specification for Todd's Coach v3 system.
 - Supabase is the canonical live data store.
 - `HEALTH_DATABASE.json` is legacy/bootstrap/export backup, not the live planning authority.
 - The API coach brain reads Supabase, applies deterministic safety/readiness/nutrition/workout gates, logs decisions to `coach_decisions`, and optionally uses OpenAI for concise response polish.
+- Workout structure, safety gates, exercise order, prescriptions, Rack/Motra handoff, and source hierarchy are deterministic output. OpenAI polish may improve wording only; it must not create, remove, reorder, delay, or soften a workout plan.
 - Legacy numbered strategy docs are archived reference. Extract from them when improving the system, but do not require a future coach to read all of them before building a workout.
 
 ## Todd Profile
@@ -58,6 +59,7 @@ Workout rules:
 - Every gym workout must include trunk, carry, chop/Pallof, or anti-rotation work.
 - Left side leads unilateral work.
 - While the Fenix 8 is the active workout watch, keep workouts Garmin Connect-ready for physiology and training-load context. Keep Rack/Motra-friendly names, sets, reps, loads, and notes as the strength-log layer. Use Rack's routine builder, not Rack import, for planned Rack sessions. Use Motra names for legacy history and strength-log continuity.
+- Generated workouts must name the known World Gym floor and equipment for each exercise. Keep the human equipment label separate from the Rack/Motra exercise name. When the exact station is unknown, say "Use the machine/cable station available on the assigned floor" instead of inventing a machine name.
 - Travel mode disables World Gym floor routing and requires hotel-gym inventory before a strength plan.
 
 Avoid:
@@ -90,6 +92,7 @@ Every workout includes:
 - Trunk/carry or anti-rotation work.
 - Hip-safe alternatives.
 - Garmin Connect-ready workout with exact names, steps, rests, weights, order, and notes.
+- Rack-ready exercise objects with Rack entry name, Motra legacy name when useful, equipment, floor, sets, reps, load, rest, coaching notes, feel target, avoid list, and safety modification.
 - Conditional hybrid close when readiness supports it.
 
 ## Nutrition Model
@@ -130,7 +133,8 @@ Daily coach output contract:
 - `coach-today` must lead with `daily_call`: Green/Yellow/Orange/Red-style color, readiness tier, and one direct decision sentence.
 - Follow the call with 3-6 `why` bullets covering readiness/recovery, pain or safety, Apple Health supporting activity context, and the planned strength/cardio schedule.
 - Include `todays_plan`, `safety_guardrails`, `what_to_track_today`, and `confidence_data_quality` so the response is actionable without reading the full dashboard payload.
-- When a workout is generated, include a Rack/Motra handoff that is copy-friendly for exercise order, names, prescriptions, and notes, while keeping Garmin/Fenix as the workout physiology and training-load context.
+- When a workout is generated, include a Rack-first handoff that is copy-friendly for `Exercise | Equipment | Sets x Reps x Load`. Keep coaching notes separate from the Rack entry line, and preserve Garmin/Fenix as the workout physiology and training-load context. Motra names are legacy/history continuity, not the current app target.
+- Exercise coaching must be plain language: how to start, how to move, what it should feel like, what to avoid, and when to stop or reduce load. Do not make anatomy jargon the main coaching language.
 - Apple Health must remain labeled as supporting evidence only in daily output. It can explain sync freshness and activity context, but cannot override readiness, safety gates, Garmin workout physiology, or Rack/Motra history.
 
 Shortcut actions to support:

@@ -572,6 +572,79 @@ export function todaySchedule(timeZone = "Asia/Taipei", now = new Date()) {
   };
 }
 
+function addDays(date, days) {
+  return new Date(date.getTime() + (days * 86400000));
+}
+
+function weekdayName(timeZone = "Asia/Taipei", now = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    weekday: "long",
+  }).formatToParts(now);
+  return parts.find(p => p.type === "weekday")?.value || "";
+}
+
+function nextWeekdayDate(targetWeekday, timeZone = "Asia/Taipei", now = new Date(), { includeToday = true } = {}) {
+  const order = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const currentIndex = order.indexOf(weekdayName(timeZone, now));
+  const targetIndex = order.indexOf(targetWeekday);
+  if (currentIndex < 0 || targetIndex < 0) return now;
+  let daysAhead = (targetIndex - currentIndex + 7) % 7;
+  if (!includeToday && daysAhead === 0) daysAhead = 7;
+  return addDays(now, daysAhead);
+}
+
+function requestedWorkoutTarget({ text = "", dashboard = {}, payload = {}, intent = "general" } = {}) {
+  const normalizedIntent = normalizeIntent(intent, text);
+  const timeZone = dashboard.profile?.timezone || "Asia/Taipei";
+  const baseNow = payload?.now ? new Date(payload.now) : dashboard.now ? new Date(dashboard.now) : new Date();
+  if (normalizedIntent !== "build_workout") {
+    return { now: baseNow, is_future_request: false };
+  }
+
+  const lower = String(text || "").toLowerCase();
+  let targetNow = baseNow;
+  let basis = "today";
+
+  if (/\btomorrow(?:'s)?\b/.test(lower)) {
+    targetNow = addDays(baseNow, 1);
+    basis = "tomorrow";
+  } else if (/\bnext\s+strength\s+day\b/.test(lower)) {
+    const schedule = todaySchedule(timeZone, baseNow);
+    targetNow = nextWeekdayDate(schedule.next_strength_day, timeZone, baseNow, { includeToday: false });
+    basis = "next strength day";
+  } else {
+    const weekdayMatches = [
+      ["Monday", /\bmon(?:day)?\b/],
+      ["Tuesday", /\btue(?:sday)?\b/],
+      ["Wednesday", /\bwed(?:nesday)?\b/],
+      ["Thursday", /\bthu(?:rsday)?\b/],
+      ["Friday", /\bfri(?:day)?\b/],
+      ["Saturday", /\bsat(?:urday)?\b/],
+      ["Sunday", /\bsun(?:day)?\b/],
+    ];
+    const requested = weekdayMatches.find(([, pattern]) => pattern.test(lower))?.[0] || null;
+    if (requested) {
+      targetNow = nextWeekdayDate(requested, timeZone, baseNow);
+      basis = "upcoming";
+    }
+  }
+
+  const targetDate = todayISO(timeZone, targetNow);
+  const baseDate = todayISO(timeZone, baseNow);
+  const targetWeekday = weekdayName(timeZone, targetNow);
+  const isFutureRequest = targetDate !== baseDate;
+  return {
+    now: targetNow,
+    is_future_request: isFutureRequest,
+    requested_for_date: targetDate,
+    requested_for_weekday: targetWeekday,
+    planning_basis: isFutureRequest
+      ? `Based on the ${basis} ${targetWeekday} plan for ${targetDate}, not today's schedule.`
+      : `Based on today's ${targetWeekday} plan for ${targetDate}.`,
+  };
+}
+
 function first(...values) {
   return values.find(v => v !== undefined && v !== null && v !== "");
 }
@@ -1300,32 +1373,138 @@ export function buildNutritionCall(dashboard = {}, state = DEFAULT_COACH_STATE) 
 }
 
 function buildPrehabBlock(state, modified) {
-  const activeHipModel = state.active_medical?.hip || DEFAULT_COACH_STATE.active_medical.hip;
   return {
     id: "PREHAB",
     label: "Floor 3 - Hip-Safe Prehab",
     floor: "Floor 3",
     estimated_min: modified ? 12 : 10,
     exercises: [
-      {
+      plannedExercise({
         name: "Bodyweight Glute Bridge",
         motra_name: "Bodyweight Glute Bridge",
-        prescription: modified ? "2x8 with 2-second hold" : "2x10 with 2-second hold",
-        note: "Posterior tilt first, stop before the front of the hip grabs.",
-      },
-      {
+        floor: "Floor 3",
+        equipment: "Floor 3 open mat space",
+        sets: 2,
+        reps: modified ? "8 with 2-second hold" : "10 with 2-second hold",
+        load: "bodyweight",
+        rest: "30-45 sec",
+        note: "Start easy, pause at the top, and stop before the front of the hip grabs.",
+        pro_coaching: [
+          "Start flat on the mat with feet planted and pressure through your heels.",
+          "Lift smoothly, pause for two seconds, then lower with control.",
+          "Keep each rep quiet and repeatable.",
+        ],
+        feel: [
+          "This should feel like smooth work through the back of your hips, not a pinch in the front.",
+          "You should feel steady and warmed up, not strained.",
+        ],
+        avoid: [
+          "No rushing the hold.",
+          "No pushing into a hip pinch.",
+        ],
+        safety_modification: "Shorten the range or skip it if the front of the hip grabs.",
+      }),
+      plannedExercise({
         name: "Cable Pallof Hold",
         motra_name: state.gym_profile.motra_names.pallof_hold,
-        prescription: "2x20-30 sec/side",
-        note: "Quiet ribs, no rotation leak, breathe behind the brace.",
-      },
-      {
+        floor: "Floor 3",
+        equipment: "Floor 3 Matrix functional trainer",
+        sets: 2,
+        reps: "20-30 sec/side",
+        load: "light cable load you can hold without turning",
+        rest: "30-45 sec",
+        note: "Stand tall and keep the handle still in front of you.",
+        pro_coaching: [
+          "Stand tall before the timer starts.",
+          "Press the handle straight out and keep your body from turning.",
+          "Breathe normally while the cable tries to pull you sideways.",
+        ],
+        feel: [
+          "This should feel like steady pressure through your hands and middle.",
+          "You should feel calm control, not shaking panic.",
+        ],
+        avoid: [
+          "No leaning into the cable.",
+          "No holding your breath.",
+        ],
+        safety_modification: "Step closer to the cable stack or reduce the load if you cannot stay still.",
+      }),
+      plannedExercise({
         name: "Cable Hip Abduction",
         motra_name: "Cable Hip Abduction",
-        prescription: "2x8-10/side, left first",
-        note: `Stack pelvis and own the range. ${activeHipModel}`,
-      },
+        floor: "Floor 3",
+        equipment: "Floor 3 Matrix functional trainer with ankle strap if available",
+        sets: 2,
+        reps: "8-10/side, left first",
+        load: "light cable load",
+        rest: "30-45 sec",
+        note: "Move only as far as you can control without hip pinch.",
+        pro_coaching: [
+          "Stand tall with one hand lightly on the station.",
+          "Move the working leg out slowly, pause, then bring it back under control.",
+          "Keep the range small enough that the rest of your body stays quiet.",
+        ],
+        feel: [
+          "This should feel controlled on the outside of the working hip.",
+          "You should feel balanced and deliberate, not twisted.",
+        ],
+        avoid: [
+          "No leaning away from the cable.",
+          "No snapping the leg back.",
+        ],
+        safety_modification: "Reduce load, shorten the range, or switch to side steps if the hip pinches.",
+      }),
     ],
+  };
+}
+
+function formatPrescription({ sets, reps, load, rest } = {}) {
+  const pieces = [];
+  if (sets !== undefined && sets !== null && reps) pieces.push(`${sets} x ${reps}`);
+  else if (reps) pieces.push(String(reps));
+  if (load) pieces.push(String(load));
+  const core = pieces.join(" x ");
+  return rest ? `${core}; rest ${rest}` : core;
+}
+
+function plannedExercise({
+  name,
+  motra_name,
+  rack_name,
+  floor,
+  equipment,
+  sets,
+  reps,
+  load,
+  rest,
+  note,
+  pro_coaching = [],
+  feel = [],
+  avoid = [],
+  safety_modification = "",
+} = {}) {
+  const prescription = { sets, reps, load, rest };
+  const prescriptionText = formatPrescription(prescription);
+  const appEntryName = rack_name || motra_name || name || null;
+  return {
+    name,
+    rack_name: appEntryName,
+    motra_name: motra_name || null,
+    app_entry_name: appEntryName,
+    tracking_app: "Rack",
+    equipment: equipment || "Use the machine/cable station available on the assigned floor.",
+    floor: floor || "Unknown",
+    prescription,
+    prescription_text: prescriptionText,
+    sets,
+    reps,
+    load,
+    rest,
+    note: note || pro_coaching[0] || null,
+    pro_coaching,
+    feel,
+    avoid,
+    safety_modification,
   };
 }
 
@@ -1482,18 +1661,56 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         floor: "Floor 3",
         estimated_min: 10,
         exercises: [
-          {
+          plannedExercise({
             name: "Lateral Step-to-Stick",
             motra_name: "Custom: Lateral Step-to-Stick",
-            prescription: modified ? "1-2x5/side" : "2x5/side",
+            floor: "Floor 3",
+            equipment: "Floor 3 open turf or soft plyo area",
+            sets: modified ? "1-2" : 2,
+            reps: "5/side",
+            load: "bodyweight",
+            rest: "30-45 sec",
             note: "Quiet landing, two-second freeze, control before speed.",
-          },
-          {
+            pro_coaching: [
+              "Start tall and step sideways with control.",
+              "Land softly, freeze for two seconds, then reset before the next rep.",
+              "Lead with the left side and make every landing look the same.",
+            ],
+            feel: [
+              "This should feel athletic but calm.",
+              "You should feel balanced at the landing before you move again.",
+            ],
+            avoid: [
+              "No bouncing out of the landing.",
+              "No knee cave or rushed reset.",
+            ],
+            safety_modification: "Make the step smaller or skip it if the hip, knee, or balance feels sketchy.",
+          }),
+          plannedExercise({
             name: "Cable Chop High to Low",
             motra_name: state.gym_profile.motra_names.cable_chop_high_low,
-            prescription: "2x8/side",
-            note: "Strong diagonal brace; posture stays stacked.",
-          },
+            floor: "Floor 3",
+            equipment: "Floor 3 Matrix functional trainer",
+            sets: 2,
+            reps: "8/side",
+            load: "light to moderate cable load",
+            rest: "45-60 sec",
+            note: "Move the handle on a clean diagonal without letting the cable pull you around.",
+            pro_coaching: [
+              "Set your feet before the first rep.",
+              "Pull the handle down and across your body in one smooth line.",
+              "Finish tall, then return slowly to the start.",
+            ],
+            feel: [
+              "This should feel like controlled pressure through your hands and middle.",
+              "You should feel strong and steady, not twisted.",
+            ],
+            avoid: [
+              "No yanking the first rep.",
+              "No letting the cable spin you.",
+            ],
+            safety_modification: "Lower the weight or shorten the range if you cannot control the return.",
+          }),
         ],
       },
       {
@@ -1502,24 +1719,84 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         floor: "Floor 2",
         estimated_min: 28,
         exercises: [
-          {
+          plannedExercise({
             name: "Pull-Up",
             motra_name: state.gym_profile.motra_names.pull_up,
-            prescription: modified ? "3 sets, leave 2 reps in reserve" : "4 sets: 6 / 5 / 5 / 4",
-            note: "Settled hang, elbows down, one-beat top hold, controlled lower.",
-          },
-          {
+            floor: "Floor 2",
+            equipment: "Floor 2 pull-up station; Floor 3 Matrix trainer if available",
+            sets: modified ? 3 : 4,
+            reps: modified ? "4-6, leave 2 reps in reserve" : "6 / 5 / 5 / 4",
+            load: "bodyweight or assistance that leaves 1-2 clean reps in reserve",
+            rest: "75-120 sec after paired movement",
+            note: "Start still, pull smoothly, pause for one beat, and own the lowering part.",
+            pro_coaching: [
+              "Start from a still hang before every rep.",
+              "Pull yourself up like you are trying to bring your chest toward the bar.",
+              "Pause for one beat at the top if the rep is clean.",
+              "Own the lowering part. Don't just drop.",
+            ],
+            feel: [
+              "This should feel like a strong, controlled pull through your upper back and arms.",
+              "You should feel in control at the top and during the lowering part.",
+            ],
+            avoid: [
+              "No swinging.",
+              "No neck reaching.",
+              "No grinding reps.",
+            ],
+            safety_modification: "Use assistance or stop the set if your body starts twisting, kicking, or your shoulder shrugs up.",
+          }),
+          plannedExercise({
             name: "Machine Hip Thrust (Glute Bridge)",
             motra_name: state.gym_profile.motra_names.hip_thrust,
-            prescription: modified ? "3x8-10 moderate" : "4x10",
-            note: "Heel drive, crisp one-second lockout, no overarch.",
-          },
-          {
+            floor: "Floor 2",
+            equipment: "Floor 2 Matrix glute trainer / hip thrust machine",
+            sets: modified ? 3 : 4,
+            reps: modified ? "8-10" : "10",
+            load: modified ? "moderate machine load" : "working load you can control for all reps",
+            rest: "75-120 sec",
+            note: "Drive through your heels, pause cleanly at the top, and do not chase extra range.",
+            pro_coaching: [
+              "Set your feet before you start and keep pressure through the whole foot.",
+              "Lift smoothly, pause for one clear beat at the top, then lower under control.",
+              "Keep the last rep looking like the first rep.",
+            ],
+            feel: [
+              "This should feel strong through the back of your hips.",
+              "You should feel a firm top position without pinching the front of the hip.",
+            ],
+            avoid: [
+              "No bouncing off the bottom.",
+              "No leaning back to fake a higher finish.",
+            ],
+            safety_modification: "Lower the load, shorten the range, or swap to bodyweight bridges if the front of the hip pinches.",
+          }),
+          plannedExercise({
             name: "Dumbbell Incline Bench Press",
             motra_name: state.gym_profile.motra_names.incline_press,
-            prescription: modified ? "2-3x8 smooth" : "3x8-10",
-            note: "Chest gets the work; shoulders stay quiet.",
-          },
+            floor: "Floor 2",
+            equipment: "Floor 2 dumbbells and adjustable bench",
+            sets: modified ? "2-3" : 3,
+            reps: modified ? "8 smooth" : "8-10",
+            load: "dumbbells you can press without shoulder shrugging",
+            rest: "75-120 sec after paired movement",
+            note: "Press smoothly and stop before the shoulders start taking over.",
+            pro_coaching: [
+              "Set the bench and dumbbells before you lie back.",
+              "Start each rep under control, then press up smoothly.",
+              "Lower with the same control you used to press.",
+            ],
+            feel: [
+              "This should feel smooth and strong through the press.",
+              "You should feel steady on the bench with no shoulder pinch.",
+            ],
+            avoid: [
+              "No bouncing the dumbbells.",
+              "No shrugging at the top.",
+              "No twisting to finish reps.",
+            ],
+            safety_modification: "Use lighter dumbbells or stop the set if either shoulder pinches or the reps stop matching.",
+          }),
         ],
       },
       {
@@ -1528,18 +1805,57 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         floor: "Floor 3",
         estimated_min: 16,
         exercises: [
-          {
+          plannedExercise({
             name: "Rope Cable Face Pull to W",
             motra_name: state.gym_profile.motra_names.face_pull_w,
-            prescription: "2-3x12",
-            note: "Pull to face height, open cleanly to W, quiet neck.",
-          },
-          {
+            floor: "Floor 3",
+            equipment: "Floor 3 Matrix functional trainer with rope attachment",
+            sets: modified ? 2 : "2-3",
+            reps: "12",
+            load: "light cable load",
+            rest: "45-60 sec",
+            note: "Pull to face height, open cleanly to a W, and keep your neck relaxed.",
+            pro_coaching: [
+              "Stand tall before you pull.",
+              "Pull the rope toward face height, then open into a clean W shape.",
+              "Control the return instead of letting the cable snap back.",
+            ],
+            feel: [
+              "This should feel like smooth control across your upper back and shoulders.",
+              "Your neck should stay relaxed.",
+            ],
+            avoid: [
+              "No leaning back.",
+              "No shrugging toward your ears.",
+              "No heavy, ugly reps.",
+            ],
+            safety_modification: "Lower the cable load or switch to a simpler face pull if the neck or shoulder gets cranky.",
+          }),
+          plannedExercise({
             name: "Kettlebell Suitcase Carry",
             motra_name: state.gym_profile.motra_names.suitcase_carry,
-            prescription: "2x20-30 m/side, left first",
+            floor: "Floor 3",
+            equipment: "Floor 3 kettlebells 4-24 kg",
+            sets: 2,
+            reps: "20-30 m/side, left first",
+            load: "single kettlebell you can carry without leaning",
+            rest: "45-75 sec",
             note: "Walk tall; posture beats distance.",
-          },
+            pro_coaching: [
+              "Pick up the kettlebell with control and stand tall before walking.",
+              "Walk slowly enough that your shoulders stay level.",
+              "Set the bell down cleanly before switching sides.",
+            ],
+            feel: [
+              "This should feel like steady pressure through your whole hand and a tall walk.",
+              "You should feel balanced from step to step.",
+            ],
+            avoid: [
+              "No leaning away from the kettlebell.",
+              "No speed-walking to finish faster.",
+            ],
+            safety_modification: "Use a lighter kettlebell or shorten the walk if posture changes.",
+          }),
         ],
       },
       {
@@ -1549,18 +1865,57 @@ export function buildWorkoutPlan(dashboard = {}, state = DEFAULT_COACH_STATE, re
         estimated_min: finisherAllowed ? 6 : 0,
         status: finisherAllowed ? "planned" : "conditional_skip",
         exercises: finisherAllowed ? [
-          {
+          plannedExercise({
             name: "Kettlebell Swing",
             motra_name: state.gym_profile.motra_names.kettlebell_swing,
-            prescription: "2x10 @ 16-20 kg",
+            floor: "Floor 3",
+            equipment: "Floor 3 kettlebells 4-24 kg",
+            sets: 2,
+            reps: "10",
+            load: "16-20 kg",
+            rest: "60-90 sec",
             note: "Snap, float, park. Stop if it turns into a shoulder lift.",
-          },
-          {
+            pro_coaching: [
+              "Start with the bell slightly in front of you.",
+              "Hike it back, stand tall fast, and let the bell float.",
+              "Park the bell cleanly when the set is done.",
+            ],
+            feel: [
+              "This should feel crisp and athletic, not like a slow lift.",
+              "You should feel power without losing control.",
+            ],
+            avoid: [
+              "No squatting every rep.",
+              "No lifting the bell with your shoulders.",
+              "No chasing fatigue.",
+            ],
+            safety_modification: "Skip swings if the hip pinches, breathing drifts, or the movement stops feeling crisp.",
+          }),
+          plannedExercise({
             name: "Kettlebell Front-Rack Carry",
             motra_name: state.gym_profile.motra_names.front_rack_carry,
-            prescription: "2x20 m/side, left first",
-            note: "Ribs down, walk tall, breathe behind the brace.",
-          },
+            floor: "Floor 3",
+            equipment: "Floor 3 kettlebells 4-24 kg",
+            sets: 2,
+            reps: "20 m/side, left first",
+            load: "single kettlebell you can hold without leaning back",
+            rest: "60-90 sec",
+            note: "Walk tall, breathe normally, and stop before posture changes.",
+            pro_coaching: [
+              "Clean the kettlebell into position without rushing.",
+              "Stand tall, breathe normally, and walk with slow, even steps.",
+              "Switch sides before the hold turns sloppy.",
+            ],
+            feel: [
+              "This should feel like steady pressure through the hand, arm, and middle.",
+              "You should feel tall and organized, not folded backward.",
+            ],
+            avoid: [
+              "No leaning back.",
+              "No holding your breath through the whole walk.",
+            ],
+            safety_modification: "Use a lighter kettlebell, shorten the carry, or skip it if breathing or posture falls apart.",
+          }),
         ] : [],
       },
     ],
@@ -1618,20 +1973,45 @@ function buildWorkoutHandoff(workout = null) {
     estimated_min: asNumber(block.estimated_min),
     status: block.status || "planned",
     exercises: Array.isArray(block.exercises)
-      ? block.exercises.map(exercise => ({
-          order: order++,
-          name: exercise.name || null,
-          rack_motra_name: exercise.motra_name || exercise.name || null,
-          prescription: exercise.prescription || null,
-          rest: exercise.rest || null,
-          note: exercise.note || null,
-        }))
+      ? block.exercises.map(exercise => {
+          const exerciseOrder = order++;
+          const prescriptionText = exercise.prescription_text
+            || (typeof exercise.prescription === "string" ? exercise.prescription : formatPrescription(exercise.prescription))
+            || null;
+          const equipment = exercise.equipment || "Use the machine/cable station available on the assigned floor.";
+          const entryName = exercise.rack_name || exercise.motra_name || exercise.name || "Unknown exercise";
+          return {
+            order: exerciseOrder,
+            name: exercise.name || null,
+            rack_name: exercise.rack_name || entryName,
+            motra_name: exercise.motra_name || null,
+            rack_motra_name: entryName,
+            app_entry_name: exercise.app_entry_name || entryName,
+            tracking_app: exercise.tracking_app || "Rack",
+            equipment,
+            floor: exercise.floor || block.floor || null,
+            prescription: exercise.prescription || null,
+            prescription_text: prescriptionText,
+            sets: exercise.sets ?? exercise.prescription?.sets ?? null,
+            reps: exercise.reps ?? exercise.prescription?.reps ?? null,
+            load: exercise.load ?? exercise.prescription?.load ?? null,
+            rest: exercise.rest ?? exercise.prescription?.rest ?? null,
+            rack_entry_line: `${entryName} | ${equipment} | ${prescriptionText || "coach-prescribed work"}`,
+            note: exercise.note || null,
+            pro_coaching: exercise.pro_coaching || [],
+            feel: exercise.feel || [],
+            avoid: exercise.avoid || [],
+            safety_modification: exercise.safety_modification || null,
+          };
+        })
       : [],
   }));
 
   return {
     generated: true,
-    execution_policy: "Rack/Motra are the strength-log authority for completed sets, exercise loads, and exercise history. Garmin Connect/Fenix remains primary for workout physiology, training load, and recovery time.",
+    execution_policy: "Rack is the current strength-log app for completed sets, exercise loads, and exercise history. Motra names are preserved for legacy/history continuity. Garmin Connect/Fenix remains primary for workout physiology, training load, and recovery time.",
+    rack_entry_format: "Exercise | Equipment | Sets x Reps x Load",
+    rack_entry_lines: blocks.flatMap(block => block.exercises.map(exercise => exercise.rack_entry_line)),
     copy_friendly_order: blocks,
   };
 }
@@ -1713,15 +2093,25 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
 
 export function buildCoachDecision({ text = "", intent = "general", dashboard = {}, state = DEFAULT_COACH_STATE, payload = {} } = {}) {
   const normalizedIntent = normalizeIntent(intent, text);
-  const now = payload?.now ? new Date(payload.now) : undefined;
-  const readiness = evaluateReadiness(dashboard, state, { text, payload, now });
-  const nutrition = buildNutritionCall(dashboard, state);
-  const workout = buildWorkoutPlan(dashboard, state, readiness);
+  const workoutTarget = requestedWorkoutTarget({ text, dashboard, payload, intent: normalizedIntent });
+  const now = workoutTarget.now;
+  const decisionDashboard = now ? { ...dashboard, now } : dashboard;
+  const readiness = evaluateReadiness(decisionDashboard, state, { text, payload, now });
+  const nutrition = buildNutritionCall(decisionDashboard, state);
+  const baseWorkout = buildWorkoutPlan(decisionDashboard, state, readiness);
+  const workout = normalizedIntent === "build_workout" && workoutTarget.requested_for_date
+    ? {
+        ...baseWorkout,
+        requested_for_date: workoutTarget.requested_for_date,
+        requested_for_weekday: workoutTarget.requested_for_weekday,
+        planning_basis: workoutTarget.planning_basis,
+      }
+    : baseWorkout;
   const topLine = topLineForIntent(normalizedIntent, readiness, nutrition, workout);
   const riskFlags = readiness.risk_flags.map(r => r.text);
-  const recentConversation = compactCoachHistory(dashboard);
+  const recentConversation = compactCoachHistory(decisionDashboard);
   const includeWorkout = ["build_workout", "travel_mode"].includes(normalizedIntent);
-  const summaryBase = now ? { ...dashboard, now } : dashboard;
+  const summaryBase = decisionDashboard;
   const appleHealth = buildAppleHealthSupport(summaryBase);
   const dailySummary = buildDailyCoachSummary({
     base: summaryBase,
@@ -1734,6 +2124,9 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   const nextActions = [];
 
   if (normalizedIntent === "build_workout") {
+    if (workoutTarget.is_future_request) {
+      nextActions.push(workoutTarget.planning_basis);
+    }
     if (readiness.tier === "Red") {
       nextActions.push("Keep today recovery-only unless symptoms and doctor guidance clear training.");
     } else if (workout.requires_inventory) {
@@ -1760,7 +2153,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   return {
     ok: true,
     version: COACH_RESPONSE_VERSION,
-    date: todayISO(dashboard.profile?.timezone || "Asia/Taipei", now || new Date()),
+    date: todayISO(decisionDashboard.profile?.timezone || "Asia/Taipei", now || new Date()),
     intent: normalizedIntent,
     top_line_call: topLine,
     reply: replyParts.join("\n"),
@@ -1771,6 +2164,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     daily_summary: dailySummary,
     nutrition_call: nutrition,
     workout_plan: includeWorkout ? workout : null,
+    workout_request: normalizedIntent === "build_workout" ? workoutTarget : null,
     source_context: {
       data_store: "supabase",
       default_gym: state.gym_profile.default_environment,
@@ -1812,11 +2206,20 @@ function coachPolishSchema() {
   };
 }
 
-export async function polishCoachDecision(decision, { text = "", dashboard = {}, state = DEFAULT_COACH_STATE } = {}) {
+function resolvePolishTimeoutMs(value) {
+  const explicit = asNumber(value);
+  if (explicit !== null) return Math.max(1, Math.round(explicit));
+  const fromEnv = asNumber(env("COACH_AI_TIMEOUT_MS"));
+  if (fromEnv !== null) return Math.max(1, Math.round(fromEnv));
+  return 2500;
+}
+
+export async function polishCoachDecision(decision, { text = "", dashboard = {}, state = DEFAULT_COACH_STATE, timeoutMs } = {}) {
   const key = env("OPENAI_API_KEY");
   if (!key || env("COACH_AI_DISABLED") === "1") return decision;
 
   const model = env("COACH_MODEL") || "gpt-5.5";
+  const resolvedTimeoutMs = resolvePolishTimeoutMs(timeoutMs);
   const prompt = [
     "You are Todd Blackhurst's pro personal coach. Preserve the deterministic decision, safety gates, and workout plan.",
     "Rewrite only the user-facing text fields. Be direct, warm, practical, concise. No generic motivation.",
@@ -1826,9 +2229,19 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
     "Return JSON that matches the schema exactly.",
   ].join("\n");
 
+  const controller = new AbortController();
+  let timeoutId = null;
+  const timeout = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      controller.abort();
+      reject(new Error(`OpenAI coach polish timed out after ${resolvedTimeoutMs}ms`));
+    }, resolvedTimeoutMs);
+  });
+
   try {
-    const res = await fetch("https://api.openai.com/v1/responses", {
+    const request = fetch("https://api.openai.com/v1/responses", {
       method: "POST",
+      signal: controller.signal,
       headers: {
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/json",
@@ -1874,6 +2287,7 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
         ],
       }),
     });
+    const res = await Promise.race([request, timeout]);
     const body = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(body.error?.message || `OpenAI returned ${res.status}`);
     const textOutput = body.output_text || body.output?.flatMap(item => item.content || []).find(c => c.text)?.text;
@@ -1891,13 +2305,20 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
       ai_warning: err.message,
       generated_by: `${COACH_RESPONSE_VERSION}+deterministic-fallback`,
     };
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
   }
 }
 
 export async function runCoach({ profileId, text = "", intent = "general", dashboard = {}, payload = {}, channel = "web" } = {}) {
   const state = await getCoachState(profileId);
   const deterministic = buildCoachDecision({ text, intent, dashboard, state, payload });
-  const decision = await polishCoachDecision(deterministic, { text, dashboard, state });
+  const decision = await polishCoachDecision(deterministic, {
+    text,
+    dashboard,
+    state,
+    timeoutMs: deterministic.intent === "build_workout" ? 1200 : undefined,
+  });
   await insertCoachDecision(profileId, { ...decision, raw: { text, payload, channel } });
   return decision;
 }

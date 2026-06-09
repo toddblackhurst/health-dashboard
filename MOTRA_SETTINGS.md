@@ -45,6 +45,8 @@ Coach workflow:
 - Search Motra first before creating a custom exercise, because the app library changes.
 - Use this file as the local source of truth for confirmed names and allowed muscle labels.
 - If using a custom exercise, provide all required fields and keep the coaching note focused on what Todd should feel and do, not muscle anatomy.
+- Generated workouts should be Rack-first: keep `rack_name`, `app_entry_name`, and `tracking_app: "Rack"` stable. Preserve `motra_name` only as a backward-compatible legacy/history alias.
+- Keep the Rack entry line concise: exercise name, equipment, sets, reps, load, and rest. Put coaching, feel, avoid, and safety notes in separate fields.
 
 ---
 
@@ -215,3 +217,4 @@ If a finisher combines reps and distance, log components separately.
 4. Double = Yes when both limbs move simultaneously (e.g., DB Incline Press — both hands move at once).
 5. Weighted = Yes for any exercise using a machine, cable, KB, DB, or barbell — even bodyweight machines.
 6. Warm-up drills (Wall Slides, Dead Hang, Band Pull-Apart) can be built in Motra or tracked externally — Todd's call.
+7. Preserve spelling once a Rack/Motra exercise name is chosen. App-created exercise names do not get automatic cleanup, so stable naming matters more than clever variation.
