@@ -105,6 +105,12 @@ Dictionary:
 }
 ```
 
+Behavior:
+
+- Generic workout requests follow today's schedule. On Tuesday/Thursday/weekend this can return the planned walk, Zone 2, mobility, or rest session instead of strength.
+- If Todd explicitly asks for strength or schedule override in the note, Coach may return a controlled modified strength option when Red safety gates are absent.
+- Red safety gates return recovery/safety work, not hard training.
+
 If travel mode is active, the coach will ask for hotel-gym inventory before programming and will stop using World Gym floor routing.
 
 ### Nutrition Closeout

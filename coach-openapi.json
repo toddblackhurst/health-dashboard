@@ -142,7 +142,7 @@
       "post": {
         "operationId": "buildTodayWorkout",
         "summary": "Build today's or an upcoming workout",
-        "description": "Builds a deterministic, floor-aware World Gym Taichung workout for today, tomorrow, a named weekday, or the next strength day unless coach_state.travel_mode is active, in which case the coach asks for hotel-gym inventory first. Exercise objects are Rack-first and include Rack/app entry names, Motra legacy aliases when useful, equipment, floor, prescription, plain-language coaching, feel targets, avoid notes, and safety modifications.",
+        "description": "Builds a deterministic workout whenever Todd explicitly asks for one. Schedule guides the default: generic today requests on non-strength days return the planned goal-support/rest session, explicit strength requests can return a controlled modified strength option when no Red safety gate exists, and Red safety returns a recovery/safety session instead of hard training. Passive today checks should use getCoachToday. Exercise objects are Rack-first and include Rack/app entry names, Motra legacy aliases when useful, equipment, floor, prescription, plain-language coaching, feel targets, avoid notes, and safety modifications.",
         "requestBody": {
           "required": false,
           "content": {
@@ -325,6 +325,28 @@
           },
           "intent": {
             "$ref": "#/components/schemas/CoachIntent"
+          },
+          "requested_session_type": {
+            "type": "string",
+            "enum": ["workout", "strength", "goal_support", "recovery"],
+            "description": "Optional session request. Use strength for explicit lifting requests, recovery for safety/recovery sessions, and goal_support for walk/Zone 2/mobility sessions."
+          },
+          "schedule_override": {
+            "type": "boolean",
+            "description": "True only when Todd explicitly asks to override the default schedule. Red safety gates still prevent hard training."
+          },
+          "target_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Optional target date in the user's timezone."
+          },
+          "target_day": {
+            "type": "string",
+            "description": "Optional target weekday such as Wednesday."
+          },
+          "timezone": {
+            "type": "string",
+            "default": "Asia/Taipei"
           },
           "channel": {
             "type": "string",
@@ -531,7 +553,12 @@
           },
           "workout_plan": {
             "type": ["object", "null"],
-            "description": "Deterministic workout plan. Generated exercise objects may include name, rack_name, app_entry_name, tracking_app, motra_name, equipment, floor, prescription, prescription_text, sets, reps, load, rest, pro_coaching, feel, avoid, and safety_modification.",
+            "description": "Deterministic workout plan. Generated exercise objects may include name, rack_name, app_entry_name, tracking_app, motra_name, equipment, floor, prescription, prescription_text, sets, reps, load, rest, pro_coaching, feel, avoid, safety_modification, requested_session_type, schedule_override_applied, what_to_track, and post_workout_debrief_prompt.",
+            "additionalProperties": true
+          },
+          "workout_request": {
+            "type": ["object", "null"],
+            "description": "Parsed workout request metadata, including request_intent, requested_session_type, schedule_override, requested_for_date, requested_for_weekday, is_future_request, and planning_basis.",
             "additionalProperties": true
           },
           "source_context": {
