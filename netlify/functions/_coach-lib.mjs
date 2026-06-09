@@ -1627,11 +1627,8 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
     if (!polished) return decision;
     return {
       ...decision,
-      ...polished,
-      risk_flags: polished.risk_flags?.length ? polished.risk_flags : decision.risk_flags,
-      evidence: polished.evidence?.length ? polished.evidence : decision.evidence,
-      next_actions: polished.next_actions?.length ? polished.next_actions : decision.next_actions,
-      generated_by: `${COACH_RESPONSE_VERSION}+${model}`,
+      ai_polish_available: Boolean(polished.reply),
+      generated_by: `${COACH_RESPONSE_VERSION}+${model}-guarded`,
     };
   } catch (err) {
     console.warn(`OpenAI coach polish skipped: ${err.message}`);

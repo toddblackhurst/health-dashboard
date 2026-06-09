@@ -12,6 +12,7 @@ import {
   compactCoachHistory,
   compactDashboard,
   evaluateReadiness,
+  polishCoachDecision,
 } from "../netlify/functions/_coach-lib.mjs";
 
 function clone(value) {
@@ -61,6 +62,59 @@ test("subjective asthma, migraine, and hip pain override app scores", () => {
   assert.ok(readiness.risk_flags.some(flag => flag.code === "migraine"));
   assert.ok(readiness.risk_flags.some(flag => flag.code === "asthma"));
   assert.ok(readiness.risk_flags.some(flag => flag.code === "pain"));
+});
+
+test("OpenAI polish cannot override deterministic safety decision", async () => {
+  const originalFetch = globalThis.fetch;
+  const originalKey = process.env.OPENAI_API_KEY;
+  const originalDisabled = process.env.COACH_AI_DISABLED;
+  process.env.OPENAI_API_KEY = "test-key";
+  delete process.env.COACH_AI_DISABLED;
+  globalThis.fetch = async () => ({
+    ok: true,
+    async json() {
+      return {
+        output_text: JSON.stringify({
+          reply: "Green light. Push intensity hard today.",
+          top_line_call: "Green enough for normal training.",
+          risk_flags: ["No safety concerns."],
+          evidence: ["Model says readiness is fine."],
+          next_actions: ["Do the full finisher."],
+        }),
+      };
+    },
+  });
+
+  try {
+    const deterministic = buildCoachDecision({
+      text: "Migraine this morning, asthma flare, hip pain 5/10.",
+      intent: "build_workout",
+      dashboard: {},
+      payload: { now: MONDAY_TAIPEI },
+    });
+    const polished = await polishCoachDecision(deterministic, { text: "Can I train hard today?" });
+
+    assert.equal(polished.readiness.tier, "Red");
+    assert.equal(polished.reply, deterministic.reply);
+    assert.equal(polished.top_line_call, deterministic.top_line_call);
+    assert.deepEqual(polished.risk_flags, deterministic.risk_flags);
+    assert.deepEqual(polished.evidence, deterministic.evidence);
+    assert.deepEqual(polished.next_actions, deterministic.next_actions);
+    assert.equal(polished.ai_polish_available, true);
+    assert.match(polished.generated_by, /\+gpt-5\.5-guarded$/);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined) {
+      delete process.env.OPENAI_API_KEY;
+    } else {
+      process.env.OPENAI_API_KEY = originalKey;
+    }
+    if (originalDisabled === undefined) {
+      delete process.env.COACH_AI_DISABLED;
+    } else {
+      process.env.COACH_AI_DISABLED = originalDisabled;
+    }
+  }
 });
 
 test("May 3 mixed readiness treats Oura and Bevel conflict conservatively", () => {
