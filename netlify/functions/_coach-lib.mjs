@@ -2158,7 +2158,7 @@ function exerciseLoggingNote(exercise = {}) {
   return `Log in ${app} as ${entryName}; record completed sets, reps, load, rest, RPE, and any pain/form note.`;
 }
 
-function buildExerciseCoachingReadout(workout = null) {
+export function buildExerciseCoachingReadout(workout = null) {
   if (!workout || !Array.isArray(workout.blocks) || !workout.blocks.length) return [];
 
   let order = 1;

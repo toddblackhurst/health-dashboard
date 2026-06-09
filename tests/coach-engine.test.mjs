@@ -6,6 +6,7 @@ import {
   buildAppleHealthSupport,
   buildCoachDecision,
   buildCoachToday,
+  buildExerciseCoachingReadout,
   buildNutritionCall,
   buildSyncStatus,
   buildWorkoutPlan,
@@ -422,6 +423,36 @@ test("workout response exposes full exercise coaching readout for GPT Actions", 
   assert.match(pullUp.execution_cue, /Pull yourself up/);
   assert.match(pullUp.feel_cue, /controlled pull/);
   assert.match(pullUp.safety_modification, /assistance/);
+});
+
+test("exercise coaching readout handles missing exercise fields with safe fallbacks", () => {
+  const readout = buildExerciseCoachingReadout({
+    blocks: [
+      {
+        name: "Fallback block",
+        exercises: [{}],
+      },
+    ],
+  });
+
+  assert.equal(readout.length, 1);
+  assert.deepEqual(readout[0], {
+    order: 1,
+    block: "Fallback block",
+    exercise_name: "Unknown exercise",
+    rack_motra_entry_name: "Unknown exercise",
+    tracking_app: "Rack",
+    floor: "Unknown",
+    equipment: "Use the machine/cable station available on the assigned floor.",
+    prescription: "coach-prescribed work",
+    purpose: "Do this for today's planned movement quality and training effect.",
+    setup_cue: "Set up deliberately before the first rep.",
+    execution_cue: "Move smoothly and keep each rep repeatable.",
+    feel_cue: "The movement should feel controlled, not forced.",
+    safety_modification: "Reduce load, range, or skip if symptoms rise.",
+    progression_target: "Progress this exercise only when all prescribed sets are clean, pain stays below 4/10, and the last reps remain repeatable.",
+    logging_note: "Log in Rack as this exercise; record completed sets, reps, load, rest, RPE, and any pain/form note.",
+  });
 });
 
 test("Kuala Lumpur travel mode asks for inventory and disables World Gym routing", () => {
