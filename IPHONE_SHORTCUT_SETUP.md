@@ -52,6 +52,10 @@ After a screenshot is processed, the original is moved into a dated `processed/`
 - `Coach Message`: installed and ready now. Use this from iPhone to send any note to coach.
 - `Coach Intake`: installed as the future structured intake version, but it needs the newer Netlify function deploy before use.
 
+## Morning Coach Shortcut
+
+The Todd Health Sync iOS app exposes a native `Morning Coach` action for Shortcuts. The verified core flow is: manual `Sync Now` works, the in-app Morning Coach button works, and a manually run `Morning Coach` Shortcut returns the daily result. Personal Automation is still configured by Todd in iOS Shortcuts. Use `Run Immediately` if iOS offers it, but treat background automation as best-effort rather than guaranteed. If freshness is uncertain, use the in-app `Sync Now` button or manually run the `Morning Coach` Shortcut.
+
 ## Recommended coach shortcuts
 
 All coach shortcuts use:

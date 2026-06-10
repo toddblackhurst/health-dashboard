@@ -25,8 +25,17 @@ struct CoachAPIClient {
             throw CoachAPIError.invalidResponse
         }
 
-        let decoded = try JSONDecoder().decode(AppleHealthSyncResponse.self, from: data)
-        guard (200..<300).contains(httpResponse.statusCode), decoded.ok else {
+        let decoder = JSONDecoder()
+        if !(200..<300).contains(httpResponse.statusCode) {
+            let decoded = try? decoder.decode(AppleHealthSyncResponse.self, from: data)
+            throw CoachAPIError.requestFailed(
+                statusCode: httpResponse.statusCode,
+                message: Self.responseMessage(from: data) ?? decoded?.errors.first?.message
+            )
+        }
+
+        let decoded = try decoder.decode(AppleHealthSyncResponse.self, from: data)
+        guard decoded.ok else {
             throw CoachAPIError.server(statusCode: httpResponse.statusCode, response: decoded)
         }
 
