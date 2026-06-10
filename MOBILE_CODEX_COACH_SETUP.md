@@ -65,4 +65,6 @@ Use the Action intents:
 
 Use Codex/GitHub for changing the coach system, updating files, improving the API, or adjusting the dashboard.
 
-Use iPhone Shortcuts for one-tap calls into the same API: Morning Check-In, Build Today's Workout, Nutrition Closeout, Post-Workout Debrief, and Fast Coach Note.
+Use iPhone Shortcuts for one-tap calls into the same API: Morning Coach, Morning Check-In, Build Today's Workout, Nutrition Closeout, Post-Workout Debrief, and Fast Coach Note.
+
+For the native Todd Health Sync app, the verified Morning Coach path is manual `Sync Now`, the in-app Morning Coach button, and a manually run `Morning Coach` Shortcut. Personal Automation setup is user-configured in iOS Shortcuts; `Run Immediately` was not fully verified through iOS Mirroring, and background automation should be treated as best-effort. Manual `Sync Now` remains the fallback when source freshness matters.

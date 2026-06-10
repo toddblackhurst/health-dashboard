@@ -6,6 +6,8 @@ Do not paste secrets into chat, terminal output, screenshots, docs, or commits. 
 
 Phase 3 note: the supporting-evidence read path does not add a migration, deploy step, secret, HealthKit permission, or `HEALTH_DATABASE.json` change. Use this runbook for the original phone-to-live-API verification or for approved production readback only; do not treat it as authorization to run migrations or deployments.
 
+Morning Coach automation v1 note: this local app/Shortcut work does not add a migration or deploy step. It reuses the already-live `apple-health-daily`, `sync-status`, and `coach-today` routes. Background HealthKit delivery is deferred and must not be treated as the reliable sync path.
+
 ## 1. Confirm Local Commit State
 
 Before live work, confirm the Apple Health sync work is committed on a feature branch:
@@ -81,6 +83,7 @@ Do not test a valid secret by pasting it into chat. Use a trusted local environm
 9. Grant the requested Apple Health read permissions.
 10. Set `Days to sync` to `7`.
 11. Tap `Sync Now`.
+12. Tap `Morning Coach`.
 
 Expected app result:
 
@@ -89,6 +92,31 @@ Sync succeeded. Wrote 7 of 7 days.
 ```
 
 If the app writes fewer than 7 days, treat it as a partial result and inspect the API response/logs before rerunning.
+
+Expected Morning Coach result:
+
+- A concise daily call appears in the app.
+- The app stores a last Apple Health sync timestamp.
+- The app stores a last coach readback timestamp.
+- Warnings are shown for stale/missing Apple Health, Garmin recovery/training, Garmin Nutrition, BP, Rack/Motra, or safety data when present.
+- The result states that Apple Health is supporting evidence only.
+
+## 5b. Configure Shortcuts
+
+1. Open iPhone `Shortcuts`.
+2. Confirm Todd Health Sync exposes:
+   - `Morning Coach`
+   - `Sync Apple Health`
+   - `Check Coach Sync Status`
+   - `Open Coach Today`
+3. Create a Shortcut named `Morning Coach`.
+4. Add the Todd Health Sync `Morning Coach` action.
+5. Run it manually once.
+6. Confirm it returns the same concise daily result style as the app.
+7. Create a time-of-day personal automation.
+8. Choose the `Morning Coach` Shortcut.
+9. Use `Run Immediately` if available.
+10. If iOS requires confirmation, keep the automation notification as the fallback and use manual `Sync Now` if freshness is uncertain.
 
 ## 6. Verify Live Evidence
 
@@ -136,3 +164,5 @@ Expected:
 Stop after the first physical-device sync is verified. Do not start PR 3 and do not connect Apple Health summaries to readiness scoring until Todd confirms the phone-to-live-API path is verified.
 
 For Phase 3 readback verification after a separately approved production deployment, confirm only that Apple Health appears as optional supporting evidence in `sync-status`, `coach-today`, and dashboard diagnostics. Do not apply migrations, add secrets, or change readiness/workout authority while doing that readback.
+
+For Morning Coach automation v1, stop after local build plus physical iPhone/Shortcut evidence. Do not deploy from this runbook unless Todd separately approves deployment.

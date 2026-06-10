@@ -25,22 +25,99 @@ struct CoachAPIClient {
             throw CoachAPIError.invalidResponse
         }
 
-        let decoded = try JSONDecoder().decode(AppleHealthSyncResponse.self, from: data)
-        guard (200..<300).contains(httpResponse.statusCode), decoded.ok else {
+        let decoder = JSONDecoder()
+        if !(200..<300).contains(httpResponse.statusCode) {
+            let decoded = try? decoder.decode(AppleHealthSyncResponse.self, from: data)
+            throw CoachAPIError.requestFailed(
+                statusCode: httpResponse.statusCode,
+                message: Self.responseMessage(from: data) ?? decoded?.errors.first?.message
+            )
+        }
+
+        let decoded = try decoder.decode(AppleHealthSyncResponse.self, from: data)
+        guard decoded.ok else {
             throw CoachAPIError.server(statusCode: httpResponse.statusCode, response: decoded)
         }
 
         return decoded
     }
 
+    func getSyncStatus(
+        apiBase: String,
+        apiSecret: String
+    ) async throws -> CoachSyncStatusSummary {
+        let data = try await authorizedGET(
+            apiBase: apiBase,
+            apiSecret: apiSecret,
+            path: "/api/coach/sync-status"
+        )
+        return try CoachSyncStatusSummary.parse(data: data)
+    }
+
+    func getCoachToday(
+        apiBase: String,
+        apiSecret: String
+    ) async throws -> CoachTodaySummary {
+        let data = try await authorizedGET(
+            apiBase: apiBase,
+            apiSecret: apiSecret,
+            path: "/api/coach/coach-today"
+        )
+        return try CoachTodaySummary.parse(data: data)
+    }
+
     private func appleHealthDailyURL(from apiBase: String) -> URL? {
+        coachURL(from: apiBase, path: "/api/coach/apple-health-daily")
+    }
+
+    private func coachURL(from apiBase: String, path: String) -> URL? {
         var trimmed = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
         while trimmed.hasSuffix("/") {
             trimmed.removeLast()
         }
 
         guard !trimmed.isEmpty else { return nil }
-        return URL(string: "\(trimmed)/api/coach/apple-health-daily")
+        return URL(string: "\(trimmed)\(path)")
+    }
+
+    private func authorizedGET(apiBase: String, apiSecret: String, path: String) async throws -> Data {
+        guard !apiSecret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw CoachAPIError.missingSecret
+        }
+
+        guard let url = coachURL(from: apiBase, path: path) else {
+            throw CoachAPIError.invalidBaseURL
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(apiSecret, forHTTPHeaderField: "x-coach-secret")
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw CoachAPIError.invalidResponse
+        }
+
+        guard (200..<300).contains(httpResponse.statusCode) else {
+            throw CoachAPIError.requestFailed(
+                statusCode: httpResponse.statusCode,
+                message: Self.responseMessage(from: data)
+            )
+        }
+
+        return data
+    }
+
+    private static func responseMessage(from data: Data) -> String? {
+        guard
+            let object = try? JSONSerialization.jsonObject(with: data),
+            let dictionary = object as? [String: Any]
+        else {
+            return nil
+        }
+
+        return dictionary["error"] as? String
+            ?? dictionary["message"] as? String
     }
 }
 
@@ -48,6 +125,7 @@ enum CoachAPIError: LocalizedError {
     case invalidBaseURL
     case invalidResponse
     case missingSecret
+    case requestFailed(statusCode: Int, message: String?)
     case server(statusCode: Int, response: AppleHealthSyncResponse)
 
     var errorDescription: String? {
@@ -58,6 +136,12 @@ enum CoachAPIError: LocalizedError {
             "The coach API returned an unexpected response."
         case .missingSecret:
             "Enter the coach API secret before syncing."
+        case let .requestFailed(statusCode, message):
+            if let message, !message.isEmpty {
+                "Coach API request failed (\(statusCode)): \(message)"
+            } else {
+                "Coach API request failed with HTTP \(statusCode)."
+            }
         case let .server(statusCode, response):
             if let firstError = response.errors.first?.message, !firstError.isEmpty {
                 "Coach API rejected the sync (\(statusCode)): \(firstError)"

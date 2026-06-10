@@ -39,12 +39,35 @@ struct ContentView: View {
                     .disabled(viewModel.isWorking)
                 }
 
+                Section("Morning Coach") {
+                    Button("Morning Coach") {
+                        Task {
+                            await viewModel.runMorningCoach()
+                        }
+                    }
+                    .disabled(viewModel.isWorking)
+
+                    Button("Check Coach Sync Status") {
+                        Task {
+                            await viewModel.checkCoachSyncStatus()
+                        }
+                    }
+                    .disabled(viewModel.isWorking)
+
+                    Text(viewModel.morningCoachText)
+                        .textSelection(.enabled)
+                }
+
                 Section("Status") {
                     if viewModel.isWorking {
                         ProgressView()
                     }
                     Text(viewModel.statusText)
                     Text(viewModel.lastSyncText)
+                        .foregroundStyle(.secondary)
+                    Text(viewModel.lastCoachReadbackText)
+                        .foregroundStyle(.secondary)
+                    Text(viewModel.backgroundHealthKitText)
                         .foregroundStyle(.secondary)
                 }
             }
