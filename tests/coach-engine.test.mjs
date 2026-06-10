@@ -6,6 +6,7 @@ import {
   buildAppleHealthSupport,
   buildCoachDecision,
   buildCoachToday,
+  buildExerciseCoachingReadout,
   buildNutritionCall,
   buildSyncStatus,
   buildWorkoutPlan,
@@ -45,6 +46,32 @@ function assertPlannedExerciseShape(exercise) {
   assert.ok(Array.isArray(exercise.pro_coaching) && exercise.pro_coaching.length >= 2, `${exercise.name} needs coaching`);
   assert.ok(Array.isArray(exercise.feel) && exercise.feel.length >= 1, `${exercise.name} needs feel target`);
   assert.ok(exercise.safety_modification || (Array.isArray(exercise.avoid) && exercise.avoid.length), `${exercise.name} needs safety notes`);
+}
+
+function assertExerciseCoachingReadoutShape(exercise) {
+  const requiredFields = [
+    "exercise_name",
+    "rack_motra_entry_name",
+    "tracking_app",
+    "floor",
+    "equipment",
+    "prescription",
+    "purpose",
+    "setup_cue",
+    "execution_cue",
+    "feel_cue",
+    "safety_modification",
+    "progression_target",
+    "logging_note",
+  ];
+
+  for (const field of requiredFields) {
+    assert.ok(exercise[field], `${exercise.rack_motra_entry_name || "exercise"} missing ${field}`);
+  }
+  assert.equal(exercise.tracking_app, "Rack");
+  assert.ok(exercise.exercise_name);
+  assert.match(exercise.progression_target, /pain stays below 4\/10/);
+  assert.match(exercise.logging_note, /Log in Rack/);
 }
 
 test("BP red gate downshifts training", () => {
@@ -371,6 +398,61 @@ test("Rack/Motra handoff includes equipment and entry-ready prescription lines",
   assert.match(pullUp.rack_entry_line, /4 x 6 \/ 5 \/ 5 \/ 4 x bodyweight/);
   assert.ok(Array.isArray(pullUp.pro_coaching) && pullUp.pro_coaching.some(note => /lowering/.test(note)));
   assert.ok(handoff.rack_entry_lines.some(line => /Dumbbell Incline Bench Press \| Floor 2 dumbbells/.test(line)));
+});
+
+test("workout response exposes full exercise coaching readout for GPT Actions", () => {
+  const decision = buildCoachDecision({
+    text: "Build today's strength workout.",
+    intent: "build_workout",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: WEDNESDAY_TAIPEI },
+  });
+  const plannedExercises = workoutExercises(decision.workout_plan);
+  const readout = decision.exercise_coaching_readout;
+  const nestedReadout = decision.workout_plan.exercise_coaching_readout;
+  const pullUp = readout.find(exercise => exercise.rack_motra_entry_name === "Pull-Up");
+
+  assert.equal(readout.length, plannedExercises.length);
+  assert.deepEqual(readout, nestedReadout);
+  for (const exercise of readout) assertExerciseCoachingReadoutShape(exercise);
+  assert.ok(pullUp);
+  assert.equal(pullUp.floor, "Floor 2");
+  assert.match(pullUp.equipment, /pull-up station/);
+  assert.match(pullUp.prescription, /bodyweight/);
+  assert.match(pullUp.setup_cue, /still hang/);
+  assert.match(pullUp.execution_cue, /Pull yourself up/);
+  assert.match(pullUp.feel_cue, /controlled pull/);
+  assert.match(pullUp.safety_modification, /assistance/);
+});
+
+test("exercise coaching readout handles missing exercise fields with safe fallbacks", () => {
+  const readout = buildExerciseCoachingReadout({
+    blocks: [
+      {
+        name: "Fallback block",
+        exercises: [{}],
+      },
+    ],
+  });
+
+  assert.equal(readout.length, 1);
+  assert.deepEqual(readout[0], {
+    order: 1,
+    block: "Fallback block",
+    exercise_name: "Unknown exercise",
+    rack_motra_entry_name: "Unknown exercise",
+    tracking_app: "Rack",
+    floor: "Unknown",
+    equipment: "Use the machine/cable station available on the assigned floor.",
+    prescription: "coach-prescribed work",
+    purpose: "Do this for today's planned movement quality and training effect.",
+    setup_cue: "Set up deliberately before the first rep.",
+    execution_cue: "Move smoothly and keep each rep repeatable.",
+    feel_cue: "The movement should feel controlled, not forced.",
+    safety_modification: "Reduce load, range, or skip if symptoms rise.",
+    progression_target: "Progress this exercise only when all prescribed sets are clean, pain stays below 4/10, and the last reps remain repeatable.",
+    logging_note: "Log in Rack as this exercise; record completed sets, reps, load, rest, RPE, and any pain/form note.",
+  });
 });
 
 test("Kuala Lumpur travel mode asks for inventory and disables World Gym routing", () => {

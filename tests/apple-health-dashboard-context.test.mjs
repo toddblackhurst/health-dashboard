@@ -71,6 +71,15 @@ function installMockDashboardSupabase({ appleHealthRows = [], appleHealthSyncRun
     const method = options.method || "GET";
     if (!Object.hasOwn(db, table)) return jsonResponse({ error: `Unexpected table ${table}` }, 404);
     if (method === "GET") return jsonResponse(db[table]);
+    if (method === "POST" && ["coach_messages", "coach_decisions"].includes(table)) {
+      const rows = JSON.parse(options.body || "[]").map(row => ({
+        id: `${table}-${db[table].length + 1}`,
+        message_at: "2026-06-10T02:00:00.000Z",
+        ...row,
+      }));
+      db[table].push(...rows);
+      return jsonResponse(rows, 201);
+    }
     return jsonResponse({ error: `Unexpected ${method} ${table}` }, 500);
   };
 }
@@ -79,6 +88,14 @@ function coachGet(action) {
   return new Request(`https://coach.test/api/coach?action=${action}`, {
     method: "GET",
     headers: { "x-coach-secret": "test-secret" },
+  });
+}
+
+function coachPost(action, body = {}) {
+  return new Request(`https://coach.test/api/coach?action=${action}`, {
+    method: "POST",
+    headers: { "x-coach-secret": "test-secret", "content-type": "application/json" },
+    body: JSON.stringify(body),
   });
 }
 
@@ -180,4 +197,27 @@ test("sync-status and coach-today tolerate missing Apple Health rows", async () 
   assert.ok(coachTodayBody.daily_call.decision);
   assert.ok(coachTodayBody.why.some(item => /Apple Health: missing supporting context only/.test(item)));
   assert.ok(coachTodayBody.confidence_data_quality.missing_or_stale.some(item => /Apple Health daily summary: missing/.test(item)));
+});
+
+test("workout action exposes top-level readout while preserving old response fields", async () => {
+  installMockDashboardSupabase();
+
+  const res = await handler(coachPost("workout", {
+    text: "Build today's strength workout.",
+    now: "2026-06-10T02:00:00.000Z",
+  }));
+  const body = await res.json();
+
+  assert.equal(res.status, 200);
+  assert.equal(body.ok, true);
+  assert.equal(body.action, "workout");
+  assert.ok(body.reply);
+  assert.ok(body.decision);
+  assert.ok(body.decision.readiness);
+  assert.ok(body.decision.daily_summary);
+  assert.ok(body.decision.source_context);
+  assert.ok(Array.isArray(body.exercise_coaching_readout));
+  assert.ok(body.exercise_coaching_readout.length > 0);
+  assert.deepEqual(body.exercise_coaching_readout, body.decision.exercise_coaching_readout);
+  assert.deepEqual(body.exercise_coaching_readout, body.decision.workout_plan.exercise_coaching_readout);
 });

@@ -2138,6 +2138,59 @@ function buildWorkoutHandoff(workout = null) {
   };
 }
 
+function compactText(value, fallback = null) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  return text || fallback;
+}
+
+function cueAt(value, index, fallback = null) {
+  return Array.isArray(value) ? compactText(value[index], fallback) : fallback;
+}
+
+function exerciseProgressionTarget(exercise = {}) {
+  const entryName = exercise.rack_name || exercise.app_entry_name || exercise.motra_name || exercise.name || "this exercise";
+  return `Progress ${entryName} only when all prescribed sets are clean, pain stays below 4/10, and the last reps remain repeatable.`;
+}
+
+function exerciseLoggingNote(exercise = {}) {
+  const entryName = exercise.rack_name || exercise.app_entry_name || exercise.motra_name || exercise.name || "this exercise";
+  const app = exercise.tracking_app || "Rack";
+  return `Log in ${app} as ${entryName}; record completed sets, reps, load, rest, RPE, and any pain/form note.`;
+}
+
+export function buildExerciseCoachingReadout(workout = null) {
+  if (!workout || !Array.isArray(workout.blocks) || !workout.blocks.length) return [];
+
+  let order = 1;
+  return workout.blocks.flatMap(block => {
+    if (!Array.isArray(block.exercises)) return [];
+    return block.exercises.map(exercise => {
+      const entryName = exercise.rack_name || exercise.app_entry_name || exercise.motra_name || exercise.name || "Unknown exercise";
+      const prescriptionText = exercise.prescription_text
+        || (typeof exercise.prescription === "string" ? exercise.prescription : formatPrescription(exercise.prescription))
+        || "coach-prescribed work";
+      const equipment = exercise.equipment || "Use the machine/cable station available on the assigned floor.";
+      return {
+        order: order++,
+        block: block.label || block.name || block.id || null,
+        exercise_name: exercise.name || entryName,
+        rack_motra_entry_name: entryName,
+        tracking_app: exercise.tracking_app || "Rack",
+        floor: exercise.floor || block.floor || "Unknown",
+        equipment,
+        prescription: prescriptionText,
+        purpose: compactText(exercise.note, "Do this for today's planned movement quality and training effect."),
+        setup_cue: cueAt(exercise.pro_coaching, 0, "Set up deliberately before the first rep."),
+        execution_cue: cueAt(exercise.pro_coaching, 1, "Move smoothly and keep each rep repeatable."),
+        feel_cue: cueAt(exercise.feel, 0, "The movement should feel controlled, not forced."),
+        safety_modification: compactText(exercise.safety_modification, cueAt(exercise.avoid, 0, "Reduce load, range, or skip if symptoms rise.")),
+        progression_target: compactText(exercise.progression_target, exerciseProgressionTarget(exercise)),
+        logging_note: compactText(exercise.logging_note, exerciseLoggingNote(exercise)),
+      };
+    });
+  });
+}
+
 function enrichWorkoutPlan(workout = {}, readiness = {}, requestContext = {}, workoutTarget = {}) {
   if (!workout || typeof workout !== "object") return workout;
   const requestedSessionType = workout.requested_session_type
@@ -2171,6 +2224,7 @@ function enrichWorkoutPlan(workout = {}, readiness = {}, requestContext = {}, wo
     why_this_workout: why,
     what_to_track: whatToTrack,
     post_workout_debrief_prompt: "After the session, send duration, completed blocks, RPE, best movement, worst movement, pain score, and any Garmin/Rack notes.",
+    exercise_coaching_readout: buildExerciseCoachingReadout(workout),
   };
 }
 
@@ -2331,6 +2385,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     daily_summary: dailySummary,
     nutrition_call: nutrition,
     workout_plan: includeWorkout ? workout : null,
+    exercise_coaching_readout: includeWorkout ? (workout.exercise_coaching_readout || []) : [],
     workout_request: workoutRequest,
     source_context: {
       data_store: "supabase",

@@ -142,7 +142,7 @@
       "post": {
         "operationId": "buildTodayWorkout",
         "summary": "Build today's or an upcoming workout",
-        "description": "Builds a deterministic workout whenever Todd explicitly asks for one. Schedule guides the default: generic today requests on non-strength days return the planned goal-support/rest session, explicit strength requests can return a controlled modified strength option when no Red safety gate exists, and Red safety returns a recovery/safety session instead of hard training. Passive today checks should use getCoachToday. Exercise objects are Rack-first and include Rack/app entry names, Motra legacy aliases when useful, equipment, floor, prescription, plain-language coaching, feel targets, avoid notes, and safety modifications.",
+        "description": "Builds a deterministic workout whenever Todd explicitly asks for one. Schedule guides the default: generic today requests on non-strength days return the planned goal-support/rest session, explicit strength requests can return a controlled modified strength option when no Red safety gate exists, and Red safety returns a recovery/safety session instead of hard training. Passive today checks should use getCoachToday. Render decision.exercise_coaching_readout when present: it is the concise GPT-facing per-exercise readout with Rack/Motra entry name, tracking app, floor/equipment, prescription, purpose, cues, safety modification, progression target, and logging note.",
         "requestBody": {
           "required": false,
           "content": {
@@ -553,8 +553,15 @@
           },
           "workout_plan": {
             "type": ["object", "null"],
-            "description": "Deterministic workout plan. Generated exercise objects may include name, rack_name, app_entry_name, tracking_app, motra_name, equipment, floor, prescription, prescription_text, sets, reps, load, rest, pro_coaching, feel, avoid, safety_modification, requested_session_type, schedule_override_applied, what_to_track, and post_workout_debrief_prompt.",
+            "description": "Deterministic workout plan. Generated exercise objects may include name, rack_name, app_entry_name, tracking_app, motra_name, equipment, floor, prescription, prescription_text, sets, reps, load, rest, pro_coaching, feel, avoid, safety_modification, requested_session_type, schedule_override_applied, what_to_track, post_workout_debrief_prompt, and exercise_coaching_readout.",
             "additionalProperties": true
+          },
+          "exercise_coaching_readout": {
+            "type": "array",
+            "description": "Preferred GPT-facing rendering list for workout exercises. Show this when present so each exercise includes the full professional coaching fields without digging through nested blocks.",
+            "items": {
+              "$ref": "#/components/schemas/ExerciseCoachingReadout"
+            }
           },
           "workout_request": {
             "type": ["object", "null"],
@@ -595,8 +602,71 @@
           "reply": {
             "type": "string"
           },
+          "exercise_coaching_readout": {
+            "type": "array",
+            "description": "Preferred GPT-facing rendering list for workout exercises. For buildTodayWorkout, render these concise fields for each exercise.",
+            "items": {
+              "$ref": "#/components/schemas/ExerciseCoachingReadout"
+            }
+          },
           "decision": {
             "$ref": "#/components/schemas/CoachDecision"
+          }
+        },
+        "additionalProperties": true
+      },
+      "ExerciseCoachingReadout": {
+        "type": "object",
+        "description": "Concise per-exercise coaching readout for GPT rendering. It is derived from the deterministic workout plan and does not change safety hierarchy or progression logic.",
+        "properties": {
+          "order": {
+            "type": "integer"
+          },
+          "block": {
+            "type": ["string", "null"]
+          },
+          "exercise_name": {
+            "type": "string",
+            "description": "Human-readable exercise name from the deterministic workout plan."
+          },
+          "rack_motra_entry_name": {
+            "type": "string",
+            "description": "Rack/Motra entry name to use when logging the exercise."
+          },
+          "tracking_app": {
+            "type": "string",
+            "description": "Tracking app for the exercise, currently Rack for strength logging."
+          },
+          "floor": {
+            "type": "string"
+          },
+          "equipment": {
+            "type": "string"
+          },
+          "prescription": {
+            "type": "string",
+            "description": "Sets, reps, load, and rest in a concise line."
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "setup_cue": {
+            "type": "string"
+          },
+          "execution_cue": {
+            "type": "string"
+          },
+          "feel_cue": {
+            "type": "string"
+          },
+          "safety_modification": {
+            "type": "string"
+          },
+          "progression_target": {
+            "type": "string"
+          },
+          "logging_note": {
+            "type": "string"
           }
         },
         "additionalProperties": true

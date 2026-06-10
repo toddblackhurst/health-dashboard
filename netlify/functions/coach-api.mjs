@@ -160,7 +160,7 @@ export default async function handler(req) {
         channel: body.channel || "web",
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || "web", { in_reply_to: text, decision });
-      return json({ ok: true, reply: decision.reply, decision });
+      return json({ ok: true, reply: decision.reply, exercise_coaching_readout: decision.exercise_coaching_readout || [], decision });
     }
 
     if (req.method === "POST" && ["brief", "workout", "nutrition-closeout", "post-workout"].includes(action)) {
@@ -185,7 +185,7 @@ export default async function handler(req) {
         channel: body.channel || `api-${action}`,
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || `api-${action}`, { in_reply_to: text, decision });
-      return json({ ok: true, action, reply: decision.reply, decision });
+      return json({ ok: true, action, reply: decision.reply, exercise_coaching_readout: decision.exercise_coaching_readout || [], decision });
     }
 
     if (req.method === "POST" && action === "feedback") {
