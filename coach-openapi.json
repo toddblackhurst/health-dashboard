@@ -145,7 +145,7 @@
       "post": {
         "operationId": "buildTodayWorkout",
         "summary": "Build today's or an upcoming workout",
-        "description": "Builds a deterministic workout whenever Todd explicitly asks for one. Schedule guides the default: generic today requests on non-strength days return the planned goal-support/rest session, explicit strength requests can return a controlled modified strength option when no Red safety gate exists, and Red safety returns a recovery/safety session instead of hard training. Passive today checks should use getCoachToday. Render decision.exercise_coaching_readout when present: it is the concise GPT-facing per-exercise readout with Rack/Motra entry name, tracking app, floor/equipment, prescription, purpose, cues, safety modification, progression target, and logging note.",
+        "description": "Builds a deterministic workout when Todd explicitly asks, preserving Red safety gates and the Garmin/Rack/Motra/Apple Health hierarchy. Use exercise_coaching_readout when present for per-exercise details.",
         "requestBody": {
           "required": false,
           "content": {
@@ -1600,7 +1600,7 @@
       },
       "WorkoutDebriefRequest": {
         "type": "object",
-        "description": "Record Todd-reported subjective workout feedback. Debriefs are event records and cannot override current hard safety flags, Garmin readiness/recovery, Garmin workout physiology, or Rack/Motra completed strength logs.",
+        "description": "Records Todd-reported subjective workout feedback. Debriefs can constrain or personalize future coaching but cannot override hard safety flags, Rack/Motra authority, Garmin physiology/readiness, or Apple Health's supporting role.",
         "required": [
           "workout_date",
           "completion_status"
