@@ -225,6 +225,155 @@
         }
       }
     },
+    "/api/coach/observations": {
+      "post": {
+        "operationId": "recordCoachObservation",
+        "summary": "Record a reviewable coach memory observation",
+        "description": "Stores one durable, evidence-based coach observation in Supabase. Memory is reviewable and advisory only; it cannot override current safety gates, BP, migraine, asthma, sharp pain, doctor guidance, Garmin readiness, Rack/Motra strength logs, or Garmin Nutrition totals.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoachObservationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recorded coach memory observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoachObservationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/memory": {
+      "get": {
+        "operationId": "listCoachMemory",
+        "summary": "List active or reviewable coach memory",
+        "description": "Returns compact coach observations for Todd review or Custom GPT context. By default, this lists active memory and excludes data-sync observations.",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["active", "needs_review", "retired", "all"]
+            },
+            "description": "Observation status to list. Default is active."
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional memory category filter."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "include_data_sync",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["0", "1"],
+              "default": "0"
+            },
+            "description": "Set to 1 to include Apple Health and other data-sync observations."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Coach memory list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoachMemoryListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/memory/correct": {
+      "post": {
+        "operationId": "correctCoachMemory",
+        "summary": "Correct an existing coach memory observation",
+        "description": "Updates a coach memory observation when Todd says it is wrong or needs refinement. The previous wording is preserved in raw audit metadata.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoachMemoryCorrectionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Corrected coach memory observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoachObservationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coach/memory/retire": {
+      "post": {
+        "operationId": "retireCoachMemory",
+        "summary": "Retire a wrong or outdated coach memory observation",
+        "description": "Marks a memory observation retired or superseded so it no longer appears in active coach context.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoachMemoryRetireRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retired coach memory observation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoachObservationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/coach/motra-template": {
       "post": {
         "operationId": "buildMotraDebriefTemplate",
@@ -359,6 +508,280 @@
         },
         "additionalProperties": true
       },
+      "CoachObservation": {
+        "type": "object",
+        "description": "Reviewable coach memory observation from Supabase. It is advisory memory, not fresh sensor data and not a safety override.",
+        "properties": {
+          "id": {
+            "type": ["string", "null"]
+          },
+          "observation_date": {
+            "type": ["string", "null"],
+            "format": "date"
+          },
+          "category": {
+            "type": ["string", "null"]
+          },
+          "observation": {
+            "type": ["string", "null"]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "status": {
+            "type": ["string", "null"],
+            "enum": ["active", "needs_review", "retired", null]
+          },
+          "lifecycle_status": {
+            "type": ["string", "null"],
+            "enum": ["proposed", "active", "needs_review", "retired", "superseded", null]
+          },
+          "action": {
+            "type": ["string", "null"]
+          },
+          "action_taken": {
+            "type": ["string", "null"]
+          },
+          "review_date": {
+            "type": ["string", "null"],
+            "format": "date"
+          },
+          "source": {
+            "type": ["string", "null"]
+          },
+          "action_contexts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "last_used_at": {
+            "type": ["string", "null"]
+          },
+          "supersedes": {
+            "type": ["string", "null"]
+          },
+          "replaced_by": {
+            "type": ["string", "null"]
+          },
+          "priority": {
+            "type": ["string", "null"]
+          },
+          "relevance": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "freshness_label": {
+            "type": ["string", "null"],
+            "description": "Always memory for retrieved context; this is not fresh sensor data."
+          },
+          "sensor_data": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": ["string", "null"]
+          },
+          "updated_at": {
+            "type": ["string", "null"]
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachMemoryContext": {
+        "type": "object",
+        "description": "Compact memory context retrieved from coach_observations. Safety gates and current data override it.",
+        "properties": {
+          "summary": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "const": "coach_observations"
+          },
+          "relevant_observations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CoachObservation"
+            }
+          },
+          "memory_warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "policy": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "retrieval": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "last_updated": {
+            "type": ["string", "null"]
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachObservationRequest": {
+        "type": "object",
+        "required": ["observation"],
+        "properties": {
+          "observation": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "description": "Recommended categories include training_preference, exercise_preference, pain_pattern, safety_constraint, recovery_pattern, nutrition_preference, coaching_style, schedule_preference, equipment_constraint, repeated_question, user_correction, and workout_response_pattern."
+          },
+          "observation_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "default": "medium"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["proposed", "active", "needs_review", "retired", "superseded"],
+            "default": "active"
+          },
+          "action": {
+            "type": "string",
+            "description": "How Coach should use this observation."
+          },
+          "action_taken": {
+            "type": "string"
+          },
+          "review_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "source": {
+            "type": "string",
+            "default": "custom-gpt"
+          },
+          "action_contexts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "raw": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachObservationResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string"
+          },
+          "observation": {
+            "$ref": "#/components/schemas/CoachObservation"
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachMemoryListResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string",
+            "const": "list-memory"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "memories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CoachObservation"
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachMemoryCorrectionRequest": {
+        "type": "object",
+        "required": ["observation_id", "corrected_observation"],
+        "properties": {
+          "observation_id": {
+            "type": "string"
+          },
+          "corrected_observation": {
+            "type": "string"
+          },
+          "correction_note": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "action": {
+            "type": "string"
+          },
+          "review_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "raw": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "CoachMemoryRetireRequest": {
+        "type": "object",
+        "required": ["observation_id"],
+        "properties": {
+          "observation_id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "replacement_observation_id": {
+            "type": "string"
+          },
+          "raw": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
       "MotraTemplateRequest": {
         "type": "object",
         "required": ["motra_text"],
@@ -477,6 +900,9 @@
                 "type": "object",
                 "additionalProperties": true
               },
+              "coach_memory_context": {
+                "$ref": "#/components/schemas/CoachMemoryContext"
+              },
               "source_context": {
                 "type": "object",
                 "additionalProperties": true
@@ -568,6 +994,9 @@
             "description": "Parsed workout request metadata, including request_intent, requested_session_type, schedule_override, requested_for_date, requested_for_weekday, is_future_request, and planning_basis.",
             "additionalProperties": true
           },
+          "coach_memory_context": {
+            "$ref": "#/components/schemas/CoachMemoryContext"
+          },
           "source_context": {
             "type": "object",
             "additionalProperties": true
@@ -583,6 +1012,9 @@
           },
           "reply": {
             "type": "string"
+          },
+          "coach_memory_context": {
+            "$ref": "#/components/schemas/CoachMemoryContext"
           },
           "decision": {
             "$ref": "#/components/schemas/CoachDecision"
@@ -601,6 +1033,9 @@
           },
           "reply": {
             "type": "string"
+          },
+          "coach_memory_context": {
+            "$ref": "#/components/schemas/CoachMemoryContext"
           },
           "exercise_coaching_readout": {
             "type": "array",

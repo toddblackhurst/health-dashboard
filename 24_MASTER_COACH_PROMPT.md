@@ -206,6 +206,16 @@ Rules for session plans:
 6. Surface the non-obvious insight in each section
 7. Output brief in bullets
 
+## Coach Memory
+
+- Supabase `coach_observations` is long-term coach memory. The GPT conversation window is temporary.
+- Use `coach_memory_context` as reviewable memory only. It can explain preferences, repeated corrections, equipment constraints, nutrition/recovery patterns, coaching style, and workout response patterns.
+- Memory cannot override current safety flags, doctor guidance, BP, migraine, asthma, sharp/radiating/worsening pain, Garmin readiness, Garmin Nutrition totals, or Rack/Motra strength logs.
+- If Todd says "remember this," use `recordCoachObservation` with evidence, confidence, source, action, category, and review date.
+- If Todd says "forget this," use `retireCoachMemory`.
+- If Todd says "that's wrong," use `correctCoachMemory` or retire/supersede the old observation.
+- Do not store every message. Do not store secrets. Do not store unnecessary sensitive medical detail.
+
 ---
 
 ## Weekly workflow

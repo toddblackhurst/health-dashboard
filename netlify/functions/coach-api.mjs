@@ -6,12 +6,16 @@ import {
   buildCoachToday,
   buildSyncStatus,
   compactDashboard,
+  correctCoachObservation,
+  createCoachObservation,
   dashboardFromSupabase,
   getProfile,
   insertCoachMessage,
   json,
+  listCoachObservations,
   preflight,
   requireCoachSecret,
+  retireCoachObservation,
   runCoach,
   supabase,
   updateCoachStateFromFeedback,
@@ -127,7 +131,7 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "sync-status", "coach-today", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "sync-status", "coach-today", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout", "observations", "memory"].includes(pathAction) ? pathAction : null)
       || "dashboard";
 
     if (req.method === "GET" && ["dashboard", "sync-status", "coach-today"].includes(action)) {
@@ -160,7 +164,43 @@ export default async function handler(req) {
         channel: body.channel || "web",
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || "web", { in_reply_to: text, decision });
-      return json({ ok: true, reply: decision.reply, exercise_coaching_readout: decision.exercise_coaching_readout || [], decision });
+      return json({ ok: true, reply: decision.reply, coach_memory_context: decision.coach_memory_context, exercise_coaching_readout: decision.exercise_coaching_readout || [], decision });
+    }
+
+    if (req.method === "POST" && ["record-observation", "observations"].includes(action)) {
+      const profile = await getProfile();
+      if (!profile) return json({ error: "No Supabase profile found." }, 404);
+      const body = await req.json().catch(() => ({}));
+      const observation = await createCoachObservation(profile.id, body);
+      return json({ ok: true, action: "record-observation", observation });
+    }
+
+    if (req.method === "GET" && ["list-memory", "memory"].includes(action)) {
+      const profile = await getProfile();
+      if (!profile) return json({ error: "No Supabase profile found." }, 404);
+      const memories = await listCoachObservations(profile.id, {
+        status: url.searchParams.get("status") || "active",
+        category: url.searchParams.get("category") || "",
+        limit: url.searchParams.get("limit") || 20,
+        includeDataSync: url.searchParams.get("include_data_sync") === "1",
+      });
+      return json({ ok: true, action: "list-memory", count: memories.length, memories });
+    }
+
+    if (req.method === "POST" && action === "correct-memory") {
+      const profile = await getProfile();
+      if (!profile) return json({ error: "No Supabase profile found." }, 404);
+      const body = await req.json().catch(() => ({}));
+      const observation = await correctCoachObservation(profile.id, body);
+      return json({ ok: true, action: "correct-memory", observation });
+    }
+
+    if (req.method === "POST" && action === "retire-memory") {
+      const profile = await getProfile();
+      if (!profile) return json({ error: "No Supabase profile found." }, 404);
+      const body = await req.json().catch(() => ({}));
+      const observation = await retireCoachObservation(profile.id, body);
+      return json({ ok: true, action: "retire-memory", observation });
     }
 
     if (req.method === "POST" && ["brief", "workout", "nutrition-closeout", "post-workout"].includes(action)) {
@@ -185,7 +225,7 @@ export default async function handler(req) {
         channel: body.channel || `api-${action}`,
       });
       await insertCoachMessage(profile.id, "coach", decision.reply, body.channel || `api-${action}`, { in_reply_to: text, decision });
-      return json({ ok: true, action, reply: decision.reply, exercise_coaching_readout: decision.exercise_coaching_readout || [], decision });
+      return json({ ok: true, action, reply: decision.reply, coach_memory_context: decision.coach_memory_context, exercise_coaching_readout: decision.exercise_coaching_readout || [], decision });
     }
 
     if (req.method === "POST" && action === "feedback") {

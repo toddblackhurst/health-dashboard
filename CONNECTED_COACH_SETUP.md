@@ -71,10 +71,16 @@ Private Custom GPT Actions and iPhone Shortcuts should use:
 - `POST /api/coach/nutrition-closeout`
 - `POST /api/coach/post-workout`
 - `POST /api/coach/intake`
+- `POST /api/coach/observations`
+- `GET /api/coach/memory`
+- `POST /api/coach/memory/correct`
+- `POST /api/coach/memory/retire`
 
 Every action requires the `x-coach-secret` header. `POST /api/coach/message` accepts `intent`: `general`, `build_workout`, `evaluate_data`, `nutrition_check`, `post_workout`, or `travel_mode`.
 
 The coach always loads `coach_state`; World Gym Taichung is the default workout environment unless `travel_mode` is active.
+
+Coach Memory uses existing Supabase `coach_observations`. Todd can say "remember this" to create a reviewable observation, "forget this" to retire it, or "that's wrong" to correct/supersede it. Memory can inform or constrain coaching, but current safety flags, doctor guidance, BP, migraine, asthma, sharp pain, Garmin readiness, Rack/Motra strength logs, and Garmin Nutrition totals override memory.
 
 ## WhatsApp
 

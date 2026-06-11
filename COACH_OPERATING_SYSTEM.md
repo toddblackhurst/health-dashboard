@@ -8,6 +8,7 @@ This is the single active coaching specification for Todd's Coach v3 system.
 - `HEALTH_DATABASE.json` is legacy/bootstrap/export backup, not the live planning authority.
 - The API coach brain reads Supabase, applies deterministic safety/readiness/nutrition/workout gates, logs decisions to `coach_decisions`, and optionally uses OpenAI for concise response polish.
 - Workout structure, safety gates, exercise order, prescriptions, Rack/Motra handoff, and source hierarchy are deterministic output. OpenAI polish may improve wording only; it must not create, remove, reorder, delay, or soften a workout plan.
+- Coach Memory lives in Supabase `coach_observations`. It is durable, reviewable, evidence-based learning across Custom GPT conversations. It is not hidden truth and is not fresh sensor data.
 - Legacy numbered strategy docs are archived reference. Extract from them when improving the system, but do not require a future coach to read all of them before building a workout.
 
 ## Todd Profile
@@ -41,6 +42,18 @@ Device-stack rule:
 - Avoid overlap by not double-counting Garmin workouts, calories, or nutrition mirrored through Apple Health.
 - Medical/safety flags override every device, app score, and training/recovery metric.
 - If app scores conflict, Coach should resolve by source fit: Garmin for integrated training/recovery and workout cost when fresh, Rack/Motra for strength performance history, Oura as sleep/recovery fallback, Apple Health as supporting data bus, and symptoms/medical flags as the override.
+
+## Coach Memory / Observations
+
+- Supabase is the long-term coach memory. The GPT conversation window is temporary.
+- Store durable observations only, not every message. Good memory has a category, concise observation, evidence, source, confidence, status, action, review date, and timestamps.
+- Recommended categories: `training_preference`, `exercise_preference`, `pain_pattern`, `safety_constraint`, `recovery_pattern`, `nutrition_preference`, `coaching_style`, `schedule_preference`, `equipment_constraint`, `repeated_question`, `user_correction`, and `workout_response_pattern`.
+- Lifecycle: `proposed`, `active`, `needs_review`, `retired`, or `superseded`. Current table status supports `active`, `needs_review`, and `retired`; proposed/superseded details live in `raw` until a later approved migration.
+- Active memory may appear in `coach_memory_context` for `coach-today`, workout, nutrition, and related coach actions. It must be labeled as memory, not fresh data.
+- Memory can constrain, personalize, or downshift training. It cannot upgrade readiness, clear a symptom, override current BP/migraine/asthma/sharp-pain flags, override doctor guidance, or turn Red safety into hard training.
+- Current data wins conflicts. If Todd says "that's wrong," correct, retire, or supersede the observation instead of treating both as active truth.
+- Todd can say "remember this" to record a reviewable observation, "forget this" to retire it, or "that's wrong" to correct/supersede it.
+- Do not store secrets or unnecessary sensitive medical detail. Store the smallest useful coaching fact plus evidence pointer and review path.
 
 ## World Gym Taichung Default
 
@@ -136,6 +149,7 @@ Daily coach output contract:
 - When a workout is generated, include a Rack-first handoff that is copy-friendly for `Exercise | Equipment | Sets x Reps x Load`. Keep coaching notes separate from the Rack entry line, and preserve Garmin/Fenix as the workout physiology and training-load context. Motra names are legacy/history continuity, not the current app target.
 - Exercise coaching must be plain language: how to start, how to move, what it should feel like, what to avoid, and when to stop or reduce load. Do not make anatomy jargon the main coaching language.
 - Apple Health must remain labeled as supporting evidence only in daily output. It can explain sync freshness and activity context, but cannot override readiness, safety gates, Garmin workout physiology, or Rack/Motra history.
+- `coach_memory_context` may appear as durable memory. It should explain which active observations are relevant and warn that current safety/readiness data overrides memory.
 
 Workout action contract:
 
@@ -144,6 +158,7 @@ Workout action contract:
 - If Todd explicitly asks for strength on a non-strength day, build a controlled modified strength option only when Red safety gates are absent, and label the schedule override.
 - Red safety gates return a recovery/safety session, not hard training. Yellow builds a modified session.
 - Workout responses include `workout_request`, `requested_session_type`, `schedule_override_applied`, `what_to_track`, and a post-workout debrief prompt.
+- Workout responses include `coach_memory_context` when relevant, but memory cannot replace the deterministic workout safety gate.
 
 Shortcut actions to support:
 
@@ -152,6 +167,7 @@ Shortcut actions to support:
 - Build Today's Workout: calls `/api/coach/workout` for explicit workout-building requests.
 - Nutrition Closeout: Garmin Nutrition totals to `/api/coach/nutrition-closeout`.
 - Post-Workout Debrief: duration, best/worst movement, pain, RPE.
+- Coach Memory: `recordCoachObservation`, `listCoachMemory`, `correctCoachMemory`, and `retireCoachMemory` let Todd make memory reviewable and correctable from the Custom GPT.
 - Garmin Workout Build: create/update the scheduled Garmin Connect Strength workout with closest Garmin exercise names, exact rests/reps/weights, and WorldGym details in notes when that remains Todd's active gym execution surface; after the workout, use Garmin's completed activity for physiology/training-load context and Rack/Motra for strength-log authority.
 - Apple Health Daily Summary: native HealthKit clients may upload one summarized row per day to `/api/coach/apple-health-daily` using `x-coach-secret`; do not upload raw HealthKit samples or promote Apple Health summaries over Oura/Garmin/Rack evidence.
 - Fast Coach Note: simple message intake.

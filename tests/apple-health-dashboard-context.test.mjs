@@ -63,6 +63,7 @@ function installMockDashboardSupabase({ appleHealthRows = [], appleHealthSyncRun
     coach_decisions: [],
     apple_health_daily_summaries: appleHealthRows,
     apple_health_sync_runs: appleHealthSyncRuns,
+    coach_observations: [],
   };
 
   global.fetch = async (url, options = {}) => {
