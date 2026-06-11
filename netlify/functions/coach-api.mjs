@@ -51,6 +51,17 @@ function canonicalSource(type, source, fallback) {
   return `${normalizeSourceFamily(cleaned, fallback)}-daily`;
 }
 
+function statusForCoachApiError(err) {
+  const message = err?.message || "";
+  if ([
+    "Observation text is required.",
+    "A valid observation_id is required.",
+    "corrected_observation is required.",
+  ].includes(message)) return 400;
+  if (message === "Coach memory observation was not found.") return 404;
+  return 500;
+}
+
 function sanitizeMetric(value, { allowNegative = false } = {}) {
   const n = asNumber(value);
   if (n === null) return null;
@@ -529,8 +540,9 @@ export default async function handler(req) {
 
     return json({ error: "Not found." }, 404);
   } catch (err) {
-    console.error(err);
-    return json({ error: err.message || "Coach API error." }, 500);
+    const status = statusForCoachApiError(err);
+    if (status >= 500) console.error(err);
+    return json({ error: err.message || "Coach API error." }, status);
   }
 }
 

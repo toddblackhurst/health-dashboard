@@ -773,6 +773,7 @@ const COACH_MEMORY_LIFECYCLE_STATUSES = new Set(["proposed", "active", "needs_re
 const COACH_MEMORY_CONFIDENCE = new Set(["low", "medium", "high"]);
 const COACH_MEMORY_SAFETY_CATEGORIES = new Set(["pain_pattern", "safety_constraint", "recovery_pattern"]);
 const COACH_MEMORY_SECRET_KEY = /(secret|token|password|authorization|api[_-]?key|x-coach-secret|cookie)/i;
+const COACH_MEMORY_SECRET_VALUE = /\b(x-coach-secret|authorization)\b|bearer\s+[a-z0-9._~+/=-]+|(?:secret|token|password|api[_-]?key|coach_api_secret)\s*[:=]\s*\S+/i;
 const COACH_MEMORY_CONTEXT_TERMS = {
   build_workout: ["training", "exercise", "workout", "equipment", "floor", "schedule", "recovery", "pain", "safety", "style"],
   brief: ["training", "exercise", "workout", "nutrition", "recovery", "schedule", "pain", "safety", "style"],
@@ -823,10 +824,16 @@ function normalizeCoachMemoryDate(value, fallback = null) {
   return fallback;
 }
 
+function sanitizeCoachMemoryText(value, maxLength = 900) {
+  const text = truncate(String(value || "").trim(), maxLength);
+  if (!text) return "";
+  return COACH_MEMORY_SECRET_VALUE.test(text) ? "[redacted secret-like text]" : text;
+}
+
 function sanitizeCoachMemoryPayload(value, depth = 0) {
   if (value === undefined) return undefined;
   if (value === null || typeof value === "number" || typeof value === "boolean") return value;
-  if (typeof value === "string") return truncate(value, 900);
+  if (typeof value === "string") return sanitizeCoachMemoryText(value, 900);
   if (depth >= 4) return "[truncated]";
   if (Array.isArray(value)) {
     return value
@@ -940,7 +947,7 @@ function sortCoachMemoryRows(a, b, intent, text) {
 }
 
 export async function createCoachObservation(profileId, input = {}) {
-  const observation = truncate(String(input.observation || input.memory || "").trim(), 900);
+  const observation = sanitizeCoachMemoryText(input.observation || input.memory || "", 900);
   if (!profileId) throw new Error("Profile id is required.");
   if (!observation) throw new Error("Observation text is required.");
   const category = normalizeCoachMemoryCategory(input.category);
@@ -955,10 +962,10 @@ export async function createCoachObservation(profileId, input = {}) {
     observation,
     evidence: normalizeCoachMemoryEvidence(input.evidence),
     confidence: normalizeCoachMemoryConfidence(input.confidence),
-    action_taken: truncate(input.action_taken || input.action || "", 500) || null,
+    action_taken: sanitizeCoachMemoryText(input.action_taken || input.action || "", 500) || null,
     review_date: normalizeCoachMemoryDate(input.review_date, null),
     status: dbStatusForCoachMemory(lifecycleStatus),
-    source: truncate(input.source || "custom-gpt", 120),
+    source: sanitizeCoachMemoryText(input.source || "custom-gpt", 120) || "custom-gpt",
     raw: {
       ...raw,
       memory_lifecycle_status: lifecycleStatus,
@@ -1014,20 +1021,21 @@ async function patchCoachObservation(profileId, observationId, patch = {}) {
 }
 
 export async function correctCoachObservation(profileId, input = {}) {
-  const existing = await getCoachObservation(profileId, input.observation_id || input.id);
-  const correctedObservation = truncate(String(input.corrected_observation || input.observation || "").trim(), 900);
+  const correctedObservation = sanitizeCoachMemoryText(input.corrected_observation || input.observation || "", 900);
   if (!correctedObservation) throw new Error("corrected_observation is required.");
+  const existing = await getCoachObservation(profileId, input.observation_id || input.id);
   const raw = existing.raw && typeof existing.raw === "object" ? existing.raw : {};
-  const lifecycleStatus = normalizeCoachMemoryLifecycle(input.lifecycle_status || input.status || "active");
+  const existingLifecycleStatus = normalizeCoachMemoryLifecycle(raw.memory_lifecycle_status || raw.lifecycle_status || existing.status || "active");
+  const lifecycleStatus = normalizeCoachMemoryLifecycle(input.lifecycle_status || input.status || existingLifecycleStatus);
   return patchCoachObservation(profileId, existing.id, {
     observation: correctedObservation,
     category: input.category ? normalizeCoachMemoryCategory(input.category) : existing.category,
     evidence: input.evidence ? normalizeCoachMemoryEvidence(input.evidence) : existing.evidence,
     confidence: normalizeCoachMemoryConfidence(input.confidence || existing.confidence),
-    action_taken: truncate(input.action_taken || input.action || existing.action_taken || "", 500) || null,
+    action_taken: sanitizeCoachMemoryText(input.action_taken || input.action || existing.action_taken || "", 500) || null,
     review_date: normalizeCoachMemoryDate(input.review_date, existing.review_date),
     status: dbStatusForCoachMemory(lifecycleStatus),
-    source: truncate(input.source || existing.source || "custom-gpt", 120),
+    source: sanitizeCoachMemoryText(input.source || existing.source || "custom-gpt", 120) || "custom-gpt",
     updated_at: new Date().toISOString(),
     raw: {
       ...raw,

@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-11
+Last updated: 2026-06-11, after local Coach Memory / Observations v1 implementation checks.
 
 ## 1. Project Purpose
 
@@ -40,7 +40,14 @@ Current known working action set includes:
 - `buildTodayWorkout`
 - `nutritionCloseout`
 
-Coach Memory / Observations v1 is the next active build target and should add safe, reviewable memory actions after implementation and approval.
+Coach Memory / Observations v1 is implemented locally on branch `coach-memory-observations-v1` and is not merged or deployed.
+
+Local OpenAPI now adds:
+
+- `recordCoachObservation`
+- `listCoachMemory`
+- `correctCoachMemory`
+- `retireCoachMemory`
 
 ## 5. Authentication Rules
 
@@ -99,7 +106,26 @@ Current local branch state:
 - Branch: `coach-memory-observations-v1`
 - Base observed on 2026-06-11: `origin/main` at `0c7a0e2 Daily brief refresh - 2026-06-11`
 - Local branch already contains an unpushed Coach Memory / Observations v1 implementation commit `644a456 Add coach memory observations v1`.
+- Phase 0 handoff file commit: `876aa33 Add coach current state handoff`.
 - This handoff file was added after discovering that local feature commit; do not rewrite history without Todd's explicit approval.
+
+Coach Memory / Observations v1 local work status:
+
+- Local endpoints added through `netlify.toml` clean routes and `coach-api.mjs` action routing:
+  - `POST /api/coach/observations`
+  - `GET /api/coach/memory`
+  - `POST /api/coach/memory/correct`
+  - `POST /api/coach/memory/retire`
+- Retrieval added to `coach-today` and workout decisions through `coach_memory_context`.
+- Memory context is labeled as durable Supabase observation context, not fresh sensor data.
+- Memory warning policy says current BP, doctor guidance, migraine, asthma, sharp/radiating/worsening pain, and fresh readiness data win.
+- Tests run locally on 2026-06-11: `node --test tests/*.test.mjs`, `65/65` passing.
+- Read-only reviewer findings fixed locally:
+  - Correction now preserves non-active lifecycle by default instead of promoting proposed/retired memory to active.
+  - Known memory validation failures now return `400`, missing observations return `404`, and server/config/Supabase failures remain `500`.
+  - Secret-like string values in memory payloads are redacted before storage/return.
+- Migration status: no migration was applied. No new migration file was created because existing migration `supabase/migrations/005_apple_health_sync.sql` already defines `coach_observations` with `status`, `evidence`, `confidence`, `action_taken`, `review_date`, `source`, `raw`, timestamps, and RLS. Proposed/superseded lifecycle metadata is stored in `raw.memory_lifecycle_status` while DB `status` remains within the existing constraint.
+- Production status: not deployed from this branch. Public production OpenAPI was checked on 2026-06-11 and returned `200`, but it reflects current production, not this unmerged branch. Public production `/api/coach/workout` without `x-coach-secret` returned `401`.
 
 ## 8. Known Caveats
 
@@ -107,6 +133,7 @@ Current local branch state:
 - Do not deploy manually without Todd's explicit approval.
 - Do not merge PRs without Todd's explicit approval.
 - Do not apply Supabase migrations without Todd's explicit approval.
+- No Supabase migration has been applied for Coach Memory / Observations v1 in this branch.
 - Do not begin unrelated phases early.
 - Workout Debrief Capture is intentionally deferred until after Coach Memory / Observations v1 unless Todd explicitly widens scope.
 - Garmin official API integration may be valuable later, but it depends on Garmin developer approval and should not block Coach Memory.
@@ -116,8 +143,8 @@ Current local branch state:
 
 Recommended sequence:
 
-1. Create/update `COACH_CURRENT_STATE.md`.
-2. Coach Memory / Observations v1.
+1. Create/update `COACH_CURRENT_STATE.md`. Completed locally on branch `coach-memory-observations-v1`.
+2. Coach Memory / Observations v1. Implemented locally; pending read-only review completion, Todd approval to push/open PR if needed, and separate approval before any deploy/merge/migration.
 3. Workout Debrief Capture.
 4. iOS Siri/Shortcuts Readiness PR.
 5. Apple Health workout-level intake.
@@ -127,12 +154,12 @@ Recommended sequence:
 
 Coach Memory / Observations v1 target:
 
-- Store durable, reviewable, correctable, retireable, evidence-based observations in Supabase.
-- Retrieve relevant active observations into `coach-today` and `buildTodayWorkout`.
-- Include `coach_memory_context` with `summary`, `relevant_observations`, `memory_warnings`, and `last_updated`.
-- Keep memory deterministic and non-authoritative over safety/current data.
-- Add or update OpenAPI actions for recording, listing, correcting, and retiring memory.
-- Add tests for auth, lifecycle, retrieval, retired exclusion, Red safety protection, hard medical/safety protection, current-data precedence, and OpenAPI security.
+- Store durable, reviewable, correctable, retireable, evidence-based observations in Supabase. Implemented locally.
+- Retrieve relevant active observations into `coach-today` and `buildTodayWorkout`. Implemented locally.
+- Include `coach_memory_context` with `summary`, `relevant_observations`, `memory_warnings`, and `last_updated`. Implemented locally.
+- Keep memory deterministic and non-authoritative over safety/current data. Implemented locally and covered by tests.
+- Add or update OpenAPI actions for recording, listing, correcting, and retiring memory. Implemented locally.
+- Add tests for auth, lifecycle, retrieval, retired exclusion, Red safety protection, hard medical/safety protection, current-data precedence, validation errors, secret-like text redaction, and OpenAPI security. Implemented locally; current suite passes `65/65`.
 
 ## 10. Non-Negotiable File Rule
 
