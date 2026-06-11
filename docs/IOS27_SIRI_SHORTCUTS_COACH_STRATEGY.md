@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-11.
 
-Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Coach Memory branch.
+Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Workout Debrief branch.
 
 Current implementation status: design and research only. No iOS 27 feature implementation has started in this branch.
 
@@ -63,6 +63,8 @@ Current behavior:
 - API base is stored in app settings and the API secret is read from Keychain.
 - Requests authenticate through `x-coach-secret`; the secret is never an intent parameter and must stay out of Shortcut outputs, Siri dialog, widgets, notifications, Spotlight, logs, screenshots, and docs.
 
+Workout Debrief Capture v1 adds a backend candidate for a future App Intent or Shortcut phrase such as "Record my workout debrief." The backend action is designed around structured fields for completion status, RPE, energy, pain, symptoms, modifications, skipped work, notes, and memory-candidate review, but no iOS debrief intent is implemented in this PR.
+
 ## 4. Siri AI And App Intents Direction
 
 Recommended posture:
@@ -87,6 +89,7 @@ Recommended upgrades:
 - Add stable output fields that user-created Shortcuts can consume.
 - Use clearer parameter titles and defaults, especially for sync day count.
 - Return predictable, redacted, non-secret error messages.
+- For a future workout debrief intent, return `safety_outcome`, `debrief_summary`, `next_recommendation_constraints`, and `requires_follow_up` without exposing raw payloads or secrets.
 - Avoid `Duration` and `LPLinkMetadata` in Coach App Intents for now because of the iOS and iPadOS 27 beta Shortcuts known issue involving those types and "Describe a Shortcut."
 - Avoid App enum value-dependent AppShortcut phrases for critical coach actions because the Xcode 27 beta release notes identify a Siri known issue with AppShortcut phrases that include App enum values.
 - Do not let Shortcuts "Use Model" output determine medical, safety, or workout intensity decisions.
@@ -433,6 +436,7 @@ Recommended output fields for Coach Intents:
 - `workout_type`: `strength`, `modified_strength`, `zone2`, `recovery`, `mobility`, `none`, or `unknown`
 - `primary_constraints`: array of short constraints
 - `coach_memory_context`: short summary only, no raw memory dump
+- `workout_debrief_context`: short summary and constraints only, no raw debrief payload dump
 - `next_best_action`: one clear next action
 - `requires_medical_caution`: boolean
 - `source_freshness`: concise source freshness summary
@@ -463,23 +467,22 @@ Rules:
 
 Recommended sequence:
 
-1. Finish Coach Memory branch. Push/open PR only after Todd approval.
-2. Coach Memory merge/deploy only after Todd approval.
-3. Workout Debrief Capture.
-4. iOS 27 Siri/Shortcuts Readiness PR.
-5. Apple Health workout-level intake.
-6. Rack/Motra import/debrief support.
-7. Weekly Review Engine.
-8. Garmin official integration track if approved.
+1. Review Workout Debrief Capture v1. Push/open PR only after Todd approval.
+2. Merge/deploy Workout Debrief Capture only after Todd approval, and apply its Supabase migration only after separate explicit approval.
+3. iOS 27 Siri/Shortcuts Readiness PR.
+4. Apple Health workout-level intake.
+5. Rack/Motra import/debrief support.
+6. Weekly Review Engine.
+7. Garmin official integration track if approved.
 
 Alternate sequence if Todd wants iOS work pulled forward:
 
-1. Finish Coach Memory branch.
-2. iOS 27 Siri/Shortcuts Research PR, documentation-only.
-3. Workout Debrief Capture.
+1. Finish local Workout Debrief review and handoff.
+2. iOS 27 Siri/Shortcuts Readiness PR, documentation-only.
+3. Workout Debrief migration/deploy approval if the backend branch has merged.
 4. iOS 27 Siri/Shortcuts Implementation PR.
 
-Do not mix the large iOS implementation into the current Coach Memory branch unless Todd explicitly approves a stacked branch.
+Do not mix the large iOS implementation into the current Workout Debrief branch unless Todd explicitly approves a stacked branch.
 
 ## 19. Review Checklist For Future PR
 

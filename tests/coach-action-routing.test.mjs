@@ -40,6 +40,9 @@ test("coach memory actions are exposed as clean GPT action routes", async () => 
     ["/api/coach/memory", "get", "listCoachMemory", "list-memory"],
     ["/api/coach/memory/correct", "post", "correctCoachMemory", "correct-memory"],
     ["/api/coach/memory/retire", "post", "retireCoachMemory", "retire-memory"],
+    ["/api/coach/workout-debrief", "post", "recordWorkoutDebrief", "workout-debrief"],
+    ["/api/coach/workout-debriefs", "get", "listWorkoutDebriefs", "workout-debriefs"],
+    ["/api/coach/motra-template", "post", "buildMotraDebriefTemplate", "motra-template"],
   ];
 
   for (const [route, method, operationId, action] of routes) {
