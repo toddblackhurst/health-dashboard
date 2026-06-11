@@ -4,6 +4,7 @@ import {
 } from "./apple-health-daily.mjs";
 import {
   buildCoachToday,
+  buildMotraDebriefTemplate,
   buildSyncStatus,
   compactDashboard,
   correctCoachObservation,
@@ -60,8 +61,10 @@ function statusForCoachApiError(err) {
     "A valid observation_id is required.",
     "corrected_observation is required.",
     "Workout debrief payload contains secret-like content.",
+    "Motra template payload contains secret-like content.",
     "workout_date must be YYYY-MM-DD.",
     "completion_status is required.",
+    "motra_text is required.",
     "session_rpe must be between 1 and 10.",
     "energy_before must be between 1 and 10.",
     "energy_after must be between 1 and 10.",
@@ -151,7 +154,7 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "sync-status", "coach-today", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout", "workout-debrief", "workout-debriefs", "observations", "memory"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "sync-status", "coach-today", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout", "workout-debrief", "workout-debriefs", "motra-template", "observations", "memory"].includes(pathAction) ? pathAction : null)
       || "dashboard";
 
     if (req.method === "GET" && ["dashboard", "sync-status", "coach-today"].includes(action)) {
@@ -238,6 +241,11 @@ export default async function handler(req) {
         limit: url.searchParams.get("limit") || 10,
       });
       return json({ ok: true, action: "list-workout-debriefs", count: debriefs.length, debriefs });
+    }
+
+    if (req.method === "POST" && action === "motra-template") {
+      const body = await req.json().catch(() => ({}));
+      return json(buildMotraDebriefTemplate(body));
     }
 
     if (req.method === "POST" && ["brief", "workout", "nutrition-closeout", "post-workout"].includes(action)) {

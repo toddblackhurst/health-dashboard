@@ -388,6 +388,25 @@ test("OpenAPI exposes recordWorkoutDebrief with x-coach-secret security", () => 
   assert.ok(JSON.stringify(openapi.components.schemas.DirectCoachActionResponse).includes("workout_debrief_context"));
 });
 
+test("buildMotraDebriefTemplate route returns an exercise debrief template", async () => {
+  installMockSupabase();
+
+  const res = await handler(coachPost("motra-template", {
+    motra_text: [
+      "Controlled Chest Day",
+      "Incline Dumbbell Press",
+      "Single Arm Row",
+      "Total Volume 4500 kg",
+    ].join("\n"),
+  }));
+  const body = await res.json();
+
+  assert.equal(res.status, 200);
+  assert.equal(body.action, "motra-template");
+  assert.match(body.debrief_template, /Incline Dumbbell Press/);
+  assert.ok(body.parsed_motra.exercises.includes("Single Arm Row"));
+});
+
 test("HEALTH_DATABASE.json remains outside workout debrief implementation", () => {
   const statusText = readFileSync(new URL("../HEALTH_DATABASE.json", import.meta.url), "utf8");
   assert.ok(statusText.length > 0);

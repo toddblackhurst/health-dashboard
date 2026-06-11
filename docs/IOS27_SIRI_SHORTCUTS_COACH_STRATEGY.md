@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-11.
 
-Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Coach Memory branch.
+Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Workout Debrief branch.
 
 Current implementation status: design and research only. No iOS 27 feature implementation has started in this branch.
 
@@ -467,23 +467,22 @@ Rules:
 
 Recommended sequence:
 
-1. Finish Coach Memory branch. Push/open PR only after Todd approval.
-2. Coach Memory merge/deploy only after Todd approval.
-3. Workout Debrief Capture.
-4. iOS 27 Siri/Shortcuts Readiness PR.
-5. Apple Health workout-level intake.
-6. Rack/Motra import/debrief support.
-7. Weekly Review Engine.
-8. Garmin official integration track if approved.
+1. Review Workout Debrief Capture v1. Push/open PR only after Todd approval.
+2. Merge/deploy Workout Debrief Capture only after Todd approval, and apply its Supabase migration only after separate explicit approval.
+3. iOS 27 Siri/Shortcuts Readiness PR.
+4. Apple Health workout-level intake.
+5. Rack/Motra import/debrief support.
+6. Weekly Review Engine.
+7. Garmin official integration track if approved.
 
 Alternate sequence if Todd wants iOS work pulled forward:
 
-1. Finish Coach Memory branch.
-2. iOS 27 Siri/Shortcuts Research PR, documentation-only.
-3. Workout Debrief Capture.
+1. Finish local Workout Debrief review and handoff.
+2. iOS 27 Siri/Shortcuts Readiness PR, documentation-only.
+3. Workout Debrief migration/deploy approval if the backend branch has merged.
 4. iOS 27 Siri/Shortcuts Implementation PR.
 
-Do not mix the large iOS implementation into the current Coach Memory branch unless Todd explicitly approves a stacked branch.
+Do not mix the large iOS implementation into the current Workout Debrief branch unless Todd explicitly approves a stacked branch.
 
 ## 19. Review Checklist For Future PR
 

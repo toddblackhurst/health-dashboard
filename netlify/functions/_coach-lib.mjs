@@ -1460,6 +1460,66 @@ export function getWorkoutDebriefContext(base = {}, { limit = 5 } = {}) {
   };
 }
 
+function parseMotraExerciseNames(text = "") {
+  const seen = new Set();
+  const names = [];
+  const skip = /\b(duration|workout|total|volume|calories|heart rate|avg|average|max|started|ended|date|notes?|summary|sets?|reps?|weight|rest|personal record)\b/i;
+  for (const rawLine of String(text || "").split(/\r?\n/)) {
+    const line = rawLine
+      .trim()
+      .replace(/^[\-*•\d.)\s]+/, "")
+      .replace(/\s{2,}/g, " ");
+    if (!line || line.length < 3 || line.length > 90) continue;
+    if (!/[a-z]/i.test(line) || skip.test(line)) continue;
+    const name = line
+      .replace(/\s+(?:x|×)\s*\d+.*$/i, "")
+      .replace(/\s+\d+\s*(?:kg|lbs?|reps?|sec|seconds?|min|minutes?)\b.*$/i, "")
+      .replace(/\s+\([^)]*\)\s*$/i, "")
+      .trim();
+    if (!name || name.length < 3 || skip.test(name)) continue;
+    const key = name.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    names.push(name);
+    if (names.length >= 24) break;
+  }
+  return names;
+}
+
+export function buildMotraDebriefTemplate(input = {}) {
+  if (hasSecretLikeText(input)) throw new Error("Motra template payload contains secret-like content.");
+  const motraText = String(input.motra_text || input.text || "").trim();
+  if (!motraText) throw new Error("motra_text is required.");
+  const exercises = parseMotraExerciseNames(motraText);
+  const fallbackLines = [
+    "Overall RPE:",
+    "Pain/symptoms:",
+    "Best movement:",
+    "Worst movement:",
+    "Changes for next time:",
+  ];
+  const exerciseLines = exercises.length
+    ? exercises.map(name => `- ${name}: completed? notes / pain / load comments:`)
+    : ["- Exercise notes: paste any movements Motra listed and add completion, pain, and load comments:"];
+  return {
+    ok: true,
+    action: "motra-template",
+    debrief_template: [
+      "Workout debrief",
+      ...fallbackLines,
+      "",
+      "Exercise notes",
+      ...exerciseLines,
+    ].join("\n"),
+    parsed_motra: {
+      exercise_count: exercises.length,
+      exercises,
+      source: "motra_export_text",
+      authority_boundary: "Template parsing is convenience only. Rack/Motra remains completed strength-log authority after Todd submits the final debrief/log.",
+    },
+  };
+}
+
 function asNumber(value) {
   if (value === undefined || value === null || value === "") return null;
   const n = Number(value);

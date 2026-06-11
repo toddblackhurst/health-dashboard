@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-11 17:29 CST, after local Workout Debrief Capture v1 implementation and tests on `workout-debrief-capture-v1`.
+Last updated: 2026-06-11 17:36 CST, after read-only reviewer fixes and tests on `workout-debrief-capture-v1`.
 
 ## 1. Project Purpose
 
@@ -65,6 +65,11 @@ Local branch OpenAPI adds Workout Debrief Capture v1 actions:
 - `recordWorkoutDebrief`
 - `listWorkoutDebriefs`
 
+Local branch also fixes the previously exposed but unimplemented Motra template route:
+
+- `POST /api/coach/motra-template`
+- `buildMotraDebriefTemplate`
+
 ## 5. Authentication Rules
 
 - Custom GPT Actions authenticate with the custom header `x-coach-secret`.
@@ -123,7 +128,9 @@ Current branch and PR state:
 - Current local branch for next workstream: `workout-debrief-capture-v1`
 - Branch status: local only; not pushed.
 - First branch commit: `dbcd761 Update handoff after Coach Memory production deploy`.
-- Workout Debrief Capture v1 is implemented locally and tested, but not pushed, opened as a PR, merged, deployed, or production-verified.
+- Feature implementation commit: `436ef80 Add workout debrief capture v1`.
+- Reviewer fix commit: committed after this handoff update.
+- Workout Debrief Capture v1 is implemented locally and tested, with reviewer fixes applied, but not pushed, opened as a PR, merged, deployed, or production-verified.
 - Pull request: PR #12, `Coach Memory Observations v1 + iOS 27 Coach Strategy`, `https://github.com/toddblackhurst/health-dashboard/pull/12`.
 - PR state: merged into `main`.
 - Merge commit: `f9f36ea3c78755c9acbf306aac65449eb6355444`.
@@ -195,7 +202,12 @@ Workout Debrief Capture v1 local status:
   - Memory candidates are returned as reviewable/proposed context only; no active Coach Memory observation is silently created.
 - Test result after implementation:
   - `node --test tests/*.test.mjs`
-  - `78/78` passing.
+  - `79/79` passing after reviewer fixes.
+- Read-only reviewer follow-up fixes:
+  - API/OpenAPI/Auth reviewer found that `/api/coach/motra-template` was already exposed in OpenAPI and `netlify.toml` but fell through to `404`. Fixed by adding `buildMotraDebriefTemplate`, wiring the handler, and adding route/behavior tests.
+  - iOS 27 readiness/privacy reviewer found stale strategy-doc language saying Coach Memory was still the current branch. Fixed doc wording and sequence to reflect `workout-debrief-capture-v1`.
+  - Safety/source hierarchy reviewer found no issues.
+  - Data model/lifecycle reviewer found no issues.
 - External action status:
   - No push.
   - No PR opened.
@@ -217,6 +229,7 @@ iOS 27 Siri/Shortcuts research status:
 - Strategy document added: `docs/IOS27_SIRI_SHORTCUTS_COACH_STRATEGY.md`.
 - Implementation status: documentation/architecture only. No iOS 27 feature implementation has started in this branch.
 - Workout Debrief Capture is documented as a future Siri/App Intent candidate only. The backend response is structured for future Shortcuts/App Intents with `safety_outcome`, `debrief_summary`, `next_recommendation_constraints`, and `requires_follow_up`.
+- Stale strategy sequence language from the old Coach Memory branch has been corrected.
 - Important beta caveats captured:
   - Avoid `Duration` and `LPLinkMetadata` in Coach App Intents for now unless necessary because of an iOS and iPadOS 27 beta Shortcuts known issue involving "Describe a Shortcut."
   - Avoid enum-value-dependent AppShortcut phrases for critical coach actions because of an Xcode 27 beta Siri/AppShortcut known issue.
@@ -253,9 +266,9 @@ Recommended sequence:
 
 Alternate sequence if Todd wants iOS work pulled forward:
 
-1. Finish Coach Memory branch.
-2. iOS 27 Siri/Shortcuts Research PR, documentation-only.
-3. Workout Debrief Capture.
+1. Finish local Workout Debrief review and handoff.
+2. iOS 27 Siri/Shortcuts Readiness PR, documentation-only.
+3. Workout Debrief migration/deploy approval if the backend branch has merged.
 4. iOS 27 Siri/Shortcuts Implementation PR.
 
 Coach Memory / Observations v1 completed target:
