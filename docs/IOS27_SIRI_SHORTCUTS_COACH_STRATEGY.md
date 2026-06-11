@@ -63,6 +63,8 @@ Current behavior:
 - API base is stored in app settings and the API secret is read from Keychain.
 - Requests authenticate through `x-coach-secret`; the secret is never an intent parameter and must stay out of Shortcut outputs, Siri dialog, widgets, notifications, Spotlight, logs, screenshots, and docs.
 
+Workout Debrief Capture v1 adds a backend candidate for a future App Intent or Shortcut phrase such as "Record my workout debrief." The backend action is designed around structured fields for completion status, RPE, energy, pain, symptoms, modifications, skipped work, notes, and memory-candidate review, but no iOS debrief intent is implemented in this PR.
+
 ## 4. Siri AI And App Intents Direction
 
 Recommended posture:
@@ -87,6 +89,7 @@ Recommended upgrades:
 - Add stable output fields that user-created Shortcuts can consume.
 - Use clearer parameter titles and defaults, especially for sync day count.
 - Return predictable, redacted, non-secret error messages.
+- For a future workout debrief intent, return `safety_outcome`, `debrief_summary`, `next_recommendation_constraints`, and `requires_follow_up` without exposing raw payloads or secrets.
 - Avoid `Duration` and `LPLinkMetadata` in Coach App Intents for now because of the iOS and iPadOS 27 beta Shortcuts known issue involving those types and "Describe a Shortcut."
 - Avoid App enum value-dependent AppShortcut phrases for critical coach actions because the Xcode 27 beta release notes identify a Siri known issue with AppShortcut phrases that include App enum values.
 - Do not let Shortcuts "Use Model" output determine medical, safety, or workout intensity decisions.
@@ -433,6 +436,7 @@ Recommended output fields for Coach Intents:
 - `workout_type`: `strength`, `modified_strength`, `zone2`, `recovery`, `mobility`, `none`, or `unknown`
 - `primary_constraints`: array of short constraints
 - `coach_memory_context`: short summary only, no raw memory dump
+- `workout_debrief_context`: short summary and constraints only, no raw debrief payload dump
 - `next_best_action`: one clear next action
 - `requires_medical_caution`: boolean
 - `source_freshness`: concise source freshness summary

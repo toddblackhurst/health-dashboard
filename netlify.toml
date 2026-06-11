@@ -55,6 +55,16 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/workout-debrief"
+  to = "/api/coach?action=workout-debrief"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/workout-debriefs"
+  to = "/api/coach?action=workout-debriefs"
+  status = 200
+
+[[redirects]]
   from = "/api/coach/observations"
   to = "/api/coach?action=record-observation"
   status = 200

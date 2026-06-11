@@ -23,7 +23,10 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["0", "1"]
+              "enum": [
+                "0",
+                "1"
+              ]
             },
             "description": "Set to 1 for full Supabase context instead of the compact dashboard."
           }
@@ -266,7 +269,14 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["proposed", "active", "needs_review", "retired", "superseded", "all"]
+              "enum": [
+                "proposed",
+                "active",
+                "needs_review",
+                "retired",
+                "superseded",
+                "all"
+              ]
             },
             "description": "Observation status or lifecycle bucket to list. Proposed maps to needs_review storage; superseded maps to retired storage. Default is active."
           },
@@ -296,7 +306,10 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["0", "1"],
+              "enum": [
+                "0",
+                "1"
+              ],
               "default": "0"
             },
             "description": "Set to 1 to include Apple Health and other data-sync observations."
@@ -431,17 +444,114 @@
           }
         }
       }
+    },
+    "/api/coach/workout-debrief": {
+      "post": {
+        "operationId": "recordWorkoutDebrief",
+        "summary": "Record a structured workout debrief",
+        "description": "Stores Todd-reported subjective workout response data including completion status, RPE, energy, pain/symptoms, modifications, skipped work, user-reported completed exercises, and coaching feedback. Red-flag symptoms produce a red_flag safety_outcome and cannot authorize hard training. Completed exercises are user-reported only; Rack/Motra remains completed strength-set authority and Garmin remains primary workout physiology/recovery evidence when fresh and reliably worn.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkoutDebriefRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workout debrief recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutDebriefResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid debrief payload"
+          },
+          "401": {
+            "description": "Invalid coach API secret"
+          }
+        }
+      }
+    },
+    "/api/coach/workout-debriefs": {
+      "get": {
+        "operationId": "listWorkoutDebriefs",
+        "summary": "List recent workout debriefs",
+        "description": "Returns recent subjective workout debrief event records for review. This does not return Rack/Motra completed-set authority.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recent workout debriefs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "action": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "debriefs": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WorkoutDebriefRecord"
+                      }
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid coach API secret"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "CoachIntent": {
         "type": "string",
-        "enum": ["general", "brief", "build_workout", "evaluate_data", "nutrition_check", "post_workout", "travel_mode"]
+        "enum": [
+          "general",
+          "brief",
+          "build_workout",
+          "evaluate_data",
+          "nutrition_check",
+          "post_workout",
+          "travel_mode"
+        ]
       },
       "CoachMessageRequest": {
         "type": "object",
-        "required": ["text"],
+        "required": [
+          "text"
+        ],
         "properties": {
           "text": {
             "type": "string",
@@ -477,7 +587,12 @@
           },
           "requested_session_type": {
             "type": "string",
-            "enum": ["workout", "strength", "goal_support", "recovery"],
+            "enum": [
+              "workout",
+              "strength",
+              "goal_support",
+              "recovery"
+            ],
             "description": "Optional session request. Use strength for explicit lifting requests, recovery for safety/recovery sessions, and goal_support for walk/Zone 2/mobility sessions."
           },
           "schedule_override": {
@@ -513,17 +628,29 @@
         "description": "Reviewable coach memory observation from Supabase. It is advisory memory, not fresh sensor data and not a safety override.",
         "properties": {
           "id": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "observation_date": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date"
           },
           "category": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "observation": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "evidence": {
             "type": "array",
@@ -534,28 +661,62 @@
           },
           "confidence": {
             "type": "string",
-            "enum": ["low", "medium", "high"]
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
           },
           "status": {
-            "type": ["string", "null"],
-            "enum": ["active", "needs_review", "retired", null]
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "active",
+              "needs_review",
+              "retired",
+              null
+            ]
           },
           "lifecycle_status": {
-            "type": ["string", "null"],
-            "enum": ["proposed", "active", "needs_review", "retired", "superseded", null]
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "proposed",
+              "active",
+              "needs_review",
+              "retired",
+              "superseded",
+              null
+            ]
           },
           "action": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "action_taken": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "review_date": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date"
           },
           "source": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "action_contexts": {
             "type": "array",
@@ -564,16 +725,28 @@
             }
           },
           "last_used_at": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "supersedes": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "replaced_by": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "priority": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "relevance": {
             "type": "array",
@@ -582,17 +755,26 @@
             }
           },
           "freshness_label": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Always memory for retrieved context; this is not fresh sensor data."
           },
           "sensor_data": {
             "type": "boolean"
           },
           "created_at": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "updated_at": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "additionalProperties": true
@@ -629,14 +811,19 @@
             "additionalProperties": true
           },
           "last_updated": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "additionalProperties": true
       },
       "CoachObservationRequest": {
         "type": "object",
-        "required": ["observation"],
+        "required": [
+          "observation"
+        ],
         "properties": {
           "observation": {
             "type": "string"
@@ -658,12 +845,22 @@
           },
           "confidence": {
             "type": "string",
-            "enum": ["low", "medium", "high"],
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
             "default": "medium"
           },
           "status": {
             "type": "string",
-            "enum": ["proposed", "active", "needs_review", "retired", "superseded"],
+            "enum": [
+              "proposed",
+              "active",
+              "needs_review",
+              "retired",
+              "superseded"
+            ],
             "default": "active"
           },
           "action": {
@@ -733,7 +930,10 @@
       },
       "CoachMemoryCorrectionRequest": {
         "type": "object",
-        "required": ["observation_id", "corrected_observation"],
+        "required": [
+          "observation_id",
+          "corrected_observation"
+        ],
         "properties": {
           "observation_id": {
             "type": "string"
@@ -746,7 +946,11 @@
           },
           "confidence": {
             "type": "string",
-            "enum": ["low", "medium", "high"]
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
           },
           "action": {
             "type": "string"
@@ -764,7 +968,9 @@
       },
       "CoachMemoryRetireRequest": {
         "type": "object",
-        "required": ["observation_id"],
+        "required": [
+          "observation_id"
+        ],
         "properties": {
           "observation_id": {
             "type": "string"
@@ -784,7 +990,9 @@
       },
       "MotraTemplateRequest": {
         "type": "object",
-        "required": ["motra_text"],
+        "required": [
+          "motra_text"
+        ],
         "properties": {
           "motra_text": {
             "type": "string",
@@ -821,7 +1029,12 @@
             "properties": {
               "color": {
                 "type": "string",
-                "enum": ["Green", "Yellow", "Orange", "Red"]
+                "enum": [
+                  "Green",
+                  "Yellow",
+                  "Orange",
+                  "Red"
+                ]
               },
               "readiness_tier": {
                 "type": "string"
@@ -906,6 +1119,9 @@
               "source_context": {
                 "type": "object",
                 "additionalProperties": true
+              },
+              "workout_debrief_context": {
+                "$ref": "#/components/schemas/WorkoutDebriefContext"
               }
             },
             "additionalProperties": true
@@ -978,7 +1194,10 @@
             "additionalProperties": true
           },
           "workout_plan": {
-            "type": ["object", "null"],
+            "type": [
+              "object",
+              "null"
+            ],
             "description": "Deterministic workout plan. Generated exercise objects may include name, rack_name, app_entry_name, tracking_app, motra_name, equipment, floor, prescription, prescription_text, sets, reps, load, rest, pro_coaching, feel, avoid, safety_modification, requested_session_type, schedule_override_applied, what_to_track, post_workout_debrief_prompt, and exercise_coaching_readout.",
             "additionalProperties": true
           },
@@ -990,7 +1209,10 @@
             }
           },
           "workout_request": {
-            "type": ["object", "null"],
+            "type": [
+              "object",
+              "null"
+            ],
             "description": "Parsed workout request metadata, including request_intent, requested_session_type, schedule_override, requested_for_date, requested_for_weekday, is_future_request, and planning_basis.",
             "additionalProperties": true
           },
@@ -1000,6 +1222,9 @@
           "source_context": {
             "type": "object",
             "additionalProperties": true
+          },
+          "workout_debrief_context": {
+            "$ref": "#/components/schemas/WorkoutDebriefContext"
           }
         },
         "additionalProperties": true
@@ -1018,6 +1243,9 @@
           },
           "decision": {
             "$ref": "#/components/schemas/CoachDecision"
+          },
+          "workout_debrief_context": {
+            "$ref": "#/components/schemas/WorkoutDebriefContext"
           }
         },
         "additionalProperties": true
@@ -1046,6 +1274,9 @@
           },
           "decision": {
             "$ref": "#/components/schemas/CoachDecision"
+          },
+          "workout_debrief_context": {
+            "$ref": "#/components/schemas/WorkoutDebriefContext"
           }
         },
         "additionalProperties": true
@@ -1058,7 +1289,10 @@
             "type": "integer"
           },
           "block": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "exercise_name": {
             "type": "string",
@@ -1124,11 +1358,23 @@
       },
       "CoachIntakeRequest": {
         "type": "object",
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["bp", "food", "body", "recovery", "activity", "strength", "workout", "doctor", "note"]
+            "enum": [
+              "bp",
+              "food",
+              "body",
+              "recovery",
+              "activity",
+              "strength",
+              "workout",
+              "doctor",
+              "note"
+            ]
           },
           "date": {
             "type": "string",
@@ -1266,6 +1512,452 @@
               "type": "object",
               "additionalProperties": true
             }
+          }
+        },
+        "additionalProperties": true
+      },
+      "WorkoutDebriefContext": {
+        "type": "object",
+        "description": "Recent Todd-reported workout response context. This is subjective debrief data only; it can constrain or personalize future coaching but does not replace Rack/Motra completed strength logs, Garmin workout physiology, Garmin readiness, or hard safety flags.",
+        "properties": {
+          "summary": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "coach_workout_debriefs"
+            ]
+          },
+          "recent_debriefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkoutDebriefRecord"
+            }
+          },
+          "response_patterns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "safety_warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "policy": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "last_updated": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": true
+      },
+      "WorkoutDebriefExercise": {
+        "type": "object",
+        "description": "User-reported exercise completion detail. This is not Rack/Motra authority for completed sets, reps, or load.",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "sets": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "reps": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "load": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true
+      },
+      "WorkoutDebriefRequest": {
+        "type": "object",
+        "description": "Record Todd-reported subjective workout feedback. Debriefs are event records and cannot override current hard safety flags, Garmin readiness/recovery, Garmin workout physiology, or Rack/Motra completed strength logs.",
+        "required": [
+          "workout_date",
+          "completion_status"
+        ],
+        "properties": {
+          "workout_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "workout_started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workout_completed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "custom_gpt",
+              "ios_app",
+              "shortcut",
+              "manual",
+              "web",
+              "api"
+            ]
+          },
+          "planned_workout_id": {
+            "type": "string"
+          },
+          "workout_title": {
+            "type": "string"
+          },
+          "workout_type": {
+            "type": "string",
+            "enum": [
+              "strength",
+              "cardio",
+              "mobility",
+              "recovery",
+              "mixed",
+              "unknown"
+            ]
+          },
+          "completion_status": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "partially_completed",
+              "skipped",
+              "stopped_early"
+            ]
+          },
+          "session_rpe": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "energy_before": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "energy_after": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "pain_reported": {
+            "type": "boolean"
+          },
+          "pain_locations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pain_severity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "pain_quality": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "symptoms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "red_flag_symptoms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "modifications": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "skipped_exercises": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "completed_exercises": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkoutDebriefExercise"
+            }
+          },
+          "notes": {
+            "type": "string"
+          },
+          "coach_feedback": {
+            "type": "string"
+          },
+          "nutrition_notes": {
+            "type": "string"
+          },
+          "sleep_recovery_notes": {
+            "type": "string"
+          },
+          "follow_up_needed": {
+            "type": "boolean"
+          },
+          "memory_candidate_summary": {
+            "type": "string",
+            "description": "Candidate memory summary only. The API returns this as proposed/needs-review context; it does not silently create active Coach Memory."
+          },
+          "save_memory_candidates": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "additionalProperties": true
+      },
+      "WorkoutDebriefRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "workout_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "workout_title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "workout_type": {
+            "type": "string"
+          },
+          "completion_status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "session_rpe": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "energy_before": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "energy_after": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "pain_reported": {
+            "type": "boolean"
+          },
+          "pain_locations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pain_severity": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "symptoms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "red_flag_symptoms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "modifications": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "skipped_exercises": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "completed_exercises": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkoutDebriefExercise"
+            }
+          },
+          "completed_exercises_authority": {
+            "type": "string",
+            "enum": [
+              "user_reported_not_rack_motra"
+            ]
+          },
+          "follow_up_needed": {
+            "type": "boolean"
+          },
+          "safety_outcome": {
+            "type": "string",
+            "enum": [
+              "none",
+              "caution",
+              "red_flag"
+            ]
+          },
+          "memory_candidate_summary": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "WorkoutDebriefResponse": {
+        "type": "object",
+        "required": [
+          "ok",
+          "debrief_id",
+          "safety_outcome",
+          "debrief_summary",
+          "requires_follow_up",
+          "last_updated"
+        ],
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string"
+          },
+          "debrief_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "safety_outcome": {
+            "type": "string",
+            "enum": [
+              "none",
+              "caution",
+              "red_flag"
+            ]
+          },
+          "debrief_summary": {
+            "type": "string"
+          },
+          "coach_takeaways": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "memory_candidates": {
+            "type": "array",
+            "description": "Reviewable candidates only. A single debrief is not silently promoted to active Coach Memory.",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "next_recommendation_constraints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requires_follow_up": {
+            "type": "boolean"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "last_updated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "debrief": {
+            "$ref": "#/components/schemas/WorkoutDebriefRecord"
           }
         },
         "additionalProperties": true

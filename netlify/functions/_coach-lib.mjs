@@ -21,6 +21,14 @@ const SOURCE_CONTEXT = {
   nutrition_primary: "Garmin Connect+ Nutrition",
   body_composition_trend: "Hume/Ocare trend only",
   coach_memory_role: "durable Supabase observations for continuity, preferences, constraints, and reviewable coaching learning",
+  workout_debrief_role: "Todd-reported subjective workout response event records",
+  workout_debrief_not_authority: [
+    "Rack/Motra completed strength sets/reps/load",
+    "Garmin workout physiology and recovery cost",
+    "current medical/safety flags",
+    "Garmin readiness/recovery",
+    "Apple Health authority",
+  ],
   coach_memory_not_authority: [
     "current BP",
     "doctor guidance",
@@ -208,6 +216,14 @@ async function safeSupabase(path, options = {}, fallback = null) {
     return await supabase(path, options);
   } catch (err) {
     console.warn(`Optional Supabase call skipped: ${err.message}`);
+    return fallback;
+  }
+}
+
+async function quietSupabase(path, options = {}, fallback = null) {
+  try {
+    return await supabase(path, options);
+  } catch {
     return fallback;
   }
 }
@@ -774,6 +790,21 @@ const COACH_MEMORY_CONFIDENCE = new Set(["low", "medium", "high"]);
 const COACH_MEMORY_SAFETY_CATEGORIES = new Set(["pain_pattern", "safety_constraint", "recovery_pattern"]);
 const COACH_MEMORY_SECRET_KEY = /(secret|token|password|authorization|api[_-]?key|x-coach-secret|cookie)/i;
 const COACH_MEMORY_SECRET_VALUE = /\b(x-coach-secret|authorization)\b|bearer\s+[a-z0-9._~+/=-]+|(?:secret|token|password|api[_-]?key|coach_api_secret)\s*[:=]\s*\S+/i;
+const WORKOUT_DEBRIEF_COMPLETION_STATUSES = new Set(["completed", "partially_completed", "skipped", "stopped_early"]);
+const WORKOUT_DEBRIEF_TYPES = new Set(["strength", "cardio", "mobility", "recovery", "mixed", "unknown"]);
+const WORKOUT_DEBRIEF_SOURCES = new Set(["custom_gpt", "ios_app", "shortcut", "manual", "web", "api"]);
+const WORKOUT_DEBRIEF_RED_FLAG_TERMS = [
+  { re: /\bchest\s+pain\b/i, label: "chest pain" },
+  { re: /\b(severe|bad|significant)\s+short(ness)?\s+of\s+breath\b|\bshort(ness)?\s+of\s+breath\b|\bcan'?t\s+breathe\b/i, label: "shortness of breath" },
+  { re: /\b(faint(ed|ing)?|syncope|passed\s+out|black(ed)?\s+out)\b/i, label: "fainting" },
+  { re: /\b(neuro(logical)?|slurred\s+speech|one[- ]sided|numb(ness)?|weakness|vision\s+loss|confusion)\b/i, label: "neurological symptoms" },
+  { re: /\bsharp\s+pain\b/i, label: "sharp pain" },
+  { re: /\bradiat(ing|es|ed)\s+pain\b/i, label: "radiating pain" },
+  { re: /\bworsen(ing|ed|s)?\s+pain\b|\bpain\s+(got|gets|is)\s+worse\b/i, label: "worsening pain" },
+  { re: /\bsevere\s+migraine\b|\bmigraine\b/i, label: "migraine" },
+  { re: /\basthma\s+(flare|attack|issue|problem)\b|\bwheez(ing|e)\b/i, label: "asthma issue" },
+  { re: /\babnormal\s+blood\s+pressure\b|\bhigh\s+bp\b|\bbp\s*(?:>=|over|above)\s*(160|170|180)\b/i, label: "abnormal BP concern" },
+];
 const COACH_MEMORY_CONTEXT_TERMS = {
   build_workout: ["training", "exercise", "workout", "equipment", "floor", "schedule", "recovery", "pain", "safety", "style"],
   brief: ["training", "exercise", "workout", "nutrition", "recovery", "schedule", "pain", "safety", "style"],
@@ -850,6 +881,18 @@ function sanitizeCoachMemoryPayload(value, depth = 0) {
     return Object.fromEntries(entries);
   }
   return null;
+}
+
+function hasSecretLikeText(value, depth = 0) {
+  if (value === undefined || value === null) return false;
+  if (typeof value === "string") return COACH_MEMORY_SECRET_VALUE.test(value);
+  if (typeof value === "number" || typeof value === "boolean") return false;
+  if (depth >= 5) return false;
+  if (Array.isArray(value)) return value.some(item => hasSecretLikeText(item, depth + 1));
+  if (typeof value === "object") {
+    return Object.entries(value).some(([key, item]) => COACH_MEMORY_SECRET_KEY.test(key) || hasSecretLikeText(item, depth + 1));
+  }
+  return false;
 }
 
 function normalizeCoachMemoryEvidence(value) {
@@ -1125,6 +1168,293 @@ export function getRelevantCoachMemoryForContext(base = {}, { intent = "general"
       active_only: true,
       safety_observations_always_included: true,
       sort_order: ["safety_importance", "intent_relevance", "confidence", "recency"],
+    },
+    last_updated: lastUpdated,
+  };
+}
+
+function normalizeDebriefText(value, maxLength = 1200) {
+  return sanitizeCoachMemoryText(value, maxLength) || null;
+}
+
+function normalizeDebriefList(value, maxItems = 12, maxLength = 160) {
+  const raw = Array.isArray(value) ? value : value ? [value] : [];
+  return raw
+    .map(item => typeof item === "string" ? item : JSON.stringify(item))
+    .map(item => sanitizeCoachMemoryText(item, maxLength))
+    .filter(Boolean)
+    .slice(0, maxItems);
+}
+
+function normalizeDebriefObjectList(value, maxItems = 24) {
+  const raw = Array.isArray(value) ? value : value ? [value] : [];
+  return raw
+    .map(item => sanitizeCoachMemoryPayload(item, 0))
+    .filter(item => item && typeof item === "object")
+    .slice(0, maxItems);
+}
+
+function normalizeDebriefDate(value, fallback = null) {
+  const text = String(value || "").trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+  return fallback;
+}
+
+function normalizeDebriefTimestamp(value) {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+function normalizeDebriefEnum(value, allowed, fallback) {
+  const normalized = String(value || fallback || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "_");
+  return allowed.has(normalized) ? normalized : fallback;
+}
+
+function numberInRange(value, min, max, field, { integer = true, nullable = true } = {}) {
+  if (value === undefined || value === null || value === "") {
+    if (nullable) return null;
+    throw new Error(`${field} is required.`);
+  }
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < min || n > max) throw new Error(`${field} must be between ${min} and ${max}.`);
+  return integer ? Math.round(n) : n;
+}
+
+function detectDebriefRedFlags(input = {}) {
+  const explicit = normalizeDebriefList(input.red_flag_symptoms, 12, 160);
+  const haystack = [
+    ...normalizeDebriefList(input.symptoms, 20, 180),
+    ...normalizeDebriefList(input.pain_quality, 12, 120),
+    input.notes,
+    input.coach_feedback,
+    input.sleep_recovery_notes,
+  ].filter(Boolean).join(" ");
+  const detected = WORKOUT_DEBRIEF_RED_FLAG_TERMS
+    .filter(({ re }) => re.test(haystack))
+    .map(({ label }) => label);
+  return [...new Set([...explicit, ...detected])].slice(0, 12);
+}
+
+function summarizeWorkoutDebrief(debrief = {}) {
+  const parts = [
+    debrief.workout_title || debrief.workout_type || "Workout",
+    debrief.completion_status ? debrief.completion_status.replace(/_/g, " ") : null,
+    debrief.session_rpe !== null && debrief.session_rpe !== undefined ? `RPE ${debrief.session_rpe}/10` : null,
+    debrief.energy_after !== null && debrief.energy_after !== undefined ? `energy after ${debrief.energy_after}/10` : null,
+    debrief.pain_reported ? `pain ${debrief.pain_severity ?? "reported"}/10` : null,
+    debrief.modifications?.length ? `modified: ${debrief.modifications.slice(0, 2).join("; ")}` : null,
+    debrief.skipped_exercises?.length ? `skipped: ${debrief.skipped_exercises.slice(0, 2).join("; ")}` : null,
+  ].filter(Boolean);
+  return truncate(parts.join(" | "), 500) || "Workout debrief recorded.";
+}
+
+function buildDebriefCoachTakeaways(debrief = {}) {
+  const takeaways = [];
+  if (debrief.safety_outcome === "red_flag") {
+    takeaways.push("Treat this as a hard safety report until current symptoms and medical guidance clear training.");
+  } else if (debrief.safety_outcome === "caution") {
+    takeaways.push("Use this debrief to constrain the next recommendation before progressing load, density, or range.");
+  }
+  if (debrief.pain_reported) takeaways.push("Pain report should reduce or remove aggravating patterns in the next session.");
+  if (debrief.completion_status === "stopped_early") takeaways.push("Stopped-early sessions should bias the next plan toward lower density and clearer exit ramps.");
+  if (debrief.completion_status === "skipped") takeaways.push("Skipped sessions are adherence/recovery context, not proof of completed work.");
+  if (debrief.completed_exercises?.length) takeaways.push("Completed exercises are Todd-reported only; Rack/Motra remains the completed-set authority.");
+  if (debrief.modifications?.length) takeaways.push("Reuse successful modifications only if current safety and readiness still allow them.");
+  return takeaways.slice(0, 6);
+}
+
+function buildDebriefConstraints(debrief = {}) {
+  const constraints = [];
+  if (debrief.safety_outcome === "red_flag") constraints.push("No hard training recommendation from this debrief; require current safety clearance first.");
+  if (debrief.pain_reported) constraints.push("Reduce load/range/density for painful regions until symptoms settle.");
+  for (const location of debrief.pain_locations || []) constraints.push(`Avoid aggravating ${location} work unless current symptoms are clear.`);
+  for (const symptom of debrief.red_flag_symptoms || []) constraints.push(`Treat reported ${symptom} as a hard safety flag until resolved.`);
+  if (debrief.completion_status === "stopped_early") constraints.push("Next plan should include an early-stop option and lower density.");
+  return [...new Set(constraints)].slice(0, 8);
+}
+
+function buildDebriefMemoryCandidates(debrief = {}, input = {}) {
+  const candidates = [];
+  const explicitMemory = Boolean(input.save_memory_candidates || input.remember || input.save_as_memory_candidate);
+  if (debrief.memory_candidate_summary) {
+    candidates.push({
+      summary: debrief.memory_candidate_summary,
+      category: debrief.pain_reported ? "workout_response_pattern" : "training_preference",
+      lifecycle_status: explicitMemory ? "proposed" : "needs_review",
+      confidence: "low",
+      source_debrief_id: debrief.id || null,
+      note: "Single debrief only; do not promote to active memory without Todd confirmation.",
+    });
+  }
+  if (explicitMemory && !candidates.length && (debrief.coach_feedback || debrief.modifications?.length || debrief.pain_reported)) {
+    candidates.push({
+      summary: debrief.coach_feedback || summarizeWorkoutDebrief(debrief),
+      category: debrief.pain_reported ? "workout_response_pattern" : "training_preference",
+      lifecycle_status: "proposed",
+      confidence: "low",
+      source_debrief_id: debrief.id || null,
+      note: "Captured as proposed memory candidate only; no active Coach Memory observation was created.",
+    });
+  }
+  return candidates.slice(0, 4);
+}
+
+function compactWorkoutDebrief(row = {}) {
+  const raw = row.raw_payload && typeof row.raw_payload === "object" ? row.raw_payload : {};
+  return {
+    id: row.id || null,
+    workout_date: row.workout_date || null,
+    created_at: row.created_at || null,
+    updated_at: row.updated_at || null,
+    source: row.source || null,
+    workout_title: row.workout_title || null,
+    workout_type: row.workout_type || "unknown",
+    completion_status: row.completion_status || null,
+    session_rpe: asNumber(row.session_rpe),
+    energy_before: asNumber(row.energy_before),
+    energy_after: asNumber(row.energy_after),
+    pain_reported: Boolean(row.pain_reported),
+    pain_locations: Array.isArray(row.pain_locations) ? row.pain_locations : [],
+    pain_severity: asNumber(row.pain_severity),
+    symptoms: Array.isArray(row.symptoms) ? row.symptoms : [],
+    red_flag_symptoms: Array.isArray(row.red_flag_symptoms) ? row.red_flag_symptoms : [],
+    modifications: Array.isArray(row.modifications) ? row.modifications : [],
+    skipped_exercises: Array.isArray(row.skipped_exercises) ? row.skipped_exercises : [],
+    completed_exercises: Array.isArray(row.completed_exercises) ? row.completed_exercises : [],
+    completed_exercises_authority: raw.completed_exercises_authority || "user_reported_not_rack_motra",
+    notes: truncate(row.notes, 260),
+    coach_feedback: truncate(row.coach_feedback, 260),
+    follow_up_needed: Boolean(row.follow_up_needed),
+    safety_outcome: row.safety_outcome || "none",
+    memory_candidate_summary: row.memory_candidate_summary || null,
+    summary: summarizeWorkoutDebrief(row),
+  };
+}
+
+export async function createWorkoutDebrief(profileId, input = {}) {
+  if (!profileId) throw new Error("Profile id is required.");
+  if (hasSecretLikeText(input)) throw new Error("Workout debrief payload contains secret-like content.");
+  const workoutDate = normalizeDebriefDate(input.workout_date || input.date, null);
+  if (!workoutDate) throw new Error("workout_date must be YYYY-MM-DD.");
+  const completionStatus = normalizeDebriefEnum(input.completion_status || input.status, WORKOUT_DEBRIEF_COMPLETION_STATUSES, "");
+  if (!completionStatus) throw new Error("completion_status is required.");
+  const workoutType = normalizeDebriefEnum(input.workout_type || input.type, WORKOUT_DEBRIEF_TYPES, "unknown");
+  const redFlagSymptoms = detectDebriefRedFlags(input);
+  const painReported = Boolean(input.pain_reported || input.pain || input.pain_severity || normalizeDebriefList(input.pain_locations).length || normalizeDebriefList(input.pain_quality).length);
+  const painSeverity = numberInRange(input.pain_severity ?? input.pain_score, 0, 10, "pain_severity", { nullable: true });
+  const symptoms = normalizeDebriefList(input.symptoms, 20, 180);
+  const safetyOutcome = redFlagSymptoms.length
+    ? "red_flag"
+    : painReported || painSeverity >= 4 || symptoms.length || ["partially_completed", "stopped_early"].includes(completionStatus)
+      ? "caution"
+      : "none";
+  const row = {
+    profile_id: profileId,
+    workout_date: workoutDate,
+    workout_started_at: normalizeDebriefTimestamp(input.workout_started_at || input.started_at),
+    workout_completed_at: normalizeDebriefTimestamp(input.workout_completed_at || input.completed_at),
+    source: normalizeDebriefEnum(input.source, WORKOUT_DEBRIEF_SOURCES, "custom_gpt"),
+    planned_workout_id: input.planned_workout_id ? truncate(String(input.planned_workout_id), 120) : null,
+    workout_title: normalizeDebriefText(input.workout_title || input.title, 180),
+    workout_type: workoutType,
+    completion_status: completionStatus,
+    session_rpe: numberInRange(input.session_rpe ?? input.rpe, 1, 10, "session_rpe", { nullable: true }),
+    energy_before: numberInRange(input.energy_before, 1, 10, "energy_before", { nullable: true }),
+    energy_after: numberInRange(input.energy_after, 1, 10, "energy_after", { nullable: true }),
+    pain_reported: painReported,
+    pain_locations: normalizeDebriefList(input.pain_locations, 12, 120),
+    pain_severity: painSeverity,
+    pain_quality: normalizeDebriefList(input.pain_quality, 12, 120),
+    symptoms,
+    red_flag_symptoms: redFlagSymptoms,
+    modifications: normalizeDebriefList(input.modifications, 20, 240),
+    skipped_exercises: normalizeDebriefList(input.skipped_exercises, 20, 160),
+    completed_exercises: normalizeDebriefObjectList(input.completed_exercises, 30),
+    notes: normalizeDebriefText(input.notes || input.summary, 1200),
+    coach_feedback: normalizeDebriefText(input.coach_feedback, 900),
+    nutrition_notes: normalizeDebriefText(input.nutrition_notes, 600),
+    sleep_recovery_notes: normalizeDebriefText(input.sleep_recovery_notes, 600),
+    safety_outcome: safetyOutcome,
+    follow_up_needed: Boolean(input.follow_up_needed || safetyOutcome !== "none"),
+    memory_candidate_summary: normalizeDebriefText(input.memory_candidate_summary, 500),
+    linked_observation_ids: normalizeDebriefList(input.linked_observation_ids, 12, 80).filter(compactId),
+    raw_payload: {
+      ...sanitizeCoachMemoryPayload(input.raw || {}, 0),
+      request_fields: sanitizeCoachMemoryPayload(input, 0),
+      completed_exercises_authority: "user_reported_not_rack_motra",
+      source_policy: {
+        role: SOURCE_CONTEXT.workout_debrief_role,
+        does_not_replace: SOURCE_CONTEXT.workout_debrief_not_authority,
+        safety_rule: "Debriefs can constrain future coaching but cannot make Red safety less conservative.",
+      },
+    },
+  };
+  const inserted = await supabase("coach_workout_debriefs", { method: "POST", body: JSON.stringify([row]) });
+  const debrief = compactWorkoutDebrief(inserted?.[0] || row);
+  const memoryCandidates = buildDebriefMemoryCandidates(debrief, input);
+  return {
+    ok: true,
+    debrief_id: debrief.id,
+    safety_outcome: debrief.safety_outcome,
+    debrief_summary: debrief.summary,
+    coach_takeaways: buildDebriefCoachTakeaways(debrief),
+    memory_candidates: memoryCandidates,
+    next_recommendation_constraints: buildDebriefConstraints(debrief),
+    requires_follow_up: debrief.follow_up_needed,
+    warnings: [
+      "Workout debriefs are Todd-reported subjective feedback, not Rack/Motra completed-set authority.",
+      "Debrief context can constrain or inform future coaching but cannot override current hard safety flags.",
+      ...(debrief.safety_outcome === "red_flag" ? ["Red flag debrief cannot produce a hard-training recommendation."] : []),
+    ],
+    last_updated: debrief.updated_at || debrief.created_at || new Date().toISOString(),
+    debrief,
+  };
+}
+
+export async function listWorkoutDebriefs(profileId, { limit = 10 } = {}) {
+  if (!profileId) throw new Error("Profile id is required.");
+  const safeLimit = Math.max(1, Math.min(30, Math.round(Number(limit) || 10)));
+  const rows = await supabase(`coach_workout_debriefs?profile_id=eq.${queryValue(profileId)}&select=*&order=workout_date.desc,created_at.desc&limit=${safeLimit}`);
+  return (rows || []).map(compactWorkoutDebrief);
+}
+
+export function getWorkoutDebriefContext(base = {}, { limit = 5 } = {}) {
+  const rows = Array.isArray(base.coach_workout_debriefs) ? base.coach_workout_debriefs : [];
+  const safeLimit = Math.max(1, Math.min(10, Math.round(Number(limit) || 5)));
+  const compactRows = [...rows]
+    .sort((a, b) => String(b.workout_date || b.created_at || "").localeCompare(String(a.workout_date || a.created_at || "")))
+    .slice(0, safeLimit)
+    .map(compactWorkoutDebrief);
+  const redRows = compactRows.filter(row => row.safety_outcome === "red_flag");
+  const cautionRows = compactRows.filter(row => row.safety_outcome === "caution");
+  const responsePatterns = [];
+  for (const row of compactRows) {
+    if (row.pain_reported) responsePatterns.push(`Pain after ${row.workout_title || row.workout_type || row.workout_date}: ${row.pain_locations.join(", ") || "location unspecified"} ${row.pain_severity ?? "reported"}/10.`);
+    if (row.modifications.length) responsePatterns.push(`Useful modification from ${row.workout_date}: ${row.modifications.slice(0, 2).join("; ")}.`);
+    if (row.completion_status === "stopped_early") responsePatterns.push(`Stopped early on ${row.workout_date}; lower next-session density until context is clear.`);
+  }
+  const safetyWarnings = [
+    ...redRows.map(row => `Red flag debrief on ${row.workout_date}: ${row.red_flag_symptoms.join(", ") || "hard safety symptom reported"}. Do not recommend hard training from this context.`),
+    ...cautionRows.map(row => `Caution debrief on ${row.workout_date}: use pain/symptom response to constrain the next plan.`),
+  ];
+  const lastUpdated = compactRows
+    .map(row => row.updated_at || row.created_at || row.workout_date)
+    .filter(Boolean)
+    .sort()
+    .at(-1) || null;
+  return {
+    summary: compactRows.length
+      ? "Recent workout debriefs are Todd-reported subjective response data. They can constrain and personalize future coaching."
+      : "No recent workout debrief records are available.",
+    source: "coach_workout_debriefs",
+    recent_debriefs: compactRows,
+    response_patterns: [...new Set(responsePatterns)].slice(0, 8),
+    safety_warnings: [...new Set(safetyWarnings)].slice(0, 8),
+    policy: {
+      role: SOURCE_CONTEXT.workout_debrief_role,
+      does_not_replace: SOURCE_CONTEXT.workout_debrief_not_authority,
+      safety_rule: "Red safety and hard medical flags override all debriefs; debriefs can only make coaching more conservative.",
     },
     last_updated: lastUpdated,
   };
@@ -1558,6 +1888,7 @@ function buildDataCompleteness(base = {}) {
   const latestNutrition = latest(base.nutrition_log);
   const latestStrength = latest(base.strength_logs);
   const appleHealth = buildAppleHealthSupport(base);
+  const workoutDebriefContext = getWorkoutDebriefContext(base, { limit: 5 });
   const detailedStrengthLogs = Array.isArray(base.strength_logs) ? base.strength_logs.filter(hasExerciseDetail) : [];
   const latestDetailedStrength = latest(detailedStrengthLogs);
   const feedbackToday = Array.isArray(base.session_feedback)
@@ -1616,9 +1947,9 @@ function buildDataCompleteness(base = {}) {
     {
       id: "workout_feedback",
       label: "Workout feedback",
-      status: strengthToday ? (feedbackToday ? "current" : "missing_after_training") : "not_expected",
+      status: strengthToday ? (feedbackToday || workoutDebriefContext.recent_debriefs.some(row => row.workout_date === today) ? "current" : "missing_after_training") : "not_expected",
       required: Boolean(strengthToday),
-      latest_date: feedbackToday ? rowDate(feedbackToday) : rowDate(latest(base.session_feedback)),
+      latest_date: feedbackToday ? rowDate(feedbackToday) : workoutDebriefContext.last_updated?.slice?.(0, 10) || rowDate(latest(base.session_feedback)),
     },
     {
       id: "apple_health_daily_summary",
@@ -1647,6 +1978,7 @@ function buildDataCompleteness(base = {}) {
     checks,
     supporting_evidence: {
       apple_health: appleHealth,
+      workout_debriefs: workoutDebriefContext,
     },
   };
 }
@@ -1677,6 +2009,7 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   const bp = latestBpValues(dashboard);
   const doctorGuidance = latestDoctorGuidance(dashboard);
   const subjective = parseSubjective(context.text, context.payload || {});
+  const workoutDebriefContext = getWorkoutDebriefContext(dashboard, { limit: 5 });
   const timezone = dashboard.profile?.timezone || "Asia/Taipei";
   const now = context.now || new Date();
   const today = todayISO(timezone, now);
@@ -1718,6 +2051,9 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   }
   if (bp.date) evidence.push(`Latest BP ${bp.date}: ${bp.systolic ?? "?"}/${bp.diastolic ?? "?"}.`);
   evidence.push(`Schedule gate: ${schedule.label}.`);
+  if (workoutDebriefContext.last_updated && workoutDebriefContext.recent_debriefs.length) {
+    evidence.push(`Recent workout debrief context through ${workoutDebriefContext.last_updated}: ${workoutDebriefContext.summary}`);
+  }
 
   if (doctorGuidance?.severity === "red") risks.push({ code: "doctor_guidance", severity: "red", text: "Doctor guidance currently blocks or holds training. Devices do not clear training." });
   if (doctorGuidance?.severity === "yellow") risks.push({ code: "doctor_guidance", severity: "yellow", text: "Doctor guidance calls for modified or limited training." });
@@ -1736,6 +2072,11 @@ export function evaluateReadiness(dashboard = {}, state = DEFAULT_COACH_STATE, c
   }
   if (primaryRecovery >= 80 && fallbackRecovery !== null && fallbackRecovery < 40) {
     risks.push({ code: "app_conflict", severity: "yellow", text: "Primary recovery looks green while fallback physiology is red. Treat physiology conflict conservatively." });
+  }
+  if (workoutDebriefContext.recent_debriefs.some(row => row.safety_outcome === "red_flag")) {
+    risks.push({ code: "workout_debrief_red_flag", severity: "red", text: "Recent workout debrief reported red flag symptoms. Do not use devices or debrief optimism to clear hard training." });
+  } else if (workoutDebriefContext.recent_debriefs.some(row => row.safety_outcome === "caution")) {
+    risks.push({ code: "workout_debrief_caution", severity: "yellow", text: "Recent workout debrief reported pain, symptoms, stopped-early, or partial completion. Constrain the next plan." });
   }
 
   const red = risks.some(r => r.severity === "red");
@@ -2605,6 +2946,7 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
   const resolvedWorkout = workout || buildWorkoutPlan(base, state, resolvedReadiness);
   const dataCompleteness = buildDataCompleteness(base);
   const appleHealth = buildAppleHealthSupport(base);
+  const workoutDebriefContext = getWorkoutDebriefContext(base, { limit: 5 });
   const schedule = resolvedReadiness.schedule || dataCompleteness.schedule || todaySchedule(base.profile?.timezone || "Asia/Taipei", base.now || new Date());
   const risks = Array.isArray(resolvedReadiness.risk_flags) ? resolvedReadiness.risk_flags : [];
   const missingRequired = dataCompleteness.checks
@@ -2617,6 +2959,7 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
     ...missingRequired.slice(0, 4),
     ...staleOptional,
     ...(appleHealth.warnings || []),
+    ...(workoutDebriefContext.safety_warnings || []),
   ].slice(0, 8);
 
   const why = [
@@ -2625,6 +2968,7 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
       ? `Safety flags: ${risks.slice(0, 2).map(flag => flag.text).join(" ")}`
       : "Safety: no hard stop from pain, migraine, asthma, or BP in the available data.",
     buildAppleHealthEvidenceText(appleHealth),
+    workoutDebriefContext.response_patterns?.[0],
     `Plan context: ${schedule.label || "today's schedule"}${schedule.next_strength_day ? `; next strength day ${schedule.next_strength_day}` : ""}.`,
   ].filter(Boolean).slice(0, 6);
 
@@ -2658,6 +3002,7 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
       "BP >=140/90, low HRV, or high fatigue means modified density and no forced finisher.",
       "Avoid deep loaded hip flexion and stop any movement that creates anterior hip pinching.",
       "Apple Health activity counts never override Garmin readiness, medical/symptom gates, or Rack/Motra strength history.",
+      "Workout debrief pain or red-flag symptoms can only make training more conservative; they never clear hard training.",
     ],
     what_to_track_today: track.slice(0, 5),
     rack_motra_handoff: includeWorkout ? buildWorkoutHandoff(resolvedWorkout) : {
@@ -2669,6 +3014,7 @@ function buildDailyCoachSummary({ base = {}, state = DEFAULT_COACH_STATE, readin
       missing_or_stale: sourceWarnings,
       data_completeness_score_pct: dataCompleteness.score_pct,
       source_policy: "Apple Health is supporting evidence only; it does not override Garmin readiness, safety, Garmin workout physiology, or Rack/Motra strength history.",
+      workout_debrief_policy: "Workout debriefs are subjective response records; Rack/Motra remains completed-set authority.",
     },
   };
 
@@ -2705,6 +3051,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     text,
     limit: 6,
   });
+  const workoutDebriefContext = getWorkoutDebriefContext(decisionDashboard, { limit: 5 });
   const includeWorkout = ["build_workout", "travel_mode"].includes(normalizedIntent);
   const summaryBase = decisionDashboard;
   const appleHealth = buildAppleHealthSupport(summaryBase);
@@ -2726,6 +3073,8 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
       nextActions.push("Keep today recovery-only unless symptoms and doctor guidance clear training.");
     } else if (workout.requires_inventory) {
       nextActions.push("Send hotel-gym inventory before lifting.");
+    } else if (workoutDebriefContext.safety_warnings.length) {
+      nextActions.push("Apply recent debrief pain/symptom constraints before progressing the plan.");
     } else if (workout.schedule_override_applied) {
       nextActions.push("Use the controlled strength override below; keep volume and density capped.");
     } else if (!readiness.schedule?.strength_planned) {
@@ -2764,6 +3113,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     exercise_coaching_readout: includeWorkout ? (workout.exercise_coaching_readout || []) : [],
     workout_request: workoutRequest,
     coach_memory_context: coachMemoryContext,
+    workout_debrief_context: workoutDebriefContext,
     source_context: {
       data_store: "supabase",
       default_gym: state.gym_profile.default_environment,
@@ -2785,6 +3135,11 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
         role: SOURCE_CONTEXT.coach_memory_role,
         does_not_replace: SOURCE_CONTEXT.coach_memory_not_authority,
         context: coachMemoryContext,
+      },
+      workout_debriefs: {
+        role: SOURCE_CONTEXT.workout_debrief_role,
+        does_not_replace: SOURCE_CONTEXT.workout_debrief_not_authority,
+        context: workoutDebriefContext,
       },
       supporting_evidence: {
         apple_health: appleHealth,
@@ -2878,6 +3233,7 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
                   apple_health: buildAppleHealthSupport(dashboard),
                 },
                 coach_memory_context: decision.coach_memory_context || getRelevantCoachMemoryForContext(dashboard, { intent: decision.intent, text }),
+                workout_debrief_context: decision.workout_debrief_context || getWorkoutDebriefContext(dashboard, { limit: 5 }),
                 coach_state: {
                   goals: state.goals,
                   gym_profile: {
@@ -2942,6 +3298,7 @@ export function buildBrief(base) {
   const dailySummary = buildDailyCoachSummary({ base, state, readiness, nutrition, workout });
   const appleHealth = buildAppleHealthSupport(base);
   const coachMemoryContext = getRelevantCoachMemoryForContext(base, { intent: "brief", text: "coach-today", limit: 6 });
+  const workoutDebriefContext = getWorkoutDebriefContext(base, { limit: 5 });
   const schedule = readiness.schedule || todaySchedule(base.profile?.timezone || "Asia/Taipei");
   const upcoming = base.upcoming_session || nextPlannedSession(base);
   return {
@@ -2968,6 +3325,7 @@ export function buildBrief(base) {
       apple_health: appleHealth,
     },
     coach_memory_context: coachMemoryContext,
+    workout_debrief_context: workoutDebriefContext,
     source_hierarchy: DEFAULT_COACH_STATE.source_hierarchy,
   };
 }
@@ -2990,6 +3348,7 @@ export function compactDashboard(base) {
   const recentAppleHealth = latest(base.apple_health_daily_summaries, 7).map(compactAppleHealthSummary).filter(Boolean);
   const recentCoachMessages = compactCoachHistory(base, 10);
   const coachMemoryContext = getRelevantCoachMemoryForContext(base, { intent: "brief", text: "dashboard", limit: 6 });
+  const workoutDebriefContext = getWorkoutDebriefContext(base, { limit: 5 });
   const recentFeedback = latest(base.session_feedback, 3).map(f => ({
     date: f.date || f.session_date || null,
     rating_label: f.rating_label || null,
@@ -3033,11 +3392,13 @@ export function compactDashboard(base) {
       strength_sessions_with_exercises: recentStrengthWithExercises,
       apple_health_daily_summaries: recentAppleHealth,
       workout_feedback: recentFeedback,
+      workout_debriefs: workoutDebriefContext.recent_debriefs,
     },
     supporting_evidence: {
       apple_health: buildAppleHealthSupport(base),
     },
     coach_memory_context: coachMemoryContext,
+    workout_debrief_context: workoutDebriefContext,
   };
 }
 
@@ -3066,6 +3427,7 @@ export function buildCoachToday(base = {}) {
   const workout = buildWorkoutPlan(base, state, readiness);
   const dailySummary = buildDailyCoachSummary({ base, state, readiness, nutrition, workout });
   const coachMemoryContext = getRelevantCoachMemoryForContext(base, { intent: "brief", text: "coach-today", limit: 6 });
+  const workoutDebriefContext = getWorkoutDebriefContext(base, { limit: 5 });
   return {
     ok: true,
     date: compact.coaching_brief?.data_completeness?.date || todayISO(base.profile?.timezone || "Asia/Taipei", base.now || new Date()),
@@ -3082,6 +3444,7 @@ export function buildCoachToday(base = {}) {
     recent: compact.recent,
     supporting_evidence: compact.supporting_evidence,
     coach_memory_context: coachMemoryContext,
+    workout_debrief_context: workoutDebriefContext,
     source_context: {
       safety_override: SOURCE_CONTEXT.safety_override,
       readiness_primary: SOURCE_CONTEXT.readiness_primary,
@@ -3101,6 +3464,11 @@ export function buildCoachToday(base = {}) {
         does_not_replace: SOURCE_CONTEXT.coach_memory_not_authority,
         context: coachMemoryContext,
       },
+      workout_debriefs: {
+        role: SOURCE_CONTEXT.workout_debrief_role,
+        does_not_replace: SOURCE_CONTEXT.workout_debrief_not_authority,
+        context: workoutDebriefContext,
+      },
     },
   };
 }
@@ -3109,7 +3477,7 @@ export async function dashboardFromSupabase() {
   const profile = await getProfile();
   if (!profile) return null;
   const profileId = profile.id;
-  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions, appleHealthSummaries, appleHealthSyncRuns, doctorNotes, coachObservations] = await Promise.all([
+  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions, appleHealthSummaries, appleHealthSyncRuns, doctorNotes, coachObservations, workoutDebriefs] = await Promise.all([
     supabase(`raw_imports?profile_id=eq.${profileId}&select=payload,imported_at&order=imported_at.desc&limit=1`),
     supabase(`recovery_sleep?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
     supabase(`blood_pressure_readings?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
@@ -3124,6 +3492,7 @@ export async function dashboardFromSupabase() {
     safeSupabase(`apple_health_sync_runs?profile_id=eq.${profileId}&select=*&order=started_at.desc&limit=10`, {}, []),
     safeSupabase(`doctor_notes?profile_id=eq.${profileId}&select=*&order=note_date.desc&limit=10`, {}, []),
     safeSupabase(`coach_observations?profile_id=eq.${profileId}&status=eq.active&select=*&order=observation_date.desc,updated_at.desc&limit=50`, {}, []),
+    quietSupabase(`coach_workout_debriefs?profile_id=eq.${profileId}&select=*&order=workout_date.desc,created_at.desc&limit=20`, {}, []),
   ]);
 
   const base = rawImports?.[0]?.payload || {};
@@ -3168,6 +3537,7 @@ export async function dashboardFromSupabase() {
     .sort((a, b) => String(a.started_at || "").localeCompare(String(b.started_at || "")));
   base.doctor_notes = dedupeRows((doctorNotes || []).map(r => ({ ...r, date: r.note_date })), "doctor_notes");
   base.coach_observations = coachObservations || [];
+  base.coach_workout_debriefs = workoutDebriefs || [];
   base.coach_chat_notes = messages.reverse().map(m => ({ role: m.role, text: m.body, at: m.message_at, channel: m.channel }));
   base.coach_state = await getCoachState(profileId);
   base.weekly_plans = weeklyPlans;

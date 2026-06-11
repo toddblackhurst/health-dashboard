@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-11 17:18 CST, after PR #12 merge/deploy readback and before Workout Debrief Capture v1 feature work.
+Last updated: 2026-06-11 17:29 CST, after local Workout Debrief Capture v1 implementation and tests on `workout-debrief-capture-v1`.
 
 ## 1. Project Purpose
 
@@ -20,8 +20,10 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Custom GPT Actions OpenAPI source: `coach-openapi.json`
 - Netlify clean-route mappings: `netlify.toml`
 - Supabase migrations: `supabase/migrations/`
+- Workout Debrief Capture migration: `supabase/migrations/007_workout_debriefs.sql`
 - Coach engine tests: `tests/coach-engine.test.mjs`
 - GPT route/OpenAPI tests: `tests/coach-action-routing.test.mjs`
+- Workout Debrief tests: `tests/workout-debrief.test.mjs`
 - Apple Health tests: `tests/apple-health-daily.test.mjs`, `tests/apple-health-dashboard-context.test.mjs`
 - iOS HealthKit app: `apps/ios-health-sync/`
 - iOS 27 Siri/Shortcuts strategy: `docs/IOS27_SIRI_SHORTCUTS_COACH_STRATEGY.md`
@@ -56,6 +58,13 @@ Production OpenAPI now includes Coach Memory / Observations v1 endpoints and act
 - `correctCoachMemory`
 - `retireCoachMemory`
 
+Local branch OpenAPI adds Workout Debrief Capture v1 actions:
+
+- `POST /api/coach/workout-debrief`
+- `GET /api/coach/workout-debriefs`
+- `recordWorkoutDebrief`
+- `listWorkoutDebriefs`
+
 ## 5. Authentication Rules
 
 - Custom GPT Actions authenticate with the custom header `x-coach-secret`.
@@ -83,6 +92,7 @@ Source hierarchy:
 - Apple Health is supporting evidence and a data bus only. It must not override readiness, workout authority, safety, Garmin physiology, or Rack/Motra history.
 - Soundcore Sleep A30 is a sleep aid/noise/snore masking tool only, not a recovery authority.
 - Hume/Ocare is trend-only body composition evidence; do not overreact to single-day BIA swings.
+- Workout debriefs are Todd-reported subjective event records. They can constrain or personalize future coaching, but they cannot override current hard safety flags, Garmin readiness/recovery, Garmin workout physiology, or Rack/Motra completed-set authority.
 
 ## 7. Completed PRs And Merge/Deploy Status
 
@@ -112,6 +122,8 @@ Current branch and PR state:
 
 - Current local branch for next workstream: `workout-debrief-capture-v1`
 - Branch status: local only; not pushed.
+- First branch commit: `dbcd761 Update handoff after Coach Memory production deploy`.
+- Workout Debrief Capture v1 is implemented locally and tested, but not pushed, opened as a PR, merged, deployed, or production-verified.
 - Pull request: PR #12, `Coach Memory Observations v1 + iOS 27 Coach Strategy`, `https://github.com/toddblackhurst/health-dashboard/pull/12`.
 - PR state: merged into `main`.
 - Merge commit: `f9f36ea3c78755c9acbf306aac65449eb6355444`.
@@ -154,12 +166,57 @@ Coach Memory / Observations v1 production status:
   - `list-memory` can filter the `proposed` and `superseded` lifecycle buckets while preserving the existing DB `status` constraint.
 - Migration status: no migration was applied. No new migration file was created because existing migration `supabase/migrations/005_apple_health_sync.sql` already defines `coach_observations` with `status`, `evidence`, `confidence`, `action_taken`, `review_date`, `source`, `raw`, timestamps, and RLS. Proposed/superseded lifecycle metadata is stored in `raw.memory_lifecycle_status` while DB `status` remains within the existing constraint.
 
+Workout Debrief Capture v1 local status:
+
+- New structured record action:
+  - `POST /api/coach/workout-debrief`
+  - Custom GPT operation: `recordWorkoutDebrief`
+- New optional recent-list action:
+  - `GET /api/coach/workout-debriefs`
+  - Custom GPT operation: `listWorkoutDebriefs`
+- New context field added to `coach-today`, `buildTodayWorkout`, direct coach action responses, compact dashboard context, and source context:
+  - `workout_debrief_context`
+- New durable table migration created:
+  - `supabase/migrations/007_workout_debriefs.sql`
+  - Table: `coach_workout_debriefs`
+  - Status: migration file created only. It has not been applied.
+- New tests added:
+  - `tests/workout-debrief.test.mjs`
+  - `tests/coach-action-routing.test.mjs` updated for debrief routes/actions.
+- Validation and safety behavior:
+  - Requires `x-coach-secret`.
+  - Requires valid `workout_date` and `completion_status`.
+  - Validates completion status, RPE, energy, and pain severity ranges.
+  - Rejects secret-like payload content instead of storing it.
+  - Red-flag symptoms produce `safety_outcome: red_flag`.
+  - Red-flag debrief context cannot produce a hard-training recommendation.
+  - Debrief pain/symptoms can make future coaching more conservative.
+  - User-reported completed exercises are explicitly labeled `user_reported_not_rack_motra`.
+  - Memory candidates are returned as reviewable/proposed context only; no active Coach Memory observation is silently created.
+- Test result after implementation:
+  - `node --test tests/*.test.mjs`
+  - `78/78` passing.
+- External action status:
+  - No push.
+  - No PR opened.
+  - No merge.
+  - No deploy, manual or automatic from this branch.
+  - No migration applied.
+  - No Supabase migration run.
+  - No production secret or environment variable changed.
+  - No `x-coach-secret` used or printed.
+  - `HEALTH_DATABASE.json` remains untouched in the working tree.
+- Known implementation caveat:
+  - The recording endpoint requires the new `coach_workout_debriefs` table. Until Todd explicitly approves applying `supabase/migrations/007_workout_debriefs.sql`, production would not be able to store debrief records from this branch.
+  - Dashboard/coach context reads tolerate the missing table and return empty debrief context until the migration is applied.
+
 iOS 27 Siri/Shortcuts research status:
 
 - Todd has installed the iOS 27 developer beta.
 - iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, AppIntentsTesting, HealthKit notes, hardware triggers, widgets, Live Activities, Focus, Watch, CarPlay, AirPods, privacy, and beta caveats have been researched against official Apple sources.
 - Strategy document added: `docs/IOS27_SIRI_SHORTCUTS_COACH_STRATEGY.md`.
-- Implementation status: documentation/architecture only. No large iOS 27 feature implementation has started in this branch.
+- Implementation status: documentation/architecture only. No iOS 27 feature implementation has started in this branch.
+- Workout Debrief Capture is documented as a future Siri/App Intent candidate only. The backend response is structured for future Shortcuts/App Intents with `safety_outcome`, `debrief_summary`, `next_recommendation_constraints`, and `requires_follow_up`.
 - Important beta caveats captured:
   - Avoid `Duration` and `LPLinkMetadata` in Coach App Intents for now unless necessary because of an iOS and iPadOS 27 beta Shortcuts known issue involving "Describe a Shortcut."
   - Avoid enum-value-dependent AppShortcut phrases for critical coach actions because of an Xcode 27 beta Siri/AppShortcut known issue.
@@ -174,9 +231,10 @@ iOS 27 Siri/Shortcuts research status:
 - Do not push or open a PR without Todd's explicit approval.
 - Do not apply Supabase migrations without Todd's explicit approval.
 - No Supabase migration was applied for PR #12.
+- No Supabase migration has been applied for Workout Debrief Capture v1.
 - Do not begin unrelated phases early.
 - Do not begin iOS 27 Siri/Shortcuts implementation from this Workout Debrief branch unless Todd explicitly approves it.
-- Workout Debrief Capture v1 is the active next workstream.
+- Workout Debrief Capture v1 is implemented locally and awaits Todd approval for push/PR and separate approval for migration.
 - Garmin official API integration may be valuable later, but it depends on Garmin developer approval and should not block Coach Memory.
 - If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and label authenticated checks as not run.
 
@@ -185,12 +243,13 @@ iOS 27 Siri/Shortcuts research status:
 Recommended sequence:
 
 1. PR #12 Coach Memory / Observations v1. Merged and deployed to production.
-2. Workout Debrief Capture v1. Active local branch: `workout-debrief-capture-v1`.
-3. iOS 27 Siri/Shortcuts Readiness PR.
-4. Apple Health workout-level intake.
-5. Rack/Motra import/debrief support.
-6. Weekly Review Engine.
-7. Garmin official integration track if approved.
+2. Todd reviews Workout Debrief Capture v1 local branch and approves whether to push/open a PR.
+3. If PR is approved and later merged, apply `supabase/migrations/007_workout_debriefs.sql` only after explicit Todd approval.
+4. iOS 27 Siri/Shortcuts Readiness PR.
+5. Apple Health workout-level intake.
+6. Rack/Motra import/debrief support.
+7. Weekly Review Engine.
+8. Garmin official integration track if approved.
 
 Alternate sequence if Todd wants iOS work pulled forward:
 
