@@ -20,6 +20,15 @@ const SOURCE_CONTEXT = {
   soundcore_role: "sleep aid/noise/snore masking only; not recovery authority",
   nutrition_primary: "Garmin Connect+ Nutrition",
   body_composition_trend: "Hume/Ocare trend only",
+  coach_memory_role: "durable Supabase observations for continuity, preferences, constraints, and reviewable coaching learning",
+  coach_memory_not_authority: [
+    "current BP",
+    "doctor guidance",
+    "migraine/asthma/sharp pain flags",
+    "Garmin readiness/recovery",
+    "Rack/Motra completed strength logs",
+    "Garmin Nutrition totals",
+  ],
 };
 
 export const DEFAULT_COACH_STATE = {
@@ -757,6 +766,368 @@ export function compactCoachHistory(dashboard = {}, limit = 12) {
       text: truncate(note.text || note.body || note.summary || "", 420),
     }))
     .filter(note => note.text);
+}
+
+const COACH_MEMORY_DB_STATUSES = new Set(["active", "needs_review", "retired"]);
+const COACH_MEMORY_LIFECYCLE_STATUSES = new Set(["proposed", "active", "needs_review", "retired", "superseded"]);
+const COACH_MEMORY_CONFIDENCE = new Set(["low", "medium", "high"]);
+const COACH_MEMORY_SAFETY_CATEGORIES = new Set(["pain_pattern", "safety_constraint", "recovery_pattern"]);
+const COACH_MEMORY_SECRET_KEY = /(secret|token|password|authorization|api[_-]?key|x-coach-secret|cookie)/i;
+const COACH_MEMORY_SECRET_VALUE = /\b(x-coach-secret|authorization)\b|bearer\s+[a-z0-9._~+/=-]+|(?:secret|token|password|api[_-]?key|coach_api_secret)\s*[:=]\s*\S+/i;
+const COACH_MEMORY_CONTEXT_TERMS = {
+  build_workout: ["training", "exercise", "workout", "equipment", "floor", "schedule", "recovery", "pain", "safety", "style"],
+  brief: ["training", "exercise", "workout", "nutrition", "recovery", "schedule", "pain", "safety", "style"],
+  general: ["training", "exercise", "workout", "nutrition", "recovery", "schedule", "pain", "safety", "style"],
+  nutrition_check: ["nutrition", "protein", "fat", "macros", "adherence", "meal", "food", "safety"],
+  post_workout: ["workout", "exercise", "pain", "recovery", "training", "safety", "response"],
+  travel_mode: ["equipment", "floor", "schedule", "training", "exercise", "safety"],
+};
+
+function queryValue(value) {
+  return encodeURIComponent(String(value));
+}
+
+function compactId(value) {
+  const text = String(value || "").trim();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(text) ? text : "";
+}
+
+function normalizeCoachMemoryLifecycle(status = "active") {
+  const normalized = String(status || "active").trim().toLowerCase().replace(/[^a-z0-9]+/g, "_");
+  return COACH_MEMORY_LIFECYCLE_STATUSES.has(normalized) ? normalized : "active";
+}
+
+function dbStatusForCoachMemory(status = "active") {
+  const lifecycle = normalizeCoachMemoryLifecycle(status);
+  if (lifecycle === "proposed") return "needs_review";
+  if (lifecycle === "superseded") return "retired";
+  return COACH_MEMORY_DB_STATUSES.has(lifecycle) ? lifecycle : "active";
+}
+
+function normalizeCoachMemoryConfidence(value = "medium") {
+  const confidence = String(value || "medium").trim().toLowerCase();
+  return COACH_MEMORY_CONFIDENCE.has(confidence) ? confidence : "medium";
+}
+
+function normalizeCoachMemoryCategory(value = "training_preference") {
+  const category = String(value || "training_preference")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+  return truncate(category || "training_preference", 80);
+}
+
+function normalizeCoachMemoryDate(value, fallback = null) {
+  const text = String(value || "").trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+  return fallback;
+}
+
+function sanitizeCoachMemoryText(value, maxLength = 900) {
+  const text = truncate(String(value || "").trim(), maxLength);
+  if (!text) return "";
+  return COACH_MEMORY_SECRET_VALUE.test(text) ? "[redacted secret-like text]" : text;
+}
+
+function sanitizeCoachMemoryPayload(value, depth = 0) {
+  if (value === undefined) return undefined;
+  if (value === null || typeof value === "number" || typeof value === "boolean") return value;
+  if (typeof value === "string") return sanitizeCoachMemoryText(value, 900);
+  if (depth >= 4) return "[truncated]";
+  if (Array.isArray(value)) {
+    return value
+      .slice(0, 12)
+      .map(item => sanitizeCoachMemoryPayload(item, depth + 1))
+      .filter(item => item !== undefined);
+  }
+  if (typeof value === "object") {
+    const entries = Object.entries(value)
+      .filter(([key]) => !COACH_MEMORY_SECRET_KEY.test(key))
+      .slice(0, 30)
+      .map(([key, item]) => [truncate(key, 80), sanitizeCoachMemoryPayload(item, depth + 1)])
+      .filter(([, item]) => item !== undefined);
+    return Object.fromEntries(entries);
+  }
+  return null;
+}
+
+function normalizeCoachMemoryEvidence(value) {
+  const evidence = Array.isArray(value) ? value : value ? [value] : [];
+  return sanitizeCoachMemoryPayload(evidence, 0) || [];
+}
+
+function normalizeActionContexts(value, category = "") {
+  const raw = Array.isArray(value) ? value : value ? [value] : [];
+  const contexts = raw
+    .map(item => String(item || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "_"))
+    .filter(Boolean);
+  if (!contexts.length) {
+    if (/nutrition/.test(category)) contexts.push("nutrition_check");
+    else if (/workout|exercise|training|equipment|floor|pain|safety/.test(category)) contexts.push("build_workout");
+    else if (/recovery|schedule|style/.test(category)) contexts.push("brief");
+  }
+  return [...new Set(contexts)].slice(0, 8);
+}
+
+function compactCoachMemoryObservation(row = {}) {
+  const raw = row.raw && typeof row.raw === "object" ? row.raw : {};
+  const lifecycleStatus = normalizeCoachMemoryLifecycle(raw.memory_lifecycle_status || raw.lifecycle_status || row.status || "active");
+  const actionContexts = normalizeActionContexts(raw.action_contexts || raw.contexts, row.category);
+  const supersedes = raw.supersedes_observation_id || raw.supersedes || null;
+  const replacedBy = raw.replaced_by_observation_id || raw.replaced_by || null;
+  return {
+    id: row.id || null,
+    observation_date: row.observation_date || null,
+    category: row.category || null,
+    observation: row.observation || null,
+    evidence: Array.isArray(row.evidence) ? row.evidence : [],
+    confidence: normalizeCoachMemoryConfidence(row.confidence),
+    status: row.status || null,
+    lifecycle_status: lifecycleStatus,
+    action: row.action_taken || raw.action || null,
+    action_taken: row.action_taken || null,
+    review_date: row.review_date || null,
+    source: row.source || null,
+    action_contexts: actionContexts,
+    tags: Array.isArray(raw.tags) ? raw.tags.slice(0, 8) : [],
+    last_used_at: raw.last_used_at || null,
+    supersedes,
+    replaced_by: replacedBy,
+    created_at: row.created_at || null,
+    updated_at: row.updated_at || null,
+  };
+}
+
+function coachMemoryPriority(row = {}) {
+  const category = String(row.category || "").toLowerCase();
+  const text = `${row.observation || ""} ${row.action_taken || ""} ${JSON.stringify(row.raw || {})}`.toLowerCase();
+  const isSafety = COACH_MEMORY_SAFETY_CATEGORIES.has(category)
+    || /\b(safety|pain|hip|bp|blood pressure|migraine|asthma|sharp|radiating|worsening|doctor|medical)\b/.test(text);
+  return isSafety ? "safety" : "context";
+}
+
+function coachMemoryRelevance(row = {}, intent = "general", text = "") {
+  const normalizedIntent = normalizeIntent(intent, text);
+  const terms = COACH_MEMORY_CONTEXT_TERMS[normalizedIntent] || COACH_MEMORY_CONTEXT_TERMS.general;
+  const category = String(row.category || "").toLowerCase();
+  const raw = row.raw && typeof row.raw === "object" ? row.raw : {};
+  const contexts = normalizeActionContexts(raw.action_contexts || raw.contexts, category);
+  const haystack = [
+    category,
+    row.observation,
+    row.action_taken,
+    row.source,
+    ...(Array.isArray(raw.tags) ? raw.tags : []),
+    ...contexts,
+  ].filter(Boolean).join(" ").toLowerCase();
+  const matches = terms.filter(term => haystack.includes(term));
+  if (contexts.includes(normalizedIntent)) matches.push(normalizedIntent);
+  if (normalizedIntent === "brief" && contexts.includes("coach_today")) matches.push("coach_today");
+  return [...new Set(matches)];
+}
+
+function sortCoachMemoryRows(a, b, intent, text) {
+  const safetyA = coachMemoryPriority(a) === "safety" ? 1 : 0;
+  const safetyB = coachMemoryPriority(b) === "safety" ? 1 : 0;
+  if (safetyA !== safetyB) return safetyB - safetyA;
+
+  const relevanceA = coachMemoryRelevance(a, intent, text).length;
+  const relevanceB = coachMemoryRelevance(b, intent, text).length;
+  if (relevanceA !== relevanceB) return relevanceB - relevanceA;
+
+  const confidenceScore = { high: 3, medium: 2, low: 1 };
+  const confidenceA = confidenceScore[normalizeCoachMemoryConfidence(a.confidence)] || 0;
+  const confidenceB = confidenceScore[normalizeCoachMemoryConfidence(b.confidence)] || 0;
+  if (confidenceA !== confidenceB) return confidenceB - confidenceA;
+
+  const dateA = Date.parse(a.updated_at || a.created_at || a.observation_date || 0) || 0;
+  const dateB = Date.parse(b.updated_at || b.created_at || b.observation_date || 0) || 0;
+  return dateB - dateA;
+}
+
+export async function createCoachObservation(profileId, input = {}) {
+  const observation = sanitizeCoachMemoryText(input.observation || input.memory || "", 900);
+  if (!profileId) throw new Error("Profile id is required.");
+  if (!observation) throw new Error("Observation text is required.");
+  const category = normalizeCoachMemoryCategory(input.category);
+  const lifecycleStatus = normalizeCoachMemoryLifecycle(input.lifecycle_status || input.status || "active");
+  const today = todayISO(input.timezone || "Asia/Taipei");
+  const raw = sanitizeCoachMemoryPayload(input.raw || {}, 0) || {};
+  const actionContexts = normalizeActionContexts(input.action_contexts || input.contexts || raw.action_contexts, category);
+  const row = {
+    profile_id: profileId,
+    observation_date: normalizeCoachMemoryDate(input.observation_date || input.date, today),
+    category,
+    observation,
+    evidence: normalizeCoachMemoryEvidence(input.evidence),
+    confidence: normalizeCoachMemoryConfidence(input.confidence),
+    action_taken: sanitizeCoachMemoryText(input.action_taken || input.action || "", 500) || null,
+    review_date: normalizeCoachMemoryDate(input.review_date, null),
+    status: dbStatusForCoachMemory(lifecycleStatus),
+    source: sanitizeCoachMemoryText(input.source || "custom-gpt", 120) || "custom-gpt",
+    raw: {
+      ...raw,
+      memory_lifecycle_status: lifecycleStatus,
+      action_contexts: actionContexts,
+      cannot_override: SOURCE_CONTEXT.coach_memory_not_authority,
+      supersedes_observation_id: compactId(input.supersedes || input.supersedes_observation_id) || raw.supersedes_observation_id || null,
+      replaced_by_observation_id: compactId(input.replaced_by || input.replaced_by_observation_id) || raw.replaced_by_observation_id || null,
+      recorded_by: truncate(input.recorded_by || "coach-api", 80),
+    },
+  };
+  const inserted = await supabase("coach_observations", { method: "POST", body: JSON.stringify([row]) });
+  return compactCoachMemoryObservation(inserted?.[0] || row);
+}
+
+export async function listCoachObservations(profileId, {
+  status = "active",
+  category = "",
+  limit = 20,
+  includeDataSync = false,
+} = {}) {
+  if (!profileId) throw new Error("Profile id is required.");
+  const safeLimit = Math.max(1, Math.min(100, Math.round(Number(limit) || 20)));
+  const rows = await supabase(`coach_observations?profile_id=eq.${queryValue(profileId)}&select=*&order=observation_date.desc,updated_at.desc&limit=100`);
+  const wantedStatus = String(status || "active").trim().toLowerCase();
+  const wantedCategory = normalizeCoachMemoryCategory(category || "");
+  return (rows || [])
+    .filter(row => {
+      if (!includeDataSync && row.category === "data_sync") return false;
+      if (wantedStatus && wantedStatus !== "all") {
+        if (row.status !== dbStatusForCoachMemory(wantedStatus)) return false;
+        if (["proposed", "superseded"].includes(wantedStatus)) {
+          const raw = row.raw && typeof row.raw === "object" ? row.raw : {};
+          const lifecycleStatus = normalizeCoachMemoryLifecycle(raw.memory_lifecycle_status || raw.lifecycle_status || row.status || "active");
+          if (lifecycleStatus !== wantedStatus) return false;
+        }
+      }
+      if (category && row.category !== wantedCategory) return false;
+      return true;
+    })
+    .slice(0, safeLimit)
+    .map(compactCoachMemoryObservation);
+}
+
+async function getCoachObservation(profileId, observationId) {
+  const id = compactId(observationId);
+  if (!id) throw new Error("A valid observation_id is required.");
+  const rows = await supabase(`coach_observations?profile_id=eq.${queryValue(profileId)}&id=eq.${queryValue(id)}&select=*&limit=1`);
+  if (!rows?.[0]) throw new Error("Coach memory observation was not found.");
+  return rows[0];
+}
+
+async function patchCoachObservation(profileId, observationId, patch = {}) {
+  const id = compactId(observationId);
+  if (!id) throw new Error("A valid observation_id is required.");
+  const rows = await supabase(`coach_observations?profile_id=eq.${queryValue(profileId)}&id=eq.${queryValue(id)}`, {
+    method: "PATCH",
+    body: JSON.stringify(patch),
+  });
+  return compactCoachMemoryObservation(rows?.[0] || patch);
+}
+
+export async function correctCoachObservation(profileId, input = {}) {
+  const correctedObservation = sanitizeCoachMemoryText(input.corrected_observation || input.observation || "", 900);
+  if (!correctedObservation) throw new Error("corrected_observation is required.");
+  const existing = await getCoachObservation(profileId, input.observation_id || input.id);
+  const raw = existing.raw && typeof existing.raw === "object" ? existing.raw : {};
+  const existingLifecycleStatus = normalizeCoachMemoryLifecycle(raw.memory_lifecycle_status || raw.lifecycle_status || existing.status || "active");
+  const lifecycleStatus = normalizeCoachMemoryLifecycle(input.lifecycle_status || input.status || existingLifecycleStatus);
+  return patchCoachObservation(profileId, existing.id, {
+    observation: correctedObservation,
+    category: input.category ? normalizeCoachMemoryCategory(input.category) : existing.category,
+    evidence: input.evidence ? normalizeCoachMemoryEvidence(input.evidence) : existing.evidence,
+    confidence: normalizeCoachMemoryConfidence(input.confidence || existing.confidence),
+    action_taken: sanitizeCoachMemoryText(input.action_taken || input.action || existing.action_taken || "", 500) || null,
+    review_date: normalizeCoachMemoryDate(input.review_date, existing.review_date),
+    status: dbStatusForCoachMemory(lifecycleStatus),
+    source: sanitizeCoachMemoryText(input.source || existing.source || "custom-gpt", 120) || "custom-gpt",
+    updated_at: new Date().toISOString(),
+    raw: {
+      ...raw,
+      ...sanitizeCoachMemoryPayload(input.raw || {}, 0),
+      memory_lifecycle_status: lifecycleStatus,
+      corrected_at: new Date().toISOString(),
+      correction_note: sanitizeCoachMemoryText(input.correction_note || input.reason || "", 500) || null,
+      previous_observation: sanitizeCoachMemoryText(existing.observation || "", 900) || null,
+      previous_action_taken: sanitizeCoachMemoryText(existing.action_taken || "", 500) || null,
+      cannot_override: SOURCE_CONTEXT.coach_memory_not_authority,
+    },
+  });
+}
+
+export async function retireCoachObservation(profileId, input = {}) {
+  const existing = await getCoachObservation(profileId, input.observation_id || input.id);
+  const replacementId = compactId(input.replacement_observation_id || input.replaced_by);
+  const raw = existing.raw && typeof existing.raw === "object" ? existing.raw : {};
+  return patchCoachObservation(profileId, existing.id, {
+    status: "retired",
+    action_taken: existing.action_taken || "Retired from active coach memory.",
+    updated_at: new Date().toISOString(),
+    raw: {
+      ...raw,
+      ...sanitizeCoachMemoryPayload(input.raw || {}, 0),
+      memory_lifecycle_status: replacementId ? "superseded" : "retired",
+      retired_at: new Date().toISOString(),
+      retirement_reason: sanitizeCoachMemoryText(input.reason || "Retired by Todd or Coach correction.", 500),
+      replaced_by_observation_id: replacementId || raw.replaced_by_observation_id || null,
+      cannot_override: SOURCE_CONTEXT.coach_memory_not_authority,
+    },
+  });
+}
+
+export function getRelevantCoachMemoryForContext(base = {}, { intent = "general", text = "", limit = 6 } = {}) {
+  const rows = Array.isArray(base.coach_observations) ? base.coach_observations : [];
+  const activeRows = rows.filter(row => row?.status === "active");
+  const safetyRows = activeRows.filter(row => coachMemoryPriority(row) === "safety");
+  const contextRows = activeRows.filter(row => coachMemoryPriority(row) === "safety" || coachMemoryRelevance(row, intent, text).length);
+  const sorted = [...contextRows].sort((a, b) => sortCoachMemoryRows(a, b, intent, text));
+  const safeLimit = Math.max(1, Math.min(12, Math.round(Number(limit) || 6)));
+  const selected = [];
+  for (const row of [...safetyRows.sort((a, b) => sortCoachMemoryRows(a, b, intent, text)), ...sorted]) {
+    if (selected.some(item => item.id && item.id === row.id)) continue;
+    if (selected.length >= safeLimit && coachMemoryPriority(row) !== "safety") continue;
+    selected.push(row);
+    if (selected.length >= safeLimit && selected.every(item => coachMemoryPriority(item) !== "safety")) break;
+  }
+  const relevant = selected.map(row => {
+    const compact = compactCoachMemoryObservation(row);
+    return {
+      ...compact,
+      priority: coachMemoryPriority(row),
+      relevance: coachMemoryRelevance(row, intent, text),
+      freshness_label: "memory",
+      sensor_data: false,
+    };
+  });
+  const lastUpdated = relevant
+    .map(row => row.updated_at || row.created_at || row.observation_date)
+    .filter(Boolean)
+    .sort()
+    .at(-1) || null;
+  return {
+    summary: "Coach memory is durable Supabase observation context. It is reviewable, correctable, and not fresh sensor data.",
+    source: "coach_observations",
+    relevant_observations: relevant,
+    memory_warnings: [
+      "Memory can constrain or personalize coaching, but current BP, doctor guidance, migraine, asthma, sharp/radiating/worsening pain, and fresh readiness data win.",
+      "Retired or needs-review observations are excluded from active coach context.",
+    ],
+    policy: {
+      role: SOURCE_CONTEXT.coach_memory_role,
+      does_not_replace: SOURCE_CONTEXT.coach_memory_not_authority,
+      safety_rule: "Memory can only constrain or inform training; it cannot turn Red or Yellow safety into harder training.",
+    },
+    retrieval: {
+      intent: normalizeIntent(intent, text),
+      target_limit: safeLimit,
+      active_only: true,
+      safety_observations_always_included: true,
+      sort_order: ["safety_importance", "intent_relevance", "confidence", "recency"],
+    },
+    last_updated: lastUpdated,
+  };
 }
 
 function asNumber(value) {
@@ -2329,6 +2700,11 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
   const topLine = topLineForIntent(normalizedIntent, readiness, nutrition, workout);
   const riskFlags = readiness.risk_flags.map(r => r.text);
   const recentConversation = compactCoachHistory(decisionDashboard);
+  const coachMemoryContext = getRelevantCoachMemoryForContext(decisionDashboard, {
+    intent: normalizedIntent,
+    text,
+    limit: 6,
+  });
   const includeWorkout = ["build_workout", "travel_mode"].includes(normalizedIntent);
   const summaryBase = decisionDashboard;
   const appleHealth = buildAppleHealthSupport(summaryBase);
@@ -2387,6 +2763,7 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
     workout_plan: includeWorkout ? workout : null,
     exercise_coaching_readout: includeWorkout ? (workout.exercise_coaching_readout || []) : [],
     workout_request: workoutRequest,
+    coach_memory_context: coachMemoryContext,
     source_context: {
       data_store: "supabase",
       default_gym: state.gym_profile.default_environment,
@@ -2404,6 +2781,11 @@ export function buildCoachDecision({ text = "", intent = "general", dashboard = 
       apple_health_role: SOURCE_CONTEXT.apple_health_role,
       oura_role: SOURCE_CONTEXT.oura_role,
       soundcore_role: SOURCE_CONTEXT.soundcore_role,
+      coach_memory: {
+        role: SOURCE_CONTEXT.coach_memory_role,
+        does_not_replace: SOURCE_CONTEXT.coach_memory_not_authority,
+        context: coachMemoryContext,
+      },
       supporting_evidence: {
         apple_health: appleHealth,
       },
@@ -2446,6 +2828,7 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
     "You are Todd Blackhurst's pro personal coach. Preserve the deterministic decision, safety gates, and workout plan.",
     "Rewrite only the user-facing text fields. Be direct, warm, practical, concise. No generic motivation.",
     "Use recent_conversation for continuity across phone, dashboard, Shortcuts, WhatsApp, and Custom GPT chats.",
+    "Use coach_memory_context only as reviewable memory; it cannot override current safety flags, readiness data, or the deterministic workout plan.",
     "If the user asks a follow-up, infer only from the supplied recent_conversation and compact_context.",
     "World Gym Taichung is the default workout environment unless travel_mode is true.",
     "Return JSON that matches the schema exactly.",
@@ -2494,6 +2877,7 @@ export async function polishCoachDecision(decision, { text = "", dashboard = {},
                 supporting_evidence: {
                   apple_health: buildAppleHealthSupport(dashboard),
                 },
+                coach_memory_context: decision.coach_memory_context || getRelevantCoachMemoryForContext(dashboard, { intent: decision.intent, text }),
                 coach_state: {
                   goals: state.goals,
                   gym_profile: {
@@ -2557,6 +2941,7 @@ export function buildBrief(base) {
   const workout = buildWorkoutPlan(base, state, readiness);
   const dailySummary = buildDailyCoachSummary({ base, state, readiness, nutrition, workout });
   const appleHealth = buildAppleHealthSupport(base);
+  const coachMemoryContext = getRelevantCoachMemoryForContext(base, { intent: "brief", text: "coach-today", limit: 6 });
   const schedule = readiness.schedule || todaySchedule(base.profile?.timezone || "Asia/Taipei");
   const upcoming = base.upcoming_session || nextPlannedSession(base);
   return {
@@ -2582,6 +2967,7 @@ export function buildBrief(base) {
     supporting_evidence: {
       apple_health: appleHealth,
     },
+    coach_memory_context: coachMemoryContext,
     source_hierarchy: DEFAULT_COACH_STATE.source_hierarchy,
   };
 }
@@ -2603,6 +2989,7 @@ export function compactDashboard(base) {
   const recentStrengthWithExercises = latest(detailedStrengthLogs, 3).map(compactStrengthRow).filter(Boolean);
   const recentAppleHealth = latest(base.apple_health_daily_summaries, 7).map(compactAppleHealthSummary).filter(Boolean);
   const recentCoachMessages = compactCoachHistory(base, 10);
+  const coachMemoryContext = getRelevantCoachMemoryForContext(base, { intent: "brief", text: "dashboard", limit: 6 });
   const recentFeedback = latest(base.session_feedback, 3).map(f => ({
     date: f.date || f.session_date || null,
     rating_label: f.rating_label || null,
@@ -2650,6 +3037,7 @@ export function compactDashboard(base) {
     supporting_evidence: {
       apple_health: buildAppleHealthSupport(base),
     },
+    coach_memory_context: coachMemoryContext,
   };
 }
 
@@ -2677,6 +3065,7 @@ export function buildCoachToday(base = {}) {
   const nutrition = buildNutritionCall(base, state);
   const workout = buildWorkoutPlan(base, state, readiness);
   const dailySummary = buildDailyCoachSummary({ base, state, readiness, nutrition, workout });
+  const coachMemoryContext = getRelevantCoachMemoryForContext(base, { intent: "brief", text: "coach-today", limit: 6 });
   return {
     ok: true,
     date: compact.coaching_brief?.data_completeness?.date || todayISO(base.profile?.timezone || "Asia/Taipei", base.now || new Date()),
@@ -2692,6 +3081,7 @@ export function buildCoachToday(base = {}) {
     current: compact.current,
     recent: compact.recent,
     supporting_evidence: compact.supporting_evidence,
+    coach_memory_context: coachMemoryContext,
     source_context: {
       safety_override: SOURCE_CONTEXT.safety_override,
       readiness_primary: SOURCE_CONTEXT.readiness_primary,
@@ -2706,6 +3096,11 @@ export function buildCoachToday(base = {}) {
       oura_role: SOURCE_CONTEXT.oura_role,
       soundcore_role: SOURCE_CONTEXT.soundcore_role,
       apple_health_workout_counts: "detected activity context only; not completed strength-log authority",
+      coach_memory: {
+        role: SOURCE_CONTEXT.coach_memory_role,
+        does_not_replace: SOURCE_CONTEXT.coach_memory_not_authority,
+        context: coachMemoryContext,
+      },
     },
   };
 }
@@ -2714,7 +3109,7 @@ export async function dashboardFromSupabase() {
   const profile = await getProfile();
   if (!profile) return null;
   const profileId = profile.id;
-  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions, appleHealthSummaries, appleHealthSyncRuns, doctorNotes] = await Promise.all([
+  const [rawImports, recovery, bp, body, nutrition, strength, feedback, messages, weeklyPlans, plannedSessions, appleHealthSummaries, appleHealthSyncRuns, doctorNotes, coachObservations] = await Promise.all([
     supabase(`raw_imports?profile_id=eq.${profileId}&select=payload,imported_at&order=imported_at.desc&limit=1`),
     supabase(`recovery_sleep?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
     supabase(`blood_pressure_readings?profile_id=eq.${profileId}&select=*&order=measured_date.asc`),
@@ -2728,6 +3123,7 @@ export async function dashboardFromSupabase() {
     safeSupabase(`apple_health_daily_summaries?profile_id=eq.${profileId}&select=*&order=summary_date.desc&limit=30`, {}, []),
     safeSupabase(`apple_health_sync_runs?profile_id=eq.${profileId}&select=*&order=started_at.desc&limit=10`, {}, []),
     safeSupabase(`doctor_notes?profile_id=eq.${profileId}&select=*&order=note_date.desc&limit=10`, {}, []),
+    safeSupabase(`coach_observations?profile_id=eq.${profileId}&status=eq.active&select=*&order=observation_date.desc,updated_at.desc&limit=50`, {}, []),
   ]);
 
   const base = rawImports?.[0]?.payload || {};
@@ -2771,6 +3167,7 @@ export async function dashboardFromSupabase() {
   base.apple_health_sync_runs = [...(appleHealthSyncRuns || [])]
     .sort((a, b) => String(a.started_at || "").localeCompare(String(b.started_at || "")));
   base.doctor_notes = dedupeRows((doctorNotes || []).map(r => ({ ...r, date: r.note_date })), "doctor_notes");
+  base.coach_observations = coachObservations || [];
   base.coach_chat_notes = messages.reverse().map(m => ({ role: m.role, text: m.body, at: m.message_at, channel: m.channel }));
   base.coach_state = await getCoachState(profileId);
   base.weekly_plans = weeklyPlans;

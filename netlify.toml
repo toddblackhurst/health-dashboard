@@ -55,6 +55,26 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/observations"
+  to = "/api/coach?action=record-observation"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/memory"
+  to = "/api/coach?action=list-memory"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/memory/correct"
+  to = "/api/coach?action=correct-memory"
+  status = 200
+
+[[redirects]]
+  from = "/api/coach/memory/retire"
+  to = "/api/coach?action=retire-memory"
+  status = 200
+
+[[redirects]]
   from = "/api/coach/motra-template"
   to = "/api/coach?action=motra-template"
   status = 200
