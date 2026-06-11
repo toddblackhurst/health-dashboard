@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-11 15:52 CST, after preserving the local Coach Memory / Observations v1 checkpoint before iOS 27 research.
+Last updated: 2026-06-11 15:52 CST, after preserving the local Coach Memory / Observations v1 checkpoint and adding the iOS 27 Siri/Shortcuts strategy.
 
 ## 1. Project Purpose
 
@@ -24,6 +24,7 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - GPT route/OpenAPI tests: `tests/coach-action-routing.test.mjs`
 - Apple Health tests: `tests/apple-health-daily.test.mjs`, `tests/apple-health-dashboard-context.test.mjs`
 - iOS HealthKit app: `apps/ios-health-sync/`
+- iOS 27 Siri/Shortcuts strategy: `docs/IOS27_SIRI_SHORTCUTS_COACH_STRATEGY.md`
 - Current handoff file: `COACH_CURRENT_STATE.md`
 - Do not modify: `HEALTH_DATABASE.json`
 
@@ -104,11 +105,13 @@ Documented PR #8 caveat:
 Current local branch state:
 
 - Branch: `coach-memory-observations-v1`
-- Git status verified on 2026-06-11: branch is ahead of `origin/main` by 3 commits with no uncommitted changes.
+- Preserved Todd-verified pre-handoff status on 2026-06-11: branch was ahead of `origin/main` by 3 commits with no uncommitted changes.
 - Base observed on 2026-06-11: `origin/main` at `0c7a0e2 Daily brief refresh - 2026-06-11`
 - Local branch already contains an unpushed Coach Memory / Observations v1 implementation commit `644a456 Add coach memory observations v1`.
 - Phase 0 handoff file commit: `876aa33 Add coach current state handoff`.
 - Reviewer fixes/hardening commit: `32ef0e6 Harden coach memory lifecycle and validation`.
+- Local handoff preservation commit after Todd's checkpoint: `b75042c Update coach memory handoff state`.
+- Local iOS 27 strategy documentation work was prepared after `b75042c`; this is documentation/architecture only and must not be treated as push, PR, merge, deploy, migration, or iOS implementation approval.
 - Current branch caveat: Phase 0 was not the first historical commit in this branch because the branch already contained Coach Memory implementation before the state-file commit. The state file was added before further feature edits; do not rewrite history without Todd's explicit approval.
 
 Coach Memory / Observations v1 local work status:
@@ -131,6 +134,18 @@ Coach Memory / Observations v1 local work status:
 - Production status: not deployed from this branch. Public production OpenAPI was checked on 2026-06-11 and returned `200`, but it reflects current production, not this unmerged branch. Public production `/api/coach/workout` without `x-coach-secret` returned the expected `401`, verifying existing deployed auth behavior only.
 - Manual approvals still required before push/open PR, merge, deploy, or migration/application.
 
+iOS 27 Siri/Shortcuts research status:
+
+- Todd has installed the iOS 27 developer beta.
+- iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, AppIntentsTesting, HealthKit notes, hardware triggers, widgets, Live Activities, Focus, Watch, CarPlay, AirPods, privacy, and beta caveats have been researched against official Apple sources.
+- Strategy document added: `docs/IOS27_SIRI_SHORTCUTS_COACH_STRATEGY.md`.
+- Implementation status: documentation/architecture only. No large iOS 27 feature implementation has started in this branch.
+- Important beta caveats captured:
+  - Avoid `Duration` and `LPLinkMetadata` in Coach App Intents for now unless necessary because of an iOS and iPadOS 27 beta Shortcuts known issue involving "Describe a Shortcut."
+  - Avoid enum-value-dependent AppShortcut phrases for critical coach actions because of an Xcode 27 beta Siri/AppShortcut known issue.
+  - Do not assume side-button, Action Button, or Siri AI behavior until Apple docs and Todd's physical iPhone testing confirm availability for the installed beta, device, language, and region.
+- Safety/source hierarchy remains unchanged: medical/safety flags override all device data and memory; Red safety cannot become hard training; Garmin remains primary integrated training/recovery evidence when fresh; Rack/Motra remains completed strength authority; Apple Health remains supporting evidence only.
+
 ## 8. Known Caveats
 
 - Do not modify `HEALTH_DATABASE.json`.
@@ -140,6 +155,7 @@ Coach Memory / Observations v1 local work status:
 - Do not apply Supabase migrations without Todd's explicit approval.
 - No Supabase migration has been applied for Coach Memory / Observations v1 in this branch.
 - Do not begin unrelated phases early.
+- Do not begin iOS 27 Siri/Shortcuts implementation from this Coach Memory branch unless Todd explicitly approves a stacked branch or separate implementation branch.
 - Workout Debrief Capture is intentionally deferred until after Coach Memory / Observations v1 unless Todd explicitly widens scope.
 - Garmin official API integration may be valuable later, but it depends on Garmin developer approval and should not block Coach Memory.
 - If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and label authenticated checks as not run.
@@ -151,11 +167,18 @@ Recommended sequence:
 1. Create/update `COACH_CURRENT_STATE.md`. Completed locally on branch `coach-memory-observations-v1`.
 2. Coach Memory / Observations v1. Implemented locally; pending read-only review completion, Todd approval to push/open PR if needed, and separate approval before any deploy/merge/migration.
 3. Workout Debrief Capture.
-4. iOS Siri/Shortcuts Readiness PR.
+4. iOS 27 Siri/Shortcuts Readiness PR.
 5. Apple Health workout-level intake.
 6. Rack/Motra import/debrief support.
 7. Weekly Review Engine.
 8. Garmin official integration track if approved.
+
+Alternate sequence if Todd wants iOS work pulled forward:
+
+1. Finish Coach Memory branch.
+2. iOS 27 Siri/Shortcuts Research PR, documentation-only.
+3. Workout Debrief Capture.
+4. iOS 27 Siri/Shortcuts Implementation PR.
 
 Coach Memory / Observations v1 target:
 
