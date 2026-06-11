@@ -449,7 +449,7 @@
       "post": {
         "operationId": "recordWorkoutDebrief",
         "summary": "Record a structured workout debrief",
-        "description": "Stores Todd-reported subjective workout response data including completion status, RPE, energy, pain/symptoms, modifications, skipped work, user-reported completed exercises, and coaching feedback. Red-flag symptoms produce a red_flag safety_outcome and cannot authorize hard training. Completed exercises are user-reported only; Rack/Motra remains completed strength-set authority and Garmin remains primary workout physiology/recovery evidence when fresh and reliably worn.",
+        "description": "Stores Todd-reported workout response data. Red-flag symptoms produce red_flag and cannot authorize hard training. Debriefs remain subjective; Rack/Motra keeps completed strength-set authority and Garmin remains primary physiology evidence when fresh.",
         "requestBody": {
           "required": true,
           "content": {
