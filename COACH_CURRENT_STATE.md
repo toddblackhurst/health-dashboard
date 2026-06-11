@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-11, after local Coach Memory / Observations v1 implementation checks.
+Last updated: 2026-06-11 15:52 CST, after preserving the local Coach Memory / Observations v1 checkpoint before iOS 27 research.
 
 ## 1. Project Purpose
 
@@ -104,10 +104,12 @@ Documented PR #8 caveat:
 Current local branch state:
 
 - Branch: `coach-memory-observations-v1`
+- Git status verified on 2026-06-11: branch is ahead of `origin/main` by 3 commits with no uncommitted changes.
 - Base observed on 2026-06-11: `origin/main` at `0c7a0e2 Daily brief refresh - 2026-06-11`
 - Local branch already contains an unpushed Coach Memory / Observations v1 implementation commit `644a456 Add coach memory observations v1`.
 - Phase 0 handoff file commit: `876aa33 Add coach current state handoff`.
-- This handoff file was added after discovering that local feature commit; do not rewrite history without Todd's explicit approval.
+- Reviewer fixes/hardening commit: `32ef0e6 Harden coach memory lifecycle and validation`.
+- Current branch caveat: Phase 0 was not the first historical commit in this branch because the branch already contained Coach Memory implementation before the state-file commit. The state file was added before further feature edits; do not rewrite history without Todd's explicit approval.
 
 Coach Memory / Observations v1 local work status:
 
@@ -125,13 +127,16 @@ Coach Memory / Observations v1 local work status:
   - Known memory validation failures now return `400`, missing observations return `404`, and server/config/Supabase failures remain `500`.
   - Secret-like string values in memory payloads are redacted before storage/return.
 - Migration status: no migration was applied. No new migration file was created because existing migration `supabase/migrations/005_apple_health_sync.sql` already defines `coach_observations` with `status`, `evidence`, `confidence`, `action_taken`, `review_date`, `source`, `raw`, timestamps, and RLS. Proposed/superseded lifecycle metadata is stored in `raw.memory_lifecycle_status` while DB `status` remains within the existing constraint.
-- Production status: not deployed from this branch. Public production OpenAPI was checked on 2026-06-11 and returned `200`, but it reflects current production, not this unmerged branch. Public production `/api/coach/workout` without `x-coach-secret` returned `401`.
+- External action status: no deploy, merge, push, PR, or secret-sensitive operation has been performed from this branch.
+- Production status: not deployed from this branch. Public production OpenAPI was checked on 2026-06-11 and returned `200`, but it reflects current production, not this unmerged branch. Public production `/api/coach/workout` without `x-coach-secret` returned the expected `401`, verifying existing deployed auth behavior only.
+- Manual approvals still required before push/open PR, merge, deploy, or migration/application.
 
 ## 8. Known Caveats
 
 - Do not modify `HEALTH_DATABASE.json`.
 - Do not deploy manually without Todd's explicit approval.
 - Do not merge PRs without Todd's explicit approval.
+- Do not push or open a PR without Todd's explicit approval.
 - Do not apply Supabase migrations without Todd's explicit approval.
 - No Supabase migration has been applied for Coach Memory / Observations v1 in this branch.
 - Do not begin unrelated phases early.
