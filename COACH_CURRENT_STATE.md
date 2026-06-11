@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-11 17:36 CST, after read-only reviewer fixes and tests on `workout-debrief-capture-v1`.
+Last updated: 2026-06-11 20:20 Asia/Taipei, after Workout Debrief Capture v1 production deploy, Supabase migration, GPT Action schema refresh, and production smoke verification.
 
 ## 1. Project Purpose
 
@@ -46,6 +46,9 @@ Current known working action set includes:
 - `listCoachMemory`
 - `correctCoachMemory`
 - `retireCoachMemory`
+- `buildMotraDebriefTemplate`
+- `recordWorkoutDebrief`
+- `listWorkoutDebriefs`
 
 Production OpenAPI now includes Coach Memory / Observations v1 endpoints and actions:
 
@@ -58,14 +61,14 @@ Production OpenAPI now includes Coach Memory / Observations v1 endpoints and act
 - `correctCoachMemory`
 - `retireCoachMemory`
 
-Local branch OpenAPI adds Workout Debrief Capture v1 actions:
+Production OpenAPI includes Workout Debrief Capture v1 actions:
 
 - `POST /api/coach/workout-debrief`
 - `GET /api/coach/workout-debriefs`
 - `recordWorkoutDebrief`
 - `listWorkoutDebriefs`
 
-Local branch also fixes the previously exposed but unimplemented Motra template route:
+Production OpenAPI includes the Motra debrief template action:
 
 - `POST /api/coach/motra-template`
 - `buildMotraDebriefTemplate`
@@ -123,38 +126,33 @@ Documented PR #8 caveat:
 
 - iOS Personal Automation "Run Immediately" could not be fully verified through iOS Mirroring. Treat this as a documented caveat, not a blocker.
 
-Current branch and PR state:
+Current production state:
 
-- Current local branch for next workstream: `workout-debrief-capture-v1`
-- Branch status: local only; not pushed.
-- First branch commit: `dbcd761 Update handoff after Coach Memory production deploy`.
-- Feature implementation commit: `436ef80 Add workout debrief capture v1`.
-- Reviewer fix commit: committed after this handoff update.
-- Workout Debrief Capture v1 is implemented locally and tested, with reviewer fixes applied, but not pushed, opened as a PR, merged, deployed, or production-verified.
-- Pull request: PR #12, `Coach Memory Observations v1 + iOS 27 Coach Strategy`, `https://github.com/toddblackhurst/health-dashboard/pull/12`.
-- PR state: merged into `main`.
-- Merge commit: `f9f36ea3c78755c9acbf306aac65449eb6355444`.
-- Merge method: normal GitHub merge commit.
-- Merged at: 2026-06-11 17:09:50 Asia/Taipei.
-- `origin/main` includes PR head `403ca3a`.
-- Final pre-merge verification: `node --test tests/*.test.mjs`, `66/66` passing.
-- Netlify automatic production deploy completed successfully.
-- Deploy ID: `6a2a7b60684dfd0009308d2a`.
-- Commit deployed: `f9f36ea3c78755c9acbf306aac65449eb6355444`.
-- Deploy context: production.
-- Deploy state: ready.
-- Published at: 2026-06-11 17:10:11 Asia/Taipei.
-- Manual deploy: false. No manual Netlify deploy occurred.
-- Public production smoke checks:
-  - `GET /coach-openapi.json` returned `200`.
-  - Production OpenAPI includes Coach Memory endpoints/actions.
-  - Unauthenticated `GET /api/coach/memory` returned the expected `401`.
-- Authenticated production action tests were not run.
-- No `x-coach-secret` was used or printed.
-- `HEALTH_DATABASE.json` was untouched by the PR and merge diff.
-- No Supabase migration files were changed for PR #12.
-- No migrations were applied.
+- PR #12, `Coach Memory Observations v1 + iOS 27 Coach Strategy`, is merged and deployed.
+  - Merge commit: `f9f36ea3c78755c9acbf306aac65449eb6355444`.
+  - Netlify deploy ID: `6a2a7b60684dfd0009308d2a`.
+  - Published at: 2026-06-11 17:10:11 Asia/Taipei.
+  - Pre-merge tests: `node --test tests/*.test.mjs`, `66/66` passing.
+  - Public OpenAPI and unauthenticated `GET /api/coach/memory` `401` were verified.
+- PR #13, `Add Workout Debrief Capture v1`, is merged and deployed.
+  - Branch commits included `dbcd761`, `436ef80`, and `220462b`.
+  - Merge commit: `3e74af7ddb245a83267d02f150350dfe7877bb76`.
+  - Netlify deploy ID: `6a2aa171e14f7000085e194b`.
+  - Published at: 2026-06-11 19:52:35 Asia/Taipei.
+  - Production OpenAPI included `recordWorkoutDebrief`, `listWorkoutDebriefs`, and `buildMotraDebriefTemplate`.
+  - Public unauthenticated checks returned `401` for `POST /api/coach/workout-debrief` and `POST /api/coach/motra-template`.
+- PR #14, `Shorten GPT action OpenAPI descriptions`, is merged and deployed.
+  - Merge commit: `09bfb3f819db4a2815e2ccb3cb66eecd29d38cd0`.
+  - Netlify deploy ID: `6a2aa672b517080008fe32ec`.
+  - Published at: 2026-06-11 20:13:49 Asia/Taipei.
+- PR #15, `Shorten workout debrief action description`, is merged and deployed.
+  - Merge commit: `c7e1d20293752e9488c41e14360c29c0235fe078`.
+  - Netlify deploy ID: `6a2aa7230175320008e2a126`.
+  - Published at: 2026-06-11 20:16:46 Asia/Taipei.
+  - Manual deploy: false. The production deploy was automatic.
+- `HEALTH_DATABASE.json` remained untouched throughout PR #13, #14, #15, migration, and production verification.
 - No production secrets or environment variables were changed.
+- No secret values were printed or pasted into chat.
 
 Coach Memory / Observations v1 production status:
 
@@ -173,21 +171,23 @@ Coach Memory / Observations v1 production status:
   - `list-memory` can filter the `proposed` and `superseded` lifecycle buckets while preserving the existing DB `status` constraint.
 - Migration status: no migration was applied. No new migration file was created because existing migration `supabase/migrations/005_apple_health_sync.sql` already defines `coach_observations` with `status`, `evidence`, `confidence`, `action_taken`, `review_date`, `source`, `raw`, timestamps, and RLS. Proposed/superseded lifecycle metadata is stored in `raw.memory_lifecycle_status` while DB `status` remains within the existing constraint.
 
-Workout Debrief Capture v1 local status:
+Workout Debrief Capture v1 production status:
 
-- New structured record action:
+- Structured record action:
   - `POST /api/coach/workout-debrief`
   - Custom GPT operation: `recordWorkoutDebrief`
-- New optional recent-list action:
+- Recent-list action:
   - `GET /api/coach/workout-debriefs`
   - Custom GPT operation: `listWorkoutDebriefs`
-- New context field added to `coach-today`, `buildTodayWorkout`, direct coach action responses, compact dashboard context, and source context:
+- Context field added to `coach-today`, `buildTodayWorkout`, direct coach action responses, compact dashboard context, and source context:
   - `workout_debrief_context`
-- New durable table migration created:
+- Durable table migration:
   - `supabase/migrations/007_workout_debriefs.sql`
   - Table: `coach_workout_debriefs`
-  - Status: migration file created only. It has not been applied.
-- New tests added:
+  - Status: applied to production Supabase project `Coach` (`oytxugapzdnuqhhjjsyu`) on 2026-06-11.
+  - Supabase migration history shows `20260611115949 007_workout_debriefs`.
+  - Production table `public.coach_workout_debriefs` exists with RLS enabled.
+- Tests added:
   - `tests/workout-debrief.test.mjs`
   - `tests/coach-action-routing.test.mjs` updated for debrief routes/actions.
 - Validation and safety behavior:
@@ -202,25 +202,24 @@ Workout Debrief Capture v1 local status:
   - Memory candidates are returned as reviewable/proposed context only; no active Coach Memory observation is silently created.
 - Test result after implementation:
   - `node --test tests/*.test.mjs`
-  - `79/79` passing after reviewer fixes.
+  - `79/79` passing after implementation, reviewer fixes, and OpenAPI description follow-up fixes.
 - Read-only reviewer follow-up fixes:
   - API/OpenAPI/Auth reviewer found that `/api/coach/motra-template` was already exposed in OpenAPI and `netlify.toml` but fell through to `404`. Fixed by adding `buildMotraDebriefTemplate`, wiring the handler, and adding route/behavior tests.
   - iOS 27 readiness/privacy reviewer found stale strategy-doc language saying Coach Memory was still the current branch. Fixed doc wording and sequence to reflect `workout-debrief-capture-v1`.
   - Safety/source hierarchy reviewer found no issues.
   - Data model/lifecycle reviewer found no issues.
-- External action status:
-  - No push.
-  - No PR opened.
-  - No merge.
-  - No deploy, manual or automatic from this branch.
-  - No migration applied.
-  - No Supabase migration run.
-  - No production secret or environment variable changed.
-  - No `x-coach-secret` used or printed.
-  - `HEALTH_DATABASE.json` remains untouched in the working tree.
-- Known implementation caveat:
-  - The recording endpoint requires the new `coach_workout_debriefs` table. Until Todd explicitly approves applying `supabase/migrations/007_workout_debriefs.sql`, production would not be able to store debrief records from this branch.
-  - Dashboard/coach context reads tolerate the missing table and return empty debrief context until the migration is applied.
+- Production verification:
+  - Public OpenAPI returned `200` and includes `recordWorkoutDebrief`, `listWorkoutDebriefs`, and `buildMotraDebriefTemplate`.
+  - Unauthenticated route checks returned expected `401`.
+  - Todd's Performance Coach GPT Action schema was refreshed from the production OpenAPI after PR #15.
+  - Fresh GPT Action call used `recordWorkoutDebrief` and returned `ok: true`.
+  - Production smoke debrief ID: `9676f78f-de72-45d7-b0dd-5620a5231bd0`.
+  - Smoke debrief row was verified in Supabase with marker `codex-recordWorkoutDebrief-smoke-20260611T1240Z`, `workout_date` `2020-01-04`, `completion_status` `skipped`, and `safety_outcome` `none`.
+  - The smoke record is old-dated and labeled as non-real production smoke-test data so it should not become real coaching evidence.
+- GPT/OpenAPI follow-up:
+  - GPT editor initially rejected overlong OpenAPI descriptions.
+  - PR #14 and PR #15 shortened only description text in `coach-openapi.json`.
+  - The final GPT schema import had no GPT editor description-length warnings.
 
 iOS 27 Siri/Shortcuts research status:
 
@@ -244,41 +243,39 @@ iOS 27 Siri/Shortcuts research status:
 - Do not push or open a PR without Todd's explicit approval.
 - Do not apply Supabase migrations without Todd's explicit approval.
 - No Supabase migration was applied for PR #12.
-- No Supabase migration has been applied for Workout Debrief Capture v1.
+- Workout Debrief Capture v1 migration `007_workout_debriefs` has been applied to production Supabase with Todd's broad completion authorization for this run.
 - Do not begin unrelated phases early.
-- Do not begin iOS 27 Siri/Shortcuts implementation from this Workout Debrief branch unless Todd explicitly approves it.
-- Workout Debrief Capture v1 is implemented locally and awaits Todd approval for push/PR and separate approval for migration.
+- Do not begin iOS 27 Siri/Shortcuts implementation unless Todd explicitly approves it.
+- The production smoke debrief row is intentionally old-dated and labeled as test data. Do not treat it as real workout feedback.
 - Garmin official API integration may be valuable later, but it depends on Garmin developer approval and should not block Coach Memory.
-- If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and label authenticated checks as not run.
+- If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and use the configured GPT Action or secure provider surfaces for authenticated verification. Never paste the secret into chat.
 
 ## 9. Current Next Build Sequence
 
 Recommended sequence:
 
 1. PR #12 Coach Memory / Observations v1. Merged and deployed to production.
-2. Todd reviews Workout Debrief Capture v1 local branch and approves whether to push/open a PR.
-3. If PR is approved and later merged, apply `supabase/migrations/007_workout_debriefs.sql` only after explicit Todd approval.
-4. iOS 27 Siri/Shortcuts Readiness PR.
-5. Apple Health workout-level intake.
-6. Rack/Motra import/debrief support.
-7. Weekly Review Engine.
-8. Garmin official integration track if approved.
+2. PR #13 Workout Debrief Capture v1. Merged, migrated, deployed, and GPT Action smoke-verified in production.
+3. iOS 27 Siri/Shortcuts Readiness PR.
+4. Apple Health workout-level intake.
+5. Rack/Motra import/debrief support.
+6. Weekly Review Engine.
+7. Garmin official integration track if approved.
 
 Alternate sequence if Todd wants iOS work pulled forward:
 
-1. Finish local Workout Debrief review and handoff.
-2. iOS 27 Siri/Shortcuts Readiness PR, documentation-only.
-3. Workout Debrief migration/deploy approval if the backend branch has merged.
-4. iOS 27 Siri/Shortcuts Implementation PR.
+1. iOS 27 Siri/Shortcuts Readiness PR, documentation-only.
+2. iOS 27 Siri/Shortcuts Implementation PR only after Todd explicitly approves implementation.
+3. Apple Health workout-level intake or Rack/Motra import/debrief support, depending on Todd's priority.
 
 Coach Memory / Observations v1 completed target:
 
-- Store durable, reviewable, correctable, retireable, evidence-based observations in Supabase. Implemented locally.
-- Retrieve relevant active observations into `coach-today` and `buildTodayWorkout`. Implemented locally.
-- Include `coach_memory_context` with `summary`, `relevant_observations`, `memory_warnings`, and `last_updated`. Implemented locally.
-- Keep memory deterministic and non-authoritative over safety/current data. Implemented locally and covered by tests.
-- Add or update OpenAPI actions for recording, listing, correcting, and retiring memory. Implemented locally.
-- Add tests for auth, lifecycle, retrieval, retired exclusion, Red safety protection, hard medical/safety protection, current-data precedence, validation errors, secret-like text redaction, and OpenAPI security. Implemented locally; current suite passes `66/66`.
+- Store durable, reviewable, correctable, retireable, evidence-based observations in Supabase. Merged and deployed.
+- Retrieve relevant active observations into `coach-today` and `buildTodayWorkout`. Merged and deployed.
+- Include `coach_memory_context` with `summary`, `relevant_observations`, `memory_warnings`, and `last_updated`. Merged and deployed.
+- Keep memory deterministic and non-authoritative over safety/current data. Merged, deployed, and covered by tests.
+- Add or update OpenAPI actions for recording, listing, correcting, and retiring memory. Merged and deployed.
+- Add tests for auth, lifecycle, retrieval, retired exclusion, Red safety protection, hard medical/safety protection, current-data precedence, validation errors, secret-like text redaction, and OpenAPI security. Merged and deployed; current full suite passes `79/79`.
 
 ## 10. Non-Negotiable File Rule
 
