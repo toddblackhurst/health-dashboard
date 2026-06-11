@@ -1,10 +1,10 @@
 # Coach Current State
 
-Last updated: 2026-06-11 17:35 CST, after PR #12 check review and targeted reviewer fixes.
+Last updated: 2026-06-11 17:18 CST, after PR #12 merge/deploy readback and before Workout Debrief Capture v1 feature work.
 
 ## 1. Project Purpose
 
-Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching system connected to Custom GPT Actions, Supabase-backed coach data, Apple Health daily summaries, and planned durable coach memory. The system should behave like the same coach across new conversations while keeping medical and safety rules deterministic.
+Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching system connected to Custom GPT Actions, Supabase-backed coach data, Apple Health daily summaries, and durable coach memory. The system should behave like the same coach across new conversations while keeping medical and safety rules deterministic.
 
 ## 2. Production URLs
 
@@ -40,11 +40,17 @@ Current known working action set includes:
 - `getCoachToday`
 - `buildTodayWorkout`
 - `nutritionCloseout`
+- `recordCoachObservation`
+- `listCoachMemory`
+- `correctCoachMemory`
+- `retireCoachMemory`
 
-Coach Memory / Observations v1 is implemented locally on branch `coach-memory-observations-v1` and is not merged or deployed.
+Production OpenAPI now includes Coach Memory / Observations v1 endpoints and actions:
 
-Local OpenAPI now adds:
-
+- `POST /api/coach/observations`
+- `GET /api/coach/memory`
+- `POST /api/coach/memory/correct`
+- `POST /api/coach/memory/retire`
 - `recordCoachObservation`
 - `listCoachMemory`
 - `correctCoachMemory`
@@ -104,35 +110,36 @@ Documented PR #8 caveat:
 
 Current branch and PR state:
 
-- Branch: `coach-memory-observations-v1`
-- Remote branch: pushed to `origin/coach-memory-observations-v1` on 2026-06-11.
+- Current local branch for next workstream: `workout-debrief-capture-v1`
+- Branch status: local only; not pushed.
 - Pull request: PR #12, `Coach Memory Observations v1 + iOS 27 Coach Strategy`, `https://github.com/toddblackhurst/health-dashboard/pull/12`.
-- PR state: open normal PR, not draft, not merged.
-- Auto-merge: not enabled.
-- GitHub PR readback before the reviewer fix commit: `mergeStateStatus` was `CLEAN`; no pending or failed checks were observed.
-- Check status before the reviewer fix commit:
-  - `netlify/todd-personal-coach/deploy-preview`: pass.
-  - `Header rules - todd-personal-coach`: pass.
-  - `Redirect rules - todd-personal-coach`: pass.
-  - `Pages changed - todd-personal-coach`: neutral/skipping informational check, not a failure.
-- No deployment was performed from this branch.
+- PR state: merged into `main`.
+- Merge commit: `f9f36ea3c78755c9acbf306aac65449eb6355444`.
+- Merge method: normal GitHub merge commit.
+- Merged at: 2026-06-11 17:09:50 Asia/Taipei.
+- `origin/main` includes PR head `403ca3a`.
+- Final pre-merge verification: `node --test tests/*.test.mjs`, `66/66` passing.
+- Netlify automatic production deploy completed successfully.
+- Deploy ID: `6a2a7b60684dfd0009308d2a`.
+- Commit deployed: `f9f36ea3c78755c9acbf306aac65449eb6355444`.
+- Deploy context: production.
+- Deploy state: ready.
+- Published at: 2026-06-11 17:10:11 Asia/Taipei.
+- Manual deploy: false. No manual Netlify deploy occurred.
+- Public production smoke checks:
+  - `GET /coach-openapi.json` returned `200`.
+  - Production OpenAPI includes Coach Memory endpoints/actions.
+  - Unauthenticated `GET /api/coach/memory` returned the expected `401`.
+- Authenticated production action tests were not run.
+- No `x-coach-secret` was used or printed.
+- `HEALTH_DATABASE.json` was untouched by the PR and merge diff.
+- No Supabase migration files were changed for PR #12.
 - No migrations were applied.
-- No production secrets or environment variables were modified.
-- Verification before push/open PR on 2026-06-11: `node --test tests/*.test.mjs`, `65/65` passing.
-- Verification after reviewer fixes on 2026-06-11: `node --test tests/*.test.mjs`, `66/66` passing.
-- Preserved Todd-verified pre-handoff status on 2026-06-11: branch was ahead of `origin/main` by 3 commits with no uncommitted changes.
-- Base observed on 2026-06-11: `origin/main` at `0c7a0e2 Daily brief refresh - 2026-06-11`
-- Branch contains Coach Memory / Observations v1 implementation commit `644a456 Add coach memory observations v1`.
-- Phase 0 handoff file commit: `876aa33 Add coach current state handoff`.
-- Reviewer fixes/hardening commit: `32ef0e6 Harden coach memory lifecycle and validation`.
-- Local handoff preservation commit after Todd's checkpoint: `b75042c Update coach memory handoff state`.
-- iOS 27 strategy documentation commit: `7dc8bca Add iOS 27 coach strategy`.
-- PR-status handoff commit after PR creation: `f878817 Update handoff with Coach Memory PR status`.
-- Current branch caveat: Phase 0 was not the first historical commit in this branch because the branch already contained Coach Memory implementation before the state-file commit. The state file was added before further feature edits; do not rewrite history without Todd's explicit approval.
+- No production secrets or environment variables were changed.
 
-Coach Memory / Observations v1 local work status:
+Coach Memory / Observations v1 production status:
 
-- Local endpoints added through `netlify.toml` clean routes and `coach-api.mjs` action routing:
+- Endpoints added through `netlify.toml` clean routes and `coach-api.mjs` action routing:
   - `POST /api/coach/observations`
   - `GET /api/coach/memory`
   - `POST /api/coach/memory/correct`
@@ -140,16 +147,12 @@ Coach Memory / Observations v1 local work status:
 - Retrieval added to `coach-today` and workout decisions through `coach_memory_context`.
 - Memory context is labeled as durable Supabase observation context, not fresh sensor data.
 - Memory warning policy says current BP, doctor guidance, migraine, asthma, sharp/radiating/worsening pain, and fresh readiness data win.
-- Tests run locally on 2026-06-11: `node --test tests/*.test.mjs`, `65/65` passing.
-- Read-only reviewer findings fixed locally:
+- Read-only reviewer findings fixed before merge:
   - Correction now preserves non-active lifecycle by default instead of promoting proposed/retired memory to active.
   - Known memory validation failures now return `400`, missing observations return `404`, and server/config/Supabase failures remain `500`.
   - Secret-like string values in memory payloads, correction audit fields, previous observation/action audit fields, and retirement reasons are redacted before storage/return.
   - `list-memory` can filter the `proposed` and `superseded` lifecycle buckets while preserving the existing DB `status` constraint.
 - Migration status: no migration was applied. No new migration file was created because existing migration `supabase/migrations/005_apple_health_sync.sql` already defines `coach_observations` with `status`, `evidence`, `confidence`, `action_taken`, `review_date`, `source`, `raw`, timestamps, and RLS. Proposed/superseded lifecycle metadata is stored in `raw.memory_lifecycle_status` while DB `status` remains within the existing constraint.
-- External action status: branch push and PR creation are complete. No deploy, merge, migration, production secret/environment change, or other secret-sensitive operation has been performed from this branch.
-- Production status: not deployed from this branch. Public production OpenAPI was checked on 2026-06-11 and returned `200`, but it reflects current production, not this unmerged branch. Public production `/api/coach/workout` without `x-coach-secret` returned the expected `401`, verifying existing deployed auth behavior only.
-- Manual approvals still required before merge, deploy, migration/application, or any production secret/environment change.
 
 iOS 27 Siri/Shortcuts research status:
 
@@ -170,10 +173,10 @@ iOS 27 Siri/Shortcuts research status:
 - Do not merge PRs without Todd's explicit approval.
 - Do not push or open a PR without Todd's explicit approval.
 - Do not apply Supabase migrations without Todd's explicit approval.
-- No Supabase migration has been applied for Coach Memory / Observations v1 in this branch.
+- No Supabase migration was applied for PR #12.
 - Do not begin unrelated phases early.
-- Do not begin iOS 27 Siri/Shortcuts implementation from this Coach Memory branch unless Todd explicitly approves a stacked branch or separate implementation branch.
-- Workout Debrief Capture is intentionally deferred until after Coach Memory / Observations v1 unless Todd explicitly widens scope.
+- Do not begin iOS 27 Siri/Shortcuts implementation from this Workout Debrief branch unless Todd explicitly approves it.
+- Workout Debrief Capture v1 is the active next workstream.
 - Garmin official API integration may be valuable later, but it depends on Garmin developer approval and should not block Coach Memory.
 - If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and label authenticated checks as not run.
 
@@ -181,14 +184,13 @@ iOS 27 Siri/Shortcuts research status:
 
 Recommended sequence:
 
-1. Create/update `COACH_CURRENT_STATE.md`. Completed locally on branch `coach-memory-observations-v1`.
-2. Coach Memory / Observations v1. Implemented and opened as PR #12; pending Todd review, GitHub check readback after the latest push, and separate approval before any merge, deploy, migration, or production secret/environment change.
-3. Workout Debrief Capture.
-4. iOS 27 Siri/Shortcuts Readiness PR.
-5. Apple Health workout-level intake.
-6. Rack/Motra import/debrief support.
-7. Weekly Review Engine.
-8. Garmin official integration track if approved.
+1. PR #12 Coach Memory / Observations v1. Merged and deployed to production.
+2. Workout Debrief Capture v1. Active local branch: `workout-debrief-capture-v1`.
+3. iOS 27 Siri/Shortcuts Readiness PR.
+4. Apple Health workout-level intake.
+5. Rack/Motra import/debrief support.
+6. Weekly Review Engine.
+7. Garmin official integration track if approved.
 
 Alternate sequence if Todd wants iOS work pulled forward:
 
@@ -197,7 +199,7 @@ Alternate sequence if Todd wants iOS work pulled forward:
 3. Workout Debrief Capture.
 4. iOS 27 Siri/Shortcuts Implementation PR.
 
-Coach Memory / Observations v1 target:
+Coach Memory / Observations v1 completed target:
 
 - Store durable, reviewable, correctable, retireable, evidence-based observations in Supabase. Implemented locally.
 - Retrieve relevant active observations into `coach-today` and `buildTodayWorkout`. Implemented locally.
