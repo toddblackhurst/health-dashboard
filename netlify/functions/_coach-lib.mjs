@@ -994,7 +994,14 @@ export async function listCoachObservations(profileId, {
   return (rows || [])
     .filter(row => {
       if (!includeDataSync && row.category === "data_sync") return false;
-      if (wantedStatus && wantedStatus !== "all" && row.status !== dbStatusForCoachMemory(wantedStatus)) return false;
+      if (wantedStatus && wantedStatus !== "all") {
+        if (row.status !== dbStatusForCoachMemory(wantedStatus)) return false;
+        if (["proposed", "superseded"].includes(wantedStatus)) {
+          const raw = row.raw && typeof row.raw === "object" ? row.raw : {};
+          const lifecycleStatus = normalizeCoachMemoryLifecycle(raw.memory_lifecycle_status || raw.lifecycle_status || row.status || "active");
+          if (lifecycleStatus !== wantedStatus) return false;
+        }
+      }
       if (category && row.category !== wantedCategory) return false;
       return true;
     })
@@ -1042,9 +1049,9 @@ export async function correctCoachObservation(profileId, input = {}) {
       ...sanitizeCoachMemoryPayload(input.raw || {}, 0),
       memory_lifecycle_status: lifecycleStatus,
       corrected_at: new Date().toISOString(),
-      correction_note: truncate(input.correction_note || input.reason || "", 500) || null,
-      previous_observation: existing.observation,
-      previous_action_taken: existing.action_taken || null,
+      correction_note: sanitizeCoachMemoryText(input.correction_note || input.reason || "", 500) || null,
+      previous_observation: sanitizeCoachMemoryText(existing.observation || "", 900) || null,
+      previous_action_taken: sanitizeCoachMemoryText(existing.action_taken || "", 500) || null,
       cannot_override: SOURCE_CONTEXT.coach_memory_not_authority,
     },
   });
@@ -1063,7 +1070,7 @@ export async function retireCoachObservation(profileId, input = {}) {
       ...sanitizeCoachMemoryPayload(input.raw || {}, 0),
       memory_lifecycle_status: replacementId ? "superseded" : "retired",
       retired_at: new Date().toISOString(),
-      retirement_reason: truncate(input.reason || "Retired by Todd or Coach correction.", 500),
+      retirement_reason: sanitizeCoachMemoryText(input.reason || "Retired by Todd or Coach correction.", 500),
       replaced_by_observation_id: replacementId || raw.replaced_by_observation_id || null,
       cannot_override: SOURCE_CONTEXT.coach_memory_not_authority,
     },

@@ -119,8 +119,13 @@ function installMockSupabase(db = baseDb()) {
   return db;
 }
 
-function coachGet(action) {
-  return new Request(`https://coach.test/api/coach?action=${action}`, {
+function coachGet(action, params = {}) {
+  const url = new URL("https://coach.test/api/coach");
+  url.searchParams.set("action", action);
+  for (const [key, value] of Object.entries(params)) {
+    url.searchParams.set(key, value);
+  }
+  return new Request(url, {
     method: "GET",
     headers: { "x-coach-secret": "test-secret" },
   });
@@ -224,6 +229,44 @@ test("recordCoachObservation redacts secret-like memory text values", async () =
   assert.equal(db.coach_observations[0].raw.nested.safe, "Keep this coaching context.");
 });
 
+test("memory correction and retirement audit fields redact secret-like text", async () => {
+  const profileId = "11111111-1111-4111-8111-111111111111";
+  const db = installMockSupabase(baseDb({
+    coach_observations: [{
+      id: "88888888-8888-4888-8888-888888888888",
+      profile_id: profileId,
+      observation_date: "2026-06-10",
+      category: "training_preference",
+      observation: "COACH_API_SECRET=old-secret",
+      evidence: [],
+      confidence: "medium",
+      action_taken: "Authorization: Bearer oldtoken",
+      status: "active",
+      source: "custom-gpt",
+      raw: {},
+      created_at: "2026-06-10T00:00:00Z",
+      updated_at: "2026-06-10T00:00:00Z",
+    }],
+  }));
+
+  const correctRes = await handler(coachPost("correct-memory", {
+    observation_id: "88888888-8888-4888-8888-888888888888",
+    corrected_observation: "Use compact workout instructions.",
+    correction_note: "password=do-not-store",
+  }));
+  const retireRes = await handler(coachPost("retire-memory", {
+    observation_id: "88888888-8888-4888-8888-888888888888",
+    reason: "token=do-not-store",
+  }));
+
+  assert.equal(correctRes.status, 200);
+  assert.equal(db.coach_observations[0].raw.correction_note, "[redacted secret-like text]");
+  assert.equal(db.coach_observations[0].raw.previous_observation, "[redacted secret-like text]");
+  assert.equal(db.coach_observations[0].raw.previous_action_taken, "[redacted secret-like text]");
+  assert.equal(retireRes.status, 200);
+  assert.equal(db.coach_observations[0].raw.retirement_reason, "[redacted secret-like text]");
+});
+
 test("proposed and superseded lifecycle states stay reviewable without entering active context", async () => {
   const db = installMockSupabase();
 
@@ -269,6 +312,16 @@ test("proposed and superseded lifecycle states stay reviewable without entering 
   assert.equal(retireBody.observation.status, "retired");
   assert.equal(retireBody.observation.lifecycle_status, "superseded");
   assert.equal(retireBody.observation.replaced_by, "55555555-5555-4555-8555-555555555555");
+
+  const proposedListRes = await handler(coachGet("list-memory", { status: "proposed" }));
+  const supersededListRes = await handler(coachGet("list-memory", { status: "superseded" }));
+  const proposedListBody = await proposedListRes.json();
+  const supersededListBody = await supersededListRes.json();
+
+  assert.equal(proposedListRes.status, 200);
+  assert.deepEqual(proposedListBody.memories.map(row => row.lifecycle_status), ["proposed"]);
+  assert.equal(supersededListRes.status, 200);
+  assert.deepEqual(supersededListBody.memories.map(row => row.lifecycle_status), ["superseded"]);
 
   const context = getRelevantCoachMemoryForContext(db, { intent: "brief", text: "Coach today" });
   assert.deepEqual(context.relevant_observations, []);

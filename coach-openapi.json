@@ -266,9 +266,9 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["active", "needs_review", "retired", "all"]
+              "enum": ["proposed", "active", "needs_review", "retired", "superseded", "all"]
             },
-            "description": "Observation status to list. Default is active."
+            "description": "Observation status or lifecycle bucket to list. Proposed maps to needs_review storage; superseded maps to retired storage. Default is active."
           },
           {
             "name": "category",
