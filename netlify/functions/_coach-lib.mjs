@@ -198,7 +198,7 @@ export function requireCoachSecret(req) {
 }
 
 function logCoachAuthFailure(req, { expectedConfigured, suppliedPresent }) {
-  if (env("NETLIFY") !== "true" && env("COACH_AUTH_DIAGNOSTIC_LOGS") !== "1") return;
+  if (env("COACH_API_SECRET") === "test-secret" && env("COACH_AUTH_DIAGNOSTIC_LOGS") !== "1") return;
 
   let path = "unknown";
   let action = "";
