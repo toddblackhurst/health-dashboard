@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-12 17:25 Asia/Taipei, after PR #17 merged and PR #18 Weekly Review Engine v1 planning branch started.
+Last updated: 2026-06-12 17:55 Asia/Taipei, after PR #18 merged and PR #19 Weekly Review Engine v1 deterministic-core branch started.
 
 ## 1. Project Purpose
 
@@ -31,6 +31,7 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Codex/GPT Pro operating model: `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
 - Full implementation roadmap: `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
 - Weekly Review Engine v1 planning doc: `docs/implementation/WEEKLY_REVIEW_ENGINE_V1_PLAN.md`
+- Weekly Review Engine v1 deterministic helper candidate: `lib/weekly-review-lib.mjs`
 - Canonical Codex prompt library: `.github/codex/prompts/`
 - Do not modify: `HEALTH_DATABASE.json`
 
@@ -118,6 +119,12 @@ Completed and merged:
   - Added canonical Codex/GPT Pro operating model, full implementation roadmap, and `.github/codex/prompts/` prompt library.
   - No API behavior, OpenAPI, Netlify function, Supabase migration, env/secret, GPT Action auth, deploy, or `HEALTH_DATABASE.json` change.
   - GitHub Pages workflow succeeded for the merge commit. Netlify production was not separately live-verified because the change is docs/prompts only.
+- PR #18, `Plan Weekly Review Engine v1`, is merged.
+  - Merge commit: `bf749a796255af534fcf12754db01ab15aa9853d`.
+  - Scope: planning/docs only.
+  - Added `docs/implementation/WEEKLY_REVIEW_ENGINE_V1_PLAN.md`.
+  - No Weekly Review Engine behavior, API route, OpenAPI, Netlify function, Supabase migration, env/secret, GPT Action refresh, manual deploy, production verification, or `HEALTH_DATABASE.json` change.
+  - GitHub Pages workflow succeeded for the merge commit. Netlify production was not separately live-verified because the change is docs/planning only.
 - Custom GPT Actions are working for `getSyncStatus`, `getCoachToday`, `buildTodayWorkout`, and `nutritionCloseout`.
 - PR #10 merged and deployed: workout builder returns the safest appropriate session whenever Todd asks for a workout. Generic "build workout" should not refuse on non-strength days. Explicit strength requests on non-strength days should return controlled modified strength when non-Red. Red safety returns recovery/medical caution, not hard training.
 - PR #11 merged and deployed: added `exercise_coaching_readout` and richer exercise coaching fields for GPT Actions. Production OpenAPI was verified. Production schema uses separate `floor` and `equipment` fields rather than a combined `floor_equipment`; this is acceptable.
@@ -248,7 +255,7 @@ iOS 27 Siri/Shortcuts research status:
 ## 8. Known Caveats
 
 - Do not modify `HEALTH_DATABASE.json`.
-- PR #18 candidate scope is planning/docs only for Weekly Review Engine v1. It must not implement Weekly Review Engine behavior, change API behavior, change OpenAPI, deploy, apply migrations, modify GPT Action authentication, touch secrets, or change `HEALTH_DATABASE.json`.
+- PR #19 candidate scope is a pure deterministic Weekly Review Engine v1 helper and tests only. It must not expose an API route, change existing coach behavior, change OpenAPI, change Netlify route mappings, deploy, apply migrations, modify GPT Action authentication, touch secrets, persist weekly reviews, or change `HEALTH_DATABASE.json`.
 - Do not deploy manually without Todd's explicit approval.
 - Do not merge PRs without Todd's explicit approval.
 - Do not push or open a PR without Todd's explicit approval.
@@ -263,10 +270,10 @@ iOS 27 Siri/Shortcuts research status:
 
 ## 9. Current Next Build Sequence
 
-Active planning candidate:
+Active deterministic-core candidate:
 
-- PR #18, Weekly Review Engine v1 Planning, is intended to add `docs/implementation/WEEKLY_REVIEW_ENGINE_V1_PLAN.md` and update this current-state file only.
-- Scope boundary: planning/docs only. Weekly Review Engine behavior, routes, OpenAPI, migrations, deployments, GPT Action refresh, and production data changes remain outside PR #18.
+- PR #19, Weekly Review Engine v1 Deterministic Core, is intended to add `lib/weekly-review-lib.mjs`, focused weekly-review tests, and update this current-state file only.
+- Scope boundary: pure helper/tests only. API routes, OpenAPI, migrations, persistence, deployments, GPT Action refresh, and production data changes remain outside PR #19.
 
 Recommended sequence:
 
