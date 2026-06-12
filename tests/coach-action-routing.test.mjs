@@ -77,3 +77,21 @@ test("coach OpenAPI component references resolve", async () => {
     assert.ok(openapi.components.schemas[name], `missing schema ${name}`);
   }
 });
+
+test("coach OpenAPI actions declare operation-level CoachSecret security", async () => {
+  const openapi = JSON.parse(await readFile(OPENAPI_PATH, "utf8"));
+
+  assert.deepEqual(openapi.security, [{ CoachSecret: [] }]);
+  assert.equal(openapi.components.securitySchemes.CoachSecret.in, "header");
+  assert.equal(openapi.components.securitySchemes.CoachSecret.name, "x-coach-secret");
+
+  for (const [route, pathItem] of Object.entries(openapi.paths)) {
+    for (const [method, operation] of Object.entries(pathItem)) {
+      assert.deepEqual(
+        operation.security,
+        [{ CoachSecret: [] }],
+        `${method.toUpperCase()} ${route} should not rely only on global security inheritance`,
+      );
+    }
+  }
+});
