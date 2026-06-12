@@ -40,6 +40,7 @@ test("coach memory actions are exposed as clean GPT action routes", async () => 
     ["/api/coach/memory", "get", "listCoachMemory", "list-memory"],
     ["/api/coach/memory/correct", "post", "correctCoachMemory", "correct-memory"],
     ["/api/coach/memory/retire", "post", "retireCoachMemory", "retire-memory"],
+    ["/api/coach/weekly-review", "get", "buildWeeklyReview", "weekly-review"],
     ["/api/coach/workout-debrief", "post", "recordWorkoutDebrief", "workout-debrief"],
     ["/api/coach/workout-debriefs", "get", "listWorkoutDebriefs", "workout-debriefs"],
     ["/api/coach/motra-template", "post", "buildMotraDebriefTemplate", "motra-template"],
@@ -55,6 +56,7 @@ test("coach memory actions are exposed as clean GPT action routes", async () => 
 
   assert.ok(openapi.components.schemas.CoachMemoryContext);
   assert.ok(openapi.components.schemas.CoachObservation);
+  assert.ok(openapi.components.schemas.WeeklyReviewResponse);
   assert.equal(openapi.components.securitySchemes.CoachSecret.name, "x-coach-secret");
 });
 
