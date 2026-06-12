@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-11 20:20 Asia/Taipei, after Workout Debrief Capture v1 production deploy, Supabase migration, GPT Action schema refresh, and production smoke verification.
+Last updated: 2026-06-12 16:55 Asia/Taipei, after aligning PR #17 candidate work to the canonical Codex/GPT Pro operating-model and prompt-library paths.
 
 ## 1. Project Purpose
 
@@ -28,6 +28,9 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - iOS HealthKit app: `apps/ios-health-sync/`
 - iOS 27 Siri/Shortcuts strategy: `docs/IOS27_SIRI_SHORTCUTS_COACH_STRATEGY.md`
 - Current handoff file: `COACH_CURRENT_STATE.md`
+- Codex/GPT Pro operating model: `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
+- Full implementation roadmap: `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
+- Canonical Codex prompt library: `.github/codex/prompts/`
 - Do not modify: `HEALTH_DATABASE.json`
 
 ## 4. Custom GPT Action URL
@@ -238,6 +241,7 @@ iOS 27 Siri/Shortcuts research status:
 ## 8. Known Caveats
 
 - Do not modify `HEALTH_DATABASE.json`.
+- PR #17 candidate scope is docs/prompts only for the Codex/GPT Pro operating model, full implementation roadmap, and canonical prompt library. It must not implement Weekly Review Engine, change API behavior, deploy, apply migrations, modify GPT Action authentication, or touch secrets.
 - Do not deploy manually without Todd's explicit approval.
 - Do not merge PRs without Todd's explicit approval.
 - Do not push or open a PR without Todd's explicit approval.
@@ -251,6 +255,11 @@ iOS 27 Siri/Shortcuts research status:
 - If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and use the configured GPT Action or secure provider surfaces for authenticated verification. Never paste the secret into chat.
 
 ## 9. Current Next Build Sequence
+
+Active docs/prompts candidate:
+
+- PR #17, Autonomous Implementation Spine, is intended to add durable repo instructions, implementation-roadmap scaffolding, and canonical relay/review prompts so future Codex tasks can start fresh, read current instructions, implement bounded stages, hand off to GPT Pro for planning/evaluation, and avoid context exhaustion.
+- Scope boundary: operating-spine docs/prompts only. Weekly Review Engine remains outside PR #17.
 
 Recommended sequence:
 

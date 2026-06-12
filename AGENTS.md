@@ -27,7 +27,11 @@ Key constraints:
 Read these files first when orienting:
 
 - `00_START_HERE.md`
+- `COACH_CURRENT_STATE.md`
 - `COACH_OPERATING_SYSTEM.md`
+- `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md` when the task involves a bounded Codex implementation, GPT Pro relay, PR, merge, deploy, migration, or handoff.
+- `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md` when the task touches implementation sequencing, Weekly Review Engine, Rack/Garmin handoff, or staged rollout planning.
+- `.github/codex/prompts/` when a task needs the canonical Codex implementation or review prompt library.
 - `MOTRA_SETTINGS.md`
 - `DATABASE_GUIDE.md`
 - `coach-openapi.json`
@@ -59,6 +63,12 @@ Available routes:
 - `POST /api/coach/workout`
 - `POST /api/coach/nutrition-closeout`
 - `POST /api/coach/post-workout`
+
+## Codex / GPT Pro Relay
+
+For repo implementation tasks, Codex is the only repo-reading and implementation agent. GPT Pro may evaluate structured handoffs and return next instructions, but it must not inspect, clone, browse, edit, or test the repo.
+
+Use `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`, `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`, and the templates in `.github/codex/prompts/` when Todd asks for an autonomous Codex/GPT Pro relay. Stop for human approval before merge, deploy, Supabase migration apply, production environment changes, GPT Action secret/auth changes, login, 2FA, payment, permission, account-security, or secret entry.
 
 ## Coaching Behavior
 
