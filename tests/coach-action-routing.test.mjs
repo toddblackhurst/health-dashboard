@@ -28,6 +28,25 @@ test("sync-status is exposed as a clean GPT action route", async () => {
   assert.match(redirect, /status\s*=\s*200/);
 });
 
+test("public ping is exposed as a clean unauthenticated GPT action route", async () => {
+  const [openapiRaw, netlifyToml] = await Promise.all([
+    readFile(OPENAPI_PATH, "utf8"),
+    readFile(NETLIFY_TOML_PATH, "utf8"),
+  ]);
+  const openapi = JSON.parse(openapiRaw);
+
+  const ping = openapi.paths["/api/coach/ping"]?.get;
+  assert.ok(ping, "OpenAPI should expose GET /api/coach/ping");
+  assert.equal(ping.operationId, "pingCoachApi");
+  assert.deepEqual(ping.security, []);
+  assert.ok(openapi.components.schemas.PingResponse);
+
+  const redirect = redirectBlockFor(netlifyToml, "/api/coach/ping");
+  assert.ok(redirect, "netlify.toml should expose /api/coach/ping");
+  assert.match(redirect, /to\s*=\s*"\/api\/coach\?action=ping"/);
+  assert.match(redirect, /status\s*=\s*200/);
+});
+
 test("coach memory actions are exposed as clean GPT action routes", async () => {
   const [openapiRaw, netlifyToml] = await Promise.all([
     readFile(OPENAPI_PATH, "utf8"),
@@ -87,6 +106,10 @@ test("coach OpenAPI actions declare operation-level CoachSecret security", async
 
   for (const [route, pathItem] of Object.entries(openapi.paths)) {
     for (const [method, operation] of Object.entries(pathItem)) {
+      if (operation.operationId === "pingCoachApi") {
+        assert.deepEqual(operation.security, [], "pingCoachApi should remain public and data-free");
+        continue;
+      }
       assert.deepEqual(
         operation.security,
         [{ CoachSecret: [] }],

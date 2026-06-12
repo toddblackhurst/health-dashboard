@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Todd Personal Coach API",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Private Supabase-backed coaching API for Todd's training, recovery, nutrition, workout planning, travel mode, and iPhone Shortcut actions."
   },
   "servers": [
@@ -96,6 +96,26 @@
             "CoachSecret": []
           }
         ]
+      }
+    },
+    "/api/coach/ping": {
+      "get": {
+        "operationId": "pingCoachApi",
+        "summary": "Ping the coach API connector",
+        "description": "Returns a public health check confirming the GPT Action connector can reach the deployed coach API. It returns no health, profile, training, nutrition, memory, or secret data.",
+        "responses": {
+          "200": {
+            "description": "Public coach API ping response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": []
       }
     },
     "/api/coach/weekly-review": {
@@ -2166,6 +2186,24 @@
           }
         },
         "additionalProperties": true
+      },
+      "PingResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "ping"
+            ]
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
       }
     },
     "securitySchemes": {

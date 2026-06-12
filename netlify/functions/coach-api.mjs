@@ -8,6 +8,7 @@ import {
   buildMotraDebriefTemplate,
   buildSyncStatus,
   compactDashboard,
+  COACH_RESPONSE_VERSION,
   correctCoachObservation,
   createCoachObservation,
   createWorkoutDebrief,
@@ -233,16 +234,24 @@ export default async function handler(req) {
   const pre = preflight(req);
   if (pre) return pre;
 
+  const url = new URL(req.url);
+  const pathAction = url.pathname.split("/").filter(Boolean).pop();
+  const action = url.searchParams.get("action")
+    || (["ping", "dashboard", "sync-status", "coach-today", "weekly-review", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout", "workout-debrief", "workout-debriefs", "motra-template", "observations", "memory"].includes(pathAction) ? pathAction : null)
+    || "dashboard";
+
+  if (req.method === "GET" && action === "ping") {
+    return json({
+      ok: true,
+      action: "ping",
+      version: COACH_RESPONSE_VERSION,
+    });
+  }
+
   const authError = requireCoachSecret(req);
   if (authError) return json({ error: authError }, 401);
 
   try {
-    const url = new URL(req.url);
-    const pathAction = url.pathname.split("/").filter(Boolean).pop();
-    const action = url.searchParams.get("action")
-      || (["dashboard", "sync-status", "coach-today", "weekly-review", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout", "workout-debrief", "workout-debriefs", "motra-template", "observations", "memory"].includes(pathAction) ? pathAction : null)
-      || "dashboard";
-
     if (req.method === "GET" && ["dashboard", "sync-status", "coach-today", "weekly-review"].includes(action)) {
       const dashboard = await dashboardFromSupabase({ readOnly: action === "weekly-review" });
       if (!dashboard) return json({ error: "No Supabase profile found. Run the importer first." }, 404);
