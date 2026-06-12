@@ -6,11 +6,13 @@ This project is now a Supabase-backed, API-brained, iPhone-first coaching system
 
 Read only this active set first:
 
-1. `ARCHITECTURE_V2.md` — target architecture for the best version of the coach: ingestion, canonical storage, coach brain, delivery channels, HealthKit, testing, and migration sequence.
-2. `COACH_OPERATING_SYSTEM.md` — canonical coaching logic, data hierarchy, World Gym rules, nutrition rules, safety gates, and iPhone workflows.
-3. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-4. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-5. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+1. `COACH_CURRENT_STATE.md` — current branch, PR, deploy, migration, Custom GPT Action, and verification state.
+2. `ARCHITECTURE_V2.md` — target architecture for the best version of the coach: ingestion, canonical storage, coach brain, delivery channels, HealthKit, testing, and migration sequence.
+3. `COACH_OPERATING_SYSTEM.md` — canonical coaching logic, data hierarchy, World Gym rules, nutrition rules, safety gates, and iPhone workflows.
+4. `docs/operations/CODEX_AUTONOMOUS_IMPLEMENTATION_SPINE.md` — Codex/GPT Pro relay rules, human-approval stops, and handoff requirements for bounded implementation tasks.
+5. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+6. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+7. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -53,6 +55,10 @@ Read only this active set first:
 ## Architecture Rule
 
 Do not rebuild this repo from scratch. Use small PRs that preserve production behavior: architecture/doc alignment, Apple Health schema, health-sync API, iOS HealthKit sync app, then coach-readiness integration.
+
+## Autonomous Codex Rule
+
+When Todd asks for an autonomous Codex task with GPT Pro planning/evaluation, use `docs/operations/CODEX_AUTONOMOUS_IMPLEMENTATION_SPINE.md` and the `prompts/` templates. Codex handles repo implementation. GPT Pro evaluates only the structured handoff. Merge, deploy, Supabase migration apply, production environment changes, GPT Action secret/auth changes, login, 2FA, payment, permission, account-security, and secret entry remain Todd approval boundaries.
 
 ## Archive Rule
 
