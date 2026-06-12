@@ -437,6 +437,23 @@ test("weekly review API requires x-coach-secret before loading Supabase data", a
   assert.equal(warnings[0].includes("wrong-secret-value"), false);
 });
 
+test("coach API public ping does not require x-coach-secret or Supabase", async () => {
+  installEnv();
+  global.fetch = async () => {
+    throw new Error("Supabase should not be called for ping.");
+  };
+
+  const res = await handler(new Request("https://coach.test/api/coach?action=ping", {
+    method: "GET",
+  }));
+  const body = await res.json();
+
+  assert.equal(res.status, 200);
+  assert.equal(body.ok, true);
+  assert.equal(body.action, "ping");
+  assert.match(body.version, /coach-brain/);
+});
+
 test("weekly review API action returns deterministic review sections without persistence", async () => {
   const { calls } = installWeeklyReviewSupabase();
 
