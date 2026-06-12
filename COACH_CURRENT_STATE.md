@@ -31,7 +31,7 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Codex/GPT Pro operating model: `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
 - Full implementation roadmap: `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
 - Weekly Review Engine v1 planning doc: `docs/implementation/WEEKLY_REVIEW_ENGINE_V1_PLAN.md`
-- Weekly Review Engine v1 deterministic helper candidate: `netlify/functions/_weekly-review-lib.mjs`
+- Weekly Review Engine v1 deterministic helper candidate: `lib/weekly-review-lib.mjs`
 - Canonical Codex prompt library: `.github/codex/prompts/`
 - Do not modify: `HEALTH_DATABASE.json`
 
@@ -272,7 +272,7 @@ iOS 27 Siri/Shortcuts research status:
 
 Active deterministic-core candidate:
 
-- PR #19, Weekly Review Engine v1 Deterministic Core, is intended to add `netlify/functions/_weekly-review-lib.mjs`, focused weekly-review tests, and update this current-state file only.
+- PR #19, Weekly Review Engine v1 Deterministic Core, is intended to add `lib/weekly-review-lib.mjs`, focused weekly-review tests, and update this current-state file only.
 - Scope boundary: pure helper/tests only. API routes, OpenAPI, migrations, persistence, deployments, GPT Action refresh, and production data changes remain outside PR #19.
 
 Recommended sequence:

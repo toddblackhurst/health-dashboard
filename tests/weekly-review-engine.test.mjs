@@ -5,7 +5,7 @@ import {
   WEEKLY_REVIEW_SOURCE_HIERARCHY,
   WEEKLY_REVIEW_VERSION,
   buildWeeklyReviewV1,
-} from "../netlify/functions/_weekly-review-lib.mjs";
+} from "../lib/weekly-review-lib.mjs";
 
 const WEEK_START = "2026-06-08";
 
