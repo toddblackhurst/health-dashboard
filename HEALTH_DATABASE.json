@@ -12426,18 +12426,18 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-12",
+    "date": "2026-06-13",
     "readiness_tier": "Yellow",
-    "call": "Train modified. Keep the plan, reduce density, and skip the hybrid close if HR or symptoms drift.",
-    "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 7.1 weeks.",
+    "call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it.",
+    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
+    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 7.0 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-12",
+      "as_of": "2026-06-13",
       "current_weight_lbs": 168.48828051080554,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 7.1
+      "weeks_remaining": 7.0
     },
     "active_adjustments": [
       "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
@@ -12448,23 +12448,21 @@
       "rotational press: keep"
     ],
     "data_completeness": {
-      "date": "2026-06-12",
+      "date": "2026-06-13",
       "schedule": {
-        "weekday": "Friday",
-        "day_type": "strength",
-        "strength_planned": true,
+        "weekday": "Saturday",
+        "day_type": "weekend_rest",
+        "strength_planned": false,
         "daily_walk_planned": true,
-        "label": "Friday strength day",
-        "next_strength_day": "Friday",
-        "non_lift_call": null
+        "label": "Saturday rest option",
+        "next_strength_day": "Monday",
+        "non_lift_call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it."
       },
       "score_pct": 0,
       "missing_required": [
         "sleep_recovery",
         "blood_pressure",
-        "nutrition",
-        "strength_session",
-        "strength_exercises"
+        "nutrition"
       ],
       "checks": [
         {
@@ -12498,15 +12496,15 @@
         {
           "id": "strength_session",
           "label": "Rack/Motra strength session",
-          "status": "pending",
-          "required": true,
+          "status": "not_expected",
+          "required": false,
           "latest_date": "2026-06-08"
         },
         {
           "id": "strength_exercises",
           "label": "Rack/Motra strength exercise detail",
-          "status": "pending",
-          "required": true,
+          "status": "not_expected",
+          "required": false,
           "latest_date": "2026-06-08"
         },
         {
@@ -12524,7 +12522,7 @@
           "latest_date": "2026-06-09",
           "source": "Apple Health / HealthKit daily summary",
           "role": "supporting cross-check",
-          "days_available_last_7": 4,
+          "days_available_last_7": 3,
           "warning": "Latest Apple Health summary is older than yesterday in Asia/Taipei."
         }
       ],
@@ -12536,7 +12534,7 @@
           "latest_summary_date": "2026-06-09",
           "latest_sync_date": "2026-06-09",
           "timezone": "Asia/Taipei",
-          "days_available_last_7": 4,
+          "days_available_last_7": 3,
           "latest_summary": {
             "date": "2026-06-09",
             "source": "Apple Health / HealthKit daily summary",
@@ -12574,10 +12572,10 @@
             "errors": []
           },
           "last_7_days": {
-            "count": 4,
-            "steps": 39781,
+            "count": 3,
+            "steps": 33804,
             "exercise_minutes": 147,
-            "active_energy_kcal": 1506,
+            "active_energy_kcal": 1378,
             "workout_count": 5,
             "strength_workout_count": 2,
             "cardio_workout_count": 3
@@ -12653,7 +12651,7 @@
     },
     "source": "supabase-dashboard"
   },
-  "last_updated": "2026-06-12T06:05:13+08:00",
+  "last_updated": "2026-06-13T06:05:11+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12741,106 +12739,14 @@
     }
   ],
   "upcoming_session": {
-    "date": "2026-06-12",
-    "day": "Friday",
-    "session_type": "Mixed corrective unilateral",
-    "theme": "Friday stays varied but conservative: a different floor, different machines, and a left-led carry close without any strain-risk lower-body loading.",
-    "floor_plan": "Floor 3 only",
-    "time_cap_min": 56,
-    "status": "LIVE - daily brief refreshed",
-    "blocks": [
-      {
-        "id": "prep",
-        "label": "PREP — Floor 3 reset",
-        "floor": "Floor 3",
-        "time_min": 10,
-        "exercises": [
-          {
-            "name": "Side-Lying Thoracic Rotation Stretch",
-            "prescription": "2×6/side",
-            "load": "BW",
-            "cues": "Open the chest while the knees stay stacked. No forcing the low back."
-          },
-          {
-            "name": "Hoist ROC-IT Outer Thigh",
-            "prescription": "2×12",
-            "load": "25 kg",
-            "cues": "Small clean reps and no torso sway. Feel the side hip, not the front of the joint."
-          },
-          {
-            "name": "Bird Dog",
-            "prescription": "2×6/side",
-            "load": "BW",
-            "cues": "Reach long and keep the pelvis quiet. This is trunk control, not height."
-          }
-        ]
-      },
-      {
-        "id": "a",
-        "label": "Block A — Mixed push and pull",
-        "floor": "Floor 3",
-        "time_min": 18,
-        "exercises": [
-          {
-            "name": "Hoist ROC-IT Chest Press",
-            "prescription": "3×10",
-            "load": "35 kg",
-            "cues": "Drive the handles smoothly and keep the chest open. Stop before the shoulders roll forward."
-          },
-          {
-            "name": "Hoist ROC-IT Mid Row",
-            "prescription": "3×10",
-            "load": "40 kg",
-            "cues": "Start the pull with the shoulder blade, then finish with the elbow. Stay tall and do not yank."
-          }
-        ]
-      },
-      {
-        "id": "b",
-        "label": "Block B — Unilateral support without hamstring strain",
-        "floor": "Floor 3",
-        "time_min": 16,
-        "exercises": [
-          {
-            "name": "Hoist ROC-IT Leg Extension",
-            "prescription": "2×12",
-            "load": "40 kg",
-            "cues": "Smooth squeeze and controlled lower. Keep it clean and stop before the knee snap gets sloppy."
-          },
-          {
-            "name": "Cable Lateral Raise",
-            "prescription": "2×12/side",
-            "load": "4.5 kg",
-            "cues": "Lift with quiet shoulders and no torso sway. Think smooth arc, not throw."
-          }
-        ]
-      },
-      {
-        "id": "c",
-        "label": "Block C — Trunk and corrective carry close",
-        "floor": "Floor 3",
-        "time_min": 12,
-        "exercises": [
-          {
-            "name": "Bear Hold",
-            "prescription": "2×20 sec",
-            "load": "BW",
-            "cues": "Knees hover low, ribs stay stacked, and the low back stays quiet. This is the lower-ab anti-extension slot, not a conditioning test."
-          },
-          {
-            "name": "Offset Farmer Carry",
-            "prescription": "2×20 m, left 24 kg / right 12 kg",
-            "load": "24 kg left / 12 kg right",
-            "cues": "Left side leads and posture stays tall. Do not let the torso drift or the right side cave toward the load."
-          }
-        ]
-      }
-    ],
-    "session_notes": "Friday changes the feel of the week without breaking the current injury guardrails: Floor 3 only, ROC-IT machines, and a left-led corrective carry instead of another straight hypertrophy slot. The mixed push-pull anchor keeps the session athletic enough to stay interesting, but I stripped out anything that looks like loaded rotation, swings, RDLs, lunges, deep step-ups, or hamstring-focused work. Bear hold plus offset carry gives the week a second lower-ab and side-waist exposure. This session also keeps the weekly no-repeat rule clean by using entirely different exercises than Monday and Wednesday.",
-    "planned_date": "2026-06-12",
-    "day_label": "Friday Jun 12",
-    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
-    "why": "The point today is high-quality load and clean positions, not extra volume."
+    "planned_date": "2026-06-13",
+    "day_label": "Saturday Jun 13",
+    "session_type": "Recovery / non-lifting day",
+    "floor_plan": "Walk or easy cardio only",
+    "time_cap_min": 45,
+    "blocks": [],
+    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
+    "why": "Recovery days preserve the quality of the next anchor session."
   },
   "coach_questions": [
     {
