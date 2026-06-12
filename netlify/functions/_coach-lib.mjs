@@ -185,10 +185,38 @@ export function preflight(req) {
 
 export function requireCoachSecret(req) {
   const expected = env("COACH_API_SECRET");
-  if (!expected) return "COACH_API_SECRET is not configured.";
   const supplied = req.headers.get("x-coach-secret") || "";
-  if (supplied !== expected) return "Invalid coach API secret.";
+  if (!expected) {
+    logCoachAuthFailure(req, { expectedConfigured: false, suppliedPresent: Boolean(supplied) });
+    return "COACH_API_SECRET is not configured.";
+  }
+  if (supplied !== expected) {
+    logCoachAuthFailure(req, { expectedConfigured: true, suppliedPresent: Boolean(supplied) });
+    return "Invalid coach API secret.";
+  }
   return "";
+}
+
+function logCoachAuthFailure(req, { expectedConfigured, suppliedPresent }) {
+  if (env("NETLIFY") !== "true" && env("COACH_AUTH_DIAGNOSTIC_LOGS") !== "1") return;
+
+  let path = "unknown";
+  let action = "";
+  try {
+    const url = new URL(req.url);
+    path = url.pathname;
+    action = url.searchParams.get("action") || "";
+  } catch {
+    // Keep auth diagnostics non-blocking.
+  }
+  console.warn(JSON.stringify({
+    event: "coach_api_auth_failure",
+    method: req.method,
+    path,
+    action,
+    expected_configured: expectedConfigured,
+    supplied_present: suppliedPresent,
+  }));
 }
 
 export async function supabase(path, options = {}) {
