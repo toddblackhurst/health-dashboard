@@ -411,17 +411,30 @@ test("source hierarchy warning is included and preserves required order", () => 
 
 test("weekly review API requires x-coach-secret before loading Supabase data", async () => {
   installEnv();
+  process.env.COACH_AUTH_DIAGNOSTIC_LOGS = "1";
   global.fetch = async () => {
     throw new Error("Supabase should not be called without auth.");
   };
 
+  const warnings = [];
+  const originalWarn = console.warn;
+  console.warn = message => warnings.push(String(message));
   const res = await handler(new Request("https://coach.test/api/coach?action=weekly-review&week_start=2026-06-08", {
     method: "GET",
+    headers: { "x-coach-secret": "wrong-secret-value" },
   }));
+  console.warn = originalWarn;
   const body = await res.json();
 
   assert.equal(res.status, 401);
   assert.match(body.error, /Invalid coach API secret/);
+  assert.equal(warnings.length, 1);
+  const log = JSON.parse(warnings[0]);
+  assert.equal(log.event, "coach_api_auth_failure");
+  assert.equal(log.expected_configured, true);
+  assert.equal(log.supplied_present, true);
+  assert.equal(log.action, "weekly-review");
+  assert.equal(warnings[0].includes("wrong-secret-value"), false);
 });
 
 test("weekly review API action returns deterministic review sections without persistence", async () => {
