@@ -1,13 +1,13 @@
-# Codex Autonomous Implementation Spine
+# Codex / ChatGPT Operating Model
 
-Use this operating spine when Todd asks Codex to implement a bounded Personal Coach repo task with GPT Pro as a planning and evaluation relay.
+Use this operating model when Todd asks Codex to implement a bounded Personal Coach repo task with ChatGPT/GPT Pro as a planning and evaluation relay.
 
 This document is repo instructions and prompt scaffolding only. It does not approve merge, deploy, Supabase migration, production environment edits, GPT Action secret changes, or live account-security work.
 
 ## Roles
 
 - Codex owns repository work: inspect files, make scoped edits, run tests, commit, push, open PRs, and prepare handoffs.
-- GPT Pro is planning and evaluation only. It must not inspect, clone, browse, edit, or test this repo.
+- ChatGPT/GPT Pro is planning and evaluation only. It must not inspect, clone, browse, edit, or test this repo.
 - Todd owns human-approval boundaries: merge, deploy, migration apply, production environment changes, account security, payment, 2FA, login, and secret entry.
 
 ## Fresh-Start Procedure
@@ -29,6 +29,9 @@ This document is repo instructions and prompt scaffolding only. It does not appr
 5. Read the current source set before implementation:
    - `AGENTS.md`
    - `COACH_CURRENT_STATE.md`
+   - `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
+   - `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
+   - `.github/codex/prompts/`
    - `COACH_OPERATING_SYSTEM.md`
    - `ARCHITECTURE_V2.md`
    - `NEXT_PHASE_OPTIONS.md`
@@ -39,12 +42,12 @@ This document is repo instructions and prompt scaffolding only. It does not appr
 7. Implement only the scoped stage.
 8. Keep `HEALTH_DATABASE.json` untouched unless Todd explicitly names that file as the target.
 
-## GPT Pro Relay Procedure
+## ChatGPT / GPT Pro Relay Procedure
 
 1. Open Todd's correct GPT Pro planning chat only when safe.
 2. If the correct chat is not identifiable, ask Todd to select it.
 3. If login, 2FA, permission, payment, account-security, or secret-entry screens appear, stop and ask Todd to take over manually.
-4. Paste `prompts/GPT_PRO_RECEIVER_INSTRUCTION.md` once before the first handoff in that chat.
+4. Paste the receiver instruction from `.github/codex/prompts/implementation.md` once before the first handoff in that chat.
 5. After implementation and verification, paste a handoff that begins with `CODEX_RELAY_HANDOFF`.
 6. Wait for a response that begins with `CODEX_RELAY_RESPONSE`.
 7. Follow the next Codex instruction only if it is safe, scoped, and does not cross a human-approval boundary.
@@ -81,7 +84,7 @@ Every relay handoff must include:
 - recommended next Codex instruction
 - explicit stop boundary
 
-Use `prompts/CODEX_RELAY_HANDOFF_TEMPLATE.md`.
+Use the relay handoff template in `.github/codex/prompts/implementation.md`.
 
 ## Completion States
 
