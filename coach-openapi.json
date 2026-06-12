@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Todd Personal Coach API",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Private Supabase-backed coaching API for Todd's training, recovery, nutrition, workout planning, travel mode, and iPhone Shortcut actions."
   },
   "servers": [
@@ -42,7 +42,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/coach-today": {
@@ -61,7 +66,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/sync-status": {
@@ -80,7 +90,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/weekly-review": {
@@ -133,7 +148,12 @@
           "401": {
             "description": "Invalid coach API secret"
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/message": {
@@ -162,7 +182,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/brief": {
@@ -191,7 +216,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/workout": {
@@ -220,7 +250,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/nutrition-closeout": {
@@ -249,7 +284,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/post-workout": {
@@ -278,7 +318,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/observations": {
@@ -307,7 +352,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/memory": {
@@ -379,7 +429,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/memory/correct": {
@@ -408,7 +463,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/memory/retire": {
@@ -437,7 +497,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/motra-template": {
@@ -466,7 +531,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/intake": {
@@ -495,7 +565,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/workout-debrief": {
@@ -530,7 +605,12 @@
           "401": {
             "description": "Invalid coach API secret"
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     },
     "/api/coach/workout-debriefs": {
@@ -582,7 +662,12 @@
           "401": {
             "description": "Invalid coach API secret"
           }
-        }
+        },
+        "security": [
+          {
+            "CoachSecret": []
+          }
+        ]
       }
     }
   },
