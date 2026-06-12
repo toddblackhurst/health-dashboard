@@ -1,6 +1,6 @@
 # Coach Current State
 
-Last updated: 2026-06-12 16:55 Asia/Taipei, after aligning PR #17 candidate work to the canonical Codex/GPT Pro operating-model and prompt-library paths.
+Last updated: 2026-06-12 17:25 Asia/Taipei, after PR #17 merged and PR #18 Weekly Review Engine v1 planning branch started.
 
 ## 1. Project Purpose
 
@@ -30,6 +30,7 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Current handoff file: `COACH_CURRENT_STATE.md`
 - Codex/GPT Pro operating model: `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
 - Full implementation roadmap: `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
+- Weekly Review Engine v1 planning doc: `docs/implementation/WEEKLY_REVIEW_ENGINE_V1_PLAN.md`
 - Canonical Codex prompt library: `.github/codex/prompts/`
 - Do not modify: `HEALTH_DATABASE.json`
 
@@ -111,6 +112,12 @@ Completed and merged:
 
 - Apple Health daily sync backend and iOS HealthKit app were built and merged.
 - Apple Health daily summaries sync to Supabase.
+- PR #17, `Autonomous Implementation Spine`, is merged.
+  - Merge commit: `ba374520803db15e511f04e0f0b7f576ea4dbc13`.
+  - Scope: docs/prompts only.
+  - Added canonical Codex/GPT Pro operating model, full implementation roadmap, and `.github/codex/prompts/` prompt library.
+  - No API behavior, OpenAPI, Netlify function, Supabase migration, env/secret, GPT Action auth, deploy, or `HEALTH_DATABASE.json` change.
+  - GitHub Pages workflow succeeded for the merge commit. Netlify production was not separately live-verified because the change is docs/prompts only.
 - Custom GPT Actions are working for `getSyncStatus`, `getCoachToday`, `buildTodayWorkout`, and `nutritionCloseout`.
 - PR #10 merged and deployed: workout builder returns the safest appropriate session whenever Todd asks for a workout. Generic "build workout" should not refuse on non-strength days. Explicit strength requests on non-strength days should return controlled modified strength when non-Red. Red safety returns recovery/medical caution, not hard training.
 - PR #11 merged and deployed: added `exercise_coaching_readout` and richer exercise coaching fields for GPT Actions. Production OpenAPI was verified. Production schema uses separate `floor` and `equipment` fields rather than a combined `floor_equipment`; this is acceptable.
@@ -241,7 +248,7 @@ iOS 27 Siri/Shortcuts research status:
 ## 8. Known Caveats
 
 - Do not modify `HEALTH_DATABASE.json`.
-- PR #17 candidate scope is docs/prompts only for the Codex/GPT Pro operating model, full implementation roadmap, and canonical prompt library. It must not implement Weekly Review Engine, change API behavior, deploy, apply migrations, modify GPT Action authentication, or touch secrets.
+- PR #18 candidate scope is planning/docs only for Weekly Review Engine v1. It must not implement Weekly Review Engine behavior, change API behavior, change OpenAPI, deploy, apply migrations, modify GPT Action authentication, touch secrets, or change `HEALTH_DATABASE.json`.
 - Do not deploy manually without Todd's explicit approval.
 - Do not merge PRs without Todd's explicit approval.
 - Do not push or open a PR without Todd's explicit approval.
@@ -256,10 +263,10 @@ iOS 27 Siri/Shortcuts research status:
 
 ## 9. Current Next Build Sequence
 
-Active docs/prompts candidate:
+Active planning candidate:
 
-- PR #17, Autonomous Implementation Spine, is intended to add durable repo instructions, implementation-roadmap scaffolding, and canonical relay/review prompts so future Codex tasks can start fresh, read current instructions, implement bounded stages, hand off to GPT Pro for planning/evaluation, and avoid context exhaustion.
-- Scope boundary: operating-spine docs/prompts only. Weekly Review Engine remains outside PR #17.
+- PR #18, Weekly Review Engine v1 Planning, is intended to add `docs/implementation/WEEKLY_REVIEW_ENGINE_V1_PLAN.md` and update this current-state file only.
+- Scope boundary: planning/docs only. Weekly Review Engine behavior, routes, OpenAPI, migrations, deployments, GPT Action refresh, and production data changes remain outside PR #18.
 
 Recommended sequence:
 
