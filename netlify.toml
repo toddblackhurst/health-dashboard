@@ -30,6 +30,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/coach/weekly-review"
+  to = "/api/coach?action=weekly-review"
+  status = 200
+
+[[redirects]]
   from = "/api/coach/message"
   to = "/api/coach?action=message"
   status = 200

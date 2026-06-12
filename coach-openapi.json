@@ -83,6 +83,59 @@
         }
       }
     },
+    "/api/coach/weekly-review": {
+      "get": {
+        "operationId": "buildWeeklyReview",
+        "summary": "Build a weekly coach review",
+        "description": "Returns a read-only weekly review from existing coach data. It does not persist reviews, promote memory, or apply next-week changes.",
+        "parameters": [
+          {
+            "name": "week_start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Monday date for the review week."
+          },
+          {
+            "name": "week_end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Optional week end date."
+          },
+          {
+            "name": "timezone",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Asia/Taipei"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Weekly review response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeeklyReviewResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid coach API secret"
+          }
+        }
+      }
+    },
     "/api/coach/message": {
       "post": {
         "operationId": "sendCoachMessage",
@@ -1137,6 +1190,73 @@
           "apple_health": {
             "type": "object",
             "description": "Apple Health freshness and upload status as supporting evidence only.",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "WeeklyReviewResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "action": {
+            "type": "string",
+            "const": "weekly-review"
+          },
+          "status": {
+            "type": "string",
+            "const": "review_only"
+          },
+          "week_start": {
+            "type": "string",
+            "format": "date"
+          },
+          "week_end": {
+            "type": "string",
+            "format": "date"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "review": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "source_coverage": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "proposed_observations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "missing_or_stale_data_warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_hierarchy_warning": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "not_applied_automatically": {
+            "type": "boolean"
+          },
+          "data_lifecycle": {
+            "type": "object",
             "additionalProperties": true
           }
         },

@@ -354,6 +354,27 @@ export async function getCoachState(profileId) {
   return hydrateCoachState(inserted?.[0] || row);
 }
 
+async function getCoachStateReadOnly(profileId) {
+  const rows = await safeSupabase(`coach_state?profile_id=eq.${profileId}&select=*&limit=1`, {}, []);
+  if (rows?.[0]) return hydrateCoachState(rows[0]);
+
+  return hydrateCoachState({
+    profile_id: profileId,
+    version: DEFAULT_COACH_STATE.version,
+    goals: DEFAULT_COACH_STATE.goals,
+    constraints: {
+      active_medical: DEFAULT_COACH_STATE.active_medical,
+      training_model: DEFAULT_COACH_STATE.training_model,
+    },
+    gym_profile: DEFAULT_COACH_STATE.gym_profile,
+    source_hierarchy: DEFAULT_COACH_STATE.source_hierarchy,
+    avoid_list: DEFAULT_COACH_STATE.gym_profile.avoid_items,
+    travel_mode: false,
+    active_medical_loops: DEFAULT_COACH_STATE.active_medical,
+    raw: DEFAULT_COACH_STATE,
+  });
+}
+
 function hydrateCoachState(row = {}) {
   const raw = row.raw && typeof row.raw === "object" ? row.raw : {};
   const constraints = row.constraints || raw.constraints || {};
@@ -3533,7 +3554,7 @@ export function buildCoachToday(base = {}) {
   };
 }
 
-export async function dashboardFromSupabase() {
+export async function dashboardFromSupabase({ readOnly = false } = {}) {
   const profile = await getProfile();
   if (!profile) return null;
   const profileId = profile.id;
@@ -3599,7 +3620,7 @@ export async function dashboardFromSupabase() {
   base.coach_observations = coachObservations || [];
   base.coach_workout_debriefs = workoutDebriefs || [];
   base.coach_chat_notes = messages.reverse().map(m => ({ role: m.role, text: m.body, at: m.message_at, channel: m.channel }));
-  base.coach_state = await getCoachState(profileId);
+  base.coach_state = readOnly ? await getCoachStateReadOnly(profileId) : await getCoachState(profileId);
   base.weekly_plans = weeklyPlans;
   base.planned_sessions = (plannedSessions || []).map(row => ({
     ...row,

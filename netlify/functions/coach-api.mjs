@@ -2,6 +2,7 @@ import {
   AppleHealthDailyValidationError,
   ingestAppleHealthDaily,
 } from "./apple-health-daily.mjs";
+import { buildWeeklyReviewV1 } from "../../lib/weekly-review-lib.mjs";
 import {
   buildCoachToday,
   buildMotraDebriefTemplate,
@@ -131,6 +132,91 @@ function queryValue(value) {
   return encodeURIComponent(String(value));
 }
 
+function dateInTimeZone(date = new Date(), timeZone = "Asia/Taipei") {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "short",
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return {
+    iso: `${values.year}-${values.month}-${values.day}`,
+    weekday: values.weekday,
+  };
+}
+
+function addIsoDays(isoDate, days) {
+  const parsed = Date.parse(`${isoDate}T00:00:00.000Z`);
+  if (Number.isNaN(parsed)) return null;
+  return new Date(parsed + days * 86400000).toISOString().slice(0, 10);
+}
+
+function weekStartForDate(date = new Date(), timeZone = "Asia/Taipei") {
+  const { iso, weekday } = dateInTimeZone(date, timeZone);
+  const weekdayIndex = {
+    Mon: 0,
+    Tue: 1,
+    Wed: 2,
+    Thu: 3,
+    Fri: 4,
+    Sat: 5,
+    Sun: 6,
+  }[weekday] ?? 0;
+  return addIsoDays(iso, -weekdayIndex);
+}
+
+function buildWeeklyReviewInput(dashboard = {}, { weekStart, weekEnd, timezone, text = "" } = {}) {
+  return {
+    ...dashboard,
+    week_start: weekStart,
+    week_end: weekEnd,
+    timezone,
+    text,
+    profile: dashboard.profile || {},
+    nutrition_targets: dashboard.coach_state?.goals,
+    strength_logs: dashboard.strength_logs || dashboard.strength_sessions || [],
+    recovery_sleep: dashboard.recovery_sleep || dashboard.recovery || [],
+    nutrition_log: dashboard.nutrition_log || dashboard.nutrition_days || [],
+    apple_health_daily_summaries: dashboard.apple_health_daily_summaries || [],
+    apple_health_sync_runs: dashboard.apple_health_sync_runs || [],
+    coach_workout_debriefs: dashboard.coach_workout_debriefs || dashboard.workout_debriefs || [],
+    coach_observations: dashboard.coach_observations || dashboard.coach_memory || [],
+    blood_pressure: dashboard.blood_pressure || dashboard.blood_pressure_readings || [],
+    doctor_notes: dashboard.doctor_notes || [],
+    planned_sessions: dashboard.planned_sessions || [],
+    weekly_session_plans: dashboard.weekly_session_plans || [],
+  };
+}
+
+function buildWeeklyReviewApiResponse(dashboard = {}, options = {}) {
+  const review = buildWeeklyReviewV1(buildWeeklyReviewInput(dashboard, options));
+  return {
+    ok: true,
+    action: "weekly-review",
+    status: "review_only",
+    week_start: review.week_start,
+    week_end: review.week_end,
+    timezone: review.timezone,
+    review,
+    source_coverage: review.source_coverage,
+    recommendations: review.recommended_next_week_changes,
+    proposed_observations: review.proposed_observations_for_review,
+    missing_or_stale_data_warnings: review.missing_or_stale_data_warnings,
+    source_hierarchy_warning: review.source_hierarchy_warning,
+    not_applied_automatically: true,
+    data_lifecycle: {
+      persistence: "none",
+      supabase_writes: false,
+      memory_promotion: "none",
+      plan_application: "none",
+      openai_call: false,
+      external_service_calls: false,
+    },
+  };
+}
+
 async function fetchExisting(table, selectFields, filters = {}) {
   const query = Object.entries(filters)
     .map(([key, value]) => `${key}=eq.${queryValue(value)}`)
@@ -154,14 +240,24 @@ export default async function handler(req) {
     const url = new URL(req.url);
     const pathAction = url.pathname.split("/").filter(Boolean).pop();
     const action = url.searchParams.get("action")
-      || (["dashboard", "sync-status", "coach-today", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout", "workout-debrief", "workout-debriefs", "motra-template", "observations", "memory"].includes(pathAction) ? pathAction : null)
+      || (["dashboard", "sync-status", "coach-today", "weekly-review", "message", "feedback", "intake", "apple-health-daily", "brief", "workout", "nutrition-closeout", "post-workout", "workout-debrief", "workout-debriefs", "motra-template", "observations", "memory"].includes(pathAction) ? pathAction : null)
       || "dashboard";
 
-    if (req.method === "GET" && ["dashboard", "sync-status", "coach-today"].includes(action)) {
-      const dashboard = await dashboardFromSupabase();
+    if (req.method === "GET" && ["dashboard", "sync-status", "coach-today", "weekly-review"].includes(action)) {
+      const dashboard = await dashboardFromSupabase({ readOnly: action === "weekly-review" });
       if (!dashboard) return json({ error: "No Supabase profile found. Run the importer first." }, 404);
       if (action === "sync-status") return json(buildSyncStatus(dashboard));
       if (action === "coach-today") return json(buildCoachToday(dashboard));
+      if (action === "weekly-review") {
+        const timezone = url.searchParams.get("timezone") || dashboard.profile?.timezone || "Asia/Taipei";
+        const weekStart = url.searchParams.get("week_start") || url.searchParams.get("weekStart") || weekStartForDate(new Date(), timezone);
+        return json(buildWeeklyReviewApiResponse(dashboard, {
+          weekStart,
+          weekEnd: url.searchParams.get("week_end") || url.searchParams.get("weekEnd") || null,
+          timezone,
+          text: url.searchParams.get("text") || "",
+        }));
+      }
       const isFull = url.searchParams.get("full") === "1";
       return json({
         dashboard: isFull ? dashboard : compactDashboard(dashboard),
