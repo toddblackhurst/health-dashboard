@@ -6,13 +6,14 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main is clean at `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d` before the Coach Readiness Status and Automation Gate v1 branch.
-- Full local Node test suite passed on 2026-06-13 after PR #27 merge: `node --test tests/*.test.mjs` -> `97/97`.
+- Repo main is clean at `69dd82b47371c3e5bc96c9c15e1da7e46f83d295` after PR #30 merge.
+- Full local Node test suite passed on 2026-06-13 after PR #30 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
 - PR #29 iOS Secret Redaction and Shortcut Output Safety v1 merged and production deployed automatically from main.
-- Automatic Netlify production deploy for PR #29 merge commit `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d` is ready: deploy id `6a2cc6884e4ec40008d96348`, published at `2026-06-13T02:55:15.447Z`, manual deploy `false`.
+- PR #30 Coach Readiness Status and Automation Gate v1 merged and production deployed automatically from main.
+- Automatic Netlify production deploy for PR #30 merge commit `69dd82b47371c3e5bc96c9c15e1da7e46f83d295` is ready: deploy id `6a2ccd3d9fd3c700085ad5c9`, published at `2026-06-13T03:23:53.475Z`, manual deploy `false`.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
@@ -78,7 +79,7 @@ Remaining safe Codex work:
 - Add deeper tests for secret redaction, missing secret, invalid secret, offline/backend failure, and Red safety behavior in intent outputs.
 - Keep Apple Health supporting-only in all iPhone outputs.
 - Keep draft-only write paths explicit until Todd-assisted device confirmation exists.
-- Add a local Coach readiness gate that maps setup, public ping, protected read-only readiness, HealthKit, Siri/Shortcuts, Action Button, Personal Automation, write hold, and draft-only capture into explicit statuses.
+- Keep the merged local Coach readiness gate current as setup, public ping, protected read-only readiness, HealthKit, Siri/Shortcuts, Action Button, Personal Automation, write hold, and draft-only capture behavior evolves.
 - Use the device setup runbook for future physical-device sessions rather than improvising from chat memory.
 
 Human/device boundary:
