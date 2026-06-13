@@ -10,6 +10,8 @@ The active coaching spec is `COACH_OPERATING_SYSTEM.md`. Legacy numbered strateg
 
 Current readiness tracker: `docs/implementation/READINESS_GAP_INVENTORY.md`.
 
+Todd-assisted physical iPhone setup runbook and dry-run matrix: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
+
 ## Repository
 
 GitHub repo:
@@ -77,4 +79,4 @@ As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` ar
 
 iOS App Intents Readiness v1 is repo-side preparation only. It adds typed Shortcut-safe outputs, weekly review, Can I Train, workout/nutrition/post-workout Coach action scaffolding, and draft-only debrief/note/BP capture. It does not install to Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri or Action Button, configure Personal Automation, or submit draft-only write paths.
 
-iPhone Coach Setup UX Readiness v1 is also repo-side preparation only. It adds a native Coach Setup state, `Save Connection`, `Check Setup`, Keychain clear-on-empty-secret behavior, and Shortcut-safe setup errors before protected requests run. When Todd is present on the physical iPhone, the expected sequence is: install/run the app, enter the production API base URL, enter the secret directly on device, save, check setup, grant Health permissions, run a read-only Shortcut, and read back the result. Codex must not paste or store the secret, and GPT Pro must not inspect the repo or handle credentials.
+iPhone Coach Setup UX Readiness v1 is merged and deployed as repo-side preparation only. It adds a native Coach Setup state, `Save Connection`, `Check Setup`, Keychain clear-on-empty-secret behavior, and Shortcut-safe setup errors before protected requests run. When Todd is present on the physical iPhone, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`: install/run the app, enter the production API base URL, enter the secret directly on device, save, check setup, grant Health permissions, run a read-only Shortcut, and read back the result. Codex must not paste or store the secret, and GPT Pro must not inspect the repo or handle credentials.

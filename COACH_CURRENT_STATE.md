@@ -1,21 +1,29 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #26 merge/deploy verification and iPhone Coach Setup UX Readiness v1 local implementation.
+Last updated: 2026-06-13 Asia/Taipei, after PR #27 merge/deploy verification and Coach Device Setup Runbook local implementation.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit before the iPhone Coach Setup UX Readiness v1 branch: `110603e28bcdcc2007e7af1594dbd47919fd36d7`.
-- PR #26, `iOS App Intents Readiness v1`, is merged to main and production deployed automatically.
-- Working tree was clean before the iPhone Coach Setup UX Readiness v1 branch.
+- Current verified main commit before the Coach Device Setup Runbook and Dry-Run Matrix v1 branch: `7656419538b094abfe7f498347d48f6917b1c860`.
+- PR #27, `Add iPhone Coach setup readiness UX`, is merged to main and production deployed automatically.
+- Working tree was clean before the Coach Device Setup Runbook and Dry-Run Matrix v1 branch.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result after PR #26 merge: `97/97` passing on 2026-06-13.
-- Current iPhone Coach Setup UX Readiness v1 branch local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
-- Current iPhone Coach Setup UX Readiness v1 branch local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
+- Current verified main test result after PR #27 merge: `97/97` passing on 2026-06-13.
+- PR #27 iPhone Coach Setup UX Readiness v1 local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
+- PR #27 iPhone Coach Setup UX Readiness v1 local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
   - `GET https://todd-personal-coach.netlify.app/api/coach/ping`
   - Response: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`
-- Production API ping was also verified after PR #26 automatic production deploy at main commit `110603e28bcdcc2007e7af1594dbd47919fd36d7`.
+- Production API ping was also verified after PR #27 automatic production deploy at main commit `7656419538b094abfe7f498347d48f6917b1c860`.
+- PR #27 automatic production deploy:
+  - Netlify deploy ID: `6a2cbe646e58290008291dd2`
+  - State: `ready`
+  - Context: `production`
+  - Branch: `main`
+  - Commit: `7656419538b094abfe7f498347d48f6917b1c860`
+  - Published at: `2026-06-13T02:20:30.076Z`
+  - Manual deploy: `false`
 - Saved GPT read-only protected actions were verified after Todd manually updated the secret in Netlify and GPT Builder:
   - `getSyncStatus` succeeded for 2026-06-13.
   - `buildWeeklyReview` succeeded for week_start `2026-06-08`, week_end `2026-06-14`, timezone `Asia/Taipei`.
@@ -23,7 +31,8 @@ Last updated: 2026-06-13 Asia/Taipei, after PR #26 merge/deploy verification and
 - Codex did not view, request, paste, store, or handle the secret. Todd handled secret entry manually.
 - `HEALTH_DATABASE.json` remains protected. It may change upstream from daily brief refresh automation, but Codex tasks must not edit it unless Todd explicitly scopes that file.
 - iOS App Intents Readiness v1 is merged and repo-side only. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, call live production write endpoints, or submit draft-only debrief/note/BP writes.
-- iPhone Coach Setup UX Readiness v1 is the current local repo-only branch. It adds native setup status, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, deploy production, or call live protected write endpoints.
+- iPhone Coach Setup UX Readiness v1 is merged and deployed. It adds native setup status, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, or call live protected write endpoints.
+- Coach Device Setup Runbook and Dry-Run Matrix v1 is the current local docs-only branch. It refreshes durable state after PR #27 and adds `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for Todd-assisted physical iPhone/Siri/Shortcuts setup. It does not perform device setup, handle secrets, grant permissions, deploy production, run Supabase actions, or call write endpoints.
 
 ## 1. Project Purpose
 
@@ -50,6 +59,7 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Apple Health tests: `tests/apple-health-daily.test.mjs`, `tests/apple-health-dashboard-context.test.mjs`
 - iOS HealthKit app: `apps/ios-health-sync/`
 - iOS 27 Siri/Shortcuts strategy: `docs/IOS27_SIRI_SHORTCUTS_COACH_STRATEGY.md`
+- Coach device setup runbook and dry-run matrix: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`
 - Current handoff file: `COACH_CURRENT_STATE.md`
 - Codex/GPT Pro operating model: `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
 - Full implementation roadmap: `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
@@ -227,6 +237,14 @@ Current production state:
   - Netlify production deploy ID: `6a2cbaac40021c0008dcd7b5`.
   - Published at: 2026-06-13 10:04:38 Asia/Taipei.
   - Scope: repo-side App Intents expansion, typed Shortcut-safe outputs, stable error identifiers, read-only weekly review, Can I Train, workout/nutrition/post-workout scaffolding, and draft-only debrief/note/BP capture paths.
+  - Public production ping succeeded after the automatic deploy.
+  - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
+- PR #27, `Add iPhone Coach setup readiness UX`, is merged and deployed.
+  - Merge brought main to commit `7656419538b094abfe7f498347d48f6917b1c860`.
+  - Netlify production deploy ID: `6a2cbe646e58290008291dd2`.
+  - Published at: 2026-06-13 10:20:30 Asia/Taipei.
+  - Manual deploy: false. The production deploy was automatic.
+  - Scope: native Coach Setup state, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run.
   - Public production ping succeeded after the automatic deploy.
   - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
 - Unless explicitly noted otherwise, no production secrets or environment variables were changed by Codex, no secret values were printed or pasted into chat, and Codex did not intentionally edit `HEALTH_DATABASE.json`.
