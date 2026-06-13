@@ -13,6 +13,17 @@ struct MorningCoachActionResult {
         return "\(title)\n\(detail)"
     }
 
+    var safeSurfaceStrings: CoachFutureSafeStrings {
+        shortcutOutput?.safeSurfaceStrings
+            ?? CoachFutureSafeStrings(
+                title: title,
+                subtitle: "action_result",
+                detail: detail,
+                body: detail,
+                footer: "No production write was sent unless the returned Coach action explicitly says otherwise."
+            )
+    }
+
     init(title: String, detail: String, shortcutOutput: CoachShortcutOutput? = nil) {
         self.title = CoachSafeOutput.redact(title)
         self.detail = CoachSafeOutput.redact(detail)
