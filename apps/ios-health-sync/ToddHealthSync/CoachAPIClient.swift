@@ -262,13 +262,13 @@ enum CoachAPIError: LocalizedError {
             "Enter the coach API secret before syncing."
         case let .requestFailed(statusCode, message):
             if let message, !message.isEmpty {
-                "Coach API request failed (\(statusCode)): \(message)"
+                "Coach API request failed (\(statusCode)): \(CoachSafeOutput.redact(message))"
             } else {
                 "Coach API request failed with HTTP \(statusCode)."
             }
         case let .server(statusCode, response):
             if let firstError = response.errors.first?.message, !firstError.isEmpty {
-                "Coach API rejected the sync (\(statusCode)): \(firstError)"
+                "Coach API rejected the sync (\(statusCode)): \(CoachSafeOutput.redact(firstError))"
             } else {
                 "Coach API rejected the sync with HTTP \(statusCode)."
             }

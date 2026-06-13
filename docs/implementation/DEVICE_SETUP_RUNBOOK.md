@@ -23,6 +23,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 ## Hard Boundaries
 
 - Todd enters the Coach secret directly on the physical iPhone. Codex and GPT Pro must not request, paste, print, store, rotate, or inspect it.
+- Shortcut/App Intent output, app status text, and future Siri/widget/notification-facing strings must redact credential-like values. This is a safety net, not permission to paste secrets into chat or source code.
 - Todd handles unlock, passcode, Face ID, device trust, Health permissions, Siri prompts, Shortcuts prompts, Action Button settings, Personal Automation settings, login, 2FA, payment, account-security, and device-permission screens.
 - Codex must not manually deploy production, change Netlify settings, modify environment variables, run Supabase migrations, inspect production schema, call production write endpoints, or call GPT Action write endpoints during this setup.
 - Apple Health remains supporting evidence only and cannot override Garmin, Rack/Motra, Garmin Nutrition, safety, or medical authority.

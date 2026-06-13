@@ -43,6 +43,14 @@ final class FakeCoachSecretStore: CoachSecretStoring {
     }
 }
 
+struct FakeSensitiveError: LocalizedError {
+    let message: String
+
+    var errorDescription: String? {
+        message
+    }
+}
+
 final class CoachTodaySummaryTests: XCTestCase {
     func testStructuredCoachTodayResponseBuildsMorningCoachSummary() throws {
         let json = """
@@ -204,6 +212,115 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(output.shortcutText.contains("error_identifier: deferredWrite"))
     }
 
+    func testSafeOutputRedactsCredentialLikeValues() {
+        let fakeSecret = "fake-coach-secret-12345"
+        let fakeBearer = "fakeBearerTokenValue123456"
+        let fakePassword = "fakePasswordValue123456"
+        let fakeQueryToken = "fakeQueryTokenValue123456"
+        let fakeURLPassword = "fake-url-password"
+        let input = """
+        x-coach-secret: \(fakeSecret)
+        Authorization: Bearer \(fakeBearer)
+        password=\(fakePassword)
+        https://todd:\(fakeURLPassword)@coach.example.test/api/coach?coach_secret=\(fakeQueryToken)
+        """
+
+        let redacted = CoachSafeOutput.redact(input)
+
+        XCTAssertFalse(redacted.contains(fakeSecret))
+        XCTAssertFalse(redacted.contains(fakeBearer))
+        XCTAssertFalse(redacted.contains(fakePassword))
+        XCTAssertFalse(redacted.contains(fakeQueryToken))
+        XCTAssertFalse(redacted.contains(fakeURLPassword))
+        XCTAssertTrue(redacted.contains("[redacted]"))
+    }
+
+    func testShortcutFailureRedactsCredentialBearingError() {
+        let fakeSecret = "fake-coach-secret-98765"
+        let fakeBearer = "fakeBearerTokenValue987654"
+        let error = FakeSensitiveError(
+            message: "Request failed with x-coach-secret: \(fakeSecret) and Authorization: Bearer \(fakeBearer)"
+        )
+
+        let output = CoachShortcutOutput.failure(error: error)
+        let text = output.shortcutText
+
+        XCTAssertEqual(output.errorIdentifier, .backendUnavailable)
+        XCTAssertFalse(text.contains(fakeSecret))
+        XCTAssertFalse(text.contains(fakeBearer))
+        XCTAssertTrue(text.contains("error_message: Request failed with x-coach-secret: [redacted]"))
+    }
+
+    func testShortcutTextRedactsSensitiveFields() {
+        let fakeToken = "fakeTokenValue123456789"
+        let output = CoachShortcutOutput(
+            actionStatus: "failed token=\(fakeToken)",
+            safetyStatus: .unknown,
+            readinessSummary: "Do not expose api_key=\(fakeToken)",
+            workoutTitle: "Secret-bearing title secret=\(fakeToken)",
+            workoutType: .unknown,
+            primaryConstraints: ["Authorization: Bearer \(fakeToken)"],
+            coachMemoryContext: "x-coach-secret: \(fakeToken)",
+            workoutDebriefContext: "password=\(fakeToken)",
+            nextBestAction: "Open https://user:\(fakeToken)@coach.example.test",
+            requiresMedicalCaution: false,
+            sourceFreshness: "token=\(fakeToken)",
+            lastSync: "credential=\(fakeToken)",
+            errorIdentifier: .backendUnavailable,
+            errorMessage: "secret=\(fakeToken)"
+        )
+
+        let text = output.shortcutText
+
+        XCTAssertFalse(text.contains(fakeToken))
+        XCTAssertTrue(text.contains("[redacted]"))
+    }
+
+    func testDraftOutputRedactsCredentialLikeNotesAndStaysNoWrite() {
+        let fakeSecret = "fake-draft-secret-123456"
+        let result = MorningCoachWorkflow().draftCoachNote(
+            note: "Remember x-coach-secret: \(fakeSecret)"
+        )
+
+        XCTAssertFalse(result.shortcutValue.contains(fakeSecret))
+        XCTAssertTrue(result.shortcutValue.contains("No production write was sent."))
+        XCTAssertTrue(result.shortcutValue.contains("deferredWrite"))
+    }
+
+    func testActionResultRedactsDetailBeforeAppDisplay() {
+        let fakeSecret = "fake-result-secret-123456"
+        let result = MorningCoachActionResult(
+            title: "Coach readback token=\(fakeSecret)",
+            detail: "Raw result x-coach-secret: \(fakeSecret)"
+        )
+
+        XCTAssertFalse(result.title.contains(fakeSecret))
+        XCTAssertFalse(result.detail.contains(fakeSecret))
+        XCTAssertFalse(result.shortcutValue.contains(fakeSecret))
+        XCTAssertTrue(result.detail.contains("[redacted]"))
+    }
+
+    func testMorningCoachStoreRedactsPersistedReadbacks() throws {
+        let fakeSecret = "fake-store-secret-123456"
+        let suiteName = "CoachStoreRedactionTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+
+        store.recordCoachReadback(summary: "Server said secret=\(fakeSecret)")
+        store.recordMorningCoach(result: "Morning result token=\(fakeSecret)")
+        store.recordBackgroundHealthKit(status: "Background auth=\(fakeSecret)")
+
+        XCTAssertFalse(store.lastCoachReadbackText.contains(fakeSecret))
+        XCTAssertFalse(store.lastMorningCoachResult.contains(fakeSecret))
+        XCTAssertFalse(store.lastBackgroundHealthKitText.contains(fakeSecret))
+        XCTAssertTrue(store.lastCoachReadbackText.contains("[redacted]"))
+        XCTAssertTrue(store.lastMorningCoachResult.contains("[redacted]"))
+        XCTAssertTrue(store.lastBackgroundHealthKitText.contains("[redacted]"))
+    }
+
     func testCoachAPIErrorMapsToStableShortcutErrorCode() {
         XCTAssertEqual(CoachAPIError.missingSecret.shortcutErrorCode, .missingSecret)
         XCTAssertEqual(CoachAPIError.invalidBaseURL.shortcutErrorCode, .missingAPIBase)
@@ -215,6 +332,32 @@ final class CoachTodaySummaryTests: XCTestCase {
             CoachAPIError.requestFailed(statusCode: 503, message: nil).shortcutErrorCode,
             .backendUnavailable
         )
+    }
+
+    func testMockedClientFailureRedactsServerCredentialMessage() async throws {
+        let fakeSecret = "fake-server-secret-123456"
+        let data = """
+        {
+          "error": "Invalid x-coach-secret: \(fakeSecret)"
+        }
+        """.data(using: .utf8)!
+        let session = MockCoachURLSession(responseData: data, statusCode: 401)
+        let client = CoachAPIClient(session: session)
+
+        do {
+            _ = try await client.getSyncStatus(
+                apiBase: "https://coach.example.test",
+                apiSecret: "fake-request-secret"
+            )
+            XCTFail("Expected request to fail")
+        } catch {
+            let text = CoachShortcutOutput.failure(error: error).shortcutText
+            XCTAssertFalse(text.contains(fakeSecret))
+            XCTAssertTrue(text.contains("error_identifier: unauthorized"))
+            XCTAssertTrue(text.contains("x-coach-secret: [redacted]"))
+        }
+
+        XCTAssertEqual(session.lastRequest?.url?.host, "coach.example.test")
     }
 
     func testCoachConnectionConfigurationReportsSetupStatesWithoutSecrets() {

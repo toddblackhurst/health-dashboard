@@ -35,27 +35,36 @@ struct MorningCoachStore {
 
     func recordAppleHealthSync(summary: String, at date: Date = Date()) {
         defaults.set(date.timeIntervalSince1970, forKey: UserDefaultsKeys.lastAppleHealthSyncAt)
-        defaults.set("Last Apple Health sync: \(Self.format(date))\n\(summary)", forKey: UserDefaultsKeys.lastAppleHealthSyncText)
+        defaults.set(
+            "Last Apple Health sync: \(Self.format(date))\n\(CoachSafeOutput.redact(summary))",
+            forKey: UserDefaultsKeys.lastAppleHealthSyncText
+        )
     }
 
     func recordCoachReadback(summary: String, at date: Date = Date()) {
         defaults.set(date.timeIntervalSince1970, forKey: UserDefaultsKeys.lastCoachReadbackAt)
-        defaults.set("Last coach readback: \(Self.format(date))\n\(summary)", forKey: UserDefaultsKeys.lastCoachReadbackText)
+        defaults.set(
+            "Last coach readback: \(Self.format(date))\n\(CoachSafeOutput.redact(summary))",
+            forKey: UserDefaultsKeys.lastCoachReadbackText
+        )
     }
 
     func recordMorningCoach(result: String, at date: Date = Date()) {
         defaults.set(date.timeIntervalSince1970, forKey: UserDefaultsKeys.lastMorningCoachAt)
-        defaults.set(result, forKey: UserDefaultsKeys.lastMorningCoachResult)
+        defaults.set(CoachSafeOutput.redact(result), forKey: UserDefaultsKeys.lastMorningCoachResult)
     }
 
     func recordMorningCoachError(_ message: String, at date: Date = Date()) {
         defaults.set(date.timeIntervalSince1970, forKey: UserDefaultsKeys.lastMorningCoachAttemptAt)
-        defaults.set(message, forKey: UserDefaultsKeys.lastMorningCoachError)
+        defaults.set(CoachSafeOutput.redact(message), forKey: UserDefaultsKeys.lastMorningCoachError)
     }
 
     func recordBackgroundHealthKit(status: String, at date: Date = Date()) {
         defaults.set(date.timeIntervalSince1970, forKey: UserDefaultsKeys.lastBackgroundHealthKitAttemptAt)
-        defaults.set("Last background HealthKit attempt: \(Self.format(date))\n\(status)", forKey: UserDefaultsKeys.lastBackgroundHealthKitText)
+        defaults.set(
+            "Last background HealthKit attempt: \(Self.format(date))\n\(CoachSafeOutput.redact(status))",
+            forKey: UserDefaultsKeys.lastBackgroundHealthKitText
+        )
     }
 
     private static func format(_ date: Date) -> String {

@@ -14,8 +14,8 @@ struct MorningCoachActionResult {
     }
 
     init(title: String, detail: String, shortcutOutput: CoachShortcutOutput? = nil) {
-        self.title = title
-        self.detail = detail
+        self.title = CoachSafeOutput.redact(title)
+        self.detail = CoachSafeOutput.redact(detail)
         self.shortcutOutput = shortcutOutput
     }
 }
@@ -280,7 +280,7 @@ struct MorningCoachWorkflow {
                 shortcutOutput: today.shortcutOutput
             )
         } catch {
-            store.recordMorningCoachError(error.localizedDescription)
+            store.recordMorningCoachError(CoachSafeOutput.errorMessage(error))
             throw error
         }
     }
