@@ -4,6 +4,8 @@ Last updated: 2026-06-13 Asia/Taipei.
 
 Purpose: give Todd a safe, non-secret template for reporting physical iPhone, Siri, and Shortcuts execution results back to Codex/GPT Pro after Todd completes device setup. This packet is a preparation artifact only. It does not authorize Codex, GPT Pro, or automation to perform physical setup, enter secrets, call protected routes, change production settings, run Supabase actions, add signing/entitlements/capabilities, modify App Intent/App Shortcut code, automate third-party apps, submit writes, or handle login/security/payment/account prompts.
 
+For any future attempt to move from evidence collection into a live write, use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` first. This evidence packet proves only non-secret readback and status, not write approval.
+
 ## Current Repo Baseline
 
 - Main is at `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c` after PR #55.

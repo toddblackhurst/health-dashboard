@@ -108,7 +108,7 @@ Boundaries: no protected route calls by Codex, no secret handling, no device set
 
 ### Current: Write-Readiness Boundary Plan
 
-Current working document: not created yet.
+Current working document: `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`.
 
 Goal: create a docs-only plan for future write-capable Coach actions, acceptance gates, rollback, audit logging, and Todd approval boundaries.
 

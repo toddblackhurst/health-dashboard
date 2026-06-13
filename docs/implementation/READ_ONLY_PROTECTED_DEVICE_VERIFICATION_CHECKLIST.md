@@ -11,6 +11,7 @@ Related references:
 - `docs/implementation/DEVICE_SETUP_RUNBOOK.md`
 - `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`
 - `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`
+- `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`
 - `docs/implementation/IPHONE_READINESS_AUDIT.md`
 - `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md`
 - `docs/implementation/READINESS_GAP_INVENTORY.md`
@@ -73,6 +74,8 @@ After running an action, use `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_
 6. Read back only the safe evidence fields below.
 7. If the first protected read-only check passes, run one second read-only check to compare status wording.
 8. Stop before any write-capable path, draft submission, memory save, workout debrief submit, nutrition closeout write, post-workout write, BP/intake write, or automation setup.
+
+After read-only verification succeeds, do not proceed to live writes from this checklist. Future write-capable work must start from `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` and receive a separate scoped approval for the exact path.
 
 ## Candidate Protected Read-Only Actions
 
