@@ -93,6 +93,8 @@ These steps are device-bound and must happen with Todd present.
     - in-app `Morning Coach` if Apple Health sync is also intended.
 16. Read back the result. It should include source freshness and no secret value.
 
+Use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` for the first protected read-only device verification after Todd has entered the secret directly on the iPhone. That checklist defines safe evidence fields, stop conditions, and rollback steps for `Check Coach Sync Status`, `Weekly Coach Review`, `Morning Coach` / Coach Today, and `Check Daily Data Freshness`.
+
 Shortcut/App Intent typed output should include stable status lines such as `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status`. For missing setup, protected requests must stop before network and show a blocked setup status. For draft-only or manual workout handoff paths, `write_status` should show the no-write or manual-only state.
 
 ## Siri, Shortcuts, Action Button, And Personal Automation
@@ -134,6 +136,8 @@ Suggested setup order:
 8. Assign Action Button only after Siri/Shortcuts manual runs work.
 9. Configure Personal Automation only after Action Button or manual Shortcut behavior is stable.
 10. Treat `Run Immediately` as unverified until Todd confirms it on the real iOS Shortcuts screen.
+
+For the first protected read-only manual run, use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` before assigning Siri phrases, Action Button, or Personal Automation triggers.
 
 No-network/failure matrix expectations for every manual Shortcut check:
 

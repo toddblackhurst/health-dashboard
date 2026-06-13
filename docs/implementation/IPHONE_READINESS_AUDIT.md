@@ -79,7 +79,9 @@ Boundaries: no App Shortcuts list change unless separately scoped as code/tests/
 
 ### 3. Read-Only Protected Device Verification Checklist
 
-Goal: add a short checklist for the first Todd-assisted protected read-only route test after the secret is entered on device.
+Current working document: `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`.
+
+Goal: keep a short checklist for the first Todd-assisted protected read-only route test after the secret is entered on device.
 
 Files likely involved: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`, `MOBILE_CODEX_COACH_SETUP.md`.
 
