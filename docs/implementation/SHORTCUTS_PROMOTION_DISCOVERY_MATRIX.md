@@ -4,7 +4,7 @@ Last updated: 2026-06-13 Asia/Taipei.
 
 Purpose: document the current repo-side App Intents and App Shortcuts discovery expectations for Todd Health Sync. This is a docs-only verification aid for a later Todd-assisted physical iPhone setup. It does not add, remove, promote, reorder, or rename App Intents or App Shortcuts.
 
-For execution behavior, setup gates, expected status fields, safe evidence, and mock-test coverage, use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`. This file answers "where should the action appear?"; the dry-run matrix answers "what should happen when it runs?"
+For execution behavior, setup gates, expected status fields, safe evidence, and mock-test coverage, use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`. For Todd-safe physical-device result readback after setup, use `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`. This file answers "where should the action appear?"; the dry-run matrix answers "what should happen when it runs?"
 
 ## Current Verified Baseline
 

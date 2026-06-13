@@ -10,6 +10,7 @@ Related references:
 - `MOBILE_CODEX_COACH_SETUP.md`
 - `docs/implementation/DEVICE_SETUP_RUNBOOK.md`
 - `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`
+- `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`
 - `docs/implementation/IPHONE_READINESS_AUDIT.md`
 - `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md`
 - `docs/implementation/READINESS_GAP_INVENTORY.md`
@@ -59,6 +60,8 @@ Expected local setup evidence Todd may report:
 - `write_status` says no-write, write-held, draft-only, or manual-handoff-only depending on the action.
 
 Before running an action, cross-check its dry-run contract in `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` so Todd knows whether it is local-only, protected read-only, draft-only, manual-handoff-only, or device-bound.
+
+After running an action, use `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md` to report only non-secret status lines, redacted summaries, freshness labels, stable error identifiers, no-write confirmation, and blocker categories.
 
 ## First Session Order
 

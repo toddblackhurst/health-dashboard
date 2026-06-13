@@ -4,6 +4,8 @@ Last updated: 2026-06-13 Asia/Taipei.
 
 Purpose: define the repo-side dry-run contract for the existing Todd Health Sync App Intents before Todd-assisted physical iPhone/Siri/Shortcuts verification. This is mock/simulator planning and test evidence only. It does not add, remove, promote, reorder, or rename App Intents or App Shortcuts, and it does not authorize protected production route calls, production writes, secret handling, Health permission prompts, Siri setup, Action Button setup, Personal Automation setup, widgets, notifications, signing changes, entitlements, capabilities, or physical-device setup.
 
+For Todd-safe physical-device result collection after setup, use `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`.
+
 ## Current Verified Baseline
 
 - Main is at `541b5b9c8687921c499f66c76d32b782c6499a54` after PR #53.

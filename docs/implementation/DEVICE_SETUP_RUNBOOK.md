@@ -46,6 +46,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 - `HEALTH_DATABASE.json` remained unchanged.
 - Current readiness audit reference: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 - Current App Intent execution dry-run reference: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
+- Current Todd-safe evidence packet reference: `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`.
 
 ## Hard Boundaries
 
@@ -100,7 +101,7 @@ These steps are device-bound and must happen with Todd present.
     - in-app `Morning Coach` if Apple Health sync is also intended.
 16. Read back the result. It should include source freshness and no secret value.
 
-Use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` to confirm the intended dry-run behavior for each App Intent before the first real iPhone run. Use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` for the first protected read-only device verification after Todd has entered the secret directly on the iPhone. That checklist defines safe evidence fields, stop conditions, and rollback steps for `Check Coach Sync Status`, `Weekly Coach Review`, `Morning Coach` / Coach Today, and `Check Daily Data Freshness`.
+Use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` to confirm the intended dry-run behavior for each App Intent before the first real iPhone run. Use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` for the first protected read-only device verification after Todd has entered the secret directly on the iPhone. Use `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md` to capture only Todd-safe, non-secret physical-device results afterward. That evidence packet defines allowed fields, do-not-paste items, failure categories, and stop/escalation conditions for app, Shortcuts, Siri, Action Button, Personal Automation, draft-only, and manual handoff evidence.
 
 Shortcut/App Intent typed output should include stable status lines such as `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status`. For missing setup, protected requests must stop before network and show a blocked setup status. For draft-only or manual workout handoff paths, `write_status` should show the no-write or manual-only state.
 

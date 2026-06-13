@@ -94,7 +94,7 @@ Boundaries: no App Intent/App Shortcut additions/removals/promotions/reorders/re
 
 ### Current: App Intent Execution Evidence Packet
 
-Current working document: not created yet.
+Current working document: `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`.
 
 Goal: create a docs-only Todd-assisted evidence template for collecting non-secret iPhone/Siri/Shortcuts execution results after physical setup.
 
