@@ -96,6 +96,206 @@ struct AppleHealthSyncError: Decodable {
     let message: String?
 }
 
+enum CoachShortcutErrorCode: String, Codable, Equatable {
+    case notConfigured
+    case missingAPIBase
+    case missingSecret
+    case unauthorized
+    case syncStale
+    case noNetwork
+    case redSafety
+    case backendUnavailable
+    case malformedResponse
+    case deferredWrite
+}
+
+enum CoachShortcutSafetyStatus: String, Codable, Equatable {
+    case red
+    case yellow
+    case green
+    case unknown
+}
+
+enum CoachShortcutWorkoutType: String, Codable, Equatable {
+    case strength
+    case modifiedStrength = "modified_strength"
+    case zone2
+    case recovery
+    case mobility
+    case none
+    case unknown
+}
+
+struct CoachShortcutOutput: Codable, Equatable {
+    let actionStatus: String
+    let safetyStatus: CoachShortcutSafetyStatus
+    let readinessSummary: String
+    let workoutTitle: String?
+    let workoutType: CoachShortcutWorkoutType
+    let primaryConstraints: [String]
+    let coachMemoryContext: String?
+    let workoutDebriefContext: String?
+    let nextBestAction: String?
+    let requiresMedicalCaution: Bool
+    let sourceFreshness: String?
+    let lastSync: String?
+    let errorIdentifier: CoachShortcutErrorCode?
+    let errorMessage: String?
+
+    enum CodingKeys: String, CodingKey {
+        case actionStatus = "action_status"
+        case safetyStatus = "safety_status"
+        case readinessSummary = "readiness_summary"
+        case workoutTitle = "workout_title"
+        case workoutType = "workout_type"
+        case primaryConstraints = "primary_constraints"
+        case coachMemoryContext = "coach_memory_context"
+        case workoutDebriefContext = "workout_debrief_context"
+        case nextBestAction = "next_best_action"
+        case requiresMedicalCaution = "requires_medical_caution"
+        case sourceFreshness = "source_freshness"
+        case lastSync = "last_sync"
+        case errorIdentifier = "error_identifier"
+        case errorMessage = "error_message"
+    }
+
+    var shortcutText: String {
+        var lines: [String] = [
+            "status: \(actionStatus)",
+            "safety_status: \(safetyStatus.rawValue)",
+            "readiness_summary: \(readinessSummary)"
+        ]
+        if let workoutTitle, !workoutTitle.isEmpty {
+            lines.append("workout_title: \(workoutTitle)")
+        }
+        lines.append("workout_type: \(workoutType.rawValue)")
+        if !primaryConstraints.isEmpty {
+            lines.append("primary_constraints:")
+            lines.append(contentsOf: primaryConstraints.prefix(6).map { "- \($0)" })
+        }
+        if let coachMemoryContext, !coachMemoryContext.isEmpty {
+            lines.append("coach_memory_context: \(coachMemoryContext)")
+        }
+        if let workoutDebriefContext, !workoutDebriefContext.isEmpty {
+            lines.append("workout_debrief_context: \(workoutDebriefContext)")
+        }
+        if let nextBestAction, !nextBestAction.isEmpty {
+            lines.append("next_best_action: \(nextBestAction)")
+        }
+        lines.append("requires_medical_caution: \(requiresMedicalCaution)")
+        if let sourceFreshness, !sourceFreshness.isEmpty {
+            lines.append("source_freshness: \(sourceFreshness)")
+        }
+        if let lastSync, !lastSync.isEmpty {
+            lines.append("last_sync: \(lastSync)")
+        }
+        if let errorIdentifier {
+            lines.append("error_identifier: \(errorIdentifier.rawValue)")
+        }
+        if let errorMessage, !errorMessage.isEmpty {
+            lines.append("error_message: \(errorMessage)")
+        }
+        lines.append("Apple Health is supporting evidence only.")
+        return lines.joined(separator: "\n")
+    }
+
+    static func deferred(
+        readinessSummary: String,
+        nextBestAction: String,
+        errorMessage: String
+    ) -> CoachShortcutOutput {
+        CoachShortcutOutput(
+            actionStatus: "deferred_requires_review",
+            safetyStatus: .unknown,
+            readinessSummary: readinessSummary,
+            workoutTitle: nil,
+            workoutType: .unknown,
+            primaryConstraints: [
+                "No production write was sent.",
+                "Review and confirm inside the app or a Todd-approved setup path before submitting."
+            ],
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: nextBestAction,
+            requiresMedicalCaution: false,
+            sourceFreshness: nil,
+            lastSync: nil,
+            errorIdentifier: .deferredWrite,
+            errorMessage: errorMessage
+        )
+    }
+
+    static func failure(error: Error) -> CoachShortcutOutput {
+        let apiError = error as? CoachAPIError
+        return CoachShortcutOutput(
+            actionStatus: "failed",
+            safetyStatus: .unknown,
+            readinessSummary: "Coach request could not complete.",
+            workoutTitle: nil,
+            workoutType: .unknown,
+            primaryConstraints: ["No secret or raw payload is included in this result."],
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: "Open Todd Health Sync and check configuration, network, and source freshness.",
+            requiresMedicalCaution: false,
+            sourceFreshness: nil,
+            lastSync: nil,
+            errorIdentifier: apiError?.shortcutErrorCode ?? .backendUnavailable,
+            errorMessage: error.localizedDescription
+        )
+    }
+}
+
+enum CoachDirectActionEndpoint: String, Codable, Equatable {
+    case brief
+    case workout
+    case nutritionCloseout = "nutrition-closeout"
+    case postWorkout = "post-workout"
+
+    var path: String {
+        "/api/coach/\(rawValue)"
+    }
+
+    var defaultIntent: String {
+        switch self {
+        case .brief:
+            "brief"
+        case .workout:
+            "build_workout"
+        case .nutritionCloseout:
+            "nutrition_check"
+        case .postWorkout:
+            "post_workout"
+        }
+    }
+}
+
+struct DirectCoachActionRequest: Encodable, Equatable {
+    let text: String
+    let summary: String?
+    let intent: String
+    let requestedSessionType: String?
+    let scheduleOverride: Bool?
+    let targetDate: String?
+    let targetDay: String?
+    let timezone: String
+    let channel: String
+    let raw: [String: String]
+
+    enum CodingKeys: String, CodingKey {
+        case text
+        case summary
+        case intent
+        case requestedSessionType = "requested_session_type"
+        case scheduleOverride = "schedule_override"
+        case targetDate = "target_date"
+        case targetDay = "target_day"
+        case timezone
+        case channel
+        case raw
+    }
+}
+
 struct CoachSyncStatusSummary {
     let date: String?
     let scorePct: Int?
@@ -117,6 +317,26 @@ struct CoachSyncStatusSummary {
 
         lines.append("Apple Health remains supporting evidence only.")
         return lines.joined(separator: "\n")
+    }
+
+    var shortcutOutput: CoachShortcutOutput {
+        let warnings = warningLines
+        return CoachShortcutOutput(
+            actionStatus: warnings.isEmpty ? "ok" : "attention_required",
+            safetyStatus: .unknown,
+            readinessSummary: "Coach source freshness\(scorePct.map { " \($0)%" } ?? "") for \(date ?? "today").",
+            workoutTitle: nil,
+            workoutType: .none,
+            primaryConstraints: warnings.isEmpty ? [] : Array(warnings.prefix(6)),
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: warnings.first ?? "Sources look usable for a read-only coach check.",
+            requiresMedicalCaution: warnings.contains { $0.localizedCaseInsensitiveContains("blood pressure") || $0.localizedCaseInsensitiveContains("medical") },
+            sourceFreshness: warnings.isEmpty ? "No stale or missing required source found in sync-status." : warnings.prefix(3).joined(separator: " | "),
+            lastSync: appleHealthStatus,
+            errorIdentifier: nil,
+            errorMessage: nil
+        )
     }
 
     var warningLines: [String] {
@@ -223,6 +443,26 @@ struct CoachTodaySummary {
         return lines.joined(separator: "\n")
     }
 
+    var shortcutOutput: CoachShortcutOutput {
+        let constraints = Array(safetyGuardrails.prefix(6))
+        return CoachShortcutOutput(
+            actionStatus: "ok",
+            safetyStatus: Self.safetyStatus(from: dailyCall, constraints: constraints),
+            readinessSummary: dailyCall ?? "Coach today returned without a daily call.",
+            workoutTitle: todaysPlan.first,
+            workoutType: Self.workoutType(from: todaysPlan.first),
+            primaryConstraints: constraints,
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: whatToTrackToday.first,
+            requiresMedicalCaution: constraints.contains { Self.medicalCautionText($0) },
+            sourceFreshness: "Use sync-status for detailed source freshness.",
+            lastSync: date,
+            errorIdentifier: nil,
+            errorMessage: nil
+        )
+    }
+
     private func warningLines(syncStatus: CoachSyncStatusSummary?) -> [String] {
         var warnings = syncStatus?.warningLines ?? []
         let safety = safetyGuardrails.filter {
@@ -251,6 +491,221 @@ struct CoachTodaySummary {
             whatToTrackToday: root.stringArray("what_to_track_today")
         )
     }
+
+    private static func safetyStatus(from dailyCall: String?, constraints: [String]) -> CoachShortcutSafetyStatus {
+        let joined = ([dailyCall ?? ""] + constraints).joined(separator: " ")
+        if joined.localizedCaseInsensitiveContains("red") { return .red }
+        if joined.localizedCaseInsensitiveContains("yellow") { return .yellow }
+        if joined.localizedCaseInsensitiveContains("green") { return .green }
+        return .unknown
+    }
+
+    static func workoutType(from plan: String?) -> CoachShortcutWorkoutType {
+        guard let plan else { return .unknown }
+        if plan.localizedCaseInsensitiveContains("modified") && plan.localizedCaseInsensitiveContains("strength") {
+            return .modifiedStrength
+        }
+        if plan.localizedCaseInsensitiveContains("strength") || plan.localizedCaseInsensitiveContains("gym") {
+            return .strength
+        }
+        if plan.localizedCaseInsensitiveContains("zone 2") || plan.localizedCaseInsensitiveContains("zone2") {
+            return .zone2
+        }
+        if plan.localizedCaseInsensitiveContains("mobility") {
+            return .mobility
+        }
+        if plan.localizedCaseInsensitiveContains("recovery") || plan.localizedCaseInsensitiveContains("rest") {
+            return .recovery
+        }
+        return .unknown
+    }
+
+    static func medicalCautionText(_ text: String) -> Bool {
+        text.localizedCaseInsensitiveContains("BP")
+            || text.localizedCaseInsensitiveContains("blood pressure")
+            || text.localizedCaseInsensitiveContains("medical")
+            || text.localizedCaseInsensitiveContains("doctor")
+            || text.localizedCaseInsensitiveContains("migraine")
+            || text.localizedCaseInsensitiveContains("asthma")
+            || text.localizedCaseInsensitiveContains("pain")
+    }
+}
+
+struct CoachWeeklyReviewSummary {
+    let weekStart: String?
+    let weekEnd: String?
+    let status: String?
+    let overallCall: String?
+    let findings: [String]
+    let recommendations: [String]
+    let missingOrStaleDataWarnings: [String]
+    let notAppliedAutomatically: Bool
+
+    var conciseResult: String {
+        var lines: [String] = []
+        lines.append("Weekly coach review: \(weekStart ?? "week") to \(weekEnd ?? "current")")
+        lines.append("status: \(status ?? "review_only")")
+        if let overallCall {
+            lines.append("overall_call: \(overallCall)")
+        }
+        if !findings.isEmpty {
+            lines.append("key_findings:")
+            lines.append(contentsOf: findings.prefix(5).map { "- \($0)" })
+        }
+        if !recommendations.isEmpty {
+            lines.append("recommendations:")
+            lines.append(contentsOf: recommendations.prefix(5).map { "- \($0)" })
+        }
+        if !missingOrStaleDataWarnings.isEmpty {
+            lines.append("missing_or_stale_data:")
+            lines.append(contentsOf: missingOrStaleDataWarnings.prefix(5).map { "- \($0)" })
+        }
+        lines.append("not_applied_automatically: \(notAppliedAutomatically)")
+        return lines.joined(separator: "\n")
+    }
+
+    var shortcutOutput: CoachShortcutOutput {
+        CoachShortcutOutput(
+            actionStatus: status ?? "review_only",
+            safetyStatus: overallCall.flatMap { call in
+                if call.localizedCaseInsensitiveContains("red") { return .red }
+                if call.localizedCaseInsensitiveContains("yellow") { return .yellow }
+                if call.localizedCaseInsensitiveContains("green") { return .green }
+                return .unknown
+            } ?? .unknown,
+            readinessSummary: overallCall ?? "Weekly review returned without an overall call.",
+            workoutTitle: nil,
+            workoutType: .unknown,
+            primaryConstraints: missingOrStaleDataWarnings,
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: recommendations.first,
+            requiresMedicalCaution: missingOrStaleDataWarnings.contains { $0.localizedCaseInsensitiveContains("blood pressure") || $0.localizedCaseInsensitiveContains("doctor") },
+            sourceFreshness: missingOrStaleDataWarnings.first,
+            lastSync: weekEnd,
+            errorIdentifier: nil,
+            errorMessage: nil
+        )
+    }
+
+    static func parse(data: Data) throws -> CoachWeeklyReviewSummary {
+        let object = try JSONSerialization.jsonObject(with: data)
+        guard let root = object as? [String: Any] else {
+            throw CoachAPIError.invalidResponse
+        }
+
+        let review = root["review"] as? [String: Any] ?? [:]
+        let recommendations = (root["recommendations"] as? [[String: Any]] ?? [])
+            .compactMap { item in
+                item.stringValue("summary")
+                    ?? item.stringValue("recommendation")
+                    ?? item.stringValue("text")
+                    ?? item.stringValue("title")
+            }
+
+        return CoachWeeklyReviewSummary(
+            weekStart: root.stringValue("week_start"),
+            weekEnd: root.stringValue("week_end"),
+            status: root.stringValue("status"),
+            overallCall: review.stringValue("overall_call")
+                ?? review.stringValue("overall_status")
+                ?? root.stringValue("overall_call"),
+            findings: review.stringArray("key_findings")
+                + review.stringArray("findings"),
+            recommendations: recommendations,
+            missingOrStaleDataWarnings: root.stringArray("missing_or_stale_data_warnings"),
+            notAppliedAutomatically: root.boolValue("not_applied_automatically") ?? true
+        )
+    }
+}
+
+struct CoachDirectActionResponseSummary {
+    let action: String
+    let reply: String
+    let topLineCall: String?
+    let nextActions: [String]
+    let riskFlags: [String]
+    let workoutTitle: String?
+    let workoutType: CoachShortcutWorkoutType
+    let coachMemorySummary: String?
+    let workoutDebriefSummary: String?
+
+    var conciseResult: String {
+        var lines: [String] = ["Coach \(action):"]
+        lines.append(topLineCall ?? reply)
+        if !nextActions.isEmpty {
+            lines.append("next_actions:")
+            lines.append(contentsOf: nextActions.prefix(5).map { "- \($0)" })
+        }
+        if !riskFlags.isEmpty {
+            lines.append("risk_flags:")
+            lines.append(contentsOf: riskFlags.prefix(5).map { "- \($0)" })
+        }
+        if let workoutTitle {
+            lines.append("workout_title: \(workoutTitle)")
+        }
+        lines.append("Apple Health is supporting evidence only.")
+        return lines.joined(separator: "\n")
+    }
+
+    var shortcutOutput: CoachShortcutOutput {
+        CoachShortcutOutput(
+            actionStatus: "ok",
+            safetyStatus: Self.safetyStatus(from: topLineCall ?? reply, riskFlags: riskFlags),
+            readinessSummary: topLineCall ?? reply,
+            workoutTitle: workoutTitle,
+            workoutType: workoutType,
+            primaryConstraints: riskFlags,
+            coachMemoryContext: coachMemorySummary,
+            workoutDebriefContext: workoutDebriefSummary,
+            nextBestAction: nextActions.first,
+            requiresMedicalCaution: riskFlags.contains { CoachTodaySummary.medicalCautionText($0) },
+            sourceFreshness: nil,
+            lastSync: nil,
+            errorIdentifier: nil,
+            errorMessage: nil
+        )
+    }
+
+    static func parse(data: Data, fallbackAction: String) throws -> CoachDirectActionResponseSummary {
+        let object = try JSONSerialization.jsonObject(with: data)
+        guard let root = object as? [String: Any] else {
+            throw CoachAPIError.invalidResponse
+        }
+
+        let decision = root["decision"] as? [String: Any] ?? root
+        let workoutPlan = decision["workout_plan"] as? [String: Any]
+        let dailySummary = decision["daily_summary"] as? [String: Any]
+        let todaysPlan = dailySummary?["todays_plan"] as? [String: Any]
+        let memory = decision["coach_memory_context"] as? [String: Any]
+        let debrief = decision["workout_debrief_context"] as? [String: Any]
+
+        let workoutTitle = workoutPlan?.stringValue("top_line")
+            ?? workoutPlan?.stringValue("session_type")
+            ?? todaysPlan?.stringValue("primary_action")
+            ?? todaysPlan?.stringValue("recommendation")
+
+        return CoachDirectActionResponseSummary(
+            action: root.stringValue("action") ?? fallbackAction,
+            reply: root.stringValue("reply") ?? decision.stringValue("reply") ?? "Coach action completed.",
+            topLineCall: decision.stringValue("top_line_call"),
+            nextActions: decision.stringArray("next_actions"),
+            riskFlags: decision.stringArray("risk_flags")
+                + (dailySummary?.stringArray("safety_guardrails") ?? []),
+            workoutTitle: workoutTitle,
+            workoutType: CoachTodaySummary.workoutType(from: workoutTitle),
+            coachMemorySummary: memory?.stringValue("summary") ?? memory?.stringArray("memory_warnings").first,
+            workoutDebriefSummary: debrief?.stringValue("summary") ?? debrief?.stringArray("safety_warnings").first
+        )
+    }
+
+    private static func safetyStatus(from text: String, riskFlags: [String]) -> CoachShortcutSafetyStatus {
+        let joined = ([text] + riskFlags).joined(separator: " ")
+        if joined.localizedCaseInsensitiveContains("red") { return .red }
+        if joined.localizedCaseInsensitiveContains("yellow") { return .yellow }
+        if joined.localizedCaseInsensitiveContains("green") { return .green }
+        return .unknown
+    }
 }
 
 private extension Dictionary where Key == String, Value == Any {
@@ -274,6 +729,26 @@ private extension Dictionary where Key == String, Value == Any {
         }
         if let string = self[key] as? String {
             return Int(string)
+        }
+        return nil
+    }
+
+    func boolValue(_ key: String) -> Bool? {
+        if let bool = self[key] as? Bool {
+            return bool
+        }
+        if let number = self[key] as? NSNumber {
+            return number.boolValue
+        }
+        if let string = self[key] as? String {
+            switch string.lowercased() {
+            case "true", "1", "yes":
+                return true
+            case "false", "0", "no":
+                return false
+            default:
+                return nil
+            }
         }
         return nil
     }

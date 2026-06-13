@@ -69,8 +69,10 @@ Use Codex/GitHub for changing the coach system, updating files, improving the AP
 
 For bounded implementation tasks that use GPT Pro as a planning/evaluation relay, start with `.github/codex/prompts/implementation.md`. Paste the receiver instruction from that file once into Todd's GPT Pro planning chat, then use its `CODEX_RELAY_HANDOFF` template for each handoff. GPT Pro must not inspect, clone, browse, edit, or test the repo.
 
-Use iPhone Shortcuts for one-tap calls into the same API: Morning Coach, Morning Check-In, Build Today's Workout, Nutrition Closeout, Post-Workout Debrief, and Fast Coach Note.
+Use iPhone Shortcuts for one-tap calls into the same API: Morning Coach, Check Coach Sync Status, Can I Train, Weekly Coach Review, Build Today's Workout, Nutrition Closeout, Post-Workout Coach, Draft Workout Debrief, and Open Coach Today. `Draft Coach Note` and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top App Shortcuts list because Apple currently caps promoted App Shortcuts at 10 per app.
 
 For the native Todd Health Sync app, the verified Morning Coach path is manual `Sync Now`, the in-app Morning Coach button, and a manually run `Morning Coach` Shortcut. Personal Automation setup is user-configured in iOS Shortcuts; `Run Immediately` was not fully verified through iOS Mirroring, and background automation should be treated as best-effort. Manual `Sync Now` remains the fallback when source freshness matters.
 
-As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification. Future iPhone/Siri work should keep write actions explicit and confirmable.
+As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
+
+iOS App Intents Readiness v1 is repo-side preparation only. It adds typed Shortcut-safe outputs, weekly review, Can I Train, workout/nutrition/post-workout Coach action scaffolding, and draft-only debrief/note/BP capture. It does not install to Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri or Action Button, configure Personal Automation, or submit draft-only write paths.

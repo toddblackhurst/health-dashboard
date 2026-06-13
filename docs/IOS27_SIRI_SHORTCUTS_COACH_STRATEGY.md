@@ -1,10 +1,10 @@
 # iOS 27 Siri, Shortcuts, and Personal Coach Strategy
 
-Last updated: 2026-06-11.
+Last updated: 2026-06-13.
 
 Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Workout Debrief branch.
 
-Current implementation status: design and research only for iOS 27-specific entities, schemas, Spotlight, View Annotations, widgets, and expanded Siri/App Intent work. The existing app already exposes the earlier `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, and `OpenCoachTodayIntent` bridge.
+Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
 
 ## 1. Source-Grounded iOS 27 Read
 
@@ -48,22 +48,34 @@ Siri AI and Shortcuts may improve access, speed, and context. They must not beco
 
 ## 3. Current App Intent Baseline
 
-Existing `apps/ios-health-sync/ToddHealthSync/MorningCoachIntents.swift` exposes four App Intents through `ToddHealthSyncShortcutsProvider`:
+Existing `apps/ios-health-sync/ToddHealthSync/MorningCoachIntents.swift` exposes ten promoted App Shortcuts through `ToddHealthSyncShortcutsProvider`, which is the current Apple per-app limit:
 
 - `SyncAppleHealthIntent`
 - `MorningCoachIntent`
 - `CheckCoachSyncStatusIntent`
+- `CanITrainIntent`
+- `WeeklyCoachReviewIntent`
+- `BuildTodayWorkoutIntent`
+- `NutritionCloseoutIntent`
+- `PostWorkoutCoachIntent`
+- `DraftWorkoutDebriefIntent`
 - `OpenCoachTodayIntent`
+
+`DraftCoachNoteIntent` and `DraftBloodPressureIntakeIntent` are implemented App Intents but are not promoted in the top App Shortcuts list because Apple currently caps promoted App Shortcuts at 10 per app.
 
 Current behavior:
 
-- Intents return plain string values.
+- Intents return stable text values generated from typed `CoachShortcutOutput` fields where the repo has structured response models.
 - `MorningCoachIntent` syncs Apple Health, checks source freshness, fetches `coach-today`, and returns a concise readout.
 - `SyncAppleHealthIntent` accepts a numeric `days` parameter and clamps the workflow to a safe day range.
+- `CanITrainIntent` calls `coach-today` and maps the current safety/readiness result to a conservative training class.
+- `WeeklyCoachReviewIntent` calls read-only `weekly-review` and returns `review_only` output without applying plan or memory changes.
+- `BuildTodayWorkoutIntent`, `NutritionCloseoutIntent`, and `PostWorkoutCoachIntent` call existing direct Coach action endpoints after Todd has configured the iPhone app secret; these endpoints can log coach messages, but were not called live in this repo pass.
+- `DraftWorkoutDebriefIntent`, `DraftCoachNoteIntent`, and `DraftBloodPressureIntakeIntent` return draft/deferred outputs and do not submit production write endpoints.
 - API base is stored in app settings and the API secret is read from Keychain.
 - Requests authenticate through `x-coach-secret`; the secret is never an intent parameter and must stay out of Shortcut outputs, Siri dialog, widgets, notifications, Spotlight, logs, screenshots, and docs.
 
-Workout Debrief Capture v1 adds a backend candidate for a future App Intent or Shortcut phrase such as "Record my workout debrief." The backend action is designed around structured fields for completion status, RPE, energy, pain, symptoms, modifications, skipped work, notes, and memory-candidate review, but no iOS debrief intent is implemented in this PR.
+Workout Debrief Capture v1 adds a backend candidate for a future confirmed App Intent or Shortcut phrase such as "Record my workout debrief." iOS App Intents Readiness v1 adds draft-only debrief capture, but it does not submit the structured debrief endpoint until a future confirmed device workflow is implemented and verified.
 
 ## 4. Siri AI And App Intents Direction
 
@@ -176,7 +188,7 @@ Design principles:
 
 ## 9. AppIntentsTesting Strategy
 
-Use AppIntentsTesting for the future iOS 27 readiness PR.
+Use AppIntentsTesting for future iOS 27-specific readiness PRs when the local toolchain supports it. iOS App Intents Readiness v1 uses simulator build/test and App Intents metadata extraction as the current repo-side verification.
 
 Test classes to add:
 
@@ -316,7 +328,7 @@ Mutation rules:
 
 ## 15. Future iOS 27 Siri/Shortcuts Readiness PR Design
 
-Implementation is deferred unless Todd explicitly approves a separate implementation PR or stacked branch.
+Initial repo-side implementation is in iOS App Intents Readiness v1. Physical iPhone installation, Siri voice readback, Action Button assignment, Personal Automation setup, Health permission prompts, credential entry, and confirmed production write flows remain deferred to Todd-assisted device work.
 
 Target capabilities:
 
@@ -352,7 +364,7 @@ Action: "Can I train?"
 
 Behavior:
 
-- Fetch current safety/readiness.
+- Fetch current safety/readiness through `coach-today`.
 - Return one allowed training class:
   - `hard_training_allowed`
   - `controlled_moderated`
@@ -380,7 +392,7 @@ Action: "Record workout debrief"
 
 Status:
 
-- Backend endpoint exists as `recordWorkoutDebrief`. iOS/App Intent implementation is still deferred until a bounded iOS readiness task adds confirmable capture UI, structured outputs, tests, and device verification.
+- Backend endpoint exists as `recordWorkoutDebrief`. iOS App Intents Readiness v1 adds a draft-only debrief intent that does not submit. Confirmed structured submission remains deferred until a bounded device workflow adds explicit confirmation, structured outputs, tests, and physical-device verification.
 
 Design:
 
@@ -395,7 +407,7 @@ Action: "Record coach observation"
 
 Status:
 
-- Backend Coach Memory endpoints exist and are deployed. iOS/App Intent implementation is still deferred until a bounded task adds explicit review/confirmation, safe displays, tests, and device verification.
+- Backend Coach Memory endpoints exist and are deployed. iOS App Intents Readiness v1 adds draft-only note capture that does not save memory. Confirmed memory submission remains deferred until a bounded task adds explicit review/confirmation, safe displays, tests, and device verification.
 
 Rules:
 
@@ -441,6 +453,8 @@ Recommended output fields for Coach Intents:
 - `requires_medical_caution`: boolean
 - `source_freshness`: concise source freshness summary
 - `last_sync`: ISO timestamp when known
+
+iOS App Intents Readiness v1 implements these fields in `CoachShortcutOutput` and renders them as stable text lines for Shortcuts/Siri until a richer typed Shortcut result is adopted.
 
 ## 17. Standard App Intent Error Outputs
 
