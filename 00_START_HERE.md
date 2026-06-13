@@ -16,13 +16,14 @@ Read only this active set first:
 8. `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` — dry-run execution contract, setup gates, status expectations, and mock-test coverage for every current App Intent.
 9. `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md` — Todd-safe non-secret evidence templates for physical iPhone/Siri/Shortcuts execution results.
 10. `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` — required approval, audit, duplicate-prevention, rollback, and verification gates before any future live Coach write.
-11. `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` — promoted versus implemented/unpromoted App Intents, Shortcuts discovery expectations, and Todd-device verification steps.
-12. `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` — first Todd-assisted protected read-only iPhone verification checklist after direct device secret entry.
-13. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
-14. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
-15. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-16. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-17. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+11. `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` — docs-only plan for a future human-approved `coach_observations` schema/cache readiness diagnostic.
+12. `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` — promoted versus implemented/unpromoted App Intents, Shortcuts discovery expectations, and Todd-device verification steps.
+13. `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` — first Todd-assisted protected read-only iPhone verification checklist after direct device secret entry.
+14. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
+15. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
+16. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+17. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+18. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -71,7 +72,7 @@ Read only this active set first:
   - `Check Daily Data Freshness`
   - `Draft Coach Note`
   - `Draft Blood Pressure Intake`
-- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the App Intent dry-run contract is in `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, Todd-safe physical-device evidence templates are in `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`, future write-readiness boundaries are in `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`, the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`, and the first protected read-only device verification checklist is in `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`.
+- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the App Intent dry-run contract is in `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, Todd-safe physical-device evidence templates are in `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`, future write-readiness boundaries are in `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`, the Supabase readiness diagnostic plan is in `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`, the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`, and the first protected read-only device verification checklist is in `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`.
 - Next safe repo-only planning task: Supabase Readiness Diagnostic Plan v1. It should be docs-only unless separately approved for production/admin access.
 - Todd-assisted physical iPhone setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 - Older shortcuts still present but not preferred: `Coach Motra Debrief`, `Coach Message`, `Coach Intake`, `Coach Upload`. Delete only with Todd's explicit confirmation.
