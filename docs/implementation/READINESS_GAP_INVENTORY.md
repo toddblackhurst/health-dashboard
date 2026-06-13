@@ -6,8 +6,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main was clean at `3208c188bce6e70ee94cf984d200a3d935f840ff` after PR #35 merge.
-- Full local Node test suite passed on 2026-06-13 before PR #35 merge: `node --test tests/*.test.mjs` -> `97/97`.
+- Repo main was clean at `18b62714bd74afa42425a4363a15edaf8413119d` after PR #36 merge.
+- Full local Node test suite passed on 2026-06-13 before PR #36 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
@@ -18,7 +18,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - PR #33 Current State Refresh after PR #32 merged and production deployed automatically from main.
 - PR #34 Workout Handoff Formatting v1 merged and production deployed automatically from main.
 - PR #35 Current State Refresh after PR #34 merged and production deployed automatically from main.
-- Automatic Netlify production deploy for PR #35 merge commit `3208c188bce6e70ee94cf984d200a3d935f840ff` is ready: deploy id `6a2cdbbc9cffe8000920fc80`, published at `2026-06-13T04:25:44.837Z`, manual deploy `false`.
+- PR #36 Typed Shortcut Output Hardening v1 merged and production deployed automatically from main.
+- Automatic Netlify production deploy for PR #36 merge commit `18b62714bd74afa42425a4363a15edaf8413119d` is ready: deploy id `6a2ce15832f45b0008fdef08`, published at `2026-06-13T04:49:40.323Z`, manual deploy `false`.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
@@ -30,7 +31,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - iOS Secret Redaction and Shortcut Output Safety v1 is merged. It redacts credential-like values from Shortcut/App Intent output, visible app status, stored readbacks, and exposed errors.
 - Daily Data Freshness UX v1 is merged. It adds a local no-write freshness report for Apple Health/iOS sync freshness, public ping state when safely checked or mocked, protected source freshness deferment, manual Garmin/Rack/Motra/nutrition/sleep/body-source deferment, BP action need, and draft-only write hold.
 - Workout Handoff Formatting v1 is merged. Mocked iOS workout output exposes a redacted `workout_handoff` for manual Rack/Garmin use while preserving no-write and no-third-party-automation boundaries.
-- Typed Shortcut Output Hardening v1 is the current safe repo-only candidate. It extends `CoachShortcutOutput` with stable setup/readiness/protected-verification/write status fields and mock tests for missing setup, invalid setup, no-network failure, redaction, deferred writes, and manual workout handoff status.
+- Typed Shortcut Output Hardening v1 is merged and deployed. It extends `CoachShortcutOutput` with stable setup/readiness/protected-verification/write status fields and mock tests for missing setup, invalid setup, no-network failure, redaction, deferred writes, and manual workout handoff status.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
@@ -156,6 +157,6 @@ Rules:
 
 1. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
 2. Supabase Readiness Diagnostic Plan: document and, only if separately approved, inspect production schema/cache state for `coach_observations` without applying migrations.
-3. Review and merge Typed Shortcut Output Hardening v1 if verification and PR checks are clean.
+3. No-Network Failure Matrix v1: expand mock-only tests/docs for offline, timeout, invalid response, missing config, and deferred protected-route cases without entering secrets or calling protected routes.
 4. iOS Freshness Output Hardening: consider future typed App Intent result models or `SyncStatus` entities without adding production writes.
 5. iOS Secret-Redaction Test Expansion: add deeper local tests for future entity/widget strings without using real secrets.
