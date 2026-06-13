@@ -6,15 +6,16 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main was clean at `46884d128c554f05e94239c28cd803d133cfcaba` after PR #31 merge.
-- Full local Node test suite passed on 2026-06-13 after PR #31 merge: `node --test tests/*.test.mjs` -> `97/97`.
+- Repo main was clean at `42d83848e8937136d7b2a579c2f4eaa4104a70c8` after PR #32 merge.
+- Full local Node test suite passed on 2026-06-13 before PR #32 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
 - PR #29 iOS Secret Redaction and Shortcut Output Safety v1 merged and production deployed automatically from main.
 - PR #30 Coach Readiness Status and Automation Gate v1 merged and production deployed automatically from main.
 - PR #31 Current State Refresh merged and production deployed automatically from main.
-- Automatic Netlify production deploy for PR #31 merge commit `46884d128c554f05e94239c28cd803d133cfcaba` is ready: deploy id `6a2ccfa10c7d490008042094`, published at `2026-06-13T03:34:04.994Z`, manual deploy `false`.
+- PR #32 Daily Data Freshness UX v1 merged and production deployed automatically from main.
+- Automatic Netlify production deploy for PR #32 merge commit `42d83848e8937136d7b2a579c2f4eaa4104a70c8` is ready: deploy id `6a2cd39f3841b20008699559`, published at `2026-06-13T03:51:07.178Z`, manual deploy `false`.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
@@ -24,7 +25,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - The promoted App Shortcuts list is capped at 10 to satisfy Apple's metadata processor limit; `DraftCoachNoteIntent` and `DraftBloodPressureIntakeIntent` remain implemented but are not promoted.
 - iPhone Coach Setup UX Readiness v1 is merged. It adds native setup state, local API base/Keychain preflight checks, and non-secret Shortcut setup failures before protected requests run.
 - iOS Secret Redaction and Shortcut Output Safety v1 is merged. It redacts credential-like values from Shortcut/App Intent output, visible app status, stored readbacks, and exposed errors.
-- Daily Data Freshness UX v1 is in a scoped PR branch. It adds a local no-write freshness report for Apple Health/iOS sync freshness, public ping state when safely checked or mocked, protected source freshness deferment, manual Garmin/Rack/Motra/nutrition/sleep/body-source deferment, BP action need, and draft-only write hold. It must remain repo-only until reviewed/merged.
+- Daily Data Freshness UX v1 is merged. It adds a local no-write freshness report for Apple Health/iOS sync freshness, public ping state when safely checked or mocked, protected source freshness deferment, manual Garmin/Rack/Motra/nutrition/sleep/body-source deferment, BP action need, and draft-only write hold.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
