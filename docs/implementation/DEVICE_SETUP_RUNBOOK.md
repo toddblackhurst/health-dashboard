@@ -48,6 +48,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 - Current readiness audit reference: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 - Current App Intent execution dry-run reference: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
 - Current Todd-safe evidence packet reference: `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`.
+- Current future write-readiness boundary reference: `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`.
 
 ## Hard Boundaries
 
@@ -104,6 +105,8 @@ These steps are device-bound and must happen with Todd present.
 
 Use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` to confirm the intended dry-run behavior for each App Intent before the first real iPhone run. Use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` for the first protected read-only device verification after Todd has entered the secret directly on the iPhone. Use `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md` to capture only Todd-safe, non-secret physical-device results afterward. That evidence packet defines allowed fields, do-not-paste items, failure categories, and stop/escalation conditions for app, Shortcuts, Siri, Action Button, Personal Automation, draft-only, and manual handoff evidence.
 
+Use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` only after protected read-only verification succeeds and Todd separately approves a write-readiness phase for one exact path.
+
 Shortcut/App Intent typed output should include stable status lines such as `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status`. For missing setup, protected requests must stop before network and show a blocked setup status. For draft-only or manual workout handoff paths, `write_status` should show the no-write or manual-only state.
 
 ## Siri, Shortcuts, Action Button, And Personal Automation
@@ -158,6 +161,8 @@ No-network/failure matrix expectations for every manual Shortcut check:
 ## Write-Action Hold
 
 Do not live-test production write paths during this runbook unless Todd gives a separate scoped instruction for a write-readiness phase.
+
+The required approval, audit, duplicate-prevention, rollback, and live-write gates for that later phase are defined in `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`.
 
 Hold live writes for:
 

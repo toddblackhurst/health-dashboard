@@ -51,7 +51,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - PR #52 Current-State Refresh after PR #51 is merged/deployed at main commit `21c3341b6cc0af29efc341e5242c952bbec150d7`. Netlify production deploy `6a2d09aaf3a2e90007fd492c` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`).
 - PR #53 App Intent Execution Dry-Run Matrix v1 is merged/deployed at main commit `541b5b9c8687921c499f66c76d32b782c6499a54`. Netlify production deploy `6a2d0e2e81eea70008c10bf6` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`46/46`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
 - PR #55 App Intent Execution Evidence Packet v1 is merged/deployed at main commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`. Netlify production deploy `6a2d13f1e1d662000820aa50` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
-- Next safe repo-only task: Write-Readiness Boundary Plan v1 should create a docs-only plan for future write-capable Coach actions, acceptance gates, rollback, audit logging, and Todd approval boundaries, without entering secrets, calling protected routes from Codex, changing production settings, running Supabase actions, adding signing/entitlements, automating third-party apps, or performing physical iPhone setup.
+- Current safe repo-only task: Write-Readiness Boundary Plan v1 creates `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`, a docs-only plan for future write-capable Coach actions, acceptance gates, rollback, audit logging, duplicate prevention, and Todd approval boundaries, without entering secrets, calling protected routes from Codex, changing production settings, running Supabase actions, adding signing/entitlements, automating third-party apps, or performing physical iPhone setup.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
@@ -178,7 +178,8 @@ Rules:
 ## Next Safe Codex Task Candidates
 
 1. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
-2. Supabase Readiness Diagnostic Plan: document and, only if separately approved, inspect production schema/cache state for `coach_observations` without applying migrations.
-3. iOS Freshness Output Hardening: consider future typed App Intent result models or `SyncStatus` entities without adding production writes.
-4. iOS Secret-Redaction Test Expansion: add deeper local tests for future entity/widget strings without using real secrets.
-5. No-Network Failure Matrix follow-up, only if tests reveal gaps: extend mock cases without using real secrets or live protected routes.
+2. Write-Readiness Boundary Plan: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
+3. Supabase Readiness Diagnostic Plan: document and, only if separately approved, inspect production schema/cache state for `coach_observations` without applying migrations.
+4. iOS Freshness Output Hardening: consider future typed App Intent result models or `SyncStatus` entities without adding production writes.
+5. iOS Secret-Redaction Test Expansion: add deeper local tests for future entity/widget strings without using real secrets.
+6. No-Network Failure Matrix follow-up, only if tests reveal gaps: extend mock cases without using real secrets or live protected routes.

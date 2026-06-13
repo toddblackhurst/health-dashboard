@@ -16,6 +16,8 @@ Repo-only iPhone/Siri/Shortcuts/Health readiness audit: `docs/implementation/IPH
 
 App Intent execution dry-run contract: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
 
+Future write-capable Coach actions must follow `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any live write, GPT Action write call, Shortcut submit flow, Action Button write, Personal Automation write, Supabase mutation, or third-party app update is attempted.
+
 ## Repository
 
 GitHub repo:
@@ -98,6 +100,8 @@ Red Safety Intent Output Test Expansion v1 is merged/deployed as PR #51 at main 
 App Intent Execution Dry-Run Matrix v1 is merged/deployed as PR #53 at main commit `541b5b9c8687921c499f66c76d32b782c6499a54` with Netlify production deploy `6a2d0e2e81eea70008c10bf6` and healthy public ping. It maps every current Todd Health Sync App Intent to its promoted/unpromoted status, execution entry point, setup gate, expected typed statuses, safe Siri/Shortcut readback fields, mock-test coverage, and remaining physical-device boundary. It does not add, remove, promote, reorder, or rename App Intents or App Shortcuts, and it does not authorize protected route calls, production writes, device setup, signing/entitlement changes, or third-party automation.
 
 App Intent Execution Evidence Packet v1 is merged/deployed as PR #55 at main commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c` with Netlify production deploy `6a2d13f1e1d662000820aa50` and healthy public ping. The packet is `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`. Use it after Todd-assisted physical setup to collect only non-secret iPhone/Siri/Shortcuts evidence: action name, trigger surface, setup/readiness/protected/write statuses, redacted summaries, freshness labels, stable error identifiers, and no-write/manual-only/draft-only confirmation. Do not paste secrets, account/security/payment/device-trust prompt contents, raw protected responses, credential-like URLs, or screenshots containing those items.
+
+Write-Readiness Boundary Plan v1 is the required planning layer before moving any held path from no-write/draft-only/manual-handoff-only/write-held into a live production write. It inventories Coach Memory, workout debrief, nutrition/post-workout, BP/intake, Apple Health sync, GPT Action, Supabase/admin, and future third-party write boundaries. Physical iPhone read-only verification must pass before any live write phase.
 
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 
