@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `541b5b9c8687921c499f66c76d32b782c6499a54`.
-- PR #53, App Intent Execution Dry-Run Matrix v1, is merged after PR #52.
-- Automatic Netlify production deploy `6a2d0e2e81eea70008c10bf6` is ready for commit `541b5b9c8687921c499f66c76d32b782c6499a54`.
+- Main is at `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
+- PR #55, App Intent Execution Evidence Packet v1, is merged after PR #53.
+- Automatic Netlify production deploy `6a2d13f1e1d662000820aa50` is ready for commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -92,19 +92,33 @@ Expected verification: Node tests, iOS simulator build/test when iOS tests chang
 
 Boundaries: no App Intent/App Shortcut additions/removals/promotions/reorders/renames, no protected route calls, no production writes, no secrets, no device setup, no signing/entitlement/capability changes.
 
-### Current: App Intent Execution Evidence Packet
+### Completed: App Intent Execution Evidence Packet
 
 Current working document: `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`.
 
-Goal: create a docs-only Todd-assisted evidence template for collecting non-secret iPhone/Siri/Shortcuts execution results after physical setup.
+Result: PR #55 created a docs-only Todd-assisted evidence template for collecting non-secret iPhone/Siri/Shortcuts execution results after physical setup.
 
 Files likely involved: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`, and a new evidence packet document.
 
-Acceptance criteria: Todd has a safe template for reporting action name, status lines, redacted summary, source freshness labels, no-write/manual-only/draft-only state, and blocker category without sharing secrets, raw protected responses, account prompts, or device-security screens.
+Acceptance criteria met: Todd has a safe template for reporting action name, status lines, redacted summary, source freshness labels, no-write/manual-only/draft-only state, and blocker category without sharing secrets, raw protected responses, account prompts, or device-security screens.
 
 Expected verification: docs-only tests, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
 
 Boundaries: no protected route calls by Codex, no secret handling, no device setup, no write calls, no signing/entitlement/capability changes, and no third-party automation.
+
+### Current: Write-Readiness Boundary Plan
+
+Current working document: not created yet.
+
+Goal: create a docs-only plan for future write-capable Coach actions, acceptance gates, rollback, audit logging, and Todd approval boundaries.
+
+Files likely involved: `docs/implementation/READINESS_GAP_INVENTORY.md`, `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`, and a new write-readiness boundary plan document.
+
+Acceptance criteria: future write-capable work has explicit no-secret, no-protected-route-from-Codex, no-production-change, no-Supabase-action, no-device-setup boundaries plus deterministic approval, rollback, audit, duplicate-prevention, and live-verification gates.
+
+Expected verification: docs-only tests, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
+
+Boundaries: no protected route calls by Codex, no secret handling, no production writes, no Supabase actions, no Netlify/env/settings changes, no physical iPhone setup, no signing/entitlement/capability changes, and no third-party automation.
 
 ### Completed: Read-Only Protected Device Verification Checklist
 

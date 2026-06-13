@@ -17,9 +17,9 @@ Related references:
 
 ## Current Repo Baseline
 
-- Main is at `541b5b9c8687921c499f66c76d32b782c6499a54`.
-- PR #53, App Intent Execution Dry-Run Matrix v1, is merged and deployed.
-- Automatic Netlify production deploy `6a2d0e2e81eea70008c10bf6` is ready for commit `541b5b9c8687921c499f66c76d32b782c6499a54`.
+- Main is at `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
+- PR #55, App Intent Execution Evidence Packet v1, is merged and deployed.
+- Automatic Netlify production deploy `6a2d13f1e1d662000820aa50` is ready for commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes remain skipped by Codex and GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.

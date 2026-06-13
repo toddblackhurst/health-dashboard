@@ -6,7 +6,7 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit after PR #53 App Intent Execution Dry-Run Matrix v1: `541b5b9c8687921c499f66c76d32b782c6499a54`.
+- Main commit after PR #55 App Intent Execution Evidence Packet v1: `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
@@ -33,8 +33,9 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 - PR #51, `Harden red safety shortcut output`, is merged.
 - PR #52, `Refresh current state after PR51 merge`, is merged.
 - PR #53, `Add App Intent execution dry-run matrix`, is merged.
-- Automatic Netlify production deploy for commit `541b5b9c8687921c499f66c76d32b782c6499a54` is ready.
-- Production deploy id: `6a2d0e2e81eea70008c10bf6`.
+- PR #55, `docs: add app intent evidence packet`, is merged.
+- Automatic Netlify production deploy for commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c` is ready.
+- Production deploy id: `6a2d13f1e1d662000820aa50`.
 - Public production ping is healthy:
 
 ```text
@@ -42,7 +43,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #53 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
+- Protected read-only routes were not called in the PR #55 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remained unchanged.
 - Current readiness audit reference: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 - Current App Intent execution dry-run reference: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
