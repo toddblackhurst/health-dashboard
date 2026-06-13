@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `829ec799ba73e5c03ae9c5bd00514fcfe5ef5ad1`.
-- PR #43, Post-PR42 Current-State Refresh, is merged.
-- Automatic Netlify production deploy `6a2cf42440021c00087a3f2c` is ready for commit `829ec799ba73e5c03ae9c5bd00514fcfe5ef5ad1`.
+- Main is at `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
+- PR #44, Repo-Wide iPhone Readiness Audit v1, is merged.
+- Automatic Netlify production deploy `6a2cf69a6f66a00009dfbe85` is ready for commit `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -47,13 +47,13 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 - Supabase `coach_observations` schema/cache uncertainty remains documented as a production/admin boundary, not proof that a migration or schema-cache action should be run.
 - The App Shortcuts 10-promotion cap forces prioritization; implemented but unpromoted intents may require manual discovery in Shortcuts.
 - Source freshness UX still depends on what the device can safely verify without protected credentials.
-- `docs/implementation/DEVICE_SETUP_RUNBOOK.md` has older PR #37 baseline wording, but its device-bound setup steps and hard boundaries remain the active procedure. Treat this as a doc freshness item, not a blocker.
+- `docs/implementation/DEVICE_SETUP_RUNBOOK.md` has been identified as the next docs-only baseline refresh target after PR #44; its device-bound setup steps and hard boundaries remain the active procedure.
 
 ## Safe Codex Repo-Only Backlog
 
 ### 1. Device Setup Runbook Baseline Refresh
 
-Goal: update `docs/implementation/DEVICE_SETUP_RUNBOOK.md` so its baseline references PR #43/main `829ec799ba73e5c03ae9c5bd00514fcfe5ef5ad1` while preserving the existing Todd-assisted steps.
+Goal: update `docs/implementation/DEVICE_SETUP_RUNBOOK.md` so its baseline references PR #44/main `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5` while preserving the existing Todd-assisted steps.
 
 Files likely involved: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`, possibly `COACH_CURRENT_STATE.md`.
 
