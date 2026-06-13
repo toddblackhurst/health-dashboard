@@ -6,7 +6,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main was clean at `21c3341b6cc0af29efc341e5242c952bbec150d7` after PR #52 merge.
+- Repo main was clean at `541b5b9c8687921c499f66c76d32b782c6499a54` after PR #53 merge.
 - Full local Node test suite passed on 2026-06-13 before PR #49 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
@@ -49,7 +49,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - PR #50 Current-State Refresh after PR #49 is merged/deployed at main commit `2985ec6527293b7abad4b322ea1a847afdc96963`. Netlify production deploy `6a2d0399f117b400080835f2` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`).
 - PR #51 Red Safety Intent Output Test Expansion v1 is merged/deployed at main commit `4e8b176bcd103260cc5523f23a17b37d8cedfc8b`. Netlify production deploy `6a2d079440021c0009b92721` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`44/44`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
 - PR #52 Current-State Refresh after PR #51 is merged/deployed at main commit `21c3341b6cc0af29efc341e5242c952bbec150d7`. Netlify production deploy `6a2d09aaf3a2e90007fd492c` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`).
-- Current safe repo-only task: App Intent Execution Dry-Run Matrix v1 maps and mock-tests App Intent execution expectations where possible, without entering secrets, calling protected routes, changing production settings, running Supabase actions, adding signing/entitlements, automating third-party apps, or performing physical iPhone setup.
+- PR #53 App Intent Execution Dry-Run Matrix v1 is merged/deployed at main commit `541b5b9c8687921c499f66c76d32b782c6499a54`. Netlify production deploy `6a2d0e2e81eea70008c10bf6` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`46/46`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
+- Next safe repo-only task: App Intent Execution Evidence Packet v1 should create a docs-only Todd-assisted evidence template for collecting non-secret iPhone/Siri/Shortcuts execution results after physical setup, without entering secrets, calling protected routes from Codex, changing production settings, running Supabase actions, adding signing/entitlements, automating third-party apps, or performing physical iPhone setup.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
