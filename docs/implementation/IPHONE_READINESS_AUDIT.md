@@ -16,7 +16,7 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 ## Repo-Side Implemented
 
 - iOS Coach setup UX: the app stores the API base in settings, stores the Coach secret in Keychain, clears the Keychain entry when an empty secret is saved, and reports local setup state before protected requests run.
-- App Intents and Shortcuts: implemented intents include sync, Morning Coach, sync status, readiness, daily freshness, Can I Train, weekly review, workout, nutrition closeout, post-workout Coach, draft debrief, draft note, draft BP intake, and Open Coach Today. The promoted App Shortcuts list is capped at 10; `CheckCoachReadinessIntent`, `CheckDailyDataFreshnessIntent`, `DraftCoachNoteIntent`, and `DraftBloodPressureIntakeIntent` are implemented but not all promoted.
+- App Intents and Shortcuts: implemented intents include sync, Morning Coach, sync status, readiness, daily freshness, Can I Train, weekly review, workout, nutrition closeout, post-workout Coach, draft debrief, draft note, draft BP intake, and Open Coach Today. The promoted App Shortcuts list is capped at 10; `CoachReadinessCheckIntent`, `CheckDailyDataFreshnessIntent`, `DraftCoachNoteIntent`, and `DraftBloodPressureIntakeIntent` are implemented but not all promoted.
 - Typed output contracts: `CoachShortcutOutput` exposes setup, readiness, protected verification, write status, safety status, source freshness, workout handoff, and next action fields.
 - Redaction and safe display: `CoachSafeOutput` and `CoachFutureSafeStrings` provide redacted, length-bounded, future-safe text for Shortcuts, Siri speech, app cards, App Entity labels, widgets, and notifications.
 - Readiness gate: the local readiness model separates local setup, public ping, protected read-only readiness, HealthKit, Siri/Shortcuts, Action Button, Personal Automation, write holds, and draft-only readiness.
@@ -66,6 +66,8 @@ Boundaries preserved: docs-only; no device setup, no protected routes, no secret
 ### 2. Shortcuts Promotion And Discovery Matrix
 
 Goal: document which App Intents are promoted, implemented but unpromoted, and best accessed from the Shortcuts app after install.
+
+Working document: `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md`.
 
 Files likely involved: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`, `apps/ios-health-sync/README.md`, `MOBILE_CODEX_COACH_SETUP.md`.
 
