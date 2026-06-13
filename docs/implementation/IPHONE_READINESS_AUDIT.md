@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `221f18f8a00f8660a88229310eeea9a4aec00a09`.
-- PR #45, Device Setup Runbook Baseline Refresh, is merged after PR #44.
-- Automatic Netlify production deploy `6a2cf94cb9b036000940039d` is ready for commit `221f18f8a00f8660a88229310eeea9a4aec00a09`.
+- Main is at `8200082c205dca8ab37d2395ac4892af88d8ecb2`.
+- PR #47, Shortcuts Promotion and Discovery Matrix v1, is merged after PR #45.
+- Automatic Netlify production deploy `6a2cfd263e7234000874a64b` is ready for commit `8200082c205dca8ab37d2395ac4892af88d8ecb2`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -63,9 +63,9 @@ Expected verification: `node --test tests/*.test.mjs`, `git diff --check`, `git 
 
 Boundaries preserved: docs-only; no device setup, no protected routes, no secret handling, no deploy settings.
 
-### 2. Shortcuts Promotion And Discovery Matrix
+### Completed: Shortcuts Promotion And Discovery Matrix
 
-Goal: document which App Intents are promoted, implemented but unpromoted, and best accessed from the Shortcuts app after install.
+Result: PR #47 added `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` to document which App Intents are promoted, implemented but unpromoted, and best accessed from the Shortcuts app after install.
 
 Working document: `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md`.
 
