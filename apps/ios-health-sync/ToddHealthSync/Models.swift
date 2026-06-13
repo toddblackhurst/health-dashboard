@@ -126,6 +126,79 @@ enum CoachShortcutWorkoutType: String, Codable, Equatable {
     case unknown
 }
 
+struct CoachSafeOutput {
+    private static let redacted = "[redacted]"
+
+    static func redact(_ value: String) -> String {
+        var output = value
+
+        output = replacing(
+            output,
+            pattern: #"([a-zA-Z][a-zA-Z0-9+.\-]*://)([^/\s@]+@)"#,
+            template: "$1[redacted]@"
+        )
+        output = replacing(
+            output,
+            pattern: #"([?&][^=\s&#]*(?:secret|token|api[_-]?key|password|auth|credential|key)[^=\s&#]*=)[^&#\s]+"#,
+            template: "$1[redacted]",
+            options: [.caseInsensitive]
+        )
+        output = replacing(
+            output,
+            pattern: #"\b(authorization)\b\s*[:=]\s*Bearer\s+[A-Za-z0-9._~+/\-]+=*"#,
+            template: "$1: Bearer [redacted]",
+            options: [.caseInsensitive]
+        )
+        output = replacing(
+            output,
+            pattern: #"\b(x-coach-secret|authorization|auth|api[_ -]?key|password|secret|token|credential)\b\s*[:=]\s*[^,\s;]+"#,
+            template: "$1: [redacted]",
+            options: [.caseInsensitive]
+        )
+        output = replacing(
+            output,
+            pattern: #"\bBearer\s+[A-Za-z0-9._~+/\-]+=*"#,
+            template: "Bearer [redacted]",
+            options: [.caseInsensitive]
+        )
+        output = replacing(
+            output,
+            pattern: #"\bsk-[A-Za-z0-9_\-]{12,}\b"#,
+            template: redacted,
+            options: [.caseInsensitive]
+        )
+        output = replacing(
+            output,
+            pattern: #"\b[A-Za-z0-9_-]{16,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b"#,
+            template: redacted
+        )
+
+        return output
+    }
+
+    static func errorMessage(_ error: Error) -> String {
+        redact(error.localizedDescription)
+    }
+
+    private static func replacing(
+        _ value: String,
+        pattern: String,
+        template: String,
+        options: NSRegularExpression.Options = []
+    ) -> String {
+        guard let expression = try? NSRegularExpression(pattern: pattern, options: options) else {
+            return value
+        }
+        let range = NSRange(value.startIndex..<value.endIndex, in: value)
+        return expression.stringByReplacingMatches(
+            in: value,
+            options: [],
+            range: range,
+            withTemplate: template
+        )
+    }
+}
+
 struct CoachShortcutOutput: Codable, Equatable {
     let actionStatus: String
     let safetyStatus: CoachShortcutSafetyStatus
@@ -161,39 +234,39 @@ struct CoachShortcutOutput: Codable, Equatable {
 
     var shortcutText: String {
         var lines: [String] = [
-            "status: \(actionStatus)",
+            "status: \(CoachSafeOutput.redact(actionStatus))",
             "safety_status: \(safetyStatus.rawValue)",
-            "readiness_summary: \(readinessSummary)"
+            "readiness_summary: \(CoachSafeOutput.redact(readinessSummary))"
         ]
         if let workoutTitle, !workoutTitle.isEmpty {
-            lines.append("workout_title: \(workoutTitle)")
+            lines.append("workout_title: \(CoachSafeOutput.redact(workoutTitle))")
         }
         lines.append("workout_type: \(workoutType.rawValue)")
         if !primaryConstraints.isEmpty {
             lines.append("primary_constraints:")
-            lines.append(contentsOf: primaryConstraints.prefix(6).map { "- \($0)" })
+            lines.append(contentsOf: primaryConstraints.prefix(6).map { "- \(CoachSafeOutput.redact($0))" })
         }
         if let coachMemoryContext, !coachMemoryContext.isEmpty {
-            lines.append("coach_memory_context: \(coachMemoryContext)")
+            lines.append("coach_memory_context: \(CoachSafeOutput.redact(coachMemoryContext))")
         }
         if let workoutDebriefContext, !workoutDebriefContext.isEmpty {
-            lines.append("workout_debrief_context: \(workoutDebriefContext)")
+            lines.append("workout_debrief_context: \(CoachSafeOutput.redact(workoutDebriefContext))")
         }
         if let nextBestAction, !nextBestAction.isEmpty {
-            lines.append("next_best_action: \(nextBestAction)")
+            lines.append("next_best_action: \(CoachSafeOutput.redact(nextBestAction))")
         }
         lines.append("requires_medical_caution: \(requiresMedicalCaution)")
         if let sourceFreshness, !sourceFreshness.isEmpty {
-            lines.append("source_freshness: \(sourceFreshness)")
+            lines.append("source_freshness: \(CoachSafeOutput.redact(sourceFreshness))")
         }
         if let lastSync, !lastSync.isEmpty {
-            lines.append("last_sync: \(lastSync)")
+            lines.append("last_sync: \(CoachSafeOutput.redact(lastSync))")
         }
         if let errorIdentifier {
             lines.append("error_identifier: \(errorIdentifier.rawValue)")
         }
         if let errorMessage, !errorMessage.isEmpty {
-            lines.append("error_message: \(errorMessage)")
+            lines.append("error_message: \(CoachSafeOutput.redact(errorMessage))")
         }
         lines.append("Apple Health is supporting evidence only.")
         return lines.joined(separator: "\n")
@@ -245,7 +318,7 @@ struct CoachShortcutOutput: Codable, Equatable {
             sourceFreshness: nil,
             lastSync: nil,
             errorIdentifier: apiError?.shortcutErrorCode ?? .backendUnavailable,
-            errorMessage: error.localizedDescription
+            errorMessage: CoachSafeOutput.errorMessage(error)
         )
     }
 }

@@ -57,7 +57,7 @@ final class HealthSyncViewModel: ObservableObject {
             refreshCoachSetupStatus()
             statusText = "Coach connection saved."
         } catch {
-            statusText = error.localizedDescription
+            statusText = CoachSafeOutput.errorMessage(error)
         }
     }
 
@@ -77,7 +77,7 @@ final class HealthSyncViewModel: ObservableObject {
             try await healthKitManager.requestAuthorization()
             statusText = "Apple Health access is connected."
         } catch {
-            statusText = error.localizedDescription
+            statusText = CoachSafeOutput.errorMessage(error)
         }
     }
 
@@ -93,7 +93,7 @@ final class HealthSyncViewModel: ObservableObject {
             statusText = result.detail
             refreshStoredStatus()
         } catch {
-            statusText = error.localizedDescription
+            statusText = CoachSafeOutput.errorMessage(error)
         }
     }
 
@@ -110,7 +110,7 @@ final class HealthSyncViewModel: ObservableObject {
             morningCoachText = result.detail
             refreshStoredStatus()
         } catch {
-            statusText = error.localizedDescription
+            statusText = CoachSafeOutput.errorMessage(error)
             refreshStoredStatus()
         }
     }
@@ -128,7 +128,7 @@ final class HealthSyncViewModel: ObservableObject {
             lastCoachReadbackText = result.detail
             refreshStoredStatus()
         } catch {
-            statusText = error.localizedDescription
+            statusText = CoachSafeOutput.errorMessage(error)
             refreshStoredStatus()
         }
     }
