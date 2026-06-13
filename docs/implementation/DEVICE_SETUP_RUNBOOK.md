@@ -6,7 +6,7 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit after PR #35 state refresh: `3208c188bce6e70ee94cf984d200a3d935f840ff`.
+- Main commit after PR #36 typed output hardening: `18b62714bd74afa42425a4363a15edaf8413119d`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
@@ -16,8 +16,9 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 - PR #33, `Refresh current state after PR32 merge`, is merged.
 - PR #34, `Add workout handoff formatting`, is merged.
 - PR #35, `Refresh state after PR34 merge`, is merged.
-- Automatic Netlify production deploy for commit `3208c188bce6e70ee94cf984d200a3d935f840ff` is ready.
-- Production deploy id: `6a2cdbbc9cffe8000920fc80`.
+- PR #36, `Harden typed Shortcut outputs`, is merged.
+- Automatic Netlify production deploy for commit `18b62714bd74afa42425a4363a15edaf8413119d` is ready.
+- Production deploy id: `6a2ce15832f45b0008fdef08`.
 - Public production ping is healthy:
 
 ```text
@@ -25,7 +26,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #35 post-merge check because they require `x-coach-secret`.
+- Protected read-only routes were not called in the PR #36 post-merge check because they require `x-coach-secret`.
 - `HEALTH_DATABASE.json` remained unchanged.
 
 ## Hard Boundaries
@@ -40,7 +41,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `3208c188bce6e70ee94cf984d200a3d935f840ff`.
+1. Confirm main is at or after `18b62714bd74afa42425a4363a15edaf8413119d`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
