@@ -12,7 +12,7 @@ Purpose: define the approval, audit, duplicate-prevention, rollback, and verific
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes are skipped by Codex and GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains protected and must remain unchanged.
-- Current safe repo-only planning task: Supabase Readiness Diagnostic Plan v1 creates `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`. It remains docs-only unless a later task separately approves production/admin access.
+- Supabase Readiness Diagnostic Plan v1 is complete as PR #59 and remains docs-only. Any production/admin diagnostic still requires a later task that separately approves the exact Supabase boundary.
 
 ## Non-Negotiable Boundary
 

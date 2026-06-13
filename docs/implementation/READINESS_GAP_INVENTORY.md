@@ -6,8 +6,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main was clean at `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c` after PR #55 merge.
-- Full local Node test suite passed on 2026-06-13 before PR #49 merge: `node --test tests/*.test.mjs` -> `97/97`.
+- Repo main was clean at `e929f50e9681cded3f8fb03ec9c03ebb249d75de` after PR #59 merge.
+- Full local Node test suite passed on 2026-06-13 before PR #59 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
@@ -52,7 +52,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - PR #53 App Intent Execution Dry-Run Matrix v1 is merged/deployed at main commit `541b5b9c8687921c499f66c76d32b782c6499a54`. Netlify production deploy `6a2d0e2e81eea70008c10bf6` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`46/46`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
 - PR #55 App Intent Execution Evidence Packet v1 is merged/deployed at main commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`. Netlify production deploy `6a2d13f1e1d662000820aa50` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
 - PR #57 Write-Readiness Boundary Plan v1 is merged/deployed at main commit `0650c64f0ade249fb1b8fb46cb638553641f2cf9`. Netlify production deploy `6a2d19ccde8412000856cc98` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final PR #57 verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
-- Current safe repo-only task: Supabase Readiness Diagnostic Plan v1 creates `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`, a docs-only diagnostic plan for `coach_observations` production schema/cache readiness, without entering secrets, calling protected routes from Codex, running production SQL, applying migrations, refreshing schema cache, changing Supabase/Netlify/env/GPT Action settings, automating third-party apps, or performing physical iPhone setup.
+- PR #59 Supabase Readiness Diagnostic Plan v1 is merged/deployed at main commit `e929f50e9681cded3f8fb03ec9c03ebb249d75de`. Netlify production deploy `6a2d1dd9cb800e000843ed68` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), GitHub Pages run `27462472861` succeeded, protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final PR #59 verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
@@ -178,8 +178,8 @@ Rules:
 
 ## Next Safe Codex Task Candidates
 
-1. Supabase Readiness Diagnostic Plan v1: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` as the docs-only diagnostic plan for the `coach_observations` schema/cache readiness warning. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions unless a later task explicitly approves that boundary.
-2. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
+1. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
+2. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
 3. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
 4. iOS Freshness Output Hardening: consider future typed App Intent result models or `SyncStatus` entities without adding production writes.
 5. iOS Secret-Redaction Test Expansion: add deeper local tests for future entity/widget strings without using real secrets.
