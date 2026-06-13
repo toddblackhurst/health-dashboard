@@ -4,7 +4,7 @@ Last updated: 2026-06-11.
 
 Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Workout Debrief branch.
 
-Current implementation status: design and research only. No iOS 27 feature implementation has started in this branch.
+Current implementation status: design and research only for iOS 27-specific entities, schemas, Spotlight, View Annotations, widgets, and expanded Siri/App Intent work. The existing app already exposes the earlier `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, and `OpenCoachTodayIntent` bridge.
 
 ## 1. Source-Grounded iOS 27 Read
 
@@ -380,7 +380,7 @@ Action: "Record workout debrief"
 
 Status:
 
-- Defer implementation until Workout Debrief Capture backend endpoint exists.
+- Backend endpoint exists as `recordWorkoutDebrief`. iOS/App Intent implementation is still deferred until a bounded iOS readiness task adds confirmable capture UI, structured outputs, tests, and device verification.
 
 Design:
 
@@ -395,7 +395,7 @@ Action: "Record coach observation"
 
 Status:
 
-- Available only after Coach Memory endpoints exist locally, are reviewed, and are deployed with Todd approval.
+- Backend Coach Memory endpoints exist and are deployed. iOS/App Intent implementation is still deferred until a bounded task adds explicit review/confirmation, safe displays, tests, and device verification.
 
 Rules:
 

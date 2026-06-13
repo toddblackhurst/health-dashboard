@@ -2,6 +2,8 @@
 
 This plan started after the verified Apple Health Phase 3 production milestone from 2026-06-08.
 
+Current note, 2026-06-13: this file is historical phase planning. For the active readiness push, use `docs/implementation/READINESS_GAP_INVENTORY.md`. Since this file was first written, Coach Memory, Workout Debrief Capture, public ping diagnostics, and read-only Weekly Review Engine API/OpenAPI have all shipped, and the current full suite is `96/96` passing.
+
 ## Recommendation
 
 Daily coach UX polish is live and production-verified. The Garmin source-hierarchy update is merged and production-verified: Garmin Fenix 8 is primary for integrated training/recovery and workout physiology when fresh/reliable, Rack/Motra is primary for strength logs, Apple Health is supporting-only, Oura is secondary/fallback, Soundcore is sleep aid only, and medical/safety flags are above every device.
@@ -10,13 +12,13 @@ Morning Coach automation v1 is the current iPhone workflow bridge. It should giv
 
 Why: the codebase already exposes `coach-today`, `sync-status`, compact dashboard context, and Apple Health supporting evidence. Weekly Review Engine should not aggregate a week of training, recovery, and activity until the daily iPhone workflow and source hierarchy are explicit and test-covered.
 
-Recommended order:
+Current recommended order:
 
-1. Complete Morning Coach automation v1 local/iPhone verification.
-2. Weekly review engine.
-3. Coach observations learning loop.
-4. Rack/Motra workout handoff improvement.
-5. Background/reminder Apple Health sync improvements.
+1. Close readiness documentation and instruction drift.
+2. Build the next bounded iPhone/Siri/ChatGPT surface improvements while preserving Todd/device/secret boundaries.
+3. Investigate the optional `coach_observations` schema/cache warning under a separate Supabase-readiness boundary if needed.
+4. Improve Rack/Garmin workout handoff format without direct app automation.
+5. Improve background/reminder Apple Health sync only after physical-device behavior is verified.
 
 ## Option 1: Daily Coach UX Polish
 
@@ -57,6 +59,8 @@ Suggested acceptance criteria:
 
 Goal: summarize the week and turn actual evidence into next-week training adjustments.
 
+Status: read-only deterministic/API/OpenAPI version is shipped and verified through saved GPT. Applying changes automatically remains intentionally out of scope.
+
 Possible scope:
 
 - Summarize training, recovery, Apple Health activity, pain, and nutrition.
@@ -92,6 +96,8 @@ Suggested acceptance criteria:
 ## Option 3: Coach Observations Learning Loop
 
 Goal: turn repeated feedback into explicit, reviewable coach observations.
+
+Status: Coach Memory / Observations v1 is shipped. The remaining readiness issue is production schema/cache confidence for `coach_observations` after a non-blocking optional read warning, not a local code blocker.
 
 Possible scope:
 
@@ -184,17 +190,17 @@ Suggested acceptance criteria:
 - Background/reminder behavior is visible and controllable.
 - Apple Health remains supporting cross-check evidence only.
 
-## Current Candidate: Morning Coach Automation v1
+## Current Candidate: iPhone/Siri/ChatGPT Readiness
 
-Goal: make the daily iPhone path lowest friction without turning background HealthKit into the reliable path.
+Goal: make the daily iPhone path lowest friction without pretending background HealthKit or Siri automation is more reliable than physical-device readback proves.
 
 Scope:
 
-- One in-app `Morning Coach` button.
-- App Intents for `Morning Coach`, `Sync Apple Health`, `Check Coach Sync Status`, and `Open Coach Today`.
+- Existing verified bridge: one in-app `Morning Coach` button plus App Intents for `Morning Coach`, `Sync Apple Health`, `Check Coach Sync Status`, and `Open Coach Today`.
+- Next bounded implementation candidates: build workout, nutrition closeout, post-workout debrief, fast coach note, BP/intake, structured Siri/Shortcuts outputs, and safe error identifiers.
 - Shortcuts/personal automation setup docs.
 - Last successful Apple Health sync and coach readback timestamps stored locally.
 - Manual `Sync Now` remains visible.
 - Background HealthKit deferred as best-effort future work.
 
-Next likely phase after local and iPhone verification: Weekly Review Engine.
+Next likely phase after local implementation: physical iPhone verification with Todd handling passcodes, Health permissions, Shortcut automation, and any secret entry.
