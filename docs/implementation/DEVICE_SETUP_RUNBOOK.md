@@ -6,10 +6,12 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit: `7656419538b094abfe7f498347d48f6917b1c860`.
+- Main commit: `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
-- Automatic Netlify production deploy for commit `7656419538b094abfe7f498347d48f6917b1c860` is ready.
-- Production deploy id: `6a2cbe646e58290008291dd2`.
+- PR #28, `Add Coach device setup runbook`, is merged.
+- PR #29, `Harden iOS shortcut secret redaction`, is merged.
+- Automatic Netlify production deploy for commit `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d` is ready.
+- Production deploy id: `6a2cc6884e4ec40008d96348`.
 - Public production ping is healthy:
 
 ```text
@@ -17,7 +19,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #27 post-merge check because they require `x-coach-secret`.
+- Protected read-only routes were not called in the PR #29 post-merge check because they require `x-coach-secret`.
 - `HEALTH_DATABASE.json` remained unchanged.
 
 ## Hard Boundaries
@@ -32,7 +34,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `7656419538b094abfe7f498347d48f6917b1c860`.
+1. Confirm main is at or after `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
@@ -62,12 +64,14 @@ These steps are device-bound and must happen with Todd present.
 6. Tap `Save Connection`.
 7. Tap `Check Setup`.
 8. Expected local setup state: `Coach is configured locally`.
-9. Tap `Connect Apple Health`.
-10. Todd reviews and grants the HealthKit read permissions needed for daily summaries.
-11. Run a manual read-only path first:
+9. Tap `Check Coach Readiness`.
+10. Expected readiness shape: local setup is ready, protected read-only routes are Todd/device-bound, HealthKit/Siri/Shortcuts/Action Button/Personal Automation are Todd/device-bound, write-capable actions are held, and draft-only capture is no-write.
+11. Tap `Connect Apple Health`.
+12. Todd reviews and grants the HealthKit read permissions needed for daily summaries.
+13. Run a manual read-only path first:
     - `Check Coach Sync Status`, or
     - in-app `Morning Coach` if Apple Health sync is also intended.
-12. Read back the result. It should include source freshness and no secret value.
+14. Read back the result. It should include source freshness and no secret value.
 
 ## Siri, Shortcuts, Action Button, And Personal Automation
 
@@ -165,6 +169,7 @@ Automation not running unattended:
 | Missing secret | Valid API base, empty fake secret | `missingSecret` setup error; no protected request | Mock only |
 | Blank secret save | Save empty secret in app settings | Local Keychain entry is cleared; setup reports missing secret | Device-bound for real Keychain |
 | Configured locally | Valid API base and local secret present | App reports `Coach is configured locally`; protected route still needs Todd-assisted readback | Device-bound with Todd secret entry |
+| Coach readiness check | Local readiness gate | Reports local setup, public ping status, protected read-only gate, Health/Siri/Action Button/Automation boundaries, write hold, and draft-only readiness without writing | Repo/simulator safe with mocks |
 | Draft workout debrief | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |
 | Draft coach note | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |
 | Draft BP intake | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |

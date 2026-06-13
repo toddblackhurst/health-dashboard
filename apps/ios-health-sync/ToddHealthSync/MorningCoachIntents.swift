@@ -90,6 +90,20 @@ struct CheckCoachSyncStatusIntent: AppIntent {
     }
 }
 
+struct CoachReadinessCheckIntent: AppIntent {
+    static var title: LocalizedStringResource = "Check Coach Readiness"
+    static var description = IntentDescription("Return local Coach setup readiness and Todd/device-bound setup gates without writing coach data.")
+
+    func perform() async throws -> some IntentResult & ReturnsValue<String> {
+        do {
+            let result = try MorningCoachWorkflow().checkReadiness()
+            return .result(value: result.shortcutValue)
+        } catch {
+            return .result(value: CoachShortcutOutput.failure(error: error).shortcutText)
+        }
+    }
+}
+
 struct WeeklyCoachReviewIntent: AppIntent {
     static var title: LocalizedStringResource = "Weekly Coach Review"
     static var description = IntentDescription("Build a read-only weekly review. It does not apply plan or memory changes.")

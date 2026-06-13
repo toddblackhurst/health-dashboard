@@ -414,6 +414,71 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(result.shortcutValue.contains("Missing Coach API secret"))
     }
 
+    func testReadinessReportShowsSetupRequiredWithoutSecrets() {
+        let fakeSecret = "fake-readiness-secret-123456"
+        let status = CoachConnectionConfiguration(
+            apiBase: "",
+            secret: fakeSecret
+        ).status
+        let report = CoachReadinessReport.local(setupStatus: status)
+        let text = report.shortcutText
+
+        XCTAssertEqual(report.actionStatus, "setup_required")
+        XCTAssertTrue(text.contains("local_app_configuration: needs_setup"))
+        XCTAssertTrue(text.contains("protected_read_only_routes: needs_setup"))
+        XCTAssertTrue(text.contains("direct_coach_action_write_hold: held"))
+        XCTAssertTrue(text.contains("draft_only_capture: ready"))
+        XCTAssertFalse(text.contains(fakeSecret))
+        XCTAssertTrue(text.contains("No production write was sent."))
+        XCTAssertTrue(text.contains("No secret value is included."))
+    }
+
+    func testReadinessReportMarksDeviceBoundAfterLocalConfiguration() {
+        let report = CoachReadinessReport.local(
+            setupStatus: CoachConnectionConfiguration(
+                apiBase: "https://coach.example.test",
+                secret: "fake-local-secret"
+            ).status,
+            publicPing: .healthy
+        )
+        let text = report.shortcutText
+
+        XCTAssertEqual(report.actionStatus, "todd_device_verification_required")
+        XCTAssertTrue(text.contains("local_app_configuration: ready"))
+        XCTAssertTrue(text.contains("public_ping: ready"))
+        XCTAssertTrue(text.contains("protected_read_only_routes: device_bound"))
+        XCTAssertTrue(text.contains("healthkit_permissions: device_bound"))
+        XCTAssertTrue(text.contains("siri_shortcuts: device_bound"))
+        XCTAssertTrue(text.contains("action_button: device_bound"))
+        XCTAssertTrue(text.contains("personal_automation: device_bound"))
+        XCTAssertTrue(text.contains("direct_coach_action_write_hold: held"))
+    }
+
+    func testReadinessWorkflowDoesNotCallNetworkAndKeepsNoWriteBoundary() throws {
+        let suiteName = "CoachReadinessWorkflowTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let session = MockCoachURLSession(responseData: Data())
+        let client = CoachAPIClient(session: session)
+        let workflow = MorningCoachWorkflow(
+            apiClient: client,
+            keychainStore: FakeCoachSecretStore(secret: "fake-local-secret"),
+            store: store
+        )
+
+        let result = try workflow.checkReadiness()
+        let detail = result.detail
+
+        XCTAssertNil(session.lastRequest)
+        XCTAssertTrue(detail.contains("readiness_status: todd_device_verification_required"))
+        XCTAssertTrue(detail.contains("No production write was sent."))
+        XCTAssertTrue(detail.contains("direct_coach_action_write_hold: held"))
+    }
+
     func testWeeklyReviewClientUsesReadOnlyEndpointAndSecretHeader() async throws {
         let data = """
         {

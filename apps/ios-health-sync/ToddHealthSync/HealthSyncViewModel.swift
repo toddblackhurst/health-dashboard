@@ -18,6 +18,7 @@ final class HealthSyncViewModel: ObservableObject {
     @Published var lastCoachReadbackText = "No coach readback yet."
     @Published var morningCoachText = "Morning Coach has not run yet."
     @Published var backgroundHealthKitText = "Background HealthKit sync is not enabled."
+    @Published var coachReadinessText = "Coach readiness has not been checked."
 
     private let healthKitManager: HealthKitManager
     private let keychainStore: any CoachSecretStoring
@@ -65,6 +66,14 @@ final class HealthSyncViewModel: ObservableObject {
         store.apiBase = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
         refreshCoachSetupStatus()
         statusText = coachSetupTitle
+    }
+
+    func checkCoachReadiness() {
+        store.apiBase = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
+        refreshCoachSetupStatus()
+        let report = CoachReadinessReport.local(setupStatus: currentCandidateSetupStatus())
+        statusText = "Coach readiness"
+        coachReadinessText = report.displayText
     }
 
     func connectAppleHealth() async {
@@ -150,12 +159,16 @@ final class HealthSyncViewModel: ObservableObject {
     }
 
     private func refreshCoachSetupStatus() {
+        let setupStatus = currentCandidateSetupStatus()
+        coachSetupTitle = setupStatus.title
+        coachSetupDetail = setupStatus.detail
+    }
+
+    private func currentCandidateSetupStatus() -> CoachSetupStatus {
         let storedSecret = (try? keychainStore.loadSecret()) ?? ""
         let candidateSecret = apiSecret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             ? storedSecret
             : apiSecret
-        let setupStatus = CoachConnectionConfiguration(apiBase: apiBase, secret: candidateSecret).status
-        coachSetupTitle = setupStatus.title
-        coachSetupDetail = setupStatus.detail
+        return CoachConnectionConfiguration(apiBase: apiBase, secret: candidateSecret).status
     }
 }

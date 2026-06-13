@@ -47,6 +47,15 @@ struct MorningCoachWorkflow {
         )
     }
 
+    func checkReadiness() throws -> MorningCoachActionResult {
+        let report = CoachReadinessReport.local(setupStatus: try currentSetupStatus())
+        return MorningCoachActionResult(
+            title: "Coach readiness",
+            detail: report.shortcutText,
+            shortcutOutput: report.shortcutOutput
+        )
+    }
+
     func syncAppleHealth(days: Int = 7, trigger: String = "shortcut") async throws -> MorningCoachActionResult {
         let apiSecret = try savedSecret()
         try await healthKitManager.requestAuthorization()
