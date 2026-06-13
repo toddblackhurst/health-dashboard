@@ -6,9 +6,9 @@ Purpose: give Todd a safe, non-secret template for reporting physical iPhone, Si
 
 ## Current Repo Baseline
 
-- Main is at `fd8d5491d90af5483049957a9023769e89d5d221` after PR #54.
-- PR #54, Post-PR53 Current-State Refresh, is merged/deployed.
-- Automatic Netlify production deploy `6a2d111ff3a2e900080d3959` is ready for commit `fd8d5491d90af5483049957a9023769e89d5d221`.
+- Main is at `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c` after PR #55.
+- PR #55, App Intent Execution Evidence Packet v1, is merged/deployed.
+- Automatic Netlify production deploy `6a2d13f1e1d662000820aa50` is ready for commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped by Codex/GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
