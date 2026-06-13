@@ -1,15 +1,15 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #29 merge/deploy verification and Coach Readiness Status and Automation Gate local implementation.
+Last updated: 2026-06-13 Asia/Taipei, after PR #30 merge/deploy verification and production public ping.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit before the Coach Readiness Status and Automation Gate v1 branch: `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d`.
+- Current verified main commit: `69dd82b47371c3e5bc96c9c15e1da7e46f83d295`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged to main and production deployed automatically.
-- Working tree was clean before the Coach Readiness Status and Automation Gate v1 branch.
+- Working tree is clean after PR #30 merge/deploy verification.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result after PR #27 merge: `97/97` passing on 2026-06-13.
+- Current verified main test result after PR #30 merge: `97/97` passing on 2026-06-13.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
@@ -34,7 +34,7 @@ Last updated: 2026-06-13 Asia/Taipei, after PR #29 merge/deploy verification and
 - iPhone Coach Setup UX Readiness v1 is merged and deployed. It adds native setup status, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, or call live protected write endpoints.
 - Coach Device Setup Runbook and Dry-Run Matrix v1 is merged and deployed. It adds `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for Todd-assisted physical iPhone/Siri/Shortcuts setup.
 - iOS Secret Redaction and Shortcut Output Safety v1 is merged and deployed. It redacts credential-like values from Shortcut/App Intent output, visible app status, stored app readbacks, and exposed errors.
-- Coach Readiness Status and Automation Gate v1 is the current local repo-only branch. It adds a no-write readiness gate for local setup, App Intent readiness, public ping status, protected read-only readiness, HealthKit permissions, Siri/Shortcuts, Action Button, Personal Automation, direct write hold, and draft-only capture status. It does not perform device setup, handle secrets, grant permissions, deploy production, run Supabase actions, call protected routes, or call write endpoints.
+- Coach Readiness Status and Automation Gate v1 is merged and deployed as PR #30. It adds a no-write readiness gate for local setup, App Intent readiness, public ping status, protected read-only readiness, HealthKit permissions, Siri/Shortcuts, Action Button, Personal Automation, direct write hold, and draft-only capture status. It does not perform device setup, handle secrets, grant permissions, run Supabase actions, call protected routes, or call write endpoints.
 
 ## 1. Project Purpose
 
@@ -265,6 +265,15 @@ Current production state:
   - Scope: reusable iOS redaction helper, safe Shortcut/App Intent text, safe visible app status, safe stored readbacks, safe user-facing errors, and fake-placeholder Swift tests.
   - Final verification before merge: `node --test tests/*.test.mjs` passed `97/97`; default `xcodebuild ... test` completed with `TEST SUCCEEDED` and `18/18`; `xcodebuild ... build` passed; `git diff --check` passed; `git diff -- HEALTH_DATABASE.json` was empty.
   - Public production ping succeeded after the automatic deploy.
+  - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
+- PR #30, `Add coach readiness automation gate`, is merged and deployed.
+  - Merge brought main to commit `69dd82b47371c3e5bc96c9c15e1da7e46f83d295`.
+  - Netlify production deploy ID: `6a2ccd3d9fd3c700085ad5c9`.
+  - Published at: 2026-06-13 11:23:53 Asia/Taipei.
+  - Manual deploy: false. The production deploy was automatic.
+  - Scope: local no-write readiness gate for app configuration, valid API base URL, local secret presence without exposing the value, public ping status, protected read-only readiness, HealthKit permissions, Siri/Shortcuts, Action Button, Personal Automation, direct Coach action write hold, and draft-only capture.
+  - Final verification before merge: `node --test tests/*.test.mjs` passed `97/97`; `xcodebuild ... build` passed; explicit simulator `xcodebuild ... test` completed with `TEST SUCCEEDED` and `21/21`; `git diff --check` passed; `git diff -- HEALTH_DATABASE.json` was empty.
+  - Public production ping succeeded after the automatic deploy with `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
   - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
 - Unless explicitly noted otherwise, no production secrets or environment variables were changed by Codex, no secret values were printed or pasted into chat, and Codex did not intentionally edit `HEALTH_DATABASE.json`.
 

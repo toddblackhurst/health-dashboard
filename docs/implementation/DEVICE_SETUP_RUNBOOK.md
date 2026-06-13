@@ -6,12 +6,13 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit: `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d`.
+- Main commit: `69dd82b47371c3e5bc96c9c15e1da7e46f83d295`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
-- Automatic Netlify production deploy for commit `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d` is ready.
-- Production deploy id: `6a2cc6884e4ec40008d96348`.
+- PR #30, `Add coach readiness automation gate`, is merged.
+- Automatic Netlify production deploy for commit `69dd82b47371c3e5bc96c9c15e1da7e46f83d295` is ready.
+- Production deploy id: `6a2ccd3d9fd3c700085ad5c9`.
 - Public production ping is healthy:
 
 ```text
@@ -34,7 +35,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d`.
+1. Confirm main is at or after `69dd82b47371c3e5bc96c9c15e1da7e46f83d295`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
