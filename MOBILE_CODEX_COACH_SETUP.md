@@ -12,6 +12,8 @@ Current readiness tracker: `docs/implementation/READINESS_GAP_INVENTORY.md`.
 
 Todd-assisted physical iPhone setup runbook and dry-run matrix: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
+Repo-only iPhone/Siri/Shortcuts/Health readiness audit: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
+
 ## Repository
 
 GitHub repo:

@@ -13,10 +13,11 @@ Read only this active set first:
 5. `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md` — durable staged roadmap for Weekly Review Engine, Rack/Garmin handoff, review lanes, and future integrations.
 6. `docs/implementation/READINESS_GAP_INVENTORY.md` — current readiness gaps, safe Codex work, and Todd/device/account boundaries.
 7. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` — Todd-assisted iPhone/Siri/Shortcuts setup runbook and dry-run validation matrix.
-8. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
-9. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-10. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-11. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+8. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
+9. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
+10. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+11. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+12. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -28,7 +29,7 @@ Read only this active set first:
 
 - Production site/API is live at `https://todd-personal-coach.netlify.app`.
 - Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions. Read-only `getSyncStatus` and `buildWeeklyReview` were verified through the saved GPT after Todd manually updated the secret; no write action was called.
-- PR #36, `Harden typed Shortcut outputs`, is merged and automatically deployed at main commit `18b62714bd74afa42425a4363a15edaf8413119d`; automatic Netlify production deploy `6a2ce15832f45b0008fdef08` is ready and public ping is healthy.
+- PR #43, `docs: refresh state after PR42`, is merged and automatically deployed at main commit `829ec799ba73e5c03ae9c5bd00514fcfe5ef5ad1`; automatic Netlify production deploy `6a2cf42440021c00087a3f2c` is ready and public ping is healthy.
 - The public dashboard posture has been retired; the Netlify site is now primarily a private coach backend and internal tool surface.
 - V2 architecture is defined in `ARCHITECTURE_V2.md` and should guide future Codex work.
 - Apple Health / HealthKit daily sync is live as supporting evidence for activity context, freshness, and diagnostics.
@@ -62,7 +63,7 @@ Read only this active set first:
 - Implemented but not promoted because Apple caps promoted App Shortcuts at 10 per app:
   - `Draft Coach Note`
   - `Draft Blood Pressure Intake`
-- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`.
+- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 - Todd-assisted physical iPhone setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 - Older shortcuts still present but not preferred: `Coach Motra Debrief`, `Coach Message`, `Coach Intake`, `Coach Upload`. Delete only with Todd's explicit confirmation.
 
