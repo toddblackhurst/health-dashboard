@@ -24,6 +24,8 @@ Workout Handoff Formatting v1 adds a stable `workout_handoff` section to safe Sh
 
 Typed Shortcut Output Hardening v1 adds stable status fields to `CoachShortcutOutput`: `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status`. These fields let Siri/Shortcuts-facing text distinguish missing setup, local configuration, device-bound protected verification, no-network deferment, no-write read-only results, draft-only outputs, write holds, and manual workout handoffs without exposing secrets or raw payloads.
 
+No-Network Failure Matrix v1 hardens mock-only failure handling for Shortcut/App Intent output. Offline, timeout, DNS/host/connect errors, missing setup, invalid API base URL, missing local secret, non-2xx mocked responses, non-HTTP responses, and malformed JSON/decode failures map to stable `error_identifier` values with typed setup/readiness/protected-verification/write statuses, redacted summaries, and next actions. Missing or invalid setup blocks protected requests before networking; protected verification remains deferred until Todd-assisted device setup supplies credentials on device.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.

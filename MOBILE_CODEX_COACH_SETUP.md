@@ -81,6 +81,8 @@ Workout Handoff Formatting v1 keeps `Build Today's Workout` as the voice/text pa
 
 Typed Shortcut Output Hardening v1 adds stable status lines for `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status` across safe Shortcut/App Intent outputs. Use these lines during Todd-assisted iPhone testing to confirm whether a result is locally configured, blocked by setup, deferred until device verification, no-write, draft-only, write-held, or manual-handoff-only.
 
+No-Network Failure Matrix v1 keeps network and setup failures predictable for voice/text Coach use. Shortcut-facing failures should expose a stable `error_identifier`, typed statuses, a redacted summary, and one next action for offline, timeout, DNS/host/connect, missing setup, missing secret, invalid API base, non-2xx, invalid response, malformed JSON, and deferred protected-route cases. These checks are mock-only in Codex work; real protected verification waits for Todd-assisted device setup.
+
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 
 iOS App Intents Readiness v1 is repo-side preparation only. It adds typed Shortcut-safe outputs, weekly review, Can I Train, workout/nutrition/post-workout Coach action scaffolding, and draft-only debrief/note/BP capture. It does not install to Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri or Action Button, configure Personal Automation, or submit draft-only write paths.

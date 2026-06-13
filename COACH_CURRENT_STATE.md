@@ -1,15 +1,15 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #36 merge/deploy verification and production public ping.
+Last updated: 2026-06-13 Asia/Taipei, after PR #37 merge/deploy verification and production public ping.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit: `18b62714bd74afa42425a4363a15edaf8413119d`.
+- Current verified main commit: `6b0a0916e3ca85b713a72e8dbbeea3712ab74474`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged to main and production deployed automatically.
-- Working tree is clean after PR #36 merge/deploy verification unless a scoped Codex branch is active.
+- Working tree is clean after PR #37 merge/deploy verification unless a scoped Codex branch is active.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result before PR #36 merge: `97/97` passing on 2026-06-13.
+- Current verified main test result before PR #37 merge: `97/97` passing on 2026-06-13.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
@@ -41,6 +41,7 @@ Last updated: 2026-06-13 Asia/Taipei, after PR #36 merge/deploy verification and
 - Workout Handoff Formatting v1 is merged and deployed as PR #34. It improves Shortcut-friendly manual Rack/Garmin workout handoff text and tests without backend/API/OpenAPI changes, third-party automation, protected production calls, production writes, Supabase work, env changes, physical iPhone setup, or `HEALTH_DATABASE.json` edits. Production deploy `6a2cd96d93dd5d000826def2` was ready, production, automatic, and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - PR #35 refreshed durable state docs after PR #34 and is merged/deployed. Main is at `3208c188bce6e70ee94cf984d200a3d935f840ff`; Netlify production deploy `6a2cdbbc9cffe8000920fc80` was ready, production, automatic, and public ping remained healthy.
 - Typed Shortcut Output Hardening v1 is merged and deployed as PR #36. It adds stable `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status` lines across safe Shortcut/App Intent outputs, including setup, readiness, daily freshness, sync status, Coach Today, weekly review, direct Coach action, deferred drafts, workout handoff, and no-network failures. It does not call protected production routes, write endpoints, Supabase actions, env settings, third-party app automation, physical iPhone setup, or `HEALTH_DATABASE.json` edits. Production deploy `6a2ce15832f45b0008fdef08` was ready, production, automatic, and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+- PR #37 refreshed durable state docs after PR #36 and is merged/deployed. Main is at `6b0a0916e3ca85b713a72e8dbbeea3712ab74474`; Netlify production deploy `6a2ce3ba4c9f2800081617e8` was ready, production, automatic, and public ping remained healthy.
 
 ## 1. Project Purpose
 
@@ -335,6 +336,15 @@ Current production state:
   - Final verification before merge: `node --test tests/*.test.mjs` passed `97/97`; `xcodebuild ... build` passed; explicit simulator serial `xcodebuild ... test` completed with `TEST SUCCEEDED` and `31/31`; `git diff --check` passed; `git diff -- HEALTH_DATABASE.json` was empty.
   - Public production ping succeeded after the automatic deploy with `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
   - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
+- PR #37, `Refresh state after PR36 merge`, is merged and deployed.
+  - Merge brought main to commit `6b0a0916e3ca85b713a72e8dbbeea3712ab74474`.
+  - Netlify production deploy ID: `6a2ce3ba4c9f2800081617e8`.
+  - Published at: 2026-06-13 12:59:50 Asia/Taipei.
+  - Manual deploy: false. The production deploy was automatic.
+  - Scope: docs-only durable state refresh after PR #36 merge/deploy verification.
+  - Final verification before merge: `node --test tests/*.test.mjs` passed `97/97`; `git diff --check` passed; `git diff -- HEALTH_DATABASE.json` was empty. iOS build/test was not run because the change was docs-only.
+  - Public production ping succeeded after the automatic deploy with `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+  - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
 - Unless explicitly noted otherwise, no production secrets or environment variables were changed by Codex, no secret values were printed or pasted into chat, and Codex did not intentionally edit `HEALTH_DATABASE.json`.
 
 Coach Memory / Observations v1 production status:
@@ -444,7 +454,7 @@ Current readiness push:
 2. Close documentation/state drift so fresh Codex/GPT Pro runs do not follow obsolete PR #20 candidate instructions.
 3. Build the iPhone/Siri/ChatGPT voice-text path in bounded stages:
    - current verified repo-side iPhone bridge: native Apple Health sync app plus expanded App Intents for sync, Morning Coach, sync status, Can I Train, weekly review, workout planning, nutrition closeout, post-workout Coach, draft debrief/note/BP intake, readiness/freshness checks, and typed status outputs;
-   - next safe app stage: harden no-network/offline/timeout/missing-config/deferred protected-route cases without entering secrets or touching the physical iPhone;
+   - current safe app stage: No-Network Failure Matrix v1 hardens offline, timeout, missing-config, invalid-response, non-2xx, malformed JSON, and deferred protected-route cases with mocks only, stable Shortcut-facing identifiers, redacted summaries, and no live protected-route calls;
    - physical-device stage: install/configure/test only with Todd present for passcodes, Face ID, Health permissions, Shortcut automation, and any secret entry.
 4. Investigate the `coach_observations` optional warning as schema/cache readiness, without assuming a migration is applied or needed from local files alone.
 5. Use `docs/implementation/READINESS_GAP_INVENTORY.md` as the working gap list for future bounded Codex tasks.

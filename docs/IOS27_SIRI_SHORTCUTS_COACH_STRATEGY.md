@@ -4,7 +4,7 @@ Last updated: 2026-06-13.
 
 Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without authorizing unrelated iOS implementation work.
 
-Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge, PR #27 iPhone Coach Setup UX Readiness v1 adds local setup guardrails before protected requests run, Daily Data Freshness UX v1 is merged as repo-side local no-write source freshness output, Workout Handoff Formatting v1 is merged as manual Rack/Garmin handoff output, and Typed Shortcut Output Hardening v1 is merged/deployed as stable status-field hardening. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` is the active Todd-assisted setup runbook. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
+Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge, PR #27 iPhone Coach Setup UX Readiness v1 adds local setup guardrails before protected requests run, Daily Data Freshness UX v1 is merged as repo-side local no-write source freshness output, Workout Handoff Formatting v1 is merged as manual Rack/Garmin handoff output, and Typed Shortcut Output Hardening v1 is merged/deployed as stable status-field hardening. No-Network Failure Matrix v1 is the current mock-only hardening pass for offline, timeout, invalid response, missing setup, and deferred protected-route failures. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` is the active Todd-assisted setup runbook. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
 
 ## 1. Source-Grounded iOS 27 Read
 
@@ -469,6 +469,8 @@ Recommended output fields for Coach Intents:
 - `last_sync`: ISO timestamp when known
 
 iOS App Intents Readiness v1 implements the core fields in `CoachShortcutOutput` and renders them as stable text lines for Shortcuts/Siri until a richer typed Shortcut result is adopted. Typed Shortcut Output Hardening v1 adds the setup, readiness, protected-verification, and write/manual status lines so Shortcuts can branch without scraping prose.
+
+No-Network Failure Matrix v1 keeps failure output branchable and safe under degraded conditions. Shortcut-facing failures should provide a stable error identifier, setup/readiness/protected-verification/write statuses, a redacted summary, one next action, and no raw network/debug/body/header/credential text for offline, timeout, DNS/host/connect, invalid setup, missing secret, non-2xx, invalid response, malformed JSON, and deferred protected-route cases.
 
 ## 17. Standard App Intent Error Outputs
 
