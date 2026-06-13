@@ -99,6 +99,10 @@ struct CoachSetupStatus: Equatable {
     var shortcutOutput: CoachShortcutOutput {
         CoachShortcutOutput(
             actionStatus: isReadyForProtectedRequests ? "configured_locally" : "not_configured",
+            setupStatus: isReadyForProtectedRequests ? .configuredLocally : .needsSetup,
+            readinessStatus: isReadyForProtectedRequests ? .ready : .attentionRequired,
+            protectedVerificationStatus: isReadyForProtectedRequests ? .readyForManualReadOnly : .blockedMissingSetup,
+            writeStatus: .noWrite,
             safetyStatus: .unknown,
             readinessSummary: detail,
             workoutTitle: nil,
@@ -243,6 +247,10 @@ struct CoachReadinessReport: Codable, Equatable {
             .map { "\($0.label): \($0.detail)" }
         return CoachShortcutOutput(
             actionStatus: actionStatus,
+            setupStatus: blockers.isEmpty ? .configuredLocally : .needsSetup,
+            readinessStatus: .attentionRequired,
+            protectedVerificationStatus: blockers.isEmpty ? .deferredUntilToddDevice : .blockedMissingSetup,
+            writeStatus: .writeHeld,
             safetyStatus: .unknown,
             readinessSummary: summary,
             workoutTitle: nil,

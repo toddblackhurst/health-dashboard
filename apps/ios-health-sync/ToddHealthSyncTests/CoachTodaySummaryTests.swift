@@ -5,14 +5,19 @@ final class MockCoachURLSession: CoachURLSessioning {
     var lastRequest: URLRequest?
     var responseData: Data
     var statusCode: Int
+    var thrownError: Error?
 
-    init(responseData: Data, statusCode: Int = 200) {
+    init(responseData: Data, statusCode: Int = 200, thrownError: Error? = nil) {
         self.responseData = responseData
         self.statusCode = statusCode
+        self.thrownError = thrownError
     }
 
     func data(for request: URLRequest) async throws -> (Data, URLResponse) {
         lastRequest = request
+        if let thrownError {
+            throw thrownError
+        }
         let response = HTTPURLResponse(
             url: request.url!,
             statusCode: statusCode,
@@ -117,9 +122,17 @@ final class CoachTodaySummaryTests: XCTestCase {
         let output = summary.shortcutOutput
 
         XCTAssertEqual(output.safetyStatus, .yellow)
+        XCTAssertEqual(output.setupStatus, .configuredLocally)
+        XCTAssertEqual(output.readinessStatus, .attentionRequired)
+        XCTAssertEqual(output.protectedVerificationStatus, .verifiedReadOnly)
+        XCTAssertEqual(output.writeStatus, .noWrite)
         XCTAssertEqual(output.workoutType, .strength)
         XCTAssertTrue(output.requiresMedicalCaution)
         XCTAssertEqual(output.nextBestAction, "Log completed sets in Rack/Motra.")
+        XCTAssertTrue(output.shortcutText.contains("setup_status: configured_locally"))
+        XCTAssertTrue(output.shortcutText.contains("readiness_status: attention_required"))
+        XCTAssertTrue(output.shortcutText.contains("protected_verification_status: verified_read_only"))
+        XCTAssertTrue(output.shortcutText.contains("write_status: no_write"))
         XCTAssertTrue(output.shortcutText.contains("safety_status: yellow"))
         XCTAssertTrue(output.shortcutText.contains("primary_constraints:"))
         XCTAssertTrue(output.shortcutText.contains("Apple Health is supporting evidence only."))
@@ -154,6 +167,8 @@ final class CoachTodaySummaryTests: XCTestCase {
 
         XCTAssertEqual(review.status, "review_only")
         XCTAssertEqual(review.shortcutOutput.safetyStatus, .yellow)
+        XCTAssertEqual(review.shortcutOutput.readinessStatus, .staleOrMissing)
+        XCTAssertEqual(review.shortcutOutput.writeStatus, .noWrite)
         XCTAssertEqual(review.shortcutOutput.errorIdentifier, nil)
         XCTAssertTrue(review.conciseResult.contains("not_applied_automatically: true"))
         XCTAssertTrue(review.shortcutOutput.shortcutText.contains("next_best_action: Keep progression conservative."))
@@ -233,8 +248,12 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertEqual(output.workoutType, .strength)
         XCTAssertEqual(output.coachMemoryContext, "Use conservative density.")
         XCTAssertEqual(output.workoutDebriefContext, "Recent pain means cap load.")
+        XCTAssertEqual(output.setupStatus, .configuredLocally)
+        XCTAssertEqual(output.protectedVerificationStatus, .verifiedReadOnly)
+        XCTAssertEqual(output.writeStatus, .manualHandoffOnly)
         XCTAssertEqual(response.workoutHandoff?.manualStatus, "manual_handoff_only_no_write")
         XCTAssertTrue(output.shortcutText.contains("workout_handoff:"))
+        XCTAssertTrue(output.shortcutText.contains("write_status: manual_handoff_only_no_write"))
         XCTAssertTrue(output.shortcutText.contains("rack_garmin_status: manual_handoff_only"))
         XCTAssertTrue(output.shortcutText.contains("third_party_automation: none"))
         XCTAssertTrue(output.shortcutText.contains("Assisted Pull-Up"))
@@ -342,8 +361,13 @@ final class CoachTodaySummaryTests: XCTestCase {
 
         XCTAssertEqual(output.actionStatus, "deferred_requires_review")
         XCTAssertEqual(output.errorIdentifier, .deferredWrite)
+        XCTAssertEqual(output.setupStatus, .notApplicable)
+        XCTAssertEqual(output.readinessStatus, .deferred)
+        XCTAssertEqual(output.protectedVerificationStatus, .notRequired)
+        XCTAssertEqual(output.writeStatus, .draftOnly)
         XCTAssertTrue(output.shortcutText.contains("No production write was sent."))
         XCTAssertTrue(output.shortcutText.contains("error_identifier: deferredWrite"))
+        XCTAssertTrue(output.shortcutText.contains("write_status: draft_only_no_write"))
     }
 
     func testSafeOutputRedactsCredentialLikeValues() {
@@ -366,6 +390,9 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertFalse(redacted.contains(fakePassword))
         XCTAssertFalse(redacted.contains(fakeQueryToken))
         XCTAssertFalse(redacted.contains(fakeURLPassword))
+        XCTAssertFalse(redacted.localizedCaseInsensitiveContains("x-coach-secret"))
+        XCTAssertFalse(redacted.localizedCaseInsensitiveContains("Authorization: Bearer"))
+        XCTAssertFalse(redacted.localizedCaseInsensitiveContains("password="))
         XCTAssertTrue(redacted.contains("[redacted]"))
     }
 
@@ -380,9 +407,12 @@ final class CoachTodaySummaryTests: XCTestCase {
         let text = output.shortcutText
 
         XCTAssertEqual(output.errorIdentifier, .backendUnavailable)
+        XCTAssertEqual(output.setupStatus, .notChecked)
+        XCTAssertEqual(output.writeStatus, .noWrite)
         XCTAssertFalse(text.contains(fakeSecret))
         XCTAssertFalse(text.contains(fakeBearer))
-        XCTAssertTrue(text.contains("error_message: Request failed with x-coach-secret: [redacted]"))
+        XCTAssertTrue(text.contains("error_message: Request failed with credential: [redacted]"))
+        XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret"))
     }
 
     func testShortcutTextRedactsSensitiveFields() {
@@ -407,6 +437,9 @@ final class CoachTodaySummaryTests: XCTestCase {
         let text = output.shortcutText
 
         XCTAssertFalse(text.contains(fakeToken))
+        XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret"))
+        XCTAssertFalse(text.localizedCaseInsensitiveContains("password="))
+        XCTAssertFalse(text.localizedCaseInsensitiveContains("api_key="))
         XCTAssertTrue(text.contains("[redacted]"))
     }
 
@@ -488,7 +521,8 @@ final class CoachTodaySummaryTests: XCTestCase {
             let text = CoachShortcutOutput.failure(error: error).shortcutText
             XCTAssertFalse(text.contains(fakeSecret))
             XCTAssertTrue(text.contains("error_identifier: unauthorized"))
-            XCTAssertTrue(text.contains("x-coach-secret: [redacted]"))
+            XCTAssertTrue(text.contains("credential: [redacted]"))
+            XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret"))
         }
 
         XCTAssertEqual(session.lastRequest?.url?.host, "coach.example.test")
@@ -498,6 +532,8 @@ final class CoachTodaySummaryTests: XCTestCase {
         let missing = CoachConnectionConfiguration(apiBase: "", secret: "")
         XCTAssertEqual(missing.status.state, .notConfigured)
         XCTAssertEqual(missing.status.errorIdentifier, .notConfigured)
+        XCTAssertEqual(missing.status.shortcutOutput.setupStatus, .needsSetup)
+        XCTAssertEqual(missing.status.shortcutOutput.protectedVerificationStatus, .blockedMissingSetup)
         XCTAssertTrue(missing.status.shortcutOutput.shortcutText.contains("No secret value is included"))
 
         let missingBase = CoachConnectionConfiguration(apiBase: "", secret: "test-secret")
@@ -516,6 +552,8 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertEqual(ready.status.state, .configuredLocally)
         XCTAssertNil(ready.status.errorIdentifier)
         XCTAssertTrue(ready.status.isReadyForProtectedRequests)
+        XCTAssertEqual(ready.status.shortcutOutput.setupStatus, .configuredLocally)
+        XCTAssertEqual(ready.status.shortcutOutput.protectedVerificationStatus, .readyForManualReadOnly)
     }
 
     func testConfigurationErrorBuildsStableShortcutFailureOutput() {
@@ -524,6 +562,8 @@ final class CoachTodaySummaryTests: XCTestCase {
 
         XCTAssertEqual(output.actionStatus, "not_configured")
         XCTAssertEqual(output.errorIdentifier, .missingSecret)
+        XCTAssertEqual(output.setupStatus, .needsSetup)
+        XCTAssertEqual(output.protectedVerificationStatus, .blockedMissingSetup)
         XCTAssertTrue(output.shortcutText.contains("No production write was sent."))
         XCTAssertTrue(output.shortcutText.contains("No secret value is included"))
     }
@@ -611,6 +651,70 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(detail.contains("readiness_status: todd_device_verification_required"))
         XCTAssertTrue(detail.contains("No production write was sent."))
         XCTAssertTrue(detail.contains("direct_coach_action_write_hold: held"))
+        XCTAssertEqual(result.shortcutOutput?.setupStatus, .configuredLocally)
+        XCTAssertEqual(result.shortcutOutput?.protectedVerificationStatus, .deferredUntilToddDevice)
+        XCTAssertEqual(result.shortcutOutput?.writeStatus, .writeHeld)
+    }
+
+    func testProtectedShortcutStopsBeforeNetworkWhenSecretCleared() async throws {
+        let suiteName = "ProtectedSetupGateTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let session = MockCoachURLSession(responseData: Data())
+        let client = CoachAPIClient(session: session)
+        let workflow = MorningCoachWorkflow(
+            apiClient: client,
+            keychainStore: FakeCoachSecretStore(secret: "   "),
+            store: store
+        )
+
+        do {
+            _ = try await workflow.checkCoachSyncStatus()
+            XCTFail("Expected missing local secret to block protected read-only request")
+        } catch {
+            XCTAssertNil(session.lastRequest)
+            let output = CoachShortcutOutput.failure(error: error)
+            XCTAssertEqual(output.errorIdentifier, .missingSecret)
+            XCTAssertEqual(output.setupStatus, .needsSetup)
+            XCTAssertEqual(output.protectedVerificationStatus, .blockedMissingSetup)
+            XCTAssertTrue(output.shortcutText.contains("protected_verification_status: blocked_missing_setup"))
+        }
+    }
+
+    func testProtectedShortcutStopsBeforeNetworkWhenBaseURLInvalid() async throws {
+        let suiteName = "ProtectedInvalidBaseGateTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "not a url"
+        let session = MockCoachURLSession(responseData: Data())
+        let client = CoachAPIClient(session: session)
+        let workflow = MorningCoachWorkflow(
+            apiClient: client,
+            keychainStore: FakeCoachSecretStore(secret: "fake-local-secret"),
+            store: store
+        )
+
+        do {
+            _ = try await workflow.weeklyReview(
+                weekStart: "2026-06-08",
+                weekEnd: "2026-06-14"
+            )
+            XCTFail("Expected invalid local API base URL to block protected request")
+        } catch {
+            XCTAssertNil(session.lastRequest)
+            let output = CoachShortcutOutput.failure(error: error)
+            XCTAssertEqual(output.errorIdentifier, .missingAPIBase)
+            XCTAssertEqual(output.setupStatus, .needsSetup)
+            XCTAssertEqual(output.protectedVerificationStatus, .blockedMissingSetup)
+            XCTAssertFalse(output.shortcutText.contains("fake-local-secret"))
+        }
     }
 
     func testWeeklyReviewClientUsesReadOnlyEndpointAndSecretHeader() async throws {
@@ -692,6 +796,37 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertEqual(object?["intent"] as? String, "nutrition_check")
         XCTAssertEqual(object?["channel"] as? String, "ios-app-intent-test")
         XCTAssertEqual(response.shortcutOutput.safetyStatus, .green)
+        XCTAssertEqual(response.shortcutOutput.setupStatus, .configuredLocally)
+        XCTAssertEqual(response.shortcutOutput.protectedVerificationStatus, .verifiedReadOnly)
+        XCTAssertEqual(response.shortcutOutput.writeStatus, .noWrite)
+    }
+
+    func testNoNetworkFailureBuildsStableTypedShortcutOutput() async throws {
+        let session = MockCoachURLSession(
+            responseData: Data(),
+            thrownError: URLError(.notConnectedToInternet)
+        )
+        let client = CoachAPIClient(session: session)
+
+        do {
+            _ = try await client.getSyncStatus(
+                apiBase: "https://coach.example.test",
+                apiSecret: "fake-request-secret"
+            )
+            XCTFail("Expected mocked network outage")
+        } catch {
+            let output = CoachShortcutOutput.failure(error: error)
+            let text = output.shortcutText
+
+            XCTAssertEqual(output.errorIdentifier, .noNetwork)
+            XCTAssertEqual(output.readinessStatus, .deferred)
+            XCTAssertEqual(output.protectedVerificationStatus, .deferredUntilToddDevice)
+            XCTAssertEqual(output.writeStatus, .noWrite)
+            XCTAssertTrue(text.contains("error_identifier: noNetwork"))
+            XCTAssertTrue(text.contains("readiness_status: deferred"))
+            XCTAssertTrue(text.contains("protected_verification_status: deferred_until_todd_device"))
+            XCTAssertFalse(text.contains("fake-request-secret"))
+        }
     }
 
     func testDailyDataFreshnessReportShowsMissingSetupAndStableNextActions() throws {
@@ -715,6 +850,10 @@ final class CoachTodaySummaryTests: XCTestCase {
         let text = report.shortcutText
 
         XCTAssertEqual(report.actionStatus, "attention_required")
+        XCTAssertEqual(report.shortcutOutput.setupStatus, .needsSetup)
+        XCTAssertEqual(report.shortcutOutput.readinessStatus, .attentionRequired)
+        XCTAssertEqual(report.shortcutOutput.protectedVerificationStatus, .blockedMissingSetup)
+        XCTAssertEqual(report.shortcutOutput.writeStatus, .writeHeld)
         XCTAssertTrue(text.contains("health_ios_sync: missing"))
         XCTAssertTrue(text.contains("protected_read_only_freshness: not_configured"))
         XCTAssertTrue(text.contains("healthkit_permission: permission_required"))
@@ -751,6 +890,9 @@ final class CoachTodaySummaryTests: XCTestCase {
         )
         let text = report.shortcutText
 
+        XCTAssertEqual(report.shortcutOutput.setupStatus, .configuredLocally)
+        XCTAssertEqual(report.shortcutOutput.protectedVerificationStatus, .verifiedReadOnly)
+        XCTAssertEqual(report.shortcutOutput.writeStatus, .writeHeld)
         XCTAssertTrue(text.contains("health_ios_sync: fresh"))
         XCTAssertTrue(text.contains("coach_public_ping: fresh"))
         XCTAssertTrue(text.contains("protected_read_only_freshness: fresh"))

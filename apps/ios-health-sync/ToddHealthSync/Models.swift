@@ -126,6 +126,37 @@ enum CoachShortcutWorkoutType: String, Codable, Equatable {
     case unknown
 }
 
+enum CoachShortcutSetupStatus: String, Codable, Equatable {
+    case notChecked = "not_checked"
+    case needsSetup = "needs_setup"
+    case configuredLocally = "configured_locally"
+    case deviceBound = "device_bound"
+    case notApplicable = "not_applicable"
+}
+
+enum CoachShortcutReadinessStatus: String, Codable, Equatable {
+    case ready
+    case attentionRequired = "attention_required"
+    case staleOrMissing = "stale_or_missing"
+    case deferred
+    case unknown
+}
+
+enum CoachShortcutProtectedVerificationStatus: String, Codable, Equatable {
+    case notRequired = "not_required"
+    case blockedMissingSetup = "blocked_missing_setup"
+    case deferredUntilToddDevice = "deferred_until_todd_device"
+    case readyForManualReadOnly = "ready_for_manual_read_only"
+    case verifiedReadOnly = "verified_read_only"
+}
+
+enum CoachShortcutWriteStatus: String, Codable, Equatable {
+    case noWrite = "no_write"
+    case writeHeld = "write_held"
+    case draftOnly = "draft_only_no_write"
+    case manualHandoffOnly = "manual_handoff_only_no_write"
+}
+
 struct CoachSafeOutput {
     private static let redacted = "[redacted]"
 
@@ -152,7 +183,7 @@ struct CoachSafeOutput {
         output = replacing(
             output,
             pattern: #"\b(x-coach-secret|authorization|auth|api[_ -]?key|password|secret|token|credential)\b\s*[:=]\s*[^,\s;]+"#,
-            template: "$1: [redacted]",
+            template: "credential: [redacted]",
             options: [.caseInsensitive]
         )
         output = replacing(
@@ -201,6 +232,10 @@ struct CoachSafeOutput {
 
 struct CoachShortcutOutput: Codable, Equatable {
     let actionStatus: String
+    let setupStatus: CoachShortcutSetupStatus?
+    let readinessStatus: CoachShortcutReadinessStatus?
+    let protectedVerificationStatus: CoachShortcutProtectedVerificationStatus?
+    let writeStatus: CoachShortcutWriteStatus?
     let safetyStatus: CoachShortcutSafetyStatus
     let readinessSummary: String
     let workoutTitle: String?
@@ -218,6 +253,10 @@ struct CoachShortcutOutput: Codable, Equatable {
 
     enum CodingKeys: String, CodingKey {
         case actionStatus = "action_status"
+        case setupStatus = "setup_status"
+        case readinessStatus = "readiness_status"
+        case protectedVerificationStatus = "protected_verification_status"
+        case writeStatus = "write_status"
         case safetyStatus = "safety_status"
         case readinessSummary = "readiness_summary"
         case workoutTitle = "workout_title"
@@ -236,6 +275,10 @@ struct CoachShortcutOutput: Codable, Equatable {
 
     init(
         actionStatus: String,
+        setupStatus: CoachShortcutSetupStatus? = .notChecked,
+        readinessStatus: CoachShortcutReadinessStatus? = .unknown,
+        protectedVerificationStatus: CoachShortcutProtectedVerificationStatus? = .notRequired,
+        writeStatus: CoachShortcutWriteStatus? = .noWrite,
         safetyStatus: CoachShortcutSafetyStatus,
         readinessSummary: String,
         workoutTitle: String?,
@@ -252,6 +295,10 @@ struct CoachShortcutOutput: Codable, Equatable {
         workoutHandoff: String? = nil
     ) {
         self.actionStatus = CoachSafeOutput.redact(actionStatus)
+        self.setupStatus = setupStatus
+        self.readinessStatus = readinessStatus
+        self.protectedVerificationStatus = protectedVerificationStatus
+        self.writeStatus = writeStatus
         self.safetyStatus = safetyStatus
         self.readinessSummary = CoachSafeOutput.redact(readinessSummary)
         self.workoutTitle = workoutTitle.map(CoachSafeOutput.redact)
@@ -271,6 +318,10 @@ struct CoachShortcutOutput: Codable, Equatable {
     var shortcutText: String {
         var lines: [String] = [
             "status: \(CoachSafeOutput.redact(actionStatus))",
+            "setup_status: \(setupStatus?.rawValue ?? CoachShortcutSetupStatus.notChecked.rawValue)",
+            "readiness_status: \(readinessStatus?.rawValue ?? CoachShortcutReadinessStatus.unknown.rawValue)",
+            "protected_verification_status: \(protectedVerificationStatus?.rawValue ?? CoachShortcutProtectedVerificationStatus.notRequired.rawValue)",
+            "write_status: \(writeStatus?.rawValue ?? CoachShortcutWriteStatus.noWrite.rawValue)",
             "safety_status: \(safetyStatus.rawValue)",
             "readiness_summary: \(CoachSafeOutput.redact(readinessSummary))"
         ]
@@ -319,6 +370,10 @@ struct CoachShortcutOutput: Codable, Equatable {
     ) -> CoachShortcutOutput {
         CoachShortcutOutput(
             actionStatus: "deferred_requires_review",
+            setupStatus: .notApplicable,
+            readinessStatus: .deferred,
+            protectedVerificationStatus: .notRequired,
+            writeStatus: .draftOnly,
             safetyStatus: .unknown,
             readinessSummary: readinessSummary,
             workoutTitle: nil,
@@ -344,10 +399,17 @@ struct CoachShortcutOutput: Codable, Equatable {
         }
 
         let apiError = error as? CoachAPIError
+        let errorIdentifier = Self.errorIdentifier(for: error)
         return CoachShortcutOutput(
             actionStatus: "failed",
+            setupStatus: .notChecked,
+            readinessStatus: errorIdentifier == .noNetwork ? .deferred : .unknown,
+            protectedVerificationStatus: errorIdentifier == .noNetwork ? .deferredUntilToddDevice : .notRequired,
+            writeStatus: .noWrite,
             safetyStatus: .unknown,
-            readinessSummary: "Coach request could not complete.",
+            readinessSummary: errorIdentifier == .noNetwork
+                ? "Coach request could not complete because network access is unavailable."
+                : "Coach request could not complete.",
             workoutTitle: nil,
             workoutType: .unknown,
             primaryConstraints: ["No secret or raw payload is included in this result."],
@@ -357,9 +419,25 @@ struct CoachShortcutOutput: Codable, Equatable {
             requiresMedicalCaution: false,
             sourceFreshness: nil,
             lastSync: nil,
-            errorIdentifier: apiError?.shortcutErrorCode ?? .backendUnavailable,
+            errorIdentifier: apiError?.shortcutErrorCode ?? errorIdentifier,
             errorMessage: CoachSafeOutput.errorMessage(error)
         )
+    }
+
+    private static func errorIdentifier(for error: Error) -> CoachShortcutErrorCode {
+        if let apiError = error as? CoachAPIError {
+            return apiError.shortcutErrorCode
+        }
+        let nsError = error as NSError
+        if nsError.domain == NSURLErrorDomain {
+            switch URLError.Code(rawValue: nsError.code) {
+            case .notConnectedToInternet, .networkConnectionLost, .cannotFindHost, .cannotConnectToHost, .dnsLookupFailed, .timedOut:
+                return .noNetwork
+            default:
+                return .backendUnavailable
+            }
+        }
+        return .backendUnavailable
     }
 }
 
@@ -440,6 +518,10 @@ struct CoachSyncStatusSummary {
         let warnings = warningLines
         return CoachShortcutOutput(
             actionStatus: warnings.isEmpty ? "ok" : "attention_required",
+            setupStatus: .configuredLocally,
+            readinessStatus: warnings.isEmpty ? .ready : .staleOrMissing,
+            protectedVerificationStatus: .verifiedReadOnly,
+            writeStatus: .noWrite,
             safetyStatus: .unknown,
             readinessSummary: "Coach source freshness\(scorePct.map { " \($0)%" } ?? "") for \(date ?? "today").",
             workoutTitle: nil,
@@ -598,6 +680,10 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             .map { "\($0.label): \($0.detail) Next: \($0.nextAction)" }
         return CoachShortcutOutput(
             actionStatus: actionStatus,
+            setupStatus: sources.contains { $0.status == .notConfigured } ? .needsSetup : .configuredLocally,
+            readinessStatus: actionStatus == "attention_required" ? .attentionRequired : .ready,
+            protectedVerificationStatus: Self.protectedVerificationStatus(from: sources),
+            writeStatus: .writeHeld,
             safetyStatus: .unknown,
             readinessSummary: summary,
             workoutTitle: nil,
@@ -613,6 +699,16 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             errorIdentifier: sources.contains { $0.status == .notConfigured } ? .notConfigured : nil,
             errorMessage: nil
         )
+    }
+
+    private static func protectedVerificationStatus(from sources: [DailyDataFreshnessSource]) -> CoachShortcutProtectedVerificationStatus {
+        if sources.contains(where: { $0.id == "protected_read_only_freshness" && $0.status == .fresh }) {
+            return .verifiedReadOnly
+        }
+        if sources.contains(where: { $0.id == "protected_read_only_freshness" && $0.status == .notConfigured }) {
+            return .blockedMissingSetup
+        }
+        return .deferredUntilToddDevice
     }
 
     static func local(
@@ -855,6 +951,10 @@ struct CoachTodaySummary {
         let constraints = Array(safetyGuardrails.prefix(6))
         return CoachShortcutOutput(
             actionStatus: "ok",
+            setupStatus: .configuredLocally,
+            readinessStatus: constraints.isEmpty ? .ready : .attentionRequired,
+            protectedVerificationStatus: .verifiedReadOnly,
+            writeStatus: .noWrite,
             safetyStatus: Self.safetyStatus(from: dailyCall, constraints: constraints),
             readinessSummary: dailyCall ?? "Coach today returned without a daily call.",
             workoutTitle: todaysPlan.first,
@@ -975,6 +1075,10 @@ struct CoachWeeklyReviewSummary {
     var shortcutOutput: CoachShortcutOutput {
         CoachShortcutOutput(
             actionStatus: status ?? "review_only",
+            setupStatus: .configuredLocally,
+            readinessStatus: missingOrStaleDataWarnings.isEmpty ? .ready : .staleOrMissing,
+            protectedVerificationStatus: .verifiedReadOnly,
+            writeStatus: .noWrite,
             safetyStatus: overallCall.flatMap { call in
                 if call.localizedCaseInsensitiveContains("red") { return .red }
                 if call.localizedCaseInsensitiveContains("yellow") { return .yellow }
@@ -1293,6 +1397,10 @@ struct CoachDirectActionResponseSummary {
     var shortcutOutput: CoachShortcutOutput {
         CoachShortcutOutput(
             actionStatus: "ok",
+            setupStatus: .configuredLocally,
+            readinessStatus: riskFlags.isEmpty ? .ready : .attentionRequired,
+            protectedVerificationStatus: .verifiedReadOnly,
+            writeStatus: workoutHandoff == nil ? .noWrite : .manualHandoffOnly,
             safetyStatus: Self.safetyStatus(from: topLineCall ?? reply, riskFlags: riskFlags),
             readinessSummary: topLineCall ?? reply,
             workoutTitle: workoutTitle,

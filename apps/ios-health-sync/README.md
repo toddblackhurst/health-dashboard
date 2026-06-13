@@ -22,6 +22,8 @@ Daily Data Freshness UX v1 adds a local no-write freshness check for app and Sho
 
 Workout Handoff Formatting v1 adds a stable `workout_handoff` section to safe Shortcut output when `Build Today's Workout` returns a structured workout plan. The handoff is designed for manual Rack/Motra and Garmin use: title, workout type, safety status, constraints, blocks, exercises, sets/reps/rest, equipment assumptions, Rack entry lines, Garmin manual-start note, and explicit `manual_handoff_only_no_write` status. It does not automate Garmin, Rack, Motra, World Gym, Apple Health workouts, browser sessions, or any third-party app.
 
+Typed Shortcut Output Hardening v1 adds stable status fields to `CoachShortcutOutput`: `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status`. These fields let Siri/Shortcuts-facing text distinguish missing setup, local configuration, device-bound protected verification, no-network deferment, no-write read-only results, draft-only outputs, write holds, and manual workout handoffs without exposing secrets or raw payloads.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -67,6 +69,17 @@ These direct Coach actions can log coach messages server-side. The draft debrief
 `Build Today's Workout` may return a Shortcut-safe `workout_handoff` section. Treat it as a manual guide only: copy or follow the Rack/Motra entry lines by hand, start/save the matching Garmin workout manually, and keep completed strength history anchored in Rack/Motra after the session.
 
 If the Coach API base URL or local secret is missing, protected intents return a structured `not_configured` result with stable error identifiers such as `notConfigured`, `missingAPIBase`, or `missingSecret`. They do not make the protected network request in that state.
+
+Shortcut output should keep these stable lines available for Todd-assisted testing:
+
+```text
+setup_status: ...
+readiness_status: ...
+protected_verification_status: ...
+write_status: ...
+```
+
+No-network failures are represented with the stable `noNetwork` error identifier and a deferred protected-verification status. Draft-only and workout handoff paths must continue to say that no production write or third-party automation occurred.
 
 ## Shortcuts
 
