@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
-- PR #55, App Intent Execution Evidence Packet v1, is merged after PR #53.
-- Automatic Netlify production deploy `6a2d13f1e1d662000820aa50` is ready for commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
+- Main is at `e929f50e9681cded3f8fb03ec9c03ebb249d75de`.
+- PR #59, Supabase Readiness Diagnostic Plan v1, is merged after PR #58.
+- Automatic Netlify production deploy `6a2d1dd9cb800e000843ed68` is ready for commit `e929f50e9681cded3f8fb03ec9c03ebb249d75de`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -120,11 +120,11 @@ Expected verification: docs-only tests, `git diff --check`, `git diff -- HEALTH_
 
 Boundaries: no protected route calls by Codex, no secret handling, no production writes, no Supabase actions, no Netlify/env/settings changes, no physical iPhone setup, no signing/entitlement/capability changes, and no third-party automation.
 
-### Current: Supabase Readiness Diagnostic Plan
+### Completed: Supabase Readiness Diagnostic Plan
 
 Current working document: `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`.
 
-Goal: create a docs-only diagnostic plan for the `coach_observations` schema/cache readiness warning without inspecting production schema, running SQL, applying migrations, refreshing schema cache, or performing admin actions unless separately approved.
+Result: PR #59 created a docs-only diagnostic plan for the `coach_observations` schema/cache readiness warning without inspecting production schema, running SQL, applying migrations, refreshing schema cache, or performing admin actions.
 
 Files likely involved: `docs/implementation/READINESS_GAP_INVENTORY.md`, `COACH_CURRENT_STATE.md`, and a new Supabase readiness diagnostic plan document.
 

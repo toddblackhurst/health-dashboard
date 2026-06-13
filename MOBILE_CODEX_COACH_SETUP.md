@@ -103,7 +103,7 @@ App Intent Execution Evidence Packet v1 is merged/deployed as PR #55 at main com
 
 Write-Readiness Boundary Plan v1 is merged/deployed as PR #57 at main commit `0650c64f0ade249fb1b8fb46cb638553641f2cf9` with Netlify production deploy `6a2d19ccde8412000856cc98` and healthy public ping. It is the required planning layer before moving any held path from no-write/draft-only/manual-handoff-only/write-held into a live production write. It inventories Coach Memory, workout debrief, nutrition/post-workout, BP/intake, Apple Health sync, GPT Action, Supabase/admin, and future third-party write boundaries. Physical iPhone read-only verification must pass before any live write phase.
 
-Next safe repo-only planning task: Supabase Readiness Diagnostic Plan v1, docs-only unless separately approved for production/admin access.
+Supabase Readiness Diagnostic Plan v1 is merged/deployed as PR #59 at main commit `e929f50e9681cded3f8fb03ec9c03ebb249d75de` with Netlify production deploy `6a2d1dd9cb800e000843ed68` and healthy public ping. It is docs-only and does not authorize production Supabase inspection, SQL, migration application, schema-cache refresh, protected route calls, write actions, Netlify/env/GPT Action setting changes, secret handling, or physical-device setup. The next readiness step is either Todd-assisted physical iPhone protected read-only verification or a separately approved Supabase production/admin diagnostic boundary.
 
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 

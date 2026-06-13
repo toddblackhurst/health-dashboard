@@ -6,9 +6,10 @@ Purpose: define a future diagnostic path for the `coach_observations` production
 
 ## Current Verified Baseline
 
-- Main baseline for this plan: `26adc6a1d6f498b1ee1bb2a23f94d6d989b11d7a`.
-- PR #58 is merged and deployed after PR #57 Write-Readiness Boundary Plan v1.
-- Automatic Netlify production deploy `6a2d1ace65a6680008484201` is ready for main commit `26adc6a1d6f498b1ee1bb2a23f94d6d989b11d7a`.
+- Main baseline for this plan after merge: `e929f50e9681cded3f8fb03ec9c03ebb249d75de`.
+- PR #59 is merged and deployed after PR #58 current-state refresh.
+- Automatic Netlify production deploy `6a2d1dd9cb800e000843ed68` is ready for main commit `e929f50e9681cded3f8fb03ec9c03ebb249d75de`.
+- GitHub Pages run `27462472861` succeeded for the merge commit.
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes are skipped by Codex and GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains protected and must remain unchanged.
