@@ -6,7 +6,7 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit after PR #34 Workout Handoff Formatting v1: `1747f86591317c0b4643daa8c85cd9f6267d2bb6`.
+- Main commit after PR #35 state refresh: `3208c188bce6e70ee94cf984d200a3d935f840ff`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
@@ -15,8 +15,9 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 - PR #32, `Add daily data freshness UX`, is merged.
 - PR #33, `Refresh current state after PR32 merge`, is merged.
 - PR #34, `Add workout handoff formatting`, is merged.
-- Automatic Netlify production deploy for commit `1747f86591317c0b4643daa8c85cd9f6267d2bb6` is ready.
-- Production deploy id: `6a2cd96d93dd5d000826def2`.
+- PR #35, `Refresh state after PR34 merge`, is merged.
+- Automatic Netlify production deploy for commit `3208c188bce6e70ee94cf984d200a3d935f840ff` is ready.
+- Production deploy id: `6a2cdbbc9cffe8000920fc80`.
 - Public production ping is healthy:
 
 ```text
@@ -24,7 +25,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #34 post-merge check because they require `x-coach-secret`.
+- Protected read-only routes were not called in the PR #35 post-merge check because they require `x-coach-secret`.
 - `HEALTH_DATABASE.json` remained unchanged.
 
 ## Hard Boundaries
@@ -39,7 +40,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `1747f86591317c0b4643daa8c85cd9f6267d2bb6`.
+1. Confirm main is at or after `3208c188bce6e70ee94cf984d200a3d935f840ff`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
@@ -79,6 +80,8 @@ These steps are device-bound and must happen with Todd present.
     - `Check Coach Sync Status`, or
     - in-app `Morning Coach` if Apple Health sync is also intended.
 16. Read back the result. It should include source freshness and no secret value.
+
+Shortcut/App Intent typed output should include stable status lines such as `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status`. For missing setup, protected requests must stop before network and show a blocked setup status. For draft-only or manual workout handoff paths, `write_status` should show the no-write or manual-only state.
 
 ## Siri, Shortcuts, Action Button, And Personal Automation
 
@@ -181,6 +184,8 @@ Automation not running unattended:
 | Coach readiness check | Local readiness gate | Reports local setup, public ping status, protected read-only gate, Health/Siri/Action Button/Automation boundaries, write hold, and draft-only readiness without writing | Repo/simulator safe with mocks |
 | Daily data freshness check | Local freshness gate | Reports local Apple Health sync freshness, public ping state if safely checked/mocked, protected-readiness deferment, manual source deferment, BP action need, and no-write draft-only status without protected networking | Repo/simulator safe with mocks |
 | Workout handoff output | Mocked direct Coach workout response | Returns redacted `workout_handoff` with manual Rack/Garmin notes and `manual_handoff_only_no_write`; no third-party automation or production write | Repo/simulator safe with mocks |
+| Typed Shortcut status fields | Setup/readiness/freshness/workout/failure outputs | Includes stable `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status` lines without secrets | Repo/simulator safe with mocks |
+| No network | Mocked offline client failure | Returns stable `noNetwork` error with protected verification deferred and no raw secret/config value | Repo/simulator safe with mocks |
 | Draft workout debrief | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |
 | Draft coach note | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |
 | Draft BP intake | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |
