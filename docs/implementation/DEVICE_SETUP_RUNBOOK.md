@@ -6,14 +6,15 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit before PR #32 Daily Data Freshness UX: `46884d128c554f05e94239c28cd803d133cfcaba`.
+- Main commit after PR #32 Daily Data Freshness UX: `42d83848e8937136d7b2a579c2f4eaa4104a70c8`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
 - PR #30, `Add coach readiness automation gate`, is merged.
 - PR #31, `Refresh current state after PR30 merge`, is merged.
-- Automatic Netlify production deploy for commit `46884d128c554f05e94239c28cd803d133cfcaba` is ready.
-- Production deploy id: `6a2ccfa10c7d490008042094`.
+- PR #32, `Add daily data freshness UX`, is merged.
+- Automatic Netlify production deploy for commit `42d83848e8937136d7b2a579c2f4eaa4104a70c8` is ready.
+- Production deploy id: `6a2cd39f3841b20008699559`.
 - Public production ping is healthy:
 
 ```text
@@ -21,7 +22,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #29 post-merge check because they require `x-coach-secret`.
+- Protected read-only routes were not called in the PR #32 post-merge check because they require `x-coach-secret`.
 - `HEALTH_DATABASE.json` remained unchanged.
 
 ## Hard Boundaries
@@ -36,7 +37,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `46884d128c554f05e94239c28cd803d133cfcaba`.
+1. Confirm main is at or after `42d83848e8937136d7b2a579c2f4eaa4104a70c8`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
