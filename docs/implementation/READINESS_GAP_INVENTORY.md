@@ -6,8 +6,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main was clean at `42d83848e8937136d7b2a579c2f4eaa4104a70c8` after PR #32 merge.
-- Full local Node test suite passed on 2026-06-13 before PR #32 merge: `node --test tests/*.test.mjs` -> `97/97`.
+- Repo main was clean at `a6d07b2cccc9b33e270fe4d5ce4406628d6fbcda` after PR #33 merge.
+- Full local Node test suite passed on 2026-06-13 before PR #33 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
@@ -15,7 +15,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - PR #30 Coach Readiness Status and Automation Gate v1 merged and production deployed automatically from main.
 - PR #31 Current State Refresh merged and production deployed automatically from main.
 - PR #32 Daily Data Freshness UX v1 merged and production deployed automatically from main.
-- Automatic Netlify production deploy for PR #32 merge commit `42d83848e8937136d7b2a579c2f4eaa4104a70c8` is ready: deploy id `6a2cd39f3841b20008699559`, published at `2026-06-13T03:51:07.178Z`, manual deploy `false`.
+- PR #33 Current State Refresh after PR #32 merged and production deployed automatically from main.
+- Automatic Netlify production deploy for PR #33 merge commit `a6d07b2cccc9b33e270fe4d5ce4406628d6fbcda` is ready: deploy id `6a2cd544af6864000862aa9c`, published at `2026-06-13T03:58:08.084Z`, manual deploy `false`.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
@@ -26,6 +27,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - iPhone Coach Setup UX Readiness v1 is merged. It adds native setup state, local API base/Keychain preflight checks, and non-secret Shortcut setup failures before protected requests run.
 - iOS Secret Redaction and Shortcut Output Safety v1 is merged. It redacts credential-like values from Shortcut/App Intent output, visible app status, stored readbacks, and exposed errors.
 - Daily Data Freshness UX v1 is merged. It adds a local no-write freshness report for Apple Health/iOS sync freshness, public ping state when safely checked or mocked, protected source freshness deferment, manual Garmin/Rack/Motra/nutrition/sleep/body-source deferment, BP action need, and draft-only write hold.
+- Workout Handoff Formatting v1 is the current repo-only candidate: mocked iOS workout output should expose a redacted `workout_handoff` for manual Rack/Garmin use while preserving no-write and no-third-party-automation boundaries.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
@@ -123,7 +125,8 @@ Status: workout output is Rack-first and Garmin-aware, but direct app automation
 
 Safe Codex work:
 
-- Improve copy-friendly workout handoff fields.
+- Improve copy-friendly workout handoff fields for title, session type, safety status, constraints, blocks, exercises, sets/reps/rest, equipment, Rack entry lines, Garmin manual-start notes, and one next action.
+- Keep handoff output redacted, Shortcut-friendly, and explicit that it is `manual_handoff_only_no_write`.
 - Keep planned workout handoff separate from completed-history import.
 - Add tests for output shape and source hierarchy.
 
@@ -150,6 +153,6 @@ Rules:
 
 1. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
 2. Supabase Readiness Diagnostic Plan: document and, only if separately approved, inspect production schema/cache state for `coach_observations` without applying migrations.
-3. Rack/Garmin Handoff v1: improve generated workout handoff format and tests without automating third-party app entry.
+3. Rack/Garmin Handoff v1: after the current candidate lands, evaluate whether the manual handoff needs a typed Shortcut entity or app view before any physical-device setup.
 4. iOS Freshness Output Hardening: after Daily Data Freshness UX lands, consider typed App Intent result models or future entities for `SyncStatus` without adding production writes.
 5. iOS Secret-Redaction Test Expansion: add deeper local tests for error text, Shortcut output, and future entity/widget strings without using real secrets.

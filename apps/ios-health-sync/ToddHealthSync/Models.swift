@@ -214,6 +214,7 @@ struct CoachShortcutOutput: Codable, Equatable {
     let lastSync: String?
     let errorIdentifier: CoachShortcutErrorCode?
     let errorMessage: String?
+    let workoutHandoff: String?
 
     enum CodingKeys: String, CodingKey {
         case actionStatus = "action_status"
@@ -230,6 +231,41 @@ struct CoachShortcutOutput: Codable, Equatable {
         case lastSync = "last_sync"
         case errorIdentifier = "error_identifier"
         case errorMessage = "error_message"
+        case workoutHandoff = "workout_handoff"
+    }
+
+    init(
+        actionStatus: String,
+        safetyStatus: CoachShortcutSafetyStatus,
+        readinessSummary: String,
+        workoutTitle: String?,
+        workoutType: CoachShortcutWorkoutType,
+        primaryConstraints: [String],
+        coachMemoryContext: String?,
+        workoutDebriefContext: String?,
+        nextBestAction: String?,
+        requiresMedicalCaution: Bool,
+        sourceFreshness: String?,
+        lastSync: String?,
+        errorIdentifier: CoachShortcutErrorCode?,
+        errorMessage: String?,
+        workoutHandoff: String? = nil
+    ) {
+        self.actionStatus = CoachSafeOutput.redact(actionStatus)
+        self.safetyStatus = safetyStatus
+        self.readinessSummary = CoachSafeOutput.redact(readinessSummary)
+        self.workoutTitle = workoutTitle.map(CoachSafeOutput.redact)
+        self.workoutType = workoutType
+        self.primaryConstraints = primaryConstraints.map(CoachSafeOutput.redact)
+        self.coachMemoryContext = coachMemoryContext.map(CoachSafeOutput.redact)
+        self.workoutDebriefContext = workoutDebriefContext.map(CoachSafeOutput.redact)
+        self.nextBestAction = nextBestAction.map(CoachSafeOutput.redact)
+        self.requiresMedicalCaution = requiresMedicalCaution
+        self.sourceFreshness = sourceFreshness.map(CoachSafeOutput.redact)
+        self.lastSync = lastSync.map(CoachSafeOutput.redact)
+        self.errorIdentifier = errorIdentifier
+        self.errorMessage = errorMessage.map(CoachSafeOutput.redact)
+        self.workoutHandoff = workoutHandoff.map(CoachSafeOutput.redact)
     }
 
     var shortcutText: String {
@@ -254,6 +290,10 @@ struct CoachShortcutOutput: Codable, Equatable {
         }
         if let nextBestAction, !nextBestAction.isEmpty {
             lines.append("next_best_action: \(CoachSafeOutput.redact(nextBestAction))")
+        }
+        if let workoutHandoff, !workoutHandoff.isEmpty {
+            lines.append("workout_handoff:")
+            lines.append(CoachSafeOutput.redact(workoutHandoff))
         }
         lines.append("requires_medical_caution: \(requiresMedicalCaution)")
         if let sourceFreshness, !sourceFreshness.isEmpty {
@@ -987,6 +1027,235 @@ struct CoachWeeklyReviewSummary {
     }
 }
 
+struct CoachWorkoutHandoff: Codable, Equatable {
+    let title: String?
+    let workoutType: CoachShortcutWorkoutType
+    let safetyStatus: CoachShortcutSafetyStatus
+    let readinessSummary: String?
+    let constraints: [String]
+    let planDetails: [String]
+    let blocks: [CoachWorkoutHandoffBlock]
+    let rackEntryLines: [String]
+    let equipmentAssumptions: [String]
+    let nextBestAction: String
+    let manualStatus: String
+
+    var shortcutText: String {
+        var lines: [String] = [
+            "manual_status: \(manualStatus)",
+            "rack_garmin_status: manual_handoff_only",
+            "third_party_automation: none"
+        ]
+        if let title, !title.isEmpty {
+            lines.append("workout_title: \(CoachSafeOutput.redact(title))")
+        }
+        lines.append("workout_type: \(workoutType.rawValue)")
+        lines.append("safety_status: \(safetyStatus.rawValue)")
+        if let readinessSummary, !readinessSummary.isEmpty {
+            lines.append("readiness_summary: \(CoachSafeOutput.redact(readinessSummary))")
+        }
+        if !constraints.isEmpty {
+            lines.append("constraints:")
+            lines.append(contentsOf: constraints.prefix(5).map { "- \(CoachSafeOutput.redact($0))" })
+        }
+        if !planDetails.isEmpty {
+            lines.append("plan_details:")
+            lines.append(contentsOf: planDetails.prefix(8).map { "- \(CoachSafeOutput.redact($0))" })
+        }
+        if !blocks.isEmpty {
+            lines.append("manual_workout_blocks:")
+            lines.append(contentsOf: blocks.prefix(5).flatMap { $0.lines })
+        }
+        if !rackEntryLines.isEmpty {
+            lines.append("rack_manual_entry:")
+            lines.append(contentsOf: rackEntryLines.prefix(8).map { "- \(CoachSafeOutput.redact($0))" })
+        }
+        if !equipmentAssumptions.isEmpty {
+            lines.append("equipment_assumptions:")
+            lines.append(contentsOf: equipmentAssumptions.prefix(6).map { "- \(CoachSafeOutput.redact($0))" })
+        }
+        lines.append("garmin_manual_entry: Start and save the matching Garmin workout manually; Garmin remains physiology/training-load context.")
+        lines.append("next_best_action: \(CoachSafeOutput.redact(nextBestAction))")
+        lines.append("No third-party app entry was automated.")
+        lines.append("No production write was sent.")
+        return lines.joined(separator: "\n")
+    }
+
+    static func build(
+        workoutPlan: [String: Any]?,
+        topLineCall: String?,
+        nextActions: [String],
+        riskFlags: [String]
+    ) -> CoachWorkoutHandoff? {
+        guard let workoutPlan else { return nil }
+
+        let title = workoutPlan.stringValue("top_line")
+            ?? workoutPlan.stringValue("session_type")
+            ?? workoutPlan.stringValue("name")
+            ?? workoutPlan.stringValue("title")
+        let workoutType = CoachTodaySummary.workoutType(from: title ?? workoutPlan.stringValue("session_type"))
+        let safetyStatus = CoachDirectActionResponseSummary.safetyStatus(
+            from: topLineCall ?? title ?? "Workout handoff",
+            riskFlags: riskFlags + workoutPlan.stringArray("guardrails")
+        )
+        let blocks = workoutPlan.dictionaryArray("blocks").map(CoachWorkoutHandoffBlock.init(dictionary:))
+        let planDetails = Self.planDetails(from: workoutPlan)
+        let rackEntryLines = workoutPlan.stringArray("rack_entry_lines")
+        let equipmentAssumptions = Array(
+            Set(
+                blocks
+                    .flatMap(\.exercises)
+                    .compactMap(\.equipment)
+                    .filter { !$0.isEmpty }
+            )
+        ).sorted()
+        let nextBestAction = nextActions.first
+            ?? workoutPlan.stringArray("what_to_track").first
+            ?? "Review this handoff, then manually enter completed sets in Rack/Motra and start the matching Garmin workout."
+
+        return CoachWorkoutHandoff(
+            title: title,
+            workoutType: workoutType,
+            safetyStatus: safetyStatus,
+            readinessSummary: topLineCall,
+            constraints: riskFlags + workoutPlan.stringArray("guardrails"),
+            planDetails: planDetails,
+            blocks: blocks,
+            rackEntryLines: rackEntryLines,
+            equipmentAssumptions: equipmentAssumptions,
+            nextBestAction: nextBestAction,
+            manualStatus: "manual_handoff_only_no_write"
+        )
+    }
+
+    private static func planDetails(from workoutPlan: [String: Any]) -> [String] {
+        [
+            workoutPlan.stringValue("environment").map { "environment: \($0)" },
+            workoutPlan.stringValue("floor_plan").map { "floor_plan: \($0)" },
+            workoutPlan.stringValue("target_minutes").map { "target_minutes: \($0)" },
+            workoutPlan.numberArrayText("time_range_min").map { "time_range_min: \($0)" },
+            workoutPlan.stringValue("intensity").map { "intensity: \($0)" },
+            workoutPlan.stringValue("post_workout_debrief_prompt").map { "post_workout_debrief_prompt: \($0)" }
+        ].compactMap { $0 }
+    }
+}
+
+struct CoachWorkoutHandoffBlock: Codable, Equatable {
+    let name: String
+    let target: String?
+    let floor: String?
+    let status: String?
+    let estimatedMinutes: String?
+    let exercises: [CoachWorkoutHandoffExercise]
+
+    var lines: [String] {
+        let detailText = [
+            target,
+            floor.map { "floor: \($0)" },
+            status.map { "status: \($0)" },
+            estimatedMinutes.map { "estimated_min: \($0)" }
+        ]
+            .compactMap { $0 }
+            .map(CoachSafeOutput.redact)
+            .joined(separator: " | ")
+        let suffix = detailText.isEmpty ? "" : ": \(detailText)"
+        var blockLines = ["- \(CoachSafeOutput.redact(name))\(suffix)"]
+        blockLines.append(contentsOf: exercises.prefix(6).map { "  - \($0.line)" })
+        return blockLines
+    }
+
+    init(dictionary: [String: Any]) {
+        self.name = dictionary.stringValue("label")
+            ?? dictionary.stringValue("name")
+            ?? dictionary.stringValue("id")
+            ?? "Workout block"
+        self.target = dictionary.stringValue("target")
+            ?? dictionary.stringValue("description")
+            ?? dictionary.stringValue("duration")
+        self.floor = dictionary.stringValue("floor")
+        self.status = dictionary.stringValue("status")
+        self.estimatedMinutes = dictionary.stringValue("estimated_min")
+        self.exercises = dictionary.dictionaryArray("exercises").map(CoachWorkoutHandoffExercise.init(dictionary:))
+    }
+}
+
+struct CoachWorkoutHandoffExercise: Codable, Equatable {
+    let name: String
+    let prescription: String?
+    let equipment: String?
+    let floor: String?
+    let trackingApp: String?
+    let note: String?
+    let safetyModification: String?
+    let rackEntryLine: String?
+
+    var line: String {
+        [
+            CoachSafeOutput.redact(name),
+            prescription.map(CoachSafeOutput.redact),
+            trackingApp.map { "tracking: \(CoachSafeOutput.redact($0))" },
+            equipment.map { "equipment: \(CoachSafeOutput.redact($0))" },
+            floor.map { "floor: \(CoachSafeOutput.redact($0))" },
+            note.map { "note: \(CoachSafeOutput.redact($0))" },
+            safetyModification.map { "modify: \(CoachSafeOutput.redact($0))" },
+            rackEntryLine.map { "Rack: \(CoachSafeOutput.redact($0))" }
+        ]
+            .compactMap { $0 }
+            .joined(separator: " | ")
+    }
+
+    init(dictionary: [String: Any]) {
+        self.name = dictionary.stringValue("rack_motra_name")
+            ?? dictionary.stringValue("app_entry_name")
+            ?? dictionary.stringValue("rack_name")
+            ?? dictionary.stringValue("motra_name")
+            ?? dictionary.stringValue("name")
+            ?? "Exercise"
+        self.prescription = dictionary.stringValue("prescription_text")
+            ?? Self.prescriptionText(from: dictionary)
+        self.equipment = dictionary.stringValue("equipment")
+        self.floor = dictionary.stringValue("floor")
+        self.trackingApp = dictionary.stringValue("tracking_app")
+        self.note = dictionary.stringValue("note")
+        self.safetyModification = dictionary.stringValue("safety_modification")
+        self.rackEntryLine = dictionary.stringValue("rack_entry_line")
+    }
+
+    private static func prescriptionText(from dictionary: [String: Any]) -> String? {
+        let prescription = dictionary["prescription"] as? [String: Any]
+        let sets = dictionary.stringValue("sets") ?? prescription?.stringValue("sets")
+        let reps = dictionary.stringValue("reps") ?? prescription?.stringValue("reps")
+        let load = dictionary.stringValue("load") ?? prescription?.stringValue("load")
+        let rest = dictionary.stringValue("rest") ?? prescription?.stringValue("rest")
+        let duration = dictionary.stringValue("duration") ?? dictionary.stringValue("duration_min") ?? prescription?.stringValue("duration")
+        let rpe = dictionary.stringValue("rpe") ?? dictionary.stringValue("RPE") ?? prescription?.stringValue("rpe")
+        let intensity = dictionary.stringValue("intensity") ?? prescription?.stringValue("intensity")
+
+        var pieces: [String] = []
+        if let sets, let reps {
+            pieces.append("\(sets) x \(reps)")
+        } else if let reps {
+            pieces.append(reps)
+        }
+        if let load {
+            pieces.append(load)
+        }
+        if let rest {
+            pieces.append("rest \(rest)")
+        }
+        if let duration {
+            pieces.append("duration \(duration)")
+        }
+        if let rpe {
+            pieces.append("RPE \(rpe)")
+        }
+        if let intensity {
+            pieces.append("intensity \(intensity)")
+        }
+        return pieces.isEmpty ? nil : pieces.joined(separator: "; ")
+    }
+}
+
 struct CoachDirectActionResponseSummary {
     let action: String
     let reply: String
@@ -997,6 +1266,7 @@ struct CoachDirectActionResponseSummary {
     let workoutType: CoachShortcutWorkoutType
     let coachMemorySummary: String?
     let workoutDebriefSummary: String?
+    let workoutHandoff: CoachWorkoutHandoff?
 
     var conciseResult: String {
         var lines: [String] = ["Coach \(action):"]
@@ -1011,6 +1281,10 @@ struct CoachDirectActionResponseSummary {
         }
         if let workoutTitle {
             lines.append("workout_title: \(workoutTitle)")
+        }
+        if let workoutHandoff {
+            lines.append("workout_handoff:")
+            lines.append(workoutHandoff.shortcutText)
         }
         lines.append("Apple Health is supporting evidence only.")
         return lines.joined(separator: "\n")
@@ -1031,7 +1305,8 @@ struct CoachDirectActionResponseSummary {
             sourceFreshness: nil,
             lastSync: nil,
             errorIdentifier: nil,
-            errorMessage: nil
+            errorMessage: nil,
+            workoutHandoff: workoutHandoff?.shortcutText
         )
     }
 
@@ -1063,11 +1338,18 @@ struct CoachDirectActionResponseSummary {
             workoutTitle: workoutTitle,
             workoutType: CoachTodaySummary.workoutType(from: workoutTitle),
             coachMemorySummary: memory?.stringValue("summary") ?? memory?.stringArray("memory_warnings").first,
-            workoutDebriefSummary: debrief?.stringValue("summary") ?? debrief?.stringArray("safety_warnings").first
+            workoutDebriefSummary: debrief?.stringValue("summary") ?? debrief?.stringArray("safety_warnings").first,
+            workoutHandoff: CoachWorkoutHandoff.build(
+                workoutPlan: workoutPlan,
+                topLineCall: decision.stringValue("top_line_call"),
+                nextActions: decision.stringArray("next_actions"),
+                riskFlags: decision.stringArray("risk_flags")
+                    + (dailySummary?.stringArray("safety_guardrails") ?? [])
+            )
         )
     }
 
-    private static func safetyStatus(from text: String, riskFlags: [String]) -> CoachShortcutSafetyStatus {
+    static func safetyStatus(from text: String, riskFlags: [String]) -> CoachShortcutSafetyStatus {
         let joined = ([text] + riskFlags).joined(separator: " ")
         if joined.localizedCaseInsensitiveContains("red") { return .red }
         if joined.localizedCaseInsensitiveContains("yellow") { return .yellow }
@@ -1142,6 +1424,35 @@ private extension Dictionary where Key == String, Value == Any {
             return [string]
         }
         return []
+    }
+
+    func dictionaryArray(_ key: String) -> [[String: Any]] {
+        if let array = self[key] as? [[String: Any]] {
+            return array
+        }
+        if let array = self[key] as? [Any] {
+            return array.compactMap { $0 as? [String: Any] }
+        }
+        return []
+    }
+
+    func numberArrayText(_ key: String) -> String? {
+        if let array = self[key] as? [NSNumber], !array.isEmpty {
+            return array.map { $0.stringValue }.joined(separator: "-")
+        }
+        if let array = self[key] as? [Any], !array.isEmpty {
+            let values = array.compactMap { item -> String? in
+                if let number = item as? NSNumber {
+                    return number.stringValue
+                }
+                if let string = item as? String, !string.isEmpty {
+                    return string
+                }
+                return nil
+            }
+            return values.isEmpty ? nil : values.joined(separator: "-")
+        }
+        return nil
     }
 
     func dailyCallValue(_ key: String) -> String? {

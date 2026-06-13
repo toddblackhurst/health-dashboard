@@ -1,15 +1,15 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #32 merge/deploy verification and production public ping.
+Last updated: 2026-06-13 Asia/Taipei, after PR #33 merge/deploy verification and production public ping.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit: `42d83848e8937136d7b2a579c2f4eaa4104a70c8`.
+- Current verified main commit: `a6d07b2cccc9b33e270fe4d5ce4406628d6fbcda`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged to main and production deployed automatically.
-- Working tree is clean after PR #32 merge/deploy verification.
+- Working tree is clean after PR #33 merge/deploy verification unless a scoped Codex branch is active.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result after PR #32 merge: `97/97` passing on 2026-06-13.
+- Current verified main test result after PR #33 merge: `97/97` passing on 2026-06-13.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
@@ -37,6 +37,8 @@ Last updated: 2026-06-13 Asia/Taipei, after PR #32 merge/deploy verification and
 - Coach Readiness Status and Automation Gate v1 is merged and deployed as PR #30. It adds a no-write readiness gate for local setup, App Intent readiness, public ping status, protected read-only readiness, HealthKit permissions, Siri/Shortcuts, Action Button, Personal Automation, direct write hold, and draft-only capture status. It does not perform device setup, handle secrets, grant permissions, run Supabase actions, call protected routes, or call write endpoints.
 - PR #31 refreshed durable state docs after PR #30 and is merged/deployed. Main is at `46884d128c554f05e94239c28cd803d133cfcaba`; Netlify production deploy `6a2ccfa10c7d490008042094` was ready, production, automatic, and public ping remained healthy.
 - Daily Data Freshness UX v1 is merged and deployed as PR #32. It adds a local iOS freshness report for Apple Health sync, public ping state, protected read-only freshness, manual/deferred Garmin/Rack/Motra/nutrition/sleep/body/BP sources, and draft-only write hold. It does not call protected production routes, write endpoints, Supabase actions, env settings, or physical-device setup. Production deploy `6a2cd39f3841b20008699559` was ready, production, automatic, and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+- PR #33 refreshed current state after PR #32 and is merged/deployed. Main is at `a6d07b2cccc9b33e270fe4d5ce4406628d6fbcda`; Netlify production deploy `6a2cd544af6864000862aa9c` was ready, production, automatic, and public ping remained healthy.
+- Workout Handoff Formatting v1 is the current scoped repo-only candidate branch. It improves Shortcut-friendly manual Rack/Garmin workout handoff text and tests without backend/API/OpenAPI changes, third-party automation, protected production calls, production writes, Supabase work, env changes, physical iPhone setup, or `HEALTH_DATABASE.json` edits.
 
 ## 1. Project Purpose
 
@@ -293,6 +295,15 @@ Current production state:
   - Manual deploy: false. The production deploy was automatic.
   - Scope: local iOS Daily Data Freshness report, app button, unpromoted App Intent, mock-only public ping client test path, and durable docs for freshness boundaries.
   - Final verification before merge: `node --test tests/*.test.mjs` passed `97/97`; `xcodebuild ... build` passed; explicit simulator `xcodebuild ... test` completed with `TEST SUCCEEDED` and `26/26`; `git diff --check` passed; `git diff -- HEALTH_DATABASE.json` was empty.
+  - Public production ping succeeded after the automatic deploy with `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+  - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
+- PR #33, `Refresh current state after PR32 merge`, is merged and deployed.
+  - Merge brought main to commit `a6d07b2cccc9b33e270fe4d5ce4406628d6fbcda`.
+  - Netlify production deploy ID: `6a2cd544af6864000862aa9c`.
+  - Published at: 2026-06-13 11:58:08 Asia/Taipei.
+  - Manual deploy: false. The production deploy was automatic.
+  - Scope: docs-only durable state refresh after PR #32 merge/deploy verification.
+  - Final verification before merge: `node --test tests/*.test.mjs` passed `97/97`; `git diff --check` passed; `git diff -- HEALTH_DATABASE.json` was empty. iOS build/test was not run because the change was docs-only.
   - Public production ping succeeded after the automatic deploy with `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
   - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
 - Unless explicitly noted otherwise, no production secrets or environment variables were changed by Codex, no secret values were printed or pasted into chat, and Codex did not intentionally edit `HEALTH_DATABASE.json`.

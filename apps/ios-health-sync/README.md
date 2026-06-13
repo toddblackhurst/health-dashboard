@@ -20,6 +20,8 @@ iOS Secret Redaction and Shortcut Output Safety v1 adds a reusable output safety
 
 Daily Data Freshness UX v1 adds a local no-write freshness check for app and Shortcut output. It reports Apple Health/iOS sync freshness from local timestamps, public ping freshness when safely checked or mocked, protected read-only freshness as deferred until a Todd-entered device secret is used, and Garmin/Rack/Motra/nutrition/sleep/body/BP sources as manual/deferred unless the protected Coach status path is run. It does not call protected routes or write endpoints.
 
+Workout Handoff Formatting v1 adds a stable `workout_handoff` section to safe Shortcut output when `Build Today's Workout` returns a structured workout plan. The handoff is designed for manual Rack/Motra and Garmin use: title, workout type, safety status, constraints, blocks, exercises, sets/reps/rest, equipment assumptions, Rack entry lines, Garmin manual-start note, and explicit `manual_handoff_only_no_write` status. It does not automate Garmin, Rack, Motra, World Gym, Apple Health workouts, browser sessions, or any third-party app.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -61,6 +63,8 @@ The expanded Coach actions can call existing authenticated Coach endpoints when 
 ```
 
 These direct Coach actions can log coach messages server-side. The draft debrief, draft coach note, and draft blood pressure intents intentionally do not call production write endpoints.
+
+`Build Today's Workout` may return a Shortcut-safe `workout_handoff` section. Treat it as a manual guide only: copy or follow the Rack/Motra entry lines by hand, start/save the matching Garmin workout manually, and keep completed strength history anchored in Rack/Motra after the session.
 
 If the Coach API base URL or local secret is missing, protected intents return a structured `not_configured` result with stable error identifiers such as `notConfigured`, `missingAPIBase`, or `missingSecret`. They do not make the protected network request in that state.
 

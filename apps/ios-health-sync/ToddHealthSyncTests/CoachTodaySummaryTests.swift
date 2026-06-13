@@ -175,7 +175,44 @@ final class CoachTodaySummaryTests: XCTestCase {
             ],
             "workout_plan": {
               "top_line": "Controlled World Gym strength",
-              "session_type": "strength"
+              "session_type": "strength",
+              "environment": "World Gym Taichung",
+              "floor_plan": "Floor 3 primer -> Floor 2 strength anchors",
+              "target_minutes": 45,
+              "time_range_min": [40, 55],
+              "post_workout_debrief_prompt": "Send duration, RPE, best movement, worst movement, and pain score.",
+              "guardrails": [
+                "Keep pain below 4/10."
+              ],
+              "rack_entry_lines": [
+                "Assisted Pull-Up | assisted pull-up machine | 3 x 4-6"
+              ],
+              "blocks": [
+                {
+                  "name": "Main strength",
+                  "target": "Controlled upper pull work.",
+                  "floor": "Floor 2",
+                  "estimated_min": 18,
+                  "status": "planned",
+                  "exercises": [
+                    {
+                      "rack_motra_name": "Assisted Pull-Up",
+                      "tracking_app": "Rack",
+                      "equipment": "assisted pull-up machine",
+                      "floor": "2F strength",
+                      "note": "Pause cleanly at the top.",
+                      "safety_modification": "Increase assistance if reps grind.",
+                      "prescription": {
+                        "sets": 3,
+                        "reps": "4-6",
+                        "load": "assistance that leaves clean reps",
+                        "rest": "90 sec"
+                      },
+                      "rack_entry_line": "Assisted Pull-Up | assisted pull-up machine | 3 x 4-6"
+                    }
+                  ]
+                }
+              ]
             },
             "coach_memory_context": {
               "summary": "Use conservative density."
@@ -196,7 +233,104 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertEqual(output.workoutType, .strength)
         XCTAssertEqual(output.coachMemoryContext, "Use conservative density.")
         XCTAssertEqual(output.workoutDebriefContext, "Recent pain means cap load.")
+        XCTAssertEqual(response.workoutHandoff?.manualStatus, "manual_handoff_only_no_write")
+        XCTAssertTrue(output.shortcutText.contains("workout_handoff:"))
+        XCTAssertTrue(output.shortcutText.contains("rack_garmin_status: manual_handoff_only"))
+        XCTAssertTrue(output.shortcutText.contains("third_party_automation: none"))
+        XCTAssertTrue(output.shortcutText.contains("Assisted Pull-Up"))
+        XCTAssertTrue(output.shortcutText.contains("3 x 4-6"))
+        XCTAssertTrue(output.shortcutText.contains("plan_details:"))
+        XCTAssertTrue(output.shortcutText.contains("floor_plan: Floor 3 primer -> Floor 2 strength anchors"))
+        XCTAssertTrue(output.shortcutText.contains("target_minutes: 45"))
+        XCTAssertTrue(output.shortcutText.contains("time_range_min: 40-55"))
+        XCTAssertTrue(output.shortcutText.contains("estimated_min: 18"))
+        XCTAssertTrue(output.shortcutText.contains("tracking: Rack"))
+        XCTAssertTrue(output.shortcutText.contains("assistance that leaves clean reps"))
+        XCTAssertTrue(output.shortcutText.contains("modify: Increase assistance if reps grind."))
+        XCTAssertTrue(output.shortcutText.contains("rack_manual_entry:"))
+        XCTAssertTrue(output.shortcutText.contains("garmin_manual_entry: Start and save the matching Garmin workout manually"))
+        XCTAssertTrue(output.shortcutText.contains("No third-party app entry was automated."))
+        XCTAssertTrue(output.shortcutText.contains("No production write was sent."))
         XCTAssertTrue(response.conciseResult.contains("Apple Health is supporting evidence only."))
+    }
+
+    func testWorkoutHandoffRedactsCredentialLikeValuesAndStaysManualOnly() throws {
+        let fakeToken = "fakeWorkoutToken123456789"
+        let json = """
+        {
+          "ok": true,
+          "action": "workout",
+          "reply": "Use the controlled plan.",
+          "decision": {
+            "top_line_call": "Yellow token=\(fakeToken)",
+            "next_actions": [
+              "Open https://user:\(fakeToken)@coach.example.test"
+            ],
+            "risk_flags": [
+              "x-coach-secret: \(fakeToken)"
+            ],
+            "workout_plan": {
+              "top_line": "Strength secret=\(fakeToken)",
+              "session_type": "strength",
+              "blocks": [
+                {
+                  "name": "Main",
+                  "exercises": [
+                    {
+                      "rack_motra_name": "Cable Row token=\(fakeToken)",
+                      "equipment": "Cable station",
+                      "sets": 3,
+                      "reps": "10",
+                      "rest": "60 sec",
+                      "rack_entry_line": "Cable Row | token=\(fakeToken)"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+        """.data(using: .utf8)!
+
+        let response = try CoachDirectActionResponseSummary.parse(data: json, fallbackAction: "workout")
+        let text = response.shortcutOutput.shortcutText
+
+        XCTAssertFalse(text.contains(fakeToken))
+        XCTAssertTrue(text.contains("[redacted]"))
+        XCTAssertTrue(text.contains("manual_status: manual_handoff_only_no_write"))
+        XCTAssertTrue(text.contains("third_party_automation: none"))
+        XCTAssertTrue(text.contains("No production write was sent."))
+    }
+
+    func testBuildWorkoutDoesNotCallNetworkWhenSetupIncomplete() async throws {
+        let suiteName = "BuildWorkoutSetupGateTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let session = MockCoachURLSession(responseData: Data())
+        let client = CoachAPIClient(session: session)
+        let workflow = MorningCoachWorkflow(
+            apiClient: client,
+            keychainStore: FakeCoachSecretStore(secret: ""),
+            store: store
+        )
+
+        do {
+            _ = try await workflow.buildTodaysWorkout(
+                requestText: "Build today's workout.",
+                requestedSessionType: "strength",
+                scheduleOverride: false
+            )
+            XCTFail("Expected missing setup to stop before network")
+        } catch {
+            XCTAssertNil(session.lastRequest)
+            let text = CoachShortcutOutput.failure(error: error).shortcutText
+            XCTAssertTrue(text.contains("error_identifier: missingSecret"))
+            XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret: fake"))
+        }
     }
 
     func testDeferredDraftOutputMakesNoWriteBoundaryExplicit() throws {
