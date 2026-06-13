@@ -6,9 +6,9 @@ Purpose: document the current repo-side App Intents and App Shortcuts discovery 
 
 ## Current Verified Baseline
 
-- Main is at `4fdf592c41bba02817ce73cc0dd35b1ca8022a35`.
-- PR #46, Post-PR45 Current-State Refresh, is merged and deployed.
-- Automatic Netlify production deploy `6a2cfaf2c17687000888f128` is ready for commit `4fdf592c41bba02817ce73cc0dd35b1ca8022a35`.
+- Main is at `8200082c205dca8ab37d2395ac4892af88d8ecb2`.
+- PR #47, Shortcuts Promotion and Discovery Matrix v1, is merged and deployed.
+- Automatic Netlify production deploy `6a2cfd263e7234000874a64b` is ready for commit `8200082c205dca8ab37d2395ac4892af88d8ecb2`.
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.

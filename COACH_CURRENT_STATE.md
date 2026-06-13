@@ -1,15 +1,15 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #45 merge/deploy verification and production public ping.
+Last updated: 2026-06-13 Asia/Taipei, after PR #47 merge/deploy verification and production public ping.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit: `221f18f8a00f8660a88229310eeea9a4aec00a09`.
+- Current verified main commit: `8200082c205dca8ab37d2395ac4892af88d8ecb2`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged to main and production deployed automatically.
-- Working tree is clean after PR #45 merge/deploy verification unless a scoped Codex branch is active.
+- Working tree is clean after PR #47 merge/deploy verification unless a scoped Codex branch is active.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result before PR #45 merge: `97/97` passing on 2026-06-13.
+- Current verified main test result before PR #47 merge: `97/97` passing on 2026-06-13.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
@@ -50,6 +50,7 @@ Last updated: 2026-06-13 Asia/Taipei, after PR #45 merge/deploy verification and
 - PR #43 refreshed durable state docs after PR #42 and is merged/deployed. Main is at `829ec799ba73e5c03ae9c5bd00514fcfe5ef5ad1`; Netlify production deploy `6a2cf42440021c00087a3f2c` was ready, production, automatic, and public ping remained healthy.
 - Repo-Wide iPhone Readiness Audit v1 is merged and deployed as PR #44. It audits remaining iPhone/Siri/Shortcuts/Health/setup readiness gaps and separates safe Codex tasks from Todd/device/account/admin boundaries without implementing new features. Main is at `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`; Netlify production deploy `6a2cf69a6f66a00009dfbe85` was ready, production, automatic, and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged. Protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt.
 - PR #45 refreshed device setup and durable state docs after PR #44 and is merged/deployed. Main is at `221f18f8a00f8660a88229310eeea9a4aec00a09`; Netlify production deploy `6a2cf94cb9b036000940039d` was ready, production, automatic, manual deploy `false`, and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged. Protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt.
+- Shortcuts Promotion and Discovery Matrix v1 is merged and deployed as PR #47. It adds `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` and cross-links it from durable setup/readiness docs so Todd can distinguish 10 promoted App Shortcuts, 4 implemented-but-unpromoted intents, and physical-device verification boundaries. Main is at `8200082c205dca8ab37d2395ac4892af88d8ecb2`; Netlify production deploy `6a2cfd263e7234000874a64b` was ready, production, automatic, manual deploy `false`, and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged. Protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt. No App Intent/App Shortcut code changed.
 
 ## 1. Project Purpose
 
@@ -464,7 +465,7 @@ Current readiness push:
 3. Build the iPhone/Siri/ChatGPT voice-text path in bounded stages:
    - current verified repo-side iPhone bridge: native Apple Health sync app plus expanded App Intents for sync, Morning Coach, sync status, Can I Train, weekly review, workout planning, nutrition closeout, post-workout Coach, draft debrief/note/BP intake, readiness/freshness checks, and typed status outputs;
    - latest verified safe app stage: PR #42 Safe App Entity and Widget String Contract Plan v1 is merged at `1c3d7dadc70edba04a64e7fe6d81a5ac32b514e7`, automatically deployed to Netlify production deploy `6a2cf1eea8dbf50008cf7296`, and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`). Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`40/40`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt;
-   - next safe repo-only docs task: Shortcuts Promotion and Discovery Matrix v1 should map promoted versus implemented/unpromoted intents and Todd's expected Shortcuts/Siri discovery behavior, without adding features, changing signing/entitlements, entering secrets, calling protected routes, modifying production settings, running Supabase actions, automating third-party apps, or performing physical-device setup;
+   - next safe repo-only docs task: Read-Only Protected Device Verification Checklist v1 should define the first Todd-assisted protected read-only device verification sequence after local secret entry, without entering secrets, calling protected routes from Codex, changing signing/entitlements, modifying production settings, running Supabase actions, automating third-party apps, or performing physical-device setup;
    - physical-device stage: install/configure/test only with Todd present for passcodes, Face ID, Health permissions, Shortcut automation, and any secret entry.
 4. Investigate the `coach_observations` optional warning as schema/cache readiness, without assuming a migration is applied or needed from local files alone.
 5. Use `docs/implementation/READINESS_GAP_INVENTORY.md` as the working gap list for future bounded Codex tasks.
