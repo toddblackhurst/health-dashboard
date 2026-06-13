@@ -32,6 +32,8 @@ Safe App Entity and Widget String Contract Plan v1 adds reusable safe-surface st
 
 Red Safety Intent Output Test Expansion v1 is merged/deployed as PR #51 at main commit `4e8b176bcd103260cc5523f23a17b37d8cedfc8b` with Netlify production deploy `6a2d079440021c0009b92721` and healthy public ping. It hardens the existing Shortcut/Siri-facing output paths so Red safety cannot surface as hard-training permission. Red Coach Today, Can I Train, Build Today's Workout, direct Coach action output, workout handoff text, and future safe-surface strings must suppress hard-training language, preserve `no_write` or manual-only boundaries, and keep credential-like strings redacted. Verification remains mock/simulator repo work only; protected verification, writes, and physical iPhone setup stay Todd-assisted.
 
+App Intent Execution Dry-Run Matrix v1 documents the dry-run contract for all current App Intents: promoted versus unpromoted status, workflow entry point, local setup gate, expected Shortcut/Siri status fields, no-network behavior, Red safety behavior, draft-only/manual-only boundaries, current mock/simulator test coverage, and what still requires Todd's physical iPhone. The matrix is `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`; it does not change App Intent or App Shortcut definitions.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.

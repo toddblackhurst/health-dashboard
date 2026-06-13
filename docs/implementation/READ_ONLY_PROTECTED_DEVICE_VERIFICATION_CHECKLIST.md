@@ -9,15 +9,16 @@ Related references:
 - `00_START_HERE.md`
 - `MOBILE_CODEX_COACH_SETUP.md`
 - `docs/implementation/DEVICE_SETUP_RUNBOOK.md`
+- `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`
 - `docs/implementation/IPHONE_READINESS_AUDIT.md`
 - `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md`
 - `docs/implementation/READINESS_GAP_INVENTORY.md`
 
 ## Current Repo Baseline
 
-- Main is at `caf80b0e0e5bf61002aabbc2069e386444603e62`.
-- PR #49, Read-Only Protected Device Verification Checklist v1, is merged and deployed.
-- Automatic Netlify production deploy `6a2d01780605460008c9fb8a` is ready for commit `caf80b0e0e5bf61002aabbc2069e386444603e62`.
+- Main is at `21c3341b6cc0af29efc341e5242c952bbec150d7`.
+- PR #52, Post-PR51 Current-State Refresh, is merged and deployed.
+- Automatic Netlify production deploy `6a2d09aaf3a2e90007fd492c` is ready for commit `21c3341b6cc0af29efc341e5242c952bbec150d7`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes remain skipped by Codex and GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -56,6 +57,8 @@ Expected local setup evidence Todd may report:
 - `readiness_status` says ready, locally ready, or device-bound checks remain.
 - `protected_verification_status` says deferred or blocked before the first protected read-only route.
 - `write_status` says no-write, write-held, draft-only, or manual-handoff-only depending on the action.
+
+Before running an action, cross-check its dry-run contract in `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` so Todd knows whether it is local-only, protected read-only, draft-only, manual-handoff-only, or device-bound.
 
 ## First Session Order
 

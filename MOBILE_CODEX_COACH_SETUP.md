@@ -14,6 +14,8 @@ Todd-assisted physical iPhone setup runbook and dry-run matrix: `docs/implementa
 
 Repo-only iPhone/Siri/Shortcuts/Health readiness audit: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 
+App Intent execution dry-run contract: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
+
 ## Repository
 
 GitHub repo:
@@ -92,6 +94,8 @@ iOS Freshness Output Hardening v1 makes Daily Data Freshness rows safer for voic
 Safe App Entity and Widget String Contract Plan v1 adds reusable safe strings for future Shortcuts, Siri speech, app cards, App Entity titles/subtitles, widgets, and notifications. Use these strings for planning future surfaces instead of raw errors, response bodies, headers, URLs, Keychain/config values, or unbounded workout handoff text. This does not add a widget, notification workflow, App Entity target, signing/entitlement change, protected route call, production write, or physical iPhone setup.
 
 Red Safety Intent Output Test Expansion v1 is merged/deployed as PR #51 at main commit `4e8b176bcd103260cc5523f23a17b37d8cedfc8b` with Netlify production deploy `6a2d079440021c0009b92721` and healthy public ping. It proves the existing iOS voice/text output paths stay conservative when Coach reports Red safety. Coach Today, Can I Train, Build Today's Workout, direct Coach responses, workout handoff formatting, and future safe-surface strings must not say or imply green/approved/clear-to-train/go-train/full-send hard training; they must preserve no-write or manual-only status, suppress workout handoffs when Red safety is present, and redact credential-like text.
+
+App Intent Execution Dry-Run Matrix v1 maps every current Todd Health Sync App Intent to its promoted/unpromoted status, execution entry point, setup gate, expected typed statuses, safe Siri/Shortcut readback fields, mock-test coverage, and remaining physical-device boundary. It does not add, remove, promote, reorder, or rename App Intents or App Shortcuts, and it does not authorize protected route calls, production writes, device setup, signing/entitlement changes, or third-party automation.
 
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 
