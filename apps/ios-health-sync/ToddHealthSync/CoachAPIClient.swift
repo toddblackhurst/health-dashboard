@@ -81,7 +81,7 @@ struct CoachAPIClient: CoachAPIClienting {
             )
         }
 
-        let decoded = try decoder.decode(AppleHealthSyncResponse.self, from: data)
+        let decoded = try Self.decodeAppleHealthSyncResponse(data)
         guard decoded.ok else {
             throw CoachAPIError.server(statusCode: httpResponse.statusCode, response: decoded)
         }
@@ -109,7 +109,9 @@ struct CoachAPIClient: CoachAPIClienting {
             )
         }
 
-        return try CoachPublicPingSummary.parse(data: data)
+        return try Self.parseCoachResponse(data) {
+            try CoachPublicPingSummary.parse(data: data)
+        }
     }
 
     func getSyncStatus(
@@ -121,7 +123,9 @@ struct CoachAPIClient: CoachAPIClienting {
             apiSecret: apiSecret,
             path: "/api/coach/sync-status"
         )
-        return try CoachSyncStatusSummary.parse(data: data)
+        return try Self.parseCoachResponse(data) {
+            try CoachSyncStatusSummary.parse(data: data)
+        }
     }
 
     func getCoachToday(
@@ -133,7 +137,9 @@ struct CoachAPIClient: CoachAPIClienting {
             apiSecret: apiSecret,
             path: "/api/coach/coach-today"
         )
-        return try CoachTodaySummary.parse(data: data)
+        return try Self.parseCoachResponse(data) {
+            try CoachTodaySummary.parse(data: data)
+        }
     }
 
     func getWeeklyReview(
@@ -159,7 +165,9 @@ struct CoachAPIClient: CoachAPIClienting {
             path: "/api/coach/weekly-review",
             queryItems: queryItems
         )
-        return try CoachWeeklyReviewSummary.parse(data: data)
+        return try Self.parseCoachResponse(data) {
+            try CoachWeeklyReviewSummary.parse(data: data)
+        }
     }
 
     func postDirectCoachAction(
@@ -174,7 +182,9 @@ struct CoachAPIClient: CoachAPIClienting {
             apiSecret: apiSecret,
             path: endpoint.path
         )
-        return try CoachDirectActionResponseSummary.parse(data: data, fallbackAction: endpoint.rawValue)
+        return try Self.parseCoachResponse(data) {
+            try CoachDirectActionResponseSummary.parse(data: data, fallbackAction: endpoint.rawValue)
+        }
     }
 
     private func appleHealthDailyURL(from apiBase: String) -> URL? {
@@ -267,6 +277,26 @@ struct CoachAPIClient: CoachAPIClienting {
 
         return dictionary["error"] as? String
             ?? dictionary["message"] as? String
+    }
+
+    private static func decodeAppleHealthSyncResponse(_ data: Data) throws -> AppleHealthSyncResponse {
+        do {
+            return try JSONDecoder().decode(AppleHealthSyncResponse.self, from: data)
+        } catch let error as CoachAPIError {
+            throw error
+        } catch {
+            throw CoachAPIError.invalidResponse
+        }
+    }
+
+    private static func parseCoachResponse<T>(_ data: Data, parser: () throws -> T) throws -> T {
+        do {
+            return try parser()
+        } catch let error as CoachAPIError {
+            throw error
+        } catch {
+            throw CoachAPIError.invalidResponse
+        }
     }
 }
 

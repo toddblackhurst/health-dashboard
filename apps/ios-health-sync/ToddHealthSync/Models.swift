@@ -400,27 +400,26 @@ struct CoachShortcutOutput: Codable, Equatable {
 
         let apiError = error as? CoachAPIError
         let errorIdentifier = Self.errorIdentifier(for: error)
+        let failure = failureDescriptor(for: errorIdentifier)
         return CoachShortcutOutput(
             actionStatus: "failed",
-            setupStatus: .notChecked,
-            readinessStatus: errorIdentifier == .noNetwork ? .deferred : .unknown,
-            protectedVerificationStatus: errorIdentifier == .noNetwork ? .deferredUntilToddDevice : .notRequired,
+            setupStatus: failure.setupStatus,
+            readinessStatus: failure.readinessStatus,
+            protectedVerificationStatus: failure.protectedVerificationStatus,
             writeStatus: .noWrite,
             safetyStatus: .unknown,
-            readinessSummary: errorIdentifier == .noNetwork
-                ? "Coach request could not complete because network access is unavailable."
-                : "Coach request could not complete.",
+            readinessSummary: failure.readinessSummary,
             workoutTitle: nil,
             workoutType: .unknown,
             primaryConstraints: ["No secret or raw payload is included in this result."],
             coachMemoryContext: nil,
             workoutDebriefContext: nil,
-            nextBestAction: "Open Todd Health Sync and check configuration, network, and source freshness.",
+            nextBestAction: failure.nextBestAction,
             requiresMedicalCaution: false,
             sourceFreshness: nil,
             lastSync: nil,
             errorIdentifier: apiError?.shortcutErrorCode ?? errorIdentifier,
-            errorMessage: CoachSafeOutput.errorMessage(error)
+            errorMessage: failure.errorMessage
         )
     }
 
@@ -438,6 +437,108 @@ struct CoachShortcutOutput: Codable, Equatable {
             }
         }
         return .backendUnavailable
+    }
+
+    private static func failureDescriptor(for code: CoachShortcutErrorCode) -> (
+        setupStatus: CoachShortcutSetupStatus,
+        readinessStatus: CoachShortcutReadinessStatus,
+        protectedVerificationStatus: CoachShortcutProtectedVerificationStatus,
+        readinessSummary: String,
+        nextBestAction: String,
+        errorMessage: String
+    ) {
+        switch code {
+        case .notConfigured:
+            return (
+                .needsSetup,
+                .attentionRequired,
+                .blockedMissingSetup,
+                "Coach request could not start because local setup is incomplete.",
+                "Open Todd Health Sync settings and enter the API base URL and secret on device.",
+                "Local Coach setup is incomplete; no network request is required."
+            )
+        case .missingAPIBase:
+            return (
+                .needsSetup,
+                .attentionRequired,
+                .blockedMissingSetup,
+                "Coach request could not start because the API base URL is missing or invalid.",
+                "Open Todd Health Sync settings and correct the Coach API base URL.",
+                "Coach API base URL is missing or invalid."
+            )
+        case .missingSecret:
+            return (
+                .needsSetup,
+                .attentionRequired,
+                .blockedMissingSetup,
+                "Coach request could not start because the local device secret is missing.",
+                "Enter the Coach API secret directly on Todd's iPhone during Todd-assisted setup.",
+                "Local Coach secret is missing; no protected request was sent."
+            )
+        case .unauthorized:
+            return (
+                .configuredLocally,
+                .attentionRequired,
+                .deferredUntilToddDevice,
+                "Coach rejected the protected request authorization.",
+                "Recheck the device-saved Coach secret with Todd present; do not paste it into chat.",
+                "Coach API returned unauthorized; no secret value is shown."
+            )
+        case .syncStale:
+            return (
+                .configuredLocally,
+                .staleOrMissing,
+                .deferredUntilToddDevice,
+                "Coach source data is stale or missing.",
+                "Run read-only source freshness checks before relying on Coach output.",
+                "Coach source freshness needs attention."
+            )
+        case .noNetwork:
+            return (
+                .notChecked,
+                .deferred,
+                .deferredUntilToddDevice,
+                "Coach request could not complete because network access is unavailable or timed out.",
+                "Check connection, then retry a read-only Coach check; keep write actions held.",
+                "Network unavailable, host unreachable, or request timed out."
+            )
+        case .redSafety:
+            return (
+                .notApplicable,
+                .attentionRequired,
+                .notRequired,
+                "Coach safety is Red or medical caution is required.",
+                "Do not start hard training; follow medical/safety guidance first.",
+                "Safety override is active."
+            )
+        case .backendUnavailable:
+            return (
+                .notChecked,
+                .deferred,
+                .deferredUntilToddDevice,
+                "Coach request could not complete because the API was unavailable or returned an error.",
+                "Retry a read-only Coach check later; keep write actions held.",
+                "Coach API was unavailable or returned a non-success response; response body is not shown."
+            )
+        case .malformedResponse:
+            return (
+                .notChecked,
+                .deferred,
+                .deferredUntilToddDevice,
+                "Coach request returned a response the app could not safely read.",
+                "Retry a read-only Coach check later; keep write actions held.",
+                "Coach API response was invalid or malformed; raw response is not shown."
+            )
+        case .deferredWrite:
+            return (
+                .notApplicable,
+                .deferred,
+                .notRequired,
+                "Coach write-capable action is deferred for review.",
+                "Review and confirm inside an approved path before submitting.",
+                "Write-capable action was not submitted."
+            )
+        }
     }
 }
 

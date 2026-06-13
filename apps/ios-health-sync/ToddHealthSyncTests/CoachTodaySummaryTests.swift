@@ -3,20 +3,27 @@ import XCTest
 
 final class MockCoachURLSession: CoachURLSessioning {
     var lastRequest: URLRequest?
+    var requestCount = 0
     var responseData: Data
     var statusCode: Int
     var thrownError: Error?
+    var responseOverride: URLResponse?
 
-    init(responseData: Data, statusCode: Int = 200, thrownError: Error? = nil) {
+    init(responseData: Data, statusCode: Int = 200, thrownError: Error? = nil, responseOverride: URLResponse? = nil) {
         self.responseData = responseData
         self.statusCode = statusCode
         self.thrownError = thrownError
+        self.responseOverride = responseOverride
     }
 
     func data(for request: URLRequest) async throws -> (Data, URLResponse) {
         lastRequest = request
+        requestCount += 1
         if let thrownError {
             throw thrownError
+        }
+        if let responseOverride {
+            return (responseData, responseOverride)
         }
         let response = HTTPURLResponse(
             url: request.url!,
@@ -411,7 +418,7 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertEqual(output.writeStatus, .noWrite)
         XCTAssertFalse(text.contains(fakeSecret))
         XCTAssertFalse(text.contains(fakeBearer))
-        XCTAssertTrue(text.contains("error_message: Request failed with credential: [redacted]"))
+        XCTAssertTrue(text.contains("error_message: Coach API was unavailable or returned a non-success response; response body is not shown."))
         XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret"))
     }
 
@@ -520,8 +527,10 @@ final class CoachTodaySummaryTests: XCTestCase {
         } catch {
             let text = CoachShortcutOutput.failure(error: error).shortcutText
             XCTAssertFalse(text.contains(fakeSecret))
+            XCTAssertFalse(text.contains("fake-request-secret"))
             XCTAssertTrue(text.contains("error_identifier: unauthorized"))
-            XCTAssertTrue(text.contains("credential: [redacted]"))
+            XCTAssertTrue(text.contains("Coach API returned unauthorized; no secret value is shown."))
+            XCTAssertFalse(text.contains("response body is not shown"))
             XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret"))
         }
 
@@ -819,13 +828,202 @@ final class CoachTodaySummaryTests: XCTestCase {
             let text = output.shortcutText
 
             XCTAssertEqual(output.errorIdentifier, .noNetwork)
+            XCTAssertEqual(output.setupStatus, .notChecked)
             XCTAssertEqual(output.readinessStatus, .deferred)
             XCTAssertEqual(output.protectedVerificationStatus, .deferredUntilToddDevice)
             XCTAssertEqual(output.writeStatus, .noWrite)
             XCTAssertTrue(text.contains("error_identifier: noNetwork"))
             XCTAssertTrue(text.contains("readiness_status: deferred"))
             XCTAssertTrue(text.contains("protected_verification_status: deferred_until_todd_device"))
+            XCTAssertTrue(text.contains("Network unavailable, host unreachable, or request timed out."))
+            XCTAssertFalse(text.contains("notConnectedToInternet"))
             XCTAssertFalse(text.contains("fake-request-secret"))
+        }
+    }
+
+    func testNetworkFailureMatrixMapsURLErrorsToStableRedactedShortcutOutput() async throws {
+        let cases: [(URLError.Code, String)] = [
+            (.notConnectedToInternet, "offline"),
+            (.timedOut, "timeout"),
+            (.cannotFindHost, "dns"),
+            (.cannotConnectToHost, "connect"),
+            (.dnsLookupFailed, "dns_lookup")
+        ]
+        let fakeCredentialURL = "https://user:fakePassword123456@coach.example.test/api/coach?token=fakeToken123456789"
+
+        for (code, label) in cases {
+            let session = MockCoachURLSession(
+                responseData: Data(),
+                thrownError: URLError(code, userInfo: [
+                    NSURLErrorFailingURLErrorKey: URL(string: fakeCredentialURL) as Any
+                ])
+            )
+            let client = CoachAPIClient(session: session)
+
+            do {
+                _ = try await client.getCoachToday(
+                    apiBase: "https://coach.example.test",
+                    apiSecret: "fake-secret-\(label)"
+                )
+                XCTFail("Expected \(label) URL error")
+            } catch {
+                let output = CoachShortcutOutput.failure(error: error)
+                let text = output.shortcutText
+
+                XCTAssertEqual(output.errorIdentifier, .noNetwork)
+                XCTAssertEqual(output.readinessStatus, .deferred)
+                XCTAssertEqual(output.protectedVerificationStatus, .deferredUntilToddDevice)
+                XCTAssertEqual(output.writeStatus, .noWrite)
+                XCTAssertTrue(text.contains("error_identifier: noNetwork"))
+                XCTAssertTrue(text.contains("next_best_action: Check connection, then retry a read-only Coach check; keep write actions held."))
+                assertNoCredentialLeak(in: text)
+                XCTAssertFalse(text.contains("fake-secret-\(label)"))
+                XCTAssertFalse(text.contains("fakePassword123456"))
+                XCTAssertFalse(text.contains("fakeToken123456789"))
+                XCTAssertFalse(text.contains("URLError"))
+                XCTAssertFalse(text.contains(code.rawValue.description))
+            }
+        }
+    }
+
+    func testResponseFailureMatrixMapsInvalidStatusAndMalformedBodiesToStableOutput() async throws {
+        let credentialMessage = """
+        {"error":"Invalid coach API secret. x-coach-secret: fake-secret-123456 Authorization: Bearer fakeBearerToken123456 sk-fakeKey123456789012 jwt aaaabbbbccccdddd.eeeeffffgggg.hhhhiiiijjjj"}
+        """.data(using: .utf8)!
+        let serverSession = MockCoachURLSession(responseData: credentialMessage, statusCode: 500)
+        let serverClient = CoachAPIClient(session: serverSession)
+
+        do {
+            _ = try await serverClient.getSyncStatus(
+                apiBase: "https://coach.example.test",
+                apiSecret: "fake-local-secret"
+            )
+            XCTFail("Expected mocked non-2xx response")
+        } catch {
+            let output = CoachShortcutOutput.failure(error: error)
+            let text = output.shortcutText
+
+            XCTAssertEqual(output.errorIdentifier, .backendUnavailable)
+            XCTAssertEqual(output.readinessStatus, .deferred)
+            XCTAssertEqual(output.protectedVerificationStatus, .deferredUntilToddDevice)
+            XCTAssertTrue(text.contains("error_identifier: backendUnavailable"))
+            XCTAssertTrue(text.contains("response body is not shown"))
+            assertNoCredentialLeak(in: text)
+            XCTAssertFalse(text.contains("Invalid coach API secret"))
+            XCTAssertFalse(text.contains("fake-local-secret"))
+        }
+
+        let unauthorizedSession = MockCoachURLSession(responseData: credentialMessage, statusCode: 401)
+        let unauthorizedClient = CoachAPIClient(session: unauthorizedSession)
+
+        do {
+            _ = try await unauthorizedClient.getCoachToday(
+                apiBase: "https://coach.example.test",
+                apiSecret: "fake-local-secret"
+            )
+            XCTFail("Expected mocked 401 response")
+        } catch {
+            let output = CoachShortcutOutput.failure(error: error)
+            let text = output.shortcutText
+
+            XCTAssertEqual(output.errorIdentifier, .unauthorized)
+            XCTAssertEqual(output.setupStatus, .configuredLocally)
+            XCTAssertEqual(output.protectedVerificationStatus, .deferredUntilToddDevice)
+            XCTAssertTrue(text.contains("error_identifier: unauthorized"))
+            XCTAssertTrue(text.contains("Coach API returned unauthorized; no secret value is shown."))
+            assertNoCredentialLeak(in: text)
+        }
+
+        let malformedSession = MockCoachURLSession(responseData: Data("not-json secret=fakeSecret123456".utf8))
+        let malformedClient = CoachAPIClient(session: malformedSession)
+
+        do {
+            _ = try await malformedClient.getWeeklyReview(
+                apiBase: "https://coach.example.test",
+                apiSecret: "fake-local-secret",
+                weekStart: "2026-06-08",
+                weekEnd: "2026-06-14",
+                timezone: "Asia/Taipei"
+            )
+            XCTFail("Expected malformed JSON response")
+        } catch {
+            let output = CoachShortcutOutput.failure(error: error)
+            let text = output.shortcutText
+
+            XCTAssertEqual(output.errorIdentifier, .malformedResponse)
+            XCTAssertTrue(text.contains("error_identifier: malformedResponse"))
+            XCTAssertTrue(text.contains("raw response is not shown"))
+            assertNoCredentialLeak(in: text)
+            XCTAssertFalse(text.contains("not-json"))
+            XCTAssertFalse(text.contains("fakeSecret123456"))
+        }
+
+        let invalidResponse = URLResponse(
+            url: URL(string: "https://coach.example.test/api/coach/ping")!,
+            mimeType: "application/json",
+            expectedContentLength: 0,
+            textEncodingName: nil
+        )
+        let invalidShapeSession = MockCoachURLSession(
+            responseData: Data("{\"ok\":true}".utf8),
+            responseOverride: invalidResponse
+        )
+        let invalidShapeClient = CoachAPIClient(session: invalidShapeSession)
+
+        do {
+            _ = try await invalidShapeClient.getPublicPing(apiBase: "https://coach.example.test")
+            XCTFail("Expected non-HTTP response shape")
+        } catch {
+            let output = CoachShortcutOutput.failure(error: error)
+            XCTAssertEqual(output.errorIdentifier, .malformedResponse)
+            XCTAssertTrue(output.shortcutText.contains("error_identifier: malformedResponse"))
+            assertNoCredentialLeak(in: output.shortcutText)
+        }
+    }
+
+    func testMissingConfigurationFailureMatrixBlocksNetworkAndReturnsTypedStatuses() async throws {
+        let cases: [(name: String, apiBase: String, secret: String, expectedCode: CoachShortcutErrorCode)] = [
+            ("missing_all", "", "", .notConfigured),
+            ("missing_api_base", "", "fake-local-secret", .missingAPIBase),
+            ("invalid_api_base", "not a url", "fake-local-secret", .missingAPIBase),
+            ("missing_secret", "https://coach.example.test", " ", .missingSecret)
+        ]
+
+        for item in cases {
+            let suiteName = "MissingConfigFailureMatrix-\(item.name)-\(UUID().uuidString)"
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+            defer {
+                defaults.removePersistentDomain(forName: suiteName)
+            }
+            let store = MorningCoachStore(defaults: defaults)
+            store.apiBase = item.apiBase
+            let session = MockCoachURLSession(responseData: Data())
+            let workflow = MorningCoachWorkflow(
+                apiClient: CoachAPIClient(session: session),
+                keychainStore: FakeCoachSecretStore(secret: item.secret),
+                store: store
+            )
+
+            do {
+                _ = try await workflow.checkCoachSyncStatus()
+                XCTFail("Expected \(item.name) to stop before network")
+            } catch {
+                XCTAssertNil(session.lastRequest)
+                XCTAssertEqual(session.requestCount, 0)
+                let output = CoachShortcutOutput.failure(error: error)
+                let text = output.shortcutText
+
+                XCTAssertEqual(output.errorIdentifier, item.expectedCode)
+                XCTAssertEqual(output.setupStatus, .needsSetup)
+                XCTAssertEqual(output.readinessStatus, .attentionRequired)
+                XCTAssertEqual(output.protectedVerificationStatus, .blockedMissingSetup)
+                XCTAssertEqual(output.writeStatus, .noWrite)
+                XCTAssertTrue(text.contains("setup_status: needs_setup"))
+                XCTAssertTrue(text.contains("protected_verification_status: blocked_missing_setup"))
+                XCTAssertTrue(text.contains("No production write was sent."))
+                assertNoCredentialLeak(in: text)
+                XCTAssertFalse(text.contains("fake-local-secret"))
+            }
         }
     }
 
@@ -974,5 +1172,29 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertFalse(text.contains("password@example.test"))
         XCTAssertFalse(text.contains("abcdefghijklmnop.abcdefgh.abcdefgh"))
         XCTAssertTrue(text.contains("[redacted]"))
+    }
+
+    private func assertNoCredentialLeak(in text: String, file: StaticString = #filePath, line: UInt = #line) {
+        let forbidden = [
+            "x-coach-secret",
+            "Authorization: Bearer",
+            "api_key",
+            "password=",
+            "secret=",
+            "token=",
+            "sk-fake",
+            "aaaabbbbccccdddd.eeeeffffgggg.hhhhiiiijjjj",
+            "fakeBearerToken",
+            "fake-secret",
+            "fake-local-secret"
+        ]
+        for value in forbidden {
+            XCTAssertFalse(
+                text.localizedCaseInsensitiveContains(value),
+                "Leaked forbidden value: \(value)",
+                file: file,
+                line: line
+            )
+        }
     }
 }

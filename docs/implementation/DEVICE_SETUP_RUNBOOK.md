@@ -6,7 +6,7 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit after PR #36 typed output hardening: `18b62714bd74afa42425a4363a15edaf8413119d`.
+- Main commit after PR #37 state refresh: `6b0a0916e3ca85b713a72e8dbbeea3712ab74474`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
@@ -17,8 +17,9 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 - PR #34, `Add workout handoff formatting`, is merged.
 - PR #35, `Refresh state after PR34 merge`, is merged.
 - PR #36, `Harden typed Shortcut outputs`, is merged.
-- Automatic Netlify production deploy for commit `18b62714bd74afa42425a4363a15edaf8413119d` is ready.
-- Production deploy id: `6a2ce15832f45b0008fdef08`.
+- PR #37, `Refresh state after PR36 merge`, is merged.
+- Automatic Netlify production deploy for commit `6b0a0916e3ca85b713a72e8dbbeea3712ab74474` is ready.
+- Production deploy id: `6a2ce3ba4c9f2800081617e8`.
 - Public production ping is healthy:
 
 ```text
@@ -26,7 +27,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #36 post-merge check because they require `x-coach-secret`.
+- Protected read-only routes were not called in the PR #37 post-merge check because they require `x-coach-secret`.
 - `HEALTH_DATABASE.json` remained unchanged.
 
 ## Hard Boundaries
@@ -41,7 +42,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `18b62714bd74afa42425a4363a15edaf8413119d`.
+1. Confirm main is at or after `6b0a0916e3ca85b713a72e8dbbeea3712ab74474`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
@@ -119,6 +120,13 @@ Suggested setup order:
 8. Assign Action Button only after Siri/Shortcuts manual runs work.
 9. Configure Personal Automation only after Action Button or manual Shortcut behavior is stable.
 10. Treat `Run Immediately` as unverified until Todd confirms it on the real iOS Shortcuts screen.
+
+No-network/failure matrix expectations for every manual Shortcut check:
+
+- Offline, timeout, DNS/host/connect failures should show `error_identifier: noNetwork`, `readiness_status: deferred`, `protected_verification_status: deferred_until_todd_device`, `write_status: no_write`, and a connection/retry next action.
+- Missing or invalid setup should show `setup_status: needs_setup`, `protected_verification_status: blocked_missing_setup`, and should not send a protected network request.
+- Unauthorized/non-2xx/malformed response cases should show stable redacted failure text and no raw response body, URLSession debug string, header value, token, password/api key label, or secret-like value.
+- Protected route verification remains Todd/device-bound until the device-saved secret is present in a separately scoped Todd-assisted setup phase.
 
 ## Write-Action Hold
 
