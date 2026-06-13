@@ -13,11 +13,12 @@ Read only this active set first:
 5. `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md` — durable staged roadmap for Weekly Review Engine, Rack/Garmin handoff, review lanes, and future integrations.
 6. `docs/implementation/READINESS_GAP_INVENTORY.md` — current readiness gaps, safe Codex work, and Todd/device/account boundaries.
 7. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` — Todd-assisted iPhone/Siri/Shortcuts setup runbook and dry-run validation matrix.
-8. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
-9. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
-10. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-11. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-12. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+8. `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` — promoted versus implemented/unpromoted App Intents, Shortcuts discovery expectations, and Todd-device verification steps.
+9. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
+10. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
+11. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+12. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+13. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -52,6 +53,7 @@ Read only this active set first:
 - iPhone screenshot/file upload destination is `iCloud Drive > Coach Screenshots`, which maps on the Mac to `/Users/toddsdesktop/Library/Mobile Documents/com~apple~CloudDocs/Coach Screenshots`.
 - Recommended current shortcuts:
   - `Morning Coach`
+  - `Sync Apple Health`
   - `Check Coach Sync Status`
   - `Can I Train?`
   - `Weekly Coach Review`
@@ -61,6 +63,8 @@ Read only this active set first:
   - `Draft Workout Debrief`
   - `Open Coach Today`
 - Implemented but not promoted because Apple caps promoted App Shortcuts at 10 per app:
+  - `Check Coach Readiness`
+  - `Check Daily Data Freshness`
   - `Draft Coach Note`
   - `Draft Blood Pressure Intake`
 - Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`.

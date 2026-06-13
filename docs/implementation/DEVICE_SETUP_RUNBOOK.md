@@ -98,6 +98,8 @@ Shortcut/App Intent typed output should include stable status lines such as `set
 
 These steps are also Todd/device-bound.
 
+Use `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` for the full promoted versus implemented/unpromoted intent map, expected discovery surfaces, safe status lines, and troubleshooting notes.
+
 Recommended Shortcuts to confirm:
 
 - `Morning Coach`
@@ -114,6 +116,8 @@ Recommended Shortcuts to confirm:
 
 Implemented but not promoted in the top Shortcuts list because Apple caps promoted App Shortcuts at 10:
 
+- `Check Coach Readiness`
+- `Check Daily Data Freshness`
 - `Draft Coach Note`
 - `Draft Blood Pressure Intake`
 

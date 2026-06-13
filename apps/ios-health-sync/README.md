@@ -89,6 +89,8 @@ No-network failures are represented with the stable `noNetwork` error identifier
 
 ## Shortcuts
 
+The full promoted versus implemented/unpromoted intent map lives in `../../docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md`.
+
 After the app is installed on Todd's iPhone, open `Shortcuts` and confirm these Todd Health Sync actions appear:
 
 - `Morning Coach`
