@@ -12,10 +12,11 @@ Read only this active set first:
 4. `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md` — Codex/GPT Pro relay rules, human-approval stops, and handoff requirements for bounded implementation tasks.
 5. `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md` — durable staged roadmap for Weekly Review Engine, Rack/Garmin handoff, review lanes, and future integrations.
 6. `docs/implementation/READINESS_GAP_INVENTORY.md` — current readiness gaps, safe Codex work, and Todd/device/account boundaries.
-7. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
-8. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-9. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-10. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+7. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` — Todd-assisted iPhone/Siri/Shortcuts setup runbook and dry-run validation matrix.
+8. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
+9. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+10. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+11. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -27,6 +28,7 @@ Read only this active set first:
 
 - Production site/API is live at `https://todd-personal-coach.netlify.app`.
 - Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions. Read-only `getSyncStatus` and `buildWeeklyReview` were verified through the saved GPT after Todd manually updated the secret; no write action was called.
+- PR #27, `Add iPhone Coach setup readiness UX`, is merged and automatically deployed at main commit `7656419538b094abfe7f498347d48f6917b1c860`; public ping is healthy.
 - The public dashboard posture has been retired; the Netlify site is now primarily a private coach backend and internal tool surface.
 - V2 architecture is defined in `ARCHITECTURE_V2.md` and should guide future Codex work.
 - Apple Health / HealthKit daily sync is live as supporting evidence for activity context, freshness, and diagnostics.
@@ -61,6 +63,7 @@ Read only this active set first:
   - `Draft Coach Note`
   - `Draft Blood Pressure Intake`
 - Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`.
+- Todd-assisted physical iPhone setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 - Older shortcuts still present but not preferred: `Coach Motra Debrief`, `Coach Message`, `Coach Intake`, `Coach Upload`. Delete only with Todd's explicit confirmation.
 
 ## Architecture Rule

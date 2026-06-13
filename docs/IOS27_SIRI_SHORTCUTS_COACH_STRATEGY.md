@@ -4,7 +4,7 @@ Last updated: 2026-06-13.
 
 Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Workout Debrief branch.
 
-Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge, and iPhone Coach Setup UX Readiness v1 adds local setup guardrails before protected requests run. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
+Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge, and PR #27 iPhone Coach Setup UX Readiness v1 adds local setup guardrails before protected requests run. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` is the active Todd-assisted setup runbook. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
 
 ## 1. Source-Grounded iOS 27 Read
 
@@ -210,6 +210,7 @@ Testing boundaries:
 - Basic App Intent behavior should not require UI automation if AppIntentsTesting is available.
 - Manual device testing still matters for Siri phrasing, Shortcuts UI, Personal Automation behavior, Action Button behavior, and region/device-specific availability.
 - If iOS 27 beta behavior differs between simulator and Todd's iPhone, Todd's physical iPhone readback wins.
+- Physical-device setup, Siri phrase checks, Action Button assignment, and Personal Automation validation should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## 10. Action Button, Side Button, And Hardware Integrations
 
