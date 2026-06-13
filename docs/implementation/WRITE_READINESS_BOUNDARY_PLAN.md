@@ -6,12 +6,13 @@ Purpose: define the approval, audit, duplicate-prevention, rollback, and verific
 
 ## Current Baseline
 
-- Main baseline for this plan: `73ff7aa39a8512e2d87723b39cb98dc80b6f6414`.
-- PR #56 is merged and deployed after PR #55 App Intent Execution Evidence Packet v1.
-- Automatic Netlify production deploy `6a2d15c4f496a300081ae524` is ready for main commit `73ff7aa39a8512e2d87723b39cb98dc80b6f6414`.
+- This plan is merged/deployed as PR #57.
+- Current main baseline after PR #57: `0650c64f0ade249fb1b8fb46cb638553641f2cf9`.
+- Automatic Netlify production deploy `6a2d19ccde8412000856cc98` is ready for main commit `0650c64f0ade249fb1b8fb46cb638553641f2cf9`.
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes are skipped by Codex and GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains protected and must remain unchanged.
+- Next safe repo-only planning task: Supabase Readiness Diagnostic Plan v1. It remains docs-only unless a later task separately approves production/admin access.
 
 ## Non-Negotiable Boundary
 

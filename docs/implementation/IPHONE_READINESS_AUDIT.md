@@ -106,11 +106,11 @@ Expected verification: docs-only tests, `git diff --check`, `git diff -- HEALTH_
 
 Boundaries: no protected route calls by Codex, no secret handling, no device setup, no write calls, no signing/entitlement/capability changes, and no third-party automation.
 
-### Current: Write-Readiness Boundary Plan
+### Completed: Write-Readiness Boundary Plan
 
 Current working document: `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`.
 
-Goal: create a docs-only plan for future write-capable Coach actions, acceptance gates, rollback, audit logging, and Todd approval boundaries.
+Result: PR #57 created and deployed a docs-only plan for future write-capable Coach actions, acceptance gates, rollback, audit logging, duplicate prevention, and Todd approval boundaries.
 
 Files likely involved: `docs/implementation/READINESS_GAP_INVENTORY.md`, `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`, and a new write-readiness boundary plan document.
 
@@ -119,6 +119,20 @@ Acceptance criteria: future write-capable work has explicit no-secret, no-protec
 Expected verification: docs-only tests, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
 
 Boundaries: no protected route calls by Codex, no secret handling, no production writes, no Supabase actions, no Netlify/env/settings changes, no physical iPhone setup, no signing/entitlement/capability changes, and no third-party automation.
+
+### Current: Supabase Readiness Diagnostic Plan
+
+Current working document: not created yet.
+
+Goal: create a docs-only diagnostic plan for the `coach_observations` schema/cache readiness warning without inspecting production schema, running SQL, applying migrations, refreshing schema cache, or performing admin actions unless separately approved.
+
+Files likely involved: `docs/implementation/READINESS_GAP_INVENTORY.md`, `COACH_CURRENT_STATE.md`, and a new Supabase readiness diagnostic plan document.
+
+Acceptance criteria: future production/admin diagnostic work has clear source questions, no-secret rules, read-only/admin boundaries, evidence expectations, and stop conditions before anyone touches Supabase production state.
+
+Expected verification: docs-only tests, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
+
+Boundaries: no Supabase production/admin action, no protected route call, no secret handling, no migration, no schema-cache refresh, no SQL, no env/GPT Action/Netlify changes, and no physical-device setup.
 
 ### Completed: Read-Only Protected Device Verification Checklist
 
