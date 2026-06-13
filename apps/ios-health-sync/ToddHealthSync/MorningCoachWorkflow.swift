@@ -23,19 +23,28 @@ struct MorningCoachActionResult {
 struct MorningCoachWorkflow {
     private let healthKitManager: HealthKitManager
     private let apiClient: CoachAPIClienting
-    private let keychainStore: KeychainStore
+    private let keychainStore: any CoachSecretStoring
     private let store: MorningCoachStore
 
     init(
         healthKitManager: HealthKitManager = HealthKitManager(),
         apiClient: CoachAPIClienting = CoachAPIClient(),
-        keychainStore: KeychainStore = KeychainStore(),
+        keychainStore: any CoachSecretStoring = KeychainStore(),
         store: MorningCoachStore = MorningCoachStore()
     ) {
         self.healthKitManager = healthKitManager
         self.apiClient = apiClient
         self.keychainStore = keychainStore
         self.store = store
+    }
+
+    func checkSetup() throws -> MorningCoachActionResult {
+        let status = try currentSetupStatus()
+        return MorningCoachActionResult(
+            title: status.title,
+            detail: status.shortcutOutput.shortcutText,
+            shortcutOutput: status.shortcutOutput
+        )
     }
 
     func syncAppleHealth(days: Int = 7, trigger: String = "shortcut") async throws -> MorningCoachActionResult {
@@ -297,10 +306,16 @@ struct MorningCoachWorkflow {
 
     private func savedSecret() throws -> String {
         let secret = try keychainStore.loadSecret().trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !secret.isEmpty else {
-            throw CoachAPIError.missingSecret
+        let status = CoachConnectionConfiguration(apiBase: store.apiBase, secret: secret).status
+        guard status.isReadyForProtectedRequests else {
+            throw CoachConfigurationError(status: status)
         }
         return secret
+    }
+
+    private func currentSetupStatus() throws -> CoachSetupStatus {
+        let secret = try keychainStore.loadSecret()
+        return CoachConnectionConfiguration(apiBase: store.apiBase, secret: secret).status
     }
 
     private var appVersion: String {

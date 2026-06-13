@@ -12,20 +12,22 @@ final class HealthSyncViewModel: ObservableObject {
     @Published var selectedDays = 7
     @Published var isWorking = false
     @Published var statusText = "Ready to connect Apple Health."
+    @Published var coachSetupTitle = "Coach setup not checked."
+    @Published var coachSetupDetail = "Open Coach Setup and check local configuration before running shortcuts."
     @Published var lastSyncText = "No sync yet."
     @Published var lastCoachReadbackText = "No coach readback yet."
     @Published var morningCoachText = "Morning Coach has not run yet."
     @Published var backgroundHealthKitText = "Background HealthKit sync is not enabled."
 
     private let healthKitManager: HealthKitManager
-    private let keychainStore: KeychainStore
+    private let keychainStore: any CoachSecretStoring
     private let store: MorningCoachStore
     private let workflow: MorningCoachWorkflow
 
     init(
         healthKitManager: HealthKitManager = HealthKitManager(),
         apiClient: CoachAPIClient = CoachAPIClient(),
-        keychainStore: KeychainStore = KeychainStore(),
+        keychainStore: any CoachSecretStoring = KeychainStore(),
         store: MorningCoachStore = MorningCoachStore()
     ) {
         self.healthKitManager = healthKitManager
@@ -39,16 +41,30 @@ final class HealthSyncViewModel: ObservableObject {
         )
         self.apiBase = store.apiBase
         self.apiSecret = (try? keychainStore.loadSecret()) ?? ""
+        refreshCoachSetupStatus()
         refreshStoredStatus()
     }
 
-    func saveSecret() {
+    func saveConnection() {
         do {
-            try keychainStore.saveSecret(apiSecret.trimmingCharacters(in: .whitespacesAndNewlines))
-            statusText = "Connection saved."
+            store.apiBase = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
+            let trimmedSecret = apiSecret.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmedSecret.isEmpty {
+                try keychainStore.deleteSecret()
+            } else {
+                try keychainStore.saveSecret(trimmedSecret)
+            }
+            refreshCoachSetupStatus()
+            statusText = "Coach connection saved."
         } catch {
             statusText = error.localizedDescription
         }
+    }
+
+    func checkCoachSetup() {
+        store.apiBase = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
+        refreshCoachSetupStatus()
+        statusText = coachSetupTitle
     }
 
     func connectAppleHealth() async {
@@ -123,6 +139,7 @@ final class HealthSyncViewModel: ObservableObject {
         if !trimmedSecret.isEmpty {
             try keychainStore.saveSecret(trimmedSecret)
         }
+        refreshCoachSetupStatus()
     }
 
     private func refreshStoredStatus() {
@@ -130,5 +147,15 @@ final class HealthSyncViewModel: ObservableObject {
         lastCoachReadbackText = store.lastCoachReadbackText
         morningCoachText = store.lastMorningCoachResult
         backgroundHealthKitText = store.lastBackgroundHealthKitText
+    }
+
+    private func refreshCoachSetupStatus() {
+        let storedSecret = (try? keychainStore.loadSecret()) ?? ""
+        let candidateSecret = apiSecret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? storedSecret
+            : apiSecret
+        let setupStatus = CoachConnectionConfiguration(apiBase: apiBase, secret: candidateSecret).status
+        coachSetupTitle = setupStatus.title
+        coachSetupDetail = setupStatus.detail
     }
 }

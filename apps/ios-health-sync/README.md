@@ -14,6 +14,8 @@ Morning Coach automation v1 adds a one-tap iPhone flow on top of the same bounda
 
 iOS App Intents Readiness v1 expands the repo-side Shortcuts surface for Todd's voice/text Coach path. It adds typed Shortcut-safe outputs, stable error identifiers, read-only weekly review support, "Can I train?", direct Coach workout/nutrition/post-workout scaffolding, and draft-only debrief/note/BP capture paths. It does not install or configure Todd's iPhone, grant Health permissions, enter secrets, run personal automations, or submit draft-only intake/debrief/memory writes.
 
+iPhone Coach Setup UX Readiness v1 adds local configuration guardrails before protected Coach requests run. The app now shows a Coach Setup state, lets Todd save or clear the local Keychain secret, and returns structured non-secret setup failures to Shortcuts/Siri when the API base URL or device secret is missing. It still does not enter, rotate, print, or verify the real secret without Todd present on the device.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -22,12 +24,16 @@ For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep 
 2. Configure a development team and keep the HealthKit capability enabled.
 3. Run on Todd's iPhone. Real Apple Health data is only available on device.
 4. Enter the coach API base URL and coach API secret.
-5. Tap `Connect Apple Health`.
-6. Pick the number of days to summarize. The default is 7.
-7. Tap `Sync Now`.
-8. Tap `Morning Coach` to run the one-tap daily flow.
+5. Tap `Save Connection`.
+6. Tap `Check Setup` and confirm the app reports `Coach is configured locally`.
+7. Tap `Connect Apple Health`.
+8. Pick the number of days to summarize. The default is 7.
+9. Tap `Sync Now`.
+10. Tap `Morning Coach` to run the one-tap daily flow.
 
-The API secret is stored in the iOS Keychain. The app posts to:
+The API base URL is stored in app settings. The API secret is stored in the iOS Keychain. Saving an empty secret clears the local Keychain entry. Shortcut/App Intent setup failures intentionally say what is missing without including the secret value or sending a production write.
+
+The app posts to:
 
 ```text
 /api/coach/apple-health-daily
@@ -50,6 +56,8 @@ The expanded Coach actions can call existing authenticated Coach endpoints when 
 ```
 
 These direct Coach actions can log coach messages server-side. The draft debrief, draft coach note, and draft blood pressure intents intentionally do not call production write endpoints.
+
+If the Coach API base URL or local secret is missing, protected intents return a structured `not_configured` result with stable error identifiers such as `notConfigured`, `missingAPIBase`, or `missingSecret`. They do not make the protected network request in that state.
 
 ## Shortcuts
 

@@ -4,7 +4,7 @@ Last updated: 2026-06-13.
 
 Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Workout Debrief branch.
 
-Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
+Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge, and iPhone Coach Setup UX Readiness v1 adds local setup guardrails before protected requests run. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
 
 ## 1. Source-Grounded iOS 27 Read
 
@@ -73,6 +73,8 @@ Current behavior:
 - `BuildTodayWorkoutIntent`, `NutritionCloseoutIntent`, and `PostWorkoutCoachIntent` call existing direct Coach action endpoints after Todd has configured the iPhone app secret; these endpoints can log coach messages, but were not called live in this repo pass.
 - `DraftWorkoutDebriefIntent`, `DraftCoachNoteIntent`, and `DraftBloodPressureIntakeIntent` return draft/deferred outputs and do not submit production write endpoints.
 - API base is stored in app settings and the API secret is read from Keychain.
+- The native app now exposes Coach Setup status in the settings form. `Save Connection` stores the API base URL and saves or clears the Keychain secret. `Check Setup` verifies local configuration state without sending a protected production request.
+- Protected App Intents validate local API base URL and Keychain secret before network calls. Missing or invalid setup returns a structured `not_configured` Shortcut output with stable setup error identifiers and no secret value.
 - Requests authenticate through `x-coach-secret`; the secret is never an intent parameter and must stay out of Shortcut outputs, Siri dialog, widgets, notifications, Spotlight, logs, screenshots, and docs.
 
 Workout Debrief Capture v1 adds a backend candidate for a future confirmed App Intent or Shortcut phrase such as "Record my workout debrief." iOS App Intents Readiness v1 adds draft-only debrief capture, but it does not submit the structured debrief endpoint until a future confirmed device workflow is implemented and verified.
@@ -100,7 +102,7 @@ Recommended upgrades:
 - Keep a concise spoken/readable summary for Siri and Shortcuts.
 - Add stable output fields that user-created Shortcuts can consume.
 - Use clearer parameter titles and defaults, especially for sync day count.
-- Return predictable, redacted, non-secret error messages.
+- Return predictable, redacted, non-secret error messages. Missing API base URL, invalid API base URL, and missing local secret should remain distinct Shortcut-readable states so Todd can fix setup on device without exposing credentials.
 - For a future workout debrief intent, return `safety_outcome`, `debrief_summary`, `next_recommendation_constraints`, and `requires_follow_up` without exposing raw payloads or secrets.
 - Avoid `Duration` and `LPLinkMetadata` in Coach App Intents for now because of the iOS and iPadOS 27 beta Shortcuts known issue involving those types and "Describe a Shortcut."
 - Avoid App enum value-dependent AppShortcut phrases for critical coach actions because the Xcode 27 beta release notes identify a Siri known issue with AppShortcut phrases that include App enum values.
@@ -196,6 +198,7 @@ Test classes to add:
 - Entity query tests for `CoachTodaySnapshot`, `CoachReadiness`, `WorkoutRecommendation`, and `SyncStatus`.
 - Shortcut/Siri pathway tests through real App Intents infrastructure.
 - Auth failure tests for missing API base, missing secret, bad secret/unauthorized, no network, and backend unavailable.
+- Local setup tests for the native Coach Setup status model, including clear-on-empty-secret behavior and protected-intent preflight failure before network requests.
 - Secret-redaction tests proving the secret is never in results, thrown error descriptions, logs, entity display strings, Spotlight fields, widget fields, or notification text.
 - Red safety tests proving Red results never become hard training through Siri/Shortcuts.
 - Retired memory exclusion tests once memory entities are added.

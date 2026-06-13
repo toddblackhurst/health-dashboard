@@ -226,6 +226,10 @@ struct CoachShortcutOutput: Codable, Equatable {
     }
 
     static func failure(error: Error) -> CoachShortcutOutput {
+        if let configurationError = error as? CoachConfigurationError {
+            return configurationError.status.shortcutOutput
+        }
+
         let apiError = error as? CoachAPIError
         return CoachShortcutOutput(
             actionStatus: "failed",
