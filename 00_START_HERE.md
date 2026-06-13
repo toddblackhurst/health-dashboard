@@ -29,7 +29,7 @@ Read only this active set first:
 
 - Production site/API is live at `https://todd-personal-coach.netlify.app`.
 - Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions. Read-only `getSyncStatus` and `buildWeeklyReview` were verified through the saved GPT after Todd manually updated the secret; no write action was called.
-- PR #44, `Add repo-wide iPhone readiness audit`, is merged and automatically deployed at main commit `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`; automatic Netlify production deploy `6a2cf69a6f66a00009dfbe85` is ready and public ping is healthy.
+- PR #45, `docs: refresh device setup baseline after PR44`, is merged and automatically deployed at main commit `221f18f8a00f8660a88229310eeea9a4aec00a09`; automatic Netlify production deploy `6a2cf94cb9b036000940039d` is ready and public ping is healthy.
 - The public dashboard posture has been retired; the Netlify site is now primarily a private coach backend and internal tool surface.
 - V2 architecture is defined in `ARCHITECTURE_V2.md` and should guide future Codex work.
 - Apple Health / HealthKit daily sync is live as supporting evidence for activity context, freshness, and diagnostics.
