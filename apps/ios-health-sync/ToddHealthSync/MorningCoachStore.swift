@@ -21,16 +21,32 @@ struct MorningCoachStore {
         defaults.string(forKey: UserDefaultsKeys.lastAppleHealthSyncText) ?? "No sync yet."
     }
 
+    var lastAppleHealthSyncAt: Date? {
+        date(forKey: UserDefaultsKeys.lastAppleHealthSyncAt)
+    }
+
     var lastCoachReadbackText: String {
         defaults.string(forKey: UserDefaultsKeys.lastCoachReadbackText) ?? "No coach readback yet."
+    }
+
+    var lastCoachReadbackAt: Date? {
+        date(forKey: UserDefaultsKeys.lastCoachReadbackAt)
     }
 
     var lastMorningCoachResult: String {
         defaults.string(forKey: UserDefaultsKeys.lastMorningCoachResult) ?? "Morning Coach has not run yet."
     }
 
+    var lastMorningCoachAt: Date? {
+        date(forKey: UserDefaultsKeys.lastMorningCoachAt)
+    }
+
     var lastBackgroundHealthKitText: String {
         defaults.string(forKey: UserDefaultsKeys.lastBackgroundHealthKitText) ?? "Background HealthKit sync is not enabled."
+    }
+
+    var lastBackgroundHealthKitAttemptAt: Date? {
+        date(forKey: UserDefaultsKeys.lastBackgroundHealthKitAttemptAt)
     }
 
     func recordAppleHealthSync(summary: String, at date: Date = Date()) {
@@ -69,6 +85,12 @@ struct MorningCoachStore {
 
     private static func format(_ date: Date) -> String {
         statusDateFormatter.string(from: date)
+    }
+
+    private func date(forKey key: String) -> Date? {
+        let value = defaults.double(forKey: key)
+        guard value > 0 else { return nil }
+        return Date(timeIntervalSince1970: value)
     }
 
     private static let statusDateFormatter: DateFormatter = {

@@ -69,7 +69,15 @@ struct ContentView: View {
                     }
                     .disabled(viewModel.isWorking)
 
+                    Button("Check Daily Data Freshness") {
+                        viewModel.checkDailyDataFreshness()
+                    }
+                    .disabled(viewModel.isWorking)
+
                     Text(viewModel.morningCoachText)
+                        .textSelection(.enabled)
+                    Text(viewModel.dailyDataFreshnessText)
+                        .foregroundStyle(.secondary)
                         .textSelection(.enabled)
                 }
 

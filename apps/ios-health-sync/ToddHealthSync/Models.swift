@@ -482,6 +482,297 @@ struct CoachSyncCheckSummary {
     }
 }
 
+enum DailyDataFreshnessStatus: String, Codable, Equatable {
+    case fresh
+    case stale
+    case missing
+    case notConfigured = "not_configured"
+    case permissionRequired = "permission_required"
+    case toddActionRequired = "todd_action_required"
+    case protectedVerificationDeferred = "protected_verification_deferred"
+    case manualSourceDeferred = "manual_source_deferred"
+    case noWriteDraftOnly = "no_write_draft_only"
+}
+
+struct DailyDataFreshnessSource: Codable, Equatable, Identifiable {
+    let id: String
+    let label: String
+    let status: DailyDataFreshnessStatus
+    let detail: String
+    let nextAction: String
+
+    var line: String {
+        "\(id): \(status.rawValue) - \(CoachSafeOutput.redact(detail)) Next: \(CoachSafeOutput.redact(nextAction))"
+    }
+}
+
+enum CoachPublicPingFreshness: Equatable {
+    case notChecked
+    case healthy(version: String?)
+    case failed
+}
+
+struct CoachPublicPingSummary: Equatable {
+    let ok: Bool
+    let action: String?
+    let version: String?
+
+    static func parse(data: Data) throws -> CoachPublicPingSummary {
+        let object = try JSONSerialization.jsonObject(with: data)
+        guard let root = object as? [String: Any] else {
+            throw CoachAPIError.invalidResponse
+        }
+
+        return CoachPublicPingSummary(
+            ok: root.boolValue("ok") ?? false,
+            action: root.stringValue("action"),
+            version: root.stringValue("version")
+        )
+    }
+}
+
+struct DailyDataFreshnessReport: Codable, Equatable {
+    let actionStatus: String
+    let summary: String
+    let sources: [DailyDataFreshnessSource]
+
+    var displayText: String {
+        shortcutText
+    }
+
+    var shortcutText: String {
+        var lines = [
+            "freshness_status: \(CoachSafeOutput.redact(actionStatus))",
+            "summary: \(CoachSafeOutput.redact(summary))",
+            "sources:"
+        ]
+        lines.append(contentsOf: sources.map { "- \($0.line)" })
+        lines.append("No production write was sent.")
+        lines.append("No secret value is included.")
+        return lines.joined(separator: "\n")
+    }
+
+    var shortcutOutput: CoachShortcutOutput {
+        let constraints = sources
+            .filter { !$0.status.isUsableNow }
+            .map { "\($0.label): \($0.detail) Next: \($0.nextAction)" }
+        return CoachShortcutOutput(
+            actionStatus: actionStatus,
+            safetyStatus: .unknown,
+            readinessSummary: summary,
+            workoutTitle: nil,
+            workoutType: .none,
+            primaryConstraints: Array(constraints.prefix(6)),
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: sources.first { !$0.status.isUsableNow }?.nextAction
+                ?? "Continue with read-only Coach checks; keep write actions held until Todd approves write readiness.",
+            requiresMedicalCaution: sources.contains { $0.id == "blood_pressure_intake" && !$0.status.isUsableNow },
+            sourceFreshness: sources.prefix(4).map { "\($0.label): \($0.status.rawValue)" }.joined(separator: " | "),
+            lastSync: sources.first { $0.id == "health_ios_sync" }?.detail,
+            errorIdentifier: sources.contains { $0.status == .notConfigured } ? .notConfigured : nil,
+            errorMessage: nil
+        )
+    }
+
+    static func local(
+        setupStatus: CoachSetupStatus,
+        store: MorningCoachStore,
+        now: Date = Date(),
+        publicPing: CoachPublicPingFreshness = .notChecked
+    ) -> DailyDataFreshnessReport {
+        var sources: [DailyDataFreshnessSource] = []
+
+        sources.append(localHealthSource(lastSyncAt: store.lastAppleHealthSyncAt, now: now))
+        sources.append(publicPingSource(publicPing))
+        sources.append(protectedReadOnlySource(setupStatus: setupStatus, lastReadbackAt: store.lastCoachReadbackAt, now: now))
+        sources.append(
+            DailyDataFreshnessSource(
+                id: "healthkit_permission",
+                label: "Health permissions",
+                status: .permissionRequired,
+                detail: "Health permissions can only be confirmed on Todd's physical iPhone.",
+                nextAction: "Grant Health permissions on device."
+            )
+        )
+        sources.append(contentsOf: manualSourceRows())
+        sources.append(
+            DailyDataFreshnessSource(
+                id: "blood_pressure_intake",
+                label: "Blood pressure/intake",
+                status: .toddActionRequired,
+                detail: "BP freshness needs a recent Todd-reviewed reading; draft BP intake is no-write.",
+                nextAction: "Review or enter BP through an approved intake path."
+            )
+        )
+        sources.append(
+            DailyDataFreshnessSource(
+                id: "draft_only_capture",
+                label: "Draft-only capture",
+                status: .noWriteDraftOnly,
+                detail: "Workout debrief, coach note, and BP draft paths do not submit or save data.",
+                nextAction: "Continue without write actions until write readiness is approved."
+            )
+        )
+
+        let actionStatus = sources.contains { $0.status.needsToddOrSetup }
+            ? "attention_required"
+            : "read_only_ready"
+        let summary = actionStatus == "attention_required"
+            ? "Daily freshness has safe next actions, but some sources need Todd/device setup or manual review."
+            : "Daily freshness is usable for read-only Coach checks; write-capable paths remain held."
+        return DailyDataFreshnessReport(
+            actionStatus: actionStatus,
+            summary: summary,
+            sources: sources
+        )
+    }
+
+    private static func localHealthSource(lastSyncAt: Date?, now: Date) -> DailyDataFreshnessSource {
+        guard let lastSyncAt else {
+            return DailyDataFreshnessSource(
+                id: "health_ios_sync",
+                label: "Health/iOS sync",
+                status: .missing,
+                detail: "No Apple Health daily sync has completed on this device.",
+                nextAction: "Open Todd Health Sync and sync Health data."
+            )
+        }
+
+        let hours = max(0, Int(now.timeIntervalSince(lastSyncAt) / 3600))
+        let status: DailyDataFreshnessStatus = hours <= 36 ? .fresh : .stale
+        let action = status == .fresh
+            ? "Continue; Apple Health remains supporting evidence only."
+            : "Open Todd Health Sync and sync Health data."
+        return DailyDataFreshnessSource(
+            id: "health_ios_sync",
+            label: "Health/iOS sync",
+            status: status,
+            detail: "Last Apple Health sync was \(hours) hours ago.",
+            nextAction: action
+        )
+    }
+
+    private static func publicPingSource(_ publicPing: CoachPublicPingFreshness) -> DailyDataFreshnessSource {
+        switch publicPing {
+        case .notChecked:
+            return DailyDataFreshnessSource(
+                id: "coach_public_ping",
+                label: "Coach API public ping",
+                status: .protectedVerificationDeferred,
+                detail: "Public ping was not called by this local freshness check.",
+                nextAction: "Retry public ping from a safe diagnostic when needed."
+            )
+        case let .healthy(version):
+            return DailyDataFreshnessSource(
+                id: "coach_public_ping",
+                label: "Coach API public ping",
+                status: .fresh,
+                detail: "Public ping is healthy\(version.map { " on \($0)" } ?? "").",
+                nextAction: "Continue with read-only checks."
+            )
+        case .failed:
+            return DailyDataFreshnessSource(
+                id: "coach_public_ping",
+                label: "Coach API public ping",
+                status: .stale,
+                detail: "Public ping did not return the expected healthy response.",
+                nextAction: "Retry public ping."
+            )
+        }
+    }
+
+    private static func protectedReadOnlySource(
+        setupStatus: CoachSetupStatus,
+        lastReadbackAt: Date?,
+        now: Date
+    ) -> DailyDataFreshnessSource {
+        guard setupStatus.isReadyForProtectedRequests else {
+            return DailyDataFreshnessSource(
+                id: "protected_read_only_freshness",
+                label: "Protected read-only freshness",
+                status: .notConfigured,
+                detail: "Requires Todd-entered device secret before live source freshness can be checked.",
+                nextAction: "Enter Coach secret on device during Todd-assisted setup."
+            )
+        }
+
+        if let lastReadbackAt {
+            let hours = max(0, Int(now.timeIntervalSince(lastReadbackAt) / 3600))
+            if hours <= 36 {
+                return DailyDataFreshnessSource(
+                    id: "protected_read_only_freshness",
+                    label: "Protected read-only freshness",
+                    status: .fresh,
+                    detail: "Last protected read-only Coach readback was \(hours) hours ago.",
+                    nextAction: "Continue with read-only Coach checks."
+                )
+            }
+        }
+
+        return DailyDataFreshnessSource(
+            id: "protected_read_only_freshness",
+            label: "Protected read-only freshness",
+            status: .protectedVerificationDeferred,
+            detail: "Protected source freshness has not been verified by this local check.",
+            nextAction: "Run Check Coach Sync Status after Todd-entered setup is saved."
+        )
+    }
+
+    private static func manualSourceRows() -> [DailyDataFreshnessSource] {
+        [
+            DailyDataFreshnessSource(
+                id: "workout_source_freshness",
+                label: "Workout sources",
+                status: .manualSourceDeferred,
+                detail: "Rack/Motra and Garmin workout freshness are not scraped by the app.",
+                nextAction: "Review manual source/runbook or run protected read-only Coach sync status."
+            ),
+            DailyDataFreshnessSource(
+                id: "nutrition_source_freshness",
+                label: "Nutrition source",
+                status: .manualSourceDeferred,
+                detail: "Garmin Nutrition freshness needs protected Coach read-only check or manual review.",
+                nextAction: "Review manual source/runbook."
+            ),
+            DailyDataFreshnessSource(
+                id: "sleep_recovery_source_freshness",
+                label: "Sleep/recovery source",
+                status: .manualSourceDeferred,
+                detail: "Garmin sleep/recovery is primary; Oura remains fallback only when Garmin is stale or unreliable.",
+                nextAction: "Review manual source/runbook."
+            ),
+            DailyDataFreshnessSource(
+                id: "body_metrics_source_freshness",
+                label: "Body metrics/weight",
+                status: .manualSourceDeferred,
+                detail: "Body-composition and weight trends are evidence only and should not be overreacted to.",
+                nextAction: "Review manual source/runbook."
+            )
+        ]
+    }
+}
+
+private extension DailyDataFreshnessStatus {
+    var isUsableNow: Bool {
+        switch self {
+        case .fresh, .noWriteDraftOnly:
+            true
+        case .stale, .missing, .notConfigured, .permissionRequired, .toddActionRequired, .protectedVerificationDeferred, .manualSourceDeferred:
+            false
+        }
+    }
+
+    var needsToddOrSetup: Bool {
+        switch self {
+        case .missing, .notConfigured, .permissionRequired, .toddActionRequired:
+            true
+        case .fresh, .stale, .protectedVerificationDeferred, .manualSourceDeferred, .noWriteDraftOnly:
+            false
+        }
+    }
+}
+
 struct CoachTodaySummary {
     let date: String?
     let dailyCall: String?

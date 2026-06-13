@@ -4,7 +4,7 @@ Last updated: 2026-06-13.
 
 Purpose: this is the authoritative iOS 27 integration strategy for Todd's Personal Coach. It folds iOS 27 Siri AI, Shortcuts, App Intents, App Schemas, App Entities, Spotlight, View Annotations, and AppIntentsTesting into the roadmap without starting unrelated iOS implementation work on the current Workout Debrief branch.
 
-Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge, and PR #27 iPhone Coach Setup UX Readiness v1 adds local setup guardrails before protected requests run. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` is the active Todd-assisted setup runbook. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
+Current implementation status: iOS App Intents Readiness v1 expands the repo-side Shortcuts bridge, PR #27 iPhone Coach Setup UX Readiness v1 adds local setup guardrails before protected requests run, and Daily Data Freshness UX v1 is a repo-side candidate for local no-write source freshness output. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` is the active Todd-assisted setup runbook. iOS 27-specific App Schemas, Spotlight, View Annotations, widgets, Live Activities, physical-device Siri readback, Action Button assignment, Personal Automation setup, Health permission prompts, and credential entry remain future Todd-assisted work.
 
 ## 1. Source-Grounded iOS 27 Read
 
@@ -61,7 +61,7 @@ Existing `apps/ios-health-sync/ToddHealthSync/MorningCoachIntents.swift` exposes
 - `DraftWorkoutDebriefIntent`
 - `OpenCoachTodayIntent`
 
-`DraftCoachNoteIntent` and `DraftBloodPressureIntakeIntent` are implemented App Intents but are not promoted in the top App Shortcuts list because Apple currently caps promoted App Shortcuts at 10 per app.
+`CheckCoachReadinessIntent`, `CheckDailyDataFreshnessIntent`, `DraftCoachNoteIntent`, and `DraftBloodPressureIntakeIntent` are implemented App Intents but are not promoted in the top App Shortcuts list because Apple currently caps promoted App Shortcuts at 10 per app.
 
 Current behavior:
 
@@ -72,6 +72,7 @@ Current behavior:
 - `WeeklyCoachReviewIntent` calls read-only `weekly-review` and returns `review_only` output without applying plan or memory changes.
 - `BuildTodayWorkoutIntent`, `NutritionCloseoutIntent`, and `PostWorkoutCoachIntent` call existing direct Coach action endpoints after Todd has configured the iPhone app secret; these endpoints can log coach messages, but were not called live in this repo pass.
 - `DraftWorkoutDebriefIntent`, `DraftCoachNoteIntent`, and `DraftBloodPressureIntakeIntent` return draft/deferred outputs and do not submit production write endpoints.
+- `CheckDailyDataFreshnessIntent` returns local freshness output without protected networking: Apple Health sync state from local timestamps, public ping state only when safely checked/mocked, protected-readiness deferment, manual/deferred third-party source rows, BP action need, and draft-only no-write status.
 - API base is stored in app settings and the API secret is read from Keychain.
 - The native app now exposes Coach Setup status in the settings form. `Save Connection` stores the API base URL and saves or clears the Keychain secret. `Check Setup` verifies local configuration state without sending a protected production request.
 - Protected App Intents validate local API base URL and Keychain secret before network calls. Missing or invalid setup returns a structured `not_configured` Shortcut output with stable setup error identifiers and no secret value.

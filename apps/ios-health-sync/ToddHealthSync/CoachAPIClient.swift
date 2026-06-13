@@ -7,6 +7,8 @@ protocol CoachURLSessioning {
 extension URLSession: CoachURLSessioning {}
 
 protocol CoachAPIClienting {
+    func getPublicPing(apiBase: String) async throws -> CoachPublicPingSummary
+
     func postAppleHealthDaily(
         payload: AppleHealthDailyPayload,
         apiBase: String,
@@ -85,6 +87,29 @@ struct CoachAPIClient: CoachAPIClienting {
         }
 
         return decoded
+    }
+
+    func getPublicPing(apiBase: String) async throws -> CoachPublicPingSummary {
+        guard let url = coachURL(from: apiBase, path: "/api/coach/ping") else {
+            throw CoachAPIError.invalidBaseURL
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw CoachAPIError.invalidResponse
+        }
+
+        guard (200..<300).contains(httpResponse.statusCode) else {
+            throw CoachAPIError.requestFailed(
+                statusCode: httpResponse.statusCode,
+                message: Self.responseMessage(from: data)
+            )
+        }
+
+        return try CoachPublicPingSummary.parse(data: data)
     }
 
     func getSyncStatus(
