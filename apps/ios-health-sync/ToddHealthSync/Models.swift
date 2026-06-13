@@ -717,15 +717,98 @@ enum DailyDataFreshnessStatus: String, Codable, Equatable {
     case noWriteDraftOnly = "no_write_draft_only"
 }
 
+enum DailyDataSourceCategory: String, Codable, Equatable {
+    case localDevice = "local_device"
+    case coachPublic = "coach_public"
+    case coachProtectedReadOnly = "coach_protected_read_only"
+    case devicePermission = "device_permission"
+    case manualThirdParty = "manual_third_party"
+    case safetyIntake = "safety_intake"
+    case draftCapture = "draft_capture"
+}
+
 struct DailyDataFreshnessSource: Codable, Equatable, Identifiable {
     let id: String
     let label: String
+    let category: DailyDataSourceCategory
     let status: DailyDataFreshnessStatus
     let detail: String
     let nextAction: String
 
     var line: String {
-        "\(id): \(status.rawValue) - \(CoachSafeOutput.redact(detail)) Next: \(CoachSafeOutput.redact(nextAction))"
+        var parts = [
+            "\(id): \(status.rawValue)",
+            "source_category: \(category.rawValue)",
+            "freshness_status: \(status.rawValue)",
+            "readiness_status: \(readinessStatus.rawValue)",
+            "protected_verification_status: \(protectedVerificationStatus.rawValue)",
+            "write_status: \(writeStatus.rawValue)",
+            "title: \(surfaceTitle)",
+            "detail: \(surfaceDetail)",
+            "next_action: \(CoachSafeOutput.redact(nextAction))"
+        ]
+        if let errorIdentifier {
+            parts.append("error_identifier: \(errorIdentifier.rawValue)")
+        }
+        return parts.joined(separator: " | ")
+    }
+
+    var surfaceTitle: String {
+        CoachSafeOutput.redact("\(label) - \(status.displayLabel)")
+    }
+
+    var surfaceDetail: String {
+        CoachSafeOutput.redact(detail)
+    }
+
+    var readinessStatus: CoachShortcutReadinessStatus {
+        switch status {
+        case .fresh, .noWriteDraftOnly:
+            return .ready
+        case .stale, .missing:
+            return .staleOrMissing
+        case .notConfigured, .permissionRequired, .toddActionRequired:
+            return .attentionRequired
+        case .protectedVerificationDeferred, .manualSourceDeferred:
+            return .deferred
+        }
+    }
+
+    var protectedVerificationStatus: CoachShortcutProtectedVerificationStatus {
+        switch (category, status) {
+        case (.coachProtectedReadOnly, .fresh):
+            return .verifiedReadOnly
+        case (.coachProtectedReadOnly, .notConfigured):
+            return .blockedMissingSetup
+        case (.coachProtectedReadOnly, _), (_, .protectedVerificationDeferred):
+            return .deferredUntilToddDevice
+        default:
+            return .notRequired
+        }
+    }
+
+    var writeStatus: CoachShortcutWriteStatus {
+        switch status {
+        case .noWriteDraftOnly:
+            return .draftOnly
+        case .manualSourceDeferred:
+            return .manualHandoffOnly
+        case .fresh:
+            return .noWrite
+        case .stale, .missing, .notConfigured, .permissionRequired, .toddActionRequired, .protectedVerificationDeferred:
+            return .writeHeld
+        }
+    }
+
+    var errorIdentifier: CoachShortcutErrorCode? {
+        switch status {
+        case .notConfigured:
+            return .notConfigured
+        case .stale, .missing:
+            return .syncStale
+        case .permissionRequired, .toddActionRequired, .protectedVerificationDeferred, .manualSourceDeferred, .noWriteDraftOnly, .fresh:
+            return nil
+        }
     }
 }
 
@@ -827,6 +910,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             DailyDataFreshnessSource(
                 id: "healthkit_permission",
                 label: "Health permissions",
+                category: .devicePermission,
                 status: .permissionRequired,
                 detail: "Health permissions can only be confirmed on Todd's physical iPhone.",
                 nextAction: "Grant Health permissions on device."
@@ -837,6 +921,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             DailyDataFreshnessSource(
                 id: "blood_pressure_intake",
                 label: "Blood pressure/intake",
+                category: .safetyIntake,
                 status: .toddActionRequired,
                 detail: "BP freshness needs a recent Todd-reviewed reading; draft BP intake is no-write.",
                 nextAction: "Review or enter BP through an approved intake path."
@@ -846,6 +931,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             DailyDataFreshnessSource(
                 id: "draft_only_capture",
                 label: "Draft-only capture",
+                category: .draftCapture,
                 status: .noWriteDraftOnly,
                 detail: "Workout debrief, coach note, and BP draft paths do not submit or save data.",
                 nextAction: "Continue without write actions until write readiness is approved."
@@ -870,6 +956,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             return DailyDataFreshnessSource(
                 id: "health_ios_sync",
                 label: "Health/iOS sync",
+                category: .localDevice,
                 status: .missing,
                 detail: "No Apple Health daily sync has completed on this device.",
                 nextAction: "Open Todd Health Sync and sync Health data."
@@ -884,6 +971,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
         return DailyDataFreshnessSource(
             id: "health_ios_sync",
             label: "Health/iOS sync",
+            category: .localDevice,
             status: status,
             detail: "Last Apple Health sync was \(hours) hours ago.",
             nextAction: action
@@ -896,6 +984,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             return DailyDataFreshnessSource(
                 id: "coach_public_ping",
                 label: "Coach API public ping",
+                category: .coachPublic,
                 status: .protectedVerificationDeferred,
                 detail: "Public ping was not called by this local freshness check.",
                 nextAction: "Retry public ping from a safe diagnostic when needed."
@@ -904,6 +993,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             return DailyDataFreshnessSource(
                 id: "coach_public_ping",
                 label: "Coach API public ping",
+                category: .coachPublic,
                 status: .fresh,
                 detail: "Public ping is healthy\(version.map { " on \($0)" } ?? "").",
                 nextAction: "Continue with read-only checks."
@@ -912,6 +1002,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             return DailyDataFreshnessSource(
                 id: "coach_public_ping",
                 label: "Coach API public ping",
+                category: .coachPublic,
                 status: .stale,
                 detail: "Public ping did not return the expected healthy response.",
                 nextAction: "Retry public ping."
@@ -928,6 +1019,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             return DailyDataFreshnessSource(
                 id: "protected_read_only_freshness",
                 label: "Protected read-only freshness",
+                category: .coachProtectedReadOnly,
                 status: .notConfigured,
                 detail: "Requires Todd-entered device secret before live source freshness can be checked.",
                 nextAction: "Enter Coach secret on device during Todd-assisted setup."
@@ -940,6 +1032,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
                 return DailyDataFreshnessSource(
                     id: "protected_read_only_freshness",
                     label: "Protected read-only freshness",
+                    category: .coachProtectedReadOnly,
                     status: .fresh,
                     detail: "Last protected read-only Coach readback was \(hours) hours ago.",
                     nextAction: "Continue with read-only Coach checks."
@@ -950,6 +1043,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
         return DailyDataFreshnessSource(
             id: "protected_read_only_freshness",
             label: "Protected read-only freshness",
+            category: .coachProtectedReadOnly,
             status: .protectedVerificationDeferred,
             detail: "Protected source freshness has not been verified by this local check.",
             nextAction: "Run Check Coach Sync Status after Todd-entered setup is saved."
@@ -961,6 +1055,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             DailyDataFreshnessSource(
                 id: "workout_source_freshness",
                 label: "Workout sources",
+                category: .manualThirdParty,
                 status: .manualSourceDeferred,
                 detail: "Rack/Motra and Garmin workout freshness are not scraped by the app.",
                 nextAction: "Review manual source/runbook or run protected read-only Coach sync status."
@@ -968,6 +1063,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             DailyDataFreshnessSource(
                 id: "nutrition_source_freshness",
                 label: "Nutrition source",
+                category: .manualThirdParty,
                 status: .manualSourceDeferred,
                 detail: "Garmin Nutrition freshness needs protected Coach read-only check or manual review.",
                 nextAction: "Review manual source/runbook."
@@ -975,6 +1071,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             DailyDataFreshnessSource(
                 id: "sleep_recovery_source_freshness",
                 label: "Sleep/recovery source",
+                category: .manualThirdParty,
                 status: .manualSourceDeferred,
                 detail: "Garmin sleep/recovery is primary; Oura remains fallback only when Garmin is stale or unreliable.",
                 nextAction: "Review manual source/runbook."
@@ -982,6 +1079,7 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             DailyDataFreshnessSource(
                 id: "body_metrics_source_freshness",
                 label: "Body metrics/weight",
+                category: .manualThirdParty,
                 status: .manualSourceDeferred,
                 detail: "Body-composition and weight trends are evidence only and should not be overreacted to.",
                 nextAction: "Review manual source/runbook."
@@ -991,6 +1089,29 @@ struct DailyDataFreshnessReport: Codable, Equatable {
 }
 
 private extension DailyDataFreshnessStatus {
+    var displayLabel: String {
+        switch self {
+        case .fresh:
+            return "fresh"
+        case .stale:
+            return "stale"
+        case .missing:
+            return "missing"
+        case .notConfigured:
+            return "setup needed"
+        case .permissionRequired:
+            return "permission required"
+        case .toddActionRequired:
+            return "Todd action required"
+        case .protectedVerificationDeferred:
+            return "protected verification deferred"
+        case .manualSourceDeferred:
+            return "manual source deferred"
+        case .noWriteDraftOnly:
+            return "draft only"
+        }
+    }
+
     var isUsableNow: Bool {
         switch self {
         case .fresh, .noWriteDraftOnly:

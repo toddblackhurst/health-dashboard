@@ -20,7 +20,9 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - PR #35 Current State Refresh after PR #34 merged and production deployed automatically from main.
 - PR #36 Typed Shortcut Output Hardening v1 merged and production deployed automatically from main.
 - PR #37 Current State Refresh after PR #36 merged and production deployed automatically from main.
-- Automatic Netlify production deploy for PR #37 merge commit `6b0a0916e3ca85b713a72e8dbbeea3712ab74474` is ready: deploy id `6a2ce3ba4c9f2800081617e8`, published at `2026-06-13T04:59:50.435Z`, manual deploy `false`.
+- PR #38 No-Network Failure Matrix v1 merged and production deployed automatically from main.
+- PR #39 Current State Refresh after PR #38 merged and production deployed automatically from main.
+- Automatic Netlify production deploy for PR #39 merge commit `977e3851c8138c2a07fe3fed8b42ae129dd718d1` is ready: deploy id `6a2ce9247aee2d0008a8d087`, published at `2026-06-13T05:22:57.490Z`, manual deploy `false`.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
@@ -34,6 +36,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - Workout Handoff Formatting v1 is merged. Mocked iOS workout output exposes a redacted `workout_handoff` for manual Rack/Garmin use while preserving no-write and no-third-party-automation boundaries.
 - Typed Shortcut Output Hardening v1 is merged and deployed. It extends `CoachShortcutOutput` with stable setup/readiness/protected-verification/write status fields and mock tests for missing setup, invalid setup, no-network failure, redaction, deferred writes, and manual workout handoff status.
 - PR #38 No-Network Failure Matrix v1 is merged/deployed at main commit `6dfdd8261b4c8c0412f3aa744db16bd6953dcb82`. Netlify production deploy `6a2ce79080431d00083ef1b1` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), and protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt. Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`34/34`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged.
+- PR #39 refreshed durable docs after PR #38 and is merged/deployed at main commit `977e3851c8138c2a07fe3fed8b42ae129dd718d1`. Netlify production deploy `6a2ce9247aee2d0008a8d087` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`).
+- iOS Freshness Output Hardening v1 is the current safe repo-only implementation pass. It adds typed per-source freshness categories, readiness/protected-verification/write status mappings, optional error identifiers, and redacted future entity/widget-safe title/detail strings without widget/signing/entitlement work, protected route calls, production writes, or physical-device setup.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
