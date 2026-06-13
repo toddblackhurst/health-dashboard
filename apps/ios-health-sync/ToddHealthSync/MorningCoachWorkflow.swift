@@ -56,6 +56,19 @@ struct MorningCoachWorkflow {
         )
     }
 
+    func checkDailyDataFreshness(now: Date = Date()) throws -> MorningCoachActionResult {
+        let report = DailyDataFreshnessReport.local(
+            setupStatus: try currentSetupStatus(),
+            store: store,
+            now: now
+        )
+        return MorningCoachActionResult(
+            title: "Daily data freshness",
+            detail: report.shortcutText,
+            shortcutOutput: report.shortcutOutput
+        )
+    }
+
     func syncAppleHealth(days: Int = 7, trigger: String = "shortcut") async throws -> MorningCoachActionResult {
         let apiSecret = try savedSecret()
         try await healthKitManager.requestAuthorization()

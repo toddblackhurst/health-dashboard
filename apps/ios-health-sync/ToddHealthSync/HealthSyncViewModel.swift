@@ -19,6 +19,7 @@ final class HealthSyncViewModel: ObservableObject {
     @Published var morningCoachText = "Morning Coach has not run yet."
     @Published var backgroundHealthKitText = "Background HealthKit sync is not enabled."
     @Published var coachReadinessText = "Coach readiness has not been checked."
+    @Published var dailyDataFreshnessText = "Daily data freshness has not been checked."
 
     private let healthKitManager: HealthKitManager
     private let keychainStore: any CoachSecretStoring
@@ -74,6 +75,17 @@ final class HealthSyncViewModel: ObservableObject {
         let report = CoachReadinessReport.local(setupStatus: currentCandidateSetupStatus())
         statusText = "Coach readiness"
         coachReadinessText = report.displayText
+    }
+
+    func checkDailyDataFreshness() {
+        store.apiBase = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
+        refreshCoachSetupStatus()
+        let report = DailyDataFreshnessReport.local(
+            setupStatus: currentCandidateSetupStatus(),
+            store: store
+        )
+        statusText = "Daily data freshness"
+        dailyDataFreshnessText = report.displayText
     }
 
     func connectAppleHealth() async {

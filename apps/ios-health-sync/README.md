@@ -18,6 +18,8 @@ iPhone Coach Setup UX Readiness v1 adds local configuration guardrails before pr
 
 iOS Secret Redaction and Shortcut Output Safety v1 adds a reusable output safety layer for Shortcut/App Intent text, visible app status, stored app readbacks, and user-facing errors. Coach Readiness Status and Automation Gate v1 adds a no-write readiness check that separates local app setup from Todd/device-bound Health, Siri, Action Button, Personal Automation, and protected read-only verification.
 
+Daily Data Freshness UX v1 adds a local no-write freshness check for app and Shortcut output. It reports Apple Health/iOS sync freshness from local timestamps, public ping freshness when safely checked or mocked, protected read-only freshness as deferred until a Todd-entered device secret is used, and Garmin/Rack/Motra/nutrition/sleep/body/BP sources as manual/deferred unless the protected Coach status path is run. It does not call protected routes or write endpoints.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -30,8 +32,9 @@ For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep 
 6. Tap `Check Setup` and confirm the app reports `Coach is configured locally`.
 7. Tap `Connect Apple Health`.
 8. Pick the number of days to summarize. The default is 7.
-9. Tap `Sync Now`.
-10. Tap `Morning Coach` to run the one-tap daily flow.
+9. Tap `Check Daily Data Freshness` if present in the installed build.
+10. Tap `Sync Now`.
+11. Tap `Morning Coach` to run the one-tap daily flow.
 
 The API base URL is stored in app settings. The API secret is stored in the iOS Keychain. Saving an empty secret clears the local Keychain entry. Shortcut/App Intent setup failures intentionally say what is missing without including the secret value or sending a production write.
 
@@ -68,6 +71,7 @@ After the app is installed on Todd's iPhone, open `Shortcuts` and confirm these 
 - `Morning Coach`
 - `Sync Apple Health`
 - `Check Coach Sync Status`
+- `Check Daily Data Freshness`
 - `Can I Train?`
 - `Weekly Coach Review`
 - `Build Today's Workout`
@@ -76,7 +80,7 @@ After the app is installed on Todd's iPhone, open `Shortcuts` and confirm these 
 - `Draft Workout Debrief`
 - `Open Coach Today`
 
-Apple currently limits each app to 10 promoted App Shortcuts. `Check Coach Readiness`, `Draft Coach Note`, and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top Shortcuts list; use them from the app's available actions if present after install.
+Apple currently limits each app to 10 promoted App Shortcuts. `Check Coach Readiness`, `Check Daily Data Freshness`, `Draft Coach Note`, and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top Shortcuts list; use them from the app's available actions if present after install.
 
 Recommended setup:
 

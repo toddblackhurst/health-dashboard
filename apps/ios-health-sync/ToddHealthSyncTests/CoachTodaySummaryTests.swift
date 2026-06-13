@@ -559,4 +559,144 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertEqual(object?["channel"] as? String, "ios-app-intent-test")
         XCTAssertEqual(response.shortcutOutput.safetyStatus, .green)
     }
+
+    func testDailyDataFreshnessReportShowsMissingSetupAndStableNextActions() throws {
+        let suiteName = "DailyDataFreshnessMissingTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+
+        let setupStatus = CoachConnectionConfiguration(
+            apiBase: store.apiBase,
+            secret: ""
+        ).status
+        let report = DailyDataFreshnessReport.local(
+            setupStatus: setupStatus,
+            store: store,
+            now: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+        let text = report.shortcutText
+
+        XCTAssertEqual(report.actionStatus, "attention_required")
+        XCTAssertTrue(text.contains("health_ios_sync: missing"))
+        XCTAssertTrue(text.contains("protected_read_only_freshness: not_configured"))
+        XCTAssertTrue(text.contains("healthkit_permission: permission_required"))
+        XCTAssertTrue(text.contains("workout_source_freshness: manual_source_deferred"))
+        XCTAssertTrue(text.contains("blood_pressure_intake: todd_action_required"))
+        XCTAssertTrue(text.contains("draft_only_capture: no_write_draft_only"))
+        XCTAssertTrue(text.contains("Enter Coach secret on device during Todd-assisted setup."))
+        XCTAssertTrue(text.contains("Open Todd Health Sync and sync Health data."))
+        XCTAssertTrue(text.contains("Continue without write actions"))
+        XCTAssertTrue(text.contains("No production write was sent."))
+        XCTAssertTrue(text.contains("No secret value is included."))
+    }
+
+    func testDailyDataFreshnessReportMarksRecentLocalDataFreshAndManualSourcesDeferred() throws {
+        let suiteName = "DailyDataFreshnessFreshTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        store.recordAppleHealthSync(summary: "Wrote 7 of 7 Apple Health daily summaries.", at: now.addingTimeInterval(-2 * 3600))
+        store.recordCoachReadback(summary: "Coach sync status 100%.", at: now.addingTimeInterval(-3 * 3600))
+
+        let report = DailyDataFreshnessReport.local(
+            setupStatus: CoachConnectionConfiguration(
+                apiBase: store.apiBase,
+                secret: "fake-local-secret"
+            ).status,
+            store: store,
+            now: now,
+            publicPing: .healthy(version: "coach-brain-v1")
+        )
+        let text = report.shortcutText
+
+        XCTAssertTrue(text.contains("health_ios_sync: fresh"))
+        XCTAssertTrue(text.contains("coach_public_ping: fresh"))
+        XCTAssertTrue(text.contains("protected_read_only_freshness: fresh"))
+        XCTAssertTrue(text.contains("nutrition_source_freshness: manual_source_deferred"))
+        XCTAssertTrue(text.contains("sleep_recovery_source_freshness: manual_source_deferred"))
+        XCTAssertTrue(text.contains("body_metrics_source_freshness: manual_source_deferred"))
+        XCTAssertTrue(text.contains("draft_only_capture: no_write_draft_only"))
+        XCTAssertFalse(text.contains("fake-local-secret"))
+    }
+
+    func testDailyDataFreshnessWorkflowDoesNotCallNetworkWhenSetupIncomplete() throws {
+        let suiteName = "DailyDataFreshnessWorkflowTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let session = MockCoachURLSession(responseData: Data())
+        let client = CoachAPIClient(session: session)
+        let workflow = MorningCoachWorkflow(
+            apiClient: client,
+            keychainStore: FakeCoachSecretStore(secret: ""),
+            store: store
+        )
+
+        let result = try workflow.checkDailyDataFreshness(
+            now: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+        let detail = result.detail
+
+        XCTAssertNil(session.lastRequest)
+        XCTAssertTrue(detail.contains("freshness_status: attention_required"))
+        XCTAssertTrue(detail.contains("protected_read_only_freshness: not_configured"))
+        XCTAssertTrue(detail.contains("draft_only_capture: no_write_draft_only"))
+        XCTAssertTrue(detail.contains("No production write was sent."))
+    }
+
+    func testPublicPingFreshnessUsesInjectedMockSessionAndNoSecretHeader() async throws {
+        let data = """
+        {
+          "ok": true,
+          "action": "ping",
+          "version": "coach-brain-v1"
+        }
+        """.data(using: .utf8)!
+        let session = MockCoachURLSession(responseData: data)
+        let client = CoachAPIClient(session: session)
+
+        let ping = try await client.getPublicPing(apiBase: "https://coach.example.test/")
+        let request = try XCTUnwrap(session.lastRequest)
+
+        XCTAssertTrue(ping.ok)
+        XCTAssertEqual(ping.action, "ping")
+        XCTAssertEqual(ping.version, "coach-brain-v1")
+        XCTAssertEqual(request.httpMethod, "GET")
+        XCTAssertEqual(request.url?.path, "/api/coach/ping")
+        XCTAssertNil(request.value(forHTTPHeaderField: "x-coach-secret"))
+        XCTAssertNil(request.value(forHTTPHeaderField: "Authorization"))
+    }
+
+    func testDailyDataFreshnessRedactsSecretLikeText() {
+        let report = DailyDataFreshnessReport(
+            actionStatus: "attention_required secret=abc123456789012345",
+            summary: "Bearer abcdefghijklmnop.abcdefgh.abcdefgh",
+            sources: [
+                DailyDataFreshnessSource(
+                    id: "redaction_probe",
+                    label: "Redaction probe",
+                    status: .toddActionRequired,
+                    detail: "x-coach-secret: abc123456789012345",
+                    nextAction: "Open https://user:password@example.test/path?token=abc123456789012345"
+                )
+            ]
+        )
+        let text = report.shortcutText
+
+        XCTAssertFalse(text.contains("abc123456789012345"))
+        XCTAssertFalse(text.contains("password@example.test"))
+        XCTAssertFalse(text.contains("abcdefghijklmnop.abcdefgh.abcdefgh"))
+        XCTAssertTrue(text.contains("[redacted]"))
+    }
 }

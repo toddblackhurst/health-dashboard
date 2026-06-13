@@ -6,13 +6,14 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit: `69dd82b47371c3e5bc96c9c15e1da7e46f83d295`.
+- Main commit before PR #32 Daily Data Freshness UX: `46884d128c554f05e94239c28cd803d133cfcaba`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
 - PR #30, `Add coach readiness automation gate`, is merged.
-- Automatic Netlify production deploy for commit `69dd82b47371c3e5bc96c9c15e1da7e46f83d295` is ready.
-- Production deploy id: `6a2ccd3d9fd3c700085ad5c9`.
+- PR #31, `Refresh current state after PR30 merge`, is merged.
+- Automatic Netlify production deploy for commit `46884d128c554f05e94239c28cd803d133cfcaba` is ready.
+- Production deploy id: `6a2ccfa10c7d490008042094`.
 - Public production ping is healthy:
 
 ```text
@@ -35,7 +36,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `69dd82b47371c3e5bc96c9c15e1da7e46f83d295`.
+1. Confirm main is at or after `46884d128c554f05e94239c28cd803d133cfcaba`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
@@ -67,12 +68,14 @@ These steps are device-bound and must happen with Todd present.
 8. Expected local setup state: `Coach is configured locally`.
 9. Tap `Check Coach Readiness`.
 10. Expected readiness shape: local setup is ready, protected read-only routes are Todd/device-bound, HealthKit/Siri/Shortcuts/Action Button/Personal Automation are Todd/device-bound, write-capable actions are held, and draft-only capture is no-write.
-11. Tap `Connect Apple Health`.
-12. Todd reviews and grants the HealthKit read permissions needed for daily summaries.
-13. Run a manual read-only path first:
+11. Tap `Check Daily Data Freshness` if present in the installed build.
+12. Expected freshness shape: Apple Health/iOS sync freshness is local, public ping is either fresh or safely deferred, protected read-only freshness is not claimed until a read-only route is run, Garmin/Rack/Motra/nutrition/sleep/body sources remain manual/deferred unless returned by protected Coach status, BP/intake needs Todd action, and draft-only capture remains no-write.
+13. Tap `Connect Apple Health`.
+14. Todd reviews and grants the HealthKit read permissions needed for daily summaries.
+15. Run a manual read-only path first:
     - `Check Coach Sync Status`, or
     - in-app `Morning Coach` if Apple Health sync is also intended.
-14. Read back the result. It should include source freshness and no secret value.
+16. Read back the result. It should include source freshness and no secret value.
 
 ## Siri, Shortcuts, Action Button, And Personal Automation
 
@@ -83,6 +86,7 @@ Recommended Shortcuts to confirm:
 - `Morning Coach`
 - `Sync Apple Health`
 - `Check Coach Sync Status`
+- `Check Daily Data Freshness` if present in the installed build
 - `Can I Train?`
 - `Weekly Coach Review`
 - `Build Today's Workout`
@@ -171,6 +175,7 @@ Automation not running unattended:
 | Blank secret save | Save empty secret in app settings | Local Keychain entry is cleared; setup reports missing secret | Device-bound for real Keychain |
 | Configured locally | Valid API base and local secret present | App reports `Coach is configured locally`; protected route still needs Todd-assisted readback | Device-bound with Todd secret entry |
 | Coach readiness check | Local readiness gate | Reports local setup, public ping status, protected read-only gate, Health/Siri/Action Button/Automation boundaries, write hold, and draft-only readiness without writing | Repo/simulator safe with mocks |
+| Daily data freshness check | Local freshness gate | Reports local Apple Health sync freshness, public ping state if safely checked/mocked, protected-readiness deferment, manual source deferment, BP action need, and no-write draft-only status without protected networking | Repo/simulator safe with mocks |
 | Draft workout debrief | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |
 | Draft coach note | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |
 | Draft BP intake | Draft-only intent | Returns deferred/draft output; no production write | Repo/simulator safe |

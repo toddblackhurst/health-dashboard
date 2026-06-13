@@ -71,9 +71,11 @@ Use Codex/GitHub for changing the coach system, updating files, improving the AP
 
 For bounded implementation tasks that use GPT Pro as a planning/evaluation relay, start with `.github/codex/prompts/implementation.md`. Paste the receiver instruction from that file once into Todd's GPT Pro planning chat, then use its `CODEX_RELAY_HANDOFF` template for each handoff. GPT Pro must not inspect, clone, browse, edit, or test the repo.
 
-Use iPhone Shortcuts for one-tap calls into the same API: Morning Coach, Check Coach Sync Status, Can I Train, Weekly Coach Review, Build Today's Workout, Nutrition Closeout, Post-Workout Coach, Draft Workout Debrief, and Open Coach Today. `Draft Coach Note` and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top App Shortcuts list because Apple currently caps promoted App Shortcuts at 10 per app.
+Use iPhone Shortcuts for one-tap calls into the same API: Morning Coach, Check Coach Sync Status, Can I Train, Weekly Coach Review, Build Today's Workout, Nutrition Closeout, Post-Workout Coach, Draft Workout Debrief, and Open Coach Today. `Check Coach Readiness`, `Check Daily Data Freshness`, `Draft Coach Note`, and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top App Shortcuts list because Apple currently caps promoted App Shortcuts at 10 per app.
 
 For the native Todd Health Sync app, the verified Morning Coach path is manual `Sync Now`, the in-app Morning Coach button, and a manually run `Morning Coach` Shortcut. Personal Automation setup is user-configured in iOS Shortcuts; `Run Immediately` was not fully verified through iOS Mirroring, and background automation should be treated as best-effort. Manual `Sync Now` remains the fallback when source freshness matters.
+
+Daily Data Freshness UX v1 adds a local no-write freshness readout for the app and App Intent layer. Use it before a physical-device run to see whether Apple Health sync is missing/stale/fresh, whether public ping status is fresh or safely deferred, whether protected source freshness still requires Todd-entered device setup, which Garmin/Rack/Motra/nutrition/sleep/body/BP sources remain manual/deferred, and whether draft-only capture remains no-write.
 
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 
