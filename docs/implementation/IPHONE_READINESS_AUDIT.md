@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `caf80b0e0e5bf61002aabbc2069e386444603e62`.
-- PR #49, Read-Only Protected Device Verification Checklist v1, is merged after PR #48.
-- Automatic Netlify production deploy `6a2d01780605460008c9fb8a` is ready for commit `caf80b0e0e5bf61002aabbc2069e386444603e62`.
+- Main is at `21c3341b6cc0af29efc341e5242c952bbec150d7`.
+- PR #52, Post-PR51 Current-State Refresh, is merged after PR #51.
+- Automatic Netlify production deploy `6a2d09aaf3a2e90007fd492c` is ready for commit `21c3341b6cc0af29efc341e5242c952bbec150d7`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -17,6 +17,7 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 - iOS Coach setup UX: the app stores the API base in settings, stores the Coach secret in Keychain, clears the Keychain entry when an empty secret is saved, and reports local setup state before protected requests run.
 - App Intents and Shortcuts: implemented intents include sync, Morning Coach, sync status, readiness, daily freshness, Can I Train, weekly review, workout, nutrition closeout, post-workout Coach, draft debrief, draft note, draft BP intake, and Open Coach Today. The promoted App Shortcuts list is capped at 10; `CoachReadinessCheckIntent`, `CheckDailyDataFreshnessIntent`, `DraftCoachNoteIntent`, and `DraftBloodPressureIntakeIntent` are implemented but not all promoted.
+- App Intent dry-run matrix: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` maps every current intent to its workflow entry point, setup gate, status expectations, safe evidence, mock-test coverage, and physical-device boundary.
 - Typed output contracts: `CoachShortcutOutput` exposes setup, readiness, protected verification, write status, safety status, source freshness, workout handoff, and next action fields.
 - Redaction and safe display: `CoachSafeOutput` and `CoachFutureSafeStrings` provide redacted, length-bounded, future-safe text for Shortcuts, Siri speech, app cards, App Entity labels, widgets, and notifications.
 - Readiness gate: the local readiness model separates local setup, public ping, protected read-only readiness, HealthKit, Siri/Shortcuts, Action Button, Personal Automation, write holds, and draft-only readiness.
@@ -77,7 +78,21 @@ Expected verification: docs-only tests above.
 
 Boundaries: no App Shortcuts list change unless separately scoped as code/tests/docs; no physical-device verification claim.
 
-### 3. Read-Only Protected Device Verification Checklist
+### Current: App Intent Execution Dry-Run Matrix
+
+Current working document: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
+
+Goal: define the safe dry-run execution contract for every current App Intent before Todd-assisted physical iPhone/Siri/Shortcuts verification.
+
+Files likely involved: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, `apps/ios-health-sync/ToddHealthSyncTests/CoachTodaySummaryTests.swift`, and cross-linked setup/readiness docs.
+
+Acceptance criteria: every current intent has a documented setup gate, use class, status expectation, safe evidence field, mock/simulator coverage note, and Todd/device boundary.
+
+Expected verification: Node tests, iOS simulator build/test when iOS tests change, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
+
+Boundaries: no App Intent/App Shortcut additions/removals/promotions/reorders/renames, no protected route calls, no production writes, no secrets, no device setup, no signing/entitlement/capability changes.
+
+### Completed: Read-Only Protected Device Verification Checklist
 
 Current working document: `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`.
 
@@ -91,13 +106,13 @@ Expected verification: docs-only tests above.
 
 Boundaries: no secret entry, no protected route call by Codex, no GPT Action write call.
 
-### 4. Red Safety Intent Output Test Expansion
+### Completed: Red Safety Intent Output Test Expansion
 
-Goal: deepen iOS tests proving Siri/Shortcuts-facing outputs cannot turn Red safety into hard training.
+Result: PR #51 deepened iOS tests proving Siri/Shortcuts-facing outputs cannot turn Red safety into hard training.
 
 Files likely involved: `apps/ios-health-sync/ToddHealthSyncTests/CoachTodaySummaryTests.swift`, possibly `apps/ios-health-sync/ToddHealthSync/Models.swift` if a gap is found.
 
-Acceptance criteria: test coverage shows Red/medical/symptom flags remain conservative in `CoachShortcutOutput`, direct action summaries, and workout handoff text.
+Acceptance criteria met: test coverage shows Red/medical/symptom flags remain conservative in `CoachShortcutOutput`, direct action summaries, and workout handoff text.
 
 Expected verification: Node tests if backend docs are touched, iOS simulator build, explicit serial iOS tests, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
 

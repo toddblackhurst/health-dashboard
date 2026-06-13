@@ -6,7 +6,7 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit after PR #49 read-only protected device checklist: `caf80b0e0e5bf61002aabbc2069e386444603e62`.
+- Main commit after PR #52 current-state refresh: `21c3341b6cc0af29efc341e5242c952bbec150d7`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
@@ -29,8 +29,11 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 - PR #47, `Add shortcuts discovery matrix`, is merged.
 - PR #48, `Refresh current state after PR47 merge`, is merged.
 - PR #49, `Add read-only protected device checklist`, is merged.
-- Automatic Netlify production deploy for commit `caf80b0e0e5bf61002aabbc2069e386444603e62` is ready.
-- Production deploy id: `6a2d01780605460008c9fb8a`.
+- PR #50, `Refresh current state after PR49 merge`, is merged.
+- PR #51, `Harden red safety shortcut output`, is merged.
+- PR #52, `Refresh current state after PR51 merge`, is merged.
+- Automatic Netlify production deploy for commit `21c3341b6cc0af29efc341e5242c952bbec150d7` is ready.
+- Production deploy id: `6a2d09aaf3a2e90007fd492c`.
 - Public production ping is healthy:
 
 ```text
@@ -38,9 +41,10 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #49 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
+- Protected read-only routes were not called in the PR #52 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remained unchanged.
 - Current readiness audit reference: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
+- Current App Intent execution dry-run reference: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
 
 ## Hard Boundaries
 
@@ -95,7 +99,7 @@ These steps are device-bound and must happen with Todd present.
     - in-app `Morning Coach` if Apple Health sync is also intended.
 16. Read back the result. It should include source freshness and no secret value.
 
-Use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` for the first protected read-only device verification after Todd has entered the secret directly on the iPhone. That checklist defines safe evidence fields, stop conditions, and rollback steps for `Check Coach Sync Status`, `Weekly Coach Review`, `Morning Coach` / Coach Today, and `Check Daily Data Freshness`.
+Use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` to confirm the intended dry-run behavior for each App Intent before the first real iPhone run. Use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` for the first protected read-only device verification after Todd has entered the secret directly on the iPhone. That checklist defines safe evidence fields, stop conditions, and rollback steps for `Check Coach Sync Status`, `Weekly Coach Review`, `Morning Coach` / Coach Today, and `Check Daily Data Freshness`.
 
 Shortcut/App Intent typed output should include stable status lines such as `setup_status`, `readiness_status`, `protected_verification_status`, and `write_status`. For missing setup, protected requests must stop before network and show a blocked setup status. For draft-only or manual workout handoff paths, `write_status` should show the no-write or manual-only state.
 
@@ -103,7 +107,7 @@ Shortcut/App Intent typed output should include stable status lines such as `set
 
 These steps are also Todd/device-bound.
 
-Use `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` for the full promoted versus implemented/unpromoted intent map, expected discovery surfaces, safe status lines, and troubleshooting notes.
+Use `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` for the full promoted versus implemented/unpromoted intent map and expected discovery surfaces. Use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md` for expected run behavior, setup gates, status lines, and mock-test coverage before Todd checks the same actions on device.
 
 Recommended Shortcuts to confirm:
 

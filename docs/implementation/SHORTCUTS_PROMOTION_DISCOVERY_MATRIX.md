@@ -4,11 +4,13 @@ Last updated: 2026-06-13 Asia/Taipei.
 
 Purpose: document the current repo-side App Intents and App Shortcuts discovery expectations for Todd Health Sync. This is a docs-only verification aid for a later Todd-assisted physical iPhone setup. It does not add, remove, promote, reorder, or rename App Intents or App Shortcuts.
 
+For execution behavior, setup gates, expected status fields, safe evidence, and mock-test coverage, use `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`. This file answers "where should the action appear?"; the dry-run matrix answers "what should happen when it runs?"
+
 ## Current Verified Baseline
 
-- Main is at `caf80b0e0e5bf61002aabbc2069e386444603e62`.
-- PR #49, Read-Only Protected Device Verification Checklist v1, is merged and deployed after PR #47.
-- Automatic Netlify production deploy `6a2d01780605460008c9fb8a` is ready for commit `caf80b0e0e5bf61002aabbc2069e386444603e62`.
+- Main is at `21c3341b6cc0af29efc341e5242c952bbec150d7`.
+- PR #52, Post-PR51 Current-State Refresh, is merged and deployed after PR #51.
+- Automatic Netlify production deploy `6a2d09aaf3a2e90007fd492c` is ready for commit `21c3341b6cc0af29efc341e5242c952bbec150d7`.
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.

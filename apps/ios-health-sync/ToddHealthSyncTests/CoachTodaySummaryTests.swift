@@ -1615,6 +1615,113 @@ final class CoachTodaySummaryTests: XCTestCase {
         assertNoCredentialLeak(in: text)
     }
 
+    func testIntentDryRunProtectedWorkflowsStopBeforeNetworkWhenSetupMissing() async throws {
+        let cases: [(name: String, action: (MorningCoachWorkflow) async throws -> MorningCoachActionResult)] = [
+            ("sync_apple_health", { workflow in
+                try await workflow.syncAppleHealth(days: 7, trigger: "shortcut")
+            }),
+            ("morning_coach", { workflow in
+                try await workflow.runMorningCoach()
+            }),
+            ("check_sync_status", { workflow in
+                try await workflow.checkCoachSyncStatus()
+            }),
+            ("coach_today", { workflow in
+                try await workflow.openCoachToday()
+            }),
+            ("weekly_review", { workflow in
+                try await workflow.weeklyReview(weekStart: "2026-06-08", weekEnd: "2026-06-14")
+            }),
+            ("can_i_train", { workflow in
+                try await workflow.canITrain()
+            }),
+            ("build_workout", { workflow in
+                try await workflow.buildTodaysWorkout(
+                    requestText: "Build today's workout.",
+                    requestedSessionType: "strength",
+                    scheduleOverride: false
+                )
+            }),
+            ("nutrition_closeout", { workflow in
+                try await workflow.nutritionCloseout(note: "Run today's nutrition closeout.")
+            }),
+            ("post_workout", { workflow in
+                try await workflow.postWorkoutCoach(note: "Prepare my post-workout debrief.")
+            })
+        ]
+
+        for item in cases {
+            let suiteName = "IntentDryRun-\(item.name)-\(UUID().uuidString)"
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+            defer {
+                defaults.removePersistentDomain(forName: suiteName)
+            }
+            let store = MorningCoachStore(defaults: defaults)
+            store.apiBase = "https://coach.example.test"
+            let session = MockCoachURLSession(responseData: Data())
+            let workflow = MorningCoachWorkflow(
+                apiClient: CoachAPIClient(session: session),
+                keychainStore: FakeCoachSecretStore(secret: " "),
+                store: store
+            )
+
+            do {
+                _ = try await item.action(workflow)
+                XCTFail("Expected \(item.name) to stop before network when local secret is missing")
+            } catch {
+                XCTAssertNil(session.lastRequest, item.name)
+                XCTAssertEqual(session.requestCount, 0, item.name)
+                let output = CoachShortcutOutput.failure(error: error)
+                let text = output.shortcutText
+
+                XCTAssertEqual(output.errorIdentifier, .missingSecret, item.name)
+                XCTAssertEqual(output.setupStatus, .needsSetup, item.name)
+                XCTAssertEqual(output.readinessStatus, .attentionRequired, item.name)
+                XCTAssertEqual(output.protectedVerificationStatus, .blockedMissingSetup, item.name)
+                XCTAssertEqual(output.writeStatus, .noWrite, item.name)
+                XCTAssertTrue(text.contains("setup_status: needs_setup"), item.name)
+                XCTAssertTrue(text.contains("protected_verification_status: blocked_missing_setup"), item.name)
+                XCTAssertTrue(text.contains("write_status: no_write"), item.name)
+                XCTAssertTrue(text.contains("No production write was sent."), item.name)
+                assertNoCredentialLeak(in: text)
+                assertNoCredentialLeak(in: output.safeSurfaceStrings.contractText)
+            }
+        }
+    }
+
+    func testIntentDryRunDraftCaptureWorkflowsStayDraftOnlyAndRedacted() {
+        let fakeSecret = "fakeDraftDryRunSecret123456"
+        let workflow = MorningCoachWorkflow()
+        let results = [
+            workflow.draftWorkoutDebrief(note: "Workout went well. x-coach-secret: \(fakeSecret)"),
+            workflow.draftCoachNote(note: "Remember token=\(fakeSecret)"),
+            workflow.draftBloodPressureIntake(
+                systolic: 120,
+                diastolic: 80,
+                note: "password=\(fakeSecret)"
+            )
+        ]
+
+        for result in results {
+            let output = result.shortcutOutput
+            let text = result.shortcutValue
+
+            XCTAssertEqual(output?.actionStatus, "deferred_requires_review")
+            XCTAssertEqual(output?.setupStatus, .notApplicable)
+            XCTAssertEqual(output?.readinessStatus, .deferred)
+            XCTAssertEqual(output?.protectedVerificationStatus, .notRequired)
+            XCTAssertEqual(output?.writeStatus, .draftOnly)
+            XCTAssertEqual(output?.errorIdentifier, .deferredWrite)
+            XCTAssertTrue(text.contains("No production write was sent."))
+            XCTAssertTrue(text.contains("write_status: draft_only_no_write"))
+            XCTAssertFalse(text.contains(fakeSecret))
+            assertNoCredentialLeak(in: text)
+            if let output {
+                assertNoCredentialLeak(in: output.safeSurfaceStrings.contractText)
+            }
+        }
+    }
+
     private func assertNoCredentialLeak(in text: String, file: StaticString = #filePath, line: UInt = #line) {
         let forbidden = [
             "x-coach-secret",
