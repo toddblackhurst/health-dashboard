@@ -6,8 +6,8 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main was clean at `6b0a0916e3ca85b713a72e8dbbeea3712ab74474` after PR #37 merge.
-- Full local Node test suite passed on 2026-06-13 before PR #37 merge: `node --test tests/*.test.mjs` -> `97/97`.
+- Repo main was clean at `caf80b0e0e5bf61002aabbc2069e386444603e62` after PR #49 merge.
+- Full local Node test suite passed on 2026-06-13 before PR #49 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
@@ -44,7 +44,9 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - PR #44 Repo-Wide iPhone Readiness Audit v1 is merged/deployed at main commit `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`. Netlify production deploy `6a2cf69a6f66a00009dfbe85` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`). Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged.
 - PR #45 Device Setup Runbook Baseline Refresh is merged/deployed at main commit `221f18f8a00f8660a88229310eeea9a4aec00a09`. Netlify production deploy `6a2cf94cb9b036000940039d` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`). Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged.
 - PR #47 Shortcuts Promotion and Discovery Matrix v1 is merged/deployed at main commit `8200082c205dca8ab37d2395ac4892af88d8ecb2`. Netlify production deploy `6a2cfd263e7234000874a64b` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`). Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged.
-- Current safe repo-only docs task: Read-Only Protected Device Verification Checklist v1 defines Todd-assisted first protected read-only device verification after local secret entry in `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`, without Codex handling secrets, calling protected routes, or performing physical-device setup.
+- PR #48 Current-State Refresh after PR #47 is merged/deployed at main commit `dbefa1af03be0d0d151cda84d97d732befb9c0b5`. Netlify production deploy `6a2cfeaa9cffe8000922ea6d` is ready and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`).
+- PR #49 Read-Only Protected Device Verification Checklist v1 is merged/deployed at main commit `caf80b0e0e5bf61002aabbc2069e386444603e62`. Netlify production deploy `6a2d01780605460008c9fb8a` is ready, public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`), protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt, final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and `HEALTH_DATABASE.json` remains unchanged.
+- Next safe repo-only task: Red Safety Intent Output Test Expansion v1 should deepen iOS tests proving Red safety cannot become hard training in Siri/Shortcuts-facing output, without entering secrets, calling protected routes, changing production settings, running Supabase actions, adding signing/entitlements, automating third-party apps, or performing physical iPhone setup.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps

@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `8200082c205dca8ab37d2395ac4892af88d8ecb2`.
-- PR #47, Shortcuts Promotion and Discovery Matrix v1, is merged after PR #45.
-- Automatic Netlify production deploy `6a2cfd263e7234000874a64b` is ready for commit `8200082c205dca8ab37d2395ac4892af88d8ecb2`.
+- Main is at `caf80b0e0e5bf61002aabbc2069e386444603e62`.
+- PR #49, Read-Only Protected Device Verification Checklist v1, is merged after PR #48.
+- Automatic Netlify production deploy `6a2d01780605460008c9fb8a` is ready for commit `caf80b0e0e5bf61002aabbc2069e386444603e62`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
