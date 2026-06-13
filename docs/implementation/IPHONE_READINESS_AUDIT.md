@@ -122,7 +122,7 @@ Boundaries: no protected route calls by Codex, no secret handling, no production
 
 ### Current: Supabase Readiness Diagnostic Plan
 
-Current working document: not created yet.
+Current working document: `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`.
 
 Goal: create a docs-only diagnostic plan for the `coach_observations` schema/cache readiness warning without inspecting production schema, running SQL, applying migrations, refreshing schema cache, or performing admin actions unless separately approved.
 

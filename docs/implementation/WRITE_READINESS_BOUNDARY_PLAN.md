@@ -12,7 +12,7 @@ Purpose: define the approval, audit, duplicate-prevention, rollback, and verific
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes are skipped by Codex and GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains protected and must remain unchanged.
-- Next safe repo-only planning task: Supabase Readiness Diagnostic Plan v1. It remains docs-only unless a later task separately approves production/admin access.
+- Current safe repo-only planning task: Supabase Readiness Diagnostic Plan v1 creates `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`. It remains docs-only unless a later task separately approves production/admin access.
 
 ## Non-Negotiable Boundary
 
@@ -229,7 +229,7 @@ Safe Codex work:
 - keep this plan linked and current as write paths change;
 - add local/mock tests for idempotency, audit fields, duplicate prevention, and write-held wording before any write phase;
 - improve safe status fields so Siri/Shortcuts/GPT can distinguish read-only, draft-only, manual-handoff-only, and write-held paths;
-- document a future production-admin diagnostic plan for `coach_observations` without applying it.
+- use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` before any future production-admin diagnostic for `coach_observations`.
 
 Todd/device/account/production-admin work:
 
