@@ -91,6 +91,8 @@ iOS Freshness Output Hardening v1 makes Daily Data Freshness rows safer for voic
 
 Safe App Entity and Widget String Contract Plan v1 adds reusable safe strings for future Shortcuts, Siri speech, app cards, App Entity titles/subtitles, widgets, and notifications. Use these strings for planning future surfaces instead of raw errors, response bodies, headers, URLs, Keychain/config values, or unbounded workout handoff text. This does not add a widget, notification workflow, App Entity target, signing/entitlement change, protected route call, production write, or physical iPhone setup.
 
+Red Safety Intent Output Test Expansion v1 proves the existing iOS voice/text output paths stay conservative when Coach reports Red safety. Coach Today, Can I Train, Build Today's Workout, direct Coach responses, workout handoff formatting, and future safe-surface strings must not say or imply green/approved/clear-to-train/go-train/full-send hard training; they must preserve no-write or manual-only status, suppress workout handoffs when Red safety is present, and redact credential-like text.
+
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 
 iOS App Intents Readiness v1 is repo-side preparation only. It adds typed Shortcut-safe outputs, weekly review, Can I Train, workout/nutrition/post-workout Coach action scaffolding, and draft-only debrief/note/BP capture. It does not install to Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri or Action Button, configure Personal Automation, or submit draft-only write paths.

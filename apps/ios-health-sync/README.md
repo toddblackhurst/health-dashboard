@@ -30,6 +30,8 @@ iOS Freshness Output Hardening v1 adds typed per-source freshness cards for the 
 
 Safe App Entity and Widget String Contract Plan v1 adds reusable safe-surface strings on top of existing outputs for future Shortcuts, Siri speech, app cards, App Entity titles/subtitles, widgets, and notifications. The strings are concise, redacted, and preserve no-write/manual-only/deferred status. This remains model/helper/test/docs work inside existing app and test targets; it does not add a widget, notification workflow, App Entity target, signing capability, entitlement, protected route call, production write, or physical-device setup.
 
+Red Safety Intent Output Test Expansion v1 hardens the existing Shortcut/Siri-facing output paths so Red safety cannot surface as hard-training permission. Red Coach Today, Can I Train, Build Today's Workout, direct Coach action output, workout handoff text, and future safe-surface strings must suppress hard-training language, preserve `no_write` or manual-only boundaries, and keep credential-like strings redacted. This remains mock/simulator repo work only; protected verification, writes, and physical iPhone setup stay Todd-assisted.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -86,6 +88,8 @@ write_status: ...
 ```
 
 No-network failures are represented with the stable `noNetwork` error identifier and a deferred protected-verification status. Draft-only and workout handoff paths must continue to say that no production write or third-party automation occurred.
+
+When Red safety is present, Shortcut/Siri-facing output should say to hold, modify, recover, or seek human review. It must not imply `green`, `approved`, `clear to train`, `go train`, `full send`, or any equivalent hard-training permission.
 
 ## Shortcuts
 

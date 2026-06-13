@@ -1328,21 +1328,25 @@ struct CoachTodaySummary {
 
     var shortcutOutput: CoachShortcutOutput {
         let constraints = Array(safetyGuardrails.prefix(6))
+        let safetyStatus = Self.safetyStatus(from: dailyCall, constraints: constraints)
+        let isRedSafety = safetyStatus == .red
         return CoachShortcutOutput(
             actionStatus: "ok",
             setupStatus: .configuredLocally,
             readinessStatus: constraints.isEmpty ? .ready : .attentionRequired,
             protectedVerificationStatus: .verifiedReadOnly,
             writeStatus: .noWrite,
-            safetyStatus: Self.safetyStatus(from: dailyCall, constraints: constraints),
+            safetyStatus: safetyStatus,
             readinessSummary: dailyCall ?? "Coach today returned without a daily call.",
-            workoutTitle: todaysPlan.first,
-            workoutType: Self.workoutType(from: todaysPlan.first),
+            workoutTitle: isRedSafety ? nil : todaysPlan.first,
+            workoutType: isRedSafety ? .none : Self.workoutType(from: todaysPlan.first),
             primaryConstraints: constraints,
             coachMemoryContext: nil,
             workoutDebriefContext: nil,
-            nextBestAction: whatToTrackToday.first,
-            requiresMedicalCaution: constraints.contains { Self.medicalCautionText($0) },
+            nextBestAction: isRedSafety
+                ? Self.redSafetyNextAction
+                : whatToTrackToday.first,
+            requiresMedicalCaution: isRedSafety || constraints.contains { Self.medicalCautionText($0) },
             sourceFreshness: "Use sync-status for detailed source freshness.",
             lastSync: date,
             errorIdentifier: nil,
@@ -1415,6 +1419,10 @@ struct CoachTodaySummary {
             || text.localizedCaseInsensitiveContains("migraine")
             || text.localizedCaseInsensitiveContains("asthma")
             || text.localizedCaseInsensitiveContains("pain")
+    }
+
+    static var redSafetyNextAction: String {
+        "Do not start hard training; follow medical/safety guidance first."
     }
 }
 
@@ -1591,6 +1599,9 @@ struct CoachWorkoutHandoff: Codable, Equatable {
             from: topLineCall ?? title ?? "Workout handoff",
             riskFlags: riskFlags + workoutPlan.stringArray("guardrails")
         )
+        guard safetyStatus != .red else {
+            return nil
+        }
         let blocks = workoutPlan.dictionaryArray("blocks").map(CoachWorkoutHandoffBlock.init(dictionary:))
         let planDetails = Self.planDetails(from: workoutPlan)
         let rackEntryLines = workoutPlan.stringArray("rack_entry_lines")
@@ -1784,21 +1795,25 @@ struct CoachDirectActionResponseSummary {
     }
 
     var shortcutOutput: CoachShortcutOutput {
-        CoachShortcutOutput(
+        let safetyStatus = Self.safetyStatus(from: topLineCall ?? reply, riskFlags: riskFlags)
+        let isRedSafety = safetyStatus == .red
+        return CoachShortcutOutput(
             actionStatus: "ok",
             setupStatus: .configuredLocally,
             readinessStatus: riskFlags.isEmpty ? .ready : .attentionRequired,
             protectedVerificationStatus: .verifiedReadOnly,
             writeStatus: workoutHandoff == nil ? .noWrite : .manualHandoffOnly,
-            safetyStatus: Self.safetyStatus(from: topLineCall ?? reply, riskFlags: riskFlags),
+            safetyStatus: safetyStatus,
             readinessSummary: topLineCall ?? reply,
-            workoutTitle: workoutTitle,
-            workoutType: workoutType,
+            workoutTitle: isRedSafety ? nil : workoutTitle,
+            workoutType: isRedSafety ? .none : workoutType,
             primaryConstraints: riskFlags,
             coachMemoryContext: coachMemorySummary,
             workoutDebriefContext: workoutDebriefSummary,
-            nextBestAction: nextActions.first,
-            requiresMedicalCaution: riskFlags.contains { CoachTodaySummary.medicalCautionText($0) },
+            nextBestAction: isRedSafety
+                ? CoachTodaySummary.redSafetyNextAction
+                : nextActions.first,
+            requiresMedicalCaution: isRedSafety || riskFlags.contains { CoachTodaySummary.medicalCautionText($0) },
             sourceFreshness: nil,
             lastSync: nil,
             errorIdentifier: nil,

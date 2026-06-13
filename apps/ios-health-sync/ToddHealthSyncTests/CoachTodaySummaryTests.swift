@@ -145,6 +145,46 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(output.shortcutText.contains("Apple Health is supporting evidence only."))
     }
 
+    func testCoachTodayRedSafetySuppressesHardTrainingSurfaceText() throws {
+        let json = """
+        {
+          "date": "2026-06-13",
+          "daily_call": "Red: medical caution today.",
+          "todays_plan": {
+            "primary_action": "Go train hard at World Gym",
+            "recommendation": "Full send heavy strength",
+            "time_cap_min": 60
+          },
+          "safety_guardrails": [
+            "Red safety: blood pressure and pain require hold.",
+            "Doctor guidance overrides device data."
+          ],
+          "what_to_track_today": [
+            "Go train hard and log heavy sets."
+          ]
+        }
+        """.data(using: .utf8)!
+
+        let summary = try CoachTodaySummary.parse(data: json)
+        let output = summary.shortcutOutput
+        let text = output.shortcutText
+        let surfaces = output.safeSurfaceStrings.contractText
+
+        XCTAssertEqual(output.safetyStatus, .red)
+        XCTAssertEqual(output.readinessStatus, .attentionRequired)
+        XCTAssertEqual(output.writeStatus, .noWrite)
+        XCTAssertEqual(output.workoutTitle, nil)
+        XCTAssertEqual(output.workoutType, .none)
+        XCTAssertTrue(output.requiresMedicalCaution)
+        XCTAssertEqual(output.nextBestAction, CoachTodaySummary.redSafetyNextAction)
+        XCTAssertTrue(text.contains("safety_status: red"))
+        XCTAssertTrue(text.contains("next_best_action: \(CoachTodaySummary.redSafetyNextAction)"))
+        assertNoHardTrainingPermission(in: text)
+        assertNoHardTrainingPermission(in: surfaces)
+        assertNoCredentialLeak(in: text)
+        assertNoCredentialLeak(in: surfaces)
+    }
+
     func testWeeklyReviewResponseBuildsReadOnlyShortcutOutput() throws {
         let json = """
         {
@@ -280,6 +320,70 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(response.conciseResult.contains("Apple Health is supporting evidence only."))
     }
 
+    func testBuildWorkoutRedSafetySuppressesWorkoutHandoffAndHardTrainingPermission() throws {
+        let json = """
+        {
+          "ok": true,
+          "action": "workout",
+          "reply": "Red safety hold.",
+          "decision": {
+            "top_line_call": "Red: do not train today.",
+            "next_actions": [
+              "Go train hard at World Gym."
+            ],
+            "risk_flags": [
+              "Red safety: sharp pain and blood pressure caution.",
+              "Doctor guidance overrides device data."
+            ],
+            "workout_plan": {
+              "top_line": "Full send heavy strength",
+              "session_type": "strength",
+              "rack_entry_lines": [
+                "Back Squat | barbell | 5 x 5 heavy"
+              ],
+              "blocks": [
+                {
+                  "name": "Heavy strength",
+                  "exercises": [
+                    {
+                      "rack_motra_name": "Back Squat",
+                      "equipment": "barbell",
+                      "prescription": {
+                        "sets": 5,
+                        "reps": "5",
+                        "load": "heavy"
+                      },
+                      "rack_entry_line": "Back Squat | barbell | 5 x 5 heavy"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+        """.data(using: .utf8)!
+
+        let response = try CoachDirectActionResponseSummary.parse(data: json, fallbackAction: "workout")
+        let output = response.shortcutOutput
+        let text = output.shortcutText
+        let surfaces = output.safeSurfaceStrings.contractText
+
+        XCTAssertNil(response.workoutHandoff)
+        XCTAssertEqual(output.safetyStatus, .red)
+        XCTAssertEqual(output.writeStatus, .noWrite)
+        XCTAssertEqual(output.workoutTitle, nil)
+        XCTAssertEqual(output.workoutType, .none)
+        XCTAssertTrue(output.requiresMedicalCaution)
+        XCTAssertEqual(output.nextBestAction, CoachTodaySummary.redSafetyNextAction)
+        XCTAssertFalse(text.contains("workout_handoff:"))
+        XCTAssertFalse(text.contains("Back Squat"))
+        XCTAssertFalse(text.contains("5 x 5 heavy"))
+        assertNoHardTrainingPermission(in: text)
+        assertNoHardTrainingPermission(in: surfaces)
+        assertNoCredentialLeak(in: text)
+        assertNoCredentialLeak(in: surfaces)
+    }
+
     func testWorkoutHandoffRedactsCredentialLikeValuesAndStaysManualOnly() throws {
         let fakeToken = "fakeWorkoutToken123456789"
         let json = """
@@ -357,6 +461,60 @@ final class CoachTodaySummaryTests: XCTestCase {
             XCTAssertTrue(text.contains("error_identifier: missingSecret"))
             XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret: fake"))
         }
+    }
+
+    func testCanITrainRedSafetyCarriesTypedNoWriteOutput() async throws {
+        let data = """
+        {
+          "date": "2026-06-13",
+          "daily_call": "Red: hold training today.",
+          "todays_plan": {
+            "primary_action": "Go train hard at World Gym"
+          },
+          "safety_guardrails": [
+            "Red safety: asthma symptoms and blood pressure need review."
+          ],
+          "what_to_track_today": [
+            "Go train hard."
+          ]
+        }
+        """.data(using: .utf8)!
+        let suiteName = "CanITrainRedSafetyTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let session = MockCoachURLSession(responseData: data)
+        let workflow = MorningCoachWorkflow(
+            apiClient: CoachAPIClient(session: session),
+            keychainStore: FakeCoachSecretStore(secret: "fake-local-secret"),
+            store: store
+        )
+
+        let result = try await workflow.canITrain()
+        let output = try XCTUnwrap(result.shortcutOutput)
+        let request = try XCTUnwrap(session.lastRequest)
+        let text = result.shortcutValue
+        let surfaces = output.safeSurfaceStrings.contractText
+
+        XCTAssertEqual(request.httpMethod, "GET")
+        XCTAssertEqual(request.url?.path, "/api/coach/coach-today")
+        XCTAssertEqual(output.actionStatus, "medical_caution")
+        XCTAssertEqual(output.safetyStatus, .red)
+        XCTAssertEqual(output.writeStatus, .noWrite)
+        XCTAssertEqual(output.workoutTitle, nil)
+        XCTAssertEqual(output.workoutType, .none)
+        XCTAssertTrue(output.requiresMedicalCaution)
+        XCTAssertEqual(output.nextBestAction, CoachTodaySummary.redSafetyNextAction)
+        XCTAssertTrue(text.contains("status: medical_caution"))
+        XCTAssertTrue(text.contains("training_class: medical_caution"))
+        XCTAssertFalse(text.contains("fake-local-secret"))
+        assertNoHardTrainingPermission(in: text)
+        assertNoHardTrainingPermission(in: surfaces)
+        assertNoCredentialLeak(in: text)
+        assertNoCredentialLeak(in: surfaces)
     }
 
     func testDeferredDraftOutputMakesNoWriteBoundaryExplicit() throws {
@@ -1298,6 +1456,50 @@ final class CoachTodaySummaryTests: XCTestCase {
         assertNoCredentialLeak(in: text)
     }
 
+    func testTypedRedSafetyOutputUsesHoldLanguageAndNoWriteStatuses() {
+        let output = CoachShortcutOutput(
+            actionStatus: "red_safety_hold",
+            setupStatus: .configuredLocally,
+            readinessStatus: .attentionRequired,
+            protectedVerificationStatus: .verifiedReadOnly,
+            writeStatus: .noWrite,
+            safetyStatus: .red,
+            readinessSummary: "Red: medical caution today.",
+            workoutTitle: nil,
+            workoutType: .none,
+            primaryConstraints: [
+                "Red safety: pain and blood pressure require hold.",
+                "Doctor guidance overrides device data."
+            ],
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: CoachTodaySummary.redSafetyNextAction,
+            requiresMedicalCaution: true,
+            sourceFreshness: "Read-only source freshness only.",
+            lastSync: "2026-06-13",
+            errorIdentifier: nil,
+            errorMessage: nil
+        )
+        let text = output.shortcutText
+        let surfaces = output.safeSurfaceStrings
+        let surfaceText = surfaces.contractText
+
+        XCTAssertEqual(output.errorIdentifier, nil)
+        XCTAssertEqual(output.setupStatus, .configuredLocally)
+        XCTAssertEqual(output.readinessStatus, .attentionRequired)
+        XCTAssertEqual(output.protectedVerificationStatus, .verifiedReadOnly)
+        XCTAssertEqual(output.writeStatus, .noWrite)
+        XCTAssertEqual(output.safetyStatus, .red)
+        XCTAssertTrue(output.requiresMedicalCaution)
+        XCTAssertTrue(text.contains("Do not start hard training"))
+        XCTAssertTrue(text.contains("write_status: no_write"))
+        XCTAssertTrue(surfaces.widgetBody.contains("Do not start hard training"))
+        assertNoHardTrainingPermission(in: text)
+        assertNoHardTrainingPermission(in: surfaceText)
+        assertNoCredentialLeak(in: text)
+        assertNoCredentialLeak(in: surfaceText)
+    }
+
     func testDailyFreshnessSafeSurfaceStringsRetainDeferredAndNoWriteSemantics() throws {
         let suiteName = "DailyFreshnessFutureSurfaces-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
@@ -1431,6 +1633,28 @@ final class CoachTodaySummaryTests: XCTestCase {
             XCTAssertFalse(
                 text.localizedCaseInsensitiveContains(value),
                 "Leaked forbidden value: \(value)",
+                file: file,
+                line: line
+            )
+        }
+    }
+
+    private func assertNoHardTrainingPermission(in text: String, file: StaticString = #filePath, line: UInt = #line) {
+        let lowercased = text.lowercased()
+        let forbidden = [
+            "train hard",
+            "go train",
+            "approved",
+            "green",
+            "clear to train",
+            "full send",
+            "hard_training_allowed",
+            "heavy strength"
+        ]
+        for value in forbidden {
+            XCTAssertFalse(
+                lowercased.contains(value),
+                "Leaked hard-training permission: \(value)",
                 file: file,
                 line: line
             )

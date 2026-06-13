@@ -175,10 +175,34 @@ struct MorningCoachWorkflow {
             "training_class: \(trainingClass)",
             output.shortcutText
         ].joined(separator: "\n")
+        let resultOutput = CoachShortcutOutput(
+            actionStatus: trainingClass,
+            setupStatus: output.setupStatus,
+            readinessStatus: output.readinessStatus,
+            protectedVerificationStatus: output.protectedVerificationStatus,
+            writeStatus: output.writeStatus,
+            safetyStatus: output.safetyStatus,
+            readinessSummary: output.readinessSummary,
+            workoutTitle: output.workoutTitle,
+            workoutType: output.workoutType,
+            primaryConstraints: ["training_class: \(trainingClass)"] + output.primaryConstraints,
+            coachMemoryContext: output.coachMemoryContext,
+            workoutDebriefContext: output.workoutDebriefContext,
+            nextBestAction: output.safetyStatus == .red
+                ? CoachTodaySummary.redSafetyNextAction
+                : output.nextBestAction,
+            requiresMedicalCaution: output.requiresMedicalCaution || output.safetyStatus == .red,
+            sourceFreshness: output.sourceFreshness,
+            lastSync: output.lastSync,
+            errorIdentifier: output.errorIdentifier,
+            errorMessage: output.errorMessage,
+            workoutHandoff: output.workoutHandoff
+        )
         store.recordCoachReadback(summary: detail)
         return MorningCoachActionResult(
             title: "Can I train?",
-            detail: detail
+            detail: detail,
+            shortcutOutput: resultOutput
         )
     }
 
