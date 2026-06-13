@@ -15,13 +15,13 @@ Related references:
 
 ## Current Repo Baseline
 
-- Main is at `dbefa1af03be0d0d151cda84d97d732befb9c0b5`.
-- PR #48, Post-PR47 Current-State Refresh, is merged and deployed.
-- Automatic Netlify production deploy `6a2cfeaa9cffe8000922ea6d` is ready for commit `dbefa1af03be0d0d151cda84d97d732befb9c0b5`.
+- Main is at `caf80b0e0e5bf61002aabbc2069e386444603e62`.
+- PR #49, Read-Only Protected Device Verification Checklist v1, is merged and deployed.
+- Automatic Netlify production deploy `6a2d01780605460008c9fb8a` is ready for commit `caf80b0e0e5bf61002aabbc2069e386444603e62`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes remain skipped by Codex and GPT Pro because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
-- This checklist PR does not call public or protected production routes. It uses the PR #48 ping result as documentation context only.
+- This checklist did not call protected production routes. Post-merge verification used only the public ping route.
 
 ## Hard Boundary
 
