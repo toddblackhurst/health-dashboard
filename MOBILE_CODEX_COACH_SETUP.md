@@ -77,6 +77,8 @@ For the native Todd Health Sync app, the verified Morning Coach path is manual `
 
 Daily Data Freshness UX v1 adds a local no-write freshness readout for the app and App Intent layer. Use it before a physical-device run to see whether Apple Health sync is missing/stale/fresh, whether public ping status is fresh or safely deferred, whether protected source freshness still requires Todd-entered device setup, which Garmin/Rack/Motra/nutrition/sleep/body/BP sources remain manual/deferred, and whether draft-only capture remains no-write.
 
+Workout Handoff Formatting v1 keeps `Build Today's Workout` as the voice/text path for workout planning while making the returned Shortcut text easier to use manually. When a structured workout plan is available, Coach output includes a redacted `workout_handoff` with manual Rack/Motra entry lines, Garmin manual-start guidance, safety constraints, equipment assumptions, and `manual_handoff_only_no_write`. This is not authorization to automate Garmin, Rack, Motra, World Gym, Apple Health workouts, browser sessions, or third-party apps.
+
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 
 iOS App Intents Readiness v1 is repo-side preparation only. It adds typed Shortcut-safe outputs, weekly review, Can I Train, workout/nutrition/post-workout Coach action scaffolding, and draft-only debrief/note/BP capture. It does not install to Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri or Action Button, configure Personal Automation, or submit draft-only write paths.

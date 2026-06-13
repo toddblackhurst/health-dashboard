@@ -386,10 +386,14 @@ Behavior:
 
 - Call `buildTodayWorkout`.
 - Return safe workout summary.
+- When the backend response includes a structured workout plan, render a stable redacted `workout_handoff` for manual use.
 - Include safety constraints.
+- Include manual Rack/Motra entry lines, Garmin manual-start guidance, equipment assumptions, and one next action when available.
+- Mark Rack/Garmin handoff as `manual_handoff_only_no_write`.
 - Generic request should not refuse on non-strength days.
 - Explicit strength request on non-strength day returns controlled modified strength when non-Red.
 - Red safety returns recovery/medical caution, not hard training.
+- Do not automate Garmin, Rack, Motra, World Gym, Apple Health workouts, browser sessions, or other third-party app entry from this intent.
 
 ### 15.4 Record Workout Debrief
 
@@ -454,6 +458,7 @@ Recommended output fields for Coach Intents:
 - `primary_constraints`: array of short constraints
 - `coach_memory_context`: short summary only, no raw memory dump
 - `workout_debrief_context`: short summary and constraints only, no raw debrief payload dump
+- `workout_handoff`: redacted manual-only workout handoff for Rack/Garmin use when a structured plan is present
 - `next_best_action`: one clear next action
 - `requires_medical_caution`: boolean
 - `source_freshness`: concise source freshness summary
