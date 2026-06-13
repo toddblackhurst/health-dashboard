@@ -20,6 +20,17 @@ enum CoachWorkoutRequestKind: String, AppEnum {
     }
 }
 
+private func coachIntentShortcutValue(
+    _ action: () async throws -> MorningCoachActionResult
+) async -> String {
+    do {
+        let result = try await action()
+        return result.shortcutValue
+    } catch {
+        return CoachShortcutOutput.failure(error: error).shortcutText
+    }
+}
+
 struct SyncAppleHealthIntent: AppIntent {
     static var title: LocalizedStringResource = "Sync Apple Health"
     static var description = IntentDescription("Sync Apple Health daily summaries to Todd's private coach.")
@@ -36,8 +47,10 @@ struct SyncAppleHealthIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().syncAppleHealth(days: days, trigger: "shortcut")
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().syncAppleHealth(days: days, trigger: "shortcut")
+        }
+        return .result(value: value)
     }
 }
 
@@ -46,8 +59,10 @@ struct MorningCoachIntent: AppIntent {
     static var description = IntentDescription("Sync Apple Health, check coach source freshness, and return today's coaching call.")
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().runMorningCoach()
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().runMorningCoach()
+        }
+        return .result(value: value)
     }
 }
 
@@ -56,8 +71,10 @@ struct CanITrainIntent: AppIntent {
     static var description = IntentDescription("Check today's safety and readiness class without changing coach data.")
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().canITrain()
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().canITrain()
+        }
+        return .result(value: value)
     }
 }
 
@@ -66,8 +83,10 @@ struct CheckCoachSyncStatusIntent: AppIntent {
     static var description = IntentDescription("Check whether Todd's coach sources are fresh enough for today's call.")
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().checkCoachSyncStatus()
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().checkCoachSyncStatus()
+        }
+        return .result(value: value)
     }
 }
 
@@ -92,11 +111,13 @@ struct WeeklyCoachReviewIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().weeklyReview(
-            weekStart: weekStart,
-            weekEnd: weekEnd
-        )
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().weeklyReview(
+                weekStart: weekStart,
+                weekEnd: weekEnd
+            )
+        }
+        return .result(value: value)
     }
 }
 
@@ -126,12 +147,14 @@ struct BuildTodayWorkoutIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().buildTodaysWorkout(
-            requestText: request,
-            requestedSessionType: workoutType.rawValue,
-            scheduleOverride: scheduleOverride
-        )
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().buildTodaysWorkout(
+                requestText: request,
+                requestedSessionType: workoutType.rawValue,
+                scheduleOverride: scheduleOverride
+            )
+        }
+        return .result(value: value)
     }
 }
 
@@ -151,8 +174,10 @@ struct NutritionCloseoutIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().nutritionCloseout(note: note)
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().nutritionCloseout(note: note)
+        }
+        return .result(value: value)
     }
 }
 
@@ -172,8 +197,10 @@ struct PostWorkoutCoachIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().postWorkoutCoach(note: note)
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().postWorkoutCoach(note: note)
+        }
+        return .result(value: value)
     }
 }
 
@@ -260,8 +287,10 @@ struct OpenCoachTodayIntent: AppIntent {
     static var openAppWhenRun = true
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        let result = try await MorningCoachWorkflow().openCoachToday()
-        return .result(value: result.shortcutValue)
+        let value = await coachIntentShortcutValue {
+            try await MorningCoachWorkflow().openCoachToday()
+        }
+        return .result(value: value)
     }
 }
 

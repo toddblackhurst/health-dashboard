@@ -6,9 +6,9 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main is clean at `847825ac958aae2b14656b8328b2f4434142ecc7` before the iOS App Intents Readiness v1 branch.
+- Repo main is clean at `110603e28bcdcc2007e7af1594dbd47919fd36d7` before the iPhone Coach Setup UX Readiness v1 branch.
 - Full local Node test suite passed on 2026-06-13 before this branch: `node --test tests/*.test.mjs` -> `97/97`.
-- PR #25 readiness audit merged and production deployed automatically from main; public ping still works.
+- PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main; public ping still works.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
@@ -16,6 +16,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - The current OpenAPI is version `2.0.2`; public `pingCoachApi` has `security: []`; protected actions explicitly require `CoachSecret` in the `x-coach-secret` header.
 - The existing iPhone app bridge exposes `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, `CanITrainIntent`, `WeeklyCoachReviewIntent`, `BuildTodayWorkoutIntent`, `NutritionCloseoutIntent`, `PostWorkoutCoachIntent`, `DraftWorkoutDebriefIntent`, `DraftCoachNoteIntent`, `DraftBloodPressureIntakeIntent`, and `OpenCoachTodayIntent`.
 - The promoted App Shortcuts list is capped at 10 to satisfy Apple's metadata processor limit; `DraftCoachNoteIntent` and `DraftBloodPressureIntakeIntent` remain implemented but are not promoted.
+- iPhone Coach Setup UX Readiness v1 is in progress on a repo-only branch. It adds native setup state, local API base/Keychain preflight checks, and non-secret Shortcut setup failures before protected requests run.
 
 ## Readiness Gaps
 
@@ -55,16 +56,17 @@ Human-boundary work:
 
 ### P0: iPhone/Siri Daily Coach Surface
 
-Status: repo-side App Intents readiness in progress; not yet physical-device verified for the expanded voice/text Coach.
+Status: repo-side App Intents readiness is merged; iPhone Coach Setup UX Readiness v1 is in progress; not yet physical-device verified for the expanded voice/text Coach.
 
 Verified:
 
 - Native app can sync Apple Health and run Morning Coach manually.
 - Shortcuts can expose the existing app intents.
+- Repo-side App Intents now cover weekly review, Can I Train, build workout, nutrition closeout, post-workout coach, draft debrief, draft note, draft BP intake, and Open Coach Today.
 
 Remaining safe Codex work:
 
-- Keep expanding typed intent outputs and safe error identifiers so Siri/Shortcuts can branch without scraping prose.
+- Keep expanding typed intent outputs, setup preflights, and safe error identifiers so Siri/Shortcuts can branch without scraping prose.
 - Add deeper tests for secret redaction, missing secret, invalid secret, offline/backend failure, and Red safety behavior in intent outputs.
 - Keep Apple Health supporting-only in all iPhone outputs.
 - Keep draft-only write paths explicit until Todd-assisted device confirmation exists.
@@ -132,7 +134,7 @@ Rules:
 
 ## Next Safe Codex Task Candidates
 
-1. iOS App Intents Readiness Implementation v1: add safe read/write-intent scaffolding for build workout, nutrition closeout, fast note, BP/intake, and debrief with structured outputs, local tests, and no physical-device claims.
+1. iPhone Coach Setup UX Readiness v1: finish local setup guardrails, docs, tests, and PR without physical-device claims.
 2. Supabase Readiness Diagnostic Plan: document and, only if separately approved, inspect production schema/cache state for `coach_observations` without applying migrations.
 3. Rack/Garmin Handoff v1: improve generated workout handoff format and tests without automating third-party app entry.
 4. Daily Data Freshness UX: make `getSyncStatus` and `coach-today` warnings more action-oriented while preserving source hierarchy.

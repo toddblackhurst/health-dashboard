@@ -6,7 +6,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Connection") {
+                Section("Coach Setup") {
                     TextField("Coach API base URL", text: $viewModel.apiBase)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
@@ -17,8 +17,16 @@ struct ContentView: View {
                         .autocorrectionDisabled()
 
                     Button("Save Connection") {
-                        viewModel.saveSecret()
+                        viewModel.saveConnection()
                     }
+
+                    Button("Check Setup") {
+                        viewModel.checkCoachSetup()
+                    }
+
+                    LabeledContent("State", value: viewModel.coachSetupTitle)
+                    Text(viewModel.coachSetupDetail)
+                        .foregroundStyle(.secondary)
                 }
 
                 Section("Apple Health") {

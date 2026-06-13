@@ -23,6 +23,26 @@ final class MockCoachURLSession: CoachURLSessioning {
     }
 }
 
+final class FakeCoachSecretStore: CoachSecretStoring {
+    var secret: String
+
+    init(secret: String = "") {
+        self.secret = secret
+    }
+
+    func loadSecret() throws -> String {
+        secret
+    }
+
+    func saveSecret(_ secret: String) throws {
+        self.secret = secret
+    }
+
+    func deleteSecret() throws {
+        secret = ""
+    }
+}
+
 final class CoachTodaySummaryTests: XCTestCase {
     func testStructuredCoachTodayResponseBuildsMorningCoachSummary() throws {
         let json = """
@@ -195,6 +215,60 @@ final class CoachTodaySummaryTests: XCTestCase {
             CoachAPIError.requestFailed(statusCode: 503, message: nil).shortcutErrorCode,
             .backendUnavailable
         )
+    }
+
+    func testCoachConnectionConfigurationReportsSetupStatesWithoutSecrets() {
+        let missing = CoachConnectionConfiguration(apiBase: "", secret: "")
+        XCTAssertEqual(missing.status.state, .notConfigured)
+        XCTAssertEqual(missing.status.errorIdentifier, .notConfigured)
+        XCTAssertTrue(missing.status.shortcutOutput.shortcutText.contains("No secret value is included"))
+
+        let missingBase = CoachConnectionConfiguration(apiBase: "", secret: "test-secret")
+        XCTAssertEqual(missingBase.status.state, .missingAPIBase)
+        XCTAssertEqual(missingBase.status.errorIdentifier, .missingAPIBase)
+
+        let invalidBase = CoachConnectionConfiguration(apiBase: "not a url", secret: "test-secret")
+        XCTAssertEqual(invalidBase.status.state, .invalidAPIBase)
+        XCTAssertEqual(invalidBase.status.errorIdentifier, .missingAPIBase)
+
+        let missingSecret = CoachConnectionConfiguration(apiBase: "https://coach.example.test", secret: "")
+        XCTAssertEqual(missingSecret.status.state, .missingSecret)
+        XCTAssertEqual(missingSecret.status.errorIdentifier, .missingSecret)
+
+        let ready = CoachConnectionConfiguration(apiBase: "https://coach.example.test", secret: "test-secret")
+        XCTAssertEqual(ready.status.state, .configuredLocally)
+        XCTAssertNil(ready.status.errorIdentifier)
+        XCTAssertTrue(ready.status.isReadyForProtectedRequests)
+    }
+
+    func testConfigurationErrorBuildsStableShortcutFailureOutput() {
+        let status = CoachConnectionConfiguration(apiBase: "https://coach.example.test", secret: "").status
+        let output = CoachShortcutOutput.failure(error: CoachConfigurationError(status: status))
+
+        XCTAssertEqual(output.actionStatus, "not_configured")
+        XCTAssertEqual(output.errorIdentifier, .missingSecret)
+        XCTAssertTrue(output.shortcutText.contains("No production write was sent."))
+        XCTAssertTrue(output.shortcutText.contains("No secret value is included"))
+    }
+
+    func testMorningCoachSetupCheckUsesFakeSecretStore() throws {
+        let suiteName = "CoachTodaySummaryTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let workflow = MorningCoachWorkflow(
+            keychainStore: FakeCoachSecretStore(secret: ""),
+            store: store
+        )
+
+        let result = try workflow.checkSetup()
+
+        XCTAssertEqual(result.shortcutOutput?.errorIdentifier, .missingSecret)
+        XCTAssertTrue(result.shortcutValue.contains("status: not_configured"))
+        XCTAssertTrue(result.shortcutValue.contains("Missing Coach API secret"))
     }
 
     func testWeeklyReviewClientUsesReadOnlyEndpointAndSecretHeader() async throws {

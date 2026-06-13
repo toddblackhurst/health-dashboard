@@ -1,28 +1,29 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #25 merge/deploy verification and iOS App Intents Readiness v1 local implementation.
+Last updated: 2026-06-13 Asia/Taipei, after PR #26 merge/deploy verification and iPhone Coach Setup UX Readiness v1 local implementation.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit before the iOS App Intents Readiness v1 branch: `847825ac958aae2b14656b8328b2f4434142ecc7`.
-- PR #25, `Document coach readiness gaps and optional memory fallback`, is merged to main and production deployed automatically.
-- Working tree was clean before the iOS App Intents Readiness v1 branch.
+- Current verified main commit before the iPhone Coach Setup UX Readiness v1 branch: `110603e28bcdcc2007e7af1594dbd47919fd36d7`.
+- PR #26, `iOS App Intents Readiness v1`, is merged to main and production deployed automatically.
+- Working tree was clean before the iPhone Coach Setup UX Readiness v1 branch.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result after PR #25 merge: `97/97` passing on 2026-06-13.
-- Current iOS App Intents Readiness v1 branch local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
-- Current iOS App Intents Readiness v1 branch local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 6 `CoachTodaySummaryTests`.
+- Current verified main test result after PR #26 merge: `97/97` passing on 2026-06-13.
+- Current iPhone Coach Setup UX Readiness v1 branch local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
+- Current iPhone Coach Setup UX Readiness v1 branch local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
   - `GET https://todd-personal-coach.netlify.app/api/coach/ping`
   - Response: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`
-- Production API ping was also verified after PR #25 automatic production deploy at main commit `847825ac958aae2b14656b8328b2f4434142ecc7`.
+- Production API ping was also verified after PR #26 automatic production deploy at main commit `110603e28bcdcc2007e7af1594dbd47919fd36d7`.
 - Saved GPT read-only protected actions were verified after Todd manually updated the secret in Netlify and GPT Builder:
   - `getSyncStatus` succeeded for 2026-06-13.
   - `buildWeeklyReview` succeeded for week_start `2026-06-08`, week_end `2026-06-14`, timezone `Asia/Taipei`.
 - No GPT Action write action was called during the read-only recovery verification.
 - Codex did not view, request, paste, store, or handle the secret. Todd handled secret entry manually.
 - `HEALTH_DATABASE.json` remains protected. It may change upstream from daily brief refresh automation, but Codex tasks must not edit it unless Todd explicitly scopes that file.
-- iOS App Intents Readiness v1 is repo-side only. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, call live production write endpoints, or submit draft-only debrief/note/BP writes.
+- iOS App Intents Readiness v1 is merged and repo-side only. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, call live production write endpoints, or submit draft-only debrief/note/BP writes.
+- iPhone Coach Setup UX Readiness v1 is the current local repo-only branch. It adds native setup status, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, deploy production, or call live protected write endpoints.
 
 ## 1. Project Purpose
 
@@ -218,6 +219,16 @@ Current production state:
   - Saved GPT read-only `getSyncStatus` and `buildWeeklyReview` succeeded.
   - No write action was called.
   - Codex did not view, request, paste, store, or handle secrets.
+- PR #25, `Document coach readiness gaps and optional memory fallback`, is merged and deployed.
+  - Scope: readiness gap inventory and optional memory fallback tests/docs.
+  - Production public ping succeeded after the automatic deploy.
+- PR #26, `iOS App Intents Readiness v1`, is merged and deployed.
+  - Merge brought main to commit `110603e28bcdcc2007e7af1594dbd47919fd36d7`.
+  - Netlify production deploy ID: `6a2cbaac40021c0008dcd7b5`.
+  - Published at: 2026-06-13 10:04:38 Asia/Taipei.
+  - Scope: repo-side App Intents expansion, typed Shortcut-safe outputs, stable error identifiers, read-only weekly review, Can I Train, workout/nutrition/post-workout scaffolding, and draft-only debrief/note/BP capture paths.
+  - Public production ping succeeded after the automatic deploy.
+  - Protected read-only routes were not called by Codex after merge because they require `x-coach-secret`.
 - Unless explicitly noted otherwise, no production secrets or environment variables were changed by Codex, no secret values were printed or pasted into chat, and Codex did not intentionally edit `HEALTH_DATABASE.json`.
 
 Coach Memory / Observations v1 production status:
