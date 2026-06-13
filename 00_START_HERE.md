@@ -14,11 +14,12 @@ Read only this active set first:
 6. `docs/implementation/READINESS_GAP_INVENTORY.md` — current readiness gaps, safe Codex work, and Todd/device/account boundaries.
 7. `docs/implementation/DEVICE_SETUP_RUNBOOK.md` — Todd-assisted iPhone/Siri/Shortcuts setup runbook and dry-run validation matrix.
 8. `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` — promoted versus implemented/unpromoted App Intents, Shortcuts discovery expectations, and Todd-device verification steps.
-9. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
-10. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
-11. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-12. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-13. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+9. `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` — first Todd-assisted protected read-only iPhone verification checklist after direct device secret entry.
+10. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
+11. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
+12. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+13. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+14. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -67,7 +68,7 @@ Read only this active set first:
   - `Check Daily Data Freshness`
   - `Draft Coach Note`
   - `Draft Blood Pressure Intake`
-- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`.
+- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`, and the first protected read-only device verification checklist is in `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`.
 - Todd-assisted physical iPhone setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 - Older shortcuts still present but not preferred: `Coach Motra Debrief`, `Coach Message`, `Coach Intake`, `Coach Upload`. Delete only with Todd's explicit confirmation.
 

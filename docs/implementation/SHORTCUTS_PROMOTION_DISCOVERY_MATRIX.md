@@ -56,6 +56,8 @@ Purpose: document the current repo-side App Intents and App Shortcuts discovery 
 12. Treat Action Button and Personal Automation as candidates until Todd verifies them on the real iPhone.
 13. Capture only non-secret evidence: status lines, redacted summaries, readiness/freshness labels, and no-write/manual-only/draft-only markers.
 
+For the first protected read-only device run after Todd-entered secret setup, use `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` for action order, safe evidence fields, stop conditions, and rollback steps.
+
 ## Troubleshooting
 
 - Shortcut not visible: confirm the installed app build is current, reopen Shortcuts, search Todd Health Sync actions, relaunch the app, then reboot/reinstall only with Todd present.
@@ -64,6 +66,7 @@ Purpose: document the current repo-side App Intents and App Shortcuts discovery 
 - Invalid API base URL: correct it to `https://todd-personal-coach.netlify.app`, save, and rerun setup checks.
 - Health permission required: Todd reviews Health permissions for Todd Health Sync and reruns local sync/freshness checks.
 - Protected verification deferred: this is expected until the device-saved secret is present and Todd runs the check on the physical iPhone.
+- First protected read-only verification uncertain: return to `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` and run only one manual read-only action before any Siri, Action Button, Personal Automation, or write-readiness path.
 - No network: expect stable no-network/deferred status, a redacted summary, and no protected write.
 - Stale data: use freshness/source warning lines; do not let Apple Health override Garmin, Rack/Motra, Garmin Nutrition, safety, or medical hierarchy.
 - No-write/manual-handoff-only status: expected for workout handoff and draft-only capture paths unless a later write-readiness phase is explicitly scoped.
