@@ -24,9 +24,16 @@ struct ContentView: View {
                         viewModel.checkCoachSetup()
                     }
 
+                    Button("Check Coach Readiness") {
+                        viewModel.checkCoachReadiness()
+                    }
+
                     LabeledContent("State", value: viewModel.coachSetupTitle)
                     Text(viewModel.coachSetupDetail)
                         .foregroundStyle(.secondary)
+                    Text(viewModel.coachReadinessText)
+                        .foregroundStyle(.secondary)
+                        .textSelection(.enabled)
                 }
 
                 Section("Apple Health") {

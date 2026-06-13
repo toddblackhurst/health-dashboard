@@ -6,11 +6,13 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main is clean at `7656419538b094abfe7f498347d48f6917b1c860` before the Coach Device Setup Runbook and Dry-Run Matrix v1 branch.
+- Repo main is clean at `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d` before the Coach Readiness Status and Automation Gate v1 branch.
 - Full local Node test suite passed on 2026-06-13 after PR #27 merge: `node --test tests/*.test.mjs` -> `97/97`.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
-- Automatic Netlify production deploy for PR #27 merge commit `7656419538b094abfe7f498347d48f6917b1c860` is ready: deploy id `6a2cbe646e58290008291dd2`, published at `2026-06-13T02:20:30.076Z`, manual deploy `false`.
+- PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
+- PR #29 iOS Secret Redaction and Shortcut Output Safety v1 merged and production deployed automatically from main.
+- Automatic Netlify production deploy for PR #29 merge commit `c2b8c0cde8493e9df9074bb124c3ec7a44f7960d` is ready: deploy id `6a2cc6884e4ec40008d96348`, published at `2026-06-13T02:55:15.447Z`, manual deploy `false`.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
@@ -19,6 +21,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - The existing iPhone app bridge exposes `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, `CanITrainIntent`, `WeeklyCoachReviewIntent`, `BuildTodayWorkoutIntent`, `NutritionCloseoutIntent`, `PostWorkoutCoachIntent`, `DraftWorkoutDebriefIntent`, `DraftCoachNoteIntent`, `DraftBloodPressureIntakeIntent`, and `OpenCoachTodayIntent`.
 - The promoted App Shortcuts list is capped at 10 to satisfy Apple's metadata processor limit; `DraftCoachNoteIntent` and `DraftBloodPressureIntakeIntent` remain implemented but are not promoted.
 - iPhone Coach Setup UX Readiness v1 is merged. It adds native setup state, local API base/Keychain preflight checks, and non-secret Shortcut setup failures before protected requests run.
+- iOS Secret Redaction and Shortcut Output Safety v1 is merged. It redacts credential-like values from Shortcut/App Intent output, visible app status, stored readbacks, and exposed errors.
 - Todd-assisted physical iPhone/Siri/Shortcuts setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 ## Readiness Gaps
@@ -75,6 +78,7 @@ Remaining safe Codex work:
 - Add deeper tests for secret redaction, missing secret, invalid secret, offline/backend failure, and Red safety behavior in intent outputs.
 - Keep Apple Health supporting-only in all iPhone outputs.
 - Keep draft-only write paths explicit until Todd-assisted device confirmation exists.
+- Add a local Coach readiness gate that maps setup, public ping, protected read-only readiness, HealthKit, Siri/Shortcuts, Action Button, Personal Automation, write hold, and draft-only capture into explicit statuses.
 - Use the device setup runbook for future physical-device sessions rather than improvising from chat memory.
 
 Human/device boundary:

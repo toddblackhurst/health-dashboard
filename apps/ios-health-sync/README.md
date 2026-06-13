@@ -16,6 +16,8 @@ iOS App Intents Readiness v1 expands the repo-side Shortcuts surface for Todd's 
 
 iPhone Coach Setup UX Readiness v1 adds local configuration guardrails before protected Coach requests run. The app now shows a Coach Setup state, lets Todd save or clear the local Keychain secret, and returns structured non-secret setup failures to Shortcuts/Siri when the API base URL or device secret is missing. It still does not enter, rotate, print, or verify the real secret without Todd present on the device.
 
+iOS Secret Redaction and Shortcut Output Safety v1 adds a reusable output safety layer for Shortcut/App Intent text, visible app status, stored app readbacks, and user-facing errors. Coach Readiness Status and Automation Gate v1 adds a no-write readiness check that separates local app setup from Todd/device-bound Health, Siri, Action Button, Personal Automation, and protected read-only verification.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -74,7 +76,7 @@ After the app is installed on Todd's iPhone, open `Shortcuts` and confirm these 
 - `Draft Workout Debrief`
 - `Open Coach Today`
 
-Apple currently limits each app to 10 promoted App Shortcuts. `Draft Coach Note` and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top Shortcuts list; use them from the app's available actions if present after install.
+Apple currently limits each app to 10 promoted App Shortcuts. `Check Coach Readiness`, `Draft Coach Note`, and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top Shortcuts list; use them from the app's available actions if present after install.
 
 Recommended setup:
 
