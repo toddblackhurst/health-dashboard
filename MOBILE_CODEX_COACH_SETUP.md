@@ -85,6 +85,8 @@ No-Network Failure Matrix v1 keeps network and setup failures predictable for vo
 
 iOS Freshness Output Hardening v1 makes Daily Data Freshness rows safer for voice/text display and future entity/widget/notification reuse. Each source row should show a stable category, freshness/readiness/protected/write statuses, redacted title/detail, one next action, and any stable error identifier without exposing secrets, raw URLs, headers, response bodies, or Keychain/config values. This remains repo-only preparation; real protected verification and device setup stay Todd-assisted.
 
+Safe App Entity and Widget String Contract Plan v1 adds reusable safe strings for future Shortcuts, Siri speech, app cards, App Entity titles/subtitles, widgets, and notifications. Use these strings for planning future surfaces instead of raw errors, response bodies, headers, URLs, Keychain/config values, or unbounded workout handoff text. This does not add a widget, notification workflow, App Entity target, signing/entitlement change, protected route call, production write, or physical iPhone setup.
+
 As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification.
 
 iOS App Intents Readiness v1 is repo-side preparation only. It adds typed Shortcut-safe outputs, weekly review, Can I Train, workout/nutrition/post-workout Coach action scaffolding, and draft-only debrief/note/BP capture. It does not install to Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri or Action Button, configure Personal Automation, or submit draft-only write paths.

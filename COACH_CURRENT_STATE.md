@@ -1,15 +1,15 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #40 merge/deploy verification and production public ping.
+Last updated: 2026-06-13 Asia/Taipei, after PR #41 merge/deploy verification and production public ping, during Safe App Entity and Widget String Contract Plan v1.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit: `6c5e5c89d7c40432f164e6cecaa8c447e5b8471e`.
+- Current verified main commit: `4832a295f87c47d9171a6fd65d219294744e0f7d`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged to main and production deployed automatically.
-- Working tree is clean after PR #40 merge/deploy verification unless a scoped Codex branch is active.
+- Working tree is clean after PR #41 merge/deploy verification unless a scoped Codex branch is active.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result before PR #40 merge: `97/97` passing on 2026-06-13.
+- Current verified main test result before PR #41 merge: `97/97` passing on 2026-06-13.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
 - PR #27 iPhone Coach Setup UX Readiness v1 local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
@@ -45,6 +45,7 @@ Last updated: 2026-06-13 Asia/Taipei, after PR #40 merge/deploy verification and
 - No-Network Failure Matrix v1 is merged and deployed as PR #38. It maps offline, timeout, DNS/host/connect, missing setup, invalid base URL, missing secret, non-2xx mocked responses, non-HTTP responses, and malformed JSON/decode failures to stable redacted Shortcut output. Main is at `6dfdd8261b4c8c0412f3aa744db16bd6953dcb82`; Netlify production deploy `6a2ce79080431d00083ef1b1` was ready, production, automatic, and public ping remained healthy.
 - PR #39 refreshed durable state docs after PR #38 and is merged/deployed. Main is at `977e3851c8138c2a07fe3fed8b42ae129dd718d1`; Netlify production deploy `6a2ce9247aee2d0008a8d087` was ready, production, automatic, and public ping remained healthy.
 - iOS Freshness Output Hardening v1 is merged and deployed as PR #40. It adds typed per-source freshness categories, readiness/protected-verification/write status mappings, optional error identifiers, and redacted future entity/widget-safe title/detail strings without widget/signing/entitlement work, protected route calls, production writes, or physical-device setup. Main is at `6c5e5c89d7c40432f164e6cecaa8c447e5b8471e`; Netlify production deploy `6a2cec740605460008c73c0b` was ready, production, automatic, and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`35/35`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remains unchanged.
+- PR #41 refreshed durable state docs after PR #40 and is merged/deployed. Main is at `4832a295f87c47d9171a6fd65d219294744e0f7d`; Netlify production deploy `6a2cede993dd5d0008287888` was ready, production, automatic, and public ping remained healthy.
 
 ## 1. Project Purpose
 
@@ -458,7 +459,7 @@ Current readiness push:
 3. Build the iPhone/Siri/ChatGPT voice-text path in bounded stages:
    - current verified repo-side iPhone bridge: native Apple Health sync app plus expanded App Intents for sync, Morning Coach, sync status, Can I Train, weekly review, workout planning, nutrition closeout, post-workout Coach, draft debrief/note/BP intake, readiness/freshness checks, and typed status outputs;
    - latest verified safe app stage: PR #40 iOS Freshness Output Hardening v1 is merged at `6c5e5c89d7c40432f164e6cecaa8c447e5b8471e`, automatically deployed to Netlify production deploy `6a2cec740605460008c73c0b`, and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`). Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`35/35`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt;
-   - next safe repo-only app stage: Safe App Entity and Widget String Contract Plan v1, limited to mock-only model/tests/docs for future App Entity/widget/notification-safe strings without adding targets, changing signing/entitlements, entering secrets, calling protected routes, modifying production settings, running Supabase actions, automating third-party apps, or performing physical-device setup;
+   - current safe repo-only app stage: Safe App Entity and Widget String Contract Plan v1 adds reusable safe strings for future App Entity/widget/notification/Siri/app-card surfaces with mock-only model/tests/docs, without adding targets, changing signing/entitlements, entering secrets, calling protected routes, modifying production settings, running Supabase actions, automating third-party apps, or performing physical-device setup;
    - physical-device stage: install/configure/test only with Todd present for passcodes, Face ID, Health permissions, Shortcut automation, and any secret entry.
 4. Investigate the `coach_observations` optional warning as schema/cache readiness, without assuming a migration is applied or needed from local files alone.
 5. Use `docs/implementation/READINESS_GAP_INVENTORY.md` as the working gap list for future bounded Codex tasks.

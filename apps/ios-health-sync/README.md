@@ -28,6 +28,8 @@ No-Network Failure Matrix v1 hardens mock-only failure handling for Shortcut/App
 
 iOS Freshness Output Hardening v1 adds typed per-source freshness cards for the existing local freshness report. Each source exposes a stable source category, freshness status, readiness status, protected-verification status, write status, optional error identifier, and redacted title/detail strings suitable for Siri, Shortcuts, app display, and future entity/widget/notification reuse. This is model/helper/test/docs work only; it does not add a widget target, signing change, entitlement, protected route call, or production write.
 
+Safe App Entity and Widget String Contract Plan v1 adds reusable safe-surface strings on top of existing outputs for future Shortcuts, Siri speech, app cards, App Entity titles/subtitles, widgets, and notifications. The strings are concise, redacted, and preserve no-write/manual-only/deferred status. This remains model/helper/test/docs work inside existing app and test targets; it does not add a widget, notification workflow, App Entity target, signing capability, entitlement, protected route call, production write, or physical-device setup.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.

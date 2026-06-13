@@ -211,6 +211,31 @@ struct CoachSafeOutput {
         redact(error.localizedDescription)
     }
 
+    static func surfaceText(_ value: String?, fallback: String, maxCharacters: Int = 160) -> String {
+        let raw = value?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let redactedValue = redact(raw)
+        let compact = redactedValue
+            .components(separatedBy: .whitespacesAndNewlines)
+            .filter { !$0.isEmpty }
+            .joined(separator: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let nonEmpty = compact.isEmpty ? fallback : compact
+        guard nonEmpty.count > maxCharacters else {
+            return nonEmpty
+        }
+        let prefixLength = max(1, maxCharacters - 3)
+        let index = nonEmpty.index(nonEmpty.startIndex, offsetBy: prefixLength)
+        return "\(nonEmpty[..<index].trimmingCharacters(in: .whitespacesAndNewlines))..."
+    }
+
+    static func labelText(_ value: String) -> String {
+        surfaceText(
+            value.replacingOccurrences(of: "_", with: " "),
+            fallback: "Coach status",
+            maxCharacters: 64
+        )
+    }
+
     private static func replacing(
         _ value: String,
         pattern: String,
@@ -227,6 +252,96 @@ struct CoachSafeOutput {
             range: range,
             withTemplate: template
         )
+    }
+}
+
+struct CoachFutureSafeStrings: Codable, Equatable {
+    let shortcutTitle: String
+    let shortcutSubtitle: String
+    let shortcutDetail: String
+    let siriSummary: String
+    let appCardTitle: String
+    let appCardDetail: String
+    let appEntityTitle: String
+    let appEntitySubtitle: String
+    let widgetTitle: String
+    let widgetBody: String
+    let widgetFooter: String
+    let notificationTitle: String
+    let notificationBody: String
+
+    init(
+        title: String?,
+        subtitle: String?,
+        detail: String?,
+        body: String?,
+        footer: String?
+    ) {
+        let safeTitle = CoachSafeOutput.surfaceText(title, fallback: "Coach", maxCharacters: 56)
+        let safeSubtitle = CoachSafeOutput.surfaceText(subtitle, fallback: "Coach status", maxCharacters: 80)
+        let safeDetail = CoachSafeOutput.surfaceText(detail, fallback: "Open Coach for details.", maxCharacters: 140)
+        let safeBody = CoachSafeOutput.surfaceText(body, fallback: safeDetail, maxCharacters: 180)
+        let safeFooter = CoachSafeOutput.surfaceText(footer, fallback: "No production write was sent.", maxCharacters: 120)
+
+        self.shortcutTitle = safeTitle
+        self.shortcutSubtitle = safeSubtitle
+        self.shortcutDetail = safeDetail
+        self.siriSummary = CoachSafeOutput.surfaceText(
+            "\(safeTitle). \(safeDetail). \(safeFooter)",
+            fallback: safeTitle,
+            maxCharacters: 220
+        )
+        self.appCardTitle = safeTitle
+        self.appCardDetail = CoachSafeOutput.surfaceText(
+            "\(safeSubtitle) \(safeDetail) \(safeFooter)",
+            fallback: safeDetail,
+            maxCharacters: 220
+        )
+        self.appEntityTitle = safeTitle
+        self.appEntitySubtitle = safeSubtitle
+        self.widgetTitle = safeTitle
+        self.widgetBody = safeBody
+        self.widgetFooter = safeFooter
+        self.notificationTitle = safeTitle
+        self.notificationBody = CoachSafeOutput.surfaceText(
+            "\(safeFooter) \(safeBody)",
+            fallback: safeDetail,
+            maxCharacters: 180
+        )
+    }
+
+    var allStrings: [String] {
+        [
+            shortcutTitle,
+            shortcutSubtitle,
+            shortcutDetail,
+            siriSummary,
+            appCardTitle,
+            appCardDetail,
+            appEntityTitle,
+            appEntitySubtitle,
+            widgetTitle,
+            widgetBody,
+            widgetFooter,
+            notificationTitle,
+            notificationBody
+        ]
+    }
+
+    var contractText: String {
+        [
+            "shortcut_title: \(shortcutTitle)",
+            "shortcut_subtitle: \(shortcutSubtitle)",
+            "shortcut_detail: \(shortcutDetail)",
+            "siri_summary: \(siriSummary)",
+            "app_entity_title: \(appEntityTitle)",
+            "app_entity_subtitle: \(appEntitySubtitle)",
+            "widget_title: \(widgetTitle)",
+            "widget_body: \(widgetBody)",
+            "widget_footer: \(widgetFooter)",
+            "notification_title: \(notificationTitle)",
+            "notification_body: \(notificationBody)"
+        ].joined(separator: "\n")
     }
 }
 
@@ -361,6 +476,25 @@ struct CoachShortcutOutput: Codable, Equatable {
         }
         lines.append("Apple Health is supporting evidence only.")
         return lines.joined(separator: "\n")
+    }
+
+    var safeSurfaceStrings: CoachFutureSafeStrings {
+        let readiness = readinessStatus?.rawValue ?? CoachShortcutReadinessStatus.unknown.rawValue
+        let protected = protectedVerificationStatus?.rawValue ?? CoachShortcutProtectedVerificationStatus.notRequired.rawValue
+        let write = writeStatus?.rawValue ?? CoachShortcutWriteStatus.noWrite.rawValue
+        let error = errorIdentifier.map { "error_identifier: \($0.rawValue) | " } ?? ""
+        let firstBody = nextBestAction
+            ?? primaryConstraints.first
+            ?? errorMessage
+            ?? sourceFreshness
+            ?? "Apple Health is supporting evidence only."
+        return CoachFutureSafeStrings(
+            title: workoutTitle ?? "Coach \(CoachSafeOutput.labelText(actionStatus))",
+            subtitle: "readiness_status: \(readiness) | write_status: \(write)",
+            detail: readinessSummary,
+            body: firstBody,
+            footer: "\(error)protected_verification_status: \(protected) | write_status: \(write)"
+        )
     }
 
     static func deferred(
@@ -810,6 +944,17 @@ struct DailyDataFreshnessSource: Codable, Equatable, Identifiable {
             return nil
         }
     }
+
+    var safeSurfaceStrings: CoachFutureSafeStrings {
+        let error = errorIdentifier.map { " | error_identifier: \($0.rawValue)" } ?? ""
+        return CoachFutureSafeStrings(
+            title: surfaceTitle,
+            subtitle: "source_category: \(category.rawValue) | freshness_status: \(status.rawValue)",
+            detail: surfaceDetail,
+            body: nextAction,
+            footer: "readiness_status: \(readinessStatus.rawValue) | protected_verification_status: \(protectedVerificationStatus.rawValue) | write_status: \(writeStatus.rawValue)\(error)"
+        )
+    }
 }
 
 enum CoachPublicPingFreshness: Equatable {
@@ -882,6 +1027,18 @@ struct DailyDataFreshnessReport: Codable, Equatable {
             lastSync: sources.first { $0.id == "health_ios_sync" }?.detail,
             errorIdentifier: sources.contains { $0.status == .notConfigured } ? .notConfigured : nil,
             errorMessage: nil
+        )
+    }
+
+    var safeSurfaceStrings: CoachFutureSafeStrings {
+        let body = sources.first { !$0.status.isUsableNow }?.nextAction
+            ?? "Continue with read-only Coach checks; write-capable paths remain held."
+        return CoachFutureSafeStrings(
+            title: "Daily data freshness",
+            subtitle: "freshness_status: \(actionStatus)",
+            detail: summary,
+            body: body,
+            footer: "write_status: \(shortcutOutput.writeStatus?.rawValue ?? CoachShortcutWriteStatus.writeHeld.rawValue) | protected_verification_status: \(shortcutOutput.protectedVerificationStatus?.rawValue ?? CoachShortcutProtectedVerificationStatus.deferredUntilToddDevice.rawValue)"
         )
     }
 
@@ -1405,6 +1562,16 @@ struct CoachWorkoutHandoff: Codable, Equatable {
         lines.append("No third-party app entry was automated.")
         lines.append("No production write was sent.")
         return lines.joined(separator: "\n")
+    }
+
+    var safeSurfaceStrings: CoachFutureSafeStrings {
+        CoachFutureSafeStrings(
+            title: title ?? "Workout handoff",
+            subtitle: "manual_status: \(manualStatus) | write_status: \(CoachShortcutWriteStatus.manualHandoffOnly.rawValue)",
+            detail: readinessSummary ?? "Manual workout handoff is ready for review.",
+            body: nextBestAction,
+            footer: "third_party_automation: none | production_write: none"
+        )
     }
 
     static func build(

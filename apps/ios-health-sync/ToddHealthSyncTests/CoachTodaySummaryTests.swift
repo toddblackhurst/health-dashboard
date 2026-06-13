@@ -1234,6 +1234,185 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(text.contains("[redacted]"))
     }
 
+    func testShortcutOutputExposesRedactedFutureSafeStrings() {
+        let fakeSecret = "fakeContractSecret123456789"
+        let output = CoachShortcutOutput(
+            actionStatus: "attention_required",
+            setupStatus: .configuredLocally,
+            readinessStatus: .attentionRequired,
+            protectedVerificationStatus: .deferredUntilToddDevice,
+            writeStatus: .writeHeld,
+            safetyStatus: .yellow,
+            readinessSummary: "Yellow with token=\(fakeSecret). Keep output bounded for Siri and widgets.",
+            workoutTitle: "Coach status https://user:\(fakeSecret)@coach.example.test",
+            workoutType: .modifiedStrength,
+            primaryConstraints: ["Authorization: Bearer \(fakeSecret)"],
+            coachMemoryContext: "x-coach-secret: \(fakeSecret)",
+            workoutDebriefContext: "password=\(fakeSecret)",
+            nextBestAction: "Retry read-only check; keep write actions held.",
+            requiresMedicalCaution: true,
+            sourceFreshness: "api_key=\(fakeSecret)",
+            lastSync: "credential=\(fakeSecret)",
+            errorIdentifier: .syncStale,
+            errorMessage: "secret=\(fakeSecret)",
+            workoutHandoff: "token=\(fakeSecret)"
+        )
+
+        let surfaces = output.safeSurfaceStrings
+        let text = surfaces.contractText
+
+        XCTAssertEqual(surfaces.appEntityTitle, surfaces.widgetTitle)
+        XCTAssertEqual(surfaces.notificationTitle, surfaces.shortcutTitle)
+        XCTAssertTrue(text.contains("app_entity_title:"))
+        XCTAssertTrue(text.contains("widget_body: Retry read-only check; keep write actions held."))
+        XCTAssertTrue(text.contains("notification_body:"))
+        XCTAssertTrue(surfaces.widgetFooter.contains("protected_verification_status: deferred_until_todd_device"))
+        XCTAssertTrue(surfaces.widgetFooter.contains("write_status: write_held"))
+        XCTAssertTrue(surfaces.widgetFooter.contains("error_identifier: syncStale"))
+        XCTAssertTrue(surfaces.allStrings.allSatisfy { $0.count <= 220 })
+        XCTAssertFalse(text.contains(fakeSecret))
+        assertNoCredentialLeak(in: text)
+    }
+
+    func testFailureSafeSurfaceStringsSummarizeRawErrorsWithoutLeakingBodies() {
+        let fakeSecret = "fakeRawFailureSecret123456"
+        let rawBody = String(
+            repeating: "{\"error\":\"Invalid x-coach-secret: \(fakeSecret) Authorization: Bearer \(fakeSecret) token=\(fakeSecret)\"}",
+            count: 8
+        )
+
+        let output = CoachShortcutOutput.failure(
+            error: CoachAPIError.requestFailed(statusCode: 500, message: rawBody)
+        )
+        let surfaces = output.safeSurfaceStrings
+        let text = surfaces.contractText
+
+        XCTAssertEqual(output.errorIdentifier, .backendUnavailable)
+        XCTAssertTrue(surfaces.shortcutDetail.contains("Coach request could not complete because the API was unavailable"))
+        XCTAssertTrue(surfaces.widgetBody.contains("Retry a read-only Coach check later"))
+        XCTAssertTrue(surfaces.notificationBody.contains("protected_verification_status: deferred_until_todd_device"))
+        XCTAssertTrue(surfaces.notificationBody.contains("error_identifier: backendUnavailable"))
+        XCTAssertFalse(text.contains(rawBody))
+        XCTAssertFalse(text.contains("{\"error\""))
+        XCTAssertFalse(text.contains(fakeSecret))
+        assertNoCredentialLeak(in: text)
+    }
+
+    func testDailyFreshnessSafeSurfaceStringsRetainDeferredAndNoWriteSemantics() throws {
+        let suiteName = "DailyFreshnessFutureSurfaces-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let report = DailyDataFreshnessReport.local(
+            setupStatus: CoachConnectionConfiguration(apiBase: store.apiBase, secret: "").status,
+            store: store,
+            now: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+
+        let protected = try XCTUnwrap(report.sources.first { $0.id == "protected_read_only_freshness" })
+        let manual = try XCTUnwrap(report.sources.first { $0.id == "workout_source_freshness" })
+        let draft = try XCTUnwrap(report.sources.first { $0.id == "draft_only_capture" })
+        let reportSurface = report.safeSurfaceStrings
+
+        XCTAssertTrue(protected.safeSurfaceStrings.widgetFooter.contains("protected_verification_status: blocked_missing_setup"))
+        XCTAssertTrue(manual.safeSurfaceStrings.widgetFooter.contains("write_status: manual_handoff_only_no_write"))
+        XCTAssertTrue(manual.safeSurfaceStrings.widgetBody.contains("Review manual source/runbook"))
+        XCTAssertTrue(draft.safeSurfaceStrings.widgetFooter.contains("write_status: draft_only_no_write"))
+        XCTAssertTrue(draft.safeSurfaceStrings.widgetBody.contains("Continue without write actions"))
+        XCTAssertTrue(reportSurface.widgetFooter.contains("write_status: write_held"))
+        XCTAssertTrue(reportSurface.widgetFooter.contains("protected_verification_status: blocked_missing_setup"))
+        assertNoCredentialLeak(in: protected.safeSurfaceStrings.contractText)
+        assertNoCredentialLeak(in: manual.safeSurfaceStrings.contractText)
+        assertNoCredentialLeak(in: draft.safeSurfaceStrings.contractText)
+    }
+
+    func testWorkflowFailureSafeSurfaceStringsStopBeforeProtectedNetworkWhenSetupIncomplete() async throws {
+        let suiteName = "FutureSurfaceSetupGate-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let session = MockCoachURLSession(responseData: Data())
+        let workflow = MorningCoachWorkflow(
+            apiClient: CoachAPIClient(session: session),
+            keychainStore: FakeCoachSecretStore(secret: ""),
+            store: store
+        )
+
+        do {
+            _ = try await workflow.buildTodaysWorkout(
+                requestText: "Build today's workout.",
+                requestedSessionType: "strength",
+                scheduleOverride: false
+            )
+            XCTFail("Expected missing setup to stop before network")
+        } catch {
+            XCTAssertNil(session.lastRequest)
+            XCTAssertEqual(session.requestCount, 0)
+            let surfaces = CoachShortcutOutput.failure(error: error).safeSurfaceStrings
+            XCTAssertTrue(surfaces.widgetFooter.contains("protected_verification_status: blocked_missing_setup"))
+            XCTAssertTrue(surfaces.widgetFooter.contains("write_status: no_write"))
+            XCTAssertTrue(surfaces.widgetFooter.contains("error_identifier: missingSecret"))
+            XCTAssertTrue(surfaces.widgetBody.contains("Enter the Coach API secret"))
+            assertNoCredentialLeak(in: surfaces.contractText)
+        }
+    }
+
+    func testWorkoutHandoffSafeSurfaceStringsStayManualOnlyAndRedacted() throws {
+        let fakeSecret = "fakeWorkoutSurfaceSecret123456"
+        let json = """
+        {
+          "ok": true,
+          "action": "workout",
+          "reply": "Use the controlled plan.",
+          "decision": {
+            "top_line_call": "Yellow token=\(fakeSecret)",
+            "next_actions": [
+              "Manually enter Rack sets; no third-party automation. token=\(fakeSecret)"
+            ],
+            "risk_flags": [
+              "No hard conditioning. x-coach-secret: \(fakeSecret)"
+            ],
+            "workout_plan": {
+              "top_line": "Controlled strength token=\(fakeSecret)",
+              "session_type": "strength",
+              "blocks": [
+                {
+                  "name": "Main",
+                  "exercises": [
+                    {
+                      "rack_motra_name": "Cable Row",
+                      "equipment": "Cable station",
+                      "sets": 3,
+                      "reps": "10",
+                      "rest": "60 sec"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+        """.data(using: .utf8)!
+
+        let response = try CoachDirectActionResponseSummary.parse(data: json, fallbackAction: "workout")
+        let handoff = try XCTUnwrap(response.workoutHandoff)
+        let surfaces = handoff.safeSurfaceStrings
+        let text = surfaces.contractText
+
+        XCTAssertTrue(surfaces.shortcutSubtitle.contains("manual_handoff_only_no_write"))
+        XCTAssertTrue(surfaces.widgetFooter.contains("third_party_automation: none"))
+        XCTAssertTrue(surfaces.widgetFooter.contains("production_write: none"))
+        XCTAssertTrue(surfaces.widgetBody.contains("Manually enter Rack sets"))
+        XCTAssertFalse(text.contains(fakeSecret))
+        assertNoCredentialLeak(in: text)
+    }
+
     private func assertNoCredentialLeak(in text: String, file: StaticString = #filePath, line: UInt = #line) {
         let forbidden = [
             "x-coach-secret",
