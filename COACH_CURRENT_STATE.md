@@ -1,24 +1,28 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after production GPT Action read-only recovery and the safe readiness audit pass.
+Last updated: 2026-06-13 Asia/Taipei, after PR #25 merge/deploy verification and iOS App Intents Readiness v1 local implementation.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit before this readiness pass: `aaef58be6964d6dcf1b331875c96a3a161613d81`.
-- Working tree was clean before the safe readiness pass.
+- Current verified main commit before the iOS App Intents Readiness v1 branch: `847825ac958aae2b14656b8328b2f4434142ecc7`.
+- PR #25, `Document coach readiness gaps and optional memory fallback`, is merged to main and production deployed automatically.
+- Working tree was clean before the iOS App Intents Readiness v1 branch.
 - Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result before this readiness branch: `96/96` passing on 2026-06-13.
-- Current readiness branch test result after adding the optional-memory fallback regression: `97/97` passing on 2026-06-13.
+- Current verified main test result after PR #25 merge: `97/97` passing on 2026-06-13.
+- Current iOS App Intents Readiness v1 branch local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
+- Current iOS App Intents Readiness v1 branch local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 6 `CoachTodaySummaryTests`.
 - Production API ping was verified after Todd's secret rotation and the production redeploy:
   - `GET https://todd-personal-coach.netlify.app/api/coach/ping`
   - Response: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`
+- Production API ping was also verified after PR #25 automatic production deploy at main commit `847825ac958aae2b14656b8328b2f4434142ecc7`.
 - Saved GPT read-only protected actions were verified after Todd manually updated the secret in Netlify and GPT Builder:
   - `getSyncStatus` succeeded for 2026-06-13.
   - `buildWeeklyReview` succeeded for week_start `2026-06-08`, week_end `2026-06-14`, timezone `Asia/Taipei`.
 - No GPT Action write action was called during the read-only recovery verification.
 - Codex did not view, request, paste, store, or handle the secret. Todd handled secret entry manually.
 - `HEALTH_DATABASE.json` remains protected. It may change upstream from daily brief refresh automation, but Codex tasks must not edit it unless Todd explicitly scopes that file.
+- iOS App Intents Readiness v1 is repo-side only. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, call live production write endpoints, or submit draft-only debrief/note/BP writes.
 
 ## 1. Project Purpose
 

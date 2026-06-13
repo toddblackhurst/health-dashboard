@@ -12,6 +12,8 @@ Phase 3 keeps that boundary. The coach backend may read previously synced Apple 
 
 Morning Coach automation v1 adds a one-tap iPhone flow on top of the same boundary. It syncs Apple Health for the last 7 days, checks `sync-status`, calls `coach-today`, and shows a concise daily call. Apple Health remains supporting evidence only.
 
+iOS App Intents Readiness v1 expands the repo-side Shortcuts surface for Todd's voice/text Coach path. It adds typed Shortcut-safe outputs, stable error identifiers, read-only weekly review support, "Can I train?", direct Coach workout/nutrition/post-workout scaffolding, and draft-only debrief/note/BP capture paths. It does not install or configure Todd's iPhone, grant Health permissions, enter secrets, run personal automations, or submit draft-only intake/debrief/memory writes.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.
@@ -36,7 +38,18 @@ Morning Coach also reads:
 ```text
 /api/coach/sync-status
 /api/coach/coach-today
+/api/coach/weekly-review
 ```
+
+The expanded Coach actions can call existing authenticated Coach endpoints when Todd runs the corresponding Shortcut after device setup:
+
+```text
+/api/coach/workout
+/api/coach/nutrition-closeout
+/api/coach/post-workout
+```
+
+These direct Coach actions can log coach messages server-side. The draft debrief, draft coach note, and draft blood pressure intents intentionally do not call production write endpoints.
 
 ## Shortcuts
 
@@ -45,7 +58,15 @@ After the app is installed on Todd's iPhone, open `Shortcuts` and confirm these 
 - `Morning Coach`
 - `Sync Apple Health`
 - `Check Coach Sync Status`
+- `Can I Train?`
+- `Weekly Coach Review`
+- `Build Today's Workout`
+- `Nutrition Closeout`
+- `Post-Workout Coach`
+- `Draft Workout Debrief`
 - `Open Coach Today`
+
+Apple currently limits each app to 10 promoted App Shortcuts. `Draft Coach Note` and `Draft Blood Pressure Intake` are implemented App Intents but are not promoted in the top Shortcuts list; use them from the app's available actions if present after install.
 
 Recommended setup:
 

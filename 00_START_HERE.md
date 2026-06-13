@@ -48,11 +48,18 @@ Read only this active set first:
   - Avoid generic internet-style filler; every athletic block needs a clear challenge and measurable target.
 - iPhone screenshot/file upload destination is `iCloud Drive > Coach Screenshots`, which maps on the Mac to `/Users/toddsdesktop/Library/Mobile Documents/com~apple~CloudDocs/Coach Screenshots`.
 - Recommended current shortcuts:
-  - `Coach Build Today Workout`
-  - `Coach Morning Check-In`
-  - `Coach Nutrition Closeout`
-  - `Coach Fast Note`
-  - `Coach Motra Debrief Lean`
+  - `Morning Coach`
+  - `Check Coach Sync Status`
+  - `Can I Train?`
+  - `Weekly Coach Review`
+  - `Build Today's Workout`
+  - `Nutrition Closeout`
+  - `Post-Workout Coach`
+  - `Draft Workout Debrief`
+  - `Open Coach Today`
+- Implemented but not promoted because Apple caps promoted App Shortcuts at 10 per app:
+  - `Draft Coach Note`
+  - `Draft Blood Pressure Intake`
 - Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`.
 - Older shortcuts still present but not preferred: `Coach Motra Debrief`, `Coach Message`, `Coach Intake`, `Coach Upload`. Delete only with Todd's explicit confirmation.
 

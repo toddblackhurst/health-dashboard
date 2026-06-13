@@ -6,15 +6,16 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main is clean at `aaef58be6964d6dcf1b331875c96a3a161613d81` before this safe readiness branch.
-- Full local test suite passed on 2026-06-13 before this branch: `node --test tests/*.test.mjs` -> `96/96`.
-- This readiness branch adds one weekly-review optional-memory fallback regression; branch verification is `97/97`.
+- Repo main is clean at `847825ac958aae2b14656b8328b2f4434142ecc7` before the iOS App Intents Readiness v1 branch.
+- Full local Node test suite passed on 2026-06-13 before this branch: `node --test tests/*.test.mjs` -> `97/97`.
+- PR #25 readiness audit merged and production deployed automatically from main; public ping still works.
 - Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Saved GPT read-only `getSyncStatus` works for 2026-06-13.
 - Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
 - No GPT Action write action was called during the read-only recovery verification.
 - The current OpenAPI is version `2.0.2`; public `pingCoachApi` has `security: []`; protected actions explicitly require `CoachSecret` in the `x-coach-secret` header.
-- The existing iPhone app bridge exposes `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, and `OpenCoachTodayIntent`.
+- The existing iPhone app bridge exposes `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, `CanITrainIntent`, `WeeklyCoachReviewIntent`, `BuildTodayWorkoutIntent`, `NutritionCloseoutIntent`, `PostWorkoutCoachIntent`, `DraftWorkoutDebriefIntent`, `DraftCoachNoteIntent`, `DraftBloodPressureIntakeIntent`, and `OpenCoachTodayIntent`.
+- The promoted App Shortcuts list is capped at 10 to satisfy Apple's metadata processor limit; `DraftCoachNoteIntent` and `DraftBloodPressureIntakeIntent` remain implemented but are not promoted.
 
 ## Readiness Gaps
 
@@ -54,7 +55,7 @@ Human-boundary work:
 
 ### P0: iPhone/Siri Daily Coach Surface
 
-Status: partial verified bridge; not yet the full voice/text Coach.
+Status: repo-side App Intents readiness in progress; not yet physical-device verified for the expanded voice/text Coach.
 
 Verified:
 
@@ -63,10 +64,10 @@ Verified:
 
 Remaining safe Codex work:
 
-- Add app intents for build workout, nutrition closeout, post-workout debrief, fast coach note, and BP/intake only after a bounded iOS implementation task is opened.
-- Add structured intent outputs and stable safe error identifiers so Siri/Shortcuts can branch without scraping prose.
-- Add tests for secret redaction, missing secret, invalid secret, offline/backend failure, and Red safety behavior in intent outputs.
+- Keep expanding typed intent outputs and safe error identifiers so Siri/Shortcuts can branch without scraping prose.
+- Add deeper tests for secret redaction, missing secret, invalid secret, offline/backend failure, and Red safety behavior in intent outputs.
 - Keep Apple Health supporting-only in all iPhone outputs.
+- Keep draft-only write paths explicit until Todd-assisted device confirmation exists.
 
 Human/device boundary:
 
