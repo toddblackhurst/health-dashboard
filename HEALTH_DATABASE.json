@@ -2360,8 +2360,8 @@
       "rem_sleep_min": 87,
       "sleep_start": "2026-05-27T22:09:37.000+08:00",
       "wake_time": "2026-05-28T05:55:52.000+08:00",
-      "readiness_tier_basis": "Red/yellow: readiness 64 and sleep score 80 are usable, but HRV 15 ms is a low-autonomic-reserve flag. Use this to reduce Friday optional volume unless Friday morning rebounds.",
-      "recovery_trend": "Synced from live Oura API through Supabase on 2026-05-28; BP and nutrition remain stale/missing after 2026-05-24.",
+      "readiness_tier_basis": "Yellow: recovery 64%, HRV 15 ms, sleep 6h11, RHR 62 bpm.",
+      "recovery_trend": "Live Supabase dashboard is the primary brief input; local JSON is now fallback/archive.",
       "notes": "Oura API sync verified through coach dashboard. Treat HRV 15 as the main limiter for the next strength decision; do not add make-up volume."
     }
   ],
@@ -12426,232 +12426,24 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-13",
+    "date": "2026-06-14",
     "readiness_tier": "Yellow",
-    "call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it.",
-    "sprint_gate": "Evaluate HRV >=35 ms before sprinting.",
-    "progress_note": "Current scale anchor is 168.5 lb; weight is up 1.2 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 9.2 lb over 7.0 weeks.",
+    "call": "Recover today based on recovery 64%, HRV 15 ms, sleep 6h11, RHR 62 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
+    "sprint_gate": "N/A - sprints are Saturday-standalone.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 6.9 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-13",
-      "current_weight_lbs": 168.48828051080554,
+      "as_of": "2026-06-14",
+      "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
-      "fat_to_lose_lbs": 9.2,
-      "weeks_remaining": 7.0
+      "fat_to_lose_lbs": 7.1,
+      "weeks_remaining": 6.9
     },
-    "active_adjustments": [
-      "Every strength day starts with 8-12 minutes of hip-safe prehab before the main work.",
-      "Cut optional accessories or the finisher before cutting prehab.",
-      "Send Morning Brief, Evening Update, and requested coaching-aspect reports through the WhatsApp connector, even when the report is long; favor precision and completeness over brevity.",
-      "Waist-loss filter: Todd wants lower-belly and side-waist reduction, not a six-pack chase. All workouts should preserve heavy hypertrophy anchors, keep daily walking/easy Zone 2 and nutrition pressure in view, cap sessions before recovery cost accumulates, avoid random extra ab volume, and keep Hip Surgery Prehab inside every strength session.",
-      "power off press: modify",
-      "rotational press: keep"
-    ],
-    "data_completeness": {
-      "date": "2026-06-13",
-      "schedule": {
-        "weekday": "Saturday",
-        "day_type": "weekend_rest",
-        "strength_planned": false,
-        "daily_walk_planned": true,
-        "label": "Saturday rest option",
-        "next_strength_day": "Monday",
-        "non_lift_call": "No strength today. Saturday is a rest option: keep the daily walk, add only gentle mobility if useful, and do not add conditioning unless Coach explicitly plans it."
-      },
-      "score_pct": 0,
-      "missing_required": [
-        "sleep_recovery",
-        "blood_pressure",
-        "nutrition"
-      ],
-      "checks": [
-        {
-          "id": "sleep_recovery",
-          "label": "Sleep/recovery",
-          "status": "missing",
-          "required": true,
-          "latest_date": "2026-06-08"
-        },
-        {
-          "id": "blood_pressure",
-          "label": "Blood pressure",
-          "status": "missing",
-          "required": true,
-          "latest_date": "2026-06-05"
-        },
-        {
-          "id": "nutrition",
-          "label": "Garmin Nutrition",
-          "status": "missing",
-          "required": true,
-          "latest_date": "2026-06-07"
-        },
-        {
-          "id": "body_composition",
-          "label": "Body composition",
-          "status": "stale",
-          "required": false,
-          "latest_date": "2026-05-23"
-        },
-        {
-          "id": "strength_session",
-          "label": "Rack/Motra strength session",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-06-08"
-        },
-        {
-          "id": "strength_exercises",
-          "label": "Rack/Motra strength exercise detail",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-06-08"
-        },
-        {
-          "id": "workout_feedback",
-          "label": "Workout feedback",
-          "status": "not_expected",
-          "required": false,
-          "latest_date": "2026-06-11"
-        },
-        {
-          "id": "apple_health_daily_summary",
-          "label": "Apple Health daily summary",
-          "status": "stale",
-          "required": false,
-          "latest_date": "2026-06-09",
-          "source": "Apple Health / HealthKit daily summary",
-          "role": "supporting cross-check",
-          "days_available_last_7": 3,
-          "warning": "Latest Apple Health summary is older than yesterday in Asia/Taipei."
-        }
-      ],
-      "supporting_evidence": {
-        "apple_health": {
-          "source": "Apple Health / HealthKit daily summary",
-          "role": "supporting cross-check",
-          "status": "stale",
-          "latest_summary_date": "2026-06-09",
-          "latest_sync_date": "2026-06-09",
-          "timezone": "Asia/Taipei",
-          "days_available_last_7": 3,
-          "latest_summary": {
-            "date": "2026-06-09",
-            "source": "Apple Health / HealthKit daily summary",
-            "role": "supporting cross-check",
-            "source_app": "Apple Health",
-            "source_device": "iPhone",
-            "timezone": "Asia/Taipei",
-            "steps": 12462,
-            "exercise_minutes": 33,
-            "active_energy_kcal": 388,
-            "workout_count": 1,
-            "strength_workout_count": 0,
-            "cardio_workout_count": 1,
-            "sleep_minutes": 805,
-            "resting_hr_bpm": 56,
-            "hrv_sdnn_ms": null,
-            "hrv_sample_count": null,
-            "duplicate_policy_flags": {
-              "apple_health_role": "cross_check",
-              "garmin_mirror_possible": "true"
-            },
-            "metric_quality": {
-              "hrv": "missing",
-              "summary_grain": "daily"
-            },
-            "updated_at": "2026-06-09T12:28:33.242+00:00"
-          },
-          "latest_sync": {
-            "status": "success",
-            "days_requested": 7,
-            "days_written": 7,
-            "timezone": "Asia/Taipei",
-            "started_at": "2026-06-09T12:28:29.893435+00:00",
-            "completed_at": "2026-06-09T12:28:33.518+00:00",
-            "errors": []
-          },
-          "last_7_days": {
-            "count": 3,
-            "steps": 33804,
-            "exercise_minutes": 147,
-            "active_energy_kcal": 1378,
-            "workout_count": 5,
-            "strength_workout_count": 2,
-            "cardio_workout_count": 3
-          },
-          "duplicate_policy": {
-            "garmin_mirror_possible": true,
-            "warning": "Do not count Apple Health workout_count as completed Garmin/Rack/Motra strength history."
-          },
-          "policy": {
-            "role": "supporting cross-check/data bus",
-            "does_not_override": [
-              "Garmin readiness/recovery",
-              "subjective symptoms",
-              "medical safety flags",
-              "Garmin workout physiology",
-              "Rack/Motra strength history"
-            ]
-          },
-          "warnings": [
-            "Latest Apple Health summary is older than yesterday in Asia/Taipei.",
-            "Apple Health workout counts are detected activity context only and are not added to Garmin/Rack/Motra completed strength totals."
-          ]
-        },
-        "workout_debriefs": {
-          "summary": "Recent workout debriefs are Todd-reported subjective response data. They can constrain and personalize future coaching.",
-          "source": "coach_workout_debriefs",
-          "recent_debriefs": [
-            {
-              "id": "9676f78f-de72-45d7-b0dd-5620a5231bd0",
-              "workout_date": "2020-01-04",
-              "created_at": "2026-06-11T12:19:10.244075+00:00",
-              "updated_at": "2026-06-11T12:19:10.244075+00:00",
-              "source": "custom_gpt",
-              "workout_title": "Codex production smoke test - not real",
-              "workout_type": "strength",
-              "completion_status": "skipped",
-              "session_rpe": null,
-              "energy_before": 5,
-              "energy_after": 5,
-              "pain_reported": false,
-              "pain_locations": [],
-              "pain_severity": 0,
-              "symptoms": [],
-              "red_flag_symptoms": [],
-              "modifications": [],
-              "skipped_exercises": [],
-              "completed_exercises": [],
-              "completed_exercises_authority": "user_reported_not_rack_motra",
-              "notes": "codex-recordWorkoutDebrief-smoke-20260611T1240Z; production smoke test only; not real coaching evidence; do not save as memory",
-              "coach_feedback": "production smoke test only",
-              "follow_up_needed": false,
-              "safety_outcome": "none",
-              "memory_candidate_summary": null,
-              "summary": "Codex production smoke test - not real | skipped | energy after 5/10"
-            }
-          ],
-          "response_patterns": [],
-          "safety_warnings": [],
-          "policy": {
-            "role": "Todd-reported subjective workout response event records",
-            "does_not_replace": [
-              "Rack/Motra completed strength sets/reps/load",
-              "Garmin workout physiology and recovery cost",
-              "current medical/safety flags",
-              "Garmin readiness/recovery",
-              "Apple Health authority"
-            ],
-            "safety_rule": "Red safety and hard medical flags override all debriefs; debriefs can only make coaching more conservative."
-          },
-          "last_updated": "2026-06-11T12:19:10.244075+00:00"
-        }
-      }
-    },
-    "source": "supabase-dashboard"
+    "active_adjustments": [],
+    "data_completeness": null,
+    "source": "local-json-fallback"
   },
-  "last_updated": "2026-06-13T06:05:11+08:00",
+  "last_updated": "2026-06-14T06:05:04+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12739,8 +12531,8 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-06-13",
-    "day_label": "Saturday Jun 13",
+    "planned_date": "2026-06-14",
+    "day_label": "Sunday Jun 14",
     "session_type": "Recovery / non-lifting day",
     "floor_plan": "Walk or easy cardio only",
     "time_cap_min": 45,
