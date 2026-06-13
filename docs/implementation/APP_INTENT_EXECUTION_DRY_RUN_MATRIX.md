@@ -6,12 +6,13 @@ Purpose: define the repo-side dry-run contract for the existing Todd Health Sync
 
 ## Current Verified Baseline
 
-- Main is at `21c3341b6cc0af29efc341e5242c952bbec150d7` after PR #52.
-- PR #52 refreshed durable state after PR #51 and is merged/deployed.
-- Automatic Netlify production deploy `6a2d09aaf3a2e90007fd492c` is ready for commit `21c3341b6cc0af29efc341e5242c952bbec150d7`.
+- Main is at `541b5b9c8687921c499f66c76d32b782c6499a54` after PR #53.
+- PR #53 App Intent Execution Dry-Run Matrix v1 is merged/deployed.
+- Automatic Netlify production deploy `6a2d0e2e81eea70008c10bf6` is ready for commit `541b5b9c8687921c499f66c76d32b782c6499a54`.
 - Public production ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
+- Final pre-merge verification passed `node --test tests/*.test.mjs` (`97/97`), iOS simulator build, explicit serial iOS tests (`46/46`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`.
 
 ## AppIntentsTesting Status
 

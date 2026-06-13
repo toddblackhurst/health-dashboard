@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `21c3341b6cc0af29efc341e5242c952bbec150d7`.
-- PR #52, Post-PR51 Current-State Refresh, is merged after PR #51.
-- Automatic Netlify production deploy `6a2d09aaf3a2e90007fd492c` is ready for commit `21c3341b6cc0af29efc341e5242c952bbec150d7`.
+- Main is at `541b5b9c8687921c499f66c76d32b782c6499a54`.
+- PR #53, App Intent Execution Dry-Run Matrix v1, is merged after PR #52.
+- Automatic Netlify production deploy `6a2d0e2e81eea70008c10bf6` is ready for commit `541b5b9c8687921c499f66c76d32b782c6499a54`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -78,19 +78,33 @@ Expected verification: docs-only tests above.
 
 Boundaries: no App Shortcuts list change unless separately scoped as code/tests/docs; no physical-device verification claim.
 
-### Current: App Intent Execution Dry-Run Matrix
+### Completed: App Intent Execution Dry-Run Matrix
 
-Current working document: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
+Working document: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
 
-Goal: define the safe dry-run execution contract for every current App Intent before Todd-assisted physical iPhone/Siri/Shortcuts verification.
+Result: PR #53 defined the safe dry-run execution contract for every current App Intent before Todd-assisted physical iPhone/Siri/Shortcuts verification.
 
 Files likely involved: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, `apps/ios-health-sync/ToddHealthSyncTests/CoachTodaySummaryTests.swift`, and cross-linked setup/readiness docs.
 
-Acceptance criteria: every current intent has a documented setup gate, use class, status expectation, safe evidence field, mock/simulator coverage note, and Todd/device boundary.
+Acceptance criteria met: every current intent has a documented setup gate, use class, status expectation, safe evidence field, mock/simulator coverage note, and Todd/device boundary.
 
 Expected verification: Node tests, iOS simulator build/test when iOS tests change, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
 
 Boundaries: no App Intent/App Shortcut additions/removals/promotions/reorders/renames, no protected route calls, no production writes, no secrets, no device setup, no signing/entitlement/capability changes.
+
+### Current: App Intent Execution Evidence Packet
+
+Current working document: not created yet.
+
+Goal: create a docs-only Todd-assisted evidence template for collecting non-secret iPhone/Siri/Shortcuts execution results after physical setup.
+
+Files likely involved: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`, and a new evidence packet document.
+
+Acceptance criteria: Todd has a safe template for reporting action name, status lines, redacted summary, source freshness labels, no-write/manual-only/draft-only state, and blocker category without sharing secrets, raw protected responses, account prompts, or device-security screens.
+
+Expected verification: docs-only tests, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
+
+Boundaries: no protected route calls by Codex, no secret handling, no device setup, no write calls, no signing/entitlement/capability changes, and no third-party automation.
 
 ### Completed: Read-Only Protected Device Verification Checklist
 
