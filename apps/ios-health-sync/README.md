@@ -26,6 +26,8 @@ Typed Shortcut Output Hardening v1 adds stable status fields to `CoachShortcutOu
 
 No-Network Failure Matrix v1 hardens mock-only failure handling for Shortcut/App Intent output. Offline, timeout, DNS/host/connect errors, missing setup, invalid API base URL, missing local secret, non-2xx mocked responses, non-HTTP responses, and malformed JSON/decode failures map to stable `error_identifier` values with typed setup/readiness/protected-verification/write statuses, redacted summaries, and next actions. Missing or invalid setup blocks protected requests before networking; protected verification remains deferred until Todd-assisted device setup supplies credentials on device.
 
+iOS Freshness Output Hardening v1 adds typed per-source freshness cards for the existing local freshness report. Each source exposes a stable source category, freshness status, readiness status, protected-verification status, write status, optional error identifier, and redacted title/detail strings suitable for Siri, Shortcuts, app display, and future entity/widget/notification reuse. This is model/helper/test/docs work only; it does not add a widget target, signing change, entitlement, protected route call, or production write.
+
 ## Local Use
 
 For first real-phone verification, follow `PHYSICAL_DEVICE_TESTING.md` and keep the result staged until the live API and Supabase rows are read back.

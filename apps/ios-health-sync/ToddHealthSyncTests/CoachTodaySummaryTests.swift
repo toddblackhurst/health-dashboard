@@ -1101,6 +1101,61 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertFalse(text.contains("fake-local-secret"))
     }
 
+    func testDailyDataFreshnessSourcesExposeStableFutureSurfaceFields() throws {
+        let suiteName = "DailyDataFreshnessSourceCardTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+
+        let report = DailyDataFreshnessReport.local(
+            setupStatus: CoachConnectionConfiguration(
+                apiBase: store.apiBase,
+                secret: ""
+            ).status,
+            store: store,
+            now: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+
+        let health = try XCTUnwrap(report.sources.first { $0.id == "health_ios_sync" })
+        XCTAssertEqual(health.category, .localDevice)
+        XCTAssertEqual(health.readinessStatus, .staleOrMissing)
+        XCTAssertEqual(health.protectedVerificationStatus, .notRequired)
+        XCTAssertEqual(health.writeStatus, .writeHeld)
+        XCTAssertEqual(health.errorIdentifier, .syncStale)
+        XCTAssertEqual(health.surfaceTitle, "Health/iOS sync - missing")
+        XCTAssertTrue(health.line.contains("source_category: local_device"))
+        XCTAssertTrue(health.line.contains("freshness_status: missing"))
+        XCTAssertTrue(health.line.contains("readiness_status: stale_or_missing"))
+        XCTAssertTrue(health.line.contains("error_identifier: syncStale"))
+
+        let protected = try XCTUnwrap(report.sources.first { $0.id == "protected_read_only_freshness" })
+        XCTAssertEqual(protected.category, .coachProtectedReadOnly)
+        XCTAssertEqual(protected.readinessStatus, .attentionRequired)
+        XCTAssertEqual(protected.protectedVerificationStatus, .blockedMissingSetup)
+        XCTAssertEqual(protected.writeStatus, .writeHeld)
+        XCTAssertEqual(protected.errorIdentifier, .notConfigured)
+        XCTAssertTrue(protected.line.contains("protected_verification_status: blocked_missing_setup"))
+
+        let manual = try XCTUnwrap(report.sources.first { $0.id == "workout_source_freshness" })
+        XCTAssertEqual(manual.category, .manualThirdParty)
+        XCTAssertEqual(manual.readinessStatus, .deferred)
+        XCTAssertEqual(manual.protectedVerificationStatus, .notRequired)
+        XCTAssertEqual(manual.writeStatus, .manualHandoffOnly)
+        XCTAssertNil(manual.errorIdentifier)
+        XCTAssertTrue(manual.surfaceDetail.contains("not scraped"))
+        XCTAssertTrue(manual.line.contains("write_status: manual_handoff_only_no_write"))
+
+        let draft = try XCTUnwrap(report.sources.first { $0.id == "draft_only_capture" })
+        XCTAssertEqual(draft.category, .draftCapture)
+        XCTAssertEqual(draft.readinessStatus, .ready)
+        XCTAssertEqual(draft.writeStatus, .draftOnly)
+        XCTAssertTrue(draft.line.contains("title: Draft-only capture - draft only"))
+        XCTAssertTrue(draft.line.contains("write_status: draft_only_no_write"))
+    }
+
     func testDailyDataFreshnessWorkflowDoesNotCallNetworkWhenSetupIncomplete() throws {
         let suiteName = "DailyDataFreshnessWorkflowTests-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
@@ -1152,14 +1207,15 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertNil(request.value(forHTTPHeaderField: "Authorization"))
     }
 
-    func testDailyDataFreshnessRedactsSecretLikeText() {
+    func testDailyDataFreshnessRedactsSecretLikeText() throws {
         let report = DailyDataFreshnessReport(
             actionStatus: "attention_required secret=abc123456789012345",
             summary: "Bearer abcdefghijklmnop.abcdefgh.abcdefgh",
             sources: [
                 DailyDataFreshnessSource(
                     id: "redaction_probe",
-                    label: "Redaction probe",
+                    label: "Redaction probe secret=abc123456789012345",
+                    category: .safetyIntake,
                     status: .toddActionRequired,
                     detail: "x-coach-secret: abc123456789012345",
                     nextAction: "Open https://user:password@example.test/path?token=abc123456789012345"
@@ -1167,10 +1223,14 @@ final class CoachTodaySummaryTests: XCTestCase {
             ]
         )
         let text = report.shortcutText
+        let source = try XCTUnwrap(report.sources.first)
 
         XCTAssertFalse(text.contains("abc123456789012345"))
         XCTAssertFalse(text.contains("password@example.test"))
         XCTAssertFalse(text.contains("abcdefghijklmnop.abcdefgh.abcdefgh"))
+        XCTAssertFalse(source.surfaceTitle.contains("abc123456789012345"))
+        XCTAssertFalse(source.surfaceDetail.contains("abc123456789012345"))
+        XCTAssertFalse(source.line.contains("password@example.test"))
         XCTAssertTrue(text.contains("[redacted]"))
     }
 
