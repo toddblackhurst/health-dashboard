@@ -6,7 +6,7 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit after PR #37 state refresh: `6b0a0916e3ca85b713a72e8dbbeea3712ab74474`.
+- Main commit after PR #44 readiness audit: `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
@@ -18,8 +18,15 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 - PR #35, `Refresh state after PR34 merge`, is merged.
 - PR #36, `Harden typed Shortcut outputs`, is merged.
 - PR #37, `Refresh state after PR36 merge`, is merged.
-- Automatic Netlify production deploy for commit `6b0a0916e3ca85b713a72e8dbbeea3712ab74474` is ready.
-- Production deploy id: `6a2ce3ba4c9f2800081617e8`.
+- PR #38, `Add no-network failure matrix`, is merged.
+- PR #39, `Refresh state after PR38 merge`, is merged.
+- PR #40, `Harden iOS freshness output`, is merged.
+- PR #41, `Refresh state after PR40 merge`, is merged.
+- PR #42, `Add safe app entity and widget string contract plan`, is merged.
+- PR #43, `Refresh state after PR42 merge`, is merged.
+- PR #44, `Add repo-wide iPhone readiness audit`, is merged.
+- Automatic Netlify production deploy for commit `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5` is ready.
+- Production deploy id: `6a2cf69a6f66a00009dfbe85`.
 - Public production ping is healthy:
 
 ```text
@@ -27,8 +34,9 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #37 post-merge check because they require `x-coach-secret`.
+- Protected read-only routes were not called in the PR #44 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remained unchanged.
+- Current readiness audit reference: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 
 ## Hard Boundaries
 
@@ -42,7 +50,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `6b0a0916e3ca85b713a72e8dbbeea3712ab74474`.
+1. Confirm main is at or after `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:
