@@ -11,10 +11,11 @@ Read only this active set first:
 3. `COACH_OPERATING_SYSTEM.md` — canonical coaching logic, data hierarchy, World Gym rules, nutrition rules, safety gates, and iPhone workflows.
 4. `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md` — Codex/GPT Pro relay rules, human-approval stops, and handoff requirements for bounded implementation tasks.
 5. `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md` — durable staged roadmap for Weekly Review Engine, Rack/Garmin handoff, review lanes, and future integrations.
-6. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
-7. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-8. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-9. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+6. `docs/implementation/READINESS_GAP_INVENTORY.md` — current readiness gaps, safe Codex work, and Todd/device/account boundaries.
+7. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
+8. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+9. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+10. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -22,10 +23,10 @@ Read only this active set first:
 - `HEALTH_DATABASE.json` is legacy/bootstrap/export backup.
 - The API logs coach calls to `coach_decisions` and chat to `coach_messages`.
 
-## Current State — 2026-06-08
+## Current State — 2026-06-13
 
 - Production site/API is live at `https://todd-personal-coach.netlify.app`.
-- Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions, especially `POST /api/coach/workout`.
+- Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions. Read-only `getSyncStatus` and `buildWeeklyReview` were verified through the saved GPT after Todd manually updated the secret; no write action was called.
 - The public dashboard posture has been retired; the Netlify site is now primarily a private coach backend and internal tool surface.
 - V2 architecture is defined in `ARCHITECTURE_V2.md` and should guide future Codex work.
 - Apple Health / HealthKit daily sync is live as supporting evidence for activity context, freshness, and diagnostics.
@@ -52,6 +53,7 @@ Read only this active set first:
   - `Coach Nutrition Closeout`
   - `Coach Fast Note`
   - `Coach Motra Debrief Lean`
+- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`.
 - Older shortcuts still present but not preferred: `Coach Motra Debrief`, `Coach Message`, `Coach Intake`, `Coach Upload`. Delete only with Todd's explicit confirmation.
 
 ## Architecture Rule

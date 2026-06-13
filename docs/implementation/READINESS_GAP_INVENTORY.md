@@ -1,0 +1,137 @@
+# Personal Coach Readiness Gap Inventory
+
+Last updated: 2026-06-13 Asia/Taipei.
+
+Purpose: keep the readiness push explicit. This file separates what is already verified, what Codex can safely build next, and what must wait for Todd/device/account/manual boundaries.
+
+## Verified Now
+
+- Repo main is clean at `aaef58be6964d6dcf1b331875c96a3a161613d81` before this safe readiness branch.
+- Full local test suite passed on 2026-06-13 before this branch: `node --test tests/*.test.mjs` -> `96/96`.
+- This readiness branch adds one weekly-review optional-memory fallback regression; branch verification is `97/97`.
+- Production public ping works: `GET /api/coach/ping` returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+- Saved GPT read-only `getSyncStatus` works for 2026-06-13.
+- Saved GPT read-only `buildWeeklyReview` works for 2026-06-08 through 2026-06-14.
+- No GPT Action write action was called during the read-only recovery verification.
+- The current OpenAPI is version `2.0.2`; public `pingCoachApi` has `security: []`; protected actions explicitly require `CoachSecret` in the `x-coach-secret` header.
+- The existing iPhone app bridge exposes `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, and `OpenCoachTodayIntent`.
+
+## Readiness Gaps
+
+### P0: State And Instruction Drift
+
+Status: in progress on this readiness branch.
+
+Why it matters: stale docs can cause future Codex/GPT Pro runs to treat shipped behavior as a candidate, repeat old constraints, or stop before the real next step.
+
+Safe Codex work:
+
+- Keep `COACH_CURRENT_STATE.md` aligned with production and test reality.
+- Keep prompt scaffolding clear that GPT Pro evaluates handoffs only and does not inspect the repo.
+- Keep completion states explicit: verified, drafted/staged, or blocked.
+
+Human boundary: none unless a doc update requires live account or secret verification.
+
+### P0: Coach Observations Schema/Cache Readiness
+
+Status: warning observed; not blocking weekly review.
+
+Observed behavior:
+
+- Weekly review completed in production.
+- Netlify logged a non-blocking optional Supabase warning for `coach_observations`.
+- Local migration `005_apple_health_sync.sql` defines `coach_observations`.
+- Local code reads active memory context through `safeSupabase(...)`, so missing/unavailable observations fall back to an empty memory context for dashboard and weekly review reads.
+
+Safe Codex work:
+
+- Keep tests proving weekly review remains read-only and succeeds when optional `coach_observations` read is unavailable.
+- Document that this warning is a readiness gap, not proof that a migration should be applied.
+
+Human-boundary work:
+
+- Any production Supabase schema inspection, migration application, schema-cache refresh, SQL repair, or database write requires a separate scoped instruction and approval boundary.
+
+### P0: iPhone/Siri Daily Coach Surface
+
+Status: partial verified bridge; not yet the full voice/text Coach.
+
+Verified:
+
+- Native app can sync Apple Health and run Morning Coach manually.
+- Shortcuts can expose the existing app intents.
+
+Remaining safe Codex work:
+
+- Add app intents for build workout, nutrition closeout, post-workout debrief, fast coach note, and BP/intake only after a bounded iOS implementation task is opened.
+- Add structured intent outputs and stable safe error identifiers so Siri/Shortcuts can branch without scraping prose.
+- Add tests for secret redaction, missing secret, invalid secret, offline/backend failure, and Red safety behavior in intent outputs.
+- Keep Apple Health supporting-only in all iPhone outputs.
+
+Human/device boundary:
+
+- Installing on Todd's iPhone, entering/storing the API secret, HealthKit permission prompts, Shortcuts Personal Automation, Siri/Action Button assignment, passcodes, Face ID, or physical-device readback require Todd interaction.
+
+### P1: Minimal-Interaction Daily Data Chain
+
+Status: partly live, still dependent on manual or best-effort iOS behavior.
+
+Safe Codex work:
+
+- Improve sync-status wording and docs so missing/stale Garmin Nutrition, BP, sleep/recovery, and Apple Health data are actionable without Todd reading dashboards.
+- Add idempotent local app or Shortcut flows where the backend contract already exists.
+- Add local tests for stale/missing source explanations when behavior changes.
+
+Human/device boundary:
+
+- Background HealthKit automation reliability and iOS Personal Automation `Run Immediately` must be verified on Todd's physical device. Simulator or docs-only proof is not enough.
+
+### P1: Weekly Review To Next-Week Adaptation
+
+Status: read-only weekly review is working; automatic application is not implemented and should remain blocked by design.
+
+Safe Codex work:
+
+- Improve weekly review explainability and recommendation grouping if needed.
+- Keep recommendations `output_only`.
+- Add tests before any behavior change.
+
+Human boundary:
+
+- Persisting weekly reviews, applying next-week plan changes, promoting memory observations, or writing plan rows requires a separately scoped approval boundary.
+
+### P1: Rack/Garmin Workout Execution Handoff
+
+Status: workout output is Rack-first and Garmin-aware, but direct app automation is not safe by default.
+
+Safe Codex work:
+
+- Improve copy-friendly workout handoff fields.
+- Keep planned workout handoff separate from completed-history import.
+- Add tests for output shape and source hierarchy.
+
+Human/app boundary:
+
+- Direct Garmin, Rack, Motra, or browser/app entry requires Todd approval for the exact surface and must stop at login, payment, permission, 2FA, account-security, or secret-entry screens.
+
+### P2: Future Integrations
+
+Candidate tracks:
+
+- Apple Health workout-level intake.
+- Share extension / screenshot intake inside the native app.
+- Garmin official integration if approved and available.
+- Watch, widgets, Live Activities, Action Button, AirPods, or CarPlay surfaces.
+
+Rules:
+
+- Do not scrape Garmin, Rack, Motra, Oura, Apple, World Gym, or other web interfaces.
+- Do not let Apple Health override Garmin, Rack/Motra, Garmin Nutrition, safety, or medical data.
+- Do not let Siri, widgets, shortcuts, or model text override deterministic safety gates.
+
+## Next Safe Codex Task Candidates
+
+1. iOS App Intents Readiness Implementation v1: add safe read/write-intent scaffolding for build workout, nutrition closeout, fast note, BP/intake, and debrief with structured outputs, local tests, and no physical-device claims.
+2. Supabase Readiness Diagnostic Plan: document and, only if separately approved, inspect production schema/cache state for `coach_observations` without applying migrations.
+3. Rack/Garmin Handoff v1: improve generated workout handoff format and tests without automating third-party app entry.
+4. Daily Data Freshness UX: make `getSyncStatus` and `coach-today` warnings more action-oriented while preserving source hierarchy.

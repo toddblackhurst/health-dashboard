@@ -2,6 +2,8 @@
 
 This is the durable roadmap for future bounded Codex tasks. It is planning scaffolding only; it does not approve merge, deploy, Supabase migration apply, production environment edits, GPT Action auth changes, or secret handling.
 
+Current readiness tracker: `docs/implementation/READINESS_GAP_INVENTORY.md`.
+
 ## Operating Principle
 
 Build the coach in small verified stages. Each stage should have one target surface, a clear proof chain, tests, and a handoff. Do not let a planning document imply production state.
@@ -37,6 +39,8 @@ Acceptance:
 ## Stage 1: Weekly Review Engine
 
 Goal: produce a weekly review that summarizes actual evidence and proposes next-week adaptations without silently applying changes.
+
+Status as of 2026-06-13: implemented as a read-only deterministic helper plus authenticated API/OpenAPI action `buildWeeklyReview`. Saved GPT read-only `buildWeeklyReview` was verified for 2026-06-08 through 2026-06-14. Automatic persistence, Coach Memory promotion, and next-week plan application remain intentionally unimplemented and require a separate scoped approval boundary.
 
 Source lanes:
 
@@ -94,5 +98,6 @@ Candidate tracks after the above are stable:
 - Garmin official integration if approved and available.
 - Rack/Motra import/debrief support based on verified app constraints.
 - iOS 27 Siri/Shortcuts implementation only after Todd explicitly approves implementation.
+- iPhone/Siri/ChatGPT readiness work should use `docs/implementation/READINESS_GAP_INVENTORY.md` to separate safe Codex implementation from Todd/device/account boundaries.
 
 Every future stage must preserve the human-approval stops in `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`.

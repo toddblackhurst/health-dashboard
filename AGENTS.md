@@ -31,6 +31,7 @@ Read these files first when orienting:
 - `COACH_OPERATING_SYSTEM.md`
 - `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md` when the task involves a bounded Codex implementation, GPT Pro relay, PR, merge, deploy, migration, or handoff.
 - `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md` when the task touches implementation sequencing, Weekly Review Engine, Rack/Garmin handoff, or staged rollout planning.
+- `docs/implementation/READINESS_GAP_INVENTORY.md` when the task touches complete readiness, iPhone/Siri/ChatGPT readiness, or remaining build gaps.
 - `.github/codex/prompts/` when a task needs the canonical Codex implementation or review prompt library.
 - `MOTRA_SETTINGS.md`
 - `DATABASE_GUIDE.md`
@@ -56,13 +57,24 @@ The API requires the private `x-coach-secret` header. Never print, expose, commi
 
 Available routes:
 
+- `GET /api/coach/ping`
 - `GET /api/coach/dashboard`
+- `GET /api/coach/coach-today`
+- `GET /api/coach/sync-status`
+- `GET /api/coach/weekly-review`
 - `POST /api/coach/message`
 - `POST /api/coach/intake`
 - `POST /api/coach/brief`
 - `POST /api/coach/workout`
 - `POST /api/coach/nutrition-closeout`
 - `POST /api/coach/post-workout`
+- `POST /api/coach/observations`
+- `GET /api/coach/memory`
+- `POST /api/coach/memory/correct`
+- `POST /api/coach/memory/retire`
+- `POST /api/coach/workout-debrief`
+- `GET /api/coach/workout-debriefs`
+- `POST /api/coach/motra-template`
 
 ## Codex / GPT Pro Relay
 

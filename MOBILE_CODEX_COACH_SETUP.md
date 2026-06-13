@@ -8,6 +8,8 @@ This does not move the current local Codex Desktop thread into the phone app. In
 
 The active coaching spec is `COACH_OPERATING_SYSTEM.md`. Legacy numbered strategy docs are archive/reference unless a durable rule has been moved into that file or Supabase `coach_state`.
 
+Current readiness tracker: `docs/implementation/READINESS_GAP_INVENTORY.md`.
+
 ## Repository
 
 GitHub repo:
@@ -70,3 +72,5 @@ For bounded implementation tasks that use GPT Pro as a planning/evaluation relay
 Use iPhone Shortcuts for one-tap calls into the same API: Morning Coach, Morning Check-In, Build Today's Workout, Nutrition Closeout, Post-Workout Debrief, and Fast Coach Note.
 
 For the native Todd Health Sync app, the verified Morning Coach path is manual `Sync Now`, the in-app Morning Coach button, and a manually run `Morning Coach` Shortcut. Personal Automation setup is user-configured in iOS Shortcuts; `Run Immediately` was not fully verified through iOS Mirroring, and background automation should be treated as best-effort. Manual `Sync Now` remains the fallback when source freshness matters.
+
+As of 2026-06-13, saved GPT read-only `getSyncStatus` and `buildWeeklyReview` are verified working after Todd manually updated the secret and production was redeployed. No write action was called in that verification. Future iPhone/Siri work should keep write actions explicit and confirmable.

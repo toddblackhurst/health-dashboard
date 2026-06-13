@@ -485,6 +485,31 @@ test("weekly review API action returns deterministic review sections without per
   assert.ok(calls.every(call => call.method === "GET"));
 });
 
+test("weekly review API tolerates missing optional coach observations table", async () => {
+  const db = weeklyReviewDb();
+  delete db.coach_observations;
+  installWeeklyReviewSupabase(db);
+
+  const warnings = [];
+  const originalWarn = console.warn;
+  console.warn = message => warnings.push(String(message));
+  try {
+    const res = await handler(weeklyReviewGet("https://coach.test/api/coach?action=weekly-review&week_start=2026-06-08"));
+    const body = await res.json();
+
+    assert.equal(res.status, 200);
+    assert.equal(body.ok, true);
+    assert.equal(body.action, "weekly-review");
+    assert.equal(body.review.coach_memory_context.active_observation_count, 0);
+    assert.deepEqual(body.review.coach_memory_context.relevant_observations, []);
+    assert.equal(body.data_lifecycle.persistence, "none");
+    assert.equal(body.data_lifecycle.supabase_writes, false);
+    assert.ok(warnings.some(item => /Optional Supabase call skipped: coach_observations/.test(item)));
+  } finally {
+    console.warn = originalWarn;
+  }
+});
+
 test("weekly review clean route reaches the same handler and preserves source authority", async () => {
   installWeeklyReviewSupabase(weeklyReviewDb({
     strength_sessions: [],

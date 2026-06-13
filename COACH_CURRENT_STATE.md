@@ -1,6 +1,24 @@
 # Coach Current State
 
-Last updated: 2026-06-12 18:26 Asia/Taipei, after PR #19 merged and PR #20 Weekly Review Engine v1 API/OpenAPI wrapper branch started.
+Last updated: 2026-06-13 Asia/Taipei, after production GPT Action read-only recovery and the safe readiness audit pass.
+
+## 0. Current Verified Snapshot
+
+- Current local branch: `main` unless a scoped Codex branch is active.
+- Current verified main commit before this readiness pass: `aaef58be6964d6dcf1b331875c96a3a161613d81`.
+- Working tree was clean before the safe readiness pass.
+- Current full local test command: `node --test tests/*.test.mjs`.
+- Current verified main test result before this readiness branch: `96/96` passing on 2026-06-13.
+- Current readiness branch test result after adding the optional-memory fallback regression: `97/97` passing on 2026-06-13.
+- Production API ping was verified after Todd's secret rotation and the production redeploy:
+  - `GET https://todd-personal-coach.netlify.app/api/coach/ping`
+  - Response: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`
+- Saved GPT read-only protected actions were verified after Todd manually updated the secret in Netlify and GPT Builder:
+  - `getSyncStatus` succeeded for 2026-06-13.
+  - `buildWeeklyReview` succeeded for week_start `2026-06-08`, week_end `2026-06-14`, timezone `Asia/Taipei`.
+- No GPT Action write action was called during the read-only recovery verification.
+- Codex did not view, request, paste, store, or handle the secret. Todd handled secret entry manually.
+- `HEALTH_DATABASE.json` remains protected. It may change upstream from daily brief refresh automation, but Codex tasks must not edit it unless Todd explicitly scopes that file.
 
 ## 1. Project Purpose
 
@@ -31,8 +49,9 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Codex/GPT Pro operating model: `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
 - Full implementation roadmap: `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
 - Weekly Review Engine v1 planning doc: `docs/implementation/WEEKLY_REVIEW_ENGINE_V1_PLAN.md`
+- Readiness gap inventory: `docs/implementation/READINESS_GAP_INVENTORY.md`
 - Weekly Review Engine v1 deterministic helper candidate: `lib/weekly-review-lib.mjs`
-- Weekly Review Engine v1 API/OpenAPI wrapper candidate: `GET /api/coach/weekly-review`, operationId `buildWeeklyReview`
+- Weekly Review Engine v1 API/OpenAPI wrapper: `GET /api/coach/weekly-review`, operationId `buildWeeklyReview`
 - Canonical Codex prompt library: `.github/codex/prompts/`
 - Do not modify: `HEALTH_DATABASE.json`
 
@@ -55,7 +74,8 @@ Current known working action set includes:
 - `buildMotraDebriefTemplate`
 - `recordWorkoutDebrief`
 - `listWorkoutDebriefs`
-- `buildWeeklyReview` is a PR #20 candidate only. It is not merged, deployed, GPT Action refreshed, production verified, or available in production unless a later approved merge/deploy/readback completes.
+- `buildWeeklyReview` is merged, deployed, available in production OpenAPI, and verified through the saved GPT as a read-only action.
+- `pingCoachApi` is a public no-auth diagnostic action at `GET /api/coach/ping`. It returns no private health, training, nutrition, memory, or secret data.
 
 Production OpenAPI now includes Coach Memory / Observations v1 endpoints and actions:
 
@@ -175,9 +195,26 @@ Current production state:
   - Netlify deploy ID: `6a2aa7230175320008e2a126`.
   - Published at: 2026-06-11 20:16:46 Asia/Taipei.
   - Manual deploy: false. The production deploy was automatic.
-- `HEALTH_DATABASE.json` remained untouched throughout PR #13, #14, #15, migration, and production verification.
-- No production secrets or environment variables were changed.
-- No secret values were printed or pasted into chat.
+- PR #20, `Weekly Review Engine v1 API/OpenAPI Wrapper`, is merged and deployed.
+  - Scope: authenticated read-only `GET /api/coach/weekly-review`, operationId `buildWeeklyReview`, route/OpenAPI/tests.
+  - No weekly review persistence, Coach Memory promotion, next-week plan application, OpenAI call, Supabase migration, env/secret change, or production write action.
+- PR #21, `GPT Action operation-level security metadata`, is merged and deployed.
+  - Scope: OpenAPI compatibility metadata so protected operations explicitly declare `CoachSecret`.
+  - No route behavior, env/secret, migration, or production row change.
+- PR #22/#23, auth diagnostics, are merged and deployed.
+  - Scope: safe non-secret diagnostics around whether auth was configured and whether a header was supplied.
+  - Diagnostics do not print or expose secret values.
+- PR #24, public `pingCoachApi`, is merged and deployed.
+  - Scope: public no-auth diagnostic at `GET /api/coach/ping`, OpenAPI version `2.0.2`.
+  - `pingCoachApi` returns only `{ ok, action, version }` and no private coach data.
+- 2026-06-13 production recovery after Todd's manual secret rotation:
+  - Netlify production deploy ID: `6a2ca78f1078621ccc7c54da`.
+  - Production commit: `aaef58be6964d6dcf1b331875c96a3a161613d81`.
+  - Direct public ping succeeded.
+  - Saved GPT read-only `getSyncStatus` and `buildWeeklyReview` succeeded.
+  - No write action was called.
+  - Codex did not view, request, paste, store, or handle secrets.
+- Unless explicitly noted otherwise, no production secrets or environment variables were changed by Codex, no secret values were printed or pasted into chat, and Codex did not intentionally edit `HEALTH_DATABASE.json`.
 
 Coach Memory / Observations v1 production status:
 
@@ -227,7 +264,9 @@ Workout Debrief Capture v1 production status:
   - Memory candidates are returned as reviewable/proposed context only; no active Coach Memory observation is silently created.
 - Test result after implementation:
   - `node --test tests/*.test.mjs`
-  - `79/79` passing after implementation, reviewer fixes, and OpenAPI description follow-up fixes.
+  - Historical branch result: `79/79` passing after implementation, reviewer fixes, and OpenAPI description follow-up fixes.
+  - Main full suite after later PRs: `96/96` passing on 2026-06-13.
+  - This readiness branch adds one weekly-review optional-memory fallback regression, making the branch suite `97/97`.
 - Read-only reviewer follow-up fixes:
   - API/OpenAPI/Auth reviewer found that `/api/coach/motra-template` was already exposed in OpenAPI and `netlify.toml` but fell through to `404`. Fixed by adding `buildMotraDebriefTemplate`, wiring the handler, and adding route/behavior tests.
   - iOS 27 readiness/privacy reviewer found stale strategy-doc language saying Coach Memory was still the current branch. Fixed doc wording and sequence to reflect `workout-debrief-capture-v1`.
@@ -263,41 +302,31 @@ iOS 27 Siri/Shortcuts research status:
 ## 8. Known Caveats
 
 - Do not modify `HEALTH_DATABASE.json`.
-- PR #20 candidate scope is an authenticated Weekly Review Engine v1 API/OpenAPI wrapper only. It may change `coach-api.mjs`, `coach-openapi.json`, `netlify.toml`, focused tests, and this state file, but must not merge, deploy, refresh GPT Actions, production-verify, apply migrations, persist weekly reviews, touch secrets/env, change `HEALTH_DATABASE.json`, or begin PR #21 without later approval.
-- Do not deploy manually without Todd's explicit approval.
-- Do not merge PRs without Todd's explicit approval.
-- Do not push or open a PR without Todd's explicit approval.
-- Do not apply Supabase migrations without Todd's explicit approval.
+- Do not deploy manually unless a scoped instruction and current approval boundary allow it.
+- Do not merge PRs unless a scoped instruction and current approval boundary allow it.
+- Do not push or open a PR unless a scoped instruction and current approval boundary allow it.
+- Do not apply Supabase migrations without a scoped instruction and explicit migration boundary approval.
 - No Supabase migration was applied for PR #12.
 - Workout Debrief Capture v1 migration `007_workout_debriefs` has been applied to production Supabase with Todd's broad completion authorization for this run.
 - Do not begin unrelated phases early.
-- Do not begin iOS 27 Siri/Shortcuts implementation unless Todd explicitly approves it.
+- iOS 27 Siri/Shortcuts implementation must stay bounded. Do not install on Todd's iPhone, change device permissions, handle passcodes/Face ID, or claim physical-device proof without Todd's device interaction/readback.
 - The production smoke debrief row is intentionally old-dated and labeled as test data. Do not treat it as real workout feedback.
 - Garmin official API integration may be valuable later, but it depends on Garmin developer approval and should not block Coach Memory.
 - If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and use the configured GPT Action or secure provider surfaces for authenticated verification. Never paste the secret into chat.
+- A weekly review production run completed even though Netlify logged a non-blocking optional Supabase warning for `coach_observations`. Local code intentionally uses optional fallback for active memory context in dashboard/weekly-review reads; production schema/cache drift should be investigated through a separate safe Supabase-readiness boundary before any migration/schema-cache action.
 
 ## 9. Current Next Build Sequence
 
-Active API/OpenAPI wrapper candidate:
+Current readiness push:
 
-- PR #20, Weekly Review Engine v1 API/OpenAPI Wrapper, is intended to expose the merged deterministic helper through authenticated `GET /api/coach/weekly-review` and Custom GPT operationId `buildWeeklyReview`.
-- Scope boundary: API/OpenAPI wrapper and tests only. It must stay read-only: no weekly review persistence, no Coach Memory promotion, no next-week plan application, no OpenAI call, no external service scrape/call, no Supabase migration, no manual deploy, no production verification, no GPT Action refresh, and no `HEALTH_DATABASE.json` change.
-
-Recommended sequence:
-
-1. PR #12 Coach Memory / Observations v1. Merged and deployed to production.
-2. PR #13 Workout Debrief Capture v1. Merged, migrated, deployed, and GPT Action smoke-verified in production.
-3. iOS 27 Siri/Shortcuts Readiness PR.
-4. Apple Health workout-level intake.
-5. Rack/Motra import/debrief support.
-6. Weekly Review Engine.
-7. Garmin official integration track if approved.
-
-Alternate sequence if Todd wants iOS work pulled forward:
-
-1. iOS 27 Siri/Shortcuts Readiness PR, documentation-only.
-2. iOS 27 Siri/Shortcuts Implementation PR only after Todd explicitly approves implementation.
-3. Apple Health workout-level intake or Rack/Motra import/debrief support, depending on Todd's priority.
+1. Keep production read-only GPT Actions healthy and documented.
+2. Close documentation/state drift so fresh Codex/GPT Pro runs do not follow obsolete PR #20 candidate instructions.
+3. Build the iPhone/Siri/ChatGPT voice-text path in bounded stages:
+   - current verified iPhone bridge: native Apple Health sync app plus `SyncAppleHealthIntent`, `MorningCoachIntent`, `CheckCoachSyncStatusIntent`, and `OpenCoachTodayIntent`;
+   - next safe app stage: add build-workout, nutrition-closeout, post-workout-debrief, fast-note, BP/intake, and structured result/error outputs;
+   - physical-device stage: install/configure/test only with Todd present for passcodes, Face ID, Health permissions, Shortcut automation, and any secret entry.
+4. Investigate the `coach_observations` optional warning as schema/cache readiness, without assuming a migration is applied or needed from local files alone.
+5. Use `docs/implementation/READINESS_GAP_INVENTORY.md` as the working gap list for future bounded Codex tasks.
 
 Coach Memory / Observations v1 completed target:
 
@@ -306,7 +335,7 @@ Coach Memory / Observations v1 completed target:
 - Include `coach_memory_context` with `summary`, `relevant_observations`, `memory_warnings`, and `last_updated`. Merged and deployed.
 - Keep memory deterministic and non-authoritative over safety/current data. Merged, deployed, and covered by tests.
 - Add or update OpenAPI actions for recording, listing, correcting, and retiring memory. Merged and deployed.
-- Add tests for auth, lifecycle, retrieval, retired exclusion, Red safety protection, hard medical/safety protection, current-data precedence, validation errors, secret-like text redaction, and OpenAPI security. Merged and deployed; current full suite passes `79/79`.
+- Add tests for auth, lifecycle, retrieval, retired exclusion, Red safety protection, hard medical/safety protection, current-data precedence, validation errors, secret-like text redaction, and OpenAPI security. Merged and deployed; main full suite passed `96/96` before this readiness branch.
 
 ## 10. Non-Negotiable File Rule
 
