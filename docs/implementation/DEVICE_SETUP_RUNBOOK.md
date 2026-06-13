@@ -6,7 +6,7 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 
 ## Current Verified Baseline
 
-- Main commit after PR #44 readiness audit: `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
+- Main commit after PR #45 state refresh: `221f18f8a00f8660a88229310eeea9a4aec00a09`.
 - PR #27, `Add iPhone Coach setup readiness UX`, is merged.
 - PR #28, `Add Coach device setup runbook`, is merged.
 - PR #29, `Harden iOS shortcut secret redaction`, is merged.
@@ -25,8 +25,9 @@ Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health 
 - PR #42, `Add safe app entity and widget string contract plan`, is merged.
 - PR #43, `Refresh state after PR42 merge`, is merged.
 - PR #44, `Add repo-wide iPhone readiness audit`, is merged.
-- Automatic Netlify production deploy for commit `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5` is ready.
-- Production deploy id: `6a2cf69a6f66a00009dfbe85`.
+- PR #45, `Refresh device setup baseline after PR44`, is merged.
+- Automatic Netlify production deploy for commit `221f18f8a00f8660a88229310eeea9a4aec00a09` is ready.
+- Production deploy id: `6a2cf94cb9b036000940039d`.
 - Public production ping is healthy:
 
 ```text
@@ -34,7 +35,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #44 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
+- Protected read-only routes were not called in the PR #45 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remained unchanged.
 - Current readiness audit reference: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 
@@ -50,7 +51,7 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 
 Before Todd starts physical-device setup:
 
-1. Confirm main is at or after `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
+1. Confirm main is at or after `221f18f8a00f8660a88229310eeea9a4aec00a09`.
 2. Confirm `HEALTH_DATABASE.json` has no local diff.
 3. Confirm the public ping endpoint returns the healthy payload above.
 4. Confirm local iOS build readiness if app code has changed since PR #27:

@@ -6,9 +6,9 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
-- PR #44, Repo-Wide iPhone Readiness Audit v1, is merged.
-- Automatic Netlify production deploy `6a2cf69a6f66a00009dfbe85` is ready for commit `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5`.
+- Main is at `221f18f8a00f8660a88229310eeea9a4aec00a09`.
+- PR #45, Device Setup Runbook Baseline Refresh, is merged after PR #44.
+- Automatic Netlify production deploy `6a2cf94cb9b036000940039d` is ready for commit `221f18f8a00f8660a88229310eeea9a4aec00a09`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -47,13 +47,13 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 - Supabase `coach_observations` schema/cache uncertainty remains documented as a production/admin boundary, not proof that a migration or schema-cache action should be run.
 - The App Shortcuts 10-promotion cap forces prioritization; implemented but unpromoted intents may require manual discovery in Shortcuts.
 - Source freshness UX still depends on what the device can safely verify without protected credentials.
-- `docs/implementation/DEVICE_SETUP_RUNBOOK.md` has been identified as the next docs-only baseline refresh target after PR #44; its device-bound setup steps and hard boundaries remain the active procedure.
+- `docs/implementation/DEVICE_SETUP_RUNBOOK.md` baseline was refreshed after PR #44; its device-bound setup steps and hard boundaries remain the active procedure.
 
 ## Safe Codex Repo-Only Backlog
 
-### 1. Device Setup Runbook Baseline Refresh
+### Completed: Device Setup Runbook Baseline Refresh
 
-Goal: update `docs/implementation/DEVICE_SETUP_RUNBOOK.md` so its baseline references PR #44/main `74c7dff8c7b1a719b6ba04d5a25cf818b37e9ae5` while preserving the existing Todd-assisted steps.
+Result: PR #45 updated `docs/implementation/DEVICE_SETUP_RUNBOOK.md` so its baseline references main `221f18f8a00f8660a88229310eeea9a4aec00a09`, production deploy `6a2cf94cb9b036000940039d`, public ping health, protected-route skip status, and unchanged `HEALTH_DATABASE.json` while preserving the existing Todd-assisted steps.
 
 Files likely involved: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`, possibly `COACH_CURRENT_STATE.md`.
 
@@ -61,7 +61,7 @@ Acceptance criteria: the runbook baseline matches current production, public pin
 
 Expected verification: `node --test tests/*.test.mjs`, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
 
-Boundaries: docs-only; no device setup, no protected routes, no secret handling, no deploy settings.
+Boundaries preserved: docs-only; no device setup, no protected routes, no secret handling, no deploy settings.
 
 ### 2. Shortcuts Promotion And Discovery Matrix
 
