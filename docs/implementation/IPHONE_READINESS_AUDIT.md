@@ -51,6 +51,7 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 - Supabase `coach_observations` schema/cache uncertainty remains documented as a production/admin boundary, not proof that a migration or schema-cache action should be run.
 - The App Shortcuts 10-promotion cap forces prioritization; implemented but unpromoted intents may require manual discovery in Shortcuts.
 - Source freshness UX still depends on what the device can safely verify without protected credentials and what non-Apple provider/manual sources are refreshed.
+- Data integration readiness is mapped in `docs/implementation/DATA_INTEGRATION_READINESS_PLAN.md`; Todd-safe manual source prompts are in `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
 - `docs/implementation/DEVICE_SETUP_RUNBOOK.md` baseline was refreshed after PR #63; its device-bound setup steps and hard boundaries remain the active procedure.
 
 ## Safe Codex Repo-Only Backlog

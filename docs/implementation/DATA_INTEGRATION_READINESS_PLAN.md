@@ -6,7 +6,9 @@ Purpose: make the stale-source problem implementation-ready without crossing pro
 
 ## Current State
 
-- Baseline branch: `codex/data-integration-readiness`, based on `origin/main` at `0cf593f08225260ddca46dad8b55647b49c26133`.
+- PR #65, `Add data integration readiness map`, is merged to main at `6617094108e90e395088e582246cfc80d2099a2f`.
+- Companion manual packet: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
+- Baseline branch for PR #65 was `codex/data-integration-readiness`, based on `origin/main` at `0cf593f08225260ddca46dad8b55647b49c26133`.
 - Latest verified device evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`.
 - Latest protected read-only device evidence from 2026-06-15: sync-status succeeded through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
 - Overall Coach source freshness still remained `0%` for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound.
@@ -223,7 +225,7 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
 
 1. Manual Source Evidence Packet v1
    - Why it matters: gives Todd one clear non-secret template for the missing daily sources so Coach can work safely before write-readiness.
-   - Likely files: new `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`, plus links from `DEVICE_SETUP_RUNBOOK.md` and `READINESS_GAP_INVENTORY.md`.
+   - Working file: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`, plus minimal durable links from start/current/readiness docs.
    - Acceptance criteria: source-by-source prompt templates, do-not-paste rules, low-confidence rules, and proof states for "reported but not saved" vs "saved."
    - Tests/builds: `node --test tests/*.test.mjs`, `git diff --check`, `git diff -- HEALTH_DATABASE.json`.
    - Hard boundaries: docs-only, no protected routes, no writes, no provider automation, no device setup.
@@ -277,7 +279,7 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
 
 ## Next Implementable PR Recommendation
 
-Recommended next PR: Manual Source Evidence Packet v1.
+Recommended next PR: Manual Source Evidence Packet v1. After that, the next likely code task is Sync Status Source Classification Improvements v1, unless GPT Pro scopes a different bounded step.
 
 Why this is the best next step:
 

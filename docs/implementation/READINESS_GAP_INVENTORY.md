@@ -6,7 +6,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main is verified at `c140815117acc7ebfcd0b3812eb5dd6c1aaed115` after PR #63 merge and automatic production deploy.
+- Repo main is verified at `6617094108e90e395088e582246cfc80d2099a2f` after PR #65, `Add data integration readiness map`, merged. PR #65 was docs-only and did not change protected routes, production writes, provider accounts, Netlify/Supabase/GPT Action settings, or `HEALTH_DATABASE.json`.
 - PR #63, `Harden iOS device command runner fallback`, is merged and deployed. Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready for commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`, and public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Full local Node test suite passed on 2026-06-15 before PR #63 merge: `node --test tests/*.test.mjs` -> `98/98`.
 - iOS simulator verification before PR #63 merge passed: simulator build succeeded and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` passed `53/53`.
@@ -14,7 +14,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - Todd-approved physical iPhone evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`; protected read-only sync status worked through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
 - Overall Coach source freshness remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound. Coach remains usable for cautious caveated browser/GPT guidance, not full autonomous high-confidence readiness.
 - Remaining local dirty-state caution: the primary main worktree is behind/dirty with unrelated changes in `ContentView.swift`, `HealthSyncViewModel.swift`, `netlify/functions/_coach-lib.mjs`, `tests/coach-engine.test.mjs`, and `tests/coach-memory.test.mjs`; the original experiment worktree still has the earlier two-file DeviceCommandRunner experimental patch. These are not approved for commit by this document.
-- Next safe repo-only task: `Isolated Anti-Repeat Backend Triage v1`, only after GPT Pro explicitly scopes it from a fresh clean worktree.
+- Current safe repo-only task: `Manual Source Evidence Packet v1`, scoped by GPT Pro from a fresh clean worktree. It should add `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md` and minimal durable links only.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
@@ -132,6 +132,7 @@ Status: partly live, still dependent on manual or best-effort iOS behavior.
 Safe Codex work:
 
 - Keep the local Daily Data Freshness UX aligned with sync-status wording so missing/stale Garmin Nutrition, BP, sleep/recovery, and Apple Health data are actionable without Todd reading dashboards.
+- Use `docs/implementation/DATA_INTEGRATION_READINESS_PLAN.md` and `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md` to keep manual evidence distinct from saved/imported source data.
 - Add idempotent local app or Shortcut flows where the backend contract already exists.
 - Add local tests for stale/missing source explanations when behavior changes.
 
@@ -185,9 +186,9 @@ Rules:
 
 ## Next Safe Codex Task Candidates
 
-1. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
-2. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
-3. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
-4. iOS Freshness Output Hardening: consider future typed App Intent result models or `SyncStatus` entities without adding production writes.
-5. iOS Secret-Redaction Test Expansion: add deeper local tests for future entity/widget strings without using real secrets.
-6. No-Network Failure Matrix follow-up, only if tests reveal gaps: extend mock cases without using real secrets or live protected routes.
+1. Manual Source Evidence Packet v1: current docs-only task to give Todd one safe verbal/chat packet for stale or manual Garmin, BP, Garmin Nutrition, body, Rack/Motra, Oura, Apple Health, and safety-note evidence.
+2. Sync Status Source Classification Improvements v1: future code task to distinguish primary, fallback, supporting, stale, manual/provider-bound, write-held, and not-expected source states.
+3. Manual Source Freshness Draft UI v1: future iOS draft-only/no-write task using the evidence packet fields.
+4. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
+5. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
+6. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
