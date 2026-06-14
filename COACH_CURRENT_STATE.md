@@ -1,35 +1,53 @@
 # Coach Current State
 
-Last updated: 2026-06-13 Asia/Taipei, after PR #59 merge/deploy verification and production public ping.
+Last updated: 2026-06-15 Asia/Taipei, after PR #63 merge/deploy verification, production public ping, and Todd-approved iPhone data-refresh evidence.
 
 ## 0. Current Verified Snapshot
 
-- Current local branch: `main` unless a scoped Codex branch is active.
-- Current verified main commit: `e929f50e9681cded3f8fb03ec9c03ebb249d75de`.
-- PR #59, `docs: add supabase readiness diagnostic plan`, is merged to main and production deployed automatically.
-- Working tree is clean after PR #59 merge/deploy verification unless a scoped Codex branch is active.
-- Current full local test command: `node --test tests/*.test.mjs`.
-- Current verified main test result before PR #59 merge: `97/97` passing on 2026-06-13.
-- PR #27 iPhone Coach Setup UX Readiness v1 local iOS test command: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' test`.
-- PR #27 iPhone Coach Setup UX Readiness v1 local iOS test result: succeeded on 2026-06-13, including App Intents metadata extraction and 11 `CoachTodaySummaryTests`.
-- Production API ping was verified after Todd's secret rotation and the production redeploy:
-  - `GET https://todd-personal-coach.netlify.app/api/coach/ping`
-  - Response: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`
-- Production API ping was also verified after PR #27 automatic production deploy at main commit `7656419538b094abfe7f498347d48f6917b1c860`.
-- PR #27 automatic production deploy:
-  - Netlify deploy ID: `6a2cbe646e58290008291dd2`
+- Current local branch: `main` unless a scoped Codex branch is active. Avoid the older dirty primary worktree at `/Users/toddsdesktop/Codex Git Projects/health-dashboard` until its unrelated changes are isolated.
+- Current verified main commit: `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
+- PR #63, `Harden iOS device command runner fallback`, is merged to main and production deployed automatically.
+- Automatic Netlify production deploy for PR #63 merge commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115` is ready:
+  - Deploy ID: `6a2f34ee63d2f6000703ab27`
   - State: `ready`
   - Context: `production`
   - Branch: `main`
-  - Commit: `7656419538b094abfe7f498347d48f6917b1c860`
-  - Published at: `2026-06-13T02:20:30.076Z`
+  - Published at: `2026-06-14T23:10:48.121Z`
   - Manual deploy: `false`
+- GitHub Pages workflow `27515065002` for the PR #63 merge commit succeeded.
+- Working tree should be clean in a scoped fresh worktree after PR #63 merge/deploy verification unless a new scoped Codex branch is active.
+- Current full local test command: `node --test tests/*.test.mjs`.
+- Current verified main test result before PR #63 merge: `98/98` passing on 2026-06-15.
+- Current iOS verification before PR #63 merge:
+  - Build: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'platform=iOS Simulator,name=iPhone 17' build`
+  - XCTest: `xcodebuild -project apps/ios-health-sync/ToddHealthSync.xcodeproj -scheme ToddHealthSync -destination 'id=70CC325F-9E67-43C2-9286-F5DB244399C8' -disable-concurrent-testing -parallel-testing-enabled NO test`
+  - Result: `53/53` passing on 2026-06-15.
+- Production API ping was verified after PR #63 automatic production deploy:
+  - `GET https://todd-personal-coach.netlify.app/api/coach/ping`
+  - Response: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`
+- Protected routes were skipped in Codex post-merge verification because they require `x-coach-secret` or a real secret/account prompt.
 - Saved GPT read-only protected actions were verified after Todd manually updated the secret in Netlify and GPT Builder:
   - `getSyncStatus` succeeded for 2026-06-13.
   - `buildWeeklyReview` succeeded for week_start `2026-06-08`, week_end `2026-06-14`, timezone `Asia/Taipei`.
 - No GPT Action write action was called during the read-only recovery verification.
 - Codex did not view, request, paste, store, or handle the secret. Todd handled secret entry manually.
 - `HEALTH_DATABASE.json` remains protected. It may change upstream from daily brief refresh automation, but Codex tasks must not edit it unless Todd explicitly scopes that file.
+- Todd-approved physical iPhone evidence from 2026-06-15:
+  - Apple Health supporting evidence was refreshed at 6:55 AM and the app reported `Wrote 7 of 7 Apple Health daily summaries`.
+  - Protected read-only `sync-status` worked through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
+  - Overall Coach source freshness remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound.
+  - Coach is usable for cautious caveated browser/GPT guidance, not full autonomous high-confidence readiness.
+- PR #63 Device Command Runner Fallback safety model:
+  - `daily-freshness` is the only default allowed command and records `completed_no_write` with redacted output.
+  - `apple-health-sync`, `sync`, `sync-apple-health`, `morning-coach`, and `all` are blocked by default as `blocked_write_command`.
+  - `sync-status`, `weekly-review`, `coach-today`, `open-coach-today`, `can-i-train`, and `build-today-workout` are blocked by default as `blocked_protected_command`.
+  - Unknown command text is not persisted raw.
+  - No developer-only protected/write gate was added.
+- Remaining local dirty-state caution:
+  - Primary main worktree `/Users/toddsdesktop/Codex Git Projects/health-dashboard` remains behind/dirty with unrelated changes in `ContentView.swift`, `HealthSyncViewModel.swift`, `netlify/functions/_coach-lib.mjs`, `tests/coach-engine.test.mjs`, and `tests/coach-memory.test.mjs`.
+  - Original experiment worktree `/Users/toddsdesktop/Codex Git Projects/health-dashboard-ios-readout-ux` still has the earlier two-file DeviceCommandRunner experimental patch.
+  - Anti-repeat/backend dirty changes remain unreviewed and unapproved for commit.
+  - Next safe repo-only task: `Isolated Anti-Repeat Backend Triage v1`, after GPT Pro scopes it from a fresh clean worktree.
 - iOS App Intents Readiness v1 is merged and repo-side only. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, call live production write endpoints, or submit draft-only debrief/note/BP writes.
 - iPhone Coach Setup UX Readiness v1 is merged and deployed. It adds native setup status, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, or call live protected write endpoints.
 - Coach Device Setup Runbook and Dry-Run Matrix v1 is merged and deployed. It adds `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for Todd-assisted physical iPhone/Siri/Shortcuts setup.

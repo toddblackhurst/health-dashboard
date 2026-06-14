@@ -18,6 +18,14 @@ App Intent execution dry-run contract: `docs/implementation/APP_INTENT_EXECUTION
 
 Future write-capable Coach actions must follow `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any live write, GPT Action write call, Shortcut submit flow, Action Button write, Personal Automation write, Supabase mutation, or third-party app update is attempted.
 
+## Current Verified Baseline
+
+As of 2026-06-15 Asia/Taipei, PR #63 is merged at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`. Automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready and public ping returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+
+Final PR #63 verification passed `node --test tests/*.test.mjs` (`98/98`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial iOS XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`53/53`). Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt. `HEALTH_DATABASE.json` remained unchanged.
+
+Todd-approved physical iPhone evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`; protected read-only sync status worked through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`. Overall Coach source freshness still remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound.
+
 ## Repository
 
 GitHub repo:
