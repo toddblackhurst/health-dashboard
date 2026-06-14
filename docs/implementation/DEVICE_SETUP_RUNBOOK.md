@@ -58,6 +58,29 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 - Codex must not manually deploy production, change Netlify settings, modify environment variables, run Supabase migrations, inspect production schema, call production write endpoints, or call GPT Action write endpoints during this setup.
 - Apple Health remains supporting evidence only and cannot override Garmin, Rack/Motra, Garmin Nutrition, safety, or medical authority.
 
+## Device Command Runner Fallback
+
+The native app includes a narrowly scoped device-command runner for cases where iPhone Mirroring is unreliable but Xcode can still launch the installed app on Todd's physical iPhone. This is a developer fallback for non-secret, redacted readback only; it is not an automation bypass.
+
+Allowed by default:
+
+- `daily-freshness`: runs the local Daily Data Freshness check and records `completed_no_write` with redacted output in app preferences.
+
+Blocked by default:
+
+- Write-capable commands such as `apple-health-sync`, `sync-apple-health`, `sync`, `morning-coach`, and `all` record `blocked_write_command` and do not call the workflow.
+- Protected read-only commands such as `sync-status`, `coach-today`, `weekly-review`, `can-i-train`, `open-coach-today`, and `build-today-workout` record `blocked_protected_command` and do not call the workflow.
+- Unknown commands record `unsupported_command`; the raw command string is not persisted, so a mistyped secret-like value is not stored as a command name.
+
+This runner must not be used to trigger unattended production writes, protected Coach API calls, Apple Health sync, GPT Action writes, Supabase mutations, third-party app activity, or permission/credential entry. Protected read-only and write-capable paths remain Todd/device-bound unless a later separately approved phase explicitly changes that boundary.
+
+Latest Todd-approved device evidence from 2026-06-15 Asia/Taipei:
+
+- Apple Health supporting evidence was refreshed from the physical iPhone after Todd approved the device action; the app reported `Wrote 7 of 7 Apple Health daily summaries` at 6:55 AM.
+- A protected read-only sync-status readback succeeded through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
+- Overall Coach source freshness was still 0% for 2026-06-15 because Garmin sleep/recovery, blood pressure, Garmin Nutrition, body composition, Rack/Motra session, and Rack/Motra exercise details remained stale, missing, pending, or manual/provider-bound.
+- Garmin, Rack/Motra, Oura, body-composition, and BP sources are not scraped or operated by Codex. Todd may manually review/report non-secret summaries, or a future provider integration may be scoped separately.
+
 ## Preconditions
 
 Before Todd starts physical-device setup:
