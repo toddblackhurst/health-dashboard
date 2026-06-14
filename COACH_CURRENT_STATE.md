@@ -1,11 +1,13 @@
 # Coach Current State
 
-Last updated: 2026-06-15 Asia/Taipei, after PR #63 merge/deploy verification, production public ping, and Todd-approved iPhone data-refresh evidence.
+Last updated: 2026-06-15 Asia/Taipei, after PR #65 data integration readiness merge, production public ping, and Todd-approved iPhone data-refresh evidence.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active. Avoid the older dirty primary worktree at `/Users/toddsdesktop/Codex Git Projects/health-dashboard` until its unrelated changes are isolated.
-- Current verified main commit: `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
+- Current verified main commit: `6617094108e90e395088e582246cfc80d2099a2f` after PR #65, `Add data integration readiness map`.
+- PR #65 is docs-only and adds `docs/implementation/DATA_INTEGRATION_READINESS_PLAN.md`. It does not call protected routes, perform writes, change provider accounts, modify Netlify/Supabase/GPT Action settings, or edit `HEALTH_DATABASE.json`.
+- Current scoped Codex task: `Manual Source Evidence Packet v1`, docs-only, from a fresh clean worktree. It turns the data-readiness map into a Todd-safe verbal/chat evidence packet for stale Garmin, BP, Garmin Nutrition, body, Rack/Motra, Oura, Apple Health, and safety-note data.
 - PR #63, `Harden iOS device command runner fallback`, is merged to main and production deployed automatically.
 - Automatic Netlify production deploy for PR #63 merge commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115` is ready:
   - Deploy ID: `6a2f34ee63d2f6000703ab27`
@@ -25,6 +27,7 @@ Last updated: 2026-06-15 Asia/Taipei, after PR #63 merge/deploy verification, pr
 - Production API ping was verified after PR #63 automatic production deploy:
   - `GET https://todd-personal-coach.netlify.app/api/coach/ping`
   - Response: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`
+- Production public ping was also healthy after PR #65 merged. Protected routes remained skipped by Codex because they require `x-coach-secret` or a real secret/account prompt.
 - Protected routes were skipped in Codex post-merge verification because they require `x-coach-secret` or a real secret/account prompt.
 - Saved GPT read-only protected actions were verified after Todd manually updated the secret in Netlify and GPT Builder:
   - `getSyncStatus` succeeded for 2026-06-13.
@@ -47,7 +50,7 @@ Last updated: 2026-06-15 Asia/Taipei, after PR #63 merge/deploy verification, pr
   - Primary main worktree `/Users/toddsdesktop/Codex Git Projects/health-dashboard` remains behind/dirty with unrelated changes in `ContentView.swift`, `HealthSyncViewModel.swift`, `netlify/functions/_coach-lib.mjs`, `tests/coach-engine.test.mjs`, and `tests/coach-memory.test.mjs`.
   - Original experiment worktree `/Users/toddsdesktop/Codex Git Projects/health-dashboard-ios-readout-ux` still has the earlier two-file DeviceCommandRunner experimental patch.
   - Anti-repeat/backend dirty changes remain unreviewed and unapproved for commit.
-  - Next safe repo-only task: `Isolated Anti-Repeat Backend Triage v1`, after GPT Pro scopes it from a fresh clean worktree.
+  - Current safe repo-only task: `Manual Source Evidence Packet v1`, scoped by GPT Pro from a fresh clean worktree.
 - iOS App Intents Readiness v1 is merged and repo-side only. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, call live production write endpoints, or submit draft-only debrief/note/BP writes.
 - iPhone Coach Setup UX Readiness v1 is merged and deployed. It adds native setup status, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, or call live protected write endpoints.
 - Coach Device Setup Runbook and Dry-Run Matrix v1 is merged and deployed. It adds `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for Todd-assisted physical iPhone/Siri/Shortcuts setup.

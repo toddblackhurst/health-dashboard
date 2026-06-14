@@ -10,6 +10,8 @@ The active coaching spec is `COACH_OPERATING_SYSTEM.md`. Legacy numbered strateg
 
 Current readiness tracker: `docs/implementation/READINESS_GAP_INVENTORY.md`.
 
+Manual source evidence packet for stale or manual Garmin, BP, Garmin Nutrition, body, Rack/Motra, Oura, Apple Health, and safety-note data: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
+
 Todd-assisted physical iPhone setup runbook and dry-run matrix: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
 Repo-only iPhone/Siri/Shortcuts/Health readiness audit: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
@@ -20,7 +22,9 @@ Future write-capable Coach actions must follow `docs/implementation/WRITE_READIN
 
 ## Current Verified Baseline
 
-As of 2026-06-15 Asia/Taipei, PR #63 is merged at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`. Automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready and public ping returns `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+As of 2026-06-15 Asia/Taipei, PR #65, `Add data integration readiness map`, is merged at main commit `6617094108e90e395088e582246cfc80d2099a2f`. Public ping remains healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Protected routes remain skipped by Codex because they require `x-coach-secret` or a real secret/account prompt.
+
+PR #63 is also merged at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`. Automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` was ready and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 
 Final PR #63 verification passed `node --test tests/*.test.mjs` (`98/98`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial iOS XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`53/53`). Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt. `HEALTH_DATABASE.json` remained unchanged.
 

@@ -20,10 +20,12 @@ Read only this active set first:
 12. `docs/implementation/SHORTCUTS_PROMOTION_DISCOVERY_MATRIX.md` — promoted versus implemented/unpromoted App Intents, Shortcuts discovery expectations, and Todd-device verification steps.
 13. `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md` — first Todd-assisted protected read-only iPhone verification checklist after direct device secret entry.
 14. `docs/implementation/IPHONE_READINESS_AUDIT.md` — repo-only audit of remaining iPhone/Siri/Shortcuts/Health readiness work and Todd/device/account boundaries.
-15. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
-16. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
-17. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
-18. `coach-openapi.json` — Custom GPT / Shortcut action contract.
+15. `docs/implementation/DATA_INTEGRATION_READINESS_PLAN.md` — source-by-source readiness map for stale Garmin, BP, nutrition, body, Rack/Motra, Oura, and Apple Health data.
+16. `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md` — Todd-safe verbal/chat evidence packet for stale or manual source data.
+17. `.github/codex/prompts/` — canonical Codex implementation and review prompt library.
+18. `MOTRA_SETTINGS.md` — exact Motra exercise names and custom-exercise rules.
+19. `DATABASE_GUIDE.md` — data model notes and legacy JSON context.
+20. `coach-openapi.json` — Custom GPT / Shortcut action contract.
 
 ## Live Data
 
@@ -35,11 +37,12 @@ Read only this active set first:
 
 - Production site/API is live at `https://todd-personal-coach.netlify.app`.
 - Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions. Read-only `getSyncStatus` and `buildWeeklyReview` were verified through the saved GPT after Todd manually updated the secret; no write action was called.
+- PR #65, `Add data integration readiness map`, is merged to main at `6617094108e90e395088e582246cfc80d2099a2f`. Public ping remained healthy after merge; protected routes remained skipped by Codex.
 - PR #63, `Harden iOS device command runner fallback`, is merged and automatically deployed at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`; automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready, manual deploy `false`, and public ping is healthy.
 - PR #63 keeps the device-command runner safe by allowing only local `daily-freshness` by default. Apple Health sync, protected sync status, Coach Today, weekly review, training checks, workout builds, and `all` are blocked or unavailable by default through unattended launch commands.
 - Todd-approved physical iPhone evidence from 2026-06-15 shows Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`, and protected read-only sync status worked through the iOS app at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
 - Overall Coach source freshness still remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound.
-- The next safe repo-only task is `Isolated Anti-Repeat Backend Triage v1` only after GPT Pro scopes it from a fresh clean worktree. Do not casually use the older dirty primary main worktree or commit its unrelated dirty files.
+- The current safe repo-only task is `Manual Source Evidence Packet v1`, scoped from a fresh clean worktree after GPT Pro approval. Do not casually use the older dirty primary main worktree or commit its unrelated dirty files.
 - The public dashboard posture has been retired; the Netlify site is now primarily a private coach backend and internal tool surface.
 - V2 architecture is defined in `ARCHITECTURE_V2.md` and should guide future Codex work.
 - Apple Health / HealthKit daily sync is live as supporting evidence for activity context, freshness, and diagnostics.
@@ -76,7 +79,7 @@ Read only this active set first:
   - `Check Daily Data Freshness`
   - `Draft Coach Note`
   - `Draft Blood Pressure Intake`
-- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the App Intent dry-run contract is in `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, Todd-safe physical-device evidence templates are in `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`, future write-readiness boundaries are in `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`, the Supabase readiness diagnostic plan is in `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`, the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`, and the first protected read-only device verification checklist is in `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`.
+- Current readiness gaps and next safe Codex tasks are tracked in `docs/implementation/READINESS_GAP_INVENTORY.md`; the data integration readiness map is in `docs/implementation/DATA_INTEGRATION_READINESS_PLAN.md`; Todd-safe manual source prompts are in `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`; the App Intent dry-run contract is in `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`, Todd-safe physical-device evidence templates are in `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`, future write-readiness boundaries are in `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`, the Supabase readiness diagnostic plan is in `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`, the iPhone/Siri/Shortcuts/Health readiness audit is in `docs/implementation/IPHONE_READINESS_AUDIT.md`, and the first protected read-only device verification checklist is in `docs/implementation/READ_ONLY_PROTECTED_DEVICE_VERIFICATION_CHECKLIST.md`.
 - Supabase Readiness Diagnostic Plan v1 is complete as a docs-only planning artifact. The next readiness step is not an autonomous repo-only implementation by default; choose either Todd-assisted physical iPhone protected read-only verification, or a separately approved Supabase production/admin diagnostic boundary.
 - Todd-assisted physical iPhone setup should follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 - Older shortcuts still present but not preferred: `Coach Motra Debrief`, `Coach Message`, `Coach Intake`, `Coach Upload`. Delete only with Todd's explicit confirmation.
