@@ -64,6 +64,111 @@ struct FakeSensitiveError: LocalizedError {
 }
 
 final class CoachTodaySummaryTests: XCTestCase {
+    func testDeviceCommandRunnerParsesOnlySafeLaunchArgumentCommands() {
+        XCTAssertEqual(
+            DeviceCommandRunner.command(from: ["ToddHealthSync", "--coach-device-command", "daily-freshness"]),
+            .dailyFreshness
+        )
+        XCTAssertNil(DeviceCommandRunner.command(from: ["ToddHealthSync", "--coach-device-command", "apple-health-sync"]))
+        XCTAssertNil(DeviceCommandRunner.command(from: ["ToddHealthSync", "--coach-device-command", "sync-status"]))
+        XCTAssertNil(DeviceCommandRunner.command(from: ["ToddHealthSync", "--coach-device-command", "all"]))
+        XCTAssertNil(DeviceCommandRunner.command(from: ["ToddHealthSync", "--coach-device-command"]))
+        XCTAssertNil(DeviceCommandRunner.command(from: ["ToddHealthSync", "--coach-device-command", "unknown"]))
+        XCTAssertNil(DeviceCommandRunner.command(from: ["ToddHealthSync"]))
+        XCTAssertEqual(
+            DeviceCommandRunner.command(from: ["ToddHealthSync"], environment: ["COACH_DEVICE_COMMAND": " DAILY-FRESHNESS "]),
+            .dailyFreshness
+        )
+    }
+
+    func testDeviceCommandRunnerBlocksProtectedAndWriteCommandsWithoutRunningWorkflow() throws {
+        var workflowCallCount = 0
+        let blockedWriteDefaults = makeDeviceCommandDefaults()
+
+        DeviceCommandRunner.run(commandName: "apple-health-sync", defaults: blockedWriteDefaults) { _ in
+            workflowCallCount += 1
+            return MorningCoachActionResult(title: "Should not run", detail: "Should not run")
+        }
+
+        XCTAssertEqual(workflowCallCount, 0)
+        XCTAssertEqual(blockedWriteDefaults.string(forKey: DeviceCommandRunner.statusKey), "blocked_write_command")
+        XCTAssertEqual(blockedWriteDefaults.string(forKey: DeviceCommandRunner.nameKey), "apple-health-sync")
+        XCTAssertTrue(
+            try XCTUnwrap(blockedWriteDefaults.string(forKey: DeviceCommandRunner.resultKey))
+                .contains("production write-capable commands are not available")
+        )
+
+        let blockedProtectedDefaults = makeDeviceCommandDefaults()
+        DeviceCommandRunner.run(commandName: "sync-status", defaults: blockedProtectedDefaults) { _ in
+            workflowCallCount += 1
+            return MorningCoachActionResult(title: "Should not run", detail: "Should not run")
+        }
+
+        XCTAssertEqual(workflowCallCount, 0)
+        XCTAssertEqual(blockedProtectedDefaults.string(forKey: DeviceCommandRunner.statusKey), "blocked_protected_command")
+        XCTAssertEqual(blockedProtectedDefaults.string(forKey: DeviceCommandRunner.nameKey), "sync-status")
+        XCTAssertTrue(
+            try XCTUnwrap(blockedProtectedDefaults.string(forKey: DeviceCommandRunner.resultKey))
+                .contains("protected Coach readbacks remain Todd/device-bound")
+        )
+    }
+
+    func testDeviceCommandRunnerBlocksAllAndUnsupportedCommandsWithoutPersistingRawSecretInput() throws {
+        var workflowCallCount = 0
+        let allDefaults = makeDeviceCommandDefaults()
+
+        DeviceCommandRunner.run(commandName: "all", defaults: allDefaults) { _ in
+            workflowCallCount += 1
+            return MorningCoachActionResult(title: "Should not run", detail: "Should not run")
+        }
+
+        XCTAssertEqual(workflowCallCount, 0)
+        XCTAssertEqual(allDefaults.string(forKey: DeviceCommandRunner.statusKey), "blocked_write_command")
+        XCTAssertEqual(allDefaults.string(forKey: DeviceCommandRunner.nameKey), "all")
+
+        let unsupportedDefaults = makeDeviceCommandDefaults()
+        let fakeSecretCommand = "x-coach-secret: fake-coach-secret-12345"
+        DeviceCommandRunner.run(commandName: fakeSecretCommand, defaults: unsupportedDefaults) { _ in
+            workflowCallCount += 1
+            return MorningCoachActionResult(title: "Should not run", detail: "Should not run")
+        }
+
+        XCTAssertEqual(workflowCallCount, 0)
+        XCTAssertEqual(unsupportedDefaults.string(forKey: DeviceCommandRunner.statusKey), "unsupported_command")
+        XCTAssertEqual(unsupportedDefaults.string(forKey: DeviceCommandRunner.nameKey), "unsupported")
+        let storedValues = [
+            unsupportedDefaults.string(forKey: DeviceCommandRunner.statusKey),
+            unsupportedDefaults.string(forKey: DeviceCommandRunner.nameKey),
+            unsupportedDefaults.string(forKey: DeviceCommandRunner.resultKey)
+        ]
+        .compactMap { $0 }
+        .joined(separator: "\n")
+        XCTAssertFalse(storedValues.contains("fake-coach-secret-12345"))
+        XCTAssertFalse(storedValues.localizedCaseInsensitiveContains("x-coach-secret"))
+    }
+
+    func testDeviceCommandRunnerRecordsSafeCommandAsNoWriteAndRedactsResult() throws {
+        let defaults = makeDeviceCommandDefaults()
+        let fakeSecret = "fake-coach-secret-67890"
+        let fakeBearer = "fakeBearerTokenValue678901"
+
+        DeviceCommandRunner.run(commandName: "daily-freshness", defaults: defaults) { command in
+            XCTAssertEqual(command, .dailyFreshness)
+            return MorningCoachActionResult(
+                title: "Daily data freshness",
+                detail: "x-coach-secret: \(fakeSecret)\nAuthorization: Bearer \(fakeBearer)"
+            )
+        }
+
+        XCTAssertEqual(defaults.string(forKey: DeviceCommandRunner.statusKey), "completed_no_write")
+        XCTAssertEqual(defaults.string(forKey: DeviceCommandRunner.nameKey), "daily-freshness")
+        let result = try XCTUnwrap(defaults.string(forKey: DeviceCommandRunner.resultKey))
+        XCTAssertFalse(result.contains(fakeSecret))
+        XCTAssertFalse(result.contains(fakeBearer))
+        XCTAssertFalse(result.localizedCaseInsensitiveContains("x-coach-secret"))
+        XCTAssertTrue(result.contains("[redacted]"))
+    }
+
     func testSetupCommandRequestParsesSingleAndCombinedCommands() {
         XCTAssertEqual(
             SetupCommandRequest.parse("setup"),
@@ -1831,6 +1936,13 @@ final class CoachTodaySummaryTests: XCTestCase {
                 line: line
             )
         }
+    }
+
+    private func makeDeviceCommandDefaults() -> UserDefaults {
+        let suiteName = "DeviceCommandRunnerTests.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+        return defaults
     }
 
     private func assertNoHardTrainingPermission(in text: String, file: StaticString = #filePath, line: UInt = #line) {
