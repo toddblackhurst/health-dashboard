@@ -1577,7 +1577,7 @@ function asNumber(value) {
 
 function normalizeIntent(intent, text = "") {
   const i = String(intent || "").trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "_");
-  if (["build_workout", "workout", "brief", "nutrition_check", "post_workout", "evaluate_data", "travel_mode", "general"].includes(i)) {
+  if (["build_workout", "workout", "brief", "nutrition_check", "post_workout", "evaluate_data", "travel_mode"].includes(i)) {
     if (i === "workout") return "build_workout";
     if (i === "brief") return "brief";
     return i;
