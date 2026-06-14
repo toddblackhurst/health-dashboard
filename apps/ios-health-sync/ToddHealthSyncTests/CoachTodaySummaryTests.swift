@@ -64,6 +64,30 @@ struct FakeSensitiveError: LocalizedError {
 }
 
 final class CoachTodaySummaryTests: XCTestCase {
+    func testSetupCommandRequestParsesSingleAndCombinedCommands() {
+        XCTAssertEqual(
+            SetupCommandRequest.parse("setup"),
+            SetupCommandRequest(runSetup: true, runReadiness: false, runSync: false)
+        )
+        XCTAssertEqual(
+            SetupCommandRequest.parse("readiness"),
+            SetupCommandRequest(runSetup: false, runReadiness: true, runSync: false)
+        )
+        XCTAssertEqual(
+            SetupCommandRequest.parse("sync"),
+            SetupCommandRequest(runSetup: false, runReadiness: false, runSync: true)
+        )
+        XCTAssertEqual(
+            SetupCommandRequest.parse("setup readiness sync"),
+            SetupCommandRequest(runSetup: true, runReadiness: true, runSync: true)
+        )
+        XCTAssertEqual(
+            SetupCommandRequest.parse("all"),
+            SetupCommandRequest(runSetup: true, runReadiness: true, runSync: true)
+        )
+        XCTAssertNil(SetupCommandRequest.parse("secret-value-that-is-not-a-command"))
+    }
+
     func testStructuredCoachTodayResponseBuildsMorningCoachSummary() throws {
         let json = """
         {
@@ -143,6 +167,69 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(output.shortcutText.contains("safety_status: yellow"))
         XCTAssertTrue(output.shortcutText.contains("primary_constraints:"))
         XCTAssertTrue(output.shortcutText.contains("Apple Health is supporting evidence only."))
+    }
+
+    func testCoachTodayUsesNestedDailyCallFallback() throws {
+        let json = """
+        {
+          "date": "2026-06-14",
+          "daily_summary": {
+            "daily_call": "Yellow: use the conservative training plan."
+          },
+          "why": [
+            "Garmin sleep/recovery is stale."
+          ],
+          "todays_plan": {
+            "primary_action": "Daily walk and mobility"
+          },
+          "what_to_track_today": [
+            "BP reading and symptoms."
+          ]
+        }
+        """.data(using: .utf8)!
+
+        let summary = try CoachTodaySummary.parse(data: json)
+        let result = summary.conciseResult(syncStatus: nil)
+        let output = summary.shortcutOutput
+
+        XCTAssertTrue(result.contains("Yellow: use the conservative training plan."))
+        XCTAssertFalse(result.contains("Coach today returned without a daily call."))
+        XCTAssertEqual(output.readinessSummary, "Yellow: use the conservative training plan.")
+        XCTAssertEqual(output.safetyStatus, .yellow)
+        XCTAssertTrue(output.shortcutText.contains("protected_verification_status: verified_read_only"))
+        XCTAssertFalse(output.shortcutText.contains("Coach today returned without a daily call."))
+    }
+
+    func testCoachTodayWithUsefulContentAvoidsMisleadingMissingDailyCallText() throws {
+        let json = """
+        {
+          "date": "2026-06-14",
+          "why": [
+            "Garmin sleep/recovery is missing."
+          ],
+          "todays_plan": {
+            "primary_action": "Daily walk and mobility"
+          },
+          "safety_guardrails": [
+            "BP missing means stay conservative."
+          ],
+          "what_to_track_today": [
+            "BP reading and symptoms."
+          ]
+        }
+        """.data(using: .utf8)!
+
+        let summary = try CoachTodaySummary.parse(data: json)
+        let result = summary.conciseResult(syncStatus: nil)
+        let output = summary.shortcutOutput
+
+        XCTAssertTrue(result.contains("Coach today readback is available. Plan: Daily walk and mobility"))
+        XCTAssertTrue(result.contains("Warnings:"))
+        XCTAssertTrue(result.contains("Next: BP reading and symptoms."))
+        XCTAssertFalse(result.contains("Coach today returned without a daily call."))
+        XCTAssertEqual(output.readinessSummary, "Coach today readback is available. Plan: Daily walk and mobility")
+        XCTAssertTrue(output.shortcutText.contains("write_status: no_write"))
+        XCTAssertFalse(output.shortcutText.contains("Coach today returned without a daily call."))
     }
 
     func testCoachTodayRedSafetySuppressesHardTrainingSurfaceText() throws {
