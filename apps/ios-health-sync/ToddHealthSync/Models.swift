@@ -1299,7 +1299,7 @@ struct CoachTodaySummary {
     func conciseResult(syncStatus: CoachSyncStatusSummary?) -> String {
         var lines: [String] = []
         lines.append("Morning Coach: \(date ?? "today")")
-        lines.append(dailyCall ?? "Coach today returned without a daily call.")
+        lines.append(readoutHeadline)
 
         let whyLines = why.prefix(3)
         if !whyLines.isEmpty {
@@ -1326,9 +1326,22 @@ struct CoachTodaySummary {
         return lines.joined(separator: "\n")
     }
 
+    private var readoutHeadline: String {
+        if let dailyCall {
+            return dailyCall
+        }
+        if let plan = todaysPlan.first {
+            return "Coach today readback is available. Plan: \(plan)"
+        }
+        if !why.isEmpty || !safetyGuardrails.isEmpty || !whatToTrackToday.isEmpty {
+            return "Coach today readback is available; review the source notes and next action below."
+        }
+        return "Coach today returned without a daily call."
+    }
+
     var shortcutOutput: CoachShortcutOutput {
         let constraints = Array(safetyGuardrails.prefix(6))
-        let safetyStatus = Self.safetyStatus(from: dailyCall, constraints: constraints)
+        let safetyStatus = Self.safetyStatus(from: readoutHeadline, constraints: constraints)
         let isRedSafety = safetyStatus == .red
         return CoachShortcutOutput(
             actionStatus: "ok",
@@ -1337,7 +1350,7 @@ struct CoachTodaySummary {
             protectedVerificationStatus: .verifiedReadOnly,
             writeStatus: .noWrite,
             safetyStatus: safetyStatus,
-            readinessSummary: dailyCall ?? "Coach today returned without a daily call.",
+            readinessSummary: readoutHeadline,
             workoutTitle: isRedSafety ? nil : todaysPlan.first,
             workoutType: isRedSafety ? .none : Self.workoutType(from: todaysPlan.first),
             primaryConstraints: constraints,
@@ -1375,12 +1388,31 @@ struct CoachTodaySummary {
 
         return CoachTodaySummary(
             date: root.stringValue("date"),
-            dailyCall: root.dailyCallValue("daily_call"),
+            dailyCall: Self.dailyCall(from: root),
             why: root.stringArray("why"),
             todaysPlan: root.todayPlanLines("todays_plan"),
             safetyGuardrails: root.stringArray("safety_guardrails"),
             whatToTrackToday: root.stringArray("what_to_track_today")
         )
+    }
+
+    private static func dailyCall(from root: [String: Any]) -> String? {
+        if let value = root.dailyCallValue("daily_call")
+            ?? root.stringValue("call")
+            ?? root.stringValue("top_line_call") {
+            return value
+        }
+
+        for key in ["daily_summary", "brief", "coaching_brief"] {
+            if let nested = root[key] as? [String: Any],
+               let value = nested.dailyCallValue("daily_call")
+                ?? nested.stringValue("call")
+                ?? nested.stringValue("top_line_call") {
+                return value
+            }
+        }
+
+        return nil
     }
 
     private static func safetyStatus(from dailyCall: String?, constraints: [String]) -> CoachShortcutSafetyStatus {
