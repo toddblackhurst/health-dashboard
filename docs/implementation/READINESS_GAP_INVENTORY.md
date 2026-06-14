@@ -1,13 +1,20 @@
 # Personal Coach Readiness Gap Inventory
 
-Last updated: 2026-06-13 Asia/Taipei.
+Last updated: 2026-06-15 Asia/Taipei.
 
 Purpose: keep the readiness push explicit. This file separates what is already verified, what Codex can safely build next, and what must wait for Todd/device/account/manual boundaries.
 
 ## Verified Now
 
-- Repo main was clean at `e929f50e9681cded3f8fb03ec9c03ebb249d75de` after PR #59 merge.
-- Full local Node test suite passed on 2026-06-13 before PR #59 merge: `node --test tests/*.test.mjs` -> `97/97`.
+- Repo main is verified at `c140815117acc7ebfcd0b3812eb5dd6c1aaed115` after PR #63 merge and automatic production deploy.
+- PR #63, `Harden iOS device command runner fallback`, is merged and deployed. Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready for commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`, and public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+- Full local Node test suite passed on 2026-06-15 before PR #63 merge: `node --test tests/*.test.mjs` -> `98/98`.
+- iOS simulator verification before PR #63 merge passed: simulator build succeeded and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` passed `53/53`.
+- PR #63 Device Command Runner safety model is now durable: only `daily-freshness` is allowed by default and records `completed_no_write` with redacted output; write-capable commands such as `apple-health-sync`, `sync`, `sync-apple-health`, `morning-coach`, and `all` are blocked as `blocked_write_command`; protected commands such as `sync-status`, `weekly-review`, `coach-today`, `open-coach-today`, `can-i-train`, and `build-today-workout` are blocked as `blocked_protected_command`; unknown command text is not persisted raw.
+- Todd-approved physical iPhone evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`; protected read-only sync status worked through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
+- Overall Coach source freshness remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound. Coach remains usable for cautious caveated browser/GPT guidance, not full autonomous high-confidence readiness.
+- Remaining local dirty-state caution: the primary main worktree is behind/dirty with unrelated changes in `ContentView.swift`, `HealthSyncViewModel.swift`, `netlify/functions/_coach-lib.mjs`, `tests/coach-engine.test.mjs`, and `tests/coach-memory.test.mjs`; the original experiment worktree still has the earlier two-file DeviceCommandRunner experimental patch. These are not approved for commit by this document.
+- Next safe repo-only task: `Isolated Anti-Repeat Backend Triage v1`, only after GPT Pro explicitly scopes it from a fresh clean worktree.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.

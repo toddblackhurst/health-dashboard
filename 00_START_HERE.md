@@ -31,11 +31,15 @@ Read only this active set first:
 - `HEALTH_DATABASE.json` is legacy/bootstrap/export backup.
 - The API logs coach calls to `coach_decisions` and chat to `coach_messages`.
 
-## Current State — 2026-06-13
+## Current State — 2026-06-15
 
 - Production site/API is live at `https://todd-personal-coach.netlify.app`.
 - Latest coach brain is deployed through Netlify and should be used through Custom GPT Actions. Read-only `getSyncStatus` and `buildWeeklyReview` were verified through the saved GPT after Todd manually updated the secret; no write action was called.
-- PR #59, `docs: add supabase readiness diagnostic plan`, is merged and automatically deployed at main commit `e929f50e9681cded3f8fb03ec9c03ebb249d75de`; automatic Netlify production deploy `6a2d1dd9cb800e000843ed68` is ready, manual deploy `false`, and public ping is healthy.
+- PR #63, `Harden iOS device command runner fallback`, is merged and automatically deployed at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`; automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready, manual deploy `false`, and public ping is healthy.
+- PR #63 keeps the device-command runner safe by allowing only local `daily-freshness` by default. Apple Health sync, protected sync status, Coach Today, weekly review, training checks, workout builds, and `all` are blocked or unavailable by default through unattended launch commands.
+- Todd-approved physical iPhone evidence from 2026-06-15 shows Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`, and protected read-only sync status worked through the iOS app at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
+- Overall Coach source freshness still remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound.
+- The next safe repo-only task is `Isolated Anti-Repeat Backend Triage v1` only after GPT Pro scopes it from a fresh clean worktree. Do not casually use the older dirty primary main worktree or commit its unrelated dirty files.
 - The public dashboard posture has been retired; the Netlify site is now primarily a private coach backend and internal tool surface.
 - V2 architecture is defined in `ARCHITECTURE_V2.md` and should guide future Codex work.
 - Apple Health / HealthKit daily sync is live as supporting evidence for activity context, freshness, and diagnostics.

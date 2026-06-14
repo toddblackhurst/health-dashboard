@@ -1,41 +1,15 @@
 # Coach Device Setup Runbook
 
-Last updated: 2026-06-13 Asia/Taipei.
+Last updated: 2026-06-15 Asia/Taipei.
 
 Purpose: prepare Todd-assisted physical iPhone setup for the native Todd Health Sync app, Siri, Shortcuts, and later automation surfaces. This runbook is a repo-only planning artifact. It does not grant permissions, enter secrets, configure a device, call protected write actions, or change production settings.
 
 ## Current Verified Baseline
 
-- Main commit after PR #55 App Intent Execution Evidence Packet v1: `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c`.
-- PR #27, `Add iPhone Coach setup readiness UX`, is merged.
-- PR #28, `Add Coach device setup runbook`, is merged.
-- PR #29, `Harden iOS shortcut secret redaction`, is merged.
-- PR #30, `Add coach readiness automation gate`, is merged.
-- PR #31, `Refresh current state after PR30 merge`, is merged.
-- PR #32, `Add daily data freshness UX`, is merged.
-- PR #33, `Refresh current state after PR32 merge`, is merged.
-- PR #34, `Add workout handoff formatting`, is merged.
-- PR #35, `Refresh state after PR34 merge`, is merged.
-- PR #36, `Harden typed Shortcut outputs`, is merged.
-- PR #37, `Refresh state after PR36 merge`, is merged.
-- PR #38, `Add no-network failure matrix`, is merged.
-- PR #39, `Refresh state after PR38 merge`, is merged.
-- PR #40, `Harden iOS freshness output`, is merged.
-- PR #41, `Refresh state after PR40 merge`, is merged.
-- PR #42, `Add safe app entity and widget string contract plan`, is merged.
-- PR #43, `Refresh state after PR42 merge`, is merged.
-- PR #44, `Add repo-wide iPhone readiness audit`, is merged.
-- PR #45, `Refresh device setup baseline after PR44`, is merged.
-- PR #47, `Add shortcuts discovery matrix`, is merged.
-- PR #48, `Refresh current state after PR47 merge`, is merged.
-- PR #49, `Add read-only protected device checklist`, is merged.
-- PR #50, `Refresh current state after PR49 merge`, is merged.
-- PR #51, `Harden red safety shortcut output`, is merged.
-- PR #52, `Refresh current state after PR51 merge`, is merged.
-- PR #53, `Add App Intent execution dry-run matrix`, is merged.
-- PR #55, `docs: add app intent evidence packet`, is merged.
-- Automatic Netlify production deploy for commit `4ced57bdd133a004e6d59c8b5ba17b94ee19e05c` is ready.
-- Production deploy id: `6a2d13f1e1d662000820aa50`.
+- Main commit after PR #63 Device Command Runner Fallback hardening: `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
+- PR #63, `Harden iOS device command runner fallback`, is merged.
+- Automatic Netlify production deploy for commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115` is ready.
+- Production deploy id: `6a2f34ee63d2f6000703ab27`.
 - Public production ping is healthy:
 
 ```text
@@ -43,8 +17,14 @@ GET https://todd-personal-coach.netlify.app/api/coach/ping
 {"ok":true,"action":"ping","version":"coach-brain-v1"}
 ```
 
-- Protected read-only routes were not called in the PR #55 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
+- Protected read-only routes were not called in the PR #63 post-merge check because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remained unchanged.
+- Final PR #63 local verification passed:
+  - `git diff --check`
+  - `git diff -- HEALTH_DATABASE.json` empty
+  - `node --test tests/*.test.mjs` -> `98/98`
+  - iOS simulator build
+  - explicit serial iOS XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` -> `53/53`
 - Current readiness audit reference: `docs/implementation/IPHONE_READINESS_AUDIT.md`.
 - Current App Intent execution dry-run reference: `docs/implementation/APP_INTENT_EXECUTION_DRY_RUN_MATRIX.md`.
 - Current Todd-safe evidence packet reference: `docs/implementation/APP_INTENT_EXECUTION_EVIDENCE_PACKET.md`.

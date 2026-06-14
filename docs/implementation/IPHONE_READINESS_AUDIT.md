@@ -1,17 +1,20 @@
 # iPhone Readiness Audit
 
-Last updated: 2026-06-13 Asia/Taipei.
+Last updated: 2026-06-15 Asia/Taipei.
 
 Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/Health Coach path and separate safe Codex work from Todd/device/account/admin boundaries. This audit does not approve feature implementation, protected route calls, production writes, Supabase actions, signing/capability changes, or physical-device setup.
 
 ## Verified Baseline
 
-- Main is at `e929f50e9681cded3f8fb03ec9c03ebb249d75de`.
-- PR #59, Supabase Readiness Diagnostic Plan v1, is merged after PR #58.
-- Automatic Netlify production deploy `6a2d1dd9cb800e000843ed68` is ready for commit `e929f50e9681cded3f8fb03ec9c03ebb249d75de`.
+- Main is at `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
+- PR #63, Device Command Runner Fallback hardening, is merged after PR #62.
+- Automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready for commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
-- Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt.
+- Protected routes were skipped in Codex post-merge verification because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
+- Final PR #63 verification passed `node --test tests/*.test.mjs` (`98/98`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`53/53`).
+- Todd-approved physical iPhone evidence from 2026-06-15 shows Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`; protected read-only sync status worked through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
+- Overall Coach source freshness still remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound.
 
 ## Repo-Side Implemented
 
@@ -25,13 +28,13 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 - Workout handoff formatting: workout output can include redacted `workout_handoff` text for manual Rack/Motra and Garmin use, with explicit `manual_handoff_only_no_write` semantics.
 - No-network/failure matrix: offline, timeout, DNS/host/connect, missing setup, invalid API base, missing secret, non-2xx, invalid response, malformed JSON, and deferred protected-route cases map to stable redacted Shortcut output.
 - Backend/OpenAPI boundaries: public ping is unauthenticated and data-free; protected read routes require `x-coach-secret`; write-capable actions remain authenticated and should not be live-tested without a separate write-readiness phase.
+- Device command runner fallback: only `daily-freshness` is allowed by default and records `completed_no_write` with redacted output. Write-capable commands such as `apple-health-sync`, `sync`, `sync-apple-health`, `morning-coach`, and `all` are blocked as `blocked_write_command`; protected commands such as `sync-status`, `weekly-review`, `coach-today`, `open-coach-today`, `can-i-train`, and `build-today-workout` are blocked as `blocked_protected_command`. Unknown command text is not persisted raw.
 
 ## Not Physically Verified
 
-- Physical iPhone install/run of the latest app build.
-- HealthKit permission grants on Todd's actual iPhone.
-- Todd-entered Coach secret in the physical-device Keychain/config.
-- Protected read-only route verification from the physical device using Todd-entered credentials.
+- Physical iPhone install/run of the final PR #63 merged build.
+- Full HealthKit permission review on Todd's actual iPhone, beyond the Apple Health daily sync evidence that succeeded on 2026-06-15.
+- Secret value inspection remains unverified and intentionally impossible for Codex; Todd entered the Coach secret directly on device, and protected read-only sync status succeeded without exposing it.
 - Siri phrase behavior and region/device/language availability.
 - Shortcuts visibility and run behavior on the physical device.
 - Action Button assignment.
@@ -42,13 +45,13 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 ## Remaining Readiness Risks
 
 - Simulator-only verification cannot prove Siri, Shortcuts UI, Action Button, Personal Automation, Health permissions, or device Keychain behavior.
-- Protected read-only verification is pending Todd-entered device credentials.
+- Protected read-only sync-status verification succeeded once through the iOS app path on 2026-06-15, but future protected read-only checks remain Todd/device-bound and must not be called from Codex.
 - Write-capable paths are intentionally held; draft-only outputs must stay no-write until a separate write-readiness phase.
 - Third-party integrations for Garmin, Rack/Motra, Oura, World Gym, and nutrition remain manual/deferred unless a safe official integration is separately scoped.
 - Supabase `coach_observations` schema/cache uncertainty remains documented as a production/admin boundary, not proof that a migration or schema-cache action should be run.
 - The App Shortcuts 10-promotion cap forces prioritization; implemented but unpromoted intents may require manual discovery in Shortcuts.
-- Source freshness UX still depends on what the device can safely verify without protected credentials.
-- `docs/implementation/DEVICE_SETUP_RUNBOOK.md` baseline was refreshed after PR #44; its device-bound setup steps and hard boundaries remain the active procedure.
+- Source freshness UX still depends on what the device can safely verify without protected credentials and what non-Apple provider/manual sources are refreshed.
+- `docs/implementation/DEVICE_SETUP_RUNBOOK.md` baseline was refreshed after PR #63; its device-bound setup steps and hard boundaries remain the active procedure.
 
 ## Safe Codex Repo-Only Backlog
 
