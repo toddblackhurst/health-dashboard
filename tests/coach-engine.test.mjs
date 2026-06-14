@@ -676,6 +676,25 @@ test("tomorrow Wednesday workout request builds the upcoming strength plan", () 
   assert.match(decision.next_actions[0], /Wednesday plan/);
 });
 
+test("general intent still routes tomorrow workout text to the workout planner", () => {
+  const decision = buildCoachDecision({
+    text: "What is tomorrow's workout?",
+    intent: "general",
+    dashboard: { profile: { timezone: "Asia/Taipei" } },
+    payload: { now: TUESDAY_TAIPEI },
+  });
+
+  assert.equal(decision.intent, "build_workout");
+  assert.equal(decision.date, "2026-06-10");
+  assert.equal(decision.readiness.schedule.weekday, "Wednesday");
+  assert.equal(decision.readiness.schedule.strength_planned, true);
+  assert.equal(decision.workout_request.requested_for_weekday, "Wednesday");
+  assert.match(decision.workout_request.planning_basis, /not today's schedule/);
+  assert.equal(decision.workout_plan.requested_for_date, "2026-06-10");
+  assert.equal(decision.workout_plan.session_type, "World Gym Strength + Athletic Functional");
+  assert.match(decision.next_actions[0], /Wednesday plan/);
+});
+
 test("next strength day request resolves without forcing today's non-lift day", () => {
   const decision = buildCoachDecision({
     text: "Build my next strength day workout",
