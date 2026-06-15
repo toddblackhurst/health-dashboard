@@ -7,7 +7,8 @@ Purpose: make the stale-source problem implementation-ready without crossing pro
 ## Current State
 
 - PR #65, `Add data integration readiness map`, is merged to main at `6617094108e90e395088e582246cfc80d2099a2f`.
-- Companion manual packet: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
+- PR #66, `Add manual source evidence packet`, is merged to main at `35febba701f9e5e11ad09fc42164b0013ddc3670`.
+- Companion manual packet is complete: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
 - Baseline branch for PR #65 was `codex/data-integration-readiness`, based on `origin/main` at `0cf593f08225260ddca46dad8b55647b49c26133`.
 - Latest verified device evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`.
 - Latest protected read-only device evidence from 2026-06-15: sync-status succeeded through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
@@ -224,6 +225,7 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
 ### A. Safe Codex Repo-Only Tasks
 
 1. Manual Source Evidence Packet v1
+   - Status: completed by PR #66.
    - Why it matters: gives Todd one clear non-secret template for the missing daily sources so Coach can work safely before write-readiness.
    - Working file: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`, plus minimal durable links from start/current/readiness docs.
    - Acceptance criteria: source-by-source prompt templates, do-not-paste rules, low-confidence rules, and proof states for "reported but not saved" vs "saved."
@@ -279,22 +281,20 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
 
 ## Next Implementable PR Recommendation
 
-Recommended next PR: Manual Source Evidence Packet v1. After that, the next likely code task is Sync Status Source Classification Improvements v1, unless GPT Pro scopes a different bounded step.
+Recommended next PR: Sync Status Source Classification Improvements v1, unless GPT Pro scopes a different bounded step.
 
 Why this is the best next step:
 
-- Highest immediate readiness impact: Todd can feed Coach the exact missing Garmin/BP/Nutrition/Rack/Motra/body/Oura facts today without waiting for account integrations.
-- Lowest boundary risk: docs-only, no secrets, no protected routes, no writes, no Supabase/admin work, no device automation, and no third-party scraping.
-- Builds the bridge to future implementation: the packet can become the acceptance contract for later draft UI, sync-status classification, and write-readiness PRs.
+- Highest immediate readiness impact after PR #66: make current sync-status output more useful by labeling source roles and boundaries more precisely.
+- Low boundary risk when scoped carefully: code/tests/docs only, no secrets, no protected routes from Codex, no writes, no Supabase/admin work, no device automation, and no third-party scraping.
+- Builds on the manual packet: source classification can reuse the completed packet's primary/fallback/supporting/manual-provider-bound/write-held distinctions.
 
 Acceptance criteria for that next PR:
 
-- A single Todd-facing evidence packet exists with source-by-source prompts.
-- It labels every item as reported/manual, not saved.
-- It includes a compact pre-workout script and post-workout script.
-- It states exactly what Coach should do with low-confidence or stale data.
-- It links back to this plan and the write-readiness boundary.
-- Verification remains docs-only: Node tests, diff check, and `HEALTH_DATABASE.json` no diff.
+- Sync status distinguishes primary, fallback, supporting-only, stale, missing, manual/provider-bound, write-held, verified-read-only, and not-expected states.
+- Garmin, Rack/Motra, Garmin Nutrition, BP, Oura fallback, Apple Health, body comp, doctor notes, workout debriefs, and Coach Memory keep the source hierarchy intact.
+- Manual evidence remains labeled as reported/not saved unless a separate write-readiness task approves persistence.
+- Verification includes Node tests, diff check, and `HEALTH_DATABASE.json` no diff; iOS tests run only if iOS output code changes.
 
 ## Non-Actions In This Plan
 
