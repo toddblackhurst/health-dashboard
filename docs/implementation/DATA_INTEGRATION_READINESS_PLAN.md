@@ -261,9 +261,10 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
    - Hard boundaries: no protected route calls, no production writes, no OpenAPI/GPT Action auth/settings.
 
 3. Manual Source Freshness Draft UI v1
+   - Status: implemented as a local iOS draft/no-write packet builder.
    - Why it matters: expands local no-write drafting from BP/debrief/note into structured prompts for nutrition, Garmin recovery, body comp, and Rack/Motra evidence.
    - Likely files: iOS workflow/model/tests and docs.
-   - Acceptance criteria: all new paths are draft-only/no-write, redacted, and labeled "not saved"; no backend route calls.
+   - Acceptance criteria: all new paths are draft-only/no-write, redacted, labeled "not saved," and produce a paste-ready manual evidence packet; no backend route calls.
    - Tests/builds: Node tests if docs/backend touched; iOS simulator build and explicit tests if iOS code changes.
    - Hard boundaries: no live intake, no Health permission changes, no physical iPhone automation.
 
@@ -302,17 +303,17 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
 
 ## Next Implementable PR Recommendation
 
-Recommended next PR: Manual Source Freshness Draft UI v1, unless GPT Pro scopes a different bounded step.
+Recommended next PR: Todd-assisted Device Setup Session or the next GPT Pro-scoped repo-only readiness step, depending on whether Todd's physical iPhone is available.
 
 Why this is the best next step:
 
-- Highest immediate readiness impact after PR #68: turn the completed source labels and manual evidence packet into local no-write draft capture surfaces Todd can use without implying provider automation or persistence.
-- Boundary stays controlled when scoped carefully: iOS/app-side draft-only capture, no secrets, no protected routes from Codex, no writes, no Supabase/admin work, no device automation, and no third-party scraping.
-- Builds on the completed manual packet and PR #68 classification labels.
+- Highest immediate readiness impact after Manual Source Freshness Draft UI v1: prove the local no-write packet on Todd's real iPhone, or continue with a fresh repo-only readiness task if device setup is not available.
+- Boundary stays controlled when scoped carefully: no secrets handled by Codex, no protected routes from Codex, no writes, no Supabase/admin work, no third-party scraping, and no provider automation.
+- Builds on the completed manual packet, PR #68 classification labels, and the local draft packet builder.
 
 Acceptance criteria for that next PR:
 
-- Draft capture surfaces are clearly labeled no-write/not-saved, redacted, and scoped to Garmin recovery, BP, nutrition, body composition, and Rack/Motra evidence.
+- Physical-device setup remains Todd-assisted with readback only, or any repo-only follow-up remains bounded, no-write, and separated from provider/admin/write-readiness work.
 - Garmin, Rack/Motra, Garmin Nutrition, BP, Oura fallback, Apple Health, body comp, doctor notes, workout debriefs, and Coach Memory keep the source hierarchy intact.
 - Manual evidence remains labeled as reported/not saved unless a separate write-readiness task approves persistence.
 - Verification includes Node tests, diff check, and `HEALTH_DATABASE.json` no diff; iOS tests run only if iOS output code changes.

@@ -255,6 +255,217 @@ struct CoachSafeOutput {
     }
 }
 
+enum ManualSourceEvidenceLane: String, CaseIterable, Codable, Equatable, Identifiable {
+    case garminSleepRecovery = "garmin_sleep_recovery"
+    case bloodPressure = "blood_pressure"
+    case garminNutrition = "garmin_nutrition"
+    case bodyComposition = "body_composition_weight"
+    case rackMotraSession = "rack_motra_strength_session"
+    case rackMotraExerciseDetail = "rack_motra_exercise_detail"
+    case ouraFallback = "oura_fallback_sleep_recovery"
+    case appleHealthSupporting = "apple_health_supporting_note"
+    case doctorSafetyNote = "doctor_safety_note"
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .garminSleepRecovery:
+            return "Garmin sleep/recovery"
+        case .bloodPressure:
+            return "Blood pressure"
+        case .garminNutrition:
+            return "Garmin Nutrition"
+        case .bodyComposition:
+            return "Body composition / weight"
+        case .rackMotraSession:
+            return "Rack/Motra strength session"
+        case .rackMotraExerciseDetail:
+            return "Rack/Motra exercise detail"
+        case .ouraFallback:
+            return "Oura fallback sleep/recovery"
+        case .appleHealthSupporting:
+            return "Apple Health supporting note"
+        case .doctorSafetyNote:
+            return "Doctor / safety note"
+        }
+    }
+
+    var sourceRole: String {
+        switch self {
+        case .garminSleepRecovery:
+            return "primary_readiness_when_fresh"
+        case .bloodPressure, .doctorSafetyNote:
+            return "safety"
+        case .garminNutrition:
+            return "nutrition_authority"
+        case .bodyComposition:
+            return "trend_evidence"
+        case .rackMotraSession:
+            return "strength_log_authority"
+        case .rackMotraExerciseDetail:
+            return "set_rep_load_authority"
+        case .ouraFallback:
+            return "fallback"
+        case .appleHealthSupporting:
+            return "supporting"
+        }
+    }
+
+    var sourceState: String {
+        switch self {
+        case .bloodPressure, .doctorSafetyNote:
+            return "write_held"
+        case .ouraFallback:
+            return "fallback_only"
+        case .appleHealthSupporting:
+            return "supporting_only"
+        case .garminSleepRecovery, .garminNutrition, .bodyComposition, .rackMotraSession, .rackMotraExerciseDetail:
+            return "manual_provider_bound"
+        }
+    }
+
+    var writeStatus: CoachShortcutWriteStatus {
+        .draftOnly
+    }
+
+    var prompt: String {
+        switch self {
+        case .garminSleepRecovery:
+            return "Readiness score, sleep time, HRV/RHR, recovery time, Body Battery, and any wear-quality caveat."
+        case .bloodPressure:
+            return "Recent reading, time taken, symptoms, medication/context, and whether it is unusual."
+        case .garminNutrition:
+            return "Calories, protein, carbs, fat, hydration, and whether the day is complete or partial."
+        case .bodyComposition:
+            return "Weight/body trend only; avoid overreacting to a one-day BIA swing."
+        case .rackMotraSession:
+            return "Completed session name/date, whether it was fully logged, and any skipped work."
+        case .rackMotraExerciseDetail:
+            return "Key sets/reps/loads/RPE/pain notes that Coach should consider for progression."
+        case .ouraFallback:
+            return "Oura readiness/sleep notes only if Garmin is stale, missing, or unreliable."
+        case .appleHealthSupporting:
+            return "Steps, active energy, exercise minutes, or sleep/workout cross-check; supporting only."
+        case .doctorSafetyNote:
+            return "Doctor guidance, pain, asthma, migraine, symptoms, or other safety caveat."
+        }
+    }
+
+    var nextAction: String {
+        switch self {
+        case .bloodPressure, .doctorSafetyNote:
+            return "Use as safety context only; do not treat this draft as training approval."
+        case .ouraFallback:
+            return "Use only when Garmin sleep/recovery is stale, missing, or unreliable."
+        case .appleHealthSupporting:
+            return "Use as supporting context only; do not override Garmin, Rack/Motra, nutrition, or safety."
+        default:
+            return "Use as manually reported evidence only; do not treat as provider-integrated data."
+        }
+    }
+}
+
+struct ManualSourceEvidenceDraft: Codable, Equatable, Identifiable {
+    let lane: ManualSourceEvidenceLane
+    var note: String
+    var lastEditedAt: Date?
+
+    var id: String { lane.id }
+
+    var hasNote: Bool {
+        !note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    var packetLine: String {
+        let edited = lastEditedAt.map { "last_edited: \(ManualSourceEvidencePacket.format($0)) | " } ?? ""
+        let safeNote = hasNote ? CoachSafeOutput.redact(note) : "not_reported"
+        return [
+            "\(lane.id):",
+            "label: \(lane.label)",
+            "source_role: \(lane.sourceRole)",
+            "source_state: \(lane.sourceState)",
+            "write_status: \(lane.writeStatus.rawValue)",
+            edited + "reported_evidence_only: \(safeNote)",
+            "next_action: \(lane.nextAction)"
+        ].joined(separator: " | ")
+    }
+}
+
+struct ManualSourceEvidencePacket: Codable, Equatable {
+    let generatedAt: Date
+    let drafts: [ManualSourceEvidenceDraft]
+
+    var includedDrafts: [ManualSourceEvidenceDraft] {
+        drafts.filter(\.hasNote)
+    }
+
+    var requiresTrainingHold: Bool {
+        includedDrafts.contains { draft in
+            guard [.bloodPressure, .doctorSafetyNote].contains(draft.lane) else { return false }
+            let text = draft.note.lowercased()
+            return text.contains("chest pain")
+                || text.contains("shortness of breath at rest")
+                || text.contains("faint")
+                || text.contains("dizzy")
+                || text.contains("doctor said stop")
+                || text.contains("do not train")
+                || text.contains("180/")
+                || text.contains("/120")
+        }
+    }
+
+    var displayText: String {
+        var lines = [
+            "MANUAL_SOURCE_EVIDENCE_PACKET_DRAFT",
+            "generated_at: \(Self.format(generatedAt))",
+            "status: draft_only_not_saved",
+            "write_status: \(CoachShortcutWriteStatus.draftOnly.rawValue)",
+            "protected_route_status: not_called",
+            "backend_write_status: no_write",
+            "summary: Manually reported evidence only. Not submitted to Coach backend. Not provider-integrated data.",
+            "source_confidence: Use this to reduce uncertainty, not to upgrade stale primary data into verified fresh data.",
+            "safety_note: BP and doctor/symptom drafts are safety inputs, not training permission."
+        ]
+        if requiresTrainingHold {
+            lines.append("safety_bias: hold hard training and seek human medical guidance when symptoms, BP, or doctor guidance are high-risk or unclear.")
+        }
+        lines.append("sources:")
+        let rows = includedDrafts.isEmpty
+            ? [ManualSourceEvidenceDraft(lane: .doctorSafetyNote, note: "No manual source evidence entered.", lastEditedAt: nil)]
+            : includedDrafts
+        lines.append(contentsOf: rows.map { "- \($0.packetLine)" })
+        lines.append("No production write was sent.")
+        lines.append("No secret value is included.")
+        return CoachSafeOutput.redact(lines.joined(separator: "\n"))
+    }
+
+    static func build(from notes: [ManualSourceEvidenceLane: String], generatedAt: Date = Date()) -> ManualSourceEvidencePacket {
+        ManualSourceEvidencePacket(
+            generatedAt: generatedAt,
+            drafts: ManualSourceEvidenceLane.allCases.map { lane in
+                let note = notes[lane]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                return ManualSourceEvidenceDraft(
+                    lane: lane,
+                    note: note,
+                    lastEditedAt: note.isEmpty ? nil : generatedAt
+                )
+            }
+        )
+    }
+
+    static func format(_ date: Date) -> String {
+        formatter.string(from: date)
+    }
+
+    private static let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd HH:mm zzz"
+        return formatter
+    }()
+}
+
 struct CoachFutureSafeStrings: Codable, Equatable {
     let shortcutTitle: String
     let shortcutSubtitle: String
