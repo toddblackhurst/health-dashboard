@@ -23,6 +23,24 @@ final class HealthSyncViewModel: ObservableObject {
     @Published var manualSourceDraftNotes: [ManualSourceEvidenceLane: String] = [:]
     @Published var manualSourceEvidenceText = "Manual source evidence packet has not been drafted."
 
+    var manualSourceDraftProgressText: String {
+        let completedCount = ManualSourceEvidenceLane.allCases.filter { lane in
+            let note = manualSourceDraftNotes[lane] ?? ""
+            return !note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }.count
+        return "\(completedCount) of \(ManualSourceEvidenceLane.allCases.count) lanes have drafts"
+    }
+
+    var manualSourceSafetySummaryText: String {
+        [
+            "local draft evidence only",
+            "backend_write_status: no_write",
+            "protected_route_status: not_called",
+            "provider apps are not scraped",
+            "copy for Coach review"
+        ].joined(separator: "\n")
+    }
+
     private let healthKitManager: HealthKitManager
     private let keychainStore: any CoachSecretStoring
     private let store: MorningCoachStore

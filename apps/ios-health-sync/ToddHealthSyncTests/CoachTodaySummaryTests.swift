@@ -890,6 +890,35 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(viewModel.manualSourceEvidenceText.contains("No production write was sent."))
     }
 
+    @MainActor
+    func testManualSourceEvidenceViewModelExposesTopNoWriteSummaryWithoutNetwork() throws {
+        let suiteName = "ManualSourceDraftTopSummary-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let session = MockCoachURLSession(responseData: Data())
+        let viewModel = HealthSyncViewModel(
+            apiClient: CoachAPIClient(session: session),
+            keychainStore: FakeCoachSecretStore(secret: ""),
+            store: MorningCoachStore(defaults: defaults)
+        )
+
+        XCTAssertEqual(viewModel.manualSourceDraftProgressText, "0 of 9 lanes have drafts")
+        XCTAssertTrue(viewModel.manualSourceSafetySummaryText.contains("local draft evidence only"))
+        XCTAssertTrue(viewModel.manualSourceSafetySummaryText.contains("backend_write_status: no_write"))
+        XCTAssertTrue(viewModel.manualSourceSafetySummaryText.contains("protected_route_status: not_called"))
+        XCTAssertTrue(viewModel.manualSourceSafetySummaryText.contains("provider apps are not scraped"))
+        XCTAssertTrue(viewModel.manualSourceSafetySummaryText.contains("copy for Coach review"))
+
+        viewModel.updateManualSourceDraft(.garminSleepRecovery, note: "Sleep about 6 hours.")
+        viewModel.updateManualSourceDraft(.bloodPressure, note: "BP not checked today.")
+
+        XCTAssertEqual(session.requestCount, 0)
+        XCTAssertEqual(viewModel.manualSourceDraftProgressText, "2 of 9 lanes have drafts")
+        XCTAssertFalse(viewModel.manualSourceSafetySummaryText.localizedCaseInsensitiveContains("x-coach-secret"))
+    }
+
     func testActionResultRedactsDetailBeforeAppDisplay() {
         let fakeSecret = "fake-result-secret-123456"
         let result = MorningCoachActionResult(

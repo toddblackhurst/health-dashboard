@@ -115,9 +115,35 @@ struct ContentView: View {
                 }
 
                 Section("Manual Source Drafts") {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Local draft evidence only. Nothing is submitted to Coach until Todd chooses a separate write path.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        Text(viewModel.manualSourceSafetySummaryText)
+                            .font(.caption.monospaced())
+                            .foregroundStyle(.secondary)
+                            .textSelection(.enabled)
+                        LabeledContent("Draft lanes", value: viewModel.manualSourceDraftProgressText)
+                    }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Manual source draft safety summary")
+
+                    Button("Build Evidence Packet") {
+                        focusedSetupField = nil
+                        viewModel.buildManualSourceEvidencePacket()
+                    }
+                    .accessibilityLabel("Build manual source evidence packet")
+
+                    Button("Copy Evidence Packet") {
+                        focusedSetupField = nil
+                        viewModel.copyManualSourceEvidencePacket()
+                    }
+                    .accessibilityLabel("Copy manual source evidence packet")
+
                     ForEach(ManualSourceEvidenceLane.allCases) { lane in
                         VStack(alignment: .leading, spacing: 8) {
                             LabeledContent(lane.label, value: lane.sourceState)
+                            LabeledContent("Draft", value: manualDraftStatus(for: lane))
                             Text(lane.prompt)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
@@ -175,6 +201,11 @@ struct ContentView: View {
                 }
             }
         }
+    }
+
+    private func manualDraftStatus(for lane: ManualSourceEvidenceLane) -> String {
+        let note = viewModel.manualSourceDraftNotes[lane] ?? ""
+        return note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "empty" : "has draft"
     }
 
     private enum SetupField {
