@@ -22,7 +22,9 @@ Future write-capable Coach actions must follow `docs/implementation/WRITE_READIN
 
 ## Current Verified Baseline
 
-As of 2026-06-15 Asia/Taipei, PR #65, `Add data integration readiness map`, is merged at main commit `6617094108e90e395088e582246cfc80d2099a2f`. Public ping remains healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Protected routes remain skipped by Codex because they require `x-coach-secret` or a real secret/account prompt.
+As of 2026-06-15 Asia/Taipei, PR #66, `Add manual source evidence packet`, is merged at main commit `35febba701f9e5e11ad09fc42164b0013ddc3670`. Public ping remains healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Protected routes remain skipped by Codex because they require `x-coach-secret` or a real secret/account prompt. `HEALTH_DATABASE.json` remained unchanged.
+
+PR #65, `Add data integration readiness map`, is also merged at main commit `6617094108e90e395088e582246cfc80d2099a2f`.
 
 PR #63 is also merged at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`. Automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` was ready and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 

@@ -6,7 +6,9 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 ## Verified Now
 
-- Repo main is verified at `6617094108e90e395088e582246cfc80d2099a2f` after PR #65, `Add data integration readiness map`, merged. PR #65 was docs-only and did not change protected routes, production writes, provider accounts, Netlify/Supabase/GPT Action settings, or `HEALTH_DATABASE.json`.
+- Repo main is verified at `35febba701f9e5e11ad09fc42164b0013ddc3670` after PR #66, `Add manual source evidence packet`, merged. PR #66 was docs-only and did not change protected routes, production writes, provider accounts, Netlify/Supabase/GPT Action settings, or `HEALTH_DATABASE.json`.
+- PR #66 added `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`, completed the Todd-safe manual source packet, passed `node --test tests/*.test.mjs` (`98/98`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`, and public ping remained healthy after merge.
+- GitHub Pages/check-run status on the PR #66 merge commit succeeded. Netlify production commit status did not attach during the observed polling window; no manual deploy was triggered.
 - PR #63, `Harden iOS device command runner fallback`, is merged and deployed. Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready for commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`, and public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Full local Node test suite passed on 2026-06-15 before PR #63 merge: `node --test tests/*.test.mjs` -> `98/98`.
 - iOS simulator verification before PR #63 merge passed: simulator build succeeded and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` passed `53/53`.
@@ -14,7 +16,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - Todd-approved physical iPhone evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`; protected read-only sync status worked through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
 - Overall Coach source freshness remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound. Coach remains usable for cautious caveated browser/GPT guidance, not full autonomous high-confidence readiness.
 - Remaining local dirty-state caution: the primary main worktree is behind/dirty with unrelated changes in `ContentView.swift`, `HealthSyncViewModel.swift`, `netlify/functions/_coach-lib.mjs`, `tests/coach-engine.test.mjs`, and `tests/coach-memory.test.mjs`; the original experiment worktree still has the earlier two-file DeviceCommandRunner experimental patch. These are not approved for commit by this document.
-- Current safe repo-only task: `Manual Source Evidence Packet v1`, scoped by GPT Pro from a fresh clean worktree. It should add `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md` and minimal durable links only.
+- Next safe repo-only task: `Sync Status Source Classification Improvements v1`, scoped by GPT Pro from a fresh clean worktree. It should make sync status and iOS freshness outputs distinguish stale, missing, manual/provider-bound, write-held, fallback, supporting-only, and verified-read-only states more clearly.
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
@@ -186,9 +188,8 @@ Rules:
 
 ## Next Safe Codex Task Candidates
 
-1. Manual Source Evidence Packet v1: current docs-only task to give Todd one safe verbal/chat packet for stale or manual Garmin, BP, Garmin Nutrition, body, Rack/Motra, Oura, Apple Health, and safety-note evidence.
-2. Sync Status Source Classification Improvements v1: future code task to distinguish primary, fallback, supporting, stale, manual/provider-bound, write-held, and not-expected source states.
-3. Manual Source Freshness Draft UI v1: future iOS draft-only/no-write task using the evidence packet fields.
-4. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
-5. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
-6. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
+1. Sync Status Source Classification Improvements v1: next code/tests/docs task to distinguish primary, fallback, supporting, stale, missing, manual/provider-bound, write-held, verified-read-only, and not-expected source states.
+2. Manual Source Freshness Draft UI v1: future iOS draft-only/no-write task using the completed evidence packet fields.
+3. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
+4. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
+5. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
