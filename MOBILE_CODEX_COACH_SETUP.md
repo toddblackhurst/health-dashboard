@@ -11,7 +11,7 @@ The active coaching spec is `COACH_OPERATING_SYSTEM.md`. Legacy numbered strateg
 Current readiness tracker: `docs/implementation/READINESS_GAP_INVENTORY.md`.
 
 Manual source evidence packet for stale or manual Garmin, BP, Garmin Nutrition, body, Rack/Motra, Oura, Apple Health, and safety-note data: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
-Manual Source Freshness Draft UI v1 adds a local no-write app packet builder for Todd-reported Garmin recovery, BP, nutrition, body composition, Rack/Motra, Oura fallback, Apple Health supporting notes, and doctor/safety notes. The packet is paste-ready for Coach review but is not submitted to the Coach backend and does not integrate provider data automatically.
+Manual Source Freshness Draft UI v1 adds a local no-write app packet builder for Todd-reported Garmin recovery, BP, nutrition, body composition, Rack/Motra, Oura fallback, Apple Health supporting notes, and doctor/safety notes. PR #72 adds the top-of-section ergonomics needed for physical iPhone use: visible local-only/no-write/protected-route markers, top Build/Copy controls, and lane completion status. The packet is paste-ready for Coach review but is not submitted to the Coach backend and does not integrate provider data automatically.
 
 Todd-assisted physical iPhone setup runbook and dry-run matrix: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 
@@ -23,11 +23,15 @@ Future write-capable Coach actions must follow `docs/implementation/WRITE_READIN
 
 ## Current Verified Baseline
 
-As of 2026-06-15 Asia/Taipei, PR #66, `Add manual source evidence packet`, is merged at main commit `35febba701f9e5e11ad09fc42164b0013ddc3670`. Public ping remains healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Protected routes remain skipped by Codex because they require `x-coach-secret` or a real secret/account prompt. `HEALTH_DATABASE.json` remained unchanged.
+As of 2026-06-15 Asia/Taipei, PR #72, `Improve manual source draft UI ergonomics`, is merged at main commit `376c7200fe571dadefbcacec30fa38a2145f0155`. Public ping remains healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`. Protected routes remain skipped by Codex because they require `x-coach-secret` or a real secret/account prompt. `HEALTH_DATABASE.json` remained unchanged.
+
+Final and post-merge PR #72 verification passed `node --test tests/*.test.mjs` (`101/101`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial iOS XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`57/57`). GitHub workflow jobs for the merge commit succeeded (`build`, `deploy`, `report-build-status`), public production ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`, no separate Netlify commit status attached during the observed polling window, no manual deploy was triggered, and protected routes were skipped.
+
+PR #66, `Add manual source evidence packet`, is also merged at main commit `35febba701f9e5e11ad09fc42164b0013ddc3670`.
 
 PR #65, `Add data integration readiness map`, is also merged at main commit `6617094108e90e395088e582246cfc80d2099a2f`.
 
-PR #63 is also merged at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`. Automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` was ready and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
+PR #63 is also merged at main commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`. Earlier PR #63 automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` was ready and public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 
 Final PR #63 verification passed `node --test tests/*.test.mjs` (`98/98`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial iOS XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`53/53`). Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt. `HEALTH_DATABASE.json` remained unchanged.
 

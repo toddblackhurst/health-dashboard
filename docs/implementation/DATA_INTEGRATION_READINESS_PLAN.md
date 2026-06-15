@@ -261,7 +261,7 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
    - Hard boundaries: no protected route calls, no production writes, no OpenAPI/GPT Action auth/settings.
 
 3. Manual Source Freshness Draft UI v1
-   - Status: completed and merged by PR #70 as a local iOS draft/no-write packet builder.
+   - Status: completed and merged by PR #70 as a local iOS draft/no-write packet builder; physical-iPhone ergonomics completed by PR #72 with top summary text, top Build/Copy controls, visible no-write/protected-route markers, and lane completion status.
    - Why it matters: expands local no-write drafting from BP/debrief/note into structured prompts for nutrition, Garmin recovery, body comp, and Rack/Motra evidence.
    - Likely files: iOS workflow/model/tests and docs.
    - Acceptance criteria: all new paths are draft-only/no-write, redacted, labeled "not saved," and produce a paste-ready manual evidence packet; no backend route calls.
@@ -303,11 +303,11 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
 
 ## Next Implementable PR Recommendation
 
-Recommended next PR: Todd-assisted Device Setup Session or the next GPT Pro-scoped repo-only readiness step, depending on whether Todd's physical iPhone is available.
+Recommended next step: Todd-assisted physical iPhone validation of the merged PR #72 Manual Source Draft UI ergonomics, or the next GPT Pro-scoped repo-only readiness step if Todd's physical iPhone is not available.
 
 Why this is the best next step:
 
-- Highest immediate readiness impact after Manual Source Freshness Draft UI v1: prove the local no-write packet on Todd's real iPhone, or continue with a fresh repo-only readiness task if device setup is not available.
+- Highest immediate readiness impact after PR #72: prove the top Build/Copy controls, top no-write/protected-route markers, local no-write packet builder, and copy behavior on Todd's real iPhone, or continue with a fresh repo-only readiness task if device setup is not available.
 - Boundary stays controlled when scoped carefully: no secrets handled by Codex, no protected routes from Codex, no writes, no Supabase/admin work, no third-party scraping, and no provider automation.
 - Builds on the completed manual packet, PR #68 classification labels, and the local draft packet builder.
 

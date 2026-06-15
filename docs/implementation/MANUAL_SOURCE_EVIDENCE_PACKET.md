@@ -131,7 +131,7 @@ Plan: keep the strength anchor, cap top sets at RPE 7, skip the dense finisher, 
 
 This packet creates acceptance criteria for later work:
 
-- Manual Source Freshness Draft UI v1 collects these fields locally as draft-only, redacted, and not saved. Its generated packet is paste-ready for Coach review, but it is manually reported evidence only and is not submitted to the Coach backend.
+- Manual Source Freshness Draft UI v1 collects these fields locally as draft-only, redacted, and not saved. PR #72 improves the physical iPhone ergonomics with top summary text, top Build/Copy controls, visible no-write/protected-route markers, and lane completion status. Its generated packet is paste-ready for Coach review, but it is manually reported evidence only and is not submitted to the Coach backend.
 - PR #68 Sync Status Source Classification Improvements v1 now exposes which source is fresh, stale, missing, manual/provider-bound, write-held, draft-only, fallback-only, supporting-only, verified-read-only, protected-verification-deferred, permission-required, or not expected today.
 - Future write-readiness phases can use this field list for BP, recovery, nutrition, body, and strength intake only after idempotency, audit, rollback, source labeling, and tests are approved.
 - Rack/Motra import work should not begin until Todd provides an approved export format or provider-approved integration path.
