@@ -919,6 +919,76 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertFalse(viewModel.manualSourceSafetySummaryText.localizedCaseInsensitiveContains("x-coach-secret"))
     }
 
+    @MainActor
+    func testCoachHomeSummaryIsPlainAndDoesNotCallNetworkOnInit() throws {
+        let suiteName = "CoachHomeSummary-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let session = MockCoachURLSession(responseData: Data())
+        let viewModel = HealthSyncViewModel(
+            apiClient: CoachAPIClient(session: session),
+            keychainStore: FakeCoachSecretStore(secret: ""),
+            store: MorningCoachStore(defaults: defaults)
+        )
+        let homeText = [
+            viewModel.coachHomeHeadline,
+            viewModel.coachHomeNextStepText,
+            viewModel.coachHomeManualEvidenceText,
+            viewModel.coachHomeBoundaryText
+        ].joined(separator: "\n")
+
+        XCTAssertEqual(session.requestCount, 0)
+        XCTAssertEqual(viewModel.statusText, "Ready.")
+        XCTAssertTrue(homeText.contains("Coach setup needs attention"))
+        XCTAssertTrue(homeText.contains("Use ChatGPT Coach for natural voice or text") || homeText.contains("Open Advanced / Diagnostics"))
+        XCTAssertTrue(homeText.contains("Manual evidence helps"))
+        XCTAssertTrue(homeText.contains("does not call protected Coach routes"))
+        XCTAssertTrue(homeText.contains("sync Apple Health"))
+        XCTAssertTrue(homeText.contains("write to Coach"))
+        XCTAssertFalse(homeText.localizedCaseInsensitiveContains("x-coach-secret"))
+        XCTAssertFalse(homeText.localizedCaseInsensitiveContains("Authorization: Bearer"))
+        XCTAssertFalse(homeText.localizedCaseInsensitiveContains("password="))
+    }
+
+    @MainActor
+    func testCoachHomeHidesCredentialLikeValuesAndLocalReadinessStaysNoWrite() throws {
+        let suiteName = "CoachHomeConfigured-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let fakeSecret = "fake-home-secret-123456"
+        let session = MockCoachURLSession(responseData: Data())
+        let viewModel = HealthSyncViewModel(
+            apiClient: CoachAPIClient(session: session),
+            keychainStore: FakeCoachSecretStore(secret: fakeSecret),
+            store: MorningCoachStore(defaults: defaults)
+        )
+        let homeText = [
+            viewModel.coachHomeHeadline,
+            viewModel.coachHomeNextStepText,
+            viewModel.coachHomeManualEvidenceText,
+            viewModel.coachHomeBoundaryText
+        ].joined(separator: "\n")
+
+        XCTAssertEqual(viewModel.coachHomeHeadline, "Coach is locally configured")
+        XCTAssertFalse(homeText.contains(fakeSecret))
+        XCTAssertFalse(homeText.localizedCaseInsensitiveContains("x-coach-secret"))
+
+        viewModel.checkCoachReadiness()
+
+        XCTAssertEqual(session.requestCount, 0)
+        XCTAssertEqual(viewModel.statusText, "Coach readiness")
+        XCTAssertTrue(viewModel.coachReadinessText.contains("readiness_status: todd_device_verification_required"))
+        XCTAssertTrue(viewModel.coachReadinessText.contains("writes remain held"))
+        XCTAssertTrue(viewModel.coachReadinessText.contains("direct_coach_action_write_hold"))
+        XCTAssertTrue(viewModel.coachReadinessText.contains("No production write was sent."))
+        assertNoCredentialLeak(in: homeText)
+        assertNoCredentialLeak(in: viewModel.coachReadinessText)
+    }
+
     func testActionResultRedactsDetailBeforeAppDisplay() {
         let fakeSecret = "fake-result-secret-123456"
         let result = MorningCoachActionResult(
