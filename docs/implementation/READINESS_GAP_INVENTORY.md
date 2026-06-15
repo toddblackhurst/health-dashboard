@@ -188,7 +188,7 @@ Rules:
 
 ## Next Safe Codex Task Candidates
 
-1. Sync Status Source Classification Improvements v1: next code/tests/docs task to distinguish primary, fallback, supporting, stale, missing, manual/provider-bound, write-held, verified-read-only, and not-expected source states.
+1. Sync Status Source Classification Improvements v1: current code/tests/docs task to distinguish fresh, stale, missing, manual/provider-bound, write-held, draft-only, fallback-only, supporting-only, verified-read-only, protected-verification-deferred, permission-required, and not-expected source states.
 2. Manual Source Freshness Draft UI v1: future iOS draft-only/no-write task using the completed evidence packet fields.
 3. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
 4. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.

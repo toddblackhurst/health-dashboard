@@ -1992,6 +1992,7 @@ function buildDataCompleteness(base = {}) {
   const today = todayISO(timezone, now);
   const schedule = todaySchedule(timezone, now);
   const latestSleep = latest(base.recovery_sleep);
+  const sleepValues = latestSleepValues(base);
   const latestBp = latest(base.blood_pressure);
   const latestBody = latest(base.body_composition);
   const latestNutrition = latest(base.nutrition_log);
@@ -2007,16 +2008,48 @@ function buildDataCompleteness(base = {}) {
   const bodyAgeDays = latestBody?.date || latestBody?.measured_date
     ? Math.round((Date.parse(`${today}T00:00:00Z`) - Date.parse(`${rowDate(latestBody)}T00:00:00Z`)) / 86400000)
     : null;
+  const sleepDate = sleepValues.date || rowDate(latestSleep);
+  const sleepAgeDays = dateAgeDays(sleepDate, today);
+  const sleepHasGarmin = [
+    sleepValues.garmin_readiness,
+    sleepValues.garmin_hrv,
+    sleepValues.garmin_rhr,
+    sleepValues.garmin_sleep_min,
+  ].some(value => value !== null);
+  const sleepHasOura = [
+    sleepValues.oura_readiness,
+    sleepValues.oura_hrv,
+    sleepValues.oura_rhr,
+    sleepValues.oura_sleep_min,
+  ].some(value => value !== null);
+  const garminSleepFresh = sleepHasGarmin && sleepAgeDays !== null && sleepAgeDays >= 0 && sleepAgeDays <= 1 && sleepValues.garmin_wear_reliable !== false;
+  const sleepFreshness = sleepDate === today ? "fresh" : sleepDate ? "stale" : "missing";
+  const garminSleepFreshness = sleepHasGarmin ? (garminSleepFresh ? "fresh" : sleepDate ? "stale" : "missing") : "missing";
+  const bpFreshness = rowDate(latestBp) === today ? "fresh" : rowDate(latestBp) ? "stale" : "missing";
+  const nutritionFreshness = rowDate(latestNutrition) === today ? "fresh" : rowDate(latestNutrition) ? "stale" : "missing";
+  const bodyFreshness = bodyAgeDays !== null && bodyAgeDays <= 14 ? "fresh" : rowDate(latestBody) ? "stale" : "missing";
   const strengthToday = rowDate(latestStrength) === today;
   const detailedStrengthToday = rowDate(latestDetailedStrength) === today;
+  const strengthFreshness = !schedule.strength_planned ? "not_expected_today" : strengthToday ? "fresh" : rowDate(latestStrength) ? "stale" : "missing";
+  const detailedStrengthFreshness = !schedule.strength_planned ? "not_expected_today" : detailedStrengthToday ? "fresh" : rowDate(latestDetailedStrength) ? "stale" : "missing";
+  const appleHealthFreshness = appleHealth.status === "current" ? "fresh" : appleHealth.status === "stale" ? "stale" : "missing";
+  const staleOrMissing = freshness => ["stale", "missing"].includes(freshness);
 
   const checks = [
     {
       id: "sleep_recovery",
       label: "Sleep/recovery",
-      status: rowDate(latestSleep) === today ? "current" : "missing",
+      status: garminSleepFresh ? "current" : "missing",
       required: true,
-      latest_date: rowDate(latestSleep),
+      latest_date: sleepDate,
+      authority_role: "primary_readiness",
+      source_state: garminSleepFresh ? "fresh" : "manual_provider_bound",
+      freshness_status: garminSleepFreshness,
+      confidence_effect: garminSleepFresh ? "high_when_reliable" : "low_conservative",
+      next_action: staleOrMissing(garminSleepFreshness)
+        ? "Review Garmin sleep/recovery or provide a manual source evidence packet; use Oura only as fallback."
+        : "Use Garmin readiness/recovery when wear is reliable.",
+      source_note: "Garmin is primary for sleep/recovery and training physiology when fresh and reliably worn.",
     },
     {
       id: "blood_pressure",
@@ -2024,6 +2057,14 @@ function buildDataCompleteness(base = {}) {
       status: rowDate(latestBp) === today ? "current" : "missing",
       required: true,
       latest_date: rowDate(latestBp),
+      authority_role: "safety_override",
+      source_state: bpFreshness === "fresh" ? "fresh" : "write_held",
+      freshness_status: bpFreshness,
+      confidence_effect: bpFreshness === "fresh" ? "safety_current" : "low_until_todd_reports",
+      next_action: bpFreshness === "fresh"
+        ? "Apply BP safety gate before training intensity."
+        : "Todd should report a current BP reading or use the draft-only BP intake path; no write is implied.",
+      source_note: "BP is safety-critical and write-held until a separate write-readiness task approves persistence.",
     },
     {
       id: "nutrition",
@@ -2031,6 +2072,14 @@ function buildDataCompleteness(base = {}) {
       status: rowDate(latestNutrition) === today ? "current" : "missing",
       required: true,
       latest_date: rowDate(latestNutrition),
+      authority_role: "nutrition_authority",
+      source_state: nutritionFreshness === "fresh" ? "fresh" : "manual_provider_bound",
+      freshness_status: nutritionFreshness,
+      confidence_effect: nutritionFreshness === "fresh" ? "medium_high" : "low_conservative",
+      next_action: nutritionFreshness === "fresh"
+        ? "Use Garmin Nutrition totals for fueling and recovery context."
+        : "Review Garmin Nutrition or provide manual calories/protein/hydration summary; do not use Apple Health calories as Garmin Nutrition.",
+      source_note: "Garmin Nutrition is the nutrition authority when usable.",
     },
     {
       id: "body_composition",
@@ -2038,6 +2087,14 @@ function buildDataCompleteness(base = {}) {
       status: bodyAgeDays !== null && bodyAgeDays <= 14 ? "current" : "stale",
       required: false,
       latest_date: rowDate(latestBody),
+      authority_role: "trend_evidence",
+      source_state: bodyFreshness === "fresh" ? "fresh" : "manual_provider_bound",
+      freshness_status: bodyFreshness,
+      confidence_effect: "trend_only",
+      next_action: bodyFreshness === "fresh"
+        ? "Use only as trend context; do not overreact to one reading."
+        : "Update weight/body trend manually when useful; keep it optional and trend-only.",
+      source_note: "Body composition is trend evidence only.",
     },
     {
       id: "strength_session",
@@ -2045,6 +2102,16 @@ function buildDataCompleteness(base = {}) {
       status: schedule.strength_planned ? (strengthToday ? "current" : "pending") : "not_expected",
       required: Boolean(schedule.strength_planned),
       latest_date: rowDate(latestStrength),
+      authority_role: "strength_log_authority",
+      source_state: !schedule.strength_planned ? "not_expected_today" : strengthToday ? "fresh" : "manual_provider_bound",
+      freshness_status: strengthFreshness,
+      confidence_effect: !schedule.strength_planned ? "not_required_today" : strengthToday ? "high" : "low_until_rack_motra_review",
+      next_action: !schedule.strength_planned
+        ? "No Rack/Motra strength session is expected for today's schedule."
+        : strengthToday
+          ? "Use Rack/Motra session as completed strength authority."
+          : "Review Rack/Motra after training or provide a reported manual session summary; do not count Apple Health workouts as strength history.",
+      source_note: "Rack/Motra is the authority for completed strength sessions.",
     },
     {
       id: "strength_exercises",
@@ -2052,6 +2119,33 @@ function buildDataCompleteness(base = {}) {
       status: schedule.strength_planned ? (detailedStrengthToday ? "current" : "pending") : "not_expected",
       required: Boolean(schedule.strength_planned),
       latest_date: rowDate(latestDetailedStrength),
+      authority_role: "set_rep_load_authority",
+      source_state: !schedule.strength_planned ? "not_expected_today" : detailedStrengthToday ? "fresh" : "manual_provider_bound",
+      freshness_status: detailedStrengthFreshness,
+      confidence_effect: !schedule.strength_planned ? "not_required_today" : detailedStrengthToday ? "high" : "low_for_progression",
+      next_action: !schedule.strength_planned
+        ? "No set/rep/load detail is expected for today's schedule."
+        : detailedStrengthToday
+          ? "Use Rack/Motra exercise detail for progression."
+          : "Review Rack/Motra exercise detail or provide reported sets/reps/load; do not infer loads from memory.",
+      source_note: "Rack/Motra exercise detail is the authority for sets, reps, and loads.",
+    },
+    {
+      id: "oura_fallback",
+      label: "Oura fallback sleep/recovery",
+      status: garminSleepFresh ? "not_expected" : sleepHasOura && sleepDate === today ? "current" : sleepHasOura ? "stale" : "missing",
+      required: false,
+      latest_date: sleepHasOura ? sleepDate : null,
+      authority_role: "fallback_recovery",
+      source_state: "fallback_only",
+      freshness_status: garminSleepFresh ? "not_expected_today" : sleepHasOura ? sleepFreshness : "missing",
+      confidence_effect: garminSleepFresh ? "not_used_when_garmin_primary_is_fresh" : sleepHasOura ? "medium_fallback" : "low_missing",
+      next_action: garminSleepFresh
+        ? "Do not use Oura to override fresh reliable Garmin readiness."
+        : sleepHasOura
+          ? "Label Oura as fallback because Garmin is stale, missing, or unreliable."
+          : "Use Oura only if Todd reports it because Garmin is stale, missing, or unreliable.",
+      source_note: "Oura is fallback sleep/recovery only and cannot override fresh reliable Garmin.",
     },
     {
       id: "workout_feedback",
@@ -2059,6 +2153,14 @@ function buildDataCompleteness(base = {}) {
       status: strengthToday ? (feedbackToday || workoutDebriefContext.recent_debriefs.some(row => row.workout_date === today) ? "current" : "missing_after_training") : "not_expected",
       required: Boolean(strengthToday),
       latest_date: feedbackToday ? rowDate(feedbackToday) : workoutDebriefContext.last_updated?.slice?.(0, 10) || rowDate(latest(base.session_feedback)),
+      authority_role: "subjective_adaptation",
+      source_state: strengthToday ? (feedbackToday || workoutDebriefContext.recent_debriefs.some(row => row.workout_date === today) ? "fresh" : "draft_only") : "not_expected_today",
+      freshness_status: strengthToday ? (feedbackToday || workoutDebriefContext.recent_debriefs.some(row => row.workout_date === today) ? "fresh" : "missing") : "not_expected_today",
+      confidence_effect: "personalization_only",
+      next_action: strengthToday
+        ? "Capture subjective feedback as draft/reported evidence; it does not replace Rack/Motra."
+        : "No workout feedback is expected today unless Todd trains.",
+      source_note: "Workout feedback can constrain future coaching but cannot replace Rack/Motra or Garmin.",
     },
     {
       id: "apple_health_daily_summary",
@@ -2068,6 +2170,14 @@ function buildDataCompleteness(base = {}) {
       latest_date: appleHealth.latest_summary_date,
       source: appleHealth.source,
       role: appleHealth.role,
+      authority_role: "supporting_evidence",
+      source_state: "supporting_only",
+      freshness_status: appleHealthFreshness,
+      confidence_effect: "supporting_only",
+      next_action: appleHealth.status === "current"
+        ? "Use as supporting context only; it does not raise primary readiness confidence."
+        : "Refresh Apple Health on device when Todd is present; keep it supporting-only.",
+      source_note: "Apple Health is supporting evidence only and does not override Garmin, Rack/Motra, nutrition, or safety.",
       days_available_last_7: appleHealth.days_available_last_7,
       warning: appleHealth.warnings[0] || null,
     },
@@ -3521,6 +3631,12 @@ export function buildSyncStatus(base = {}) {
     missing_required: dataCompleteness.missing_required,
     checks: dataCompleteness.checks,
     apple_health: dataCompleteness.supporting_evidence.apple_health,
+    protected_read_only_status: {
+      source_state: "verified_read_only",
+      protected_verification_status: "verified_read_only",
+      write_status: "no_write",
+      note: "This sync-status response is read-only; it does not prove write readiness.",
+    },
     source_policy: {
       apple_health_role: SOURCE_CONTEXT.apple_health_role,
       does_not_override: ["Garmin readiness/recovery", "subjective symptoms", "medical safety flags", "Garmin workout physiology", "Rack/Motra strength history"],
