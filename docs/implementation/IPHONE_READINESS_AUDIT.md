@@ -6,9 +6,11 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Verified Baseline
 
-- Main is at `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
+- Main is at `376c7200fe571dadefbcacec30fa38a2145f0155`.
+- PR #72, Manual Source Draft UI Ergonomics, is merged. It keeps Manual Source Draft behavior local-only/no-write/no-protected-route while adding top summary text, top Build/Copy controls, visible no-write/protected-route markers, and lane completion status for easier physical iPhone verification.
+- Final and post-merge PR #72 verification passed `node --test tests/*.test.mjs` (`101/101`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`57/57`). GitHub workflow jobs for the merge commit succeeded (`build`, `deploy`, `report-build-status`), public ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`, no separate Netlify commit status attached during the observed polling window, protected routes were skipped, no manual deploy was triggered, and `HEALTH_DATABASE.json` remained unchanged.
 - PR #63, Device Command Runner Fallback hardening, is merged after PR #62.
-- Automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` is ready for commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
+- Earlier PR #63 automatic Netlify production deploy `6a2f34ee63d2f6000703ab27` was ready for commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115`.
 - Public ping is healthy: `{"ok":true,"action":"ping","version":"coach-brain-v1"}`.
 - Protected routes were skipped in Codex post-merge verification because they require `x-coach-secret` or a real secret/account prompt.
 - `HEALTH_DATABASE.json` remains unchanged.
@@ -32,7 +34,7 @@ Purpose: capture the repo-only readiness state for Todd's iPhone/Siri/Shortcuts/
 
 ## Not Physically Verified
 
-- Physical iPhone install/run of the final PR #63 merged build.
+- Physical iPhone install/run of the final PR #72 merged build and visible validation of the Manual Source Draft top Build/Copy controls, top no-write/protected-route markers, local packet builder, and copy behavior.
 - Full HealthKit permission review on Todd's actual iPhone, beyond the Apple Health daily sync evidence that succeeded on 2026-06-15.
 - Secret value inspection remains unverified and intentionally impossible for Codex; Todd entered the Coach secret directly on device, and protected read-only sync status succeeded without exposing it.
 - Siri phrase behavior and region/device/language availability.
