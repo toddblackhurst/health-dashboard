@@ -11,7 +11,7 @@ final class HealthSyncViewModel: ObservableObject {
     @Published var apiSecret: String = ""
     @Published var selectedDays = 7
     @Published var isWorking = false
-    @Published var statusText = "Ready to connect Apple Health."
+    @Published var statusText = "Ready."
     @Published var coachSetupTitle = "Coach setup not checked."
     @Published var coachSetupDetail = "Open Coach Setup and check local configuration before running shortcuts."
     @Published var lastSyncText = "No sync yet."
@@ -39,6 +39,26 @@ final class HealthSyncViewModel: ObservableObject {
             "provider apps are not scraped",
             "copy for Coach review"
         ].joined(separator: "\n")
+    }
+
+    var coachHomeHeadline: String {
+        currentCandidateSetupStatus().state == .configuredLocally
+            ? "Coach is locally configured"
+            : "Coach setup needs attention"
+    }
+
+    var coachHomeNextStepText: String {
+        currentCandidateSetupStatus().state == .configuredLocally
+            ? "Use ChatGPT Coach for natural voice or text. Check readiness here when you need a quick local safety read."
+            : "Open Advanced / Diagnostics to finish local setup before relying on Coach shortcuts."
+    }
+
+    var coachHomeManualEvidenceText: String {
+        "Manual evidence helps when Garmin, Rack/Motra, nutrition, or blood pressure data is missing or stale."
+    }
+
+    var coachHomeBoundaryText: String {
+        "Opening this app does not call protected Coach routes, sync Apple Health, or write to Coach."
     }
 
     private let healthKitManager: HealthKitManager
