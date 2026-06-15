@@ -132,7 +132,7 @@ Plan: keep the strength anchor, cap top sets at RPE 7, skip the dense finisher, 
 This packet creates acceptance criteria for later work:
 
 - Manual Source Freshness Draft UI v1 should collect these fields locally as draft-only, redacted, and not saved.
-- Sync Status Source Classification Improvements v1 should expose which source is fresh, stale, missing, manual/provider-bound, write-held, draft-only, fallback-only, supporting-only, verified-read-only, protected-verification-deferred, permission-required, or not expected today.
+- PR #68 Sync Status Source Classification Improvements v1 now exposes which source is fresh, stale, missing, manual/provider-bound, write-held, draft-only, fallback-only, supporting-only, verified-read-only, protected-verification-deferred, permission-required, or not expected today.
 - Future write-readiness phases can use this field list for BP, recovery, nutrition, body, and strength intake only after idempotency, audit, rollback, source labeling, and tests are approved.
 - Rack/Motra import work should not begin until Todd provides an approved export format or provider-approved integration path.
 
