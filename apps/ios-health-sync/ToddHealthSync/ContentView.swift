@@ -114,6 +114,40 @@ struct ContentView: View {
                         .textSelection(.enabled)
                 }
 
+                Section("Manual Source Drafts") {
+                    ForEach(ManualSourceEvidenceLane.allCases) { lane in
+                        VStack(alignment: .leading, spacing: 8) {
+                            LabeledContent(lane.label, value: lane.sourceState)
+                            Text(lane.prompt)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            TextEditor(text: manualDraftBinding(for: lane))
+                                .frame(minHeight: 72)
+                                .textInputAutocapitalization(.sentences)
+                                .autocorrectionDisabled(false)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(.secondary.opacity(0.25))
+                                )
+                                .accessibilityLabel("\(lane.label) manual evidence draft")
+                        }
+                    }
+
+                    Button("Build Evidence Packet") {
+                        focusedSetupField = nil
+                        viewModel.buildManualSourceEvidencePacket()
+                    }
+
+                    Button("Copy Evidence Packet") {
+                        focusedSetupField = nil
+                        viewModel.copyManualSourceEvidencePacket()
+                    }
+
+                    Text(viewModel.manualSourceEvidenceText)
+                        .foregroundStyle(.secondary)
+                        .textSelection(.enabled)
+                }
+
                 Section("Status") {
                     if viewModel.isWorking {
                         ProgressView()
@@ -174,6 +208,17 @@ struct ContentView: View {
                 await viewModel.checkCoachSyncStatus()
             }
         }
+    }
+
+    private func manualDraftBinding(for lane: ManualSourceEvidenceLane) -> Binding<String> {
+        Binding(
+            get: {
+                viewModel.manualSourceDraftNotes[lane] ?? ""
+            },
+            set: { value in
+                viewModel.updateManualSourceDraft(lane, note: value)
+            }
+        )
     }
 }
 

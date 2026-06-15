@@ -811,6 +811,85 @@ final class CoachTodaySummaryTests: XCTestCase {
         XCTAssertTrue(result.shortcutValue.contains("deferredWrite"))
     }
 
+    func testManualSourceEvidencePacketClassifiesEveryLaneAsDraftOnly() {
+        let notes = Dictionary(
+            uniqueKeysWithValues: ManualSourceEvidenceLane.allCases.map { lane in
+                (lane, "Reported \(lane.label) evidence.")
+            }
+        )
+        let packet = ManualSourceEvidencePacket.build(
+            from: notes,
+            generatedAt: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+        let text = packet.displayText
+
+        XCTAssertTrue(text.contains("MANUAL_SOURCE_EVIDENCE_PACKET_DRAFT"))
+        XCTAssertTrue(text.contains("status: draft_only_not_saved"))
+        XCTAssertTrue(text.contains("backend_write_status: no_write"))
+        XCTAssertTrue(text.contains("Not submitted to Coach backend"))
+        XCTAssertTrue(text.contains("Not provider-integrated data"))
+
+        for lane in ManualSourceEvidenceLane.allCases {
+            XCTAssertTrue(text.contains("\(lane.id):"), lane.id)
+            XCTAssertTrue(text.contains("source_role: \(lane.sourceRole)"), lane.id)
+            XCTAssertTrue(text.contains("source_state: \(lane.sourceState)"), lane.id)
+            XCTAssertTrue(text.contains("write_status: draft_only_no_write"), lane.id)
+        }
+
+        XCTAssertTrue(text.contains("source_state: fallback_only"))
+        XCTAssertTrue(text.contains("source_state: supporting_only"))
+        XCTAssertTrue(text.contains("source_state: write_held"))
+        XCTAssertTrue(text.contains("source_state: manual_provider_bound"))
+    }
+
+    func testManualSourceEvidencePacketRedactsSecretsAndBiasesSafetyConservatively() {
+        let fakeSecret = "manual-source-secret-123456"
+        let packet = ManualSourceEvidencePacket.build(
+            from: [
+                .bloodPressure: "180/120 and dizzy. x-coach-secret: \(fakeSecret)",
+                .doctorSafetyNote: "Doctor said stop hard training. token=\(fakeSecret)",
+                .appleHealthSupporting: "Steps looked normal; Authorization: Bearer \(fakeSecret)"
+            ],
+            generatedAt: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+        let text = packet.displayText
+
+        XCTAssertTrue(packet.requiresTrainingHold)
+        XCTAssertTrue(text.contains("safety_bias: hold hard training"))
+        XCTAssertTrue(text.contains("safety inputs, not training permission"))
+        XCTAssertTrue(text.contains("source_state: supporting_only"))
+        XCTAssertFalse(text.contains(fakeSecret))
+        XCTAssertFalse(text.localizedCaseInsensitiveContains("x-coach-secret"))
+        XCTAssertFalse(text.localizedCaseInsensitiveContains("Authorization: Bearer \(fakeSecret)"))
+        XCTAssertTrue(text.contains("[redacted]"))
+    }
+
+    @MainActor
+    func testManualSourceEvidenceViewModelBuildsLocalNoWritePacketWithoutNetwork() throws {
+        let suiteName = "ManualSourceDraftViewModel-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let session = MockCoachURLSession(responseData: Data())
+        let viewModel = HealthSyncViewModel(
+            apiClient: CoachAPIClient(session: session),
+            keychainStore: FakeCoachSecretStore(secret: ""),
+            store: MorningCoachStore(defaults: defaults)
+        )
+
+        viewModel.updateManualSourceDraft(.garminSleepRecovery, note: "Readiness 72, HRV ok.")
+        viewModel.updateManualSourceDraft(.ouraFallback, note: "Oura readiness 80, fallback only.")
+        viewModel.buildManualSourceEvidencePacket(now: Date(timeIntervalSince1970: 1_800_000_000))
+
+        XCTAssertEqual(session.requestCount, 0)
+        XCTAssertEqual(viewModel.statusText, "Manual evidence packet drafted locally.")
+        XCTAssertTrue(viewModel.manualSourceEvidenceText.contains("write_status: draft_only_no_write"))
+        XCTAssertTrue(viewModel.manualSourceEvidenceText.contains("protected_route_status: not_called"))
+        XCTAssertTrue(viewModel.manualSourceEvidenceText.contains("source_state: fallback_only"))
+        XCTAssertTrue(viewModel.manualSourceEvidenceText.contains("No production write was sent."))
+    }
+
     func testActionResultRedactsDetailBeforeAppDisplay() {
         let fakeSecret = "fake-result-secret-123456"
         let result = MorningCoachActionResult(

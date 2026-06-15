@@ -11,6 +11,7 @@ The active coaching spec is `COACH_OPERATING_SYSTEM.md`. Legacy numbered strateg
 Current readiness tracker: `docs/implementation/READINESS_GAP_INVENTORY.md`.
 
 Manual source evidence packet for stale or manual Garmin, BP, Garmin Nutrition, body, Rack/Motra, Oura, Apple Health, and safety-note data: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
+Manual Source Freshness Draft UI v1 adds a local no-write app packet builder for Todd-reported Garmin recovery, BP, nutrition, body composition, Rack/Motra, Oura fallback, Apple Health supporting notes, and doctor/safety notes. The packet is paste-ready for Coach review but is not submitted to the Coach backend and does not integrate provider data automatically.
 
 Todd-assisted physical iPhone setup runbook and dry-run matrix: `docs/implementation/DEVICE_SETUP_RUNBOOK.md`.
 

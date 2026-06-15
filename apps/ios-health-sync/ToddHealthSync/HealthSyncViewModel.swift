@@ -20,6 +20,8 @@ final class HealthSyncViewModel: ObservableObject {
     @Published var backgroundHealthKitText = "Background HealthKit sync is not enabled."
     @Published var coachReadinessText = "Coach readiness has not been checked."
     @Published var dailyDataFreshnessText = "Daily data freshness has not been checked."
+    @Published var manualSourceDraftNotes: [ManualSourceEvidenceLane: String] = [:]
+    @Published var manualSourceEvidenceText = "Manual source evidence packet has not been drafted."
 
     private let healthKitManager: HealthKitManager
     private let keychainStore: any CoachSecretStoring
@@ -86,6 +88,27 @@ final class HealthSyncViewModel: ObservableObject {
         )
         statusText = "Daily data freshness"
         dailyDataFreshnessText = report.displayText
+    }
+
+    func updateManualSourceDraft(_ lane: ManualSourceEvidenceLane, note: String) {
+        manualSourceDraftNotes[lane] = note
+    }
+
+    func buildManualSourceEvidencePacket(now: Date = Date()) {
+        let packet = ManualSourceEvidencePacket.build(
+            from: manualSourceDraftNotes,
+            generatedAt: now
+        )
+        statusText = "Manual evidence packet drafted locally."
+        manualSourceEvidenceText = packet.displayText
+    }
+
+    func copyManualSourceEvidencePacket() {
+        if manualSourceEvidenceText == "Manual source evidence packet has not been drafted." {
+            buildManualSourceEvidencePacket()
+        }
+        UIPasteboard.general.string = CoachSafeOutput.redact(manualSourceEvidenceText)
+        statusText = "Manual evidence packet copied. No write was sent."
     }
 
     func connectAppleHealth() async {
