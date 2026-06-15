@@ -547,6 +547,95 @@ test("source authority context preserves Garmin, Rack/Motra, Oura, Apple Health,
   ]);
 });
 
+test("sync-status classifies stale, manual-bound, fallback, supporting, and read-only source states", () => {
+  const dashboard = {
+    now: new Date("2026-06-08T02:00:00.000Z"),
+    profile: { timezone: "Asia/Taipei", oura_biology_baselines: { hrv_baseline_ms: 32.5 } },
+    recovery_sleep: [{
+      date: "2026-06-05",
+      source: "Garmin",
+      training_readiness_score: 82,
+      hrv_status_ms: 44,
+      oura: { readiness_score: 71, hrv_avg_ms: 35 },
+    }],
+    blood_pressure: [{ date: "2026-06-05", systolic_mmhg: 124, diastolic_mmhg: 78 }],
+    body_composition: [{ measured_date: "2026-05-23", weight_kg: 87 }],
+    apple_health_daily_summaries: [{ summary_date: "2026-06-08", steps: 8421 }],
+  };
+
+  const syncStatus = buildSyncStatus(dashboard);
+  const byId = Object.fromEntries(syncStatus.checks.map(check => [check.id, check]));
+
+  assert.equal(syncStatus.protected_read_only_status.source_state, "verified_read_only");
+  assert.equal(syncStatus.protected_read_only_status.write_status, "no_write");
+
+  assert.equal(byId.sleep_recovery.source_state, "manual_provider_bound");
+  assert.equal(byId.sleep_recovery.freshness_status, "stale");
+  assert.equal(byId.sleep_recovery.authority_role, "primary_readiness");
+  assert.match(byId.sleep_recovery.next_action, /Garmin sleep\/recovery/);
+
+  assert.equal(byId.blood_pressure.source_state, "write_held");
+  assert.equal(byId.blood_pressure.freshness_status, "stale");
+  assert.equal(byId.blood_pressure.authority_role, "safety_override");
+
+  assert.equal(byId.nutrition.source_state, "manual_provider_bound");
+  assert.equal(byId.nutrition.freshness_status, "missing");
+  assert.match(byId.nutrition.next_action, /do not use Apple Health calories/);
+
+  assert.equal(byId.strength_session.status, "pending");
+  assert.equal(byId.strength_session.source_state, "manual_provider_bound");
+  assert.equal(byId.strength_session.freshness_status, "missing");
+  assert.match(byId.strength_session.next_action, /do not count Apple Health workouts/);
+
+  assert.equal(byId.strength_exercises.source_state, "manual_provider_bound");
+  assert.equal(byId.strength_exercises.confidence_effect, "low_for_progression");
+
+  assert.equal(byId.oura_fallback.source_state, "fallback_only");
+  assert.equal(byId.oura_fallback.freshness_status, "stale");
+  assert.match(byId.oura_fallback.next_action, /fallback/);
+
+  assert.equal(byId.apple_health_daily_summary.source_state, "supporting_only");
+  assert.equal(byId.apple_health_daily_summary.freshness_status, "fresh");
+  assert.equal(byId.apple_health_daily_summary.confidence_effect, "supporting_only");
+});
+
+test("sync-status keeps Oura current data fallback-only when Garmin sleep is missing", () => {
+  const syncStatus = buildSyncStatus({
+    now: new Date(MONDAY_TAIPEI),
+    profile: { timezone: "Asia/Taipei" },
+    recovery_sleep: [{
+      date: "2026-05-11",
+      source: "Oura",
+      oura: { readiness_score: 84, hrv_avg_ms: 38, total_sleep_min: 435 },
+    }],
+  });
+  const byId = Object.fromEntries(syncStatus.checks.map(check => [check.id, check]));
+
+  assert.equal(byId.sleep_recovery.status, "missing");
+  assert.equal(byId.sleep_recovery.source_state, "manual_provider_bound");
+  assert.equal(byId.sleep_recovery.freshness_status, "missing");
+  assert.ok(syncStatus.missing_required.includes("sleep_recovery"));
+  assert.equal(byId.oura_fallback.status, "current");
+  assert.equal(byId.oura_fallback.source_state, "fallback_only");
+  assert.equal(byId.oura_fallback.freshness_status, "fresh");
+});
+
+test("sync-status marks Rack/Motra strength sources not expected on non-strength days", () => {
+  const syncStatus = buildSyncStatus({
+    now: new Date(TUESDAY_TAIPEI),
+    profile: { timezone: "Asia/Taipei" },
+  });
+  const byId = Object.fromEntries(syncStatus.checks.map(check => [check.id, check]));
+
+  assert.equal(byId.strength_session.status, "not_expected");
+  assert.equal(byId.strength_session.source_state, "not_expected_today");
+  assert.equal(byId.strength_session.freshness_status, "not_expected_today");
+  assert.equal(byId.strength_exercises.status, "not_expected");
+  assert.equal(byId.strength_exercises.source_state, "not_expected_today");
+  assert.ok(!syncStatus.missing_required.includes("strength_session"));
+  assert.ok(!syncStatus.missing_required.includes("strength_exercises"));
+});
+
 test("medical and safety flags override optimistic device data across workout decisions", () => {
   const dashboard = {
     now: new Date(MONDAY_TAIPEI),

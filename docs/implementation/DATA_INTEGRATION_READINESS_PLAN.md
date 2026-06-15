@@ -28,6 +28,26 @@ Purpose: make the stale-source problem implementation-ready without crossing pro
 | Draft-only capture | iOS workflows include draft note, draft debrief, and draft BP intake without submitting production writes. | Draft-only |
 | Write readiness | `WRITE_READINESS_BOUNDARY_PLAN.md` classifies every write-capable/write-adjacent path and gates live writes. | Implemented as policy |
 
+## Sync Status Classification Labels
+
+Sync status should keep legacy `status` values for compatibility while adding explicit source classification fields for newer Coach/iOS surfaces:
+
+| Label | Meaning |
+| --- | --- |
+| `fresh` | Current enough to use within its source authority lane. |
+| `stale` | Present but old enough to lower confidence. |
+| `missing` | No usable row or report is available. |
+| `manual_provider_bound` | Requires Todd/provider/app review or a manual evidence packet; not automatically integrated. |
+| `write_held` | A write-capable path exists or may exist, but persistence is held behind write-readiness. |
+| `draft_only` | Local capture/draft is allowed but not saved as live source data. |
+| `fallback_only` | Source can be used only when the primary source is stale, missing, or unreliable. |
+| `supporting_only` | Source is context/cross-check evidence and cannot raise primary readiness confidence. |
+| `verified_read_only` | A protected read-only check succeeded; this does not prove write readiness. |
+| `protected_verification_deferred` | Protected source freshness was not checked because Codex/device boundaries apply. |
+| `permission_required` | Todd/device permission or setup is required. |
+| `not_expected_today` | The source is not expected for today's schedule. |
+| `unknown` | The source state cannot be classified safely. |
+
 ## Source Readiness Matrix
 
 ### Garmin Sleep/Recovery

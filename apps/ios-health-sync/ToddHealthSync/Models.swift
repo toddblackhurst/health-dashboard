@@ -779,7 +779,10 @@ struct CoachSyncStatusSummary {
             let label = check.warningLabel
             let latest = check.latestDate.map { " Latest: \($0)." } ?? ""
             let warning = check.warning.map { " \($0)" } ?? ""
-            return "\(label) is \(check.statusText).\(latest)\(warning)"
+            let sourceState = check.sourceState.map { " Source state: \($0.replacingOccurrences(of: "_", with: " "))." } ?? ""
+            let freshness = check.freshnessStatus.map { " Freshness: \($0.replacingOccurrences(of: "_", with: " "))." } ?? ""
+            let nextAction = check.nextAction.map { " Next: \($0)" } ?? ""
+            return "\(label) is \(check.statusText).\(latest)\(sourceState)\(freshness)\(warning)\(nextAction)"
         }
     }
 
@@ -808,6 +811,11 @@ struct CoachSyncCheckSummary {
     let status: String
     let latestDate: String?
     let warning: String?
+    let sourceState: String?
+    let freshnessStatus: String?
+    let authorityRole: String?
+    let confidenceEffect: String?
+    let nextAction: String?
 
     init(dictionary: [String: Any]) {
         self.id = dictionary.stringValue("id") ?? "unknown"
@@ -815,6 +823,11 @@ struct CoachSyncCheckSummary {
         self.status = dictionary.stringValue("status") ?? "unknown"
         self.latestDate = dictionary.stringValue("latest_date")
         self.warning = dictionary.stringValue("warning")
+        self.sourceState = dictionary.stringValue("source_state")
+        self.freshnessStatus = dictionary.stringValue("freshness_status")
+        self.authorityRole = dictionary.stringValue("authority_role")
+        self.confidenceEffect = dictionary.stringValue("confidence_effect")
+        self.nextAction = dictionary.stringValue("next_action")
     }
 
     var statusText: String {
@@ -873,6 +886,7 @@ struct DailyDataFreshnessSource: Codable, Equatable, Identifiable {
         var parts = [
             "\(id): \(status.rawValue)",
             "source_category: \(category.rawValue)",
+            "source_state: \(sourceState)",
             "freshness_status: \(status.rawValue)",
             "readiness_status: \(readinessStatus.rawValue)",
             "protected_verification_status: \(protectedVerificationStatus.rawValue)",
@@ -885,6 +899,33 @@ struct DailyDataFreshnessSource: Codable, Equatable, Identifiable {
             parts.append("error_identifier: \(errorIdentifier.rawValue)")
         }
         return parts.joined(separator: " | ")
+    }
+
+    var sourceState: String {
+        switch status {
+        case .fresh where id == "protected_read_only_freshness":
+            return "verified_read_only"
+        case .fresh where id == "health_ios_sync":
+            return "supporting_only"
+        case .fresh:
+            return "fresh"
+        case .stale:
+            return "stale"
+        case .missing:
+            return "missing"
+        case .notConfigured:
+            return "permission_required"
+        case .permissionRequired:
+            return "permission_required"
+        case .toddActionRequired:
+            return "write_held"
+        case .protectedVerificationDeferred:
+            return "protected_verification_deferred"
+        case .manualSourceDeferred:
+            return id == "sleep_recovery_source_freshness" ? "fallback_only_or_manual_provider_bound" : "manual_provider_bound"
+        case .noWriteDraftOnly:
+            return "draft_only"
+        }
     }
 
     var surfaceTitle: String {
