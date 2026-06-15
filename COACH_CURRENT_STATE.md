@@ -1,15 +1,17 @@
 # Coach Current State
 
-Last updated: 2026-06-15 Asia/Taipei, after PR #66 manual source evidence packet merge, production public ping, and Todd-approved iPhone data-refresh evidence.
+Last updated: 2026-06-15 Asia/Taipei, after PR #68 sync status source classification merge, production public ping, and Todd-approved iPhone data-refresh evidence.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active. Avoid the older dirty primary worktree at `/Users/toddsdesktop/Codex Git Projects/health-dashboard` until its unrelated changes are isolated.
-- Current verified main commit: `35febba701f9e5e11ad09fc42164b0013ddc3670` after PR #66, `Add manual source evidence packet`.
+- Current verified main commit: `6d85eeeb8825f2466feea2551bc2a8963306b70b` after PR #68, `Classify sync status source states`.
+- PR #68 is merged and adds durable source classification for sync status and iOS freshness output. Final verification passed `node --test tests/coach-engine.test.mjs` (`40/40`), `node --test tests/*.test.mjs` (`101/101`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8`. GitHub Pages workflow `27516896496` succeeded, public production ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`, and Netlify production commit status did not attach during the observed polling window; no manual deploy was triggered.
+- PR #68 preserves the source hierarchy: Garmin sleep/recovery remains primary, Oura is `fallback_only` and does not satisfy Garmin-primary sleep/recovery, BP stale/missing is `write_held`, Garmin Nutrition stale/missing is `manual_provider_bound`, Rack/Motra strength session/detail remain authority lanes and can be `not_expected_today`, Apple Health is `supporting_only`, and protected read-only sync status is `verified_read_only`/`no_write`.
 - PR #66 is docs-only and adds `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md` as the completed Todd-safe manual evidence packet for stale/manual Garmin, BP, Garmin Nutrition, body, Rack/Motra, Oura, Apple Health, and safety-note data.
 - Final PR #66 verification passed `node --test tests/*.test.mjs` (`98/98`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; `HEALTH_DATABASE.json` remained unchanged. GitHub Pages/check-run status on the merge commit succeeded. Public production ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}` after merge. Netlify production commit status did not attach during the observed polling window; no manual deploy was triggered.
 - PR #65 is docs-only and adds `docs/implementation/DATA_INTEGRATION_READINESS_PLAN.md`. It does not call protected routes, perform writes, change provider accounts, modify Netlify/Supabase/GPT Action settings, or edit `HEALTH_DATABASE.json`.
-- Next safe repo-only task: `Sync Status Source Classification Improvements v1`, from a fresh clean worktree, to make sync status and iOS freshness outputs distinguish stale, missing, manual/provider-bound, write-held, fallback, supporting-only, and verified-read-only states more clearly.
+- Next safe repo-only task: `Manual Source Freshness Draft UI v1`, from a fresh clean worktree. It should add no-write iOS/app-side draft capture surfaces for Garmin recovery, BP, nutrition, body composition, and Rack/Motra evidence without provider scraping, secrets, protected route calls from Codex, production writes, Supabase/admin actions, or `HEALTH_DATABASE.json` edits.
 - PR #63, `Harden iOS device command runner fallback`, is merged to main and production deployed automatically.
 - Automatic Netlify production deploy for PR #63 merge commit `c140815117acc7ebfcd0b3812eb5dd6c1aaed115` is ready:
   - Deploy ID: `6a2f34ee63d2f6000703ab27`
@@ -52,7 +54,7 @@ Last updated: 2026-06-15 Asia/Taipei, after PR #66 manual source evidence packet
   - Primary main worktree `/Users/toddsdesktop/Codex Git Projects/health-dashboard` remains behind/dirty with unrelated changes in `ContentView.swift`, `HealthSyncViewModel.swift`, `netlify/functions/_coach-lib.mjs`, `tests/coach-engine.test.mjs`, and `tests/coach-memory.test.mjs`.
   - Original experiment worktree `/Users/toddsdesktop/Codex Git Projects/health-dashboard-ios-readout-ux` still has the earlier two-file DeviceCommandRunner experimental patch.
   - Anti-repeat/backend dirty changes remain unreviewed and unapproved for commit.
-  - Next safe repo-only task: `Sync Status Source Classification Improvements v1`, scoped by GPT Pro from a fresh clean worktree.
+  - Next safe repo-only task: `Manual Source Freshness Draft UI v1`, scoped by GPT Pro from a fresh clean worktree.
 - iOS App Intents Readiness v1 is merged and repo-side only. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, call live production write endpoints, or submit draft-only debrief/note/BP writes.
 - iPhone Coach Setup UX Readiness v1 is merged and deployed. It adds native setup status, `Save Connection`, `Check Setup`, API base/Keychain preflight checks, Keychain clear-on-empty-secret behavior, and Shortcut-safe non-secret setup failures before protected requests run. It does not install/configure Todd's iPhone, enter or rotate secrets, grant Health permissions, configure Siri/Action Button/Personal Automation, or call live protected write endpoints.
 - Coach Device Setup Runbook and Dry-Run Matrix v1 is merged and deployed. It adds `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for Todd-assisted physical iPhone/Siri/Shortcuts setup.

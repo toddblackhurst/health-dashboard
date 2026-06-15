@@ -253,6 +253,7 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
    - Hard boundaries: docs-only, no protected routes, no writes, no provider automation, no device setup.
 
 2. Sync Status Source Classification Improvements v1
+   - Status: completed by PR #68.
    - Why it matters: the current sync-status `missing`/`pending` states are accurate but not always specific enough for Todd. Better classification can distinguish stale, manual/provider-bound, write-held, fallback-only, and supporting-only.
    - Likely files: `netlify/functions/_coach-lib.mjs`, tests in `tests/*.test.mjs`, docs updates.
    - Acceptance criteria: sync-status exposes stable source role/status fields without changing source hierarchy; tests cover Garmin primary, Oura fallback, Apple Health supporting, Rack/Motra pending, BP safety, nutrition authority, body optional.
@@ -301,17 +302,17 @@ Use this when Todd returns. Do not paste credentials, API keys, account pages, r
 
 ## Next Implementable PR Recommendation
 
-Recommended next PR: Sync Status Source Classification Improvements v1, unless GPT Pro scopes a different bounded step.
+Recommended next PR: Manual Source Freshness Draft UI v1, unless GPT Pro scopes a different bounded step.
 
 Why this is the best next step:
 
-- Highest immediate readiness impact after PR #66: make current sync-status output more useful by labeling source roles and boundaries more precisely.
-- Low boundary risk when scoped carefully: code/tests/docs only, no secrets, no protected routes from Codex, no writes, no Supabase/admin work, no device automation, and no third-party scraping.
-- Builds on the manual packet: source classification can reuse the completed packet's primary/fallback/supporting/manual-provider-bound/write-held distinctions.
+- Highest immediate readiness impact after PR #68: turn the completed source labels and manual evidence packet into local no-write draft capture surfaces Todd can use without implying provider automation or persistence.
+- Boundary stays controlled when scoped carefully: iOS/app-side draft-only capture, no secrets, no protected routes from Codex, no writes, no Supabase/admin work, no device automation, and no third-party scraping.
+- Builds on the completed manual packet and PR #68 classification labels.
 
 Acceptance criteria for that next PR:
 
-- Sync status distinguishes primary, fallback, supporting-only, stale, missing, manual/provider-bound, write-held, verified-read-only, and not-expected states.
+- Draft capture surfaces are clearly labeled no-write/not-saved, redacted, and scoped to Garmin recovery, BP, nutrition, body composition, and Rack/Motra evidence.
 - Garmin, Rack/Motra, Garmin Nutrition, BP, Oura fallback, Apple Health, body comp, doctor notes, workout debriefs, and Coach Memory keep the source hierarchy intact.
 - Manual evidence remains labeled as reported/not saved unless a separate write-readiness task approves persistence.
 - Verification includes Node tests, diff check, and `HEALTH_DATABASE.json` no diff; iOS tests run only if iOS output code changes.
