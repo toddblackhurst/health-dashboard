@@ -1,12 +1,20 @@
 # Personal Coach Readiness Gap Inventory
 
-Last updated: 2026-06-15 Asia/Taipei.
+Last updated: 2026-06-17 Asia/Taipei.
 
 Purpose: keep the readiness push explicit. This file separates what is already verified, what Codex can safely build next, and what must wait for Todd/device/account/manual boundaries.
 
 ## Verified Now
 
-- Repo main is verified at `376c7200fe571dadefbcacec30fa38a2145f0155` after PR #72, `Improve manual source draft UI ergonomics`, merged.
+- Repo main is verified at `511c36ff4cdb9cd9e48ca4b30845c0a1e4ac3a14` after PR #80, `Disabled Garmin/Oura official integration scaffolding`, merged.
+- PRs #76-#80 are now merged in order on main:
+  - PR #76 `Source Registry + Freshness Policy v1`, merge `b300aaae98c58e3cac50e90848be3018fa931ab6`.
+  - PR #77 `CoachEvidencePacket v1 + local validator`, merge `1f1a085843acc56f30f42e9bff65062eda641a9c`.
+  - PR #78 `One-tap Refresh Coach Data local orchestration`, merge `d068b943e36ed15cdd55809a70b93d9a96690597`.
+  - PR #79 `Rack CSV/export ingestion bridge`, merge `ebc1511b56e4aea60d83d961437d9b7f50c8e1aa`.
+  - PR #80 `Disabled Garmin/Oura official integration scaffolding`, merge `511c36ff4cdb9cd9e48ca4b30845c0a1e4ac3a14`.
+- Post-merge full-stack verification after PR #80 passed `node --test tests/*.test.mjs` (`118/118`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, shell simulator build/XCTest on iPhone 17, xcodebuildmcp simulator build after session-default setup, healthy public ping, and successful GitHub merge workflows for PRs #79 and #80. No protected production route calls, production writes, provider automation, secrets/env/settings changes, Supabase admin/migration/schema-cache work, GPT Action auth changes, manual deploys, or `HEALTH_DATABASE.json` edits occurred.
+- PR #78 Refresh Coach Data is now the current local no-write readiness surface. It groups evidence into Fresh, Fallback, and Needs Todd while keeping Apple Health supporting-only, Oura fallback-only, Rack/Motra authority, and conservative BP behavior.
 - PR #72 keeps Manual Source Draft behavior local-only/no-write/no-protected-route and improves physical iPhone usability: top summary text, top `Build Evidence Packet` and `Copy Evidence Packet` controls, visible `backend_write_status: no_write` and `protected_route_status: not_called` markers without scrolling to the generated packet bottom, and per-lane draft completion status.
 - PR #72 final and post-merge verification passed `node --test tests/*.test.mjs` (`101/101`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`57/57`). GitHub workflow jobs for the merge commit succeeded (`build`, `deploy`, `report-build-status`), public production ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`, no separate Netlify commit status attached during the observed polling window, protected routes were skipped, no manual deploy was triggered, and `HEALTH_DATABASE.json` remained unchanged.
 - PR #70 added the local iOS Manual Source Freshness Draft UI v1 packet builder. It can compose a paste-ready, redacted, no-write `MANUAL_SOURCE_EVIDENCE_PACKET_DRAFT` for Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra session/detail, Oura fallback, Apple Health supporting notes, and doctor/safety notes without submitting to the Coach backend. It reports `protected_route_status: not_called` and `backend_write_status: no_write`, classifies manual notes as reported evidence rather than provider-integrated data, and biases conservatively for high-risk BP/doctor/safety cues.
@@ -23,7 +31,12 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 - Todd-approved physical iPhone evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`; protected read-only sync status worked through the iOS app path at 6:56 AM with `protected_verification_status: verified_read_only` and `write_status: no_write`.
 - Overall Coach source freshness remained 0% for 2026-06-15 because Garmin sleep/recovery, BP, Garmin Nutrition, body composition, Rack/Motra strength session, and Rack/Motra exercise detail were stale, missing, pending, or manual/provider-bound. Coach remains usable for cautious caveated browser/GPT guidance, not full autonomous high-confidence readiness.
 - Remaining local dirty-state caution: the primary main worktree is behind/dirty with unrelated changes in `ContentView.swift`, `HealthSyncViewModel.swift`, `netlify/functions/_coach-lib.mjs`, `tests/coach-engine.test.mjs`, and `tests/coach-memory.test.mjs`; the original experiment worktree still has the earlier two-file DeviceCommandRunner experimental patch. These are not approved for commit by this document.
-- Manual Source Freshness Draft UI v1 is complete as PR #70 and its physical-iPhone ergonomics follow-up is complete as PR #72. The next readiness step is Todd-assisted physical iPhone validation of the merged PR #72 UI: install or launch the app on Todd's iPhone, verify the top Build/Copy controls, top no-write/protected-route markers, local packet builder, and copy behavior, do not expose secrets, do not scrape providers, do not call protected routes from Codex, and do not perform production writes.
+- Manual Source Freshness Draft UI v1 is complete as PR #70 and its physical-iPhone ergonomics follow-up is complete as PR #72. The current physical-device readiness step is the merged Refresh Coach Data validation from PR #78: Todd should use `docs/implementation/REFRESH_COACH_DATA_PHYSICAL_VALIDATION.md` to verify Fresh/Fallback/Needs Todd grouping, no-write/protected-route-not-called behavior, Apple Health supporting-only, Oura fallback-only, Rack/Motra authority, and conservative BP handling on the physical iPhone without exposing secrets or performing production writes.
+- Garmin follow-up and Oura setup planning packets are now prepared:
+  - `docs/implementation/GARMIN_FOLLOWUP_PACKET.md`
+  - `docs/implementation/OURA_SETUP_PLANNING_PACKET.md`
+- Production write-readiness now has a recommended first candidate packet:
+  - `docs/implementation/FIRST_PRODUCTION_WRITE_CANDIDATE_BP_INTAKE.md`
 - PR #26 iOS App Intents Readiness v1 merged and production deployed automatically from main.
 - PR #27 iPhone Coach Setup UX Readiness v1 merged and production deployed automatically from main.
 - PR #28 Coach Device Setup Runbook and Dry-Run Matrix v1 merged and production deployed automatically from main.
@@ -109,7 +122,7 @@ Human-boundary work:
 
 ### P0: iPhone/Siri Daily Coach Surface
 
-Status: repo-side App Intents readiness and iPhone Coach Setup UX Readiness v1 are merged; not yet physical-device verified for the expanded voice/text Coach.
+Status: repo-side App Intents readiness, manual-source drafting, and Refresh Coach Data local orchestration are merged; physical-device verification is still required for the latest expanded voice/text Coach flow.
 
 Verified:
 
@@ -126,9 +139,11 @@ Remaining safe Codex work:
 - Keep the no-network/failure matrix current so offline, timeout, invalid response, missing setup, and deferred protected-route cases return stable identifiers, typed statuses, redacted summaries, and next actions.
 - Add deeper tests for Red safety behavior in intent outputs.
 - Keep Apple Health supporting-only in all iPhone outputs.
+- Keep Refresh Coach Data grouped into Fresh, Fallback, and Needs Todd without falsely promoting stale/manual/fallback data.
 - Keep draft-only write paths explicit until Todd-assisted device confirmation exists.
 - Keep the merged local Coach readiness gate current as setup, public ping, protected read-only readiness, HealthKit, Siri/Shortcuts, Action Button, Personal Automation, write hold, and draft-only capture behavior evolves.
 - Use the device setup runbook for future physical-device sessions rather than improvising from chat memory.
+- Use `docs/implementation/REFRESH_COACH_DATA_PHYSICAL_VALIDATION.md` for the PR #78 device-check flow rather than treating simulator proof as device proof.
 
 Human/device boundary:
 
@@ -195,6 +210,8 @@ Rules:
 
 ## Next Safe Codex Task Candidates
 
-1. Todd-assisted Device Setup Session: when Todd is present, follow `docs/implementation/DEVICE_SETUP_RUNBOOK.md` for install, local secret entry, Health permissions, read-only Shortcut checks, Siri/Action Button/Automation setup, and readback.
-2. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
-3. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
+1. Todd-assisted Refresh Coach Data Device Validation: when Todd is present, use `docs/implementation/REFRESH_COACH_DATA_PHYSICAL_VALIDATION.md` to verify the merged PR #78 local flow on the physical iPhone.
+2. Garmin Follow-Up: Todd/admin can use `docs/implementation/GARMIN_FOLLOWUP_PACKET.md` for a non-secret application-status follow-up limited to read-only Health API + Activity API scope.
+3. Oura Setup Planning: Todd/admin can use `docs/implementation/OURA_SETUP_PLANNING_PACKET.md` for account/app ownership and callback planning while keeping Oura fallback-only and secrets out of Codex/GPT.
+4. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` together with `docs/implementation/FIRST_PRODUCTION_WRITE_CANDIDATE_BP_INTAKE.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
+5. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` only if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
