@@ -486,6 +486,7 @@ iOS 27 Siri/Shortcuts research status:
 - iOS 27 Siri/Shortcuts implementation must stay bounded. Do not install on Todd's iPhone, change device permissions, handle passcodes/Face ID, or claim physical-device proof without Todd's device interaction/readback.
 - The production smoke debrief row is intentionally old-dated and labeled as test data. Do not treat it as real workout feedback.
 - Garmin official API integration may be valuable later, but it depends on Garmin developer approval and should not block Coach Memory.
+- Disabled mock-only Garmin/Oura official-integration scaffolding now lives in `lib/official-provider-scaffolding.mjs`, with Todd/admin playbooks at `docs/implementation/GARMIN_APPROVAL_CHECKLIST.md` and `docs/implementation/OURA_API_SETUP_CHECKLIST.md`. This does not start OAuth, enable provider reads, or permit protected/write actions.
 - If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and use the configured GPT Action or secure provider surfaces for authenticated verification. Never paste the secret into chat.
 - A weekly review production run completed even though Netlify logged a non-blocking optional Supabase warning for `coach_observations`. Local code intentionally uses optional fallback for active memory context in dashboard/weekly-review reads; production schema/cache drift should be investigated through a separate safe Supabase-readiness boundary before any migration/schema-cache action.
 
