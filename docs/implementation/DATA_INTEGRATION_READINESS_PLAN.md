@@ -8,6 +8,7 @@ Purpose: make the stale-source problem implementation-ready without crossing pro
 
 - PR #65, `Add data integration readiness map`, is merged to main at `6617094108e90e395088e582246cfc80d2099a2f`.
 - PR #66, `Add manual source evidence packet`, is merged to main at `35febba701f9e5e11ad09fc42164b0013ddc3670`.
+- PR E scaffolding branch adds disabled-by-default official Garmin/Oura integration scaffolds, mock-only read fixtures, and Todd/admin checklists without enabling any live provider integration.
 - Companion manual packet is complete: `docs/implementation/MANUAL_SOURCE_EVIDENCE_PACKET.md`.
 - Baseline branch for PR #65 was `codex/data-integration-readiness`, based on `origin/main` at `0cf593f08225260ddca46dad8b55647b49c26133`.
 - Latest verified device evidence from 2026-06-15: Apple Health supporting evidence refreshed at 6:55 AM with `Wrote 7 of 7 Apple Health daily summaries`.
@@ -26,6 +27,7 @@ Purpose: make the stale-source problem implementation-ready without crossing pro
 | Apple Health daily sync | `apple_health_daily_summaries` and `apple_health_sync_runs` are read into dashboard/sync-status/coach-today as supporting evidence only. | Implemented and device-proven once |
 | iOS daily freshness | `DailyDataFreshnessReport.local(...)` separates Apple Health local freshness, public ping, protected read-only freshness, device permissions, manual third-party sources, BP action need, and draft-only capture. | Implemented local no-write |
 | Draft-only capture | iOS workflows include draft note, draft debrief, and draft BP intake without submitting production writes. | Draft-only |
+| Official provider scaffolds | `lib/official-provider-scaffolding.mjs` exposes disabled-by-default mock Garmin/Oura read interfaces and fixtures only. | Repo-only mock scaffold |
 | Write readiness | `WRITE_READINESS_BOUNDARY_PLAN.md` classifies every write-capable/write-adjacent path and gates live writes. | Implemented as policy |
 
 ## Sync Status Classification Labels
