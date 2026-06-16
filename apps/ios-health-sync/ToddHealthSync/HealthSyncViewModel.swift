@@ -118,14 +118,21 @@ final class HealthSyncViewModel: ObservableObject {
     }
 
     func checkDailyDataFreshness() {
+        refreshCoachData()
+    }
+
+    func refreshCoachData() {
         store.apiBase = apiBase.trimmingCharacters(in: .whitespacesAndNewlines)
         refreshCoachSetupStatus()
-        let report = DailyDataFreshnessReport.local(
-            setupStatus: currentCandidateSetupStatus(),
-            store: store
-        )
-        statusText = "Daily data freshness"
-        dailyDataFreshnessText = report.displayText
+        do {
+            let result = try workflow.refreshCoachDataLocally(
+                manualSourceNotes: manualSourceDraftNotes
+            )
+            statusText = result.title
+            dailyDataFreshnessText = result.detail
+        } catch {
+            statusText = CoachSafeOutput.errorMessage(error)
+        }
     }
 
     func updateManualSourceDraft(_ lane: ManualSourceEvidenceLane, note: String) {

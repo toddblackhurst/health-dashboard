@@ -201,8 +201,8 @@ struct ContentView: View {
             }
             .disabled(viewModel.isWorking)
 
-            Button("Check Daily Data Freshness") {
-                viewModel.checkDailyDataFreshness()
+            Button("Refresh Coach Data") {
+                viewModel.refreshCoachData()
             }
             .disabled(viewModel.isWorking)
 

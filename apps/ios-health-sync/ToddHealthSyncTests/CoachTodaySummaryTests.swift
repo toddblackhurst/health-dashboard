@@ -1911,6 +1911,136 @@ final class CoachTodaySummaryTests: XCTestCase {
         assertNoCredentialLeak(in: draft.safeSurfaceStrings.contractText)
     }
 
+    func testCoachDataRefreshSnapshotGroupsFreshFallbackAndNeedsToddLocally() throws {
+        let suiteName = "CoachDataRefreshSnapshotGroups-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        store.recordAppleHealthSync(summary: "Wrote 7 of 7 Apple Health daily summaries.", at: now.addingTimeInterval(-2 * 3600))
+        store.recordCoachReadback(summary: "Coach sync status 100%.", at: now.addingTimeInterval(-3 * 3600))
+
+        let snapshot = CoachDataRefreshSnapshot.local(
+            setupStatus: CoachConnectionConfiguration(
+                apiBase: store.apiBase,
+                secret: "fake-local-secret"
+            ).status,
+            store: store,
+            manualSourceNotes: [
+                .ouraFallback: "Oura readiness 80, fallback only.",
+                .rackMotraExerciseDetail: "Manual bridge detail only.",
+                .bodyComposition: "Body trend holding steady."
+            ],
+            now: now
+        )
+        let text = snapshot.shortcutText
+
+        XCTAssertEqual(snapshot.writeStatus, .noWrite)
+        XCTAssertEqual(snapshot.protectedRouteStatus, "not_called")
+        XCTAssertEqual(snapshot.protectedVerificationStatus, .verifiedReadOnly)
+        XCTAssertEqual(snapshot.actionStatus, "local_refresh_needs_todd")
+        XCTAssertTrue(snapshot.sourceGroups[.fresh, default: []].contains { $0.registryKey == "apple_health" })
+        XCTAssertTrue(snapshot.sourceGroups[.fresh, default: []].contains { $0.registryKey == "protected_read_only" })
+        XCTAssertTrue(snapshot.sourceGroups[.fallback, default: []].contains { $0.registryKey == "oura_fallback" })
+        XCTAssertTrue(snapshot.sourceGroups[.fallback, default: []].contains { $0.registryKey == "manual_evidence_packet" })
+        XCTAssertTrue(snapshot.sourceGroups[.needsTodd, default: []].contains { $0.registryKey == "garmin_sleep_recovery" })
+        XCTAssertTrue(snapshot.sourceGroups[.needsTodd, default: []].contains { $0.registryKey == "rack_strength_detail" })
+        XCTAssertTrue(text.contains("COACH_DATA_REFRESH_SNAPSHOT_LOCAL"))
+        XCTAssertTrue(text.contains("write_status: no_write"))
+        XCTAssertTrue(text.contains("protected_verification_status: verified_read_only"))
+        XCTAssertTrue(text.contains("protected_route_status: not_called"))
+        XCTAssertTrue(text.contains("- fresh: Protected read-only Coach verification; Apple Health daily summary"))
+        XCTAssertTrue(text.contains("- fallback: Oura fallback sleep/recovery"))
+        XCTAssertTrue(text.contains("No protected route was called by this local refresh."))
+        XCTAssertFalse(text.contains("fake-local-secret"))
+    }
+
+    func testCoachDataRefreshSnapshotKeepsAppleHealthFreshWithoutMarkingGarminOrRackFresh() throws {
+        let suiteName = "CoachDataRefreshAppleHealthOnly-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        store.recordAppleHealthSync(summary: "Wrote 7 of 7 Apple Health daily summaries.", at: now.addingTimeInterval(-1 * 3600))
+
+        let snapshot = CoachDataRefreshSnapshot.local(
+            setupStatus: CoachConnectionConfiguration(
+                apiBase: store.apiBase,
+                secret: ""
+            ).status,
+            store: store,
+            now: now
+        )
+
+        let appleSource = try XCTUnwrap(snapshot.sources.first { $0.registryKey == "apple_health" })
+        let garminSource = try XCTUnwrap(snapshot.sources.first { $0.registryKey == "garmin_sleep_recovery" })
+        let rackSource = try XCTUnwrap(snapshot.sources.first { $0.registryKey == "rack_strength_detail" })
+
+        XCTAssertEqual(appleSource.group, .fresh)
+        XCTAssertEqual(appleSource.sourceState, "supporting_only")
+        XCTAssertEqual(garminSource.group, .needsTodd)
+        XCTAssertEqual(garminSource.authorityRole, "primary_readiness")
+        XCTAssertEqual(rackSource.group, .needsTodd)
+        XCTAssertEqual(rackSource.authorityRole, "set_rep_load_authority")
+        XCTAssertEqual(snapshot.protectedVerificationStatus, .blockedMissingSetup)
+        XCTAssertFalse(snapshot.sourceGroups[.fresh, default: []].contains { $0.registryKey == "garmin_sleep_recovery" })
+        XCTAssertFalse(snapshot.sourceGroups[.fresh, default: []].contains { $0.registryKey == "rack_strength_detail" })
+    }
+
+    func testCoachDataRefreshSnapshotKeepsBloodPressureConservativeAndNetworkFree() throws {
+        let suiteName = "CoachDataRefreshBloodPressure-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer {
+            defaults.removePersistentDomain(forName: suiteName)
+        }
+        let store = MorningCoachStore(defaults: defaults)
+        store.apiBase = "https://coach.example.test"
+        let session = MockCoachURLSession(responseData: Data())
+        let workflow = MorningCoachWorkflow(
+            apiClient: CoachAPIClient(session: session),
+            keychainStore: FakeCoachSecretStore(secret: "fake-local-secret"),
+            store: store
+        )
+
+        let result = try workflow.refreshCoachDataLocally(
+            manualSourceNotes: [
+                .bloodPressure: "150/95 this morning.",
+                .doctorSafetyNote: "Headache and dizziness."
+            ],
+            now: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+        let snapshot = CoachDataRefreshSnapshot.local(
+            setupStatus: CoachConnectionConfiguration(
+                apiBase: store.apiBase,
+                secret: "fake-local-secret"
+            ).status,
+            store: store,
+            manualSourceNotes: [
+                .bloodPressure: "150/95 this morning.",
+                .doctorSafetyNote: "Headache and dizziness."
+            ],
+            now: Date(timeIntervalSince1970: 1_800_000_000)
+        )
+        let bpSource = try XCTUnwrap(snapshot.sources.first { $0.registryKey == "blood_pressure" })
+
+        XCTAssertNil(session.lastRequest)
+        XCTAssertEqual(result.title, "Refresh Coach Data")
+        XCTAssertEqual(bpSource.group, .needsTodd)
+        XCTAssertEqual(bpSource.status, .toddActionRequired)
+        XCTAssertEqual(bpSource.sourceState, "write_held")
+        XCTAssertEqual(snapshot.shortcutOutput.writeStatus, .noWrite)
+        XCTAssertTrue(snapshot.shortcutOutput.requiresMedicalCaution)
+        XCTAssertTrue(result.detail.contains("Blood pressure"))
+        XCTAssertTrue(result.detail.contains("No production write was sent."))
+        XCTAssertTrue(result.detail.contains("No protected route was called by this local refresh."))
+    }
+
     func testWorkflowFailureSafeSurfaceStringsStopBeforeProtectedNetworkWhenSetupIncomplete() async throws {
         let suiteName = "FutureSurfaceSetupGate-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
