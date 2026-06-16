@@ -4,6 +4,8 @@ Last updated: 2026-06-17 Asia/Taipei.
 
 Purpose: nominate the safest first production write candidate without authorizing a live write. This packet is planning-only and sits behind the write-readiness gates in `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md`.
 
+Current repo refinement status: a local fail-closed helper exists at `lib/bp-write-readiness.mjs` for planning/test scaffolding only. It is not wired into the live production route and cannot submit a write.
+
 ## Recommendation
 
 Recommended first production write candidate: blood pressure intake through `POST /api/coach/intake` with type `bp`.
@@ -81,8 +83,23 @@ Record non-secret evidence for:
 - Protected read-only device verification is complete.
 - The physical iPhone or chosen submit surface is verified as the exact path Todd will use.
 - The route contract and expected response are verified without submitting a live mutation.
+- Any schema/cache readiness confirmation is obtained without Codex handling secrets or performing Supabase admin actions.
 - The source hierarchy wording remains conservative.
 - GPT Pro explicitly approves the exact first live BP test case immediately before execution.
+
+## Exact Preflight Gates
+
+All of these must be true before a live BP write can even be considered:
+
+- protected read-only verification complete
+- schema/cache readiness confirmed without Codex handling secrets
+- exact Todd-approved payload named
+- idempotency key generated before submit
+- duplicate-prevention rule confirmed
+- audit record defined
+- rollback or repair path defined
+- post-write readback plan defined
+- medical/safety interpretation boundary confirmed
 
 ## Safe Fake Test Payload Shape
 
@@ -119,6 +136,12 @@ This example is not approval to submit a live write.
 - Todd must handle any physical-device, permission, login, or account step.
 - Codex/GPT must not handle secrets, OAuth, 2FA, auth headers, or provider dashboards.
 - No Apple Health, Garmin, Oura, Rack, or other provider automation is allowed in the first live-write step.
+
+## Current Live-Route Caution
+
+- The existing protected intake route already accepts `type: bp`, but this refinement phase does not change or exercise that live route.
+- The local helper and tests exist to make future approval safer, not to open a write path.
+- Default posture remains `write_status: write_held` and no live write is allowed.
 
 ## Why Other Candidates Are Lower Priority
 
