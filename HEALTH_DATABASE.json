@@ -12426,24 +12426,24 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-16",
+    "date": "2026-06-17",
     "readiness_tier": "Yellow",
-    "call": "Recover today based on recovery 64%, HRV 15 ms, sleep 6h11, RHR 62 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
+    "call": "Train today based on recovery 64%, HRV 15 ms, sleep 6h11, RHR 62 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 6.6 weeks.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 6.4 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-16",
+      "as_of": "2026-06-17",
       "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 6.6
+      "weeks_remaining": 6.4
     },
     "active_adjustments": [],
     "data_completeness": null,
     "source": "local-json-fallback"
   },
-  "last_updated": "2026-06-16T06:05:05+08:00",
+  "last_updated": "2026-06-17T06:05:08+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12531,14 +12531,112 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-06-16",
-    "day_label": "Tuesday Jun 16",
-    "session_type": "Recovery / non-lifting day",
-    "floor_plan": "Walk or easy cardio only",
-    "time_cap_min": 45,
-    "blocks": [],
-    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
-    "why": "Recovery days preserve the quality of the next anchor session."
+    "date": "2026-06-17",
+    "day": "Wednesday",
+    "session_type": "Pull-dominant upper + loaded posture",
+    "theme": "Pull-up quality leads the session, then width, calf support, and loaded posture finish the work without any hamstring gamble.",
+    "floor_plan": "Floor 3 prep -> Floor 2 for Blocks A-C",
+    "time_cap_min": 58,
+    "status": "LIVE - daily brief refreshed",
+    "blocks": [
+      {
+        "id": "prep",
+        "label": "PREP — Floor 3 scan correction",
+        "floor": "Floor 3",
+        "time_min": 10,
+        "exercises": [
+          {
+            "name": "Open Book Stretch",
+            "prescription": "2×6/side",
+            "load": "BW",
+            "cues": "Open from the rib cage and keep the hips quiet. Smooth breaths only."
+          },
+          {
+            "name": "Serratus Wall Reach",
+            "prescription": "2×8",
+            "load": "BW",
+            "cues": "Exhale as you reach and let the ribs drop. Do not shrug the reach into the neck."
+          },
+          {
+            "name": "Prone Glute Set",
+            "prescription": "2×8 with 3-sec squeeze",
+            "load": "BW",
+            "cues": "Wake the glute up without arching the low back. This is tension, not range chasing."
+          },
+          {
+            "name": "Knee-to-Wall Ankle Mobilization",
+            "prescription": "2×8/side",
+            "load": "BW",
+            "cues": "Drive the knee over the middle toes without the heel peeling up. Left ankle gets the first clean reps."
+          }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Block A — Pull-up anchor",
+        "floor": "Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Pull-Up",
+            "prescription": "4×4",
+            "load": "BW",
+            "cues": "Hold the top for a beat, then lower under control. Stop before the ribs kick or the rep turns ugly."
+          },
+          {
+            "name": "Hammer Strength Decline Press",
+            "prescription": "3×8",
+            "load": "22.5 kg/side",
+            "cues": "Drive the handles smoothly and keep the shoulders quiet. Hard press, clean lockout, no sloppy grinders."
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Block B — Width and gait support",
+        "floor": "Floor 2",
+        "time_min": 16,
+        "exercises": [
+          {
+            "name": "Half-Kneeling Single Arm Cable Pull Down",
+            "prescription": "3×10/side",
+            "load": "12.5 kg",
+            "cues": "Shoulder blade sets down first, then drive the elbow to the hip pocket. Left side leads and the torso stays tall."
+          },
+          {
+            "name": "Smith Standing Calf Raise",
+            "prescription": "2×12",
+            "load": "40 kg",
+            "cues": "Full controlled rise, slow lower, and no bouncing. Keep it smooth so the calf work stays supportive, not sloppy."
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Block C — Loaded posture close",
+        "floor": "Floor 2",
+        "time_min": 12,
+        "exercises": [
+          {
+            "name": "Kettlebell Front-Rack Carry",
+            "prescription": "2×20 m/side, left first",
+            "load": "16 kg",
+            "cues": "Walk stacked and let the trunk resist the bell. No leaning back and no rushed steps."
+          },
+          {
+            "name": "Bear Hold",
+            "prescription": "2×20 sec",
+            "load": "BW",
+            "cues": "Knees hover low, ribs stay stacked, and the low back stays quiet. This is the anti-extension slot, not a conditioning test."
+          }
+        ]
+      }
+    ],
+    "session_notes": "Open by logging hamstring pain, right hip pinch, left shoulder-arm control, and left ankle status before the first work set. Wednesday keeps Pull-Up in the week because that preference is explicit, then adds a left-first pulldown skill set to keep the left-arm scapular issue front and center. The calf slot supports the new ankle priority without using any deep hip-flexion pattern. Front-rack carry plus bear hold gives the week loaded posture and lower-ab work without any swing, hinge, or rotation exposure.",
+    "planned_date": "2026-06-17",
+    "day_label": "Wednesday Jun 17",
+    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
+    "why": "The point today is high-quality load and clean positions, not extra volume."
   },
   "coach_questions": [
     {
