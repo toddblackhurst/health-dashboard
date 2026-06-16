@@ -5,6 +5,13 @@ const JSON_HEADERS = {
   "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
 };
 
+import {
+  SOURCE_REGISTRY_VERSION,
+  applySourceRegistryPolicy,
+  buildSourceGroups,
+  buildSourceRegistrySnapshot,
+} from "../../lib/source-registry.mjs";
+
 export const COACH_RESPONSE_VERSION = "coach-brain-v1";
 
 const SOURCE_CONTEXT = {
@@ -2181,7 +2188,7 @@ function buildDataCompleteness(base = {}) {
       days_available_last_7: appleHealth.days_available_last_7,
       warning: appleHealth.warnings[0] || null,
     },
-  ];
+  ].map(applySourceRegistryPolicy);
 
   const requiredChecks = checks.filter(check => check.required);
   const missingRequired = requiredChecks
@@ -2195,6 +2202,11 @@ function buildDataCompleteness(base = {}) {
     score_pct: requiredChecks.length ? Math.round((currentRequired / requiredChecks.length) * 100) : 100,
     missing_required: missingRequired,
     checks,
+    source_groups: buildSourceGroups(checks),
+    source_registry: {
+      version: SOURCE_REGISTRY_VERSION,
+      entries: buildSourceRegistrySnapshot(checks),
+    },
     supporting_evidence: {
       apple_health: appleHealth,
       workout_debriefs: workoutDebriefContext,
@@ -3630,9 +3642,13 @@ export function buildSyncStatus(base = {}) {
     score_pct: dataCompleteness.score_pct,
     missing_required: dataCompleteness.missing_required,
     checks: dataCompleteness.checks,
+    source_groups: dataCompleteness.source_groups,
+    source_registry: dataCompleteness.source_registry,
     apple_health: dataCompleteness.supporting_evidence.apple_health,
     protected_read_only_status: {
       source_state: "verified_read_only",
+      registry_key: "protected_read_only",
+      grouping_bucket: "fresh",
       protected_verification_status: "verified_read_only",
       write_status: "no_write",
       note: "This sync-status response is read-only; it does not prove write readiness.",
