@@ -1497,6 +1497,704 @@ struct DailyDataFreshnessReport: Codable, Equatable {
     }
 }
 
+enum CoachDataRefreshGroup: String, Codable, CaseIterable, Equatable {
+    case fresh
+    case fallback
+    case needsTodd = "needs_todd"
+}
+
+private struct CoachDataRefreshPolicy {
+    let registryKey: String
+    let label: String
+    let authorityRole: String
+    let freshnessWindow: String
+    let fallbackRules: [String]
+    let acquisitionMethod: String
+    let allowedOperationClass: String
+}
+
+struct CoachDataRefreshSource: Codable, Equatable, Identifiable {
+    let registryKey: String
+    let label: String
+    let group: CoachDataRefreshGroup
+    let status: DailyDataFreshnessStatus
+    let authorityRole: String
+    let freshnessWindow: String
+    let fallbackRules: [String]
+    let acquisitionMethod: String
+    let allowedOperationClass: String
+    let packetId: String?
+    let packetType: String?
+    let source: String?
+    let observedWindow: String
+    let generatedAt: Date
+    let sourceQuality: String?
+    let authorityLane: String
+    let sourceState: String
+    let freshnessStatus: String
+    let protectedVerificationStatus: CoachShortcutProtectedVerificationStatus
+    let writeStatus: CoachShortcutWriteStatus
+    let protectedRouteStatus: String
+    let localOnly: Bool
+    let noSecretValues: Bool
+    let noWritePerformed: Bool
+    let detail: String
+    let nextAction: String
+
+    var id: String { registryKey }
+
+    var line: String {
+        var parts = [
+            "registry_key: \(registryKey)",
+            "label: \(CoachSafeOutput.redact(label))",
+            "grouping_bucket: \(group.rawValue)",
+            "status: \(status.rawValue)",
+            "authority_role: \(authorityRole)",
+            "freshness_window: \(CoachSafeOutput.redact(freshnessWindow))",
+            "fallback_rules: \(CoachSafeOutput.redact(fallbackRules.joined(separator: " || ")))",
+            "acquisition_method: \(CoachSafeOutput.redact(acquisitionMethod))",
+            "allowed_operation_class: \(allowedOperationClass)",
+            "authority_lane: \(authorityLane)",
+            "source_state: \(sourceState)",
+            "freshness_status: \(freshnessStatus)",
+            "protected_verification_status: \(protectedVerificationStatus.rawValue)",
+            "write_status: \(writeStatus.rawValue)",
+            "protected_route_status: \(protectedRouteStatus)",
+            "local_only: \(localOnly)",
+            "no_secret_values: \(noSecretValues)",
+            "no_write_performed: \(noWritePerformed)",
+            "observed_window: \(CoachSafeOutput.redact(observedWindow))"
+        ]
+        if let packetId, !packetId.isEmpty {
+            parts.append("packet_id: \(packetId)")
+        }
+        if let packetType, !packetType.isEmpty {
+            parts.append("packet_type: \(packetType)")
+        }
+        if let source, !source.isEmpty {
+            parts.append("source: \(CoachSafeOutput.redact(source))")
+        }
+        if let sourceQuality, !sourceQuality.isEmpty {
+            parts.append("source_quality: \(sourceQuality)")
+        }
+        parts.append("generated_at: \(ManualSourceEvidencePacket.format(generatedAt))")
+        parts.append("detail: \(CoachSafeOutput.redact(detail))")
+        parts.append("next_action: \(CoachSafeOutput.redact(nextAction))")
+        return parts.joined(separator: " | ")
+    }
+}
+
+struct CoachDataRefreshSnapshot: Codable, Equatable {
+    let actionStatus: String
+    let summary: String
+    let generatedAt: Date
+    let writeStatus: CoachShortcutWriteStatus
+    let protectedVerificationStatus: CoachShortcutProtectedVerificationStatus
+    let protectedRouteStatus: String
+    let sourceRegistryVersion: String
+    let coachEvidencePacketVersion: String
+    let sources: [CoachDataRefreshSource]
+
+    var sourceGroups: [CoachDataRefreshGroup: [CoachDataRefreshSource]] {
+        var groups: [CoachDataRefreshGroup: [CoachDataRefreshSource]] = [:]
+        for group in CoachDataRefreshGroup.allCases {
+            groups[group] = []
+        }
+        for source in sources {
+            groups[source.group, default: []].append(source)
+        }
+        return groups
+    }
+
+    var shortcutText: String {
+        var lines = [
+            "COACH_DATA_REFRESH_SNAPSHOT_LOCAL",
+            "generated_at: \(ManualSourceEvidencePacket.format(generatedAt))",
+            "status: \(CoachSafeOutput.redact(actionStatus))",
+            "summary: \(CoachSafeOutput.redact(summary))",
+            "write_status: \(writeStatus.rawValue)",
+            "protected_verification_status: \(protectedVerificationStatus.rawValue)",
+            "protected_route_status: \(protectedRouteStatus)",
+            "source_registry_version: \(sourceRegistryVersion)",
+            "coach_evidence_packet_version: \(coachEvidencePacketVersion)",
+            "source_groups:"
+        ]
+
+        for group in CoachDataRefreshGroup.allCases {
+            let labels = sourceGroups[group, default: []]
+                .map(\.label)
+                .joined(separator: "; ")
+            lines.append("- \(group.rawValue): \(CoachSafeOutput.redact(labels.isEmpty ? "none" : labels))")
+        }
+
+        lines.append("sources:")
+        lines.append(contentsOf: sources.map { "- \($0.line)" })
+        lines.append("No production write was sent.")
+        lines.append("No protected route was called by this local refresh.")
+        lines.append("No secret value is included.")
+        return lines.joined(separator: "\n")
+    }
+
+    var shortcutOutput: CoachShortcutOutput {
+        let needsToddSources = sourceGroups[.needsTodd, default: []]
+        let fallbackSources = sourceGroups[.fallback, default: []]
+        let freshSources = sourceGroups[.fresh, default: []]
+        let sourceFreshness = [
+            "Fresh: \(Self.joinedLabels(freshSources))",
+            "Fallback: \(Self.joinedLabels(fallbackSources))",
+            "Needs Todd: \(Self.joinedLabels(needsToddSources))"
+        ].joined(separator: " | ")
+
+        let firstConstraint = needsToddSources.prefix(6).map { "\($0.label): \($0.detail)" }
+        let nextAction = needsToddSources.first?.nextAction
+            ?? fallbackSources.first?.nextAction
+            ?? "Use this local refresh as a no-write snapshot only; protected/provider checks remain separate."
+
+        return CoachShortcutOutput(
+            actionStatus: actionStatus,
+            setupStatus: protectedVerificationStatus == .blockedMissingSetup ? .needsSetup : .configuredLocally,
+            readinessStatus: needsToddSources.isEmpty ? .ready : .attentionRequired,
+            protectedVerificationStatus: protectedVerificationStatus,
+            writeStatus: .noWrite,
+            safetyStatus: .unknown,
+            readinessSummary: summary,
+            workoutTitle: nil,
+            workoutType: .none,
+            primaryConstraints: firstConstraint,
+            coachMemoryContext: nil,
+            workoutDebriefContext: nil,
+            nextBestAction: nextAction,
+            requiresMedicalCaution: needsToddSources.contains(where: { $0.registryKey == "blood_pressure" })
+                || fallbackSources.contains(where: { $0.registryKey == "blood_pressure" }),
+            sourceFreshness: sourceFreshness,
+            lastSync: freshSources.first(where: { $0.registryKey == "apple_health" })?.detail,
+            errorIdentifier: protectedVerificationStatus == .blockedMissingSetup ? .notConfigured : nil,
+            errorMessage: nil
+        )
+    }
+
+    static func local(
+        setupStatus: CoachSetupStatus,
+        store: MorningCoachStore,
+        manualSourceNotes: [ManualSourceEvidenceLane: String] = [:],
+        now: Date = Date()
+    ) -> CoachDataRefreshSnapshot {
+        let manualPacket = ManualSourceEvidencePacket.build(from: manualSourceNotes, generatedAt: now)
+        let notes = Dictionary(uniqueKeysWithValues: manualSourceNotes.map { key, value in
+            (key, value.trimmingCharacters(in: .whitespacesAndNewlines))
+        })
+        let hasNote: (ManualSourceEvidenceLane) -> Bool = { lane in
+            !(notes[lane] ?? "").isEmpty
+        }
+
+        let protectedHours = store.lastCoachReadbackAt.map { max(0, Int(now.timeIntervalSince($0) / 3600)) }
+        let protectedStatus: CoachShortcutProtectedVerificationStatus
+        let protectedSourceStatus: DailyDataFreshnessStatus
+        let protectedDetail: String
+        let protectedNextAction: String
+        let protectedSourceState: String
+        if !setupStatus.isReadyForProtectedRequests {
+            protectedStatus = .blockedMissingSetup
+            protectedSourceStatus = .notConfigured
+            protectedDetail = "Protected read-only verification still needs Todd-entered device setup."
+            protectedNextAction = "Enter the Coach secret on device during Todd-assisted setup before expecting protected read-only verification."
+            protectedSourceState = "permission_required"
+        } else if let protectedHours, protectedHours <= 36 {
+            protectedStatus = .verifiedReadOnly
+            protectedSourceStatus = .fresh
+            protectedDetail = "A prior protected read-only Coach readback was verified \(protectedHours) hours ago."
+            protectedNextAction = "Use this as read-only evidence only; this local refresh did not call a protected route."
+            protectedSourceState = "verified_read_only"
+        } else {
+            protectedStatus = .deferredUntilToddDevice
+            protectedSourceStatus = .protectedVerificationDeferred
+            protectedDetail = "Protected read-only freshness was not re-verified by this local refresh."
+            protectedNextAction = "Run a separate protected read-only Coach check when Todd is present if fresh provider verification is needed."
+            protectedSourceState = "protected_verification_deferred"
+        }
+
+        let appleSyncAt = store.lastAppleHealthSyncAt
+        let appleHours = appleSyncAt.map { max(0, Int(now.timeIntervalSince($0) / 3600)) }
+        let appleStatus: DailyDataFreshnessStatus
+        let appleGroup: CoachDataRefreshGroup
+        let appleDetail: String
+        let appleObservedWindow: String
+        if let appleSyncAt, let appleHours {
+            appleStatus = appleHours <= 36 ? .fresh : .stale
+            appleGroup = appleHours <= 36 ? .fresh : .needsTodd
+            appleDetail = "Last Apple Health sync was \(appleHours) hours ago."
+            appleObservedWindow = observedWindowText(from: appleSyncAt, now: now)
+        } else {
+            appleStatus = .missing
+            appleGroup = .needsTodd
+            appleDetail = "No Apple Health daily sync has completed on this device."
+            appleObservedWindow = "not_captured_locally"
+        }
+
+        let priorReadOnlyContext: String
+        switch protectedStatus {
+        case .verifiedReadOnly:
+            priorReadOnlyContext = "A prior read-only Coach check exists, but this local refresh did not re-query provider freshness."
+        case .blockedMissingSetup:
+            priorReadOnlyContext = "Protected read-only verification is blocked until Todd finishes local device setup."
+        case .deferredUntilToddDevice, .readyForManualReadOnly, .notRequired:
+            priorReadOnlyContext = "This local refresh did not call protected routes or provider apps."
+        }
+
+        let bodyHasNote = hasNote(.bodyComposition)
+        let ouraHasNote = hasNote(.ouraFallback)
+        let anyManualPacket = !manualPacket.includedDrafts.isEmpty
+
+        let protectedSource = source(
+            policy: policy(for: "protected_read_only"),
+            group: protectedSourceStatus == .fresh ? .fresh : .needsTodd,
+            status: protectedSourceStatus,
+            packetType: nil,
+            source: protectedStatus == .verifiedReadOnly ? "Protected read-only Coach verification" : nil,
+            observedWindow: observedWindowText(from: store.lastCoachReadbackAt, now: now),
+            sourceQuality: protectedStatus == .verifiedReadOnly ? "verified_read_only" : nil,
+            authorityLane: "protected_read_only",
+            sourceState: protectedSourceState,
+            protectedVerificationStatus: protectedStatus,
+            detail: protectedDetail,
+            nextAction: protectedNextAction,
+            generatedAt: now
+        )
+
+        let sources = [
+            protectedSource,
+            source(
+                policy: policy(for: "apple_health"),
+                group: appleGroup,
+                status: appleStatus,
+                packetType: appleStatus == .fresh ? "apple_health_daily_summary" : nil,
+                source: appleStatus == .fresh ? "Apple Health / HealthKit daily summary" : nil,
+                observedWindow: appleObservedWindow,
+                sourceQuality: appleStatus == .fresh ? "device_sync" : nil,
+                authorityLane: "apple_health_supporting",
+                sourceState: "supporting_only",
+                protectedVerificationStatus: .notRequired,
+                detail: appleDetail,
+                nextAction: appleStatus == .fresh
+                    ? "Use as supporting context only; it does not raise primary readiness confidence."
+                    : "Refresh Apple Health on device when Todd is present; keep it supporting-only.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "garmin_sleep_recovery"),
+                group: .needsTodd,
+                status: hasNote(.garminSleepRecovery) ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: hasNote(.garminSleepRecovery) ? "garmin_manual_freshness" : nil,
+                source: hasNote(.garminSleepRecovery) ? "Garmin manual freshness report" : nil,
+                observedWindow: hasNote(.garminSleepRecovery) ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: hasNote(.garminSleepRecovery) ? "reported_manual" : nil,
+                authorityLane: "garmin_primary_readiness",
+                sourceState: "manual_provider_bound",
+                protectedVerificationStatus: protectedStatus,
+                detail: "Garmin remains the primary readiness authority. \(priorReadOnlyContext)",
+                nextAction: "Review Garmin sleep/recovery or provide a manual source evidence packet; use Oura only as fallback.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "garmin_activities"),
+                group: .needsTodd,
+                status: .manualSourceDeferred,
+                packetType: nil,
+                source: nil,
+                observedWindow: "not_captured_locally",
+                sourceQuality: nil,
+                authorityLane: "garmin_activity_physiology",
+                sourceState: "manual_provider_bound",
+                protectedVerificationStatus: protectedStatus,
+                detail: "Garmin activity summary can corroborate physiology, but this local refresh did not re-verify it. Garmin still does not override Rack detail.",
+                nextAction: "Review Garmin activity summary when available; do not replace Rack/Motra detail with Apple Health or memory.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "garmin_nutrition"),
+                group: .needsTodd,
+                status: hasNote(.garminNutrition) ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: hasNote(.garminNutrition) ? "garmin_nutrition_manual" : nil,
+                source: hasNote(.garminNutrition) ? "Garmin Nutrition manual report" : nil,
+                observedWindow: hasNote(.garminNutrition) ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: hasNote(.garminNutrition) ? "reported_manual" : nil,
+                authorityLane: "garmin_nutrition_authority",
+                sourceState: "manual_provider_bound",
+                protectedVerificationStatus: protectedStatus,
+                detail: "Garmin Nutrition remains the nutrition authority when usable. This local refresh did not fetch provider totals.",
+                nextAction: "Review Garmin Nutrition or provide manual calories/protein/hydration summary; do not use Apple Health calories as Garmin Nutrition.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "rack_strength_session"),
+                group: .needsTodd,
+                status: hasNote(.rackMotraSession) ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: hasNote(.rackMotraSession) ? "rack_strength_manual" : nil,
+                source: hasNote(.rackMotraSession) ? "Rack/Motra manual strength report" : nil,
+                observedWindow: hasNote(.rackMotraSession) ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: hasNote(.rackMotraSession) ? "reported_manual" : nil,
+                authorityLane: "rack_strength_session",
+                sourceState: "manual_provider_bound",
+                protectedVerificationStatus: protectedStatus,
+                detail: "Rack/Motra remains the completed strength-session authority. This local refresh did not inspect provider session history.",
+                nextAction: "Review Rack/Motra after training or provide a reported manual session summary; do not count Apple Health workouts as strength history.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "rack_strength_detail"),
+                group: .needsTodd,
+                status: hasNote(.rackMotraExerciseDetail) ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: hasNote(.rackMotraExerciseDetail) ? "rack_strength_manual" : nil,
+                source: hasNote(.rackMotraExerciseDetail) ? "Rack/Motra manual strength report" : nil,
+                observedWindow: hasNote(.rackMotraExerciseDetail) ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: hasNote(.rackMotraExerciseDetail) ? "reported_manual" : nil,
+                authorityLane: "rack_strength_detail",
+                sourceState: "manual_provider_bound",
+                protectedVerificationStatus: protectedStatus,
+                detail: "Rack/Motra set, rep, and load detail stays the authority. Garmin strength activity can corroborate effort but does not override Rack detail by default.",
+                nextAction: "Review Rack/Motra exercise detail or provide reported sets/reps/load; do not infer loads from memory.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "oura_fallback"),
+                group: ouraHasNote ? .fallback : .needsTodd,
+                status: ouraHasNote ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: ouraHasNote ? "manual_source_evidence_packet" : nil,
+                source: ouraHasNote ? "Manual Oura fallback note" : nil,
+                observedWindow: ouraHasNote ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: ouraHasNote ? "reported_manual" : nil,
+                authorityLane: "oura_fallback",
+                sourceState: "fallback_only",
+                protectedVerificationStatus: .notRequired,
+                detail: ouraHasNote
+                    ? "Oura can make coaching usable as fallback without marking Garmin fresh. This note stays fallback-only."
+                    : "Oura is reserved for fallback only when Garmin is stale, missing, or unreliable.",
+                nextAction: ouraHasNote
+                    ? "Label Oura as fallback because Garmin is stale, missing, or unreliable."
+                    : "Use Oura only as fallback if Todd reports it because Garmin is stale, missing, or unreliable.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "oura_advisor_manual_insight"),
+                group: ouraHasNote ? .fallback : .needsTodd,
+                status: ouraHasNote ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: ouraHasNote ? "oura_advisor_manual_insight" : nil,
+                source: ouraHasNote ? "Oura Advisor manual insight" : nil,
+                observedWindow: ouraHasNote ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: ouraHasNote ? "reported_manual" : nil,
+                authorityLane: "oura_manual_insight",
+                sourceState: "fallback_only",
+                protectedVerificationStatus: .notRequired,
+                detail: ouraHasNote
+                    ? "Reported Oura insight is available as fallback context only."
+                    : "No current Oura Advisor/manual insight was captured by this local refresh.",
+                nextAction: ouraHasNote
+                    ? "Use reported Oura insight as fallback context only."
+                    : "Ask Todd for a current Oura Advisor/manual insight only if Garmin remains stale or unreliable.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "blood_pressure"),
+                group: .needsTodd,
+                status: .toddActionRequired,
+                packetType: hasNote(.bloodPressure) || hasNote(.doctorSafetyNote) ? "bp_manual" : nil,
+                source: hasNote(.bloodPressure) || hasNote(.doctorSafetyNote) ? "Blood pressure manual report" : nil,
+                observedWindow: hasNote(.bloodPressure) || hasNote(.doctorSafetyNote) ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: hasNote(.bloodPressure) || hasNote(.doctorSafetyNote) ? "reported_manual" : nil,
+                authorityLane: "blood_pressure_safety",
+                sourceState: "write_held",
+                protectedVerificationStatus: .notRequired,
+                detail: hasNote(.bloodPressure) || hasNote(.doctorSafetyNote)
+                    ? "Local BP/safety notes were drafted, but BP remains safety-sensitive and conservative until Todd reviews a current reading."
+                    : "No current BP reading was captured locally; keep the coaching posture conservative.",
+                nextAction: "Todd should report a current BP reading or use the draft-only BP intake path; no write is implied.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "body_composition"),
+                group: bodyHasNote ? .fallback : .needsTodd,
+                status: bodyHasNote ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: bodyHasNote ? "body_composition_manual" : nil,
+                source: bodyHasNote ? "Body composition manual report" : nil,
+                observedWindow: bodyHasNote ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: bodyHasNote ? "reported_manual" : nil,
+                authorityLane: "body_trend_evidence",
+                sourceState: "manual_provider_bound",
+                protectedVerificationStatus: .notRequired,
+                detail: bodyHasNote
+                    ? "A local body-trend note was drafted. It can inform context, but it remains trend-only evidence."
+                    : "Body composition remains optional trend evidence and was not updated by this local refresh.",
+                nextAction: bodyHasNote
+                    ? "Use only as trend context; do not overreact to one reading."
+                    : "Update weight/body trend manually when useful; keep it optional and trend-only.",
+                generatedAt: now
+            ),
+            source(
+                policy: policy(for: "manual_evidence_packet"),
+                group: anyManualPacket ? .fallback : .needsTodd,
+                status: anyManualPacket ? .noWriteDraftOnly : .manualSourceDeferred,
+                packetType: anyManualPacket ? "manual_source_evidence_packet" : nil,
+                source: anyManualPacket ? "Manual source evidence packet" : nil,
+                observedWindow: anyManualPacket ? "manual_draft_at: \(ManualSourceEvidencePacket.format(now))" : "not_captured_locally",
+                sourceQuality: anyManualPacket ? "reported_manual" : nil,
+                authorityLane: "manual_bridge",
+                sourceState: "draft_only",
+                protectedVerificationStatus: .notRequired,
+                detail: anyManualPacket
+                    ? "A local manual evidence packet is available to bridge stale/provider-bound lanes without marking them fresh."
+                    : "No local manual evidence packet has been drafted in this app session.",
+                nextAction: "Use the manual evidence packet to bridge stale or provider-bound lanes without implying provider freshness or a production write.",
+                generatedAt: now
+            )
+        ]
+
+        let freshCount = sources.filter { $0.group == .fresh }.count
+        let fallbackCount = sources.filter { $0.group == .fallback }.count
+        let needsToddCount = sources.filter { $0.group == .needsTodd }.count
+        let actionStatus = needsToddCount > 0 ? "local_refresh_needs_todd" : "local_refresh_ready"
+        let summary = "Local no-write refresh grouped \(freshCount) fresh, \(fallbackCount) fallback, and \(needsToddCount) needs-Todd lanes."
+
+        return CoachDataRefreshSnapshot(
+            actionStatus: actionStatus,
+            summary: summary,
+            generatedAt: now,
+            writeStatus: .noWrite,
+            protectedVerificationStatus: protectedStatus,
+            protectedRouteStatus: "not_called",
+            sourceRegistryVersion: "source-registry-v1",
+            coachEvidencePacketVersion: "coach-evidence-packet-v1",
+            sources: sources
+        )
+    }
+
+    private static func joinedLabels(_ sources: [CoachDataRefreshSource]) -> String {
+        let value = sources.map(\.label).joined(separator: ", ")
+        return value.isEmpty ? "none" : value
+    }
+
+    private static func observedWindowText(from date: Date?, now: Date) -> String {
+        guard let date else {
+            return "not_captured_locally"
+        }
+        return "\(ManualSourceEvidencePacket.format(date)) -> \(ManualSourceEvidencePacket.format(now))"
+    }
+
+    private static func source(
+        policy: CoachDataRefreshPolicy,
+        group: CoachDataRefreshGroup,
+        status: DailyDataFreshnessStatus,
+        packetType: String?,
+        source: String?,
+        observedWindow: String,
+        sourceQuality: String?,
+        authorityLane: String,
+        sourceState: String,
+        protectedVerificationStatus: CoachShortcutProtectedVerificationStatus,
+        detail: String,
+        nextAction: String,
+        generatedAt: Date
+    ) -> CoachDataRefreshSource {
+        CoachDataRefreshSource(
+            registryKey: policy.registryKey,
+            label: policy.label,
+            group: group,
+            status: status,
+            authorityRole: policy.authorityRole,
+            freshnessWindow: policy.freshnessWindow,
+            fallbackRules: policy.fallbackRules,
+            acquisitionMethod: policy.acquisitionMethod,
+            allowedOperationClass: policy.allowedOperationClass,
+            packetId: packetType.map { compactPacketID(for: policy.registryKey, packetType: $0, generatedAt: generatedAt) },
+            packetType: packetType,
+            source: source,
+            observedWindow: observedWindow,
+            generatedAt: generatedAt,
+            sourceQuality: sourceQuality,
+            authorityLane: authorityLane,
+            sourceState: sourceState,
+            freshnessStatus: status.rawValue,
+            protectedVerificationStatus: protectedVerificationStatus,
+            writeStatus: .noWrite,
+            protectedRouteStatus: "not_called",
+            localOnly: true,
+            noSecretValues: true,
+            noWritePerformed: true,
+            detail: detail,
+            nextAction: nextAction
+        )
+    }
+
+    private static func compactPacketID(for registryKey: String, packetType: String, generatedAt: Date) -> String {
+        let stamp = Int(generatedAt.timeIntervalSince1970)
+        return "\(registryKey)-\(packetType)"
+            .lowercased()
+            .replacingOccurrences(of: "_", with: "-")
+            .replacingOccurrences(of: "[^a-z0-9-]", with: "-", options: .regularExpression)
+            .replacingOccurrences(of: "-+", with: "-", options: .regularExpression)
+            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+            + "-\(stamp)"
+    }
+
+    private static func policy(for registryKey: String) -> CoachDataRefreshPolicy {
+        policies[registryKey] ?? CoachDataRefreshPolicy(
+            registryKey: registryKey,
+            label: registryKey,
+            authorityRole: "supporting_evidence",
+            freshnessWindow: "Local refresh policy was not mapped for this lane.",
+            fallbackRules: ["Use local no-write evidence only."],
+            acquisitionMethod: "Local app refresh only.",
+            allowedOperationClass: "read_only_no_write"
+        )
+    }
+
+    private static let policies: [String: CoachDataRefreshPolicy] = [
+        "protected_read_only": CoachDataRefreshPolicy(
+            registryKey: "protected_read_only",
+            label: "Protected read-only Coach verification",
+            authorityRole: "verified_read_only",
+            freshnessWindow: "Fresh when a protected read-only source check succeeds without performing a write.",
+            fallbackRules: [
+                "Protected read-only verification proves read access only.",
+                "It does not prove write readiness or authorize production writes."
+            ],
+            acquisitionMethod: "Protected read-only coach route with Todd-entered secret on an approved device.",
+            allowedOperationClass: "read_only_no_write"
+        ),
+        "garmin_sleep_recovery": CoachDataRefreshPolicy(
+            registryKey: "garmin_sleep_recovery",
+            label: "Garmin sleep/recovery",
+            authorityRole: "primary_readiness",
+            freshnessWindow: "Fresh when same-day or previous-night Garmin sleep/recovery is available and wear is reliable.",
+            fallbackRules: [
+                "If Garmin is stale, missing, or unreliable, Oura may inform sleep/recovery as fallback only.",
+                "Apple Health remains supporting evidence only and does not make Garmin fresh."
+            ],
+            acquisitionMethod: "Garmin Connect / Fenix 8 read-only review, or a no-write manual evidence packet when Garmin is unavailable.",
+            allowedOperationClass: "read_only_or_manual_no_write"
+        ),
+        "garmin_activities": CoachDataRefreshPolicy(
+            registryKey: "garmin_activities",
+            label: "Garmin activities",
+            authorityRole: "workout_physiology_primary",
+            freshnessWindow: "Fresh when same-day Garmin activity summary and workout physiology are available after training.",
+            fallbackRules: [
+                "Garmin activities corroborate workout completion, physiology, and recovery cost.",
+                "Garmin strength activity does not override Rack/Motra set, rep, load, or exercise-detail authority by default."
+            ],
+            acquisitionMethod: "Garmin Connect / Fenix 8 read-only activity review.",
+            allowedOperationClass: "read_only_no_write"
+        ),
+        "garmin_nutrition": CoachDataRefreshPolicy(
+            registryKey: "garmin_nutrition",
+            label: "Garmin Nutrition",
+            authorityRole: "nutrition_authority",
+            freshnessWindow: "Fresh when today's Garmin Nutrition totals are available and usable for the active day.",
+            fallbackRules: [
+                "If Garmin Nutrition is stale or missing, use a manual calories, protein, carbs, fat, and hydration summary.",
+                "Apple Health calories do not substitute for Garmin Nutrition authority."
+            ],
+            acquisitionMethod: "Garmin Connect+ Nutrition read-only totals, or a no-write manual nutrition closeout summary.",
+            allowedOperationClass: "read_only_or_manual_no_write"
+        ),
+        "rack_strength_session": CoachDataRefreshPolicy(
+            registryKey: "rack_strength_session",
+            label: "Rack/Motra strength session",
+            authorityRole: "strength_log_authority",
+            freshnessWindow: "Fresh when today's completed Rack/Motra strength session exists on a planned strength day.",
+            fallbackRules: [
+                "If a planned strength session is missing, ask for a reported manual session summary.",
+                "Do not count Apple Health workouts as completed strength history."
+            ],
+            acquisitionMethod: "Rack/Motra completed-session review, or a reported manual session summary.",
+            allowedOperationClass: "read_only_or_manual_no_write"
+        ),
+        "rack_strength_detail": CoachDataRefreshPolicy(
+            registryKey: "rack_strength_detail",
+            label: "Rack/Motra strength exercise detail",
+            authorityRole: "set_rep_load_authority",
+            freshnessWindow: "Fresh when today's Rack/Motra session includes exercise, set, rep, and load detail on a planned strength day.",
+            fallbackRules: [
+                "If Rack/Motra detail is stale or missing, use reported manual sets, reps, and load as a bridge only.",
+                "Garmin strength activity can corroborate effort and physiology but does not override Rack/Motra detail by default."
+            ],
+            acquisitionMethod: "Rack/Motra exercise-detail review, or reported manual set, rep, and load notes.",
+            allowedOperationClass: "read_only_or_manual_no_write"
+        ),
+        "oura_fallback": CoachDataRefreshPolicy(
+            registryKey: "oura_fallback",
+            label: "Oura fallback sleep/recovery",
+            authorityRole: "fallback_recovery",
+            freshnessWindow: "Fresh when same-day or previous-night Oura sleep/recovery is available and Garmin primary readiness is stale, missing, or unreliable.",
+            fallbackRules: [
+                "Oura can make coaching usable as fallback without making Garmin fresh.",
+                "Fresh reliable Garmin always stays the primary readiness authority."
+            ],
+            acquisitionMethod: "Oura read-only review when Garmin primary readiness is stale, missing, or unreliable.",
+            allowedOperationClass: "read_only_no_write"
+        ),
+        "oura_advisor_manual_insight": CoachDataRefreshPolicy(
+            registryKey: "oura_advisor_manual_insight",
+            label: "Oura Advisor/manual insight",
+            authorityRole: "manual_fallback_insight",
+            freshnessWindow: "Fresh only when Todd provides current Oura Advisor or manual insight as reported evidence.",
+            fallbackRules: [
+                "Reported Oura insight may inform context but does not override fresh Garmin or medical/safety flags.",
+                "Treat Advisor text as reported evidence, not direct provider authority."
+            ],
+            acquisitionMethod: "Todd-reported Oura Advisor text or manual insight captured without provider automation.",
+            allowedOperationClass: "read_only_or_manual_no_write"
+        ),
+        "apple_health": CoachDataRefreshPolicy(
+            registryKey: "apple_health",
+            label: "Apple Health daily summary",
+            authorityRole: "supporting_evidence",
+            freshnessWindow: "Fresh when today's Apple Health daily summary is available.",
+            fallbackRules: [
+                "Apple Health can be fresh while Garmin/Rack authority freshness remains stale.",
+                "Apple Health remains supporting evidence only and does not raise primary readiness or strength-log authority."
+            ],
+            acquisitionMethod: "Apple Health / HealthKit daily summary read-only sync.",
+            allowedOperationClass: "read_only_no_write"
+        ),
+        "blood_pressure": CoachDataRefreshPolicy(
+            registryKey: "blood_pressure",
+            label: "Blood pressure",
+            authorityRole: "safety_override",
+            freshnessWindow: "Fresh when today's BP reading is available for the current coaching day.",
+            fallbackRules: [
+                "If BP is stale or missing, keep the coaching posture conservative.",
+                "Manual BP intake remains no-write until a separate write-readiness task is approved."
+            ],
+            acquisitionMethod: "Todd-reported BP reading or a draft-only intake path; no provider automation.",
+            allowedOperationClass: "draft_only_no_write"
+        ),
+        "body_composition": CoachDataRefreshPolicy(
+            registryKey: "body_composition",
+            label: "Body composition",
+            authorityRole: "trend_evidence",
+            freshnessWindow: "Fresh when the most recent body-composition trend point is within the last 14 days.",
+            fallbackRules: [
+                "Body composition is optional trend evidence and should not drive urgent coaching changes.",
+                "Manual updates are acceptable when useful, but trend-only rules remain conservative."
+            ],
+            acquisitionMethod: "Read-only trend review or manual trend update.",
+            allowedOperationClass: "read_only_or_manual_no_write"
+        ),
+        "manual_evidence_packet": CoachDataRefreshPolicy(
+            registryKey: "manual_evidence_packet",
+            label: "Manual evidence packet",
+            authorityRole: "manual_bridge",
+            freshnessWindow: "Current only when Todd composes or reports same-day manual evidence for stale or provider-bound lanes.",
+            fallbackRules: [
+                "Manual evidence can bridge stale Garmin, BP, nutrition, body, or Rack gaps without marking those primary sources fresh.",
+                "Manual evidence stays no-write and does not become provider authority by default."
+            ],
+            acquisitionMethod: "Local no-write draft packet or Todd-reported manual evidence relay.",
+            allowedOperationClass: "draft_only_no_write"
+        )
+    ]
+}
+
 private extension DailyDataFreshnessStatus {
     var displayLabel: String {
         switch self {

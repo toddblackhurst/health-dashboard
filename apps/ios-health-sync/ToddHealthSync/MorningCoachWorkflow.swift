@@ -80,6 +80,23 @@ struct MorningCoachWorkflow {
         )
     }
 
+    func refreshCoachDataLocally(
+        manualSourceNotes: [ManualSourceEvidenceLane: String] = [:],
+        now: Date = Date()
+    ) throws -> MorningCoachActionResult {
+        let snapshot = CoachDataRefreshSnapshot.local(
+            setupStatus: try currentSetupStatus(),
+            store: store,
+            manualSourceNotes: manualSourceNotes,
+            now: now
+        )
+        return MorningCoachActionResult(
+            title: "Refresh Coach Data",
+            detail: snapshot.shortcutText,
+            shortcutOutput: snapshot.shortcutOutput
+        )
+    }
+
     func syncAppleHealth(days: Int = 7, trigger: String = "shortcut") async throws -> MorningCoachActionResult {
         let apiSecret = try savedSecret()
         try await healthKitManager.requestAuthorization()
