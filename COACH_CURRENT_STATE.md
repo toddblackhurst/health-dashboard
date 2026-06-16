@@ -1,11 +1,20 @@
 # Coach Current State
 
-Last updated: 2026-06-17 Asia/Taipei, after PRs #76-#80 merged sequentially, automatic GitHub workflow verification, automatic production deploy verification, post-merge local/iOS verification, and post-merge autonomy-ops planning refresh.
+Last updated: 2026-06-17 Asia/Taipei, after PR #81 autonomy-ops packets merged, PR #82 BP write-readiness scaffolding merged, automatic GitHub workflow verification, automatic production deploy verification, post-merge local/public verification, and protected read-only execution-plan refresh.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active. Avoid the older dirty primary worktree at `/Users/toddsdesktop/Codex Git Projects/health-dashboard` until its unrelated changes are isolated. PR-stack merge and post-merge work were performed from clean isolated worktrees only.
-- Current verified main commit: `511c36ff4cdb9cd9e48ca4b30845c0a1e4ac3a14` after PR #80, `Disabled Garmin/Oura official integration scaffolding`.
+- Current verified main commit: `b071e528934186e8e1fd76f391ed75f1e50e241f` after PR #82, `Add BP write-readiness scaffolding`.
+- PR #81, `Add post-merge autonomy ops packets`, is merged and production deployed.
+  - Merge commit: `95d416515f0a0e6f8f7c913a359557e3e4396eb3`.
+  - Scope: durable state refresh after PRs #76-#80 plus new docs for Refresh Coach Data physical validation, Garmin follow-up, Oura setup planning, and BP-first write candidate planning.
+  - Verification after merge: `node --test tests/*.test.mjs` passed `118/118`, `git diff --check` passed, `git diff -- HEALTH_DATABASE.json` was empty, public ping stayed healthy, iOS build/XCTest was not rerun because the PR was docs/state only, and GitHub Pages run `27649387496` later completed successfully.
+- PR #82, `Add BP write-readiness scaffolding`, is merged and production deployed.
+  - Merge commit: `b071e528934186e8e1fd76f391ed75f1e50e241f`.
+  - Scope: fail-closed local BP write-readiness helper, deterministic tests, and tighter BP-first write-readiness planning docs.
+  - Safety contract: the helper is not wired into any live route, defaults to `write_status: write_held`, rejects secret/auth-like content, generates deterministic idempotency/correlation metadata, and cannot execute a live write by default.
+  - Verification after merge: `node --test tests/*.test.mjs` passed `124/124`, `git diff --check` passed, `git diff -- HEALTH_DATABASE.json` was empty, public ping stayed healthy, iOS build/XCTest was not rerun because there were no Swift/iOS changes, and GitHub Pages run `27652218528` completed successfully.
 - PRs #76-#80 are merged in order and verified:
   - PR #76, `Source Registry + Freshness Policy v1`, merge commit `b300aaae98c58e3cac50e90848be3018fa931ab6`.
   - PR #77, `CoachEvidencePacket v1 + local validator`, merge commit `1f1a085843acc56f30f42e9bff65062eda641a9c`.
@@ -15,6 +24,7 @@ Last updated: 2026-06-17 Asia/Taipei, after PRs #76-#80 merged sequentially, aut
 - Post-merge full-stack verification after PR #80 passed `node --test tests/*.test.mjs` (`118/118`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, shell `xcodebuild` simulator build/test on iPhone 17, xcodebuildmcp simulator build after session-default setup, healthy public production ping, and successful GitHub merge workflows for PR #79 and PR #80.
 - PR #78 Refresh Coach Data remains local-only and no-write. It groups evidence into Fresh, Fallback, and Needs Todd, keeps Apple Health supporting-only, keeps Oura fallback-only, preserves Rack/Motra authority for strength history, applies conservative BP behavior, does not call protected production routes during local validation, and does not perform production writes.
 - Protected verification and physical-iPhone proof remain separate from simulator/local success. Protected read-only verification that would require `x-coach-secret`, provider login, OAuth, 2FA, or device action still waits for Todd/admin handling and must not expose secrets in Codex or ChatGPT.
+- Current protected read-only planning baseline: Codex may only execute a protected read-only check if a preconfigured, redacted, no-secret, no-prompt path already exists. Otherwise protected verification remains Todd-assisted. Use `docs/implementation/PROTECTED_READ_ONLY_VERIFICATION_EXECUTION_PLAN.md`.
 - Build iOS Apps / xcodebuildmcp is now a verified simulator-build path for this repo. Required sequence: `session_show_defaults`; if defaults are empty, run `discover_projs`; then `list_schemes`; `list_sims`; `session_set_defaults`; then `build_sim`, `test_sim`, or `build_run_sim`. Verified defaults in this repo are project `ToddHealthSync.xcodeproj`, scheme `ToddHealthSync`, and simulator `iPhone 17`. Simulator proof does not count as physical-device validation.
 - PR #72 is merged and keeps Manual Source Draft behavior local-only/no-write/no-protected-route while making the physical iPhone UI easier to use: the Manual Source Drafts section now shows top summary text, top `Build Evidence Packet` and `Copy Evidence Packet` controls, visible `backend_write_status: no_write` and `protected_route_status: not_called` markers without scrolling to the generated packet bottom, and per-lane draft completion status. Final verification passed `git diff --check`, `git diff -- HEALTH_DATABASE.json`, `node --test tests/*.test.mjs` (`101/101`), iOS simulator build, and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8` (`57/57`). Post-merge verification repeated Node tests, iOS build, and explicit serial XCTest successfully. GitHub workflow jobs for the merge commit succeeded (`build`, `deploy`, `report-build-status`), public production ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`, no separate Netlify commit status attached during the observed polling window, protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt, no manual deploy was triggered, and `HEALTH_DATABASE.json` remained unchanged.
 - PR #70 is merged and adds the local iOS Manual Source Freshness Draft UI v1 packet builder. Final verification passed `node --test tests/*.test.mjs` (`101/101`), `git diff --check`, `git diff -- HEALTH_DATABASE.json`, iOS simulator build, and explicit serial XCTest on iPhone 17 simulator id `70CC325F-9E67-43C2-9286-F5DB244399C8`. GitHub Pages workflow `27517559504` succeeded, public production ping returned `{"ok":true,"action":"ping","version":"coach-brain-v1"}`, and Netlify production commit status did not attach during the observed polling window; no manual deploy was triggered. Protected routes were skipped because they require `x-coach-secret` or a real secret/account prompt. `HEALTH_DATABASE.json` remained unchanged.
@@ -125,6 +135,7 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Garmin follow-up packet: `docs/implementation/GARMIN_FOLLOWUP_PACKET.md`
 - Oura setup planning packet: `docs/implementation/OURA_SETUP_PLANNING_PACKET.md`
 - First production write candidate packet: `docs/implementation/FIRST_PRODUCTION_WRITE_CANDIDATE_BP_INTAKE.md`
+- Protected read-only execution plan: `docs/implementation/PROTECTED_READ_ONLY_VERIFICATION_EXECUTION_PLAN.md`
 - Current handoff file: `COACH_CURRENT_STATE.md`
 - Codex/GPT Pro operating model: `docs/operations/CODEX_CHATGPT_OPERATING_MODEL.md`
 - Full implementation roadmap: `docs/implementation/COACH_10_FULL_IMPLEMENTATION_PLAN.md`
@@ -536,32 +547,37 @@ iOS 27 Siri/Shortcuts research status:
 - Garmin follow-up and Oura setup planning are documentation/prep only. Do not treat the new packets as approval to log into provider portals, complete OAuth, handle tokens, or enable live integrations.
 - Build iOS Apps / xcodebuildmcp is verified for simulator proof only. Always establish or confirm session defaults before build/test calls, and do not present simulator success as physical iPhone success.
 - If local `COACH_API_SECRET` is absent, use public `401` checks for route/auth existence and use the configured GPT Action or secure provider surfaces for authenticated verification. Never paste the secret into chat.
+- Protected read-only verification remains blocked unless the path is already configured, redacted, and executable without Codex seeing, entering, copying, printing, or storing a secret. Otherwise it stays Todd-assisted by design.
 - A weekly review production run completed even though Netlify logged a non-blocking optional Supabase warning for `coach_observations`. Local code intentionally uses optional fallback for active memory context in dashboard/weekly-review reads; production schema/cache drift should be investigated through a separate safe Supabase-readiness boundary before any migration/schema-cache action.
 
 ## 9. Current Next Build Sequence
 
 Current readiness push:
 
-1. Keep production read-only GPT Actions healthy and documented, while keeping protected reads Todd/admin/secret-bound when secret exposure would be required.
-2. Close documentation/state drift so fresh Codex/GPT Pro runs do not follow obsolete pre-PR-#80 instructions.
-3. Use the merged Refresh Coach Data and evidence-packet stack as the current no-write readiness baseline:
+1. Keep production read-only GPT Actions healthy and documented, while keeping protected reads Todd/admin/secret-bound whenever secret exposure would be required.
+2. Treat PR #81 and PR #82 as the current durable planning baseline:
+   - PR #81 autonomy-ops packets are merged.
+   - PR #82 BP write-readiness scaffolding is merged.
+   - Current full-stack verification baseline is main `b071e528934186e8e1fd76f391ed75f1e50e241f`, `124/124` Node tests, healthy public ping, and unchanged `HEALTH_DATABASE.json`.
+3. Use the merged Refresh Coach Data, evidence-packet, and BP planning stack as the current no-write readiness baseline:
    - PR #76 source registry/freshness policy is merged.
    - PR #77 CoachEvidencePacket local validator is merged.
    - PR #78 one-tap Refresh Coach Data local orchestration is merged.
    - PR #79 Rack CSV/export bridge is merged.
    - PR #80 disabled Garmin/Oura official-integration scaffolding is merged.
-   - Current full-stack verification baseline is main `511c36ff4cdb9cd9e48ca4b30845c0a1e4ac3a14`, `118/118` Node tests, healthy public ping, passing simulator build/test, and unchanged `HEALTH_DATABASE.json`.
+   - PR #82 BP write-readiness helper stays fail-closed and no-write by default.
 4. Build the iPhone/Siri/ChatGPT voice-text path in bounded stages:
    - current verified repo-side iPhone bridge: native Apple Health sync app plus expanded App Intents for sync, Morning Coach, sync status, Can I Train, weekly review, workout planning, nutrition closeout, post-workout Coach, draft debrief/note/BP intake, readiness/freshness checks, and typed status outputs;
    - latest completed write-readiness baseline: PR #57 Write-Readiness Boundary Plan v1 is merged at `0650c64f0ade249fb1b8fb46cb638553641f2cf9`, automatically deployed to Netlify production deploy `6a2d19ccde8412000856cc98`, and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`);
    - latest completed Supabase readiness planning baseline: PR #59 Supabase Readiness Diagnostic Plan v1 is merged at `e929f50e9681cded3f8fb03ec9c03ebb249d75de`, automatically deployed to Netlify production deploy `6a2d1dd9cb800e000843ed68`, and public ping is healthy (`{"ok":true,"action":"ping","version":"coach-brain-v1"}`). Final PR #59 verification passed `node --test tests/*.test.mjs` (`97/97`), `git diff --check`, and `git diff -- HEALTH_DATABASE.json`; protected routes remain skipped because they require `x-coach-secret` or a real secret/account prompt; no production Supabase inspection, SQL, migration, schema-cache refresh, production writes, GPT Action writes, Netlify/env/GPT Action setting changes, physical-device setup, or secret handling occurred;
    - physical-device stage: install/configure/test only with Todd present for passcodes, Face ID, Health permissions, Shortcut automation, and any secret entry.
 5. Treat the `coach_observations` optional warning as a documented production/admin diagnostic decision. Use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md`; do not inspect production schema, run SQL, apply migrations, refresh schema cache, call protected routes, or perform admin actions without a separate scoped boundary.
-6. Use the new packets to drive the next bounded stages:
+6. Use the current packets to drive the next bounded stages:
    - `docs/implementation/REFRESH_COACH_DATA_PHYSICAL_VALIDATION.md`
    - `docs/implementation/GARMIN_FOLLOWUP_PACKET.md`
    - `docs/implementation/OURA_SETUP_PLANNING_PACKET.md`
    - `docs/implementation/FIRST_PRODUCTION_WRITE_CANDIDATE_BP_INTAKE.md`
+   - `docs/implementation/PROTECTED_READ_ONLY_VERIFICATION_EXECUTION_PLAN.md`
 
 Coach Memory / Observations v1 completed target:
 
