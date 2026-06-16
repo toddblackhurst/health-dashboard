@@ -6,7 +6,7 @@ Purpose: prepare a future official Garmin integration without starting OAuth, to
 
 ## What This Does And Does Not Do
 
-- This checklist supports the disabled mock-only scaffold in [official-provider-scaffolding.mjs](/Users/toddsdesktop/Codex%20Git%20Projects/health-dashboard-disabled-garmin-oura-integration-scaffolding-v1/lib/official-provider-scaffolding.mjs).
+- This checklist supports the disabled mock-only scaffold in [official-provider-scaffolding.mjs](../../lib/official-provider-scaffolding.mjs).
 - It does not authorize scraping Garmin Connect, logging into Garmin, handling credentials, starting device setup, or enabling a live sync.
 - It does not approve writes to Supabase, protected Coach routes, or GPT Actions.
 
@@ -64,4 +64,3 @@ Purpose: prepare a future official Garmin integration without starting OAuth, to
 - Stop for login, 2FA, CAPTCHA, payment, business verification, secret entry, or account-security prompts.
 - Stop if Garmin approval requires terms Todd/admin has not reviewed.
 - Stop if the requested data families would weaken Coach source hierarchy or bypass Rack/Motra authority.
-

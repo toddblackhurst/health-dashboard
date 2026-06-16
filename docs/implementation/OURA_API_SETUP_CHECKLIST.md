@@ -6,7 +6,7 @@ Purpose: prepare a future official Oura read-only fallback integration without s
 
 ## What This Does And Does Not Do
 
-- This checklist supports the disabled mock-only scaffold in [official-provider-scaffolding.mjs](/Users/toddsdesktop/Codex%20Git%20Projects/health-dashboard-disabled-garmin-oura-integration-scaffolding-v1/lib/official-provider-scaffolding.mjs).
+- This checklist supports the disabled mock-only scaffold in [official-provider-scaffolding.mjs](../../lib/official-provider-scaffolding.mjs).
 - It does not authorize login automation, OAuth completion, token handling, or any live Oura API requests.
 - It does not let Oura override fresh reliable Garmin readiness or any medical/safety gate.
 
@@ -53,4 +53,3 @@ Purpose: prepare a future official Oura read-only fallback integration without s
 - Stop for login, 2FA, CAPTCHA, payment, secret entry, or account-security prompts.
 - Stop if Oura setup would be used to bypass Garmin primary readiness or medical/safety boundaries.
 - Stop if a future task asks Codex to store or reveal tokens, client secrets, or raw OAuth credentials.
-
