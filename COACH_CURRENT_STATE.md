@@ -21,6 +21,15 @@ Last updated: 2026-06-18 Asia/Taipei, after PR #83 protected read-only verificat
   - Bevel is not a production source of truth yet.
   - Garmin, Rack/Motra, Garmin Nutrition, Oura fallback, Apple Health supporting-only, and BP safety policy remain unchanged for production behavior.
   - Bevel output may be evaluated through Todd-safe summaries only.
+- Initial Bevel phone setup result from 2026-06-18:
+  - Bevel iPhone app version `3.0.8` launched successfully in an already-authorized state.
+  - Garmin Connect and Oura are connected in Bevel Data Sources.
+  - Bevel is configured/evaluated as Garmin-first for inspected Garmin-owned physiology/activity categories, Oura Ring for Sleep, and Bevel for Nutrition.
+  - Duplicate/hidden-source controls are present. Sleep keeps Oura Ring visible while Garmin Connect, Health, Bevel, Soundcore, and other duplicate sleep sources are hidden.
+  - Bevel Intelligence works and returned an easy/low-impact recommendation from current readiness/strain context; it remains consumer coaching context, not medical authority.
+  - Strength Builder and nutrition logging entry points are visible, but no real workout or nutrition workflow has been completed.
+  - Garmin resync was triggered from Bevel's own Manage screen; Bevel remained usable but still showed global `Syncing...` at last readback.
+  - No provider account settings outside Bevel, Apple Health permissions, subscription/payment, production writes, runtime source registry, backend routes, iOS code, OpenAPI/GPT Action schema, Supabase schema, production settings, write paths, or `HEALTH_DATABASE.json` were changed.
 - PR #81, `Add post-merge autonomy ops packets`, is merged and production deployed.
   - Merge commit: `95d416515f0a0e6f8f7c913a359557e3e4396eb3`.
   - Scope: durable state refresh after PRs #76-#80 plus new docs for Refresh Coach Data physical validation, Garmin follow-up, Oura setup planning, and BP-first write candidate planning.

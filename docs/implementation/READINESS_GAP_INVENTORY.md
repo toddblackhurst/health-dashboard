@@ -8,6 +8,7 @@ Purpose: keep the readiness push explicit. This file separates what is already v
 
 - Repo main baseline for this refresh is `3d1a1fb3d2878013be46a9fff2688c41ceed5cdc`, after PR #83 merged and the 2026-06-18 daily brief refresh landed on `origin/main`.
 - Bevel Pro Evaluation Sprint is the new active evaluation path. Use `docs/implementation/BEVEL_PRO_EVALUATION_PLAN.md` before changing readiness, strain, sleep, nutrition, strength-builder, Oura, Rack, or BP write plans.
+- Initial Bevel phone setup is partially working: Bevel version `3.0.8` launched on Todd's iPhone, Garmin Connect and Oura are connected, inspected Garmin-owned categories are Garmin-first, Sleep is Oura Ring, Nutrition is Bevel, duplicate-source controls exist, Bevel Intelligence works, and Strength Builder / nutrition entry points are visible. Garmin resync was triggered and Bevel was still showing `Syncing...` at last readback.
 - BP production-write work is paused after PR #82's fail-closed readiness scaffold. The scaffold remains useful and merged, but live BP write work must not proceed until Bevel evaluation and a later explicit approval boundary.
 - Rack-first integration work is paused pending Bevel Strength Builder evaluation and Noah/Rack response. Rack/Motra remain current completed-strength authorities until a later explicit decision changes production policy.
 - Garmin follow-up remains approved only as a read-only Health API plus Activity API application/status follow-up. Do not broaden into writes, provider automation, OAuth completion, scraping, or token handling.

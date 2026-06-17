@@ -8,6 +8,34 @@ Purpose: evaluate whether Bevel Pro can become the primary readiness, recovery, 
 
 Bevel may become the primary consumer-facing health brain if its Garmin Connect plus Apple Health sync, Recovery, Strain, Sleep, Nutrition, Bevel Intelligence, and Strength Builder are reliable enough for Todd's real workflow.
 
+## Initial Phone Setup Result
+
+Status as of 2026-06-18 07:57 Asia/Taipei:
+
+- Bevel is installed on Todd's physical iPhone and launched successfully.
+- Installed app version verified from the paired-device app list: `3.0.8`.
+- Bevel opens in an authorized app state, not onboarding or login.
+- Garmin Connect is connected in Bevel Data Sources.
+- Oura is connected in Bevel Data Sources.
+- The working evaluation setup is Garmin-first for Garmin-owned physiology/activity categories, Oura for sleep, and Bevel for nutrition logging.
+- Active Energy, Heart Rate Variability, Resting Heart Rate, and other inspected Garmin-owned categories are set to Garmin Connect.
+- Heart Rate has both Oura Ring and Garmin Connect active, with duplicate/hidden-source controls available.
+- Sleep is set to Oura Ring as the visible priority source, with Garmin Connect, Health, Bevel, Soundcore, and other duplicate sleep sources hidden.
+- Nutrition is set to Bevel as the active source, with hidden-source controls available.
+- Bevel Intelligence is working and answered a safe readiness/strain question with an easy/low-impact recommendation. Treat that as consumer coaching context, not medical authority.
+- Fitness and Strength Builder entry points are visible: Log activity, Create workout, Generate template, Guided template, and Freeform template.
+- Journal nutrition entry points are visible: Describe food, Import food, Capture food, Scan food, Ask Bevel, and Search food.
+- A Garmin resync was triggered from Bevel's own Garmin Connect Manage screen after source configuration. The app remained usable but still showed global `Syncing...` at last readback.
+- No workout, nutrition record, provider account, Apple Health permission, subscription, payment, production write, or Coach runtime/source-policy change was performed.
+
+Current working decision:
+
+- Continue the Bevel evaluation sprint.
+- Do not promote Bevel to production source of truth yet.
+- Do not replace Rack/Motra for completed strength yet.
+- Do not replace Garmin Nutrition yet.
+- Do not resume BP production-write work yet.
+
 ## Explicit Non-Decision
 
 - Do not make Bevel the source of truth yet.
