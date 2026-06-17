@@ -1,11 +1,26 @@
 # Coach Current State
 
-Last updated: 2026-06-17 Asia/Taipei, after PR #81 autonomy-ops packets merged, PR #82 BP write-readiness scaffolding merged, automatic GitHub workflow verification, automatic production deploy verification, post-merge local/public verification, and protected read-only execution-plan refresh.
+Last updated: 2026-06-18 Asia/Taipei, after PR #83 protected read-only verification plan merged, the 2026-06-18 daily brief refresh landed on main, and the Bevel Pro Evaluation Sprint became the active evaluation path.
 
 ## 0. Current Verified Snapshot
 
 - Current local branch: `main` unless a scoped Codex branch is active. Avoid the older dirty primary worktree at `/Users/toddsdesktop/Codex Git Projects/health-dashboard` until its unrelated changes are isolated. PR-stack merge and post-merge work were performed from clean isolated worktrees only.
-- Current verified main commit: `b071e528934186e8e1fd76f391ed75f1e50e241f` after PR #82, `Add BP write-readiness scaffolding`.
+- Current origin/main baseline for new scoped work: `3d1a1fb3d2878013be46a9fff2688c41ceed5cdc`, `Daily brief refresh - 2026-06-18`. PR #83's merge commit is an ancestor of this baseline.
+- Active evaluation path: Bevel Pro Evaluation Sprint. Use `docs/implementation/BEVEL_PRO_EVALUATION_PLAN.md` before changing readiness, strain, sleep, nutrition, strength-builder, Oura, Rack, or BP write plans.
+- BP production-write work is paused after PR #82's fail-closed BP write-readiness scaffold. The scaffold remains useful and merged, but do not proceed toward live BP production writes until Bevel evaluation and a later explicit approval boundary.
+- Rack-first integration work is paused pending Bevel Strength Builder evaluation and Noah/Rack response. Rack/Motra remain current completed-strength authorities until a later explicit decision changes production policy.
+- Garmin follow-up remains approved only as read-only Health API plus Activity API application/status follow-up. Do not broaden scope into Garmin writes, scraping, provider automation, OAuth completion, or secret/token handling.
+- Oura setup planning remains allowed, but Bevel may reduce the need for Oura. Oura remains fallback-only unless a later decision changes the source hierarchy.
+- Physical iPhone, Bevel account, Garmin Connect authorization, Apple Health permissions, subscription/payment, login, OAuth, 2FA, account security, and device setup remain Todd-bound.
+- Do not wire Bevel into runtime source registry, backend routes, OpenAPI/GPT Action schema, Supabase schema, production settings, provider integrations, write paths, or `HEALTH_DATABASE.json` during the evaluation sprint.
+- PR #83, `Add protected read-only verification execution plan`, is merged.
+  - Merge commit: `45acd95a1a975f27db08a09bed35a21eed241b2e`.
+  - Scope: docs-only protected read-only execution plan that keeps protected checks no-write, no-secret, no-account-prompt, and Todd-assisted unless a preconfigured redacted path exists.
+  - Follow-on baseline: `3d1a1fb3d2878013be46a9fff2688c41ceed5cdc` updated `HEALTH_DATABASE.json` through the daily brief refresh automation. New Codex work must not edit `HEALTH_DATABASE.json` unless explicitly scoped.
+- Current Bevel non-decision:
+  - Bevel is not a production source of truth yet.
+  - Garmin, Rack/Motra, Garmin Nutrition, Oura fallback, Apple Health supporting-only, and BP safety policy remain unchanged for production behavior.
+  - Bevel output may be evaluated through Todd-safe summaries only.
 - PR #81, `Add post-merge autonomy ops packets`, is merged and production deployed.
   - Merge commit: `95d416515f0a0e6f8f7c913a359557e3e4396eb3`.
   - Scope: durable state refresh after PRs #76-#80 plus new docs for Refresh Coach Data physical validation, Garmin follow-up, Oura setup planning, and BP-first write candidate planning.
@@ -134,6 +149,7 @@ Todd Blackhurst's Personal Coach is a deterministic, safety-first coaching syste
 - Physical iPhone Refresh Coach Data checklist: `docs/implementation/REFRESH_COACH_DATA_PHYSICAL_VALIDATION.md`
 - Garmin follow-up packet: `docs/implementation/GARMIN_FOLLOWUP_PACKET.md`
 - Oura setup planning packet: `docs/implementation/OURA_SETUP_PLANNING_PACKET.md`
+- Bevel Pro evaluation plan: `docs/implementation/BEVEL_PRO_EVALUATION_PLAN.md`
 - First production write candidate packet: `docs/implementation/FIRST_PRODUCTION_WRITE_CANDIDATE_BP_INTAKE.md`
 - Protected read-only execution plan: `docs/implementation/PROTECTED_READ_ONLY_VERIFICATION_EXECUTION_PLAN.md`
 - Current handoff file: `COACH_CURRENT_STATE.md`
@@ -212,6 +228,7 @@ Safety and medical constraints override all device data and memory:
 
 Source hierarchy:
 
+- Temporary Bevel evaluation overlay: Bevel Pro is being evaluated as a possible readiness/recovery/strain/sleep/nutrition/AI-insight and Strength Builder layer. This evaluation does not change production source policy, does not authorize Bevel as source of truth, does not authorize runtime provider wiring, and does not authorize any production write.
 - Garmin Fenix 8 / Garmin Connect is the primary integrated training, recovery, workout physiology, HR, zones, Body Battery, training load, and recovery-time source when fresh and reliably worn.
 - Rack/Motra is the authority for completed strength sets, reps, loads, exercise names, and performance history.
 - Garmin Connect+ Nutrition is the nutrition authority.
