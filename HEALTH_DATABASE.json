@@ -12426,24 +12426,24 @@
     }
   ],
   "coaching_brief": {
-    "date": "2026-06-18",
+    "date": "2026-06-19",
     "readiness_tier": "Yellow",
-    "call": "Recover today based on recovery 64%, HRV 15 ms, sleep 6h11, RHR 62 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
+    "call": "Train today based on recovery 64%, HRV 15 ms, sleep 6h11, RHR 62 bpm. Keep the cap tight and adjust volume if HR or hip tolerance drifts.",
     "sprint_gate": "N/A - sprints are Saturday-standalone.",
-    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 6.3 weeks.",
+    "progress_note": "Current scale anchor is 166.4 lb; weight is down 0.4 lb across the recent scale window. To reach 159.3 lb by Aug 1, the remaining cut is about 7.1 lb over 6.1 weeks.",
     "encouragement": "Make today look professional: hit the main objective, keep the positions clean, and leave the junk volume alone.",
     "goal_summary": {
-      "as_of": "2026-06-18",
+      "as_of": "2026-06-19",
       "current_weight_lbs": 166.4,
       "target_weight_lbs": 159.3,
       "fat_to_lose_lbs": 7.1,
-      "weeks_remaining": 6.3
+      "weeks_remaining": 6.1
     },
     "active_adjustments": [],
     "data_completeness": null,
     "source": "local-json-fallback"
   },
-  "last_updated": "2026-06-18T06:05:06+08:00",
+  "last_updated": "2026-06-19T06:05:03+08:00",
   "sprint_protocol": {
     "added": "2026-04-16",
     "rationale": "HGH stimulus via short maximal efforts. At 57, sprint intervals drive growth hormone more effectively than steady-state cardio. Supports VAT reduction, muscle preservation, and metabolic adaptation.",
@@ -12531,14 +12531,112 @@
     }
   ],
   "upcoming_session": {
-    "planned_date": "2026-06-18",
-    "day_label": "Thursday Jun 18",
-    "session_type": "Recovery / non-lifting day",
-    "floor_plan": "Walk or easy cardio only",
-    "time_cap_min": 45,
-    "blocks": [],
-    "coach_note": "No strength session is scheduled today. Keep it easy and protect the next lift.",
-    "why": "Recovery days preserve the quality of the next anchor session."
+    "date": "2026-06-19",
+    "day": "Friday",
+    "session_type": "Mixed athletic corrective",
+    "theme": "Friday changes the feel of the week with a landmine press day, but every choice still stays hip-safe, hamstring-safe, and left-led where it should be.",
+    "floor_plan": "Floor 3 prep -> Floor 2 for Blocks A-C",
+    "time_cap_min": 60,
+    "status": "LIVE - daily brief refreshed",
+    "blocks": [
+      {
+        "id": "prep",
+        "label": "PREP — Floor 3 scan correction",
+        "floor": "Floor 3",
+        "time_min": 10,
+        "exercises": [
+          {
+            "name": "Doorway Pec Stretch",
+            "prescription": "2×20 sec/side",
+            "load": "BW",
+            "cues": "Open the chest without cranking the shoulder forward. Breathe out and let the ribs settle as you hold."
+          },
+          {
+            "name": "Scapular Retraction Hold",
+            "prescription": "2×20 sec",
+            "load": "BW",
+            "cues": "Pull the shoulder blades gently back and down, then keep the neck quiet. Think tall posture, not a hard shrug."
+          },
+          {
+            "name": "Low-Range Hip Thrust Iso",
+            "prescription": "2×20 sec",
+            "load": "BW",
+            "cues": "Drive through the heels and stop at neutral. If the front of the right hip pinches, shorten the range immediately."
+          },
+          {
+            "name": "Supported Single-Leg Balance",
+            "prescription": "2×20 sec/side",
+            "load": "BW",
+            "cues": "Use a light fingertip assist and keep the foot tripod alive. Left ankle gets the first clean hold."
+          }
+        ]
+      },
+      {
+        "id": "a",
+        "label": "Block A — Athletic press and width",
+        "floor": "Floor 2",
+        "time_min": 18,
+        "exercises": [
+          {
+            "name": "Landmine Half Kneeling Single Arm Press",
+            "prescription": "3×8/side",
+            "load": "25 kg",
+            "cues": "Start left first, keep the ribs down, and finish tall instead of leaning back. Clean reps only."
+          },
+          {
+            "name": "Hammer Strength Wide Pulldown",
+            "prescription": "3×8",
+            "load": "60 kg",
+            "cues": "Own the stretch, then pull the elbows down without torso swing. Think width and control, not momentum."
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "label": "Block B — Glute and rear-shoulder support",
+        "floor": "Floor 2",
+        "time_min": 16,
+        "exercises": [
+          {
+            "name": "Matrix Glute Trainer",
+            "prescription": "2×10",
+            "load": "35 kg",
+            "cues": "Drive through the heel and stop at neutral. The glute should work harder than the hamstring and there should be no front-hip pinch."
+          },
+          {
+            "name": "Landmine Rear Delt Raise",
+            "prescription": "2×12",
+            "load": "15 kg",
+            "cues": "Raise with the back of the shoulder and keep the traps from taking over. Smooth reps only."
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "label": "Block C — Trunk and left-led carry close",
+        "floor": "Floor 2",
+        "time_min": 12,
+        "exercises": [
+          {
+            "name": "Unilateral Pallof Press",
+            "prescription": "2×10/side",
+            "load": "7.9 kg",
+            "cues": "Press straight out and keep the body quiet. No twist, no rush, and no rib flare."
+          },
+          {
+            "name": "Offset Farmer Carry",
+            "prescription": "2×20 m, left 24 kg / right 12 kg",
+            "load": "24 kg left / 12 kg right",
+            "cues": "Left side leads and posture stays tall. Do not let the torso drift or the right side cave toward the load."
+          }
+        ]
+      }
+    ],
+    "session_notes": "Open by logging hamstring pain, right hip pinch, left shoulder-arm control, and left ankle status before the first work set. Friday is the mixed athletic day for this week, but the fun comes from a controlled landmine press and a heavy left-led carry, not from rotation, swings, or any deep hip-flexion pattern. The prep block keeps pec-posture, glute, and ankle work live so the scan-correction priorities do not get cut when the gym gets busy. The week finishes with a second side-waist and loaded-posture exposure while staying inside the sixty-minute cap.",
+    "planned_date": "2026-06-19",
+    "day_label": "Friday Jun 19",
+    "coach_note": "Use the planned structure without cross-floor supersets. Lead left-side work where relevant, keep strength near the HR cap, and keep loaded hip flexion pain-free. Skip the optional close if readiness, grip, or mechanics say the main work was enough.",
+    "why": "The point today is high-quality load and clean positions, not extra volume."
   },
   "coach_questions": [
     {
