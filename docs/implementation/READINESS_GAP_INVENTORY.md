@@ -1,12 +1,21 @@
 # Personal Coach Readiness Gap Inventory
 
-Last updated: 2026-06-17 Asia/Taipei.
+Last updated: 2026-06-18 Asia/Taipei.
 
 Purpose: keep the readiness push explicit. This file separates what is already verified, what Codex can safely build next, and what must wait for Todd/device/account/manual boundaries.
 
 ## Verified Now
 
-- Repo main is verified at `511c36ff4cdb9cd9e48ca4b30845c0a1e4ac3a14` after PR #80, `Disabled Garmin/Oura official integration scaffolding`, merged.
+- Repo main baseline for this refresh is `3d1a1fb3d2878013be46a9fff2688c41ceed5cdc`, after PR #83 merged and the 2026-06-18 daily brief refresh landed on `origin/main`.
+- Bevel Pro Evaluation Sprint is the new active evaluation path. Use `docs/implementation/BEVEL_PRO_EVALUATION_PLAN.md` before changing readiness, strain, sleep, nutrition, strength-builder, Oura, Rack, or BP write plans.
+- Initial Bevel phone setup is partially working: Bevel version `3.0.8` launched on Todd's iPhone, Garmin Connect and Oura are connected, inspected Garmin-owned categories are Garmin-first, Sleep is Oura Ring, Nutrition is Bevel, duplicate-source controls exist, Bevel Intelligence works, and Strength Builder / nutrition entry points are visible. Garmin resync was triggered and Bevel was still showing `Syncing...` at last readback.
+- BP production-write work is paused after PR #82's fail-closed readiness scaffold. The scaffold remains useful and merged, but live BP write work must not proceed until Bevel evaluation and a later explicit approval boundary.
+- Rack-first integration work is paused pending Bevel Strength Builder evaluation and Noah/Rack response. Rack/Motra remain current completed-strength authorities until a later explicit decision changes production policy.
+- Garmin follow-up remains approved only as a read-only Health API plus Activity API application/status follow-up. Do not broaden into writes, provider automation, OAuth completion, scraping, or token handling.
+- Oura setup planning remains allowed, but Bevel may reduce the need for Oura. Oura remains fallback-only until a later explicit decision changes the source hierarchy.
+- Physical iPhone, Bevel account, Garmin Connect authorization, Apple Health permissions, subscription/payment, login, OAuth, 2FA, account security, and device setup remain Todd-bound.
+- Do not wire Bevel into runtime source registry, backend routes, OpenAPI/GPT Action schema, Supabase schema, production settings, provider integrations, write paths, or `HEALTH_DATABASE.json` during this evaluation sprint.
+- Repo main was previously verified at `511c36ff4cdb9cd9e48ca4b30845c0a1e4ac3a14` after PR #80, `Disabled Garmin/Oura official integration scaffolding`, merged.
 - PRs #76-#80 are now merged in order on main:
   - PR #76 `Source Registry + Freshness Policy v1`, merge `b300aaae98c58e3cac50e90848be3018fa931ab6`.
   - PR #77 `CoachEvidencePacket v1 + local validator`, merge `1f1a085843acc56f30f42e9bff65062eda641a9c`.
@@ -180,10 +189,12 @@ Human boundary:
 
 ### P1: Rack/Garmin Workout Execution Handoff
 
-Status: workout output is Rack-first and Garmin-aware, but direct app automation is not safe by default.
+Status: workout output is Rack-first and Garmin-aware, but direct app automation is not safe by default. New Rack-first integration work is paused while Todd tests Bevel Strength Builder and waits for Noah/Rack response.
 
 Safe Codex work:
 
+- During the Bevel sprint, do not add new Rack integration code unless Todd explicitly reopens Rack-first work.
+- Use `docs/implementation/BEVEL_PRO_EVALUATION_PLAN.md` to evaluate whether Bevel Strength Builder can support a real World Gym session, usable set/rep/load/rest handling, coaching notes, completion flow, and GPT Coach handoff.
 - Improve copy-friendly workout handoff fields for title, session type, safety status, constraints, blocks, exercises, sets/reps/rest, equipment, Rack entry lines, Garmin manual-start notes, and one next action.
 - Keep handoff output redacted, Shortcut-friendly, and explicit that it is `manual_handoff_only_no_write`.
 - Keep planned workout handoff separate from completed-history import.
@@ -191,7 +202,7 @@ Safe Codex work:
 
 Human/app boundary:
 
-- Direct Garmin, Rack, Motra, or browser/app entry requires Todd approval for the exact surface and must stop at login, payment, permission, 2FA, account-security, or secret-entry screens.
+- Direct Garmin, Rack, Motra, Bevel, Apple Health, or browser/app entry requires Todd approval for the exact surface and must stop at login, payment, permission, OAuth, 2FA, account-security, Health-permission, or secret-entry screens.
 
 ### P2: Future Integrations
 
@@ -210,8 +221,9 @@ Rules:
 
 ## Next Safe Codex Task Candidates
 
-1. Todd-assisted Refresh Coach Data Device Validation: when Todd is present, use `docs/implementation/REFRESH_COACH_DATA_PHYSICAL_VALIDATION.md` to verify the merged PR #78 local flow on the physical iPhone.
-2. Garmin Follow-Up: Todd/admin can use `docs/implementation/GARMIN_FOLLOWUP_PACKET.md` for a non-secret application-status follow-up limited to read-only Health API + Activity API scope.
-3. Oura Setup Planning: Todd/admin can use `docs/implementation/OURA_SETUP_PLANNING_PACKET.md` for account/app ownership and callback planning while keeping Oura fallback-only and secrets out of Codex/GPT.
-4. Future Write-Readiness Execution: use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` together with `docs/implementation/FIRST_PRODUCTION_WRITE_CANDIDATE_BP_INTAKE.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
-5. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` only if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
+1. Bevel Pro Evaluation Sprint: Todd tests Bevel Pro setup, Garmin Connect sync, Apple Health sync, Bevel Intelligence, Strength Builder, and nutrition logging using `docs/implementation/BEVEL_PRO_EVALUATION_PLAN.md`. Codex/GPT only receive Todd-safe summaries.
+2. Todd-assisted Refresh Coach Data Device Validation: when Todd is present, use `docs/implementation/REFRESH_COACH_DATA_PHYSICAL_VALIDATION.md` to verify the merged PR #78 local flow on the physical iPhone.
+3. Garmin Follow-Up: Todd/admin can use `docs/implementation/GARMIN_FOLLOWUP_PACKET.md` for a non-secret application-status follow-up limited to read-only Health API + Activity API scope.
+4. Oura Setup Planning: Todd/admin can use `docs/implementation/OURA_SETUP_PLANNING_PACKET.md` for account/app ownership and callback planning while keeping Oura fallback-only and secrets out of Codex/GPT. Bevel may reduce the need for this.
+5. Future Write-Readiness Execution: paused until Bevel evaluation completes and Todd gives a new explicit instruction. When resumed, use `docs/implementation/WRITE_READINESS_BOUNDARY_PLAN.md` together with `docs/implementation/FIRST_PRODUCTION_WRITE_CANDIDATE_BP_INTAKE.md` before any future live write phase, GPT Action write call, Shortcut submit flow, Supabase mutation, or third-party update.
+6. Supabase Readiness Diagnostic Boundary: use `docs/implementation/SUPABASE_READINESS_DIAGNOSTIC_PLAN.md` only if Todd separately approves production/admin inspection. Do not inspect production schema, run SQL, apply migrations, refresh schema cache, or perform admin actions without that boundary.
